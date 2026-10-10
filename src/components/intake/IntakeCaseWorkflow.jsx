@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
+import { Download } from 'lucide-react';
 import {
   CheckCircle2,
   FileWarning,
@@ -15,6 +16,10 @@ import {
   UploadCloud,
   UserCheck,
 } from 'lucide-react';
+import { downloadOriginalDocument } from '@/lib/documentDownloads';
+import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
+import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
+import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, PARTICIPANT_FORM_META } from '@/lib/participantDocuments';
 import {
   INTAKE_FILE_ACCEPT,
   businessDateTime,
@@ -114,6 +119,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const [form, setForm] = useState(intakeType === 'Participant' ? PARTICIPANT_BLANK : EMPLOYEE_BLANK);
   const [busy, setBusy] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState('');
+  const [downloadingTemplate, setDownloadingTemplate] = useState('');
 
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
@@ -416,6 +422,36 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     (doc) => canonicalIntakeDocumentType(doc.document_type) === label,
   );
 
+  const templateFiles = intakeType === 'Participant' ? PARTICIPANT_FORM_FILES : EMPLOYEE_FORM_FILES;
+  const templateCodes = intakeType === 'Participant'
+    ? Object.fromEntries(Object.entries(PARTICIPANT_FORM_META).map(([key, meta]) => [key, meta.code]))
+    : EMPLOYEE_FORM_CODES;
+  const templateDefinitions = intakeType === 'Participant' ? PARTICIPANT_FORM_DEFINITIONS : {};
+
+  const downloadTemplate = async (docType) => {
+    setDownloadingTemplate(docType);
+    try {
+      const officialUrl = templateFiles[docType];
+      if (officialUrl) {
+        await downloadOriginalDocument(officialUrl, `${docType} - Official Template`);
+      } else {
+        const definition = templateDefinitions[docType] || {};
+        downloadBlankFormPdf({
+          title: docType,
+          code: templateCodes[docType],
+          subtitle: definition.label || 'ComplianceHR Form',
+          fields: definition.fields || [],
+          columns: definition.columns,
+          rows: definition.rows,
+        });
+      }
+    } catch (error) {
+      toast({ title: 'Download failed', description: error.message, variant: 'destructive' });
+    } finally {
+      setDownloadingTemplate('');
+    }
+  };
+
   const newForm = (
     <form
       onSubmit={(event) => { event.preventDefault(); createCase(); }}
@@ -661,6 +697,12 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                             {doc && (
                               <Button variant="outline" size="sm" onClick={() => viewDocument(doc)}>View</Button>
                             )}
+                            <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
+                              {downloadingTemplate === check.label
+                                ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+                                : <Download className="h-3.5 w-3.5" />}
+                              Download
+                            </Button>
                             {!TERMINAL_STATUSES.has(activeCase.status) && (
                               <label className="cursor-pointer">
                                 <input
