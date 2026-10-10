@@ -20,6 +20,7 @@ import ComplianceHub from '@/pages/ComplianceHub';
 import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
 import Tasks from '@/pages/Tasks';
+import Incidents from '@/pages/Incidents';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -59,6 +60,7 @@ const AuthenticatedApp = () => {
           <Route path="/documents" element={<Documents />} />
           <Route path="/training" element={<Training />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/incidents" element={<Incidents />} />
           <Route path="/github" element={<GitHubActivity />} />
         </Route>
       </Route>

@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard, Users, ShieldCheck, GraduationCap, FolderOpen,
-  ClipboardList, Github, Menu, LogOut, X, Building2,
+  ClipboardList, Github, Menu, LogOut, X, Building2, AlertTriangle,
 } from 'lucide-react';
 
 const NAV = [
@@ -14,6 +14,7 @@ const NAV = [
   { label: 'Documents', path: '/documents', icon: FolderOpen },
   { label: 'Training', path: '/training', icon: GraduationCap },
   { label: 'Tasks', path: '/tasks', icon: ClipboardList },
+  { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
   { label: 'GitHub Activity', path: '/github', icon: Github },
 ];
 
@@ -36,8 +37,8 @@ export default function AppLayout() {
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 border-b p-4">
-        <div className="rounded-lg bg-slate-900 p-2">
-          <Building2 className="h-5 w-5 text-white" />
+        <div className="rounded-lg bg-primary p-2">
+          <Building2 className="h-5 w-5 text-primary-foreground" />
         </div>
         <div>
           <p className="font-bold leading-tight">ComplianceHR</p>
@@ -53,7 +54,7 @@ export default function AppLayout() {
               to={item.path}
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 isActive(item.path)
-                  ? 'bg-slate-900 text-white'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               }`}
             >

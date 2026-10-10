@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, FolderOpen, GraduationCap, Award } from 'lucide-react';
+import { Plus, Trash2, FolderOpen, RefreshCw } from 'lucide-react';
 import { format, differenceInCalendarDays } from 'date-fns';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -28,6 +28,8 @@ export default function Documents() {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [scanMsg, setScanMsg] = useState('');
   const [form, setForm] = useState({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', notes: '' });
 
   const load = useCallback(async () => {
@@ -64,12 +66,31 @@ export default function Documents() {
     await load();
   };
 
+  const runScan = async () => {
+    setScanning(true);
+    setScanMsg('');
+    try {
+      const res = await base44.functions.invoke('complianceExpiryScan', {});
+      const { documents, certificates } = res.data || {};
+      setScanMsg(`Scan complete: ${documents.updated + certificates.updated} records updated`);
+      await load();
+    } finally {
+      setScanning(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold"><FolderOpen className="h-6 w-6" /> Document Vault</h1>
           <p className="text-sm text-muted-foreground">Employee documents and their expiry tracking.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
+          <Button variant="outline" onClick={runScan} disabled={scanning}>
+            <RefreshCw className={`mr-2 h-4 w-4 ${scanning ? 'animate-spin' : ''}`} /> Scan expiries
+          </Button>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
