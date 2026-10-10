@@ -11,7 +11,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import { SHIFT_CSV_COLUMNS, SHIFT_STATUSES, shiftHours } from '@/lib/rostering';
 import { ClockButton } from '@/components/rostering/ApprovalsPanel';
 
-export default function ShiftList({ shifts, onEdit, onDelete }) {
+export default function ShiftList({ shifts, onEdit, onDelete, onAdvance }) {
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('all');
   const [staffFilter, setStaffFilter] = useState('all');
