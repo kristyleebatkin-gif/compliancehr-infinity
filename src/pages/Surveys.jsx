@@ -93,7 +93,7 @@ export default function Surveys() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : items.length === 0 ? (
         <Card><CardContent className="p-10 text-center text-muted-foreground">No surveys yet.</CardContent></Card>
       ) : (

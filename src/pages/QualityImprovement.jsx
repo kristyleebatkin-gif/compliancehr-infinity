@@ -127,7 +127,7 @@ export default function QualityImprovement() {
         </TabsList>
         <TabsContent value="Improvement Idea" className="mt-4">
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : <List type="Improvement Idea" />}
         </TabsContent>
         <TabsContent value="Corrective Action" className="mt-4">

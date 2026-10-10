@@ -131,7 +131,7 @@ export default function ProgramsEvents() {
         </TabsList>
         <TabsContent value="Program" className="mt-4">
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : <List type="Program" />}
         </TabsContent>
         <TabsContent value="Event" className="mt-4">

@@ -97,7 +97,7 @@ export default function Tasks() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></div>
+        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : (
         <div className="grid gap-4 md:grid-cols-3">
           {COLUMNS.map((col) => {

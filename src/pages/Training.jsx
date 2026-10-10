@@ -113,7 +113,7 @@ export default function Training() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primar00" /></div>
           ) : modules.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No training modules yet.</CardContent></Card>
           ) : (
@@ -175,7 +175,7 @@ export default function Training() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primar00" /></div>
           ) : certs.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No certificates issued yet.</CardContent></Card>
           ) : (

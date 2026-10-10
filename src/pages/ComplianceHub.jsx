@@ -122,7 +122,7 @@ export default function ComplianceHub() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primar00" /></div>
           ) : policies.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No policies yet. Add your first one above.</CardContent></Card>
           ) : (
@@ -184,7 +184,7 @@ export default function ComplianceHub() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primar00" /></div>
           ) : requirements.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No legal requirements tracked yet.</CardContent></Card>
           ) : (

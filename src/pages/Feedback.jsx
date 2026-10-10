@@ -129,7 +129,7 @@ export default function Feedback() {
         </TabsList>
         <TabsContent value="Feedback" className="mt-4">
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : <List type="Feedback" />}
         </TabsContent>
         <TabsContent value="Complaint" className="mt-4">

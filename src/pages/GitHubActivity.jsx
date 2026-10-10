@@ -47,7 +47,7 @@ export default function GitHubActivity() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary"></div>
       </div>
     );
   }
@@ -143,7 +143,7 @@ export default function GitHubActivity() {
             {events.length === 0 && <p className="text-sm text-muted-foreground">No recent activity.</p>}
             {events.slice(0, 10).map((e, i) => (
               <div key={i} className="flex items-start gap-3 rounded-lg border p-3">
-                <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-slate-800"></div>
+                <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary"></div>
                 <div>
                   <p className="text-sm">{e.text}</p>
                   <p className="text-xs text-muted-foreground">
