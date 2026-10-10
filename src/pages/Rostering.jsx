@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays } from 'lucide-react';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
@@ -32,8 +33,8 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
 export default function Rostering() {
   const [tab, setTab] = useState('roster');
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
-  const [calFrom, setCalFrom] = useState(format(startOfMonth(new Date()), 'yyyy-MM-dd'));
-  const [calTo, setCalTo] = useState(format(endOfMonth(new Date()), 'yyyy-MM-dd'));
+  const [calFrom, setCalFrom] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [calTo, setCalTo] = useState(format(addDays(new Date(), 30), 'yyyy-MM-dd'));
   const [calStaff, setCalStaff] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -130,6 +131,21 @@ export default function Rostering() {
 
   const refresh = () => { loadStats(); if (tab === 'roster') return loadBoard(weekStart); if (tab === 'calendar') return loadCalendar(calFrom, calTo, calStaff); if (tab === 'shifts') return loadList(listRange); return loadApprovals(); };
 
+  const setCalPreset = (preset) => {
+    const today = new Date();
+    if (preset === 'week') {
+      setCalFrom(format(startOfWeek(today, { weekStartsOn: 1 }), 'yyyy-MM-dd'));
+      setCalTo(format(endOfWeek(today, { weekStartsOn: 1 }), 'yyyy-MM-dd'));
+    } else if (preset === 'month') {
+      setCalFrom(format(startOfMonth(today), 'yyyy-MM-dd'));
+      setCalTo(format(endOfMonth(today), 'yyyy-MM-dd'));
+    } else {
+      const days = preset === 'next7' ? 7 : 30;
+      setCalFrom(format(today, 'yyyy-MM-dd'));
+      setCalTo(format(addDays(today, days), 'yyyy-MM-dd'));
+    }
+  };
+
   const openNew = (date) => { setEditingShift(null); setFormOpen(true); if (date) setPrefillDate(date); };
   const [prefillDate, setPrefillDate] = useState(null);
 
@@ -215,6 +231,11 @@ export default function Rostering() {
             )}
             {tab === 'calendar' && (
               <div className="flex flex-wrap items-center gap-2">
+                <Button variant="outline" size="sm" onClick={() => { const t = format(new Date(), 'yyyy-MM-dd'); setCalFrom(t); setCalTo(t); }} title="Today only">Today</Button>
+                <Button variant="outline" size="sm" onClick={() => setCalPreset('week')}>This week</Button>
+                <Button variant="outline" size="sm" onClick={() => setCalPreset('month')}>This month</Button>
+                <Button variant="outline" size="sm" onClick={() => setCalPreset('next7')}>Next 7 days</Button>
+                <Button variant="outline" size="sm" onClick={() => setCalPreset('next30')}>Next 30 days</Button>
                 <Select value={calStaff || 'all'} onValueChange={(v) => setCalStaff(v === 'all' ? '' : v)}>
                   <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -267,7 +288,15 @@ export default function Rostering() {
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge className="bg-brand/10 text-brand border-transparent">{boardShifts.length} shifts</Badge>
+            <Badge className="bg-warning/10 text-warning border-transparent">
+              {boardShifts.filter((s) => !s.employee_name).length} unassigned
+            </Badge>
+            <Badge className="bg-teal/10 text-teal border-transparent">
+              {new Set(boardShifts.map((s) => s.employee_name).filter(Boolean)).size} staff rostered
+            </Badge>
+            <div className="flex-1" />
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (
