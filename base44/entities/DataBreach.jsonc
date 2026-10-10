@@ -1,0 +1,117 @@
+{
+  "name": "DataBreach",
+  "type": "object",
+  "properties": {
+    "breach_id": {
+      "type": "string",
+      "title": "Breach ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "detected_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Detected"
+    },
+    "detected_by": {
+      "type": "string",
+      "title": "Detected / Reported By"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description of Breach"
+    },
+    "data_types": {
+      "type": "string",
+      "title": "Types of Data Involved"
+    },
+    "individuals_affected": {
+      "type": "number",
+      "title": "Individuals Affected"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "default": "Medium",
+      "title": "Severity"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Identified",
+        "Contained",
+        "Assessing Notifiability",
+        "OAIC Notified",
+        "Individuals Notified",
+        "Remediation Underway",
+        "Resolved",
+        "Closed"
+      ],
+      "default": "Identified",
+      "title": "Status"
+    },
+    "is_notifiable": {
+      "type": "boolean",
+      "default": false,
+      "title": "Assessed as Notifiable (NDB Scheme)"
+    },
+    "assessment_notes": {
+      "type": "string",
+      "title": "Notifiability Assessment Notes"
+    },
+    "containment_actions": {
+      "type": "string",
+      "title": "Containment Actions"
+    },
+    "remediation_actions": {
+      "type": "string",
+      "title": "Remediation Actions"
+    },
+    "lessons_learned": {
+      "type": "string",
+      "title": "Lessons Learned / Prevention"
+    },
+    "oaic_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "OAIC Notified At"
+    },
+    "oaic_reference": {
+      "type": "string",
+      "title": "OAIC Reference"
+    },
+    "individuals_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Individuals Notified At"
+    },
+    "management_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Management Notified At"
+    },
+    "management_notified_to": {
+      "type": "string",
+      "title": "Management Notification Sent To"
+    },
+    "closed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Closed"
+    },
+    "recorded_by": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
