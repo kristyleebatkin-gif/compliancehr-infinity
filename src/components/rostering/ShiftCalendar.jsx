@@ -18,7 +18,7 @@ function ShiftChip({ s, onEdit, compact, conflict }) {
     <button
       type="button"
       onClick={() => onEdit(s)}
-      className={`block w-full truncate rounded px-1 py-0.5 text-left leading-tight hover:opacity-80 ${statusTone(s.status)} ${compact ? 'text-[10px]' : 'text-xs'} ${conflict ? 'ring-2 ring-warning' : ''}`}
+      className={`block w-full truncate rounded px-1 py-0.5 text-left leading-tight hover:opacity-80 ${statusTone(s.status)} ${compact ? 'text-[10px]' : 'text-xs'} ${conflict ? 'ring-2 ring-destructive' : ''}`}
       title={`${s.employee_name || 'Unassigned'}${s.participant_name ? ` → ${s.participant_name}` : ''}${s.start_time ? ` · ${s.start_time}${s.end_time ? `–${s.end_time}` : ''}` : ''}${s.employee_name ? (needsConfirm(s) ? ' · Awaiting confirmation' : ' · Confirmed') : ''}${conflict ? ' · ⚠ Overlapping shift' : ''}`}
     >
       {conflict && <AlertTriangle className="mr-0.5 inline h-2.5 w-2.5" />}
@@ -137,7 +137,7 @@ function AgendaView({ from, to, shifts, onAdd, onEdit, onConfirm, myName }) {
                 <button
                   type="button"
                   onClick={() => onEdit(s)}
-                  className={`flex flex-1 flex-wrap items-center justify-between gap-2 rounded-lg border border-border/60 p-2 text-left hover:bg-accent ${conflicts.has(s.id) ? 'ring-2 ring-warning' : ''}`}
+                  className={`flex flex-1 flex-wrap items-center justify-between gap-2 rounded-lg border border-border/60 p-2 text-left hover:bg-accent ${conflicts.has(s.id) ? 'ring-2 ring-destructive bg-destructive/5' : ''}`}
                 >
                   <div className="min-w-0">
                     <p className="text-sm font-medium truncate">{s.employee_name || <span className="inline-flex items-center gap-1 text-warning"><UserX className="h-3.5 w-3.5" /> Unassigned</span>}</p>
