@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye } from 'lucide-react';
 import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
+import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import { EMPLOYEE_FILE_SECTIONS, EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
@@ -124,6 +125,7 @@ export default function Documents() {
             <RefreshCw className={`mr-2 h-4 w-4 ${scanning ? 'animate-spin' : ''}`} /> Scan expiries
           </Button>
         </div>
+        <BulkUploadDocuments staff={staff} onDone={load} />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
           <DialogContent>
