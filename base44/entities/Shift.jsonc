@@ -4,7 +4,7 @@
   "properties": {
     "employee_name": {
       "type": "string",
-      "title": "Employee"
+      "title": "Employee (blank = unassigned)"
     },
     "participant_name": {
       "type": "string",
@@ -27,12 +27,37 @@
       "type": "string",
       "enum": [
         "Scheduled",
+        "In Progress",
         "Completed",
         "Missed",
         "Cancelled"
       ],
       "default": "Scheduled",
       "title": "Status"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "Personal Care",
+        "Community Access",
+        "Domestic Assistance",
+        "Transport",
+        "Respite",
+        "Social Support",
+        "Other"
+      ],
+      "title": "Service Type"
+    },
+    "funding_source": {
+      "type": "string",
+      "enum": [
+        "NDIS Core Supports",
+        "NDIS Capacity Building",
+        "NDIS Capital",
+        "Private",
+        "Other"
+      ],
+      "title": "Funding Source"
     },
     "location": {
       "type": "string",
@@ -41,6 +66,53 @@
     "notes": {
       "type": "string",
       "title": "Notes"
+    },
+    "break_minutes": {
+      "type": "number",
+      "title": "Unpaid Break (min)"
+    },
+    "travel_km": {
+      "type": "number",
+      "title": "Travel (km)"
+    },
+    "billable_rate": {
+      "type": "number",
+      "title": "Billable Rate ($/hr)"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "Not Required",
+        "Pending Approval",
+        "Approved",
+        "Rejected"
+      ],
+      "default": "Not Required",
+      "title": "Approval Status"
+    },
+    "clock_in": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Clock In"
+    },
+    "clock_out": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Clock Out"
+    },
+    "repeat_rule": {
+      "type": "string",
+      "enum": [
+        "none",
+        "weekly",
+        "fortnightly"
+      ],
+      "title": "Repeat Rule"
+    },
+    "repeat_until": {
+      "type": "string",
+      "format": "date",
+      "title": "Repeat Until"
     },
     "invoiced": {
       "type": "boolean",
@@ -53,7 +125,6 @@
     }
   },
   "required": [
-    "employee_name",
     "date"
   ]
 }

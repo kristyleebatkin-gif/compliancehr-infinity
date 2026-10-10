@@ -28,7 +28,7 @@ import Certificates from '@/pages/Certificates';
 import Participants from '@/pages/Participants';
 import ParticipantDetail from '@/pages/ParticipantDetail';
 import Risks from '@/pages/Risks';
-import ShiftScheduling from '@/pages/ShiftScheduling';
+
 import Feedback from '@/pages/Feedback';
 import Checklists from '@/pages/Checklists';
 import AssetManagement from '@/pages/AssetManagement';
@@ -46,6 +46,7 @@ import QualityImprovement from '@/pages/QualityImprovement';
 import KeyContacts from '@/pages/KeyContacts';
 import Volunteers from '@/pages/Volunteers';
 import Rostering from '@/pages/Rostering';
+
 import VisualBoards from '@/pages/VisualBoards';
 import CompanySafe from '@/pages/CompanySafe';
 import EquipmentManuals from '@/pages/EquipmentManuals';
@@ -108,7 +109,7 @@ const AuthenticatedApp = () => {
           <Route path="/participants" element={<RoleGate navKey="participants"><Participants /></RoleGate>} />
           <Route path="/participants/:id" element={<RoleGate navKey="participants"><ParticipantDetail /></RoleGate>} />
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
-          <Route path="/shifts" element={<RoleGate navKey="shifts"><ShiftScheduling /></RoleGate>} />
+
           <Route path="/feedback" element={<RoleGate navKey="feedback"><Feedback /></RoleGate>} />
           <Route path="/checklists" element={<RoleGate navKey="checklists"><Checklists /></RoleGate>} />
           <Route path="/assets" element={<RoleGate navKey="assets"><AssetManagement /></RoleGate>} />
@@ -144,6 +145,7 @@ const AuthenticatedApp = () => {
           <Route path="/insurance-finance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/volunteering-placements" element={<RoleGate navKey="volunteering-placements"><Volunteers /></RoleGate>} />
           <Route path="/rostering" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
+          <Route path="/shifts" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
