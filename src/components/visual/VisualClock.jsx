@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Clock as ClockIcon } from 'lucide-react';
+import { printClock } from '@/lib/visualPrint';
+import { Clock as ClockIcon, Printer } from 'lucide-react';
 
 const ACCENTS = {
   indigo: '#4f46e5',
@@ -46,6 +47,7 @@ export default function VisualClock() {
           <Button size="sm" variant={mode === 'digital' ? 'default' : 'outline'} onClick={() => { setMode('digital'); save('vh_clock_mode', 'digital'); }}>Digital</Button>
           <Button size="sm" variant="outline" onClick={() => { setHour24(!hour24); save('vh_clock_24', hour24 ? '0' : '1'); }}>{hour24 ? '24-hour' : '12-hour'}</Button>
           <Button size="sm" variant="outline" onClick={() => { const next = size >= 360 ? 200 : size + 80; setSize(next); save('vh_clock_size', String(next)); }}>Size</Button>
+          <Button size="sm" variant="outline" onClick={() => printClock({ mode, color, digitalTime, dateLine, size })}><Printer className="h-4 w-4" />Print</Button>
           {Object.entries(ACCENTS).map(([name, hex]) => (
             <button key={name} onClick={() => { setAccent(name); save('vh_clock_accent', name); }} className={`h-6 w-6 rounded-full border-2 ${accent === name ? 'border-foreground' : 'border-transparent'}`} style={{ background: hex }} title={name} />
           ))}
