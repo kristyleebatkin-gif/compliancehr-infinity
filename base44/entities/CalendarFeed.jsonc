@@ -1,0 +1,13 @@
+{
+  "name": "CalendarFeed",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "title": "Feed Token"
+    }
+  },
+  "required": [
+    "token"
+  ]
+}

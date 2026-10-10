@@ -18,6 +18,8 @@ import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
+import CalendarSyncDialog from '@/components/rostering/CalendarSyncDialog';
+import { RefreshCw } from 'lucide-react';
 import { expandRecurrence } from '@/lib/rostering';
 
 const StatCard = ({ icon: Icon, label, value, tone }) => (
@@ -53,6 +55,7 @@ export default function Rostering() {
   const [fillShift, setFillShift] = useState(null);
   const [fillData, setFillData] = useState({ shifts: [], availability: [] });
   const [availOpen, setAvailOpen] = useState(false);
+  const [syncOpen, setSyncOpen] = useState(false);
   const [availForm, setAvailForm] = useState({ staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' });
 
   const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0 });
@@ -312,6 +315,7 @@ export default function Rostering() {
               {boardShifts.filter((s) => s.employee_name && s.staff_confirmation !== 'Confirmed').length} awaiting confirmation
             </Badge>
             <div className="flex-1" />
+            <Button variant="outline" size="sm" onClick={() => setSyncOpen(true)}><RefreshCw className="mr-2 h-3.5 w-3.5" /> Sync calendar</Button>
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (
@@ -362,6 +366,8 @@ export default function Rostering() {
       />
 
       <AvailabilityFormDialog open={availOpen} onOpenChange={setAvailOpen} form={availForm} setForm={setAvailForm} onSave={saveAvailability} saving={saving} staff={staff} />
+
+      <CalendarSyncDialog open={syncOpen} onOpenChange={setSyncOpen} />
     </div>
   );
 }
