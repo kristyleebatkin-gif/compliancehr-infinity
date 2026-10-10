@@ -90,6 +90,16 @@
       "default": "Not Required",
       "title": "Approval Status"
     },
+    "staff_confirmation": {
+      "type": "string",
+      "enum": [
+        "Pending Confirmation",
+        "Confirmed",
+        "Declined"
+      ],
+      "default": "Pending Confirmation",
+      "title": "Staff Confirmation"
+    },
     "clock_in": {
       "type": "string",
       "format": "date-time",

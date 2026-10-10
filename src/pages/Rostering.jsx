@@ -54,6 +54,7 @@ export default function Rostering() {
   const [availForm, setAvailForm] = useState({ staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' });
 
   const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0 });
+  const [myName, setMyName] = useState('');
 
   const loadStats = useCallback(async () => {
     const mon = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
@@ -113,10 +114,12 @@ export default function Rostering() {
 
   useEffect(() => {
     Promise.all([
+      base44.auth.me(),
       base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
       base44.entities.ParticipantProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
       loadStats(),
-    ]).then(([s, p]) => {
+    ]).then(([me, s, p]) => {
+      setMyName(me?.full_name || '');
       setStaff(s.items.map((i) => i.full_name));
       setParticipants(p.items.map((i) => i.full_name));
     });
@@ -182,6 +185,11 @@ export default function Rostering() {
     } else if (shift.status === 'In Progress') {
       await base44.entities.Shift.update(shift.id, { status: 'Completed', clock_out: now, approval_status: 'Pending Approval' });
     }
+    await refresh();
+  };
+
+  const confirmShift = async (shift) => {
+    await base44.entities.Shift.update(shift.id, { staff_confirmation: 'Confirmed' });
     await refresh();
   };
 
@@ -296,13 +304,16 @@ export default function Rostering() {
             <Badge className="bg-teal/10 text-teal border-transparent">
               {new Set(boardShifts.map((s) => s.employee_name).filter(Boolean)).size} staff rostered
             </Badge>
+            <Badge className="bg-warning/10 text-warning border-transparent">
+              {boardShifts.filter((s) => s.employee_name && s.staff_confirmation !== 'Confirmed').length} awaiting confirmation
+            </Badge>
             <div className="flex-1" />
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (
             <Loading />
           ) : (
-            <ShiftCalendar from={calFrom} to={calTo} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
+            <ShiftCalendar from={calFrom} to={calTo} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} onConfirm={confirmShift} myName={myName} />
           )}
         </TabsContent>
 
