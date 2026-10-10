@@ -24,6 +24,7 @@ const QuickLink = ({ to, icon: Icon, title, desc }) => (
 );
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ staff: 0, docs: 0, expiring: 0, tasks: 0, incidents: 0 });
   const [announcements, setAnnouncements] = useState([]);
   const [newTitle, setNewTitle] = useState('');
@@ -41,9 +42,10 @@ export default function Dashboard() {
     ]);
     setStats({ staff, docs, expiring, tasks, incidents });
     setAnnouncements(news.items);
+    setLoading(false);
   };
 
-  useEffect(() => { load().catch(() => {}); }, []);
+  useEffect(() => { load().catch(() => { setLoading(false); }); }, []);
 
   const post = async () => {
     if (!newTitle.trim()) return;
@@ -73,63 +75,69 @@ export default function Dashboard() {
         <p className="text-sm text-muted-foreground">Compliance overview across your organisation.</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-        {cards.map((c) => {
-          const Icon = c.icon;
-          return (
-            <Card key={c.label}>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 text-muted-foreground" />
-                  <p className="text-xs text-muted-foreground">{c.label}</p>
+      {loading ? (
+        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+            {cards.map((c) => {
+              const Icon = c.icon;
+              return (
+                <Card key={c.label}>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2">
+                      <Icon className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-xs text-muted-foreground">{c.label}</p>
+                    </div>
+                    <p className="mt-2 text-2xl font-bold">{c.value}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Card className="lg:col-span-2">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg"><Megaphone className="h-5 w-5" /> Announcements</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {announcements.length === 0 && <p className="text-sm text-muted-foreground">No announcements yet.</p>}
+                {announcements.map((a) => (
+                  <div key={a.id} className="rounded-lg border p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-medium">{a.title}</p>
+                      <Badge variant="outline">{a.audience}</Badge>
+                    </div>
+                    {a.body && <p className="mt-1 text-sm text-muted-foreground">{a.body}</p>}
+                  </div>
+                ))}
+                <div className="space-y-2 rounded-lg border bg-muted/30 p-3">
+                  <Input placeholder="Announcement title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+                  <Input placeholder="Details (optional)" value={newBody} onChange={(e) => setNewBody(e.target.value)} />
+                  <Button size="sm" onClick={post} disabled={posting || !newTitle.trim()}>
+                    <Plus className="mr-1 h-4 w-4" /> Post announcement
+                  </Button>
                 </div>
-                <p className="mt-2 text-2xl font-bold">{c.value}</p>
               </CardContent>
             </Card>
-          );
-        })}
-      </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg"><Megaphone className="h-5 w-5" /> Announcements</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {announcements.length === 0 && <p className="text-sm text-muted-foreground">No announcements yet.</p>}
-            {announcements.map((a) => (
-              <div key={a.id} className="rounded-lg border p-3">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="font-medium">{a.title}</p>
-                  <Badge variant="outline">{a.audience}</Badge>
-                </div>
-                {a.body && <p className="mt-1 text-sm text-muted-foreground">{a.body}</p>}
-              </div>
-            ))}
-            <div className="space-y-2 rounded-lg border bg-muted/30 p-3">
-              <Input placeholder="Announcement title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-              <Input placeholder="Details (optional)" value={newBody} onChange={(e) => setNewBody(e.target.value)} />
-              <Button size="sm" onClick={post} disabled={posting || !newTitle.trim()}>
-                <Plus className="mr-1 h-4 w-4" /> Post announcement
-              </Button>
+            <div className="space-y-3">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg"><ShieldCheck className="h-5 w-5" /> Quick links</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <QuickLink to="/staff" icon={Users} title="Staff Profiles" desc="Manage your team" />
+                  <QuickLink to="/documents" icon={FolderOpen} title="Document Vault" desc="Track employee documents" />
+                  <QuickLink to="/compliance" icon={ShieldCheck} title="Compliance Centre" desc="Policies & legal requirements" />
+                  <QuickLink to="/tasks" icon={ClipboardList} title="Tasks" desc="Open compliance actions" />
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-3">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg"><ShieldCheck className="h-5 w-5" /> Quick links</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <QuickLink to="/staff" icon={Users} title="Staff Profiles" desc="Manage your team" />
-              <QuickLink to="/documents" icon={FolderOpen} title="Document Vault" desc="Track employee documents" />
-              <QuickLink to="/compliance" icon={ShieldCheck} title="Compliance Centre" desc="Policies & legal requirements" />
-              <QuickLink to="/tasks" icon={ClipboardList} title="Tasks" desc="Open compliance actions" />
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
