@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Trash2, Lock, IdCard, Building2, FolderLock } from 'lucide-react';
 import { format } from 'date-fns';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
+import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 
@@ -92,6 +93,7 @@ export default function CompanySafe() {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Business identity</div>
         <BusinessIdentityCard />
+        <BusinessDetailsCard />
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><FolderLock className="h-4 w-4" />Compliance &amp; business documents</div>
         <ComplianceUploads />
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><IdCard className="h-4 w-4" />Staff badges</div>

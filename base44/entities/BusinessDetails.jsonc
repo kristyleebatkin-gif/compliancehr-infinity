@@ -1,0 +1,96 @@
+{
+  "name": "BusinessDetails",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string",
+      "title": "Business Name"
+    },
+    "trading_name": {
+      "type": "string",
+      "title": "Trading Name"
+    },
+    "abn": {
+      "type": "string",
+      "title": "ABN"
+    },
+    "acn": {
+      "type": "string",
+      "title": "ACN"
+    },
+    "ndis_provider_number": {
+      "type": "string",
+      "title": "NDIS Provider Registration Number"
+    },
+    "address_line": {
+      "type": "string",
+      "title": "Street Address"
+    },
+    "suburb": {
+      "type": "string",
+      "title": "Suburb"
+    },
+    "state": {
+      "type": "string",
+      "title": "State"
+    },
+    "postcode": {
+      "type": "string",
+      "title": "Postcode"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "website": {
+      "type": "string",
+      "title": "Website"
+    },
+    "contact_person": {
+      "type": "string",
+      "title": "Primary Contact"
+    },
+    "bank_name": {
+      "type": "string",
+      "title": "Bank Name"
+    },
+    "bsb": {
+      "type": "string",
+      "title": "BSB"
+    },
+    "account_number": {
+      "type": "string",
+      "title": "Account Number"
+    },
+    "account_name": {
+      "type": "string",
+      "title": "Account Name"
+    },
+    "payment_terms_days": {
+      "type": "number",
+      "title": "Payment Terms (Days)",
+      "default": 14
+    },
+    "payment_terms_note": {
+      "type": "string",
+      "title": "Payment Terms Note",
+      "default": "Payment is due within 14 days of the invoice date."
+    },
+    "default_invoice_notes": {
+      "type": "string",
+      "title": "Default Invoice Notes",
+      "default": "NDIS supports are GST free. Please quote the invoice number as the payment reference."
+    },
+    "payment_instructions": {
+      "type": "string",
+      "title": "Bill Payment Instructions"
+    }
+  },
+  "required": [
+    "business_name"
+  ]
+}

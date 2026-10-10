@@ -16,11 +16,19 @@ export default async function(req) {
       return Response.json({ error: 'A valid recipient, subject and message are required' }, { status: 400 });
     }
 
+    const attachments = Array.isArray(body.attachments)
+      ? body.attachments
+        .slice(0, 5)
+        .filter((item) => item && String(item.filename || '').trim() && String(item.content || '').trim())
+        .map((item) => ({ filename: String(item.filename).trim(), content: String(item.content) }))
+      : undefined;
+
     await base44.asServiceRole.integrations.Core.SendEmail({
       to,
       subject,
       body: message,
       from_name: 'ComplianceHR Portal',
+      ...(attachments && attachments.length ? { attachments } : {}),
     });
 
     return Response.json({ ok: true, to, subject });

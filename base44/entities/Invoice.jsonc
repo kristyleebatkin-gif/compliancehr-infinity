@@ -8,11 +8,53 @@
     },
     "client_name": {
       "type": "string",
-      "title": "Client"
+      "title": "Billed To"
+    },
+    "client_email": {
+      "type": "string",
+      "title": "Billed To Email"
+    },
+    "client_address": {
+      "type": "string",
+      "title": "Billed To Address"
+    },
+    "biller_type": {
+      "type": "string",
+      "enum": [
+        "Participant",
+        "Plan Manager",
+        "NDIA"
+      ],
+      "default": "Plan Manager",
+      "title": "Biller Type"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "ndis_number": {
+      "type": "string",
+      "title": "NDIS Number"
+    },
+    "participant_address": {
+      "type": "string",
+      "title": "Participant Address"
+    },
+    "line_items": {
+      "type": "string",
+      "title": "Line Items (JSON)"
+    },
+    "subtotal": {
+      "type": "number",
+      "title": "Subtotal ($)"
     },
     "amount": {
       "type": "number",
-      "title": "Amount ($)"
+      "title": "Total ($)"
     },
     "issue_date": {
       "type": "string",
@@ -35,9 +77,31 @@
       "default": "Draft",
       "title": "Status"
     },
+    "payment_terms": {
+      "type": "string",
+      "title": "Payment Terms"
+    },
+    "payment_details": {
+      "type": "string",
+      "title": "Payment Details"
+    },
     "description": {
       "type": "string",
       "title": "Description"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Sent At"
+    },
+    "paid_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Paid Date"
     }
   },
   "required": [
