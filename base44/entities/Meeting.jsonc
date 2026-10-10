@@ -6,6 +6,20 @@
       "type": "string",
       "title": "Title"
     },
+    "meeting_type": {
+      "type": "string",
+      "enum": [
+        "Compliance Review",
+        "Governance / Board",
+        "Staff Meeting",
+        "Participant Planning",
+        "Quality & Improvement",
+        "Incident / Risk Review",
+        "Other"
+      ],
+      "default": "Staff Meeting",
+      "title": "Meeting Type"
+    },
     "date": {
       "type": "string",
       "format": "date",
@@ -13,23 +27,72 @@
     },
     "time": {
       "type": "string",
-      "title": "Time"
+      "title": "Start Time"
+    },
+    "duration": {
+      "type": "string",
+      "title": "Expected Duration"
     },
     "location": {
       "type": "string",
       "title": "Location"
     },
+    "meeting_link": {
+      "type": "string",
+      "title": "Video / Meeting Link"
+    },
+    "chair": {
+      "type": "string",
+      "title": "Chairperson"
+    },
+    "minute_taker": {
+      "type": "string",
+      "title": "Minute Taker"
+    },
     "attendees": {
       "type": "string",
       "title": "Attendees"
+    },
+    "attendee_emails": {
+      "type": "string",
+      "title": "Attendee Emails (comma-separated)"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose"
     },
     "agenda": {
       "type": "string",
       "title": "Agenda"
     },
+    "attendance": {
+      "type": "string",
+      "title": "Attendance (attended / apologies)"
+    },
     "minutes": {
       "type": "string",
-      "title": "Minutes"
+      "title": "Minutes / Decisions"
+    },
+    "assessment": {
+      "type": "string",
+      "title": "Meeting Assessment (what worked / improvements)"
+    },
+    "minutes_file_uri": {
+      "type": "string",
+      "title": "Completed Minutes File URI"
+    },
+    "minutes_file_name": {
+      "type": "string",
+      "title": "Completed Minutes File Name"
+    },
+    "invited_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Invites Sent At"
+    },
+    "invited_to": {
+      "type": "string",
+      "title": "Invites Sent To"
     },
     "status": {
       "type": "string",
