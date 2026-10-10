@@ -8,7 +8,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
   return (
     <div
       className={cn('relative overflow-hidden rounded-2xl border p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-4 md:p-6', className)}
-      style={{ borderColor: `${primary}35`, background: `linear-gradient(135deg, ${primary}1f 0%, ${secondary}12 58%, hsl(var(--card)) 100%)` }}
+      style={{ borderColor: `${primary}35`, background: `linear-gradient(135deg, ${primary}1f 0%, ${secondary}16 100%)` }}
     >
       <div className="pointer-events-none absolute -right-10 -top-14 h-36 w-36 rounded-full opacity-15" style={{ backgroundColor: secondary }} />
       <div className="pointer-events-none absolute bottom-0 left-0 h-1 w-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary})` }} />

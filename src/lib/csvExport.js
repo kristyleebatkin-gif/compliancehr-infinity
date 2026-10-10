@@ -7,7 +7,7 @@ export function downloadCsv(filename, columns, rows) {
     return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
   };
   const csv = [
-    columns.map(escape).join(','),
+    columns.map((c) => escape(c.label ?? c)).join(','),
     ...rows.map((row) => columns.map((c) => escape(row[c.key])).join(',')),
   ].join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

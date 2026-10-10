@@ -7,6 +7,24 @@ import { Download, FileDown, Loader2 } from 'lucide-react';
 
 const QUICK_FORMS = ['Incident Report', 'Investigation Report', 'Take Five Assessment', 'Risk Assessment'];
 
+export const INCIDENT_CSV_COLUMNS = [
+  { key: 'incident_id', label: 'Incident ID' }, { key: 'title', label: 'Title' },
+  { key: 'date_occurred', label: 'Date' }, { key: 'time_occurred', label: 'Time' },
+  { key: 'reported_by', label: 'Reported By' }, { key: 'received_by', label: 'Received By' },
+  { key: 'participant_name', label: 'Participant' }, { key: 'staff_name', label: 'Staff' },
+  { key: 'category', label: 'Category' }, { key: 'severity', label: 'Severity' }, { key: 'status', label: 'Status' },
+  { key: 'description', label: 'What Happened' }, { key: 'immediate_actions', label: 'Follow-up Actions' },
+  { key: 'requires_ndis_report', label: 'NDIS Reportable' },
+];
+
+export const INVESTIGATION_CSV_COLUMNS = [
+  { key: 'investigation_id', label: 'Investigation ID' }, { key: 'title', label: 'Title' },
+  { key: 'incident_id', label: 'Related Incident' }, { key: 'investigator', label: 'Investigator (Person Performed)' },
+  { key: 'start_date', label: 'Date' }, { key: 'time', label: 'Time' }, { key: 'status', label: 'Status' },
+  { key: 'findings', label: 'Findings' }, { key: 'recommendations', label: 'Follow-up Actions' },
+  { key: 'corrective_actions', label: 'Corrective Actions / Responsible' },
+];
+
 export default function SafetyRegisterExports({ incidents = [], investigations = [], risks = [] }) {
   const { toast } = useToast();
   const [busy, setBusy] = useState('');
@@ -27,35 +45,13 @@ export default function SafetyRegisterExports({ incidents = [], investigations =
 
   const exportIncidents = () => guard('inc', () => {
     if (!incidents.length) { toast({ title: 'No incidents to export' }); return; }
-    downloadCsv(
-      'Incident Register.csv',
-      [
-        { key: 'incident_id', label: 'Incident ID' }, { key: 'title', label: 'Title' },
-        { key: 'date_occurred', label: 'Date' }, { key: 'time_occurred', label: 'Time' },
-        { key: 'reported_by', label: 'Reported By' }, { key: 'received_by', label: 'Received By' },
-        { key: 'participant_name', label: 'Participant' }, { key: 'staff_name', label: 'Staff' },
-        { key: 'category', label: 'Category' }, { key: 'severity', label: 'Severity' }, { key: 'status', label: 'Status' },
-        { key: 'description', label: 'What Happened' }, { key: 'immediate_actions', label: 'Follow-up Actions' },
-        { key: 'requires_ndis_report', label: 'NDIS Reportable' },
-      ],
-      incidents,
-    );
+    downloadCsv('Incident Register.csv', INCIDENT_CSV_COLUMNS, incidents);
     toast({ title: 'Incident register exported' });
   });
 
   const exportInvestigations = () => guard('inv', () => {
     if (!investigations.length) { toast({ title: 'No investigations to export' }); return; }
-    downloadCsv(
-      'Investigation Register.csv',
-      [
-        { key: 'investigation_id', label: 'Investigation ID' }, { key: 'title', label: 'Title' },
-        { key: 'incident_id', label: 'Related Incident' }, { key: 'investigator', label: 'Investigator (Person Performed)' },
-        { key: 'start_date', label: 'Date' }, { key: 'time', label: 'Time' }, { key: 'status', label: 'Status' },
-        { key: 'findings', label: 'Findings' }, { key: 'recommendations', label: 'Follow-up Actions' },
-        { key: 'corrective_actions', label: 'Corrective Actions / Responsible' },
-      ],
-      investigations,
-    );
+    downloadCsv('Investigation Register.csv', INVESTIGATION_CSV_COLUMNS, investigations);
     toast({ title: 'Investigation register exported' });
   });
 

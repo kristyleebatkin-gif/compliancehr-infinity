@@ -14,7 +14,8 @@ import TemplatePicker from '@/components/TemplatePicker';
 import { INVESTIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
-import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
+import SafetyRegisterExports, { INCIDENT_CSV_COLUMNS, INVESTIGATION_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
+import { downloadCsv } from '@/lib/csvExport';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -150,6 +151,12 @@ export default function Incidents() {
     return inc ? inc.title : '—';
   };
 
+  const exportRegister = (filename, columns, rows, label) => {
+    if (!rows.length) { toast({ title: `No ${label} to export` }); return; }
+    downloadCsv(filename, columns, rows);
+    toast({ title: `${label} register exported` });
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
       <PageHeader
@@ -174,7 +181,12 @@ export default function Incidents() {
         id="incident-register"
         title="Incident Register"
         description="All reported incidents"
-        action={<span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{items.length} incidents</span>}
+        action={
+          <div className="flex items-center gap-2">
+            <button onClick={() => exportRegister('Incident Register.csv', INCIDENT_CSV_COLUMNS, filtered, 'incident')} className="flex items-center gap-1.5 rounded-lg bg-teal px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal/90"><Download className="h-3.5 w-3.5" />Export CSV</button>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{items.length} incidents</span>
+          </div>
+        }
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
           <div className="relative max-w-sm flex-1">
@@ -273,7 +285,12 @@ export default function Incidents() {
       {canReview && <SectionCard
         title="Investigation Register"
         description="All incident investigations"
-        action={<span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{investigations.length} investigations</span>}
+        action={
+          <div className="flex items-center gap-2">
+            <button onClick={() => exportRegister('Investigation Register.csv', INVESTIGATION_CSV_COLUMNS, invFiltered, 'investigation')} className="flex items-center gap-1.5 rounded-lg bg-teal px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal/90"><Download className="h-3.5 w-3.5" />Export CSV</button>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{investigations.length} investigations</span>
+          </div>
+        }
       >
         <div className="mb-4 max-w-sm">
           <div className="relative">
