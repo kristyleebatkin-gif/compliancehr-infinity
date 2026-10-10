@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
 import Checklists from '@/pages/Checklists';
+import ComplianceReadiness from '@/components/compliance/ComplianceReadiness';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -80,12 +81,17 @@ export default function ComplianceHub() {
     <div className="space-y-6">
       <PageHeader icon={ShieldCheck} title="Compliance & Report Centre" subtitle="Policies, legal obligations and their review cycles." />
 
-      <Tabs defaultValue="policies">
+      <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">
+          <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
           <TabsTrigger value="policies">Policies</TabsTrigger>
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
           <TabsTrigger value="checklists">Compliance Checklists</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="readiness" className="mt-4">
+          <ComplianceReadiness />
+        </TabsContent>
 
         <TabsContent value="policies" className="mt-4 space-y-4">
           <div className="flex justify-end">
