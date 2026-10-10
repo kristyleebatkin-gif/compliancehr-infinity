@@ -1,7 +1,8 @@
 import React from 'react';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
-import { ShieldAlert, Pencil } from 'lucide-react';
+import { ShieldAlert, Pencil, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 
 const ratingColor = { Low: 'bg-safe/15 text-safe', Medium: 'bg-warning/15 text-warning', High: 'bg-orange-500/15 text-orange-600', Critical: 'bg-danger/15 text-danger' };
 
@@ -16,12 +17,30 @@ export default function TreatmentSection({ type, title, description, field, risk
   const accent = ACCENTS[type];
   const complete = risks.filter((r) => r[field] && r[field].trim()).length;
 
+  const exportStrategies = () => {
+    const rows = risks.filter((r) => r[field] && r[field].trim());
+    if (!rows.length) return;
+    downloadCsv(
+      `${title}.csv`,
+      [
+        { key: 'risk_id', label: 'Risk ID' }, { key: 'title', label: 'Risk / Hazard' },
+        { key: 'report_type', label: 'Report Type' }, { key: 'category', label: 'Category' },
+        { key: 'rating', label: 'Risk Rating' }, { key: 'status', label: 'Status' }, { key: 'owner', label: 'Owner' },
+        { key: 'strategy_type', label: 'Strategy Type' }, { key: 'strategy', label: 'Strategy / Actions' },
+      ],
+      rows.map((r) => ({ ...r, strategy_type: accent.label, strategy: r[field] })),
+    );
+  };
+
   return (
     <SectionCard
       title={title}
       description={description}
       action={
-        <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{complete}/{risks.length} completed</span>
+        <div className="flex items-center gap-2">
+          <button onClick={exportStrategies} disabled={complete === 0} className="flex items-center gap-1.5 rounded-lg bg-teal px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal/90 disabled:opacity-50"><Download className="h-3.5 w-3.5" />Export CSV</button>
+          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{complete}/{risks.length} completed</span>
+        </div>
       }
     >
       {loading ? (

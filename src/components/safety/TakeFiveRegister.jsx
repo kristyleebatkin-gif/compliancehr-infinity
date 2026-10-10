@@ -4,8 +4,10 @@ import { useToast } from '@/components/ui/use-toast';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
-import { ClipboardCheck, Plus } from 'lucide-react';
+import { ClipboardCheck, Plus, Download } from 'lucide-react';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
+import { downloadCsv } from '@/lib/csvExport';
+import { TAKE5_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 
 const blank = (meetingType = '', meeting = {}, kind = 'take-five') => ({
   assessment_id: `${kind === 'risk-assessment' ? 'RA' : 'T5'}-${Date.now().toString().slice(-8)}`,
@@ -77,6 +79,12 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
     }
   };
 
+  const exportRegister = () => {
+    if (!items.length) { toast({ title: 'No Take Five assessments to export' }); return; }
+    downloadCsv(toolboxOnly ? 'Toolbox Take Five Register.csv' : 'Take Five Assessment Register.csv', TAKE5_CSV_COLUMNS, items);
+    toast({ title: 'Take Five register exported' });
+  };
+
   const Container = embedded
     ? ({ title, description, action, children }) => (
       <div className="border-b border-border/60 py-5">
@@ -93,7 +101,7 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
     : SectionCard;
 
   return (
-    <Container title={toolboxOnly ? 'Toolbox Take Five Risk Assessment Log' : 'Take Five Assessment Register'} description="Complete a quick pre-task risk assessment; saving updates the register and alerts administrators." action={showCreateButton && !form && <div className="flex flex-wrap gap-2"><button onClick={() => openForm('take-five')} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3 py-1.5 text-xs font-semibold text-slate-900 hover:bg-yellow-500"><Plus className="h-3.5 w-3.5" />New Take Five</button><button onClick={() => openForm('risk-assessment')} className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"><Plus className="h-3.5 w-3.5" />New Risk Assessment</button></div>}>
+    <Container title={toolboxOnly ? 'Toolbox Take Five Risk Assessment Log' : 'Take Five Assessment Register'} description="Complete a quick pre-task risk assessment; saving updates the register and alerts administrators." action={<div className="flex flex-wrap items-center gap-2">{showCreateButton && !form && (<><button onClick={() => openForm('take-five')} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3 py-1.5 text-xs font-semibold text-slate-900 hover:bg-yellow-500"><Plus className="h-3.5 w-3.5" />New Take Five</button><button onClick={() => openForm('risk-assessment')} className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"><Plus className="h-3.5 w-3.5" />New Risk Assessment</button></>)}<button onClick={exportRegister} className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold hover:bg-muted"><Download className="h-3.5 w-3.5 text-brand" />Export CSV</button></div>}>
       {form && <form onSubmit={save} className={`mb-5 space-y-3 rounded-xl border p-4 ${formKind === 'risk-assessment' ? 'border-red-400/60 bg-red-50/40' : 'border-yellow-400/60 bg-yellow-50/40'}`}>
         <h3 className="font-semibold">{formKind === 'risk-assessment' ? 'New Risk Assessment' : 'New Take Five'}</h3>
         <div className="grid gap-3 sm:grid-cols-2">

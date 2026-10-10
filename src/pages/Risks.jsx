@@ -18,6 +18,9 @@ import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
 import { isHighCriticalRisk, isOpenRisk } from '@/lib/safetyFilters';
+import { downloadCsv } from '@/lib/csvExport';
+import StatusDashboard from '@/components/safety/StatusDashboard';
+import { RISK_CSV_COLUMNS, HAZARD_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 
 const CATEGORIES = ['Operational', 'Clinical', 'Financial', 'Workplace Health & Safety', 'Participant', 'Compliance'];
 const LIKELIHOODS = ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost Certain'];
@@ -40,7 +43,12 @@ function cellRating(l, c) {
 }
 
 const ratingColor = { Low: 'bg-safe/15 text-safe', Medium: 'bg-warning/15 text-warning', High: 'bg-orange-500/15 text-orange-600', Critical: 'bg-danger/15 text-danger' };
-const matrixColor = { Low: 'bg-safe/20', Medium: 'bg-warning/20', High: 'bg-orange-500/25', Critical: 'bg-danger/30' };
+const matrixCell = {
+  Low: 'bg-green-200 text-green-950',
+  Medium: 'bg-yellow-300 text-yellow-950',
+  High: 'bg-orange-400 text-orange-950',
+  Critical: 'bg-red-500 text-red-950',
+};
 
 export default function Risks() {
   const [searchParams] = useSearchParams();
@@ -122,6 +130,38 @@ export default function Risks() {
     } catch (err) { toast({ title: 'Delete failed', description: err.message, variant: 'destructive' }); }
   };
 
+  const changeRiskStatus = async (r, status) => {
+    if (r.status === status) return;
+    try {
+      await base44.entities.Risk.update(r.id, { status });
+      await recordSafetyEvent('Risk', r.id, { notify: false });
+      setRisks((prev) => prev.map((x) => (x.id === r.id ? { ...x, status } : x)));
+      toast({ title: `Risk moved to ${status}` });
+    } catch (err) { toast({ title: 'Status change failed', description: err.message, variant: 'destructive' }); }
+  };
+
+  const exportHazards = () => {
+    const hazards = risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: ')));
+    if (!hazards.length) { toast({ title: 'No hazards to export' }); return; }
+    downloadCsv('Hazard Register.csv', HAZARD_CSV_COLUMNS, hazards);
+    toast({ title: 'Hazard register exported' });
+  };
+
+  const exportControls = () => {
+    if (!risks.length) { toast({ title: 'No controls to export' }); return; }
+    downloadCsv(
+      'Staff Training & Compliance Controls.csv',
+      [
+        { key: 'risk_id', label: 'Risk ID' }, { key: 'title', label: 'Risk / Hazard' }, { key: 'report_type', label: 'Report Type' },
+        { key: 'category', label: 'Category' }, { key: 'rating', label: 'Risk Rating' }, { key: 'status', label: 'Status' },
+        { key: 'owner', label: 'Owner' }, { key: 'staff_training_controls', label: 'Staff Training Controls' },
+        { key: 'compliance_controls', label: 'Compliance Controls' },
+      ],
+      risks,
+    );
+    toast({ title: 'Training & compliance controls exported' });
+  };
+
   const counts = { Low: 0, Medium: 0, High: 0, Critical: 0 };
   risks.forEach((r) => { counts[r.rating] = (counts[r.rating] || 0) + 1; });
   const filteredRisks = risks.filter((risk) => {
@@ -136,12 +176,12 @@ export default function Risks() {
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
       <PageHeader title="Risk Management" subtitle={`${risks.length} risks in register`} action={can('risks') && (
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />Add Risk</button>
-          <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning px-3.5 py-2 text-sm font-semibold text-white hover:bg-warning/90"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
-          <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-green-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-green-700"><FileWarning className="h-4 w-4" />Report Near Miss</button>
-          <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3.5 py-2 text-sm font-semibold text-slate-900 hover:bg-yellow-500"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
-          <button onClick={() => downloadRiskAssessmentTemplatePdf()} className="flex items-center gap-1.5 rounded-lg bg-danger px-3.5 py-2 text-sm font-semibold text-white hover:bg-danger/90"><FileDown className="h-4 w-4" />Risk Assessment Template</button>
-          <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
+          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk</button>
+          <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3.5 py-2 text-sm font-semibold text-warning hover:bg-warning/25"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
+          <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-safe/15 px-3.5 py-2 text-sm font-semibold text-safe hover:bg-safe/25"><FileWarning className="h-4 w-4" />Report Near Miss</button>
+          <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-100 px-3.5 py-2 text-sm font-semibold text-yellow-800 hover:bg-yellow-200"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
+          <button onClick={() => downloadRiskAssessmentTemplatePdf()} className="flex items-center gap-1.5 rounded-lg bg-danger/10 px-3.5 py-2 text-sm font-semibold text-danger hover:bg-danger/20"><FileDown className="h-4 w-4" />Risk Assessment Template</button>
+          <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg bg-muted px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted/70 disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
         </div>
       )} />
 
@@ -159,11 +199,33 @@ export default function Risks() {
         ))}
       </div>
 
+      {/* Changeable status dashboard */}
+      <StatusDashboard
+        title="Risk Status Dashboard"
+        description="Every risk and its current status — change a status here and the register updates"
+        records={risks}
+        statuses={STATUSES}
+        subField="risk_id"
+        disabled={!can('risks')}
+        onChange={changeRiskStatus}
+        onExport={() => {
+          if (!risks.length) { toast({ title: 'No risks to export' }); return; }
+          downloadCsv('Risk Register.csv', RISK_CSV_COLUMNS, risks);
+          toast({ title: 'Risk register exported' });
+        }}
+        emptyTitle="No risks recorded"
+      />
+
       {/* Hazard Register - live updates as hazards are entered */}
       <SectionCard
         title="Hazard Register"
         description="Hazards reported via the Report Hazard button"
-        action={<span className="rounded-full bg-warning/15 px-2 py-0.5 text-xs font-semibold text-warning">{risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: '))).length} entries</span>}
+        action={
+          <div className="flex items-center gap-2">
+            <button onClick={exportHazards} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3 py-1.5 text-xs font-semibold text-warning hover:bg-warning/25"><Download className="h-3.5 w-3.5" />Export CSV</button>
+            <span className="rounded-full bg-warning/15 px-2 py-0.5 text-xs font-semibold text-warning">{risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: '))).length} entries</span>
+          </div>
+        }
       >
         {(() => {
           const hazards = risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: ')));
@@ -208,27 +270,47 @@ export default function Risks() {
       </SectionCard>
 
       {/* Risk Matrix */}
-      <SectionCard title="Risk Matrix" description="Likelihood × Consequence">
+      <SectionCard title="Risk Matrix" description="Likelihood × Consequence — the number in each cell shows how many risks sit at that score">
         <div className="overflow-x-auto">
-          <div className="min-w-[480px]">
-            <div className="grid grid-cols-6 gap-1 text-center text-[10px] font-medium text-foreground/50">
-              <div></div>
-              {CONSEQUENCES.map((c) => <div key={c} className="px-1 py-1.5">{c}</div>)}
+          <div className="min-w-[540px]">
+            <div className="grid grid-cols-[120px_repeat(5,1fr)] gap-1">
+              <div />
+              {CONSEQUENCES.map((c, i) => (
+                <div key={c} className="rounded-md bg-muted/60 px-1 py-1.5 text-center">
+                  <div className="text-[10px] font-bold text-foreground/40">{i + 1}</div>
+                  <div className="text-[10px] font-semibold text-foreground/70">{c}</div>
+                </div>
+              ))}
             </div>
-            {LIKELIHOODS.slice().reverse().map((l) => (
-              <div key={l} className="grid grid-cols-6 gap-1">
-                <div className="flex items-center justify-end px-2 py-2 text-[10px] font-medium text-foreground/50">{l}</div>
-                {CONSEQUENCES.map((c) => {
-                  const rating = cellRating(l, c);
-                  const count = risks.filter((r) => r.likelihood === l && r.consequence === c).length;
-                  return (
-                    <div key={c} className={`flex h-12 items-center justify-center rounded-md text-xs font-semibold ${matrixColor[rating]}`}>
-                      {count > 0 ? count : ''}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
+            {LIKELIHOODS.slice().reverse().map((l, li) => {
+              const likelihoodScore = LIKELIHOODS.length - li;
+              return (
+                <div key={l} className="mt-1 grid grid-cols-[120px_repeat(5,1fr)] gap-1">
+                  <div className="flex flex-col items-end justify-center rounded-md bg-muted/60 px-2 py-1.5 text-right">
+                    <div className="text-[10px] font-bold text-foreground/40">{likelihoodScore}</div>
+                    <div className="text-[10px] font-semibold text-foreground/70">{l}</div>
+                  </div>
+                  {CONSEQUENCES.map((c) => {
+                    const ci = CONSEQUENCES.indexOf(c);
+                    const rating = cellRating(l, c);
+                    const score = likelihoodScore * (ci + 1);
+                    const count = risks.filter((r) => r.likelihood === l && r.consequence === c).length;
+                    return (
+                      <div key={c} className={`flex h-14 flex-col items-center justify-center rounded-md ${matrixCell[rating]}`}>
+                        <span className="text-[11px] font-bold">{count > 0 ? count : ''}</span>
+                        <span className="text-[9px] font-semibold opacity-70">{score} · {rating}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border/60 pt-3">
+              <span className="text-[10px] font-semibold uppercase tracking-wide text-foreground/40">Legend</span>
+              {RATINGS.map((r) => (
+                <div key={r} className={`rounded-md px-2.5 py-1 text-[10px] font-bold ${matrixCell[r]}`}>{r}</div>
+              ))}
+            </div>
           </div>
         </div>
       </SectionCard>
@@ -338,7 +420,12 @@ export default function Risks() {
       <SectionCard
         title="Staff Training & Compliance Controls"
         description="Training and compliance controls recorded against each risk"
-        action={<span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{risks.length} records</span>}
+        action={
+          <div className="flex items-center gap-2">
+            <button onClick={exportControls} className="flex items-center gap-1.5 rounded-lg bg-teal px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal/90"><Download className="h-3.5 w-3.5" />Export CSV</button>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{risks.length} records</span>
+          </div>
+        }
       >
         {loading ? (
           <div className="py-8 text-center text-sm text-foreground/40">Loading...</div>

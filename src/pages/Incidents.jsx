@@ -16,6 +16,7 @@ import { recordSafetyEvent } from '@/lib/safetyEvent';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports, { INCIDENT_CSV_COLUMNS, INVESTIGATION_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 import { downloadCsv } from '@/lib/csvExport';
+import StatusDashboard from '@/components/safety/StatusDashboard';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -171,6 +172,18 @@ export default function Incidents() {
             {canReview && <Button onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Download All Incident Reports (PDF)</Button>}
           </div>
         }
+      />
+
+      <StatusDashboard
+        title="Incident Status Dashboard"
+        description="Every incident and its current status — change a status here and the register updates"
+        records={items}
+        statuses={INC_STATUSES}
+        subField="incident_id"
+        disabled={!canReview}
+        onChange={(inc, status) => commitInc(inc, 'status', status)}
+        onExport={() => exportRegister('Incident Register.csv', INCIDENT_CSV_COLUMNS, items, 'incident')}
+        emptyTitle="No incidents reported"
       />
 
       <SafetyRegisterExports incidents={items} investigations={investigations} />
