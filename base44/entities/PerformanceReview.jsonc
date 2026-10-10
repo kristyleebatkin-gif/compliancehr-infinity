@@ -1,0 +1,88 @@
+{
+  "name": "PerformanceReview",
+  "type": "object",
+  "properties": {
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Member"
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Staff ID"
+    },
+    "review_type": {
+      "type": "string",
+      "enum": [
+        "Probation",
+        "6-Month Review",
+        "Annual Review",
+        "Return from Leave",
+        "Other"
+      ],
+      "default": "Annual Review",
+      "title": "Review Type"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "reviewer": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "overall_rating": {
+      "type": "number",
+      "title": "Overall Rating (1-5)"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "Exceeds expectations",
+        "Meets expectations",
+        "Needs improvement",
+        "Unsatisfactory"
+      ],
+      "title": "Outcome"
+    },
+    "strengths": {
+      "type": "string",
+      "title": "Strengths"
+    },
+    "improvements": {
+      "type": "string",
+      "title": "Areas for Improvement"
+    },
+    "goals": {
+      "type": "string",
+      "title": "Goals / Development Plan"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "In Progress",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Scheduled",
+      "title": "Status"
+    },
+    "next_review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
+    }
+  },
+  "required": [
+    "staff_name"
+  ]
+}
