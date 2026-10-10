@@ -28,9 +28,85 @@
       "type": "string",
       "title": "NDIS Number"
     },
+    "ndis_reference_number": {
+      "type": "string",
+      "title": "NDIS Reference Number"
+    },
     "support_coordinator": {
       "type": "string",
-      "title": "Support Coordinator"
+      "title": "Support Coordination"
+    },
+    "plan_manager": {
+      "type": "string",
+      "title": "Plan Manager"
+    },
+    "plan_manager_email": {
+      "type": "string",
+      "title": "Plan Manager Email"
+    },
+    "advocate_representative": {
+      "type": "string",
+      "title": "Advocate / Representative"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "title": "Emergency Contact"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "medical_diagnosis": {
+      "type": "string",
+      "title": "Medical Diagnosis"
+    },
+    "triggers": {
+      "type": "string",
+      "title": "Triggers"
+    },
+    "risks": {
+      "type": "string",
+      "title": "Risks"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "occupational_therapist": {
+      "type": "string",
+      "title": "Occupational Therapist"
+    },
+    "support_shifts": {
+      "type": "string",
+      "title": "Support Shifts"
+    },
+    "support_staff": {
+      "type": "string",
+      "title": "Support Staff"
+    },
+    "likes": {
+      "type": "string",
+      "title": "Likes"
+    },
+    "dislikes": {
+      "type": "string",
+      "title": "Dislikes"
+    },
+    "routine": {
+      "type": "string",
+      "title": "Routine"
+    },
+    "support_type": {
+      "type": "string",
+      "title": "Type of Support Provided"
+    },
+    "fire_drill": {
+      "type": "string",
+      "title": "Fire Drill"
+    },
+    "medications_dosage": {
+      "type": "string",
+      "title": "Medications and Dosage"
     },
     "status": {
       "type": "string",
@@ -41,6 +117,22 @@
       ],
       "default": "Active",
       "title": "Status"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "title": "Audit Consent",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
     },
     "notes": {
       "type": "string",

@@ -1,0 +1,43 @@
+{
+  "name": "ParticipantFormEntry",
+  "type": "object",
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "form_type": {
+      "type": "string",
+      "title": "Form Type"
+    },
+    "form_code": {
+      "type": "string",
+      "title": "Form Code"
+    },
+    "answers": {
+      "type": "string",
+      "title": "Answers (JSON)"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "participant_id",
+    "form_type"
+  ]
+}

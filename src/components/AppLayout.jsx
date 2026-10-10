@@ -121,9 +121,9 @@ export default function AppLayout() {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-brand text-white shadow-sm">
           <ShieldQuestion className="h-5 w-5" />
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="text-[15px] font-bold tracking-tight font-display">Compliance HR</div>
-          <div className="text-[11px] font-medium text-brand/60">Your Comprehensive Compliance and Risk Management Platform</div>
+          <div className="mt-0.5 text-[10px] font-medium leading-snug text-brand/60 line-clamp-2">Your Comprehensive Compliance and Risk Management Platform</div>
         </div>
       </div>
 

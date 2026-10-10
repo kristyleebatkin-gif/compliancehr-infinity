@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Trash2, Heart } from 'lucide-react';
+import { Plus, Search, Trash2, Heart, UserRound } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 
 export default function Participants() {
@@ -118,7 +119,10 @@ export default function Participants() {
                   {p.support_coordinator && <p>Coordinator: {p.support_coordinator}</p>}
                   {p.notes && <p className="pt-1 italic">{p.notes}</p>}
                 </div>
-                <div className="mt-3 flex justify-end">
+                <div className="mt-3 flex justify-end gap-1">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to={`/participants/${p.id}`}><UserRound className="h-4 w-4" />Open profile</Link>
+                  </Button>
                   <Button variant="ghost" size="icon" onClick={() => remove(p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>
               </CardContent>
