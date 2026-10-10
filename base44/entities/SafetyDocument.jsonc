@@ -1,0 +1,178 @@
+{
+  "name": "SafetyDocument",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "Incident Report",
+        "Investigation Report",
+        "Risk Assessment",
+        "Hazard Report",
+        "Near Miss Report",
+        "Take Five Assessment",
+        "Individual Risk Assessment",
+        "Daily Vehicle Check",
+        "Home Risk Assessment"
+      ],
+      "title": "Document Type"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File"
+    },
+    "uploaded_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Uploaded Date"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Received",
+        "Pending Review",
+        "Verified",
+        "Archived"
+      ],
+      "default": "Received",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "document_type",
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

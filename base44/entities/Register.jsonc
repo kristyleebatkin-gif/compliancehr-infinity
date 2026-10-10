@@ -1,0 +1,220 @@
+{
+  "name": "Register",
+  "type": "object",
+  "properties": {
+    "register_type": {
+      "type": "string",
+      "enum": [
+        "Incident Register",
+        "Investigation Register",
+        "Risk Register",
+        "Hazard Register",
+        "Near Miss Register",
+        "Take Five Register",
+        "Feedback Register",
+        "Complaint Register",
+        "Training Register",
+        "Asset Register",
+        "Asset Maintenance Register",
+        "Asset Disposal Register",
+        "Asset Compliance Review Register",
+        "Continuous Improvement Register",
+        "Internal Audit Register",
+        "Participant Folder Audit Register",
+        "Staff Training Audit Register",
+        "Emergency Drill Register",
+        "NDIS Deadline Register",
+        "Legal Register",
+        "Document Register",
+        "Human Resource Register",
+        "Archived Employee Register",
+        "Goal Progress Register",
+        "Issue Concern Register",
+        "Progress Snapshot Register",
+        "Meeting Minutes Register",
+        "Data Breach Register",
+        "Archived User Register",
+        "Volunteer & Student Interest Register"
+      ],
+      "default": "Document Register",
+      "title": "Register Type"
+    },
+    "entry_title": {
+      "type": "string",
+      "title": "Entry Title"
+    },
+    "entry_id": {
+      "type": "string",
+      "title": "Entry ID"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status"
+    },
+    "recorded_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Recorded Date"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "register_type",
+    "entry_title"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "name": "Investigation",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "investigation_id": {
+      "type": "string",
+      "title": "Investigation ID"
+    },
+    "incident_id": {
+      "type": "string",
+      "title": "Related Incident"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Related Participant"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "investigator": {
+      "type": "string",
+      "title": "Investigator"
+    },
+    "received_by": {
+      "type": "string",
+      "title": "Received By"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+    },
+    "time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "target_completion": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Completion"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "In Progress",
+        "Findings Draft",
+        "Completed",
+        "Closed"
+      ],
+      "default": "Pending",
+      "title": "Status"
+    },
+    "findings": {
+      "type": "string",
+      "title": "Findings"
+    },
+    "recommendations": {
+      "type": "string",
+      "title": "Recommendations"
+    },
+    "root_cause": {
+      "type": "string",
+      "title": "Root Cause"
+    },
+    "incident_summary": {
+      "type": "string",
+      "title": "Incident Summary"
+    },
+    "evidence_reviewed": {
+      "type": "string",
+      "title": "Evidence Reviewed"
+    },
+    "persons_interviewed": {
+      "type": "string",
+      "title": "Persons Interviewed"
+    },
+    "hazards_identified": {
+      "type": "string",
+      "title": "Risks / Hazards Identified"
+    },
+    "risk_assessment": {
+      "type": "string",
+      "title": "Risk Assessment"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "corrective_actions": {
+      "type": "string",
+      "title": "Corrective Actions"
+    },
+    "participant_audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "staff_audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "source_entity_type": {
+      "type": "string",
+      "title": "Source Entity Type"
+    },
+    "source_entity_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "source_item_key": {
+      "type": "string",
+      "title": "Source Item Key"
+    },
+    "source_document_url": {
+      "type": "string",
+      "title": "Source Document URL"
+    },
+    "source_form_title": {
+      "type": "string",
+      "title": "Source Form Title"
+    },
+    "source_answers_json": {
+      "type": "string",
+      "title": "Source Answers JSON"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.participant_audit_consent": "Audit consent received"
+            },
+            {
+              "data.staff_audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "name": "TakeFive",
+  "type": "object",
+  "properties": {
+    "assessment_id": {
+      "type": "string",
+      "title": "Assessment ID"
+    },
+    "meeting_id": {
+      "type": "string",
+      "title": "Meeting ID"
+    },
+    "meeting_title": {
+      "type": "string",
+      "title": "Meeting Title"
+    },
+    "meeting_type": {
+      "type": "string",
+      "title": "Meeting Type"
+    },
+    "task": {
+      "type": "string",
+      "title": "Task / Activity"
+    },
+    "worker_name": {
+      "type": "string",
+      "title": "Worker Name"
+    },
+    "supervisor": {
+      "type": "string",
+      "title": "Supervisor"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "assessment_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Assessment Date"
+    },
+    "assessment_time": {
+      "type": "string",
+      "title": "Assessment Time"
+    },
+    "hazards_identified": {
+      "type": "string",
+      "title": "Risks / Hazards Identified"
+    },
+    "potential_harm": {
+      "type": "string",
+      "title": "Potential Harm / Consequences"
+    },
+    "likelihood": {
+      "type": "string",
+      "title": "Likelihood"
+    },
+    "consequence": {
+      "type": "string",
+      "title": "Consequence"
+    },
+    "risk_rating": {
+      "type": "string",
+      "title": "Risk Rating"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "residual_risk": {
+      "type": "string",
+      "title": "Residual Risk"
+    },
+    "safe_to_proceed": {
+      "type": "boolean",
+      "default": false,
+      "title": "Safe to Proceed"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Completed",
+        "Escalated"
+      ],
+      "default": "Completed",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "task",
+    "assessment_date"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

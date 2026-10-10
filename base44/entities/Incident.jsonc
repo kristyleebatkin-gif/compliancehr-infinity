@@ -6,9 +6,94 @@
       "type": "string",
       "title": "Title"
     },
-    "description": {
+    "incident_id": {
       "type": "string",
-      "title": "Description"
+      "title": "Incident ID"
+    },
+    "date_occurred": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Occurred"
+    },
+    "time_occurred": {
+      "type": "string",
+      "title": "Time Occurred"
+    },
+    "date_reported": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Reported"
+    },
+    "reported_by": {
+      "type": "string",
+      "title": "Reported By"
+    },
+    "received_by": {
+      "type": "string",
+      "title": "Received By"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Staff Involved"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Name"
+    },
+    "participant_audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "staff_audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Medical",
+        "Behavioural",
+        "Safety",
+        "Medication Error",
+        "Abuse/Neglect",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Category"
     },
     "severity": {
       "type": "string",
@@ -18,35 +103,287 @@
         "High",
         "Critical"
       ],
-      "default": "Low",
+      "default": "Medium",
       "title": "Severity"
     },
     "status": {
       "type": "string",
       "enum": [
-        "Open",
-        "Investigating",
+        "Reported",
+        "Under Investigation",
+        "Action Required",
         "Resolved",
         "Closed"
       ],
-      "default": "Open",
+      "default": "Reported",
       "title": "Status"
     },
-    "reported_by": {
+    "description": {
       "type": "string",
-      "title": "Reported By"
+      "title": "Description"
     },
-    "incident_date": {
+    "immediate_actions": {
+      "type": "string",
+      "title": "Immediate Actions Taken"
+    },
+    "hazards_identified": {
+      "type": "string",
+      "title": "Risks / Hazards Identified"
+    },
+    "risk_assessment": {
+      "type": "string",
+      "title": "Risk Assessment"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "requires_ndis_report": {
+      "type": "boolean",
+      "default": false,
+      "title": "Requires NDIS Report"
+    },
+    "reportable_incident_type": {
+      "type": "string",
+      "enum": [
+        "Not assessed",
+        "Death",
+        "Serious injury",
+        "Abuse or neglect",
+        "Unlawful sexual or physical contact",
+        "Sexual misconduct or grooming",
+        "Unauthorised restrictive practice",
+        "Other reportable incident",
+        "Not reportable"
+      ],
+      "default": "Not assessed",
+      "title": "Reportable Incident Type"
+    },
+    "reportability_decision_reasons": {
+      "type": "string",
+      "title": "Reportability Decision and Reasons"
+    },
+    "provider_awareness_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Provider Awareness Date and Time"
+    },
+    "initial_notification_due_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Initial Notification Due"
+    },
+    "initial_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Initial Notification Submitted"
+    },
+    "ndis_commission_reference": {
+      "type": "string",
+      "title": "NDIS Commission Reference"
+    },
+    "five_day_follow_up_due": {
       "type": "string",
       "format": "date",
-      "title": "Incident Date"
+      "title": "Five-Day Follow-up Due"
     },
-    "location": {
+    "five_day_follow_up_submitted": {
       "type": "string",
-      "title": "Location"
+      "format": "date",
+      "title": "Five-Day Follow-up Submitted"
+    },
+    "final_report_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Final Report Due"
+    },
+    "final_report_submitted": {
+      "type": "string",
+      "format": "date",
+      "title": "Final Report Submitted"
+    },
+    "late_notification_reason": {
+      "type": "string",
+      "title": "Late Notification Reason"
+    },
+    "participant_or_nominee_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Participant or Nominee Notified"
+    },
+    "whs_notification_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "WHS Regulator Notification Required"
+    },
+    "whs_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "WHS Regulator Notified"
+    },
+    "whs_reference": {
+      "type": "string",
+      "title": "WHS Notification Reference"
+    },
+    "requires_police": {
+      "type": "boolean",
+      "default": false,
+      "title": "Police Notified"
+    },
+    "source_entity_type": {
+      "type": "string",
+      "title": "Source Entity Type"
+    },
+    "source_entity_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "source_item_key": {
+      "type": "string",
+      "title": "Source Item Key"
+    },
+    "source_document_url": {
+      "type": "string",
+      "title": "Source Document URL"
+    },
+    "source_form_title": {
+      "type": "string",
+      "title": "Source Form Title"
+    },
+    "source_answers_json": {
+      "type": "string",
+      "title": "Source Answers JSON"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
     }
   },
   "required": [
-    "title"
-  ]
+    "title",
+    "severity"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.participant_audit_consent": "Audit consent received"
+            },
+            {
+              "data.staff_audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
 }

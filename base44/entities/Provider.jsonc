@@ -1,0 +1,169 @@
+{
+  "name": "Provider",
+  "type": "object",
+  "properties": {
+    "provider_name": {
+      "type": "string",
+      "title": "Provider Name"
+    },
+    "abn": {
+      "type": "string",
+      "title": "ABN"
+    },
+    "ndis_registration_id": {
+      "type": "string",
+      "title": "NDIS Registration ID"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+    },
+    "website": {
+      "type": "string",
+      "title": "Website"
+    },
+    "primary_contact": {
+      "type": "string",
+      "title": "Primary Contact"
+    },
+    "ceo_director_name": {
+      "type": "string",
+      "title": "CEO / Director Name"
+    },
+    "ceo_director_phone": {
+      "type": "string",
+      "title": "CEO / Director Phone"
+    },
+    "ceo_director_email": {
+      "type": "string",
+      "format": "email",
+      "title": "CEO / Director Email"
+    },
+    "management_contact_name": {
+      "type": "string",
+      "title": "Management Contact Name"
+    },
+    "management_contact_phone": {
+      "type": "string",
+      "title": "Management Phone"
+    },
+    "management_contact_email": {
+      "type": "string",
+      "format": "email",
+      "title": "Management Email"
+    },
+    "logo_url": {
+      "type": "string",
+      "title": "Logo URL"
+    },
+    "document_slogan": {
+      "type": "string",
+      "title": "Document Slogan",
+      "maxLength": 160
+    },
+    "document_branding_active": {
+      "type": "boolean",
+      "title": "Active Document Branding",
+      "default": false
+    },
+    "compliance_score": {
+      "type": "number",
+      "title": "Compliance Score (%)"
+    }
+  },
+  "required": [
+    "provider_name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

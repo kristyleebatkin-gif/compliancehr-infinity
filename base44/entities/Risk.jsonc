@@ -4,7 +4,29 @@
   "properties": {
     "title": {
       "type": "string",
-      "title": "Title"
+      "title": "Risk Title"
+    },
+    "report_type": {
+      "type": "string",
+      "enum": [
+        "Risk",
+        "Hazard",
+        "Near Miss"
+      ],
+      "default": "Risk",
+      "title": "Report Type"
+    },
+    "risk_id": {
+      "type": "string",
+      "title": "Risk ID"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Related Participant"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
     },
     "description": {
       "type": "string",
@@ -12,50 +34,279 @@
     },
     "category": {
       "type": "string",
+      "enum": [
+        "Operational",
+        "Clinical",
+        "Financial",
+        "Workplace Health & Safety",
+        "Participant",
+        "Compliance"
+      ],
+      "default": "Operational",
       "title": "Category"
     },
     "likelihood": {
       "type": "string",
       "enum": [
-        "Low",
-        "Medium",
-        "High"
+        "Rare",
+        "Unlikely",
+        "Possible",
+        "Likely",
+        "Almost Certain"
       ],
-      "default": "Medium",
+      "default": "Possible",
       "title": "Likelihood"
     },
-    "impact": {
+    "consequence": {
+      "type": "string",
+      "enum": [
+        "Insignificant",
+        "Minor",
+        "Moderate",
+        "Major",
+        "Severe"
+      ],
+      "default": "Moderate",
+      "title": "Consequence"
+    },
+    "rating": {
       "type": "string",
       "enum": [
         "Low",
         "Medium",
-        "High"
+        "High",
+        "Critical"
       ],
       "default": "Medium",
-      "title": "Impact"
+      "title": "Risk Rating"
     },
     "status": {
       "type": "string",
       "enum": [
-        "Open",
-        "Mitigated",
+        "Identified",
+        "Assessed",
+        "Treating",
         "Monitored",
         "Closed"
       ],
-      "default": "Open",
+      "default": "Identified",
       "title": "Status"
     },
     "owner": {
       "type": "string",
-      "title": "Owner"
+      "title": "Risk Owner"
+    },
+    "mitigation_plan": {
+      "type": "string",
+      "title": "Mitigation Plan"
+    },
+    "hazards_identified": {
+      "type": "string",
+      "title": "Risks / Hazards Identified"
+    },
+    "risk_assessment": {
+      "type": "string",
+      "title": "Risk Assessment"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "control_measure_category": {
+      "type": "string",
+      "enum": [
+        "Preventative",
+        "Protective",
+        "Training & Capability",
+        "Policy & Procedure",
+        "Environmental",
+        "Equipment & Technology",
+        "Supervision & Monitoring",
+        "Emergency Response",
+        "Administrative"
+      ],
+      "default": "Preventative",
+      "title": "Control Measure Category"
+    },
+    "elimination_actions": {
+      "type": "string",
+      "title": "Elimination Actions"
+    },
+    "minimise_actions": {
+      "type": "string",
+      "title": "Minimise Actions"
+    },
+    "isolate_actions": {
+      "type": "string",
+      "title": "Isolate Actions"
+    },
+    "staff_training_controls": {
+      "type": "string",
+      "title": "Staff Training Controls"
+    },
+    "compliance_controls": {
+      "type": "string",
+      "title": "Compliance Controls"
     },
     "review_date": {
       "type": "string",
       "format": "date",
-      "title": "Next Review"
+      "title": "Review Date"
+    },
+    "identified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Identified"
+    },
+    "source_entity_type": {
+      "type": "string",
+      "title": "Source Entity Type"
+    },
+    "source_entity_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "source_item_key": {
+      "type": "string",
+      "title": "Source Item Key"
+    },
+    "source_document_url": {
+      "type": "string",
+      "title": "Source Document URL"
+    },
+    "source_form_title": {
+      "type": "string",
+      "title": "Source Form Title"
+    },
+    "source_answers_json": {
+      "type": "string",
+      "title": "Source Answers JSON"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
     }
   },
   "required": [
-    "title"
-  ]
+    "title",
+    "rating"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
 }

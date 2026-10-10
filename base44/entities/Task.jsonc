@@ -6,41 +6,220 @@
       "type": "string",
       "title": "Title"
     },
-    "description": {
-      "type": "string",
-      "title": "Description"
-    },
-    "status": {
+    "task_type": {
       "type": "string",
       "enum": [
-        "open",
-        "in_progress",
-        "done"
+        "Review Reminder",
+        "Training Renewal",
+        "Policy Review",
+        "Incident Action",
+        "Audit Action",
+        "General"
       ],
-      "default": "open",
-      "title": "Status"
+      "default": "General",
+      "title": "Task Type"
     },
-    "priority": {
+    "assigned_to": {
       "type": "string",
-      "enum": [
-        "low",
-        "medium",
-        "high"
-      ],
-      "default": "medium",
-      "title": "Priority"
+      "title": "Assigned To"
     },
     "due_date": {
       "type": "string",
       "format": "date",
       "title": "Due Date"
     },
-    "assigned_to": {
+    "status": {
       "type": "string",
-      "title": "Assigned To"
+      "enum": [
+        "Open",
+        "In Progress",
+        "Completed",
+        "Overdue",
+        "Cancelled"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
     }
   },
   "required": [
     "title"
-  ]
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
 }
