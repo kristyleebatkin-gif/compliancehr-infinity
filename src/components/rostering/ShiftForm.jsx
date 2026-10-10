@@ -126,6 +126,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">Does not repeat</SelectItem>
+                      <SelectItem value="daily">Daily</SelectItem>
                       <SelectItem value="weekly">Weekly</SelectItem>
                       <SelectItem value="fortnightly">Fortnightly</SelectItem>
                     </SelectContent>

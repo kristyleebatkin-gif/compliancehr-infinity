@@ -97,7 +97,7 @@ function nextDateStr(dateStr) {
 export function expandRecurrence(base, rule, until) {
   if (!rule || rule === 'none' || !until) return [base.date];
   const dates = [];
-  const step = rule === 'weekly' ? 7 : 14;
+  const step = rule === 'daily' ? 1 : rule === 'weekly' ? 7 : 14;
   const day = new Date(base.date + 'T00:00:00');
   const end = new Date(until + 'T00:00:00');
   for (let i = 0; i < 104 && day <= end; i += 1) {
