@@ -10,6 +10,18 @@
       "type": "string",
       "title": "Audit Area"
     },
+    "audit_type": {
+      "type": "string",
+      "enum": [
+        "Internal",
+        "NDIS Verification",
+        "NDIS Certification",
+        "NDIS Mid-term",
+        "Other"
+      ],
+      "default": "Internal",
+      "title": "Audit Type"
+    },
     "date": {
       "type": "string",
       "format": "date",
@@ -41,6 +53,26 @@
     "actions": {
       "type": "string",
       "title": "Corrective Actions"
+    },
+    "checklist_file_uri": {
+      "type": "string",
+      "title": "Checklist File URI"
+    },
+    "checklist_file_name": {
+      "type": "string",
+      "title": "Checklist File Name"
+    },
+    "report_file_uri": {
+      "type": "string",
+      "title": "Report File URI"
+    },
+    "report_file_name": {
+      "type": "string",
+      "title": "Report File Name"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
     }
   },
   "required": [

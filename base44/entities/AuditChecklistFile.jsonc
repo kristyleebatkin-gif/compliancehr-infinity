@@ -1,0 +1,34 @@
+{
+  "name": "AuditChecklistFile",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "checklist_title": {
+      "type": "string",
+      "title": "Source Checklist"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "file_uri"
+  ]
+}

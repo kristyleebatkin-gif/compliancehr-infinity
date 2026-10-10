@@ -1,0 +1,68 @@
+{
+  "name": "AuditAction",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Action Title"
+    },
+    "audit_title": {
+      "type": "string",
+      "title": "Linked Audit"
+    },
+    "description": {
+      "type": "string",
+      "title": "Finding / Description"
+    },
+    "allocated_to": {
+      "type": "string",
+      "title": "Allocated To"
+    },
+    "allocated_email": {
+      "type": "string",
+      "title": "Allocated Email"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
