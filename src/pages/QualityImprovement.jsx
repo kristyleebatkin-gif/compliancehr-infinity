@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,7 +15,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['New', 'In Progress', 'Implemented', 'Closed'];
 const NEXT = { New: 'In Progress', 'In Progress': 'Implemented', Implemented: 'Closed', Closed: 'New' };
-const tone = (s) => (s === 'Implemented' || s === 'Closed' ? 'default' : s === 'New' || s === 'In Progress' ? 'secondary' : 'outline');
 
 export default function QualityImprovement() {
   const [items, setItems] = useState([]);
@@ -70,7 +70,7 @@ export default function QualityImprovement() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant={tone(i.status)}>{i.status}</Badge>
+                <Badge className={statusTone(i.status)}>{i.status}</Badge>
                 <Button variant="ghost" size="icon" onClick={() => advance(i)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
                 <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.QualityItem.delete(i.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
               </div>

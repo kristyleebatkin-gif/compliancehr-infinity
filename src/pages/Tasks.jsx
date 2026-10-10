@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { ratingTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ClipboardList, ArrowRight } from 'lucide-react';
@@ -16,7 +17,7 @@ const COLUMNS = [
   { key: 'done', label: 'Done' },
 ];
 const NEXT = { open: 'in_progress', in_progress: 'done', done: 'open' };
-const priorityTone = (p) => (p === 'high' ? 'destructive' : p === 'medium' ? 'secondary' : 'outline');
+const priorityTone = (p) => ratingTone[p.charAt(0).toUpperCase() + p.slice(1)] || 'bg-muted text-foreground/60';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -116,7 +117,7 @@ export default function Tasks() {
                     <CardContent className="space-y-2 p-3">
                       <div className="flex items-start justify-between gap-2">
                         <p className={`text-sm font-medium ${t.status === 'done' ? 'line-through text-muted-foreground' : ''}`}>{t.title}</p>
-                        <Badge variant={priorityTone(t.priority)}>{t.priority}</Badge>
+                        <Badge className={priorityTone(t.priority)}>{t.priority}</Badge>
                       </div>
                       {t.description && <p className="text-xs text-muted-foreground">{t.description}</p>}
                       <div className="flex items-center justify-between text-xs text-muted-foreground">

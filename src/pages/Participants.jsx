@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Trash2, Heart } from 'lucide-react';
 
-const tone = (s) => (s === 'Active' ? 'default' : s === 'On Hold' ? 'secondary' : 'destructive');
 
 export default function Participants() {
   const [people, setPeople] = useState([]);
@@ -106,7 +106,7 @@ export default function Participants() {
                     <p className="font-semibold">{p.full_name}</p>
                     <p className="text-sm text-muted-foreground">{p.ndis_number ? `NDIS ${p.ndis_number}` : 'No NDIS number'}</p>
                   </div>
-                  <Badge variant={tone(p.status)}>{p.status}</Badge>
+                  <Badge className={statusTone(p.status)}>{p.status}</Badge>
                 </div>
                 <div className="mt-3 space-y-1 text-sm text-muted-foreground">
                   {p.phone && <p>{p.phone}</p>}

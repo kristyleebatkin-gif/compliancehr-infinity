@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -12,7 +13,6 @@ import { Plus, Trash2, Siren } from 'lucide-react';
 import { format } from 'date-fns';
 
 const TYPES = ['Fire Evacuation', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
-const tone = (o) => (o === 'Completed' ? 'default' : o === 'Partial' ? 'secondary' : 'destructive');
 
 export default function EmergencyResponse() {
   const [drills, setDrills] = useState([]);
@@ -104,7 +104,7 @@ export default function EmergencyResponse() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant={tone(d.outcome)}>{d.outcome}</Badge>
+                  <Badge className={statusTone(d.outcome)}>{d.outcome}</Badge>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.EmergencyDrill.delete(d.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>
               </CardContent>

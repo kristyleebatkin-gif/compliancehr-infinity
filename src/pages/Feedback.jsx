@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,7 +14,6 @@ import { Plus, Trash2, Megaphone, ArrowRight, Star } from 'lucide-react';
 
 const FLOW = ['New', 'In Review', 'Resolved', 'Closed'];
 const NEXT = { New: 'In Review', 'In Review': 'Resolved', Resolved: 'Closed', Closed: 'New' };
-const tone = (s) => (s === 'New' ? 'destructive' : s === 'Resolved' || s === 'Closed' ? 'default' : 'secondary');
 
 export default function Feedback() {
   const [items, setItems] = useState([]);
@@ -69,7 +69,7 @@ export default function Feedback() {
                 </div>
                 <div className="flex items-center gap-2">
                   {i.rating ? <Badge variant="outline"><Star className="mr-1 h-3 w-3" />{i.rating}/5</Badge> : null}
-                  <Badge variant={tone(i.status)}>{i.status}</Badge>
+                  <Badge className={statusTone(i.status)}>{i.status}</Badge>
                 </div>
               </div>
               {i.message && <p className="mt-2 text-sm text-muted-foreground">{i.message}</p>}

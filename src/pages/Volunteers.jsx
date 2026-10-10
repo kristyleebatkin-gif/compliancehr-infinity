@@ -10,7 +10,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Trash2, HeartHandshake } from 'lucide-react';
 import { format } from 'date-fns';
 
-const tone = (s) => (s === 'Active' ? 'default' : s === 'Onboarding' ? 'secondary' : 'outline');
+import { statusTone } from '@/lib/statusStyles';
+
+const tone = statusTone;
 
 export default function Volunteers() {
   const [volunteers, setVolunteers] = useState([]);
@@ -94,7 +96,7 @@ export default function Volunteers() {
                       <p className="text-sm text-muted-foreground">{v.role}{v.supervisor ? ` · Sup: ${v.supervisor}` : ''}</p>
                     </div>
                   </div>
-                  <Badge variant={tone(v.status)}>{v.status}</Badge>
+                  <Badge className={statusTone(v.status)}>{v.status}</Badge>
                 </div>
                 <p className="mt-3 text-xs text-muted-foreground">
                   {[v.start_date ? `Started ${format(new Date(v.start_date), 'd MMM yyyy')}` : '', v.weekly_hours != null ? `${v.weekly_hours} hrs/week` : ''].filter(Boolean).join(' · ')}

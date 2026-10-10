@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Search, Trash2, Users } from 'lucide-react';
@@ -12,7 +13,6 @@ import { Plus, Search, Trash2, Users } from 'lucide-react';
 const ROLES = ['Support Worker', 'Team Leader', 'Compliance Manager', 'Administration', 'Management'];
 const STATUSES = ['Active', 'On Leave', 'Inactive'];
 
-const statusTone = (s) => (s === 'Active' ? 'default' : s === 'On Leave' ? 'secondary' : 'destructive');
 
 export default function Staff() {
   const [staff, setStaff] = useState([]);
@@ -119,7 +119,7 @@ export default function Staff() {
                     <p className="font-semibold">{s.full_name}</p>
                     <p className="text-sm text-muted-foreground">{s.position || s.role}</p>
                   </div>
-                  <Badge variant={statusTone(s.status)}>{s.status}</Badge>
+                  <Badge className={statusTone(s.status)}>{s.status}</Badge>
                 </div>
                 <div className="mt-3 space-y-1 text-sm text-muted-foreground">
                   {s.email && <p>{s.email}</p>}

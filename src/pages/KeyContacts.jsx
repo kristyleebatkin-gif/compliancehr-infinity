@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Phone } from 'lucide-react';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Supplier', 'Family', 'Other'];
-const tone = (c) => (c === 'Emergency' ? 'destructive' : c === 'Medical' ? 'default' : 'secondary');
 
 export default function KeyContacts() {
   const [contacts, setContacts] = useState([]);
@@ -91,7 +91,7 @@ export default function KeyContacts() {
                     <p className="font-semibold">{c.name}</p>
                     <p className="text-sm text-muted-foreground">{[c.role, c.organisation].filter(Boolean).join(' · ')}</p>
                   </div>
-                  <Badge variant={tone(c.category)}>{c.category}</Badge>
+                  <Badge className={statusTone(c.category)}>{c.category}</Badge>
                 </div>
                 <div className="mt-3 space-y-0.5 text-sm text-muted-foreground">
                   {c.phone && <p>Phone: {c.phone}</p>}

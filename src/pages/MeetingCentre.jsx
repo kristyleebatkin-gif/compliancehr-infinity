@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,7 +14,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['Scheduled', 'Completed', 'Cancelled'];
 const NEXT = { Scheduled: 'Completed', Completed: 'Cancelled', Cancelled: 'Scheduled' };
-const tone = (s) => (s === 'Scheduled' ? 'default' : s === 'Completed' ? 'secondary' : 'destructive');
 
 export default function MeetingCentre() {
   const [meetings, setMeetings] = useState([]);
@@ -102,7 +102,7 @@ export default function MeetingCentre() {
                       {[m.date ? format(new Date(m.date), 'EEE d MMM yyyy') : '', m.time, m.location, m.attendees].filter(Boolean).join(' · ')}
                     </p>
                   </div>
-                  <Badge variant={tone(m.status)}>{m.status}</Badge>
+                  <Badge className={statusTone(m.status)}>{m.status}</Badge>
                 </div>
                 {m.agenda && <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Agenda:</span> {m.agenda}</p>}
                 {m.minutes && <p className="mt-1 text-sm text-muted-foreground"><span className="font-medium text-foreground">Minutes:</span> {m.minutes}</p>}

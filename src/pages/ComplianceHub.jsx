@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -15,7 +16,6 @@ const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints',
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
 const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 
-const tone = (s) => (['Active', 'Current'].includes(s) ? 'default' : ['Under Review', 'Review Required', 'Draft'].includes(s) ? 'secondary' : 'destructive');
 
 export default function ComplianceHub() {
   const [policies, setPolicies] = useState([]);
@@ -138,7 +138,7 @@ export default function ComplianceHub() {
                           <p className="text-sm text-muted-foreground">{p.category}{p.version ? ` · v${p.version}` : ''}</p>
                         </div>
                       </div>
-                      <Badge variant={tone(p.status)}>{p.status}</Badge>
+                      <Badge className={statusTone(p.status)}>{p.status}</Badge>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{p.review_date ? `Review due ${format(new Date(p.review_date), 'd MMM yyyy')}` : 'No review date set'}</span>
@@ -200,7 +200,7 @@ export default function ComplianceHub() {
                           <p className="text-sm text-muted-foreground">{[r.category, r.jurisdiction, r.authority].filter(Boolean).join(' · ')}</p>
                         </div>
                       </div>
-                      <Badge variant={tone(r.status)}>{r.status}</Badge>
+                      <Badge className={statusTone(r.status)}>{r.status}</Badge>
                     </div>
                     {r.purpose && <p className="mt-2 text-sm text-muted-foreground">{r.purpose}</p>}
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">

@@ -12,7 +12,9 @@ import { format } from 'date-fns';
 
 const FLOW = ['Scheduled', 'Completed', 'Cancelled'];
 const NEXT = { Scheduled: 'Completed', Completed: 'Cancelled', Cancelled: 'Scheduled' };
-const tone = (s) => (s === 'Scheduled' ? 'default' : s === 'Completed' ? 'secondary' : 'destructive');
+import { statusTone } from '@/lib/statusStyles';
+
+const tone = statusTone;
 
 export default function ShiftScheduling() {
   const [shifts, setShifts] = useState([]);
@@ -126,7 +128,7 @@ export default function ShiftScheduling() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant={tone(s.status)}>{s.status}</Badge>
+                  <Badge className={statusTone(s.status)}>{s.status}</Badge>
                   <Button variant="ghost" size="icon" onClick={() => advance(s)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Shift.delete(s.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>

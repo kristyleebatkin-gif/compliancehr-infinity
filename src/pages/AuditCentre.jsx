@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,7 +14,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['Scheduled', 'In Progress', 'Complete', 'Follow-up Required'];
 const NEXT = { Scheduled: 'In Progress', 'In Progress': 'Complete', Complete: 'Follow-up Required', 'Follow-up Required': 'Scheduled' };
-const tone = (s) => (s === 'Complete' ? 'default' : s === 'Scheduled' || s === 'In Progress' ? 'secondary' : 'destructive');
 
 export default function AuditCentre() {
   const [audits, setAudits] = useState([]);
@@ -103,7 +103,7 @@ export default function AuditCentre() {
                       {[a.audit_area, a.date ? format(new Date(a.date), 'd MMM yyyy') : '', a.auditor].filter(Boolean).join(' · ')}
                     </p>
                   </div>
-                  <Badge variant={tone(a.status)}>{a.status}</Badge>
+                  <Badge className={statusTone(a.status)}>{a.status}</Badge>
                 </div>
                 {a.score != null && <p className="mt-2 text-sm"><span className="font-medium">Score:</span> {a.score}%</p>}
                 {a.findings && <p className="mt-1 text-sm text-muted-foreground"><span className="font-medium text-foreground">Findings:</span> {a.findings}</p>}

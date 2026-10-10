@@ -12,7 +12,9 @@ import { format } from 'date-fns';
 
 const FLOW = ['Draft', 'Open', 'Closed'];
 const NEXT = { Draft: 'Open', Open: 'Closed', Closed: 'Draft' };
-const tone = (s) => (s === 'Open' ? 'default' : s === 'Draft' ? 'secondary' : 'outline');
+import { statusTone } from '@/lib/statusStyles';
+
+const tone = statusTone;
 
 export default function Surveys() {
   const [items, setItems] = useState([]);
@@ -106,7 +108,7 @@ export default function Surveys() {
                     <p className="font-semibold">{s.title}</p>
                     <p className="text-sm text-muted-foreground">{s.type}</p>
                   </div>
-                  <Badge variant={tone(s.status)}>{s.status}</Badge>
+                  <Badge className={statusTone(s.status)}>{s.status}</Badge>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">
                   {[s.open_date ? `Opens ${format(new Date(s.open_date), 'd MMM')}` : '', s.close_date ? `Closes ${format(new Date(s.close_date), 'd MMM yyyy')}` : ''].filter(Boolean).join(' · ') || 'No dates set'}

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, FileSpreadsheet, ArrowRight } from 'lucide-react';
@@ -12,7 +13,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['Draft', 'Sent', 'Paid', 'Overdue'];
 const NEXT = { Draft: 'Sent', Sent: 'Paid', Paid: 'Overdue', Overdue: 'Draft' };
-const tone = (s) => (s === 'Paid' ? 'default' : s === 'Sent' || s === 'Draft' ? 'secondary' : 'destructive');
 
 export default function InvoicingCentre() {
   const [invoices, setInvoices] = useState([]);
@@ -107,7 +107,7 @@ export default function InvoicingCentre() {
                 </div>
                 <div className="flex items-center gap-3">
                   <p className="font-semibold">{inv.amount != null ? `$${inv.amount.toLocaleString('en-AU', { minimumFractionDigits: 2 })}` : ''}</p>
-                  <Badge variant={tone(inv.status)}>{inv.status}</Badge>
+                  <Badge className={statusTone(inv.status)}>{inv.status}</Badge>
                   <Button variant="ghost" size="icon" onClick={() => advance(inv)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Invoice.delete(inv.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>

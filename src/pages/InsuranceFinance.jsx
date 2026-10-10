@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Umbrella, ArrowRight } from 'lucide-react';
 import { format, differenceInCalendarDays } from 'date-fns';
 
 const TYPES = ['Public Liability', 'Workers Compensation', 'Professional Indemnity', 'Vehicle', 'Property', 'Cyber', 'Other'];
-const tone = (s) => (s === 'Active' ? 'default' : s === 'Expired' ? 'destructive' : 'outline');
 
 export default function InsuranceFinance() {
   const [policies, setPolicies] = useState([]);
@@ -113,7 +113,7 @@ export default function InsuranceFinance() {
                   </div>
                   <div className="flex items-center gap-3">
                     {p.premium != null && <p className="text-sm font-medium">${p.premium.toLocaleString('en-AU')}</p>}
-                    <Badge variant={tone(p.status)}>{p.status}</Badge>
+                    <Badge className={statusTone(p.status)}>{p.status}</Badge>
                     <Button variant="ghost" size="icon" onClick={() => advance(p)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
                     <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.InsurancePolicy.delete(p.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                   </div>

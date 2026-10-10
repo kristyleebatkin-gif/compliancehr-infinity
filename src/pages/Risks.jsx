@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone, ratingTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -14,8 +15,7 @@ import { format } from 'date-fns';
 const FLOW = ['Open', 'Mitigated', 'Monitored', 'Closed'];
 const NEXT = { Open: 'Mitigated', Mitigated: 'Monitored', Monitored: 'Closed', Closed: 'Open' };
 
-const levelTone = (s) => (s === 'High' ? 'destructive' : s === 'Medium' ? 'secondary' : 'outline');
-const statusTone = (s) => (s === 'Open' ? 'destructive' : s === 'Closed' ? 'default' : 'secondary');
+const levelTone = (s) => ratingTone[s] || 'bg-muted text-foreground/60';
 
 export default function Risks() {
   const [risks, setRisks] = useState([]);
@@ -104,12 +104,12 @@ export default function Risks() {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <p className="font-semibold">{r.title}</p>
-                  <Badge variant={statusTone(r.status)}>{r.status}</Badge>
+                  <Badge className={statusTone(r.status)}>{r.status}</Badge>
                 </div>
                 {r.description && <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>}
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <Badge variant={levelTone(r.likelihood)}>Likelihood {r.likelihood}</Badge>
-                  <Badge variant={levelTone(r.impact)}>Impact {r.impact}</Badge>
+                  <Badge className={levelTone(r.likelihood)}>Likelihood {r.likelihood}</Badge>
+                  <Badge className={levelTone(r.impact)}>Impact {r.impact}</Badge>
                   {r.owner && <span>Owner: {r.owner}</span>}
                   {r.review_date && <span>· Review {format(new Date(r.review_date), 'd MMM yyyy')}</span>}
                 </div>

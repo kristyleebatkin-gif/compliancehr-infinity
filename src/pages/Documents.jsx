@@ -15,11 +15,11 @@ const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
 
 const expiryTone = (expiry) => {
-  if (!expiry) return 'secondary';
+  if (!expiry) return 'bg-muted text-foreground/60';
   const days = differenceInCalendarDays(new Date(expiry), new Date());
-  if (days < 0) return 'destructive';
-  if (days <= 30) return 'secondary';
-  return 'default';
+  if (days < 0) return 'bg-danger/10 text-danger';
+  if (days <= 30) return 'bg-warning/10 text-warning';
+  return 'bg-safe/10 text-safe';
 };
 
 export default function Documents() {
@@ -143,7 +143,7 @@ export default function Documents() {
                     <p className="font-semibold">{d.title}</p>
                     <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
                   </div>
-                  <Badge variant={expiryTone(d.expiry_date)}>{d.status}</Badge>
+                  <Badge className={expiryTone(d.expiry_date)}>{d.status}</Badge>
                 </div>
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>

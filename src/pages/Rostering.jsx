@@ -6,7 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarRange, ChevronLeft, ChevronRight } from 'lucide-react';
 import { addDays, startOfWeek, endOfWeek, format, isSameDay } from 'date-fns';
 
-const tone = (s) => (s === 'Scheduled' ? 'default' : s === 'Completed' ? 'secondary' : 'destructive');
+import { statusTone } from '@/lib/statusStyles';
+
+const tone = statusTone;
 
 export default function Rostering() {
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
@@ -60,7 +62,7 @@ export default function Rostering() {
                       <div key={s.id} className="rounded-lg border p-2">
                         <div className="flex items-center justify-between gap-2">
                           <p className="text-sm font-medium">{s.employee_name}</p>
-                          <Badge variant={tone(s.status)}>{s.status}</Badge>
+                          <Badge className={statusTone(s.status)}>{s.status}</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground">
                           {[s.start_time && s.end_time ? `${s.start_time}–${s.end_time}` : '', s.participant_name, s.location].filter(Boolean).join(' · ')}

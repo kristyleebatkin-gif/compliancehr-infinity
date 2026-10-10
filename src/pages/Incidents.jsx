@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone, ratingTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -15,8 +16,7 @@ const SEVERITIES = ['Low', 'Medium', 'High', 'Critical'];
 const FLOW = ['Open', 'Investigating', 'Resolved', 'Closed'];
 const NEXT = { Open: 'Investigating', Investigating: 'Resolved', Resolved: 'Closed', Closed: 'Open' };
 
-const severityTone = (s) => (s === 'Critical' || s === 'High' ? 'destructive' : s === 'Medium' ? 'secondary' : 'outline');
-const statusTone = (s) => (['Open', 'Investigating'].includes(s) ? 'destructive' : s === 'Resolved' ? 'secondary' : 'default');
+const severityTone = (s) => ratingTone[s] || 'bg-muted text-foreground/60';
 
 export default function Incidents() {
   const [incidents, setIncidents] = useState([]);
@@ -104,7 +104,7 @@ export default function Incidents() {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <p className="font-semibold">{i.title}</p>
-                  <Badge variant={severityTone(i.severity)}>{i.severity}</Badge>
+                  <Badge className={severityTone(i.severity)}>{i.severity}</Badge>
                 </div>
                 {i.description && <p className="mt-2 text-sm text-muted-foreground">{i.description}</p>}
                 <div className="mt-3 flex flex-wrap gap-1 text-xs text-muted-foreground">
@@ -113,7 +113,7 @@ export default function Incidents() {
                   {i.reported_by && <span className="py-1">· {i.reported_by}</span>}
                 </div>
                 <div className="mt-3 flex items-center justify-between">
-                  <Badge variant={statusTone(i.status)}>{i.status}</Badge>
+                  <Badge className={statusTone(i.status)}>{i.status}</Badge>
                   <span className="flex items-center">
                     <Button variant="ghost" size="icon" onClick={() => advance(i)} title="Advance status"><ArrowRight className="h-4 w-4" /></Button>
                     <Button variant="ghost" size="icon" onClick={() => remove(i.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>

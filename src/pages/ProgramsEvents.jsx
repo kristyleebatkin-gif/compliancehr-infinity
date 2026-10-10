@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,7 +15,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['Planned', 'Ongoing', 'Completed', 'Cancelled'];
 const NEXT = { Planned: 'Ongoing', Ongoing: 'Completed', Completed: 'Cancelled', Cancelled: 'Planned' };
-const tone = (s) => (s === 'Planned' || s === 'Ongoing' ? 'default' : s === 'Completed' ? 'secondary' : 'destructive');
 
 export default function ProgramsEvents() {
   const [items, setItems] = useState([]);
@@ -65,7 +65,7 @@ export default function ProgramsEvents() {
             <CardContent className="p-4">
               <div className="flex items-start justify-between gap-2">
                 <p className="font-semibold">{i.title}</p>
-                <Badge variant={tone(i.status)}>{i.status}</Badge>
+                <Badge className={statusTone(i.status)}>{i.status}</Badge>
               </div>
               <p className="mt-1 text-sm text-muted-foreground">
                 {[i.date ? format(new Date(i.date), 'EEE d MMM yyyy') : '', i.location].filter(Boolean).join(' · ') || 'No date set'}

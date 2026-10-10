@@ -13,7 +13,9 @@ import { Plus, Trash2, GraduationCap, Award } from 'lucide-react';
 import { format } from 'date-fns';
 
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
-const tone = (s) => (s === 'Current' ? 'default' : s === 'Expiring Soon' ? 'secondary' : 'destructive');
+import { statusTone } from '@/lib/statusStyles';
+
+const tone = statusTone;
 
 export default function Training() {
   const [modules, setModules] = useState([]);
@@ -189,7 +191,7 @@ export default function Training() {
                         <p className="truncate font-semibold">{c.module_title}</p>
                         <p className="text-sm text-muted-foreground">{c.staff_name}</p>
                       </div>
-                      <Badge variant={tone(c.status)}>{c.status}</Badge>
+                      <Badge className={statusTone(c.status)}>{c.status}</Badge>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{c.expiry_date ? `Expires ${format(new Date(c.expiry_date), 'd MMM yyyy')}` : 'No expiry'}{c.score ? ` · Score ${c.score}%` : ''}</span>

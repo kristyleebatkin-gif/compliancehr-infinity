@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,7 +14,6 @@ import { format } from 'date-fns';
 
 const FLOW = ['New', 'In Assessment', 'Approved', 'Active', 'Declined'];
 const NEXT = { New: 'In Assessment', 'In Assessment': 'Approved', Approved: 'Active', Active: 'Declined', Declined: 'New' };
-const tone = (s) => (s === 'Active' || s === 'Approved' ? 'default' : s === 'New' || s === 'In Assessment' ? 'secondary' : 'destructive');
 
 export default function Intake() {
   const [items, setItems] = useState([]);
@@ -102,7 +102,7 @@ export default function Intake() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant={tone(i.status)}>{i.status}</Badge>
+                  <Badge className={statusTone(i.status)}>{i.status}</Badge>
                   <Button variant="ghost" size="icon" onClick={() => advance(i)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Intake.delete(i.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>

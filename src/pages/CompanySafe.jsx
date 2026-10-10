@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Lock } from 'lucide-react';
 import { format } from 'date-fns';
 
 const CATEGORIES = ['Policies', 'Templates', 'Certificates', 'Registrations', 'Licences', 'Financial', 'Other'];
-const tone = (s) => (s === 'Current' ? 'default' : s === 'Review Required' ? 'secondary' : 'outline');
 
 export default function CompanySafe() {
   const [docs, setDocs] = useState([]);
@@ -106,7 +106,7 @@ export default function CompanySafe() {
                 </div>
                 <div className="flex items-center gap-2">
                   {d.file_url && <a href={d.file_url} target="_blank" rel="noreferrer" className="text-sm text-primary underline">Open file</a>}
-                  <Badge variant={tone(d.status)}>{d.status}</Badge>
+                  <Badge className={statusTone(d.status)}>{d.status}</Badge>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.CompanyDocument.delete(d.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>
               </CardContent>

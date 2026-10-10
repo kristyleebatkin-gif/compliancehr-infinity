@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Boxes, Wrench } from 'lucide-react';
 import { format } from 'date-fns';
 
 const CATEGORIES = ['Vehicle', 'Equipment', 'IT', 'Furniture', 'Safety', 'Other'];
-const tone = (s) => (s === 'In Use' ? 'default' : s === 'In Maintenance' ? 'secondary' : 'destructive');
 const condTone = (c) => (c === 'Excellent' || c === 'Good' ? 'outline' : c === 'Fair' ? 'secondary' : 'destructive');
 
 export default function AssetManagement() {
@@ -110,7 +110,7 @@ export default function AssetManagement() {
                       <p className="text-sm text-muted-foreground">{a.category}{a.serial_number ? ` · ${a.serial_number}` : ''}</p>
                     </div>
                   </div>
-                  <Badge variant={tone(a.status)}>{a.status}</Badge>
+                  <Badge className={statusTone(a.status)}>{a.status}</Badge>
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                   <Badge variant={condTone(a.condition)}>{a.condition}</Badge>

@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Target } from 'lucide-react';
 import { format } from 'date-fns';
 
-const tone = (s) => (s === 'Achieved' ? 'default' : s === 'In Progress' ? 'secondary' : 'destructive');
 
 export default function GoalProgress() {
   const [goals, setGoals] = useState([]);
@@ -97,7 +97,7 @@ export default function GoalProgress() {
                     <p className="font-semibold">{g.goal}</p>
                     <p className="text-sm text-muted-foreground">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
                   </div>
-                  <Badge variant={tone(g.status)}>{g.status}</Badge>
+                  <Badge className={statusTone(g.status)}>{g.status}</Badge>
                 </div>
                 <div className="mt-3 flex items-center gap-3">
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">

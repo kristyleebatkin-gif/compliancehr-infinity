@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { moduleColour } from '@/lib/moduleColours';
 import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard, Users, ShieldCheck, GraduationCap, FolderOpen,
@@ -78,6 +79,7 @@ export default function AppLayout() {
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">
         {NAV.map((item) => {
           const Icon = item.icon;
+          const colour = moduleColour(item.label);
           return (
             <Link
               key={item.path}
@@ -88,8 +90,10 @@ export default function AppLayout() {
                   : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               }`}
             >
-              <Icon className="h-4 w-4" />
-              {item.label}
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md" style={{ backgroundColor: `${colour}22`, color: colour }}>
+                <Icon className="h-3.5 w-3.5" />
+              </span>
+              <span className="truncate">{item.label}</span>
             </Link>
           );
         })}
@@ -114,7 +118,7 @@ export default function AppLayout() {
 
   return (
     <div className="flex min-h-screen">
-      <aside className="hidden w-64 shrink-0 border-r bg-background lg:block">
+      <aside className="app-sidebar-bg hidden w-64 shrink-0 border-r lg:block">
         <SidebarContent />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
@@ -130,7 +134,7 @@ export default function AppLayout() {
             <SidebarContent />
           </div>
         )}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="app-workspace-bg flex-1 p-4 md:p-6">
           <Outlet />
         </main>
       </div>
