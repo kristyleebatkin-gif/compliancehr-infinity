@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, FolderOpen, RefreshCw } from 'lucide-react';
+import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye } from 'lucide-react';
 import { format, differenceInCalendarDays } from 'date-fns';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -30,7 +30,8 @@ export default function Documents() {
   const [saving, setSaving] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [scanMsg, setScanMsg] = useState('');
-  const [form, setForm] = useState({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', notes: '' });
+  const [uploading, setUploading] = useState(false);
+  const [form, setForm] = useState({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', file_uri: '', notes: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -53,7 +54,7 @@ export default function Documents() {
     setSaving(true);
     try {
       await base44.entities.EmployeeDocument.create(form);
-      setForm({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', notes: '' });
+      setForm({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', file_uri: '', notes: '' });
       setOpen(false);
       await load();
     } finally {
@@ -62,8 +63,35 @@ export default function Documents() {
   };
 
   const remove = async (id) => {
+    if (!confirm('Delete this document?')) return;
     await base44.entities.EmployeeDocument.delete(id);
     await load();
+  };
+
+  const handleFile = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      setForm((f) => ({ ...f, file_uri }));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const viewDoc = async (doc) => {
+    try {
+      if (doc.file_uri) {
+        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
+        window.open(signed_url, '_blank');
+      } else if (doc.file_url) {
+        window.open(doc.file_url, '_blank');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const runScan = async () => {
@@ -122,7 +150,21 @@ export default function Documents() {
                 <div className="grid gap-1.5"><Label>Issue date</Label><Input type="date" value={form.issue_date} onChange={(e) => setForm({ ...form, issue_date: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Expiry date</Label><Input type="date" value={form.expiry_date} onChange={(e) => setForm({ ...form, expiry_date: e.target.value })} /></div>
               </div>
-              <div className="grid gap-1.5"><Label>File URL (optional)</Label><Input value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Document file (optional)</Label>
+                <label className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm font-medium hover:bg-accent">
+                  {uploading
+                    ? <span className="block h-4 w-4 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+                    : <UploadCloud className="h-4 w-4" />}
+                  {form.file_uri ? 'File attached' : 'Upload file'}
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls,.txt"
+                    className="hidden"
+                    disabled={uploading}
+                    onChange={(e) => { handleFile(e.target.files?.[0]); e.target.value = ''; }}
+                  />
+                </label>
+              </div>
               <Button onClick={save} disabled={saving || !form.title.trim()}>Save document</Button>
             </div>
           </DialogContent>
@@ -147,7 +189,12 @@ export default function Documents() {
                 </div>
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
-                  <Button variant="ghost" size="icon" onClick={() => remove(d.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  <div className="flex items-center gap-1">
+                    {(d.file_uri || d.file_url) && (
+                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
+                    )}
+                    <Button variant="ghost" size="icon" onClick={() => remove(d.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

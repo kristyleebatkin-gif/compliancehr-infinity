@@ -57,6 +57,10 @@
       "type": "string",
       "title": "File URL"
     },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
