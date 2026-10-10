@@ -1,0 +1,45 @@
+{
+  "name": "Checklist",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "items": {
+      "type": "array",
+      "title": "Checklist Items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

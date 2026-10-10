@@ -1,0 +1,45 @@
+{
+  "name": "Feedback",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "Feedback",
+        "Complaint"
+      ],
+      "default": "Feedback",
+      "title": "Type"
+    },
+    "subject": {
+      "type": "string",
+      "title": "Subject"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message"
+    },
+    "submitted_by": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "rating": {
+      "type": "number",
+      "title": "Rating (1-5)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "New",
+        "In Review",
+        "Resolved",
+        "Closed"
+      ],
+      "default": "New",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "subject"
+  ]
+}

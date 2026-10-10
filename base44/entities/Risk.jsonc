@@ -1,0 +1,61 @@
+{
+  "name": "Risk",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "likelihood": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default": "Medium",
+      "title": "Likelihood"
+    },
+    "impact": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default": "Medium",
+      "title": "Impact"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Mitigated",
+        "Monitored",
+        "Closed"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

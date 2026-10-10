@@ -5,16 +5,22 @@ import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard, Users, ShieldCheck, GraduationCap, FolderOpen,
   ClipboardList, Github, Menu, LogOut, X, Building2, AlertTriangle,
+  Heart, ShieldAlert, CalendarClock, Megaphone,
 } from 'lucide-react';
 
 const NAV = [
   { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { label: 'Participants', path: '/participants', icon: Heart },
   { label: 'Staff', path: '/staff', icon: Users },
   { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
   { label: 'Documents', path: '/documents', icon: FolderOpen },
   { label: 'Training', path: '/training', icon: GraduationCap },
   { label: 'Tasks', path: '/tasks', icon: ClipboardList },
   { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
+  { label: 'Risks', path: '/risks', icon: ShieldAlert },
+  { label: 'Shifts', path: '/shifts', icon: CalendarClock },
+  { label: 'Feedback & Complaints', path: '/feedback', icon: Megaphone },
+  { label: 'Checklists', path: '/checklists', icon: ClipboardList },
   { label: 'GitHub Activity', path: '/github', icon: Github },
 ];
 

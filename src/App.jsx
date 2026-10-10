@@ -21,6 +21,11 @@ import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
 import Tasks from '@/pages/Tasks';
 import Incidents from '@/pages/Incidents';
+import Participants from '@/pages/Participants';
+import Risks from '@/pages/Risks';
+import ShiftScheduling from '@/pages/ShiftScheduling';
+import Feedback from '@/pages/Feedback';
+import Checklists from '@/pages/Checklists';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +66,11 @@ const AuthenticatedApp = () => {
           <Route path="/training" element={<Training />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/incidents" element={<Incidents />} />
+          <Route path="/participants" element={<Participants />} />
+          <Route path="/risks" element={<Risks />} />
+          <Route path="/shifts" element={<ShiftScheduling />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/checklists" element={<Checklists />} />
           <Route path="/github" element={<GitHubActivity />} />
         </Route>
       </Route>

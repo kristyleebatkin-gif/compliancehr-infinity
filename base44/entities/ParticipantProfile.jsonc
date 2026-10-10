@@ -1,0 +1,53 @@
+{
+  "name": "ParticipantProfile",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
+    "ndis_number": {
+      "type": "string",
+      "title": "NDIS Number"
+    },
+    "support_coordinator": {
+      "type": "string",
+      "title": "Support Coordinator"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "On Hold",
+        "Inactive"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "full_name"
+  ]
+}
