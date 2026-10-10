@@ -1,0 +1,51 @@
+{
+  "name": "VolunteerDocument",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "volunteer_id": {
+      "type": "string",
+      "title": "Volunteer"
+    },
+    "volunteer_name": {
+      "type": "string",
+      "title": "Volunteer Name"
+    },
+    "document_type": {
+      "type": "string",
+      "title": "Document Type"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Issue Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

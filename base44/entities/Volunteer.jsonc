@@ -20,6 +20,7 @@
       "enum": [
         "Onboarding",
         "Active",
+        "On Leave",
         "Inactive"
       ],
       "default": "Onboarding",
@@ -32,6 +33,65 @@
     "weekly_hours": {
       "type": "number",
       "title": "Weekly Hours"
+    },
+    "availability": {
+      "type": "string",
+      "title": "Availability"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "title": "Emergency Contact"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "ndis_worker_screening": {
+      "type": "string",
+      "title": "NDIS Worker Screening"
+    },
+    "blue_card_number": {
+      "type": "string",
+      "title": "Blue Card Number"
+    },
+    "police_check_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Police Check Date"
+    },
+    "reference_checks": {
+      "type": "string",
+      "title": "Reference Checks"
+    },
+    "induction_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Induction Date"
+    },
+    "intake_form_uri": {
+      "type": "string",
+      "title": "Intake Form File URI"
+    },
+    "intake_form_name": {
+      "type": "string",
+      "title": "Intake Form File Name"
     },
     "notes": {
       "type": "string",

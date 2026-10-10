@@ -12,15 +12,31 @@
     },
     "role": {
       "type": "string",
-      "title": "Role"
+      "title": "Role / Position"
     },
     "phone": {
       "type": "string",
       "title": "Phone"
     },
+    "mobile": {
+      "type": "string",
+      "title": "Mobile"
+    },
+    "after_hours_phone": {
+      "type": "string",
+      "title": "After Hours Phone"
+    },
     "email": {
       "type": "string",
       "title": "Email"
+    },
+    "hours_available": {
+      "type": "string",
+      "title": "Hours Available"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
     },
     "category": {
       "type": "string",

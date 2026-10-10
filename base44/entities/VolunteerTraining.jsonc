@@ -1,0 +1,48 @@
+{
+  "name": "VolunteerTraining",
+  "type": "object",
+  "properties": {
+    "volunteer_id": {
+      "type": "string",
+      "title": "Volunteer"
+    },
+    "volunteer_name": {
+      "type": "string",
+      "title": "Volunteer Name"
+    },
+    "module_title": {
+      "type": "string",
+      "title": "Training Module"
+    },
+    "training_provider": {
+      "type": "string",
+      "title": "Training Provider"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "score": {
+      "type": "number",
+      "title": "Score (%)"
+    },
+    "certificate_number": {
+      "type": "string",
+      "title": "Certificate Number"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "volunteer_id",
+    "module_title"
+  ]
+}
