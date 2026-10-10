@@ -10,7 +10,7 @@ import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, Github, BarChart3,
-  FlaskConical, MapPin,
+  FlaskConical, MapPin, HeartHandshake,
 } from 'lucide-react';
 
 const PRIMARY_NAV = [
@@ -39,6 +39,7 @@ const PRIMARY_NAV = [
   { label: 'Equipment Manuals and MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
   { label: 'MSDS Chemical Library', path: '/msds', key: 'msds', icon: FlaskConical },
   { label: 'Community & Council', path: '/community-council', key: 'community-council', icon: MapPin },
+  { label: 'Referral & Support', path: '/referrals', key: 'community-referral', icon: HeartHandshake },
   { label: 'Quote Centre', path: '/quotes', key: 'quotes', icon: Landmark },
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },

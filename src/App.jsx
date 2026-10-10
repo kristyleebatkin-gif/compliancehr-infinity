@@ -51,6 +51,7 @@ import CompanySafe from '@/pages/CompanySafe';
 import EquipmentManuals from '@/pages/EquipmentManuals';
 import MsdsLibrary from '@/pages/MsdsLibrary';
 import CommunityCouncil from '@/pages/CommunityCouncil';
+import ReferralSupport from '@/pages/ReferralSupport';
 import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import DataControl from '@/pages/DataControl';
@@ -128,6 +129,7 @@ const AuthenticatedApp = () => {
           <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentManuals /></RoleGate>} />
           <Route path="/msds" element={<RoleGate navKey="msds"><MsdsLibrary /></RoleGate>} />
           <Route path="/community-council" element={<RoleGate navKey="community-council"><CommunityCouncil /></RoleGate>} />
+          <Route path="/referrals" element={<RoleGate navKey="community-referral"><ReferralSupport /></RoleGate>} />
           <Route path="/quotes" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/receipts" element={<RoleGate navKey="receipts"><ReceiptHub /></RoleGate>} />
           <Route path="/data-control" element={<RoleGate navKey="data-control"><DataControl /></RoleGate>} />

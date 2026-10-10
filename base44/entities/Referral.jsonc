@@ -1,0 +1,158 @@
+{
+  "name": "Referral",
+  "type": "object",
+  "properties": {
+    "referral_id": {
+      "type": "string",
+      "title": "Referral ID"
+    },
+    "client_name": {
+      "type": "string",
+      "title": "Person Referred (Name)"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "postcode": {
+      "type": "string",
+      "title": "Postcode"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "NDIS / Disability Supports",
+        "Mental Health",
+        "Housing",
+        "Family & Domestic Violence",
+        "Alcohol & Other Drugs",
+        "Youth Services",
+        "Emergency Relief",
+        "Health / Medical",
+        "Employment & Training",
+        "Other"
+      ],
+      "default": "NDIS / Disability Supports",
+      "title": "Service Type"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "Routine",
+        "Urgent (48 hours)",
+        "Immediate - Crisis"
+      ],
+      "default": "Routine",
+      "title": "Urgency"
+    },
+    "reason": {
+      "type": "string",
+      "title": "Reason for Referral"
+    },
+    "support_needs": {
+      "type": "string",
+      "title": "Support Needs"
+    },
+    "consent": {
+      "type": "string",
+      "enum": [
+        "Consent given",
+        "Consent not given"
+      ],
+      "default": "Consent not given",
+      "title": "Client Consent"
+    },
+    "referrer_name": {
+      "type": "string",
+      "title": "Referrer Name"
+    },
+    "referrer_role": {
+      "type": "string",
+      "title": "Referrer Role"
+    },
+    "referrer_phone": {
+      "type": "string",
+      "title": "Referrer Phone"
+    },
+    "referrer_email": {
+      "type": "string",
+      "title": "Referrer Email"
+    },
+    "provider_name": {
+      "type": "string",
+      "title": "Receiving Provider"
+    },
+    "provider_email": {
+      "type": "string",
+      "title": "Provider Email"
+    },
+    "provider_phone": {
+      "type": "string",
+      "title": "Provider Phone"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Prepared",
+        "Sent",
+        "Accepted",
+        "In Progress",
+        "Declined",
+        "Completed"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Sent At"
+    },
+    "sent_to": {
+      "type": "string",
+      "title": "Sent To"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
+    },
+    "form_file_uri": {
+      "type": "string",
+      "title": "Referral Form File URI"
+    },
+    "form_file_name": {
+      "type": "string",
+      "title": "Referral Form File Name"
+    }
+  },
+  "required": [
+    "client_name"
+  ]
+}
