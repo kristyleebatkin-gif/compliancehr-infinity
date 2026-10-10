@@ -1,0 +1,69 @@
+<mjml>
+  <mj-head>
+    <mj-title>High-severity incident reported: {{incident_title}}</mj-title>
+    <mj-preview>A {{severity}} severity incident was logged in the safety register and needs your attention.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, Helvetica, Arial, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0a0a0a" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#0a0a0a" color="#ffffff" border-radius="6px" font-weight="700" inner-padding="14px 28px" align="left" />
+      <mj-class name="h" font-weight="700" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f4f4f5">
+    <mj-wrapper padding="0">
+      <mj-section background-color="#0a0a0a" padding="18px 36px">
+        <mj-column>
+          <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3352e3dd7_logo.png" alt="ComplianceHR Portal" align="left" width="140px" padding="0 0 6px 0" />
+          <mj-text color="#ffffff" font-size="13px" font-weight="700" padding="0">ComplianceHR Portal</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section padding="36px 36px 8px">
+        <mj-column>
+          <mj-text mj-class="h" font-size="26px" line-height="1.2">High-severity incident reported</mj-text>
+          <mj-text color="#737373" font-size="15px" padding="8px 0 0 0">A {{severity}} severity incident was logged in the safety register and needs your immediate attention.</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section padding="16px 36px">
+        <mj-column background-color="#ffffff" border="1px solid #e5e7eb" border-radius="6px" padding="20px 24px">
+          <mj-text mj-class="h" font-size="17px" padding="0">{{incident_title}}</mj-text>
+          <mj-text color="#737373" font-size="14px" padding="6px 0 12px 0">Severity: {{severity}} · Category: {{category}}</mj-text>
+          <mj-divider border-color="#e5e7eb" padding="0 0 12px 0" />
+          <mj-table width="100%" cellpadding="0" cellspacing="0">
+            <tr style="font-size:14px;line-height:1.6;">
+              <td style="color:#737373;padding:4px 0;width:140px;">Occurred</td>
+              <td style="color:#0a0a0a;padding:4px 0;">{{date_occurred}}{{#time_occurred}} at {{time_occurred}}{{/time_occurred}}</td>
+            </tr>
+            <tr style="font-size:14px;line-height:1.6;">
+              <td style="color:#737373;padding:4px 0;">Location</td>
+              <td style="color:#0a0a0a;padding:4px 0;">{{location}}</td>
+            </tr>
+            <tr style="font-size:14px;line-height:1.6;">
+              <td style="color:#737373;padding:4px 0;">Reported by</td>
+              <td style="color:#0a0a0a;padding:4px 0;">{{reported_by}}</td>
+            </tr>
+            <tr style="font-size:14px;line-height:1.6;">
+              <td style="color:#737373;padding:4px 0;vertical-align:top;">Description</td>
+              <td style="color:#0a0a0a;padding:4px 0;">{{description}}</td>
+            </tr>
+          </mj-table>
+        </mj-column>
+      </mj-section>
+
+      <mj-section padding="8px 36px 24px">
+        <mj-column>
+          <mj-button href="{{incident_url}}" background-color="#0a0a0a" color="#ffffff">Open incident in the portal</mj-button>
+          <mj-text color="#737373" font-size="13px" padding="14px 0 0 0">You received this alert because a new high-severity incident was logged in the safety section. Please review it and confirm any immediate actions and reportability decisions.</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#0a0a0a" padding="18px 36px">
+        <mj-column>
+          <mj-text color="#ffffff" font-size="12px" padding="0" align="center">ComplianceHR Portal · Automated safety alert</mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>

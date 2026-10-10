@@ -1,0 +1,51 @@
+{
+  "name": "High Severity Incident Alert",
+  "description": "Emails the safety officer as soon as a High or Critical severity incident is logged",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Incident",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.severity == \"High\" or .trigger.data.severity == \"Critical\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "high_severity_incident_alert",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "email_safety_officer": {
+          "call": "send_email",
+          "with": {
+            "template_name": "IncidentAlert",
+            "to": "kristyleebatkin@live.com.au",
+            "description": "Alerts the safety officer about the high-severity incident with its details and a link",
+            "variables": {
+              "incident_title": "${ .trigger.data.title }",
+              "incident_id": "${ .trigger.data.incident_id }",
+              "severity": "${ .trigger.data.severity }",
+              "category": "${ .trigger.data.category }",
+              "location": "${ .trigger.data.location }",
+              "reported_by": "${ .trigger.data.reported_by }",
+              "date_occurred": "${ .trigger.data.date_occurred }",
+              "time_occurred": "${ .trigger.data.time_occurred }",
+              "description": "${ .trigger.data.description }",
+              "incident_url": "https://polite-safe-hire-flow.base44.app/incidents/${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email the safety officer",
+            "description": "Incident alert"
+          }
+        }
+      }
+    ]
+  }
+}
