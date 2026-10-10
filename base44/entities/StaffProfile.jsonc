@@ -15,6 +15,15 @@
       "type": "string",
       "title": "Phone"
     },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
     "position": {
       "type": "string",
       "title": "Position"
@@ -53,6 +62,10 @@
     "emergency_contact": {
       "type": "string",
       "title": "Emergency Contact"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
     }
   },
   "required": [

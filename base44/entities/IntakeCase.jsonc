@@ -1,0 +1,270 @@
+{
+  "name": "IntakeCase",
+  "type": "object",
+  "properties": {
+    "case_number": {
+      "type": "string",
+      "title": "Intake Case Number"
+    },
+    "intake_type": {
+      "type": "string",
+      "enum": [
+        "Participant",
+        "Employee"
+      ],
+      "title": "Intake Type"
+    },
+    "applicant_name": {
+      "type": "string",
+      "title": "Applicant Name"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "ndis_number": {
+      "type": "string",
+      "title": "NDIS Number"
+    },
+    "preferred_name_pronouns": {
+      "type": "string",
+      "title": "Preferred Name and Pronouns"
+    },
+    "primary_contact": {
+      "type": "string",
+      "title": "Primary Contact / Nominee"
+    },
+    "communication_needs": {
+      "type": "string",
+      "title": "Communication and Accessibility Needs"
+    },
+    "requested_supports": {
+      "type": "string",
+      "title": "Requested Supports"
+    },
+    "reason_for_referral": {
+      "type": "string",
+      "title": "Reason for Referral / Application"
+    },
+    "current_supports": {
+      "type": "string",
+      "title": "Current Supports and Living Arrangements"
+    },
+    "goals_preferences": {
+      "type": "string",
+      "title": "Strengths, Preferences and Goals"
+    },
+    "health_summary": {
+      "type": "string",
+      "title": "Health, Medication and Allergy Information"
+    },
+    "risk_summary": {
+      "type": "string",
+      "title": "Risks and Immediate Safeguards"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "title": "Emergency Contact"
+    },
+    "emergency_contact_1_name": {
+      "type": "string",
+      "title": "Emergency Contact 1 Name"
+    },
+    "emergency_contact_1_relationship": {
+      "type": "string",
+      "title": "Emergency Contact 1 Relationship"
+    },
+    "emergency_contact_1_phone": {
+      "type": "string",
+      "title": "Emergency Contact 1 Phone"
+    },
+    "emergency_contact_2_name": {
+      "type": "string",
+      "title": "Emergency Contact 2 Name"
+    },
+    "emergency_contact_2_relationship": {
+      "type": "string",
+      "title": "Emergency Contact 2 Relationship"
+    },
+    "emergency_contact_2_phone": {
+      "type": "string",
+      "title": "Emergency Contact 2 Phone"
+    },
+    "representative_details": {
+      "type": "string",
+      "title": "Representative / Advocate Details"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "Plan Managed",
+        "Self Managed",
+        "NDIA Managed"
+      ],
+      "title": "Plan Type"
+    },
+    "plan_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "NDIS Plan Start Date"
+    },
+    "plan_end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "NDIS Plan End Date"
+    },
+    "plan_manager": {
+      "type": "string",
+      "title": "Plan Manager"
+    },
+    "support_coordinator": {
+      "type": "string",
+      "title": "Support Coordinator"
+    },
+    "medication_support_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Medication Support Required"
+    },
+    "mealtime_support_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Mealtime Support Required"
+    },
+    "behaviour_support_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Behaviour Support Required"
+    },
+    "restrictive_practice_identified": {
+      "type": "boolean",
+      "default": false,
+      "title": "Restrictive Practice Identified"
+    },
+    "workplace_adjustments": {
+      "type": "string",
+      "title": "Medical Alerts, Allergies or Workplace Adjustments"
+    },
+    "employee_role": {
+      "type": "string",
+      "title": "Employee Role"
+    },
+    "position": {
+      "type": "string",
+      "title": "Position"
+    },
+    "referral_source": {
+      "type": "string",
+      "title": "Referral Source"
+    },
+    "referral_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Referral / Application Date"
+    },
+    "target_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Start Date"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Intake Owner"
+    },
+    "reviewer": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Reviewed Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Information Required",
+        "Ready for Review",
+        "Approved",
+        "Converted to Profile",
+        "Declined",
+        "Withdrawn"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "service_fit": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Eligible",
+        "Waitlist",
+        "Not Suitable"
+      ],
+      "default": "Pending",
+      "title": "Eligibility / Service Fit"
+    },
+    "privacy_consent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Consent to Collect and Store Intake Information"
+    },
+    "recognition_dashboard_consent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Consent to Appear on Employee Recognition Dashboard"
+    },
+    "recognition_dashboard_consent_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Recognition Dashboard Consent Date"
+    },
+    "completed_document_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Completed or Uploaded Documents"
+    },
+    "outstanding_actions": {
+      "type": "string",
+      "title": "Outstanding Actions"
+    },
+    "decision_reason": {
+      "type": "string",
+      "title": "Decision Reason"
+    },
+    "related_profile_id": {
+      "type": "string",
+      "title": "Related Profile ID"
+    },
+    "converted_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Converted Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "applicant_name"
+  ]
+}

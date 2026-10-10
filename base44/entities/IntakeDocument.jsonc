@@ -1,0 +1,51 @@
+{
+  "name": "IntakeDocument",
+  "type": "object",
+  "properties": {
+    "intake_case_id": {
+      "type": "string",
+      "title": "Intake Case ID"
+    },
+    "intake_case_number": {
+      "type": "string",
+      "title": "Intake Case Number"
+    },
+    "intake_type": {
+      "type": "string",
+      "enum": [
+        "Participant",
+        "Employee"
+      ],
+      "title": "Intake Type"
+    },
+    "document_type": {
+      "type": "string",
+      "title": "Document Type"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "profile_id": {
+      "type": "string",
+      "title": "Related Profile ID"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "uploaded_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Uploaded Date"
+    }
+  },
+  "required": [
+    "intake_case_id",
+    "document_type"
+  ]
+}

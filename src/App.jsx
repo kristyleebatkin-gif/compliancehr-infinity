@@ -33,7 +33,9 @@ import EmergencyResponse from '@/pages/EmergencyResponse';
 import ProgramsEvents from '@/pages/ProgramsEvents';
 import Communications from '@/pages/Communications';
 import AuditCentre from '@/pages/AuditCentre';
-import Intake from '@/pages/Intake';
+import IntakeCentre from '@/pages/IntakeCentre';
+import ParticipantIntake from '@/pages/ParticipantIntake';
+import EmployeeIntake from '@/pages/EmployeeIntake';
 import GoalProgress from '@/pages/GoalProgress';
 import QualityImprovement from '@/pages/QualityImprovement';
 import Surveys from '@/pages/Surveys';
@@ -101,7 +103,9 @@ const AuthenticatedApp = () => {
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
           <Route path="/communications" element={<RoleGate navKey="communications"><Communications /></RoleGate>} />
           <Route path="/audit" element={<RoleGate navKey="audit-log"><AuditCentre /></RoleGate>} />
-          <Route path="/intake" element={<RoleGate navKey="intake"><Intake /></RoleGate>} />
+          <Route path="/intake" element={<RoleGate navKey="intake"><IntakeCentre /></RoleGate>} />
+          <Route path="/intake/participant" element={<RoleGate navKey="intake"><ParticipantIntake /></RoleGate>} />
+          <Route path="/intake/employee" element={<RoleGate navKey="intake"><EmployeeIntake /></RoleGate>} />
           <Route path="/goals" element={<RoleGate navKey="goals"><GoalProgress /></RoleGate>} />
           <Route path="/quality" element={<RoleGate navKey="quality"><QualityImprovement /></RoleGate>} />
           <Route path="/surveys" element={<RoleGate navKey="surveys"><Surveys /></RoleGate>} />
