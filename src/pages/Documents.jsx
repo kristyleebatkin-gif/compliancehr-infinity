@@ -13,6 +13,7 @@ import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
+import VaultUploads from '@/components/documents/VaultUploads';
 import { EMPLOYEE_FILE_SECTIONS, EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
@@ -195,6 +196,7 @@ export default function Documents() {
         definitions={PARTICIPANT_FORM_DEFINITIONS}
       />
       <BusinessDocumentsLibrary />
+      <VaultUploads />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

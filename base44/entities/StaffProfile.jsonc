@@ -28,6 +28,10 @@
       "type": "string",
       "title": "Position"
     },
+    "position_level": {
+      "type": "string",
+      "title": "Position Level"
+    },
     "role": {
       "type": "string",
       "enum": [
@@ -55,6 +59,15 @@
       "format": "date",
       "title": "Start Date"
     },
+    "induction_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Induction Date"
+    },
+    "employee_number": {
+      "type": "string",
+      "title": "Employee Number"
+    },
     "supervisor": {
       "type": "string",
       "title": "Supervisor"
@@ -62,6 +75,30 @@
     "emergency_contact": {
       "type": "string",
       "title": "Emergency Contact"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "banking_details": {
+      "type": "string",
+      "title": "Banking Details"
+    },
+    "superannuation_details": {
+      "type": "string",
+      "title": "Superannuation Details"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "title": "Hourly Rate ($)"
+    },
+    "tax_file_number": {
+      "type": "string",
+      "title": "Tax File Number"
+    },
+    "car_rego": {
+      "type": "string",
+      "title": "Car Registration (Rego)"
     },
     "notes": {
       "type": "string",

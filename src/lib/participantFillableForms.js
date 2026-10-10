@@ -36,6 +36,9 @@ export const PARTICIPANT_FILLABLE_FORMS = [
   'Mealtime Management Plan',
   'SAM Medication Assessment',
   'Medication Evaluation',
+  'Incident Reports',
+  'Feedback and Complaints',
+  'Participant File Audit Checklist',
 ].map((key) => ({
   key,
   code: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.code : (PARTICIPANT_FORM_DEFINITIONS[key]?.code || ''),

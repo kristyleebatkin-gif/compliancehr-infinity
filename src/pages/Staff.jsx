@@ -8,7 +8,10 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Trash2, Users } from 'lucide-react';
+import { Plus, Search, Trash2, UserRound, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
 const ROLES = ['Support Worker', 'Team Leader', 'Compliance Manager', 'Administration', 'Management'];
 const STATUSES = ['Active', 'On Leave', 'Inactive'];
@@ -41,7 +44,7 @@ export default function Staff() {
     if (!form.full_name.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.StaffProfile.create(form);
+      await base44.entities.StaffProfile.create({ ...form, employee_number: form.employee_number || generateEmployeeNumber() });
       setForm({ full_name: '', email: '', phone: '', position: '', role: 'Support Worker', status: 'Active', start_date: '', supervisor: '', emergency_contact: '' });
       setOpen(false);
       await load(search);
@@ -117,7 +120,7 @@ export default function Staff() {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="font-semibold">{s.full_name}</p>
-                    <p className="text-sm text-muted-foreground">{s.position || s.role}</p>
+                    <p className="text-sm text-muted-foreground">{s.position || s.role}{s.employee_number ? ` · ${s.employee_number}` : ''}</p>
                   </div>
                   <Badge className={statusTone(s.status)}>{s.status}</Badge>
                 </div>
@@ -126,7 +129,10 @@ export default function Staff() {
                   {s.phone && <p>{s.phone}</p>}
                   <p>Role: {s.role}</p>
                 </div>
-                <div className="mt-3 flex justify-end">
+                <div className="mt-3 flex justify-end gap-1">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to={`/staff/${s.id}`}><UserRound className="h-4 w-4" />Open profile</Link>
+                  </Button>
                   <Button variant="ghost" size="icon" onClick={() => remove(s.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>
               </CardContent>

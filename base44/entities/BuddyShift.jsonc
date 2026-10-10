@@ -1,0 +1,35 @@
+{
+  "name": "BuddyShift",
+  "type": "object",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "title": "Staff"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Name"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "shift": {
+      "type": "string",
+      "title": "Shift"
+    },
+    "buddy_supervisor": {
+      "type": "string",
+      "title": "Buddy / Supervisor"
+    },
+    "comments": {
+      "type": "string",
+      "title": "Comments"
+    }
+  },
+  "required": [
+    "staff_name",
+    "date"
+  ]
+}

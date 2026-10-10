@@ -262,6 +262,18 @@ const BASE_PARTICIPANT_FORM_DEFINITIONS = {
     { label: 'Transition / referral arrangements', multiline: true },
     { label: 'Participant feedback and closure approval', multiline: true },
   ]),
+  'Participant File Audit Checklist': definition('CM-FORM-051', 'Participant File Audit Checklist', [
+    ...personalFields,
+    { label: 'Auditor and audit date' },
+    { label: 'Identity documents sighted and current' },
+    { label: 'NDIS plan and service agreement current' },
+    { label: 'Risk assessments current' },
+    { label: 'Support plan and progress notes complete' },
+    { label: 'Medication records current' },
+    { label: 'Consent forms signed and current' },
+    { label: 'Audit outcome', multiline: true },
+    { label: 'Actions required', multiline: true },
+  ]),
   'Home Risk Assessment': definition('CM-FORM-014', 'Home Risk Assessment Form', [
     ...personalFields,
     { label: 'Assessment address and date' },
@@ -303,7 +315,7 @@ export const PARTICIPANT_FORM_DEFINITIONS = Object.fromEntries(
 
 export const PARTICIPANT_FILE_SECTIONS = [
   { name: '1. Handbooks, Intake & Lifecycle', icon: ClipboardList, docs: ['Participant Handbook', 'Participant Easy Read Handbook', 'Participant Intake Form', 'Participant Intake Assessment', 'Referral Form', 'Authority to Act as Advocate', 'Home Risk Assessment', 'Participant Exit Form'] },
-  { name: '2. NDIS, Agreements & Planning', icon: FileText, docs: ['NDIS Plan', 'Service Agreement', 'Individual Risk Assessment', 'Participant Consent for Audits', 'Consent to Share Information', 'Participant Support Plan', 'Provider Declaration'] },
+  { name: '2. NDIS, Agreements & Planning', icon: FileText, docs: ['NDIS Plan', 'Service Agreement', 'Individual Risk Assessment', 'Participant Consent for Audits', 'Consent to Share Information', 'Participant Support Plan', 'Participant File Audit Checklist', 'Provider Declaration'] },
   { name: '3. Service Delivery & Safeguards', icon: Megaphone, docs: ['Progress Reports', 'Progress Notes', 'Incident Reports', 'Behaviour Support Plan', 'Restrictive Practices Record'] },
   { name: '4. Medication & Mealtime Support', icon: Heart, docs: ['Medication Evaluation', 'SAM Medication Assessment', 'Medication Administration Record', 'Medication Consent', 'Medication Record Sheet', 'Mealtime Management Plan'] },
   { name: '5. Feedback, Investigations & Finance', icon: DollarSign, docs: ['Satisfaction Survey', 'Feedback and Complaints', 'Investigation Form', 'Participant Money Register'] },

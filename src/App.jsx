@@ -16,6 +16,7 @@ import GitHubActivity from '@/pages/GitHubActivity';
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
 import Staff from '@/pages/Staff';
+import StaffDetail from '@/pages/StaffDetail';
 import ComplianceHub from '@/pages/ComplianceHub';
 import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
@@ -90,6 +91,7 @@ const AuthenticatedApp = () => {
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
+          <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />

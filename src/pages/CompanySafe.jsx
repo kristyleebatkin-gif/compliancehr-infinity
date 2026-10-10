@@ -8,8 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Lock } from 'lucide-react';
+import { Plus, Trash2, Lock, IdCard, Building2, FolderLock } from 'lucide-react';
 import { format } from 'date-fns';
+import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
+import ComplianceUploads from '@/components/safe/ComplianceUploads';
+import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 
 const CATEGORIES = ['Policies', 'Templates', 'Certificates', 'Registrations', 'Licences', 'Financial', 'Other'];
 
@@ -84,6 +87,15 @@ export default function CompanySafe() {
             </div>
           </DialogContent>
         </Dialog>
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Business identity</div>
+        <BusinessIdentityCard />
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><FolderLock className="h-4 w-4" />Compliance &amp; business documents</div>
+        <ComplianceUploads />
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><IdCard className="h-4 w-4" />Staff badges</div>
+        <StaffBadgeCreator />
       </div>
 
       {loading ? (
