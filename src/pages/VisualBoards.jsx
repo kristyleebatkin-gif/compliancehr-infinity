@@ -11,7 +11,9 @@ const COLUMNS = [
   { id: 'in_progress', label: 'In Progress' },
   { id: 'done', label: 'Done' },
 ];
-const PRIORITY_TONE = { high: 'destructive', medium: 'secondary', low: 'outline' };
+import { ratingTone } from '@/lib/statusStyles';
+
+const PRIORITY_TONE = ratingTone;
 
 export default function VisualBoards() {
   const [tasks, setTasks] = useState([]);
@@ -77,7 +79,7 @@ export default function VisualBoards() {
                                 className="rounded-lg border bg-background p-3 shadow-sm">
                                 <div className="flex items-start justify-between gap-2">
                                   <p className="text-sm font-medium">{t.title}</p>
-                                  <Badge variant={PRIORITY_TONE[t.priority] || 'outline'}>{t.priority}</Badge>
+                                  <Badge className={ratingTone[t.priority] || 'bg-muted text-foreground/60'}>{t.priority}</Badge>
                                 </div>
                                 {t.assigned_to && <p className="mt-1 text-xs text-muted-foreground">{t.assigned_to}</p>}
                                 {t.due_date && <p className="text-xs text-muted-foreground">Due {format(new Date(t.due_date), 'd MMM')}</p>}

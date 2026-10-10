@@ -107,7 +107,7 @@ export default function Checklists() {
                         {[list.category, list.due_date ? `Due ${format(new Date(list.due_date), 'd MMM yyyy')}` : ''].filter(Boolean).join(' · ')}
                       </p>
                     </div>
-                    <Badge variant={pct === 100 ? 'default' : 'secondary'}>{pct}%</Badge>
+                    <Badge className={pct === 100 ? 'bg-safe/10 text-safe' : 'bg-brand/10 text-brand'}>{pct}%</Badge>
                   </div>
 
                   {pct > 0 && (
