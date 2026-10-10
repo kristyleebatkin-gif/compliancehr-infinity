@@ -10,6 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye } from 'lucide-react';
 import { format, differenceInCalendarDays } from 'date-fns';
+import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
+import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
+import { EMPLOYEE_FILE_SECTIONS, EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
+import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -170,6 +174,25 @@ export default function Documents() {
           </DialogContent>
         </Dialog>
       </div>
+
+      <AttachedFormsLibrary
+        title="Employee Forms Library"
+        subtitle="Official employee onboarding forms - download templates or upload completed records"
+        libraryKey="Employee"
+        sections={EMPLOYEE_FILE_SECTIONS}
+        formFiles={EMPLOYEE_FORM_FILES}
+        formCodes={EMPLOYEE_FORM_CODES}
+      />
+      <AttachedFormsLibrary
+        title="Participant Forms Library"
+        subtitle="Official participant service forms - download templates or upload completed records"
+        libraryKey="Participant"
+        sections={PARTICIPANT_FILE_SECTIONS}
+        formFiles={PARTICIPANT_FORM_FILES}
+        formCodes={Object.fromEntries(Object.entries(PARTICIPANT_FORM_META).map(([key, meta]) => [key, meta.code]))}
+        definitions={PARTICIPANT_FORM_DEFINITIONS}
+      />
+      <BusinessDocumentsLibrary />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
