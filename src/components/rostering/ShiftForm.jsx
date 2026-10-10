@@ -6,7 +6,13 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { base44 } from '@/api/base44Client';
-import { SERVICE_TYPES, FUNDING_SOURCES, SHIFT_STATUSES } from '@/lib/rostering';
+import { SERVICE_TYPES, FUNDING_SOURCES, SHIFT_STATUSES, availabilityForDate } from '@/lib/rostering';
+
+const AVAILABILITY_LABEL = {
+  available: { text: 'Free', cls: 'bg-safe/10 text-safe' },
+  unavailable: { text: 'Unavailable', cls: 'bg-destructive/10 text-destructive' },
+  none: null,
+};
 
 const BLANK = {
   employee_name: '', participant_name: '', date: '', start_time: '', end_time: '',
@@ -20,6 +26,16 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
   const [form, setForm] = useState(BLANK);
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
+  const [availability, setAvailability] = useState([]);
+
+  useEffect(() => {
+    if (!open || !form.date) { setAvailability([]); return; }
+    let cancelled = false;
+    base44.entities.StaffAvailability.filter({ date: form.date }, { limit: 500 })
+      .then((p) => { if (!cancelled) setAvailability(p.items || []); })
+      .catch((e) => console.error(e));
+    return () => { cancelled = true; };
+  }, [open, form.date]);
 
   useEffect(() => {
     if (open) {
@@ -71,11 +87,24 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
             <div className="grid gap-1.5"><Label>Employee</Label>
               <Select value={form.employee_name || '__none__'} onValueChange={(v) => setForm({ ...form, employee_name: v === '__none__' ? '' : v })}>
                 <SelectTrigger><SelectValue placeholder="Unassigned" /></SelectTrigger>
-                <SelectContent>
+                <SelectContent className="min-w-[15rem]">
                   <SelectItem value="__none__">Unassigned</SelectItem>
-                  {staff.map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}
+                  {staff.map((n) => {
+                    const avail = AVAILABILITY_LABEL[availabilityForDate(availability, n, form.start_time, form.end_time)];
+                    return (
+                      <SelectItem key={n} value={n}>
+                        <span className="flex w-full items-center justify-between gap-3">
+                          <span>{n}</span>
+                          {avail && <span className={`whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${avail.cls}`}>{avail.text}</span>}
+                        </span>
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
+              {form.employee_name && availabilityForDate(availability, form.employee_name, form.start_time, form.end_time) === 'unavailable' && (
+                <p className="text-xs font-medium text-destructive">{form.employee_name} has marked themselves unavailable on this date.</p>
+              )}
             </div>
             <div className="grid gap-1.5"><Label>Participant</Label>
               <Select value={form.participant_name || '__none__'} onValueChange={(v) => setForm({ ...form, participant_name: v === '__none__' ? '' : v })}>

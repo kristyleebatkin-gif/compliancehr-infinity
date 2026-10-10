@@ -107,6 +107,20 @@ export function expandRecurrence(base, rule, until) {
   return dates;
 }
 
+// Availability status for a staff member on a date, against the planned shift times.
+// entries = StaffAvailability records for that date. Returns 'available' | 'unavailable' | 'none'.
+export function availabilityForDate(entries, staffName, start, end) {
+  const mine = entries.filter((e) => e.staff_name === staffName);
+  if (!mine.length) return 'none';
+  const blocked = mine.find((e) => e.type === 'Unavailable' &&
+    (e.all_day || !e.start_time || rangesOverlap(start || '00:00', end || '23:59', e.start_time, e.end_time || '23:59')));
+  if (blocked) return 'unavailable';
+  const free = mine.find((e) => e.type === 'Available' &&
+    (e.all_day || !e.start_time || rangesOverlap(start || '00:00', end || '23:59', e.start_time, e.end_time || '23:59')));
+  if (free) return 'available';
+  return 'none';
+}
+
 export function shiftLabel(s) {
   const time = s.start_time ? `${s.start_time}${s.end_time ? `–${s.end_time}` : ''}` : 'All day';
   return `${s.employee_name || 'Unassigned'}${s.participant_name ? ` → ${s.participant_name}` : ''} · ${time}`;
