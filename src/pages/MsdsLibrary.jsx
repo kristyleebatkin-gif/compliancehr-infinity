@@ -9,8 +9,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { FlaskConical, Search, Download, ExternalLink, Phone, Siren, Plus, Loader2 } from 'lucide-react';
+import { FlaskConical, Search, Download, ExternalLink, Phone, Siren, Plus, Loader2, Printer } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import { downloadChemicalRegister } from '@/lib/chemicalRegisterPdf';
 
 const CATEGORIES = ['Cleaning & Disinfectants', 'Solvents & Fuels', 'Garden & Pest Control', 'Industrial & Construction', 'Laboratory & Salts', 'Medical & First Aid', 'Gases'];
 
@@ -115,6 +116,7 @@ export default function MsdsLibrary() {
         <div className="mt-4 flex flex-wrap gap-2">
           <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add chemical</Button>
           <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={loading || chemicals.length === 0}><Download className="mr-2 h-4 w-4" />Export chemical list</Button>
+          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => downloadChemicalRegister(chemicals)} disabled={loading || chemicals.length === 0}><Printer className="mr-2 h-4 w-4" />Print register PDF</Button>
         </div>
       </div>
 
