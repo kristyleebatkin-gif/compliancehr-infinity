@@ -1,0 +1,89 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "Review Reminder",
+        "Training Expiry",
+        "Policy Review",
+        "Incident Escalation",
+        "Task Assigned",
+        "Weekly Compliance Summary",
+        "Expiry Alert",
+        "Overdue Escalation",
+        "General",
+        "Birthday Shout-out",
+        "NDIS Audit Due"
+      ],
+      "default": "General",
+      "title": "Type"
+    },
+    "recipient": {
+      "type": "string",
+      "title": "Recipient"
+    },
+    "recipient_id": {
+      "type": "string",
+      "title": "Recipient ID"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false,
+      "title": "Read"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "action_url": {
+      "type": "string",
+      "title": "Action URL"
+    },
+    "branding_company_name": {
+      "type": "string",
+      "title": "Branding Company Name"
+    },
+    "branding_logo_url": {
+      "type": "string",
+      "title": "Branding Logo URL"
+    },
+    "branding_slogan": {
+      "type": "string",
+      "title": "Branding Slogan"
+    }
+  },
+  "required": [
+    "type",
+    "message"
+  ],
+  "rls": {
+    "read": {
+      "data.recipient_id": "{{user.id}}"
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

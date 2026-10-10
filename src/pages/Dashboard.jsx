@@ -1,143 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Users, FolderOpen, ClipboardList, AlertTriangle, Megaphone, Plus, ShieldCheck } from 'lucide-react';
-import { format } from 'date-fns';
+import React from 'react';
+import { useRole } from '@/lib/useRole';
+import { ROLES } from '@/lib/roles';
+import AdminDashboard from '@/components/dashboard/AdminDashboard';
+import StaffDashboard from '@/components/dashboard/StaffDashboard';
+import ParticipantDashboard from '@/components/dashboard/ParticipantDashboard';
+import DashboardQuickStart from '@/components/dashboard/DashboardQuickStart';
+import { Activity, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 
-const today = new Date();
-const in30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
-const fromISO = format(today, 'yyyy-MM-dd');
-const toISO = format(in30Days, 'yyyy-MM-dd');
-
-const QuickLink = ({ to, icon: Icon, title, desc }) => (
-  <Link to={to} className="flex items-start gap-3 rounded-xl border p-4 transition-colors hover:bg-muted/50">
-    <div className="rounded-lg bg-muted p-2"><Icon className="h-5 w-5 text-muted-foreground" /></div>
-    <div>
-      <p className="font-medium">{title}</p>
-      <p className="text-sm text-muted-foreground">{desc}</p>
-    </div>
-  </Link>
-);
+const HEADINGS = {
+  [ROLES.ADMIN]: { title: 'Administrator Dashboard', sub: 'Monitor compliance, manage documents, ensure safety and drive continuous improvement across your organisation.' },
+  [ROLES.COMPLIANCE]: { title: 'Administrator Dashboard', sub: 'Monitor compliance, manage documents, ensure safety and drive continuous improvement across your organisation.' },
+  [ROLES.TEAM_LEADER]: { title: 'Administrator Dashboard', sub: 'Monitor compliance, manage documents, ensure safety and drive continuous improvement across your organisation.' },
+  [ROLES.SUPPORT]: { title: 'Staff Dashboard', sub: 'Your tools for training, incidents, risks and participant support.' },
+  [ROLES.PARTICIPANT]: { title: 'Participant Dashboard', sub: 'Manage your supports, documents and communications with your team.' },
+};
 
 export default function Dashboard() {
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({ staff: 0, docs: 0, expiring: 0, tasks: 0, incidents: 0 });
-  const [announcements, setAnnouncements] = useState([]);
-  const [newTitle, setNewTitle] = useState('');
-  const [newBody, setNewBody] = useState('');
-  const [posting, setPosting] = useState(false);
-
-  const load = async () => {
-    const [staff, docs, expiring, tasks, incidents, news] = await Promise.all([
-      base44.entities.StaffProfile.count({ status: 'Active' }),
-      base44.entities.EmployeeDocument.count({}),
-      base44.entities.EmployeeDocument.count({ expiry_date: { $gte: fromISO, $lte: toISO }, status: { $ne: 'Archived' } }),
-      base44.entities.Task.count({ status: { $ne: 'done' } }),
-      base44.entities.Incident.count({ status: { $in: ['Open', 'Investigating'] } }),
-      base44.entities.Announcement.filter({}, { sort: '-created_date', limit: 5, fields: ['title', 'body', 'audience', 'posted_by', 'created_date'] }),
-    ]);
-    setStats({ staff, docs, expiring, tasks, incidents });
-    setAnnouncements(news.items);
-    setLoading(false);
-  };
-
-  useEffect(() => { load().catch(() => { setLoading(false); }); }, []);
-
-  const post = async () => {
-    if (!newTitle.trim()) return;
-    setPosting(true);
-    try {
-      await base44.entities.Announcement.create({ title: newTitle, body: newBody, posted_by: 'Management' });
-      setNewTitle('');
-      setNewBody('');
-      await load();
-    } finally {
-      setPosting(false);
-    }
-  };
-
-  const cards = [
-    { label: 'Active staff', value: stats.staff, icon: Users },
-    { label: 'Documents on file', value: stats.docs, icon: FolderOpen },
-    { label: 'Expiring in 30 days', value: stats.expiring, icon: AlertTriangle },
-    { label: 'Open tasks', value: stats.tasks, icon: ClipboardList },
-    { label: 'Open incidents', value: stats.incidents, icon: AlertTriangle },
-  ];
+  const { role, user } = useRole();
+  const heading = HEADINGS[role] || HEADINGS[ROLES.SUPPORT];
+  const firstName = (user?.full_name || '').split(' ')[0];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Compliance overview across your organisation.</p>
+    <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 via-fuchsia-600 to-cyan-600 p-6 text-white shadow-2xl shadow-violet-500/25 md:p-8">
+        <div className="absolute -right-12 -top-20 h-56 w-56 rounded-full bg-pink-300/25 blur-sm" />
+        <div className="absolute left-[42%] top-[-5rem] h-40 w-40 rounded-full bg-amber-300/20 blur-xl" />
+        <div className="absolute -bottom-20 right-28 h-44 w-44 rounded-full bg-cyan-200/25" />
+        <div className="absolute -bottom-24 -left-12 h-48 w-48 rounded-full bg-indigo-900/20" />
+        <div className="relative mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur">
+          <Sparkles className="h-3.5 w-3.5 text-amber-200" />
+          Your ComplianceHR workspace
+        </div>
+        <h1 className="relative font-display text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+          {firstName ? `Welcome, ${firstName}` : heading.title}
+        </h1>
+        <p className="relative mt-3 max-w-3xl text-sm leading-6 text-white/85 md:text-base">{heading.sub}</p>
+        <div className="relative mt-6 flex flex-wrap gap-2.5">
+          {[
+            [ShieldCheck, heading.title],
+            [Activity, 'Live compliance overview'],
+            [Zap, 'Quick access to every module'],
+          ].map(([Icon, label]) => (
+            <div key={label} className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-slate-950/15 px-3 py-2 text-xs font-semibold text-white/90 backdrop-blur-sm">
+              <Icon className="h-4 w-4 text-cyan-100" />
+              {label}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : (
-        <>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {cards.map((c) => {
-              const Icon = c.icon;
-              return (
-                <Card key={c.label}>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">{c.label}</p>
-                    </div>
-                    <p className="mt-2 text-2xl font-bold">{c.value}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+      <DashboardQuickStart />
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <Card className="lg:col-span-2">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg"><Megaphone className="h-5 w-5" /> Announcements</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {announcements.length === 0 && <p className="text-sm text-muted-foreground">No announcements yet.</p>}
-                {announcements.map((a) => (
-                  <div key={a.id} className="rounded-lg border p-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="font-medium">{a.title}</p>
-                      <Badge variant="outline">{a.audience}</Badge>
-                    </div>
-                    {a.body && <p className="mt-1 text-sm text-muted-foreground">{a.body}</p>}
-                  </div>
-                ))}
-                <div className="space-y-2 rounded-lg border bg-muted/30 p-3">
-                  <Input placeholder="Announcement title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-                  <Input placeholder="Details (optional)" value={newBody} onChange={(e) => setNewBody(e.target.value)} />
-                  <Button size="sm" onClick={post} disabled={posting || !newTitle.trim()}>
-                    <Plus className="mr-1 h-4 w-4" /> Post announcement
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="space-y-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg"><ShieldCheck className="h-5 w-5" /> Quick links</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <QuickLink to="/staff" icon={Users} title="Staff Profiles" desc="Manage your team" />
-                  <QuickLink to="/documents" icon={FolderOpen} title="Document Vault" desc="Track employee documents" />
-                  <QuickLink to="/compliance" icon={ShieldCheck} title="Compliance Centre" desc="Policies & legal requirements" />
-                  <QuickLink to="/tasks" icon={ClipboardList} title="Tasks" desc="Open compliance actions" />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </>
-      )}
+      {role === ROLES.PARTICIPANT
+        ? <ParticipantDashboard />
+        : (role === ROLES.SUPPORT)
+          ? <StaffDashboard />
+          : <AdminDashboard />}
     </div>
   );
 }
