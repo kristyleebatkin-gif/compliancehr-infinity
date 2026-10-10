@@ -5,7 +5,10 @@ import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { AlertTriangle, FileSearch, ShieldAlert, Clock } from 'lucide-react';
 import { format, subMonths, startOfMonth, isBefore } from 'date-fns';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+
+const SEVERITY_KEYS = ['Low', 'Medium', 'High', 'Critical'];
+const SEVERITY_COLORS = { Low: '#22c55e', Medium: '#6366f1', High: '#f59e0b', Critical: '#dc2626' };
 
 const PENDING_INV_STATUSES = ['Pending', 'In Progress', 'Findings Draft'];
 const OPEN_INC_STATUSES = ['Reported', 'Under Investigation', 'Action Required'];
@@ -58,16 +61,18 @@ export default function SafetyTrendsDashboard() {
   const overdueInv = pendingInv.filter((i) => i.target_completion && isBefore(new Date(i.target_completion + 'T00:00:00'), new Date(today + 'T00:00:00')));
   const activeRisks = risks.filter((r) => ACTIVE_RISK_STATUSES.includes(r.status));
 
-  // Incident trend: incidents per month, last 6 months
+  // Incident trend: incidents per month split by severity, last 6 months
   const months = Array.from({ length: 6 }, (_, idx) => {
     const m = subMonths(new Date(), 5 - idx);
     return { key: format(startOfMonth(m), 'yyyy-MM'), label: format(m, 'MMM') };
   });
-  const trend = months.map((m) => ({
-    label: m.label,
-    Incidents: incidents.filter((i) => (i.date_occurred || '').slice(0, 7) === m.key).length,
-  }));
-  const trendMax = Math.max(1, ...trend.map((t) => t.Incidents));
+  const trend = months.map((m) => {
+    const monthIncidents = incidents.filter((i) => (i.date_occurred || '').slice(0, 7) === m.key);
+    const row = { label: m.label, Total: monthIncidents.length };
+    SEVERITY_KEYS.forEach((s) => { row[s] = monthIncidents.filter((i) => (i.severity || 'Medium') === s).length; });
+    return row;
+  });
+  const trendMax = Math.max(1, ...trend.map((t) => t.Total));
 
   // Severity breakdown of open incidents
   const severityCounts = ['Low', 'Medium', 'High', 'Critical'].map((s) => ({
@@ -98,19 +103,19 @@ export default function SafetyTrendsDashboard() {
 
           <div className="grid gap-4 lg:grid-cols-3">
             <div className="rounded-xl border border-border/60 p-4 lg:col-span-2">
-              <h4 className="mb-3 text-sm font-semibold">Incident trend — last 6 months</h4>
-              <ResponsiveContainer width="100%" height={180}>
+              <h4 className="mb-3 text-sm font-semibold">Incident frequency and severity by month — last 6 months</h4>
+              <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={trend} margin={{ top: 4, right: 8, bottom: 0, left: -24 }}>
                   <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={11} />
                   <YAxis allowDecimals={false} domain={[0, trendMax]} tickLine={false} axisLine={false} fontSize={11} />
                   <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} />
-                  <Bar dataKey="Incidents" radius={[6, 6, 0, 0]}>
-                    {trend.map((t, idx) => (
-                      <Cell key={idx} fill={idx === trend.length - 1 && t.Incidents >= Math.max(...trend.slice(0, 5).map((x) => x.Incidents)) && t.Incidents > 0 ? '#dc2626' : '#6366f1'} />
-                    ))}
-                  </Bar>
+                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11 }} />
+                  {SEVERITY_KEYS.map((s) => (
+                    <Bar key={s} dataKey={s} stackId="severity" fill={SEVERITY_COLORS[s]} radius={s === 'Critical' ? [6, 6, 0, 0] : [0, 0, 0, 0]} />
+                  ))}
                 </BarChart>
               </ResponsiveContainer>
+              <p className="mt-2 text-xs text-muted-foreground">Each bar is a month; the stacked segments show how many incidents were Low, Medium, High or Critical. Rising red segments flag escalating severity early.</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {severityCounts.map((s) => (
                   <div key={s.severity} className={`rounded-full px-3 py-1 text-xs font-semibold ${SEVERITY_TONE[s.severity]}`}>{s.severity} (open): {s.count}</div>
