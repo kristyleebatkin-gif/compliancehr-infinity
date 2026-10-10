@@ -6,9 +6,21 @@
       "type": "string",
       "title": "Description"
     },
+    "merchant": {
+      "type": "string",
+      "title": "Merchant / Supplier"
+    },
+    "receipt_number": {
+      "type": "string",
+      "title": "Receipt Number"
+    },
     "amount": {
       "type": "number",
       "title": "Amount ($)"
+    },
+    "gst_amount": {
+      "type": "number",
+      "title": "GST Amount ($)"
     },
     "date": {
       "type": "string",
@@ -19,9 +31,27 @@
       "type": "string",
       "title": "Paid By"
     },
+    "reimburse_to": {
+      "type": "string",
+      "title": "Reimburse To"
+    },
+    "reimbursed": {
+      "type": "boolean",
+      "default": false,
+      "title": "Reimbursed"
+    },
+    "reimbursed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Reimbursed Date"
+    },
     "category": {
       "type": "string",
       "title": "Category"
+    },
+    "payment_method": {
+      "type": "string",
+      "title": "Payment Method"
     },
     "status": {
       "type": "string",
@@ -35,6 +65,14 @@
     "receipt_url": {
       "type": "string",
       "title": "Receipt Link"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Receipt File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "Receipt File Name"
     },
     "notes": {
       "type": "string",

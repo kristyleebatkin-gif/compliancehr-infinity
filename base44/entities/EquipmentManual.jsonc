@@ -10,9 +10,27 @@
       "type": "string",
       "title": "Equipment"
     },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Office Equipment",
+        "Electrical Equipment",
+        "Garden Equipment",
+        "Kitchen & Appliances",
+        "Safety Equipment",
+        "Vehicle",
+        "Other"
+      ],
+      "default": "Office Equipment",
+      "title": "Category"
+    },
     "manufacturer": {
       "type": "string",
       "title": "Manufacturer"
+    },
+    "model": {
+      "type": "string",
+      "title": "Model"
     },
     "version": {
       "type": "string",
@@ -21,6 +39,26 @@
     "manual_url": {
       "type": "string",
       "title": "Manual Link"
+    },
+    "manual_file_uri": {
+      "type": "string",
+      "title": "Manual File URI"
+    },
+    "manual_file_name": {
+      "type": "string",
+      "title": "Manual File Name"
+    },
+    "operating_instructions": {
+      "type": "string",
+      "title": "Operating Instructions"
+    },
+    "maintenance_schedule": {
+      "type": "string",
+      "title": "Maintenance Schedule"
+    },
+    "safety_notes": {
+      "type": "string",
+      "title": "Safety Notes"
     },
     "review_date": {
       "type": "string",

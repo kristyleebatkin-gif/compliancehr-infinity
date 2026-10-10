@@ -6,21 +6,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Receipt as ReceiptIcon, CheckCircle2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useToast } from '@/components/ui/use-toast';
+import { Download, History, Loader2, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { downloadCsv } from '@/lib/csvExport';
+import { exportModuleAccessLog } from '@/lib/accessLogExport';
+import ReceiptScanner from '@/components/receipts/ReceiptScanner';
+
+const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
 export default function ReceiptHub() {
+  const { toast } = useToast();
   const [receipts, setReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ description: '', amount: '', date: '', paid_by: '', category: '', status: 'Unreconciled', receipt_url: '', notes: '' });
+  const [exporting, setExporting] = useState(false);
+  const [form, setForm] = useState({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Receipt.filter({}, { sort: '-date', limit: 50 });
+      const page = await base44.entities.Receipt.filter({}, { sort: '-date', limit: 200 });
       setReceipts(page.items);
     } finally {
       setLoading(false);
@@ -33,8 +42,12 @@ export default function ReceiptHub() {
     if (!form.description.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.Receipt.create({ ...form, amount: Number(form.amount) || undefined });
-      setForm({ description: '', amount: '', date: '', paid_by: '', category: '', status: 'Unreconciled', receipt_url: '', notes: '' });
+      await base44.entities.Receipt.create({
+        ...form,
+        amount: form.amount === '' ? undefined : Number(form.amount),
+        gst_amount: form.gst_amount === '' ? undefined : Number(form.gst_amount),
+      });
+      setForm({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
       setOpen(false);
       await load();
     } finally {
@@ -42,76 +55,149 @@ export default function ReceiptHub() {
     }
   };
 
-  const reconcile = async (r) => {
+  const toggleReconcile = async (r) => {
     await base44.entities.Receipt.update(r.id, { status: r.status === 'Unreconciled' ? 'Reconciled' : 'Unreconciled' });
     await load();
   };
 
+  const toggleReimbursed = async (r) => {
+    await base44.entities.Receipt.update(r.id, r.reimbursed ? { reimbursed: false, reimbursed_date: null } : { reimbursed: true, reimbursed_date: new Date().toISOString().slice(0, 10) });
+    await load();
+  };
+
+  const openReceiptFile = async (r) => {
+    if (r.receipt_url) { window.open(r.receipt_url, '_blank'); return; }
+    if (!r.file_uri) return;
+    try {
+      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: r.file_uri });
+      window.open(signed_url, '_blank');
+    } catch (error) {
+      toast({ title: 'Unable to open receipt', description: error.message, variant: 'destructive' });
+    }
+  };
+
+  const exportCsv = () => {
+    downloadCsv('Receipt-Register.csv', [
+      { key: 'description', label: 'Description' }, { key: 'merchant', label: 'Merchant' },
+      { key: 'receipt_number', label: 'Receipt Number' }, { key: 'date', label: 'Date' },
+      { key: 'amount', label: 'Amount' }, { key: 'gst_amount', label: 'GST' },
+      { key: 'paid_by', label: 'Paid By' }, { key: 'reimburse_to', label: 'Reimburse To' },
+      { key: 'reimbursed', label: 'Reimbursed' }, { key: 'reimbursed_date', label: 'Reimbursed Date' },
+      { key: 'category', label: 'Category' }, { key: 'payment_method', label: 'Payment Method' },
+      { key: 'status', label: 'Status' }, { key: 'file_name', label: 'Stored Receipt' },
+      { key: 'receipt_url', label: 'Receipt Link' }, { key: 'notes', label: 'Notes' },
+    ], receipts);
+    toast({ title: 'Receipt register exported' });
+  };
+
+  const exportAccess = async () => {
+    try {
+      const count = await exportModuleAccessLog('/receipts', 'Receipt-Hub-Access-Log.csv');
+      toast({ title: 'Access log exported', description: `${count} access records for the Receipt Hub.` });
+    } catch (error) {
+      toast({ title: 'Export failed', description: error.message, variant: 'destructive' });
+    }
+  };
+
   const unrecTotal = receipts.filter((r) => r.status === 'Unreconciled').reduce((s, r) => s + (r.amount || 0), 0);
+  const reimburseTotal = receipts.filter((r) => !r.reimbursed && r.reimburse_to).reduce((s, r) => s + (r.amount || 0), 0);
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><ReceiptIcon className="h-6 w-6" /> Receipt Hub</h1>
-          <p className="text-sm text-muted-foreground">Unreconciled total: ${unrecTotal.toLocaleString('en-AU', { minimumFractionDigits: 2 })}</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Log receipt</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New receipt</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Description *</Label><Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Amount ($)</Label><Input type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} /></div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Paid by</Label><Input value={form.paid_by} onChange={(e) => setForm({ ...form, paid_by: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Unreconciled', 'Reconciled'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Receipt link</Label><Input value={form.receipt_url} onChange={(e) => setForm({ ...form, receipt_url: e.target.value })} /></div>
-              </div>
-              <Button onClick={save} disabled={saving || !form.description.trim()}>Save receipt</Button>
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-6 text-white shadow-lg">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="rounded-xl bg-white/10 p-3"><ReceiptIcon className="h-7 w-7" /></div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Receipt Hub</h1>
+              <p className="text-sm text-slate-300">Scan, store, reconcile and reimburse receipts with full records.</p>
             </div>
-          </DialogContent>
-        </Dialog>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {[['Receipts', String(receipts.length)], ['Unreconciled', money(unrecTotal)], ['To reimburse', money(reimburseTotal)]].map(([label, value]) => (
+              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
+                <p className="text-sm font-bold">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
+          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
+          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
+        </div>
       </div>
+
+      <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : receipts.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No receipts logged yet.</CardContent></Card>
+        <Card><CardContent className="p-10 text-center text-muted-foreground">No receipts logged yet. Scan or log your first receipt above.</CardContent></Card>
       ) : (
         <div className="space-y-3">
           {receipts.map((r) => (
             <Card key={r.id}>
-              <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
-                <div>
-                  <p className="font-medium">{r.description}{r.category ? ` · ${r.category}` : ''}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {[r.date ? format(new Date(r.date), 'd MMM yyyy') : '', r.paid_by].filter(Boolean).join(' · ')}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  {r.amount != null && <p className="font-semibold">${r.amount.toLocaleString('en-AU', { minimumFractionDigits: 2 })}</p>}
-                  <Badge variant={r.status === 'Reconciled' ? 'default' : 'secondary'}>{r.status}</Badge>
-                  <Button variant="ghost" size="icon" onClick={() => reconcile(r)} title="Toggle reconciled"><CheckCircle2 className="h-4 w-4" /></Button>
-                  {r.receipt_url && <a href={r.receipt_url} target="_blank" rel="noreferrer" className="text-sm text-primary underline">Open</a>}
-                  <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Receipt.delete(r.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+              <CardContent className="p-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium">{r.description}{r.category ? ` · ${r.category}` : ''}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {[r.merchant, r.date ? format(new Date(r.date), 'd MMM yyyy') : '', r.receipt_number ? `#${r.receipt_number}` : '', r.paid_by ? `Paid by ${r.paid_by}` : '', r.payment_method].filter(Boolean).join(' · ')}
+                    </p>
+                    {r.reimburse_to && <p className="mt-0.5 text-xs text-muted-foreground">Reimburse to: <span className="font-medium text-foreground">{r.reimburse_to}</span>{r.reimbursed ? ` · reimbursed ${r.reimbursed_date ? format(new Date(r.reimbursed_date), 'd MMM yyyy') : ''}` : ' · pending'}</p>}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {r.amount != null && <p className="font-semibold">{money(r.amount)}</p>}
+                    <Badge variant={r.status === 'Reconciled' ? 'default' : 'secondary'}>{r.status}</Badge>
+                    {r.reimburse_to && <Badge className={r.reimbursed ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}>{r.reimbursed ? 'Reimbursed' : 'Reimbursement pending'}</Badge>}
+                    {r.file_uri && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => openReceiptFile(r)}>Open receipt</Button>}
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleReconcile(r)} title="Toggle reconciled"><CheckCircle2 className="h-4 w-4" /></Button>
+                    {r.reimburse_to && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toggleReimbursed(r)}>{r.reimbursed ? 'Undo reimbursement' : 'Mark reimbursed'}</Button>}
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={async () => { await base44.entities.Receipt.delete(r.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
       )}
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-h-[92vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>Log receipt</DialogTitle></DialogHeader>
+          <div className="grid gap-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-1.5"><Label>Description *</Label><Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Merchant / supplier</Label><Input value={form.merchant} onChange={(e) => setForm({ ...form, merchant: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="grid gap-1.5"><Label>Amount ($)</Label><Input type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>GST ($)</Label><Input type="number" step="0.01" value={form.gst_amount} onChange={(e) => setForm({ ...form, gst_amount: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="grid gap-1.5"><Label>Paid by</Label><Input value={form.paid_by} onChange={(e) => setForm({ ...form, paid_by: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Reimburse to</Label><Input value={form.reimburse_to} onChange={(e) => setForm({ ...form, reimburse_to: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="grid gap-1.5"><Label>Status</Label>
+                <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>{['Unreconciled', 'Reconciled'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-1.5"><Label>Payment method</Label><Input value={form.payment_method} onChange={(e) => setForm({ ...form, payment_method: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Receipt link</Label><Input value={form.receipt_url} onChange={(e) => setForm({ ...form, receipt_url: e.target.value })} /></div>
+            </div>
+            <div className="grid gap-1.5"><Label>Notes</Label><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+            <Button onClick={save} disabled={saving || !form.description.trim()}>Save receipt</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
