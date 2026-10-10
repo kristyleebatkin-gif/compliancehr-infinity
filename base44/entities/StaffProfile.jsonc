@@ -1,0 +1,61 @@
+{
+  "name": "StaffProfile",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "position": {
+      "type": "string",
+      "title": "Position"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "Support Worker",
+        "Team Leader",
+        "Compliance Manager",
+        "Administration",
+        "Management"
+      ],
+      "default": "Support Worker",
+      "title": "Role"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "On Leave",
+        "Inactive"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+    },
+    "supervisor": {
+      "type": "string",
+      "title": "Supervisor"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "title": "Emergency Contact"
+    }
+  },
+  "required": [
+    "full_name"
+  ]
+}

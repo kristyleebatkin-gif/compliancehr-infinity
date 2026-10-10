@@ -1,0 +1,55 @@
+{
+  "name": "Certificate",
+  "type": "object",
+  "properties": {
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Name"
+    },
+    "module_title": {
+      "type": "string",
+      "title": "Module Title"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Issue Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "score": {
+      "type": "number",
+      "title": "Score (%)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Current",
+        "Expiring Soon",
+        "Expired",
+        "Revoked"
+      ],
+      "default": "Current",
+      "title": "Status"
+    },
+    "issued_by": {
+      "type": "string",
+      "title": "Issued By"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Certificate File URL"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "staff_name",
+    "module_title"
+  ]
+}

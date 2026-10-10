@@ -1,0 +1,52 @@
+{
+  "name": "Incident",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "default": "Low",
+      "title": "Severity"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Investigating",
+        "Resolved",
+        "Closed"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "reported_by": {
+      "type": "string",
+      "title": "Reported By"
+    },
+    "incident_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Incident Date"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

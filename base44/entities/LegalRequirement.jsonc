@@ -1,0 +1,54 @@
+{
+  "name": "LegalRequirement",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Requirement Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "title": "Jurisdiction"
+    },
+    "authority": {
+      "type": "string",
+      "title": "Authority / Issuer"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose / Obligation"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Current",
+        "Review Required",
+        "Superseded",
+        "Archived"
+      ],
+      "default": "Current",
+      "title": "Status"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Reviewed"
+    },
+    "next_review": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review"
+    },
+    "official_url": {
+      "type": "string",
+      "title": "Official URL"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

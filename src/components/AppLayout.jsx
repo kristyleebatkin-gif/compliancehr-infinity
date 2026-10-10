@@ -1,0 +1,108 @@
+import { useState, useEffect } from 'react';
+import { Link, useLocation, Outlet } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
+import { Button } from '@/components/ui/button';
+import {
+  LayoutDashboard, Users, ShieldCheck, GraduationCap, FolderOpen,
+  ClipboardList, Github, Menu, LogOut, X, Building2,
+} from 'lucide-react';
+
+const NAV = [
+  { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { label: 'Staff', path: '/staff', icon: Users },
+  { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
+  { label: 'Documents', path: '/documents', icon: FolderOpen },
+  { label: 'Training', path: '/training', icon: GraduationCap },
+  { label: 'Tasks', path: '/tasks', icon: ClipboardList },
+  { label: 'GitHub Activity', path: '/github', icon: Github },
+];
+
+export default function AppLayout() {
+  const location = useLocation();
+  const [user, setUser] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    base44.auth.me().then(setUser).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  const isActive = (path) =>
+    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+
+  const SidebarContent = () => (
+    <div className="flex h-full flex-col">
+      <div className="flex items-center gap-2 border-b p-4">
+        <div className="rounded-lg bg-slate-900 p-2">
+          <Building2 className="h-5 w-5 text-white" />
+        </div>
+        <div>
+          <p className="font-bold leading-tight">ComplianceHR</p>
+          <p className="text-xs text-muted-foreground">Compliance Portal</p>
+        </div>
+      </div>
+      <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+        {NAV.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                isActive(item.path)
+                  ? 'bg-slate-900 text-white'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="border-t p-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium">{user?.full_name || 'User'}</p>
+            <p className="truncate text-xs text-muted-foreground">{user?.email || ''}</p>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={async () => { await base44.auth.logout(); }}
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex min-h-screen">
+      <aside className="hidden w-64 shrink-0 border-r bg-background lg:block">
+        <SidebarContent />
+      </aside>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex items-center justify-between border-b p-3 lg:hidden">
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="rounded-lg p-2 hover:bg-muted">
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+          <p className="font-bold">ComplianceHR</p>
+          <div className="w-9" />
+        </header>
+        {mobileOpen && (
+          <div className="border-b bg-background lg:hidden">
+            <SidebarContent />
+          </div>
+        )}
+        <main className="flex-1 p-4 md:p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}

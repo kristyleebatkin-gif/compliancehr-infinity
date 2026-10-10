@@ -1,0 +1,31 @@
+{
+  "name": "Announcement",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "body": {
+      "type": "string",
+      "title": "Body"
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "All Staff",
+        "Management",
+        "Compliance"
+      ],
+      "default": "All Staff",
+      "title": "Audience"
+    },
+    "posted_by": {
+      "type": "string",
+      "title": "Posted By"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

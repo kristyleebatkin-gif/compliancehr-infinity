@@ -13,6 +13,13 @@ import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import GitHubActivity from '@/pages/GitHubActivity';
+import AppLayout from '@/components/AppLayout';
+import Dashboard from '@/pages/Dashboard';
+import Staff from '@/pages/Staff';
+import ComplianceHub from '@/pages/ComplianceHub';
+import Documents from '@/pages/Documents';
+import Training from '@/pages/Training';
+import Tasks from '@/pages/Tasks';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -45,7 +52,15 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route path="/" element={<GitHubActivity />} />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/staff" element={<Staff />} />
+          <Route path="/compliance" element={<ComplianceHub />} />
+          <Route path="/documents" element={<Documents />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/github" element={<GitHubActivity />} />
+        </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

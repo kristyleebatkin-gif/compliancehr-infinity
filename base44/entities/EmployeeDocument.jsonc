@@ -1,0 +1,68 @@
+{
+  "name": "EmployeeDocument",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "Resume",
+        "Contract",
+        "Police Check",
+        "Blue Card",
+        "First Aid Certificate",
+        "CPR Certificate",
+        "NDIS Worker Screening",
+        "Driver's License",
+        "Qualifications",
+        "Reference Check",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Document Type"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Issue Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Current",
+        "Expiring Soon",
+        "Expired",
+        "Archived"
+      ],
+      "default": "Current",
+      "title": "Status"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

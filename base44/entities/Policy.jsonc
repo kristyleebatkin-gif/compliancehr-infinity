@@ -1,0 +1,70 @@
+{
+  "name": "Policy",
+  "type": "object",
+  "properties": {
+    "document_name": {
+      "type": "string",
+      "title": "Document Name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Rights & Responsibilities",
+        "Privacy",
+        "Complaints",
+        "Incident Management",
+        "Risk Management",
+        "Medication",
+        "Human Resources",
+        "Emergency Management",
+        "Governance",
+        "Quality",
+        "Financial"
+      ],
+      "default": "Governance",
+      "title": "Category"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Active",
+        "Under Review",
+        "Expired",
+        "Archived"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "acknowledgement_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Staff Acknowledgement Required"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    }
+  },
+  "required": [
+    "document_name",
+    "category"
+  ]
+}
