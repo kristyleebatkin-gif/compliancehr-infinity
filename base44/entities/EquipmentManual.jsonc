@@ -1,0 +1,38 @@
+{
+  "name": "EquipmentManual",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Manual Title"
+    },
+    "equipment_name": {
+      "type": "string",
+      "title": "Equipment"
+    },
+    "manufacturer": {
+      "type": "string",
+      "title": "Manufacturer"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version"
+    },
+    "manual_url": {
+      "type": "string",
+      "title": "Manual Link"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

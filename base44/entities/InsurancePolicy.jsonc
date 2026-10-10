@@ -1,0 +1,59 @@
+{
+  "name": "InsurancePolicy",
+  "type": "object",
+  "properties": {
+    "policy_name": {
+      "type": "string",
+      "title": "Policy Name"
+    },
+    "insurer": {
+      "type": "string",
+      "title": "Insurer"
+    },
+    "policy_number": {
+      "type": "string",
+      "title": "Policy Number"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Public Liability",
+        "Workers Compensation",
+        "Professional Indemnity",
+        "Vehicle",
+        "Property",
+        "Cyber",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Type"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "premium": {
+      "type": "number",
+      "title": "Annual Premium ($)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Expired",
+        "Cancelled"
+      ],
+      "default": "Active",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "policy_name"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "CompanyDocument",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Document Name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Policies",
+        "Templates",
+        "Certificates",
+        "Registrations",
+        "Licences",
+        "Financial",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Category"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Document Owner"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Current",
+        "Review Required",
+        "Archived"
+      ],
+      "default": "Current",
+      "title": "Status"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

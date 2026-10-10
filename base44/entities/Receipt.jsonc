@@ -1,0 +1,47 @@
+{
+  "name": "Receipt",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount ($)"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "paid_by": {
+      "type": "string",
+      "title": "Paid By"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Unreconciled",
+        "Reconciled"
+      ],
+      "default": "Unreconciled",
+      "title": "Status"
+    },
+    "receipt_url": {
+      "type": "string",
+      "title": "Receipt Link"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "description"
+  ]
+}

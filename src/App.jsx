@@ -40,6 +40,12 @@ import Surveys from '@/pages/Surveys';
 import KeyContacts from '@/pages/KeyContacts';
 import Volunteers from '@/pages/Volunteers';
 import Rostering from '@/pages/Rostering';
+import VisualBoards from '@/pages/VisualBoards';
+import CompanySafe from '@/pages/CompanySafe';
+import EquipmentManuals from '@/pages/EquipmentManuals';
+import InsuranceFinance from '@/pages/InsuranceFinance';
+import ReceiptHub from '@/pages/ReceiptHub';
+import DataControl from '@/pages/DataControl';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -99,6 +105,12 @@ const AuthenticatedApp = () => {
           <Route path="/contacts" element={<KeyContacts />} />
           <Route path="/volunteers" element={<Volunteers />} />
           <Route path="/roster" element={<Rostering />} />
+          <Route path="/visual-boards" element={<VisualBoards />} />
+          <Route path="/company-safe" element={<CompanySafe />} />
+          <Route path="/equipment-manuals" element={<EquipmentManuals />} />
+          <Route path="/insurance" element={<InsuranceFinance />} />
+          <Route path="/receipts" element={<ReceiptHub />} />
+          <Route path="/data-control" element={<DataControl />} />
           <Route path="/github" element={<GitHubActivity />} />
         </Route>
       </Route>

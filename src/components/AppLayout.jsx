@@ -8,7 +8,8 @@ import {
   Heart, ShieldAlert, CalendarClock, Megaphone,
   Boxes, FileSpreadsheet, Siren, PartyPopper, CalendarDays,
   ClipboardCheck, UserPlus, Target, TrendingUp, BarChart3, Phone,
-  HeartHandshake, CalendarRange,
+  HeartHandshake, CalendarRange, SquareKanban, Lock, BookOpen,
+  Umbrella, Receipt, Database,
 } from 'lucide-react';
 
 const NAV = [
@@ -38,6 +39,12 @@ const NAV = [
   { label: 'Key Contacts', path: '/contacts', icon: Phone },
   { label: 'Volunteers', path: '/volunteers', icon: HeartHandshake },
   { label: 'Rostering', path: '/roster', icon: CalendarRange },
+  { label: 'Visual Boards', path: '/visual-boards', icon: SquareKanban },
+  { label: 'Company Safe', path: '/company-safe', icon: Lock },
+  { label: 'Equipment Manuals', path: '/equipment-manuals', icon: BookOpen },
+  { label: 'Insurance & Finance', path: '/insurance', icon: Umbrella },
+  { label: 'Receipt Hub', path: '/receipts', icon: Receipt },
+  { label: 'Data Control', path: '/data-control', icon: Database },
   { label: 'GitHub Activity', path: '/github', icon: Github },
 ];
 
