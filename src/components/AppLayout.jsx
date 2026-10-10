@@ -25,6 +25,7 @@ const PRIMARY_NAV = [
   { label: 'Risk Reporting', path: '/risks', key: 'risks', icon: ShieldAlert },
   { label: 'Compliance & Report Centre', path: '/compliance', key: 'compliance', icon: ShieldCheck },
   { label: 'Training Centre', path: '/training', key: 'training', icon: GraduationCap },
+  { label: 'Certificates', path: '/certificates', key: 'certificates', icon: BadgeCheck },
   { label: 'Asset Management', path: '/assets', key: 'assets', icon: Boxes },
   { label: 'Shift Scheduling', path: '/shifts', key: 'shifts', icon: CalendarClock },
   { label: 'Rostering Facility', path: '/rostering', key: 'rostering', icon: CalendarClock },

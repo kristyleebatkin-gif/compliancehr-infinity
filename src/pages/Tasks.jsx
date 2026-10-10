@@ -1,138 +1,131 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { ratingTone } from '@/lib/statusStyles';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, ClipboardList, ArrowRight } from 'lucide-react';
-import { format } from 'date-fns';
+import { useToast } from '@/components/ui/use-toast';
+import PageHeader from '@/components/PageHeader';
+import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
+import EmptyState from '@/components/EmptyState';
+import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap } from 'lucide-react';
 
-const COLUMNS = [
-  { key: 'open', label: 'To Do' },
-  { key: 'in_progress', label: 'In Progress' },
-  { key: 'done', label: 'Done' },
-];
-const NEXT = { open: 'in_progress', in_progress: 'done', done: 'open' };
-const priorityTone = (p) => ratingTone[p.charAt(0).toUpperCase() + p.slice(1)] || 'bg-muted text-foreground/60';
+const TYPES = ['Review Reminder', 'Training Renewal', 'Policy Review', 'Incident Action', 'Audit Action', 'General'];
+const STATUSES = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
+const PRIORITIES = ['Low', 'Medium', 'High', 'Urgent'];
+
+const blank = { title: '', task_type: 'General', assigned_to: '', due_date: '', status: 'Open', priority: 'Medium', notes: '', linked_entity_type: '', linked_entity_id: '' };
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState([]);
+  const { toast } = useToast();
+  const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', status: 'open', priority: 'medium', due_date: '', assigned_to: '' });
+  const [editing, setEditing] = useState(null);
+  const [form, setForm] = useState(blank);
+  const [filter, setFilter] = useState('All');
+  const [running, setRunning] = useState(false);
 
-  const load = useCallback(async () => {
+  const runAutomations = async () => {
+    setRunning(true);
+    try {
+      const res = await base44.functions.invoke('runAutomations', {});
+      const data = res?.data || res;
+      toast({ title: data.message || 'Automations complete' });
+      load();
+    } catch (err) { toast({ title: 'Automations failed', description: err.message, variant: 'destructive' }); }
+    setRunning(false);
+  };
+
+  const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Task.filter({}, { sort: 'due_date', limit: 100 });
-      setTasks(page.items);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      const page = await base44.entities.Task.filter({}, { sort: '-due_date', limit: 500 });
+      setList(page.items || []);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+  useEffect(() => { load(); }, []);
 
-  useEffect(() => { load(); }, [load]);
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
-  const save = async () => {
-    if (!form.title.trim()) return;
-    setSaving(true);
-    try {
-      await base44.entities.Task.create(form);
-      setForm({ title: '', description: '', status: 'open', priority: 'medium', due_date: '', assigned_to: '' });
-      setOpen(false);
-      await load();
-    } finally {
-      setSaving(false);
-    }
+  const openNew = () => { setEditing('new'); setForm({ ...blank, due_date: new Date().toISOString().slice(0, 10) }); };
+  const openEdit = (t) => { setEditing(t.id); setForm(t); };
+
+  const save = async (e) => {
+    e.preventDefault();
+    if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
+    if (editing === 'new') await base44.entities.Task.create(form);
+    else await base44.entities.Task.update(editing, form);
+    toast({ title: 'Task saved' });
+    setEditing(null); load();
   };
 
-  const advance = async (task) => {
-    await base44.entities.Task.update(task.id, { status: NEXT[task.status] });
-    await load();
+  const toggle = async (t) => {
+    await base44.entities.Task.update(t.id, { status: t.status === 'Completed' ? 'Open' : 'Completed' });
+    load();
   };
 
-  const remove = async (id) => {
-    await base44.entities.Task.delete(id);
-    await load();
-  };
+  const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.Task.delete(t.id); load(); } };
+
+  const filtered = filter === 'All' ? list : list.filter((t) => t.status === filter);
+  const counts = { Open: 0, 'In Progress': 0, Completed: 0, Overdue: 0 };
+  list.forEach((t) => { counts[t.status] = (counts[t.status] || 0) + 1; });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><ClipboardList className="h-6 w-6" /> Tasks</h1>
-          <p className="text-sm text-muted-foreground">Compliance actions and follow-ups.</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add task</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New task</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>Description</Label><Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{COLUMNS.map((c) => <SelectItem key={c.key} value={c.key}>{c.label}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Priority</Label>
-                  <Select value={form.priority} onValueChange={(v) => setForm({ ...form, priority: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['low', 'medium', 'high'].map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Due date</Label><Input type="date" value={form.due_date} onChange={(e) => setForm({ ...form, due_date: e.target.value })} /></div>
-              </div>
-              <div className="grid gap-1.5"><Label>Assigned to</Label><Input value={form.assigned_to} onChange={(e) => setForm({ ...form, assigned_to: e.target.value })} /></div>
-              <Button onClick={save} disabled={saving || !form.title.trim()}>Save task</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+    <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
+      <PageHeader title="Tasks" subtitle={`${counts.Open} open • ${counts.Overdue} overdue`} action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
+
+      <div className="flex gap-1 overflow-x-auto">
+        {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
+          <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
+        ))}
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+        <div className="py-12 text-center text-sm text-foreground/40">Loading...</div>
+      ) : filtered.length === 0 ? (
+        <EmptyState icon={ListTodo} title="No tasks" message="Create tasks to track compliance actions." />
       ) : (
-        <div className="grid gap-4 md:grid-cols-3">
-          {COLUMNS.map((col) => {
-            const items = tasks.filter((t) => t.status === col.key);
-            return (
-              <div key={col.key} className="space-y-3">
-                <div className="flex items-center justify-between px-1">
-                  <p className="font-semibold">{col.label}</p>
-                  <Badge variant="outline">{items.length}</Badge>
+        <div className="space-y-2">
+          {filtered.map((t) => (
+            <div key={t.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+              <button onClick={() => toggle(t)} className="shrink-0">
+                {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}
+              </button>
+              <div className="min-w-0 flex-1">
+                <div className={`text-sm font-medium ${t.status === 'Completed' ? 'line-through text-foreground/40' : ''}`}>{t.title}</div>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/50">
+                  <span className={`rounded-full px-2 py-0.5 font-medium ${t.priority === 'Urgent' || t.priority === 'High' ? 'bg-danger/10 text-danger' : 'bg-muted text-foreground/60'}`}>{t.priority}</span>
+                  <span>{t.task_type}</span>
+                  {t.assigned_to && <span>• {t.assigned_to}</span>}
+                  {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.due_date}</span>}
                 </div>
-                {items.length === 0 && (
-                  <Card><CardContent className="p-4 text-center text-sm text-muted-foreground">No tasks</CardContent></Card>
-                )}
-                {items.map((t) => (
-                  <Card key={t.id}>
-                    <CardContent className="space-y-2 p-3">
-                      <div className="flex items-start justify-between gap-2">
-                        <p className={`text-sm font-medium ${t.status === 'done' ? 'line-through text-muted-foreground' : ''}`}>{t.title}</p>
-                        <Badge className={priorityTone(t.priority)}>{t.priority}</Badge>
-                      </div>
-                      {t.description && <p className="text-xs text-muted-foreground">{t.description}</p>}
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>{[t.assigned_to, t.due_date ? `Due ${format(new Date(t.due_date), 'd MMM')}` : ''].filter(Boolean).join(' · ')}</span>
-                        <span className="flex items-center">
-                          <Button variant="ghost" size="icon" onClick={() => advance(t)} title="Move to next stage"><ArrowRight className="h-4 w-4" /></Button>
-                          <Button variant="ghost" size="icon" onClick={() => remove(t.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
               </div>
-            );
-          })}
+              <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${t.status === 'Completed' ? 'bg-safe/10 text-safe' : t.status === 'Overdue' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'}`}>{t.status}</span>
+              <div className="flex gap-1">
+                <button onClick={() => openEdit(t)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                <button onClick={() => remove(t)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {editing && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-card p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+            <h3 className="mb-4 text-lg font-semibold">{editing === 'new' ? 'New Task' : 'Edit Task'}</h3>
+            <form onSubmit={save} className="space-y-3">
+              <Field label="Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Type"><Select value={form.task_type} onChange={(e) => set('task_type', e.target.value)}>{TYPES.map((t) => <option key={t}>{t}</option>)}</Select></Field>
+                <Field label="Priority"><Select value={form.priority} onChange={(e) => set('priority', e.target.value)}>{PRIORITIES.map((p) => <option key={p}>{p}</option>)}</Select></Field>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Assigned To"><TextInput value={form.assigned_to || ''} onChange={(e) => set('assigned_to', e.target.value)} /></Field>
+                <Field label="Due Date"><DateInput value={form.due_date || ''} onChange={(e) => set('due_date', e.target.value)} /></Field>
+              </div>
+              <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
+              <Field label="Notes"><TextArea value={form.notes || ''} onChange={(e) => set('notes', e.target.value)} /></Field>
+              <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -1,125 +1,423 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { statusTone, ratingTone } from '@/lib/statusStyles';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, ShieldAlert, ArrowRight } from 'lucide-react';
-import { format } from 'date-fns';
+import { useToast } from '@/components/ui/use-toast';
+import PageHeader from '@/components/PageHeader';
+import SectionCard from '@/components/SectionCard';
+import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
+import EmptyState from '@/components/EmptyState';
+import TreatmentSection from '@/components/risks/TreatmentSection';
+import { useRole } from '@/lib/useRole';
+import { ShieldAlert, Plus, Pencil, Trash2, AlertTriangle, FileWarning, Download, FileDown } from 'lucide-react';
+import { downloadRiskReport } from '@/lib/compliancePdf';
+import { downloadTake5AssessmentPdf, downloadRiskAssessmentTemplatePdf } from '@/lib/riskTemplates';
+import TemplatePicker from '@/components/TemplatePicker';
+import { MITIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
+import { recordSafetyEvent } from '@/lib/safetyEvent';
+import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
+import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
+import SafetySpreadsheetRegister from '@/components/safety/SafetySpreadsheetRegister';
+import { isHighCriticalRisk, isOpenRisk } from '@/lib/safetyFilters';
 
-const FLOW = ['Open', 'Mitigated', 'Monitored', 'Closed'];
-const NEXT = { Open: 'Mitigated', Mitigated: 'Monitored', Monitored: 'Closed', Closed: 'Open' };
+const CATEGORIES = ['Operational', 'Clinical', 'Financial', 'Workplace Health & Safety', 'Participant', 'Compliance'];
+const LIKELIHOODS = ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost Certain'];
+const CONSEQUENCES = ['Insignificant', 'Minor', 'Moderate', 'Major', 'Severe'];
+const RATINGS = ['Low', 'Medium', 'High', 'Critical'];
+const STATUSES = ['Identified', 'Assessed', 'Treating', 'Monitored', 'Closed'];
+const CONTROL_CATEGORIES = ['Preventative', 'Protective', 'Training & Capability', 'Policy & Procedure', 'Environmental', 'Equipment & Technology', 'Supervision & Monitoring', 'Emergency Response', 'Administrative'];
 
-const levelTone = (s) => ratingTone[s] || 'bg-muted text-foreground/60';
+const blank = { title: '', report_type: 'Risk', risk_id: '', description: '', hazards_identified: '', risk_assessment: '', control_measures: '', category: 'Operational', likelihood: 'Possible', consequence: 'Moderate', rating: 'Medium', status: 'Identified', owner: '', mitigation_plan: '', control_measure_category: 'Preventative', elimination_actions: '', minimise_actions: '', isolate_actions: '', staff_training_controls: '', compliance_controls: '', review_date: '', identified_date: '' };
+
+// 5x5 matrix cell rating
+function cellRating(l, c) {
+  const li = LIKELIHOODS.indexOf(l) + 1;
+  const ci = CONSEQUENCES.indexOf(c) + 1;
+  const score = li * ci;
+  if (score <= 4) return 'Low';
+  if (score <= 9) return 'Medium';
+  if (score <= 15) return 'High';
+  return 'Critical';
+}
+
+const ratingColor = { Low: 'bg-safe/15 text-safe', Medium: 'bg-warning/15 text-warning', High: 'bg-orange-500/15 text-orange-600', Critical: 'bg-danger/15 text-danger' };
+const matrixColor = { Low: 'bg-safe/20', Medium: 'bg-warning/20', High: 'bg-orange-500/25', Critical: 'bg-danger/30' };
 
 export default function Risks() {
+  const [searchParams] = useSearchParams();
+  const { can } = useRole();
+  const { toast } = useToast();
   const [risks, setRisks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', category: '', likelihood: 'Medium', impact: 'Medium', status: 'Open', owner: '', review_date: '' });
+  const [editing, setEditing] = useState(null);
+  const [form, setForm] = useState(blank);
+  const [ratingFilter, setRatingFilter] = useState(searchParams.get('rating') === 'high-critical' ? 'High / Critical' : 'All');
+  const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
 
-  const load = useCallback(async () => {
+  const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Risk.filter({ status: { $ne: 'Closed' } }, { sort: '-created_date', limit: 50 });
-      setRisks(page.items);
-    } finally {
-      setLoading(false);
+      const page = await base44.entities.Risk.filter({}, { sort: '-identified_date', limit: 500 });
+      setRisks(page.items || []);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    if (window.location.hash !== '#risk-register') return;
+    const timer = window.setTimeout(() => document.getElementById('risk-register')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 250);
+    return () => window.clearTimeout(timer);
+  }, [loading]);
+
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  const applyMitigationTemplate = (t) => {
+    setForm((f) => ({
+      ...f,
+      elimination_actions: mergeTemplateField(f.elimination_actions, t.elimination_actions),
+      minimise_actions: mergeTemplateField(f.minimise_actions, t.minimise_actions),
+      isolate_actions: mergeTemplateField(f.isolate_actions, t.isolate_actions),
+      staff_training_controls: mergeTemplateField(f.staff_training_controls, t.staff_training_controls),
+      compliance_controls: mergeTemplateField(f.compliance_controls, t.compliance_controls),
+    }));
+    toast({ title: `Loaded "${t.name}" template` });
+  };
+
+  const openNew = () => { setEditing('new'); setForm({ ...blank, report_type: 'Risk' }); };
+  const openEdit = (r) => { setEditing(r.id); setForm({ ...blank, ...r, report_type: r.report_type || (r.title?.startsWith('Hazard: ') ? 'Hazard' : r.title?.startsWith('Near Miss: ') ? 'Near Miss' : 'Risk') }); };
+  const openReport = (type) => {
+    const today = new Date().toISOString().slice(0, 10);
+    if (type === 'hazard') {
+      setForm({ ...blank, report_type: 'Hazard', title: 'Hazard: ', category: 'Workplace Health & Safety', control_measure_category: 'Environmental', status: 'Identified', identified_date: today, description: 'Hazard observed:\nLocation:\nReported by:' });
+    } else {
+      setForm({ ...blank, report_type: 'Near Miss', title: 'Near Miss: ', category: 'Workplace Health & Safety', control_measure_category: 'Preventative', status: 'Identified', identified_date: today, description: 'Near miss description:\nWhat almost happened:\nContributing factors:\nReported by:' });
     }
-  }, []);
+    setEditing('new');
+  };
 
-  useEffect(() => { load(); }, [load]);
-
-  const save = async () => {
-    if (!form.title.trim()) return;
-    setSaving(true);
+  const save = async (e) => {
+    e.preventDefault();
+    if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
+    const payload = { ...form, rating: cellRating(form.likelihood, form.consequence) };
     try {
-      await base44.entities.Risk.create(form);
-      setForm({ title: '', description: '', category: '', likelihood: 'Medium', impact: 'Medium', status: 'Open', owner: '', review_date: '' });
-      setOpen(false);
-      await load();
-    } finally {
-      setSaving(false);
-    }
+      let rec;
+      if (editing === 'new') {
+        rec = await base44.entities.Risk.create(payload);
+        const result = await recordSafetyEvent('Risk', rec.id);
+        if (result.email_failures?.length) toast({ title: 'Record saved; some administrator emails failed', description: `${result.email_failures.length} email(s) could not be sent.`, variant: 'destructive' });
+      } else {
+        rec = await base44.entities.Risk.update(editing, payload);
+        await recordSafetyEvent('Risk', editing, { notify: false });
+      }
+      toast({ title: `${payload.report_type} saved` });
+      setEditing(null); load();
+    } catch (err) { toast({ title: 'Failed to save', description: err.message, variant: 'destructive' }); }
   };
 
-  const advance = async (risk) => {
-    await base44.entities.Risk.update(risk.id, { status: NEXT[risk.status] });
-    await load();
+  const remove = async (r) => {
+    if (!confirm(`Delete "${r.title}"?`)) return;
+    try {
+      await base44.entities.Risk.delete(r.id);
+      toast({ title: 'Risk deleted' });
+      load();
+    } catch (err) { toast({ title: 'Delete failed', description: err.message, variant: 'destructive' }); }
   };
+
+  const counts = { Low: 0, Medium: 0, High: 0, Critical: 0 };
+  risks.forEach((r) => { counts[r.rating] = (counts[r.rating] || 0) + 1; });
+  const filteredRisks = risks.filter((risk) => {
+    const ratingMatches = ratingFilter === 'All'
+      || (ratingFilter === 'High / Critical' ? isHighCriticalRisk(risk) : risk.rating === ratingFilter);
+    const statusMatches = statusFilter === 'All'
+      || (statusFilter === 'Open' ? isOpenRisk(risk) : risk.status === statusFilter);
+    return ratingMatches && statusMatches;
+  });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><ShieldAlert className="h-6 w-6" /> Risk Reporting</h1>
-          <p className="text-sm text-muted-foreground">Track organisational risks and their mitigation.</p>
+    <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
+      <PageHeader title="Risk Management" subtitle={`${risks.length} risks in register`} action={can('risks') && (
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />Add Risk</button>
+          <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning px-3.5 py-2 text-sm font-semibold text-white hover:bg-warning/90"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
+          <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-green-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-green-700"><FileWarning className="h-4 w-4" />Report Near Miss</button>
+          <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3.5 py-2 text-sm font-semibold text-slate-900 hover:bg-yellow-500"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
+          <button onClick={() => downloadRiskAssessmentTemplatePdf()} className="flex items-center gap-1.5 rounded-lg bg-danger px-3.5 py-2 text-sm font-semibold text-white hover:bg-danger/90"><FileDown className="h-4 w-4" />Risk Assessment Template</button>
+          <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Log risk</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New risk</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Likelihood</Label>
-                  <Select value={form.likelihood} onValueChange={(v) => setForm({ ...form, likelihood: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Low', 'Medium', 'High'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Impact</Label>
-                  <Select value={form.impact} onValueChange={(v) => setForm({ ...form, impact: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Low', 'Medium', 'High'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Owner</Label><Input value={form.owner} onChange={(e) => setForm({ ...form, owner: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Next review</Label><Input type="date" value={form.review_date} onChange={(e) => setForm({ ...form, review_date: e.target.value })} /></div>
-              </div>
-              <Button onClick={save} disabled={saving || !form.title.trim()}>Log risk</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      )} />
+
+      <TakeFiveRegister />
+      <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />
+      <SafetySpreadsheetRegister />
+
+      {/* Summary */}
+      <div className="grid grid-cols-4 gap-3">
+        {RATINGS.map((r) => (
+          <div key={r} className={`rounded-xl border border-border/60 p-4 ${ratingColor[r]}`}>
+            <div className="text-2xl font-bold font-display">{counts[r]}</div>
+            <div className="text-xs font-medium opacity-80">{r} Risk</div>
+          </div>
+        ))}
       </div>
 
-      {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : risks.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No open risks.</CardContent></Card>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {risks.map((r) => (
-            <Card key={r.id}>
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <p className="font-semibold">{r.title}</p>
-                  <Badge className={statusTone(r.status)}>{r.status}</Badge>
-                </div>
-                {r.description && <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>}
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <Badge className={levelTone(r.likelihood)}>Likelihood {r.likelihood}</Badge>
-                  <Badge className={levelTone(r.impact)}>Impact {r.impact}</Badge>
-                  {r.owner && <span>Owner: {r.owner}</span>}
-                  {r.review_date && <span>· Review {format(new Date(r.review_date), 'd MMM yyyy')}</span>}
-                </div>
-                <div className="mt-3 flex justify-end">
-                  <Button variant="ghost" size="icon" onClick={() => advance(r)} title="Advance status"><ArrowRight className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Risk.delete(r.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Hazard Register - live updates as hazards are entered */}
+      <SectionCard
+        title="Hazard Register"
+        description="Hazards reported via the Report Hazard button"
+        action={<span className="rounded-full bg-warning/15 px-2 py-0.5 text-xs font-semibold text-warning">{risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: '))).length} entries</span>}
+      >
+        {(() => {
+          const hazards = risks.filter((r) => r.report_type === 'Hazard' || r.report_type === 'Near Miss' || (!r.report_type && r.title?.startsWith('Hazard: ')));
+          if (loading) return <div className="py-8 text-center text-sm text-foreground/40">Loading...</div>;
+          if (hazards.length === 0) return <EmptyState icon={AlertTriangle} title="No hazards reported" subtitle="Click 'Report Hazard' to log a hazard — it will appear here instantly." />;
+          return (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                    <th className="px-3 py-2 font-medium">Hazard</th>
+                    <th className="px-3 py-2 font-medium">Location / Details</th>
+                    <th className="px-3 py-2 font-medium">Date Identified</th>
+                    <th className="px-3 py-2 font-medium">Rating</th>
+                    <th className="px-3 py-2 font-medium">Status</th>
+                    {can('risks') && <th className="px-3 py-2"></th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {hazards.map((r) => (
+                    <tr key={r.id} className="border-b border-border/40 hover:bg-muted/30">
+                      <td className="px-3 py-2.5"><div className="font-medium">{r.title}</div>{r.risk_id && <div className="text-xs text-foreground/40">{r.risk_id}</div>}</td>
+                      <td className="px-3 py-2.5 text-foreground/60 text-xs max-w-xs"><div className="line-clamp-2 whitespace-pre-wrap">{r.description || '—'}</div></td>
+                      <td className="px-3 py-2.5 text-foreground/60 text-xs">{r.identified_date || '—'}</td>
+                      <td className="px-3 py-2.5"><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${ratingColor[r.rating]}`}>{r.rating}</span></td>
+                      <td className="px-3 py-2.5 text-foreground/60">{r.status}</td>
+                      {can('risks') && (
+                        <td className="px-3 py-2.5 text-right">
+                          <div className="flex justify-end gap-1">
+                            <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                            <button onClick={() => remove(r)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })()}
+      </SectionCard>
+
+      {/* Risk Matrix */}
+      <SectionCard title="Risk Matrix" description="Likelihood × Consequence">
+        <div className="overflow-x-auto">
+          <div className="min-w-[480px]">
+            <div className="grid grid-cols-6 gap-1 text-center text-[10px] font-medium text-foreground/50">
+              <div></div>
+              {CONSEQUENCES.map((c) => <div key={c} className="px-1 py-1.5">{c}</div>)}
+            </div>
+            {LIKELIHOODS.slice().reverse().map((l) => (
+              <div key={l} className="grid grid-cols-6 gap-1">
+                <div className="flex items-center justify-end px-2 py-2 text-[10px] font-medium text-foreground/50">{l}</div>
+                {CONSEQUENCES.map((c) => {
+                  const rating = cellRating(l, c);
+                  const count = risks.filter((r) => r.likelihood === l && r.consequence === c).length;
+                  return (
+                    <div key={c} className={`flex h-12 items-center justify-center rounded-md text-xs font-semibold ${matrixColor[rating]}`}>
+                      {count > 0 ? count : ''}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* Risk register */}
+      <SectionCard
+        id="risk-register"
+        title="Risk Register"
+        description={`Displaying ${filteredRisks.length} of ${risks.length} risks`}
+        action={(
+          <div className="flex flex-wrap gap-2">
+            <select value={ratingFilter} onChange={(event) => setRatingFilter(event.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-xs font-semibold">
+              <option>All</option>
+              <option>High / Critical</option>
+              {RATINGS.map((rating) => <option key={rating}>{rating}</option>)}
+            </select>
+            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-xs font-semibold">
+              <option>All</option>
+              <option>Open</option>
+              {STATUSES.map((status) => <option key={status}>{status}</option>)}
+            </select>
+          </div>
+        )}
+      >
+        {loading ? (
+          <div className="py-8 text-center text-sm text-foreground/40">Loading...</div>
+        ) : filteredRisks.length === 0 ? (
+          <EmptyState icon={ShieldAlert} title="No risks match these filters" />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                  <th className="px-3 py-2 font-medium">Risk</th>
+                  <th className="px-3 py-2 font-medium">Category</th>
+                  <th className="px-3 py-2 font-medium">Control Measure</th>
+                  <th className="px-3 py-2 font-medium">L × C</th>
+                  <th className="px-3 py-2 font-medium">Rating</th>
+                  <th className="px-3 py-2 font-medium">Owner</th>
+                  <th className="px-3 py-2 font-medium">Status</th>
+                  {can('risks') && <th className="px-3 py-2"></th>}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredRisks.map((r) => (
+                  <tr key={r.id} className="border-b border-border/40 hover:bg-muted/30">
+                    <td className="px-3 py-2.5"><div className="font-medium">{r.title}</div>{r.risk_id && <div className="text-xs text-foreground/40">{r.risk_id}</div>}</td>
+                    <td className="px-3 py-2.5 text-foreground/60">{r.category}</td>
+                    <td className="px-3 py-2.5 text-foreground/60 text-xs">{r.control_measure_category || '—'}</td>
+                    <td className="px-3 py-2.5 text-foreground/60 text-xs">{r.likelihood} / {r.consequence}</td>
+                    <td className="px-3 py-2.5"><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${ratingColor[r.rating]}`}>{r.rating}</span></td>
+                    <td className="px-3 py-2.5 text-foreground/60">{r.owner || '—'}</td>
+                    <td className="px-3 py-2.5 text-foreground/60">{r.status}</td>
+                    {can('risks') && (
+                      <td className="px-3 py-2.5 text-right">
+                        <div className="flex justify-end gap-1">
+                          <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                          <button onClick={() => remove(r)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </SectionCard>
+
+      {/* Elimination section */}
+      <TreatmentSection
+        type="elimination"
+        title="Elimination Strategies"
+        description="Hierarchy of controls - eliminate the hazard entirely"
+        field="elimination_actions"
+        risks={risks}
+        loading={loading}
+        canEdit={can('risks')}
+        onEdit={openEdit}
+      />
+
+      {/* Minimise section */}
+      <TreatmentSection
+        type="minimise"
+        title="Minimise Strategies"
+        description="Hierarchy of controls - reduce likelihood and severity"
+        field="minimise_actions"
+        risks={risks}
+        loading={loading}
+        canEdit={can('risks')}
+        onEdit={openEdit}
+      />
+
+      {/* Isolate section */}
+      <TreatmentSection
+        type="isolate"
+        title="Isolate Strategies"
+        description="Hierarchy of controls - separate people from the hazard"
+        field="isolate_actions"
+        risks={risks}
+        loading={loading}
+        canEdit={can('risks')}
+        onEdit={openEdit}
+      />
+
+      {/* Staff Training & Compliance Controls */}
+      <SectionCard
+        title="Staff Training & Compliance Controls"
+        description="Training and compliance controls recorded against each risk"
+        action={<span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-foreground/60">{risks.length} records</span>}
+      >
+        {loading ? (
+          <div className="py-8 text-center text-sm text-foreground/40">Loading...</div>
+        ) : risks.length === 0 ? (
+          <EmptyState icon={ShieldAlert} title="No risks recorded" />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                  <th className="px-3 py-2 font-medium">Risk</th>
+                  <th className="px-3 py-2 font-medium">Category</th>
+                  <th className="px-3 py-2 font-medium">Staff Training Controls</th>
+                  <th className="px-3 py-2 font-medium">Compliance Controls</th>
+                  {can('risks') && <th className="px-3 py-2"></th>}
+                </tr>
+              </thead>
+              <tbody>
+                {risks.map((r) => (
+                  <tr key={r.id} className="border-b border-border/40 hover:bg-muted/30 align-top">
+                    <td className="px-3 py-2.5"><div className="font-medium">{r.title}</div>{r.risk_id && <div className="text-xs text-foreground/40">{r.risk_id}</div>}</td>
+                    <td className="px-3 py-2.5 text-foreground/60 text-xs">{r.category}</td>
+                    <td className="px-3 py-2.5 text-foreground/70 text-xs max-w-xs"><div className="whitespace-pre-wrap">{r.staff_training_controls || '—'}</div></td>
+                    <td className="px-3 py-2.5 text-foreground/70 text-xs max-w-xs"><div className="whitespace-pre-wrap">{r.compliance_controls || '—'}</div></td>
+                    {can('risks') && (
+                      <td className="px-3 py-2.5 text-right">
+                        <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </SectionCard>
+
+      {editing && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-card p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+            <h3 className="mb-4 text-lg font-semibold">{editing === 'new' ? 'Add Risk' : 'Edit Risk'}</h3>
+            <form onSubmit={save} className="space-y-3">
+              <Field label="Risk Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Report Type"><Select value={form.report_type || 'Risk'} onChange={(e) => set('report_type', e.target.value)}><option value="Risk">Risk</option><option value="Hazard">Hazard</option><option value="Near Miss">Near Miss</option></Select></Field>
+                <Field label="Risk ID"><TextInput value={form.risk_id || ''} onChange={(e) => set('risk_id', e.target.value)} /></Field>
+              </div>
+              <Field label="Description"><TextArea value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>
+              <Field label="Risks / Hazards Identified"><TextArea value={form.hazards_identified || ''} onChange={(e) => set('hazards_identified', e.target.value)} /></Field>
+              <Field label="Risk Assessment"><TextArea value={form.risk_assessment || ''} onChange={(e) => set('risk_assessment', e.target.value)} placeholder="Who may be harmed, existing controls, likelihood, consequence and rating" /></Field>
+              <Field label="Control Measures"><TextArea value={form.control_measures || ''} onChange={(e) => set('control_measures', e.target.value)} placeholder="Controls, responsible person, due date and monitoring arrangements" /></Field>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Category"><Select value={form.category} onChange={(e) => set('category', e.target.value)}>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
+                <Field label="Owner"><TextInput value={form.owner || ''} onChange={(e) => set('owner', e.target.value)} /></Field>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Likelihood"><Select value={form.likelihood} onChange={(e) => set('likelihood', e.target.value)}>{LIKELIHOODS.map((l) => <option key={l}>{l}</option>)}</Select></Field>
+                <Field label="Consequence"><Select value={form.consequence} onChange={(e) => set('consequence', e.target.value)}>{CONSEQUENCES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
+              </div>
+              <div className="rounded-lg bg-muted/40 px-3 py-2 text-xs text-foreground/60">Auto-calculated rating: <span className="font-semibold">{cellRating(form.likelihood, form.consequence)}</span></div>
+              <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
+              <Field label="Mitigation Plan"><TextArea value={form.mitigation_plan || ''} onChange={(e) => set('mitigation_plan', e.target.value)} /></Field>
+              <Field label="Control Measure Category"><Select value={form.control_measure_category || 'Preventative'} onChange={(e) => set('control_measure_category', e.target.value)}>{CONTROL_CATEGORIES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
+              <div className="flex items-center justify-between pt-1">
+                <div className="text-[11px] font-semibold text-foreground/60">Common risk mitigation actions</div>
+                <TemplatePicker label="Load template" templates={MITIGATION_TEMPLATES} onApply={applyMitigationTemplate} />
+              </div>
+              <Field label="Elimination Actions (remove the hazard entirely)"><TextArea value={form.elimination_actions || ''} onChange={(e) => set('elimination_actions', e.target.value)} placeholder="Actions to eliminate the risk - remove hazard, discontinue activity, redesign process..." /></Field>
+              <Field label="Minimise Actions (reduce likelihood/severity)"><TextArea value={form.minimise_actions || ''} onChange={(e) => set('minimise_actions', e.target.value)} placeholder="Actions to minimise the risk - reduce exposure, training, controls, frequency..." /></Field>
+              <Field label="Isolate Actions (separate from hazard)"><TextArea value={form.isolate_actions || ''} onChange={(e) => set('isolate_actions', e.target.value)} placeholder="Actions to isolate the risk - barriers, separation, restricted access, relocation..." /></Field>
+              <Field label="Staff Training Controls (training & capability)"><TextArea value={form.staff_training_controls || ''} onChange={(e) => set('staff_training_controls', e.target.value)} placeholder="Mandatory training, competency assessment, refresher schedule, supervisor sign-off..." /></Field>
+              <Field label="Compliance Controls (policy & standards)"><TextArea value={form.compliance_controls || ''} onChange={(e) => set('compliance_controls', e.target.value)} placeholder="NDIS Practice Standards, Code of Conduct, policy alignment, audit & record-keeping..." /></Field>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Date Identified"><DateInput value={form.identified_date || ''} onChange={(e) => set('identified_date', e.target.value)} /></Field>
+                <Field label="Review Date"><DateInput value={form.review_date || ''} onChange={(e) => set('review_date', e.target.value)} /></Field>
+              </div>
+              <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
+            </form>
+          </div>
         </div>
       )}
     </div>

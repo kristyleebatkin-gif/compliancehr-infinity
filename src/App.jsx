@@ -21,6 +21,9 @@ import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
 import Tasks from '@/pages/Tasks';
 import Incidents from '@/pages/Incidents';
+import IncidentDetail from '@/pages/IncidentDetail';
+import IncidentForm from '@/pages/IncidentForm';
+import Certificates from '@/pages/Certificates';
 import Participants from '@/pages/Participants';
 import Risks from '@/pages/Risks';
 import ShiftScheduling from '@/pages/ShiftScheduling';
@@ -91,6 +94,10 @@ const AuthenticatedApp = () => {
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
           <Route path="/tasks" element={<RoleGate navKey="tasks"><Tasks /></RoleGate>} />
           <Route path="/incidents" element={<RoleGate navKey="incidents"><Incidents /></RoleGate>} />
+          <Route path="/incidents/new" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
+          <Route path="/incidents/:id" element={<RoleGate navKey="incidents"><IncidentDetail /></RoleGate>} />
+          <Route path="/incidents/:id/edit" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
+          <Route path="/certificates" element={<RoleGate navKey="certificates"><Certificates /></RoleGate>} />
           <Route path="/participants" element={<RoleGate navKey="participants"><Participants /></RoleGate>} />
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
           <Route path="/shifts" element={<RoleGate navKey="shifts"><ShiftScheduling /></RoleGate>} />
