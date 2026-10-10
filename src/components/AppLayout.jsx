@@ -9,7 +9,7 @@ import {
   ShieldAlert, FolderOpen, UserPlus, Megaphone,
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
-  Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, Github, BarChart3,
+  Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, BarChart3,
   FlaskConical, MapPin, HeartHandshake, Building2, Newspaper,
 } from 'lucide-react';
 
@@ -34,6 +34,7 @@ const PRIMARY_NAV = [
   { label: 'Emergency Response', path: '/emergency-response', key: 'emergency-response', icon: Siren },
   { label: 'Meeting Centre', path: '/meetings', key: 'meetings', icon: CalendarDays },
   { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },
+  { label: 'Users & Permissions Hub', path: '/users', key: 'users', icon: Users },
   { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
   { label: 'Equipment Manuals and MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
   { label: 'MSDS Chemical Library', path: '/msds', key: 'msds', icon: FlaskConical },
@@ -49,7 +50,7 @@ const PRIMARY_NAV = [
   { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
   { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },
   { label: 'Audit Centre', path: '/audit', key: 'audit-log', icon: ClipboardCheck },
-  { label: 'GitHub Activity', path: '/github', key: 'github', icon: Github },
+
 ];
 
 const BOTTOM_NAV = [

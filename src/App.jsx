@@ -12,7 +12,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
-import GitHubActivity from '@/pages/GitHubActivity';
+
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
 import Staff from '@/pages/Staff';
@@ -58,6 +58,7 @@ import NdisUpdates from '@/pages/NdisUpdates';
 import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import DataControl from '@/pages/DataControl';
+import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import Landing from '@/pages/Landing';
 import RoleGate from '@/components/RoleGate';
 
@@ -138,7 +139,7 @@ const AuthenticatedApp = () => {
           <Route path="/quotes" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/receipts" element={<RoleGate navKey="receipts"><ReceiptHub /></RoleGate>} />
           <Route path="/data-control" element={<RoleGate navKey="data-control"><DataControl /></RoleGate>} />
-          <Route path="/github" element={<GitHubActivity />} />
+          <Route path="/users" element={<RoleGate navKey="users"><UsersPermissionsHub /></RoleGate>} />
           {/* Original app paths — aliases kept so original links keep working */}
           <Route path="/key-contacts" element={<RoleGate navKey="key-contacts"><KeyContacts /></RoleGate>} />
           <Route path="/insurance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
