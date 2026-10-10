@@ -1,0 +1,99 @@
+{
+  "name": "Quote",
+  "type": "object",
+  "properties": {
+    "quote_number": {
+      "type": "string",
+      "title": "Quote Number"
+    },
+    "client_name": {
+      "type": "string",
+      "title": "Quote For (Name)"
+    },
+    "client_email": {
+      "type": "string",
+      "title": "Client Email"
+    },
+    "client_address": {
+      "type": "string",
+      "title": "Client Address"
+    },
+    "biller_type": {
+      "type": "string",
+      "enum": [
+        "Participant",
+        "Plan Manager",
+        "NDIA",
+        "Other"
+      ],
+      "default": "Plan Manager",
+      "title": "Biller Type"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "ndis_number": {
+      "type": "string",
+      "title": "NDIS Number"
+    },
+    "participant_address": {
+      "type": "string",
+      "title": "Participant Address"
+    },
+    "line_items": {
+      "type": "string",
+      "title": "Line Items (JSON)"
+    },
+    "subtotal": {
+      "type": "number",
+      "title": "Subtotal ($)"
+    },
+    "total": {
+      "type": "number",
+      "title": "Total ($)"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Quote Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Valid Until"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Accepted",
+        "Declined",
+        "Expired"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "terms_conditions": {
+      "type": "string",
+      "title": "Quote Terms and Conditions"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Sent At"
+    },
+    "sent_to": {
+      "type": "string",
+      "title": "Sent To"
+    }
+  },
+  "required": [
+    "quote_number"
+  ]
+}

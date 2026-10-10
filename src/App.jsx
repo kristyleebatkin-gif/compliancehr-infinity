@@ -50,7 +50,7 @@ import Rostering from '@/pages/Rostering';
 import VisualBoards from '@/pages/VisualBoards';
 import CompanySafe from '@/pages/CompanySafe';
 import EquipmentManuals from '@/pages/EquipmentManuals';
-import InsuranceFinance from '@/pages/InsuranceFinance';
+import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import DataControl from '@/pages/DataControl';
 import Landing from '@/pages/Landing';
@@ -126,13 +126,14 @@ const AuthenticatedApp = () => {
           <Route path="/visual-boards" element={<RoleGate navKey="visual-boards"><VisualBoards /></RoleGate>} />
           <Route path="/company-safe" element={<RoleGate navKey="company-safe"><CompanySafe /></RoleGate>} />
           <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentManuals /></RoleGate>} />
-          <Route path="/insurance" element={<RoleGate navKey="insurance-finance"><InsuranceFinance /></RoleGate>} />
+          <Route path="/quotes" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/receipts" element={<RoleGate navKey="receipts"><ReceiptHub /></RoleGate>} />
           <Route path="/data-control" element={<RoleGate navKey="data-control"><DataControl /></RoleGate>} />
           <Route path="/github" element={<GitHubActivity />} />
           {/* Original app paths — aliases kept so original links keep working */}
           <Route path="/key-contacts" element={<RoleGate navKey="key-contacts"><KeyContacts /></RoleGate>} />
-          <Route path="/insurance-finance" element={<RoleGate navKey="insurance-finance"><InsuranceFinance /></RoleGate>} />
+          <Route path="/insurance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
+          <Route path="/insurance-finance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/volunteering-placements" element={<RoleGate navKey="volunteering-placements"><Volunteers /></RoleGate>} />
           <Route path="/rostering" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
         </Route>

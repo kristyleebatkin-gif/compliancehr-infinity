@@ -36,7 +36,7 @@ const PRIMARY_NAV = [
   { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },
   { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
   { label: 'Equipment Manuals and MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
-  { label: 'Insurance & Finance Management', path: '/insurance-finance', key: 'insurance-finance', icon: Landmark },
+  { label: 'Quote Centre', path: '/quotes', key: 'quotes', icon: Landmark },
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },
   { label: 'Volunteering & Student Placement', path: '/volunteering-placements', key: 'volunteering-placements', icon: Handshake },

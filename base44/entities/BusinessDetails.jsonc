@@ -88,6 +88,16 @@
     "payment_instructions": {
       "type": "string",
       "title": "Bill Payment Instructions"
+    },
+    "quote_terms": {
+      "type": "string",
+      "title": "Quote Terms and Conditions",
+      "default": "This quotation is valid for 30 days from the date of issue. Prices are based on the current NDIS Pricing Schedule and may change if the schedule is updated. NDIS supports are GST free. A formal service agreement will be prepared once the quotation is accepted."
+    },
+    "quote_validity_days": {
+      "type": "number",
+      "title": "Quote Validity (Days)",
+      "default": 30
     }
   },
   "required": [

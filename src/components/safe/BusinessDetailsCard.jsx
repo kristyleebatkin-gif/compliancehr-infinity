@@ -14,6 +14,8 @@ const EMPTY = {
   payment_terms_days: 14, payment_terms_note: 'Payment is due within 14 days of the invoice date.',
   default_invoice_notes: 'NDIS supports are GST free. Please quote the invoice number as the payment reference.',
   payment_instructions: '',
+  quote_terms: 'This quotation is valid for 30 days from the date of issue. Prices are based on the current NDIS Pricing Schedule and may change if the schedule is updated. NDIS supports are GST free. A formal service agreement will be prepared once the quotation is accepted.',
+  quote_validity_days: 30,
 };
 
 export default function BusinessDetailsCard() {
@@ -108,6 +110,14 @@ export default function BusinessDetailsCard() {
             <div className="grid gap-1.5 sm:col-span-3"><Label>Default invoice notes</Label><Input value={form.default_invoice_notes} onChange={set('default_invoice_notes')} /></div>
             <div className="grid gap-1.5 sm:col-span-3"><Label>Bill payment instructions</Label><Input value={form.payment_instructions} onChange={set('payment_instructions')} /></div>
           </div>
+        </div>
+        <div>
+          <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/50"><Landmark className="h-3.5 w-3.5" />Quote terms &amp; conditions (Quote Centre)</div>
+          <div className="grid gap-2 sm:grid-cols-3">
+            <div className="grid gap-1.5"><Label>Quote validity (days)</Label><Input type="number" value={form.quote_validity_days ?? 30} onChange={set('quote_validity_days')} /></div>
+            <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Input value={form.quote_terms} onChange={set('quote_terms')} /></div>
+          </div>
+          <p className="mt-1.5 text-xs text-muted-foreground">Used as the default terms on every new quote; individual quotes can override them.</p>
         </div>
       </div>
       <div className="mt-4 flex gap-2">
