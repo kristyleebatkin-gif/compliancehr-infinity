@@ -1,0 +1,26 @@
+{
+  "name": "ShiftPatternTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Template Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "shift_count": {
+      "type": "number",
+      "title": "Shifts in Pattern"
+    },
+    "pattern_json": {
+      "type": "string",
+      "title": "Pattern Shifts (JSON)"
+    }
+  },
+  "required": [
+    "name",
+    "pattern_json"
+  ]
+}

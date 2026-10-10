@@ -17,6 +17,7 @@ import AvailabilityPanel, { AvailabilityFormDialog } from '@/components/rosterin
 import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import PayrollReport from '@/components/rostering/PayrollReport';
+import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import { expandRecurrence } from '@/lib/rostering';
 
 const StatCard = ({ icon: Icon, label, value, tone }) => (
@@ -284,6 +285,7 @@ export default function Rostering() {
           <TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
           <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>
           <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
+          <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
         </TabsList>
 
         <TabsContent value="roster" className="mt-4 space-y-4">
@@ -340,6 +342,10 @@ export default function Rostering() {
 
         <TabsContent value="payroll" className="mt-4">
           <PayrollReport />
+        </TabsContent>
+
+        <TabsContent value="patterns" className="mt-4">
+          <ShiftPatterns />
         </TabsContent>
       </Tabs>
 
