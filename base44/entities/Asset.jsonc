@@ -1,0 +1,65 @@
+{
+  "name": "Asset",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Asset Name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Vehicle",
+        "Equipment",
+        "IT",
+        "Furniture",
+        "Safety",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Category"
+    },
+    "serial_number": {
+      "type": "string",
+      "title": "Serial Number"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Purchase Date"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "Excellent",
+        "Good",
+        "Fair",
+        "Poor"
+      ],
+      "default": "Good",
+      "title": "Condition"
+    },
+    "next_service_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Service Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "In Use",
+        "In Maintenance",
+        "Retired"
+      ],
+      "default": "In Use",
+      "title": "Status"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

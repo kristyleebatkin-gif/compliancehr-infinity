@@ -1,0 +1,130 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { base44 } from '@/api/base44Client';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Plus, Trash2, Boxes, Wrench } from 'lucide-react';
+import { format } from 'date-fns';
+
+const CATEGORIES = ['Vehicle', 'Equipment', 'IT', 'Furniture', 'Safety', 'Other'];
+const tone = (s) => (s === 'In Use' ? 'default' : s === 'In Maintenance' ? 'secondary' : 'destructive');
+const condTone = (c) => (c === 'Excellent' || c === 'Good' ? 'outline' : c === 'Fair' ? 'secondary' : 'destructive');
+
+export default function AssetManagement() {
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({ name: '', category: 'Other', serial_number: '', purchase_date: '', condition: 'Good', next_service_date: '', status: 'In Use', location: '' });
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const page = await base44.entities.Asset.filter({ status: { $ne: 'Retired' } }, { sort: '-created_date', limit: 50 });
+      setAssets(page.items);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const save = async () => {
+    if (!form.name.trim()) return;
+    setSaving(true);
+    try {
+      await base44.entities.Asset.create(form);
+      setForm({ name: '', category: 'Other', serial_number: '', purchase_date: '', condition: 'Good', next_service_date: '', status: 'In Use', location: '' });
+      setOpen(false);
+      await load();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="flex items-center gap-2 text-2xl font-bold"><Boxes className="h-6 w-6" /> Asset Management</h1>
+          <p className="text-sm text-muted-foreground">Vehicles, equipment and their service schedules.</p>
+        </div>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add asset</Button></DialogTrigger>
+          <DialogContent>
+            <DialogHeader><DialogTitle>New asset</DialogTitle></DialogHeader>
+            <div className="grid gap-3">
+              <div className="grid gap-1.5"><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5"><Label>Category</Label>
+                  <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-1.5"><Label>Serial number</Label><Input value={form.serial_number} onChange={(e) => setForm({ ...form, serial_number: e.target.value })} /></div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="grid gap-1.5"><Label>Purchase date</Label><Input type="date" value={form.purchase_date} onChange={(e) => setForm({ ...form, purchase_date: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Condition</Label>
+                  <Select value={form.condition} onValueChange={(v) => setForm({ ...form, condition: v })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{['Excellent', 'Good', 'Fair', 'Poor'].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-1.5"><Label>Status</Label>
+                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{['In Use', 'In Maintenance', 'Retired'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5"><Label>Next service date</Label><Input type="date" value={form.next_service_date} onChange={(e) => setForm({ ...form, next_service_date: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
+              </div>
+              <Button onClick={save} disabled={saving || !form.name.trim()}>Save asset</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" /></div>
+      ) : assets.length === 0 ? (
+        <Card><CardContent className="p-10 text-center text-muted-foreground">No assets recorded yet.</CardContent></Card>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {assets.map((a) => (
+            <Card key={a.id}>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-lg bg-muted p-2"><Wrench className="h-5 w-5 text-muted-foreground" /></div>
+                    <div>
+                      <p className="font-semibold">{a.name}</p>
+                      <p className="text-sm text-muted-foreground">{a.category}{a.serial_number ? ` · ${a.serial_number}` : ''}</p>
+                    </div>
+                  </div>
+                  <Badge variant={tone(a.status)}>{a.status}</Badge>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  <Badge variant={condTone(a.condition)}>{a.condition}</Badge>
+                  {a.next_service_date && <span>Service due {format(new Date(a.next_service_date), 'd MMM yyyy')}</span>}
+                  {a.location && <span>· {a.location}</span>}
+                </div>
+                <div className="mt-3 flex justify-end">
+                  <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Asset.delete(a.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

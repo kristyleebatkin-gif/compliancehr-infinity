@@ -6,6 +6,7 @@ import {
   LayoutDashboard, Users, ShieldCheck, GraduationCap, FolderOpen,
   ClipboardList, Github, Menu, LogOut, X, Building2, AlertTriangle,
   Heart, ShieldAlert, CalendarClock, Megaphone,
+  Boxes, FileSpreadsheet, Siren, PartyPopper, CalendarDays,
 } from 'lucide-react';
 
 const NAV = [
@@ -21,6 +22,12 @@ const NAV = [
   { label: 'Shifts', path: '/shifts', icon: CalendarClock },
   { label: 'Feedback & Complaints', path: '/feedback', icon: Megaphone },
   { label: 'Checklists', path: '/checklists', icon: ClipboardList },
+  { label: 'Asset Management', path: '/assets', icon: Boxes },
+  { label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet },
+  { label: 'Meeting Centre', path: '/meetings', icon: CalendarDays },
+  { label: 'Emergency Response', path: '/emergency-response', icon: Siren },
+  { label: 'Programs & Events', path: '/programs', icon: PartyPopper },
+  { label: 'Communication Centre', path: '/communications', icon: Megaphone },
   { label: 'GitHub Activity', path: '/github', icon: Github },
 ];
 

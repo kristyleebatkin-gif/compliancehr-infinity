@@ -1,0 +1,52 @@
+{
+  "name": "EmergencyDrill",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Drill Title"
+    },
+    "drill_type": {
+      "type": "string",
+      "enum": [
+        "Fire Evacuation",
+        "Lockdown",
+        "Medical Emergency",
+        "Natural Disaster",
+        "Other"
+      ],
+      "default": "Fire Evacuation",
+      "title": "Drill Type"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "attendees_count": {
+      "type": "number",
+      "title": "Participants"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "Completed",
+        "Partial",
+        "Issues Found"
+      ],
+      "default": "Completed",
+      "title": "Outcome"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

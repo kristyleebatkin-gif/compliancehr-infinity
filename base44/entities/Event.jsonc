@@ -1,0 +1,50 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Program",
+        "Event"
+      ],
+      "default": "Program",
+      "title": "Type"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "attendees": {
+      "type": "string",
+      "title": "Attendees"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planned",
+        "Ongoing",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Planned",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

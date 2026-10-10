@@ -26,6 +26,12 @@ import Risks from '@/pages/Risks';
 import ShiftScheduling from '@/pages/ShiftScheduling';
 import Feedback from '@/pages/Feedback';
 import Checklists from '@/pages/Checklists';
+import AssetManagement from '@/pages/AssetManagement';
+import InvoicingCentre from '@/pages/InvoicingCentre';
+import MeetingCentre from '@/pages/MeetingCentre';
+import EmergencyResponse from '@/pages/EmergencyResponse';
+import ProgramsEvents from '@/pages/ProgramsEvents';
+import Communications from '@/pages/Communications';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -71,6 +77,12 @@ const AuthenticatedApp = () => {
           <Route path="/shifts" element={<ShiftScheduling />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/checklists" element={<Checklists />} />
+          <Route path="/assets" element={<AssetManagement />} />
+          <Route path="/invoicing" element={<InvoicingCentre />} />
+          <Route path="/meetings" element={<MeetingCentre />} />
+          <Route path="/emergency-response" element={<EmergencyResponse />} />
+          <Route path="/programs" element={<ProgramsEvents />} />
+          <Route path="/communications" element={<Communications />} />
           <Route path="/github" element={<GitHubActivity />} />
         </Route>
       </Route>

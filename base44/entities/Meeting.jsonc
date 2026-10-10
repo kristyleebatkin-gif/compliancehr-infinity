@@ -1,0 +1,48 @@
+{
+  "name": "Meeting",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "attendees": {
+      "type": "string",
+      "title": "Attendees"
+    },
+    "agenda": {
+      "type": "string",
+      "title": "Agenda"
+    },
+    "minutes": {
+      "type": "string",
+      "title": "Minutes"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Scheduled",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
