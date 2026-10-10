@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
@@ -18,6 +19,7 @@ export default function Participants() {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ full_name: '', email: '', phone: '', address: '', date_of_birth: '', ndis_number: '', support_coordinator: '', status: 'Active', notes: '' });
+  const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   const load = useCallback(async (term) => {
     setLoading(true);
@@ -81,6 +83,7 @@ export default function Participants() {
                 </div>
               </div>
               <div className="grid gap-1.5"><Label>Address</Label><Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Notes</Label><Textarea value={form.notes} onChange={set('notes')} /></div>
               <Button onClick={save} disabled={saving || !form.full_name.trim()}>Save participant</Button>
             </div>
           </DialogContent>
@@ -109,8 +112,11 @@ export default function Participants() {
                   <Badge className={statusTone(p.status)}>{p.status}</Badge>
                 </div>
                 <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+                  {p.email && <p>{p.email}</p>}
                   {p.phone && <p>{p.phone}</p>}
+                  {p.address && <p>{p.address}</p>}
                   {p.support_coordinator && <p>Coordinator: {p.support_coordinator}</p>}
+                  {p.notes && <p className="pt-1 italic">{p.notes}</p>}
                 </div>
                 <div className="mt-3 flex justify-end">
                   <Button variant="ghost" size="icon" onClick={() => remove(p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
