@@ -7,7 +7,8 @@ import ScoreRing from '@/components/ScoreRing';
 import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 import LmsLearner from '@/components/training/LmsLearner';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
-import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid } from 'lucide-react';
+import TrainingTemplates from '@/components/training/TrainingTemplates';
+import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap } from 'lucide-react';
 
 function statusFor(title, completions) {
   const recs = completions.filter((c) => c.module_title === title && c.status === 'Completed');
@@ -69,6 +70,7 @@ export default function Training() {
           <div className="flex rounded-lg border border-border/60 bg-card p-0.5">
             <button onClick={() => setView('modules')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'modules' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />Modules</button>
             <button onClick={() => setView('calendar')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'calendar' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><CalendarDays className="h-3.5 w-3.5" />Calendar</button>
+            <button onClick={() => setView('templates')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'templates' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><GraduationCap className="h-3.5 w-3.5" />Role templates</button>
           </div>
         }
       />
@@ -87,7 +89,9 @@ export default function Training() {
         </div>
       </SectionCard>
 
-      {view === 'calendar' ? (
+      {view === 'templates' ? (
+        <TrainingTemplates />
+      ) : view === 'calendar' ? (
         loading ? (
           <div className="py-12 text-center text-sm text-foreground/40">Loading calendar...</div>
         ) : (

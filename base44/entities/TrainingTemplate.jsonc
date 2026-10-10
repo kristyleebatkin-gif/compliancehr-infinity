@@ -1,0 +1,33 @@
+{
+  "name": "TrainingTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Template Name"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "Support Worker",
+        "Team Leader",
+        "Compliance Manager",
+        "Administration",
+        "Management"
+      ],
+      "default": "Support Worker",
+      "title": "Role"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "module_titles": {
+      "type": "string",
+      "title": "Modules (one per line)"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
