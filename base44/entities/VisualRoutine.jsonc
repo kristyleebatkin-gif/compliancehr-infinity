@@ -1,0 +1,25 @@
+{
+  "name": "VisualRoutine",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Routine Title"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "steps": {
+      "type": "string",
+      "title": "Steps (JSON)"
+    },
+    "created_by": {
+      "type": "string",
+      "title": "Created By"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

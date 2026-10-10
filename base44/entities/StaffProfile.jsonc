@@ -68,6 +68,24 @@
       "type": "string",
       "title": "Employee Number"
     },
+    "username": {
+      "type": "string",
+      "title": "Username"
+    },
+    "app_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "Provider Administrator",
+        "Compliance Manager",
+        "Administration",
+        "Support Worker",
+        "Participant",
+        "Auditor"
+      ],
+      "default": "user",
+      "title": "App Role (Permissions)"
+    },
     "supervisor": {
       "type": "string",
       "title": "Supervisor"
@@ -99,6 +117,22 @@
     "car_rego": {
       "type": "string",
       "title": "Car Registration (Rego)"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "title": "Audit Consent",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
     },
     "notes": {
       "type": "string",

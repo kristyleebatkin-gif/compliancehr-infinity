@@ -16,7 +16,7 @@ import { MITIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemp
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
-import SafetySpreadsheetRegister from '@/components/safety/SafetySpreadsheetRegister';
+import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
 import { isHighCriticalRisk, isOpenRisk } from '@/lib/safetyFilters';
 
 const CATEGORIES = ['Operational', 'Clinical', 'Financial', 'Workplace Health & Safety', 'Participant', 'Compliance'];
@@ -147,7 +147,7 @@ export default function Risks() {
 
       <TakeFiveRegister />
       <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />
-      <SafetySpreadsheetRegister />
+      <SafetyRegisterExports risks={risks} />
 
       {/* Summary */}
       <div className="grid grid-cols-4 gap-3">

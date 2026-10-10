@@ -1,0 +1,47 @@
+{
+  "name": "ShiftNote",
+  "type": "object",
+  "properties": {
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Staff"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "travel": {
+      "type": "string",
+      "title": "Travel (km / details)"
+    },
+    "issues_concerns": {
+      "type": "string",
+      "title": "Issues or Concerns"
+    },
+    "what_happened": {
+      "type": "string",
+      "title": "What Happened"
+    },
+    "incident_report": {
+      "type": "string",
+      "title": "Incident Report Reference"
+    },
+    "recorded_by": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "participant_name",
+    "date"
+  ]
+}

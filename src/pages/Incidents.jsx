@@ -14,7 +14,7 @@ import TemplatePicker from '@/components/TemplatePicker';
 import { INVESTIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
-import SafetySpreadsheetRegister from '@/components/safety/SafetySpreadsheetRegister';
+import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -154,7 +154,7 @@ export default function Incidents() {
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
       <PageHeader
         title="Incident Clinic"
-        subtitle="Report, track and manage incidents and investigations"
+        subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
         action={
           <div className="flex flex-wrap items-center gap-2">
             {canReview && <Button onClick={() => { setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> Add New Investigation</Button>}
@@ -166,8 +166,8 @@ export default function Incidents() {
         }
       />
 
-      <SafetyFormsLibrary types={['Incident Report', 'Investigation Report', 'Risk Assessment']} />
-      {canReview && <SafetySpreadsheetRegister />}
+      <SafetyRegisterExports incidents={items} investigations={investigations} />
+      <SafetyFormsLibrary types={['Incident Report', 'Investigation Report', 'Take Five Assessment', 'Risk Assessment']} />
 
       {/* Incident Register */}
       <SectionCard
@@ -225,6 +225,7 @@ export default function Incidents() {
                     {inc.incident_id && <div className="text-xs text-foreground/40">{inc.incident_id}</div>}
                   </div>
                   <div className="flex items-center gap-2">
+                    <button onClick={() => downloadIncidentReport([inc])} className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted"><Download className="h-3 w-3" />PDF</button>
                     <select disabled={!canReview} value={inc.severity || ''} onChange={(e) => commitInc(inc, 'severity', e.target.value)} className={`${fieldBase} w-auto disabled:opacity-70`}>
                       {SEVERITIES.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
