@@ -19,6 +19,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import StatusDashboard from '@/components/safety/StatusDashboard';
 import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
 import IncidentLog from '@/components/safety/IncidentLog';
+import SafetyOperationsDashboard from '@/components/safety/SafetyOperationsDashboard';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -175,6 +176,8 @@ export default function Incidents() {
           </div>
         }
       />
+
+      <SafetyOperationsDashboard />
 
       <SafetyTrendsDashboard />
 
