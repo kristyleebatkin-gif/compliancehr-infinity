@@ -1,0 +1,44 @@
+{
+  "name": "FormsLibraryDocument",
+  "type": "object",
+  "properties": {
+    "library": {
+      "type": "string",
+      "enum": [
+        "Employee",
+        "Participant"
+      ],
+      "title": "Library"
+    },
+    "document_type": {
+      "type": "string",
+      "title": "Document Type"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "uploaded_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Uploaded Date"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    }
+  },
+  "required": [
+    "library",
+    "document_type",
+    "title"
+  ]
+}
