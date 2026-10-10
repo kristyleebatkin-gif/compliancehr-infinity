@@ -1,0 +1,52 @@
+{
+  "name": "NdisUpdate",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Published Date"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "NDIS Commission",
+        "NDIS Agency",
+        "Other"
+      ],
+      "default": "NDIS Agency",
+      "title": "Source"
+    },
+    "news_type": {
+      "type": "string",
+      "enum": [
+        "News",
+        "Update",
+        "Newsletter",
+        "Consultation"
+      ],
+      "default": "News",
+      "title": "Type"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary"
+    },
+    "url": {
+      "type": "string",
+      "title": "Link"
+    }
+  },
+  "required": [
+    "title",
+    "url"
+  ]
+}

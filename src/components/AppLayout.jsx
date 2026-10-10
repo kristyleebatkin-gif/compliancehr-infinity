@@ -10,7 +10,7 @@ import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, Github, BarChart3,
-  FlaskConical, MapPin, HeartHandshake,
+  FlaskConical, MapPin, HeartHandshake, Building2, Newspaper,
 } from 'lucide-react';
 
 const PRIMARY_NAV = [
@@ -40,6 +40,8 @@ const PRIMARY_NAV = [
   { label: 'MSDS Chemical Library', path: '/msds', key: 'msds', icon: FlaskConical },
   { label: 'Community & Council', path: '/community-council', key: 'community-council', icon: MapPin },
   { label: 'Referral & Support', path: '/referrals', key: 'community-referral', icon: HeartHandshake },
+  { label: 'NDIS Provider Portal', path: '/ndis-portal', key: 'ndis-provider', icon: Building2 },
+  { label: 'NDIS Updates & News', path: '/ndis-updates', key: 'ndis-news', icon: Newspaper },
   { label: 'Quote Centre', path: '/quotes', key: 'quotes', icon: Landmark },
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },
