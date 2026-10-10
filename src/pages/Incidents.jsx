@@ -17,6 +17,7 @@ import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports, { INCIDENT_CSV_COLUMNS, INVESTIGATION_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 import { downloadCsv } from '@/lib/csvExport';
 import StatusDashboard from '@/components/safety/StatusDashboard';
+import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -173,6 +174,8 @@ export default function Incidents() {
           </div>
         }
       />
+
+      <SafetyTrendsDashboard />
 
       <StatusDashboard
         title="Incident Status Dashboard"
