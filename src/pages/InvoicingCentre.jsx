@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -112,16 +113,17 @@ export default function InvoicingCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><FileSpreadsheet className="h-6 w-6" /> Invoicing Centre</h1>
-          <p className="text-sm text-muted-foreground">Outstanding ${outstanding.toLocaleString('en-AU', { minimumFractionDigits: 2 })} · Paid ${paid.toLocaleString('en-AU', { minimumFractionDigits: 2 })}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
-          <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
-        </div>
-      </div>
+      <PageHeader
+        icon={FileSpreadsheet}
+        title="Invoicing Centre"
+        subtitle={`Outstanding $${outstanding.toLocaleString('en-AU', { minimumFractionDigits: 2 })} · Paid $${paid.toLocaleString('en-AU', { minimumFractionDigits: 2 })}`}
+        action={
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
+            <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
+          </div>
+        }
+      />
 
       {!business.business_name && !loading && (
         <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>

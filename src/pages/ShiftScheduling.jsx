@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -63,11 +64,8 @@ export default function ShiftScheduling() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><CalendarClock className="h-6 w-6" /> Shift Scheduling</h1>
-          <p className="text-sm text-muted-foreground">Upcoming and recent shifts.</p>
-        </div>
+      <PageHeader icon={CalendarClock} title="Shift Scheduling" subtitle="Upcoming and recent shifts." />
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Schedule shift</Button></DialogTrigger>
           <DialogContent>

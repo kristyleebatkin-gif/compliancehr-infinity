@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,17 +100,18 @@ export default function MeetingCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><CalendarDays className="h-6 w-6" /> Meeting Centre</h1>
-          <p className="text-sm text-muted-foreground">Meeting register, calendar, invites, minutes and follow-up tasks.</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
-          <Button variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-          <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Schedule meeting</Button>
-        </div>
-      </div>
+      <PageHeader
+        icon={CalendarDays}
+        title="Meeting Centre"
+        subtitle="Meeting register, calendar, invites, minutes and follow-up tasks."
+        action={
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
+            <Button variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Schedule meeting</Button>
+          </div>
+        }
+      />
 
       <Tabs defaultValue="register">
         <TabsList className="flex-wrap">

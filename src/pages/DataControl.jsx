@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -94,13 +95,12 @@ export default function DataControl() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><Database className="h-6 w-6" /> Data Control</h1>
-          <p className="text-sm text-muted-foreground">Users and permissions, access logging, breach response, and data exports.</p>
-        </div>
-        <Button variant="outline" onClick={downloadBreachResponsePlan}><FileDown className="mr-2 h-4 w-4" />Data breach response plan</Button>
-      </div>
+      <PageHeader
+        icon={Database}
+        title="Data Control"
+        subtitle="Users and permissions, access logging, breach response, and data exports."
+        action={<Button variant="outline" onClick={downloadBreachResponsePlan}><FileDown className="mr-2 h-4 w-4" />Data breach response plan</Button>}
+      />
 
       <Tabs defaultValue="users">
         <TabsList className="flex-wrap">

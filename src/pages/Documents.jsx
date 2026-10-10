@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -115,11 +116,8 @@ export default function Documents() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><FolderOpen className="h-6 w-6" /> Document Vault</h1>
-          <p className="text-sm text-muted-foreground">Employee documents and their expiry tracking.</p>
-        </div>
+      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Employee documents and their expiry tracking." />
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <div className="flex items-center gap-2">
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
           <Button variant="outline" onClick={runScan} disabled={scanning}>

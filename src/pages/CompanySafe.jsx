@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,11 +52,8 @@ export default function CompanySafe() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><Lock className="h-6 w-6" /> Company Safe</h1>
-          <p className="text-sm text-muted-foreground">Central register of organisational documents, certificates and licences.</p>
-        </div>
+      <PageHeader icon={Lock} title="Company Safe" subtitle="Central register of organisational documents, certificates and licences." />
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
           <DialogContent>

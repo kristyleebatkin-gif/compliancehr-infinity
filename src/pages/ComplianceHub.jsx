@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PageHeader from '@/components/PageHeader';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -77,10 +78,7 @@ export default function ComplianceHub() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="flex items-center gap-2 text-2xl font-bold"><ShieldCheck className="h-6 w-6" /> Compliance & Report Centre</h1>
-        <p className="text-sm text-muted-foreground">Policies, legal obligations and their review cycles.</p>
-      </div>
+      <PageHeader icon={ShieldCheck} title="Compliance & Report Centre" subtitle="Policies, legal obligations and their review cycles." />
 
       <Tabs defaultValue="policies">
         <TabsList className="flex-wrap">

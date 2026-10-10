@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -129,11 +130,8 @@ export default function AuditCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><ClipboardCheck className="h-6 w-6" /> Audit Centre</h1>
-          <p className="text-sm text-muted-foreground">Audit schedule, findings, actions, checklists and NDIS audit readiness.</p>
-        </div>
+      <PageHeader icon={ClipboardCheck} title="Audit Centre" subtitle="Audit schedule, findings, actions, checklists and NDIS audit readiness." />
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <div className="flex gap-2">
           <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
           <Dialog open={open} onOpenChange={setOpen}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
 
-export default function PageHeader({ title, subtitle, action, className }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className }) {
   const primary = moduleColour(title);
   const secondary = moduleColour(title, 3);
   return (
@@ -12,10 +12,17 @@ export default function PageHeader({ title, subtitle, action, className }) {
     >
       <div className="pointer-events-none absolute -right-10 -top-14 h-36 w-36 rounded-full opacity-15" style={{ backgroundColor: secondary }} />
       <div className="pointer-events-none absolute bottom-0 left-0 h-1 w-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary})` }} />
-      <div className="relative">
-        <div className="mb-2 h-1 w-12 rounded-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary})` }} />
-        <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">{title}</h1>
-        {subtitle && <p className="mt-1 max-w-3xl text-sm text-foreground/60">{subtitle}</p>}
+      <div className="relative flex items-start gap-3">
+        {Icon && (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-sm" style={{ backgroundColor: `${primary}26`, color: primary }}>
+            <Icon className="h-5 w-5" />
+          </div>
+        )}
+        <div>
+          <div className="mb-2 h-1 w-12 rounded-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary})` }} />
+          <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">{title}</h1>
+          {subtitle && <p className="mt-1 max-w-3xl text-sm text-foreground/60">{subtitle}</p>}
+        </div>
       </div>
       {action && <div className="relative mt-4 shrink-0 sm:mt-0">{action}</div>}
     </div>

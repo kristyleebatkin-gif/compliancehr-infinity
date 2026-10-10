@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
+import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,10 +71,7 @@ export default function EmergencyResponse() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="flex items-center gap-2 text-2xl font-bold"><Siren className="h-6 w-6" /> Emergency Response</h1>
-        <p className="text-sm text-muted-foreground">Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.</p>
-      </div>
+      <PageHeader icon={Siren} title="Emergency Response" subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources." />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
