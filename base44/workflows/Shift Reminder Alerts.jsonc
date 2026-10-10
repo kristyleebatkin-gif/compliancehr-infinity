@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "shift_reminder_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_and_notify": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "shiftReminderAlert",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send shift reminders",
+            "description": "Emails each staff member 24 hours before their scheduled shift starts"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Shift Reminder Alerts",
+  "description": "Hourly: emails staff members 24 hours before their scheduled shift starts (each shift is reminded once)."
+}

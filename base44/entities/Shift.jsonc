@@ -122,6 +122,11 @@
     "invoice_id": {
       "type": "string",
       "title": "Linked Invoice ID"
+    },
+    "reminder_sent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Reminder Sent"
     }
   },
   "required": [

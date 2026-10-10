@@ -1,0 +1,47 @@
+<mjml>
+  <mj-head>
+    <mj-title>Reminder: your shift tomorrow at {{start_time}}</mj-title>
+    <mj-preview>Your shift starts in 24 hours - here are the details</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, Helvetica, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0a0a0a" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#0a0a0a" border-radius="6px" font-weight="700" inner-padding="14px 28px" align="left" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f4f4f5">
+    <mj-section background-color="#0a0a0a" padding="20px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3352e3dd7_logo.png" alt="ComplianceHR Portal" align="left" width="120px" />
+      </mj-column>
+    </mj-section>
+    <mj-section padding="32px 36px 8px">
+      <mj-column>
+        <mj-text font-size="26px" font-weight="700" line-height="1.2">Shift reminder, {{first_name}}</mj-text>
+        <mj-text color="#737373">You have a shift starting tomorrow, {{shift_date}} at {{start_time}}. Please arrive on time and review the details below.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="8px 36px">
+      <mj-column background-color="#f9fafb" border="1px solid #e5e7eb" border-radius="6px" padding="16px">
+        <mj-text font-size="14px"><span style="font-weight:bold">Shift details</span></mj-text>
+        <mj-text font-size="14px" line-height="1.8">
+          <span style="font-weight:bold">Date:</span> {{shift_date}}<br/>
+          <span style="font-weight:bold">Time:</span> {{start_time}}{{end_time_s}}{{end_time}}<br/>
+          <span style="font-weight:bold">Participant:</span> {{participant_name}}<br/>
+          <span style="font-weight:bold">Service:</span> {{service_type}}{{location_s}}{{location}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="16px 36px 8px">
+      <mj-column>
+        <mj-button href="https://polite-safe-hire-flow.base44.app/roster">Open the roster</mj-button>
+        <mj-text font-size="12px" color="#737373" padding="12px 0 0">This is an automated reminder from {{app_name}}, sent 24 hours before a scheduled shift starts. If you cannot attend, please notify your supervisor as soon as possible.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#0a0a0a" padding="16px 36px">
+      <mj-column>
+        <mj-text color="#ffffff" font-size="12px">ComplianceHR Portal - Rostering and compliance management</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
