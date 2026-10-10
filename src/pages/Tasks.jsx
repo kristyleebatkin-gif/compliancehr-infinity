@@ -1,25 +1,114 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
-import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap } from 'lucide-react';
+import TaskDashboard from '@/components/tasks/TaskDashboard';
+import TaskSendDialog from '@/components/tasks/TaskSendDialog';
+import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell } from 'lucide-react';
+import { format } from 'date-fns';
 
 const TYPES = ['Review Reminder', 'Training Renewal', 'Policy Review', 'Incident Action', 'Audit Action', 'General'];
 const STATUSES = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
 const PRIORITIES = ['Low', 'Medium', 'High', 'Urgent'];
 
-const blank = { title: '', task_type: 'General', assigned_to: '', due_date: '', status: 'Open', priority: 'Medium', notes: '', linked_entity_type: '', linked_entity_id: '' };
+const blank = { title: '', task_type: 'General', assigned_to: '', assigned_email: '', due_date: '', status: 'Open', priority: 'Medium', estimated_hours: '', completed_date: '', notes: '', linked_entity_type: '', linked_entity_id: '' };
 
 export default function Tasks() {
   const { toast } = useToast();
   const [list, setList] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(blank);
+  const [emailAssignee, setEmailAssignee] = useState(false);
   const [filter, setFilter] = useState('All');
   const [running, setRunning] = useState(false);
+  const [sending, setSending] = useState(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [page, userPage] = await Promise.all([
+        base44.entities.Task.filter({}, { sort: '-due_date', limit: 500 }),
+        base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
+      ]);
+      setList(page.items || []);
+      setUsers(userPage.items || []);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  }, []);
+  useEffect(() => { load(); }, [load]);
+
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+  const assignUser = (name) => {
+    const user = users.find((u) => u.full_name === name);
+    setForm((f) => ({ ...f, assigned_to: name, assigned_email: user?.email || f.assigned_email }));
+    if (user?.email) setEmailAssignee(true);
+  };
+
+  const openNew = () => { setEditing('new'); setForm({ ...blank, due_date: new Date().toISOString().slice(0, 10) }); setEmailAssignee(false); };
+  const openEdit = (t) => { setEditing(t.id); setForm({ ...blank, ...t }); setEmailAssignee(false); };
+
+  const alertAssignee = async (task) => {
+    if (!task.assigned_to) return;
+    try {
+      await base44.entities.Notification.create({
+        type: 'Task Allocation',
+        recipient: task.assigned_to,
+        message: `Task allocated: ${task.title}${task.due_date ? ` (due ${format(new Date(task.due_date), 'd MMM yyyy')})` : ''}`,
+        read: false,
+        linked_entity_type: 'Task',
+        linked_entity_id: task.id,
+      });
+    } catch { /* alert is best-effort */ }
+  };
+
+  const save = async (e) => {
+    e.preventDefault();
+    if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
+    const payload = {
+      ...form,
+      estimated_hours: form.estimated_hours === '' ? undefined : Number(form.estimated_hours),
+      completed_date: form.status === 'Completed' ? (form.completed_date || new Date().toISOString().slice(0, 10)) : form.completed_date,
+    };
+    const previous = editing === 'new' ? null : list.find((t) => t.id === editing);
+    if (editing === 'new') await base44.entities.Task.create(payload);
+    else await base44.entities.Task.update(editing, payload);
+    if (payload.assigned_to && (!previous || previous.assigned_to !== payload.assigned_to)) await alertAssignee(payload);
+    if (payload.assigned_to && emailAssignee && payload.assigned_email && (!previous || previous.assigned_to !== payload.assigned_to)) {
+      try {
+        await base44.functions.invoke('sendAppEmail', {
+          to: payload.assigned_email,
+          subject: `Task allocated: ${payload.title}${payload.due_date ? ` (due ${format(new Date(payload.due_date), 'd MMM yyyy')})` : ''}`,
+          body: `You have been allocated the task "${payload.title}"${payload.due_date ? `, due ${format(new Date(payload.due_date), 'EEEE d MMMM yyyy')}` : ''}. Priority: ${payload.priority}.${payload.notes ? `\n\nDetails: ${payload.notes}` : ''}\n\nPlease open the Tasks module to keep it up to date.`,
+        });
+      } catch { /* email is best-effort here */ }
+    }
+    toast({ title: 'Task saved' });
+    setEditing(null);
+    load();
+  };
+
+  const toggle = async (t) => {
+    const completed = t.status !== 'Completed';
+    await base44.entities.Task.update(t.id, {
+      status: completed ? 'Completed' : 'Open',
+      completed_date: completed ? new Date().toISOString().slice(0, 10) : undefined,
+    });
+    load();
+  };
+
+  const setStatus = async (t, status) => {
+    await base44.entities.Task.update(t.id, {
+      status,
+      completed_date: status === 'Completed' ? new Date().toISOString().slice(0, 10) : undefined,
+    });
+    load();
+  };
+
+  const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.Task.delete(t.id); load(); } };
 
   const runAutomations = async () => {
     setRunning(true);
@@ -32,44 +121,13 @@ export default function Tasks() {
     setRunning(false);
   };
 
-  const load = async () => {
-    setLoading(true);
-    try {
-      const page = await base44.entities.Task.filter({}, { sort: '-due_date', limit: 500 });
-      setList(page.items || []);
-    } catch (e) { console.error(e); }
-    setLoading(false);
-  };
-  useEffect(() => { load(); }, []);
-
-  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
-
-  const openNew = () => { setEditing('new'); setForm({ ...blank, due_date: new Date().toISOString().slice(0, 10) }); };
-  const openEdit = (t) => { setEditing(t.id); setForm(t); };
-
-  const save = async (e) => {
-    e.preventDefault();
-    if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
-    if (editing === 'new') await base44.entities.Task.create(form);
-    else await base44.entities.Task.update(editing, form);
-    toast({ title: 'Task saved' });
-    setEditing(null); load();
-  };
-
-  const toggle = async (t) => {
-    await base44.entities.Task.update(t.id, { status: t.status === 'Completed' ? 'Open' : 'Completed' });
-    load();
-  };
-
-  const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.Task.delete(t.id); load(); } };
-
   const filtered = filter === 'All' ? list : list.filter((t) => t.status === filter);
-  const counts = { Open: 0, 'In Progress': 0, Completed: 0, Overdue: 0 };
-  list.forEach((t) => { counts[t.status] = (counts[t.status] || 0) + 1; });
 
   return (
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Tasks" subtitle={`${counts.Open} open • ${counts.Overdue} overdue`} action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
+      <PageHeader title="Tasks" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
+
+      <TaskDashboard tasks={list} onOpen={openEdit} />
 
       <div className="flex gap-1 overflow-x-auto">
         {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
@@ -94,11 +152,16 @@ export default function Tasks() {
                   <span className={`rounded-full px-2 py-0.5 font-medium ${t.priority === 'Urgent' || t.priority === 'High' ? 'bg-danger/10 text-danger' : 'bg-muted text-foreground/60'}`}>{t.priority}</span>
                   <span>{t.task_type}</span>
                   {t.assigned_to && <span>• {t.assigned_to}</span>}
-                  {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.due_date}</span>}
+                  {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{format(new Date(t.due_date), 'EEE d MMM yyyy')}</span>}
+                  {t.completed_date && t.status === 'Completed' && <span>• completed {format(new Date(t.completed_date), 'd MMM yyyy')}</span>}
                 </div>
               </div>
-              <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${t.status === 'Completed' ? 'bg-safe/10 text-safe' : t.status === 'Overdue' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'}`}>{t.status}</span>
+              <select value={t.status} onChange={(e) => setStatus(t, e.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">
+                {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
               <div className="flex gap-1">
+                <button onClick={() => setSending(t)} title="Send / alert assignee" className="rounded p-1.5 hover:bg-brand/10"><Mail className="h-4 w-4 text-foreground/50" /></button>
+                <button onClick={() => alertAssignee(t)} title="Send in-app alert" className="rounded p-1.5 hover:bg-brand/10"><Bell className="h-4 w-4 text-foreground/50" /></button>
                 <button onClick={() => openEdit(t)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
                 <button onClick={() => remove(t)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
               </div>
@@ -117,17 +180,35 @@ export default function Tasks() {
                 <Field label="Type"><Select value={form.task_type} onChange={(e) => set('task_type', e.target.value)}>{TYPES.map((t) => <option key={t}>{t}</option>)}</Select></Field>
                 <Field label="Priority"><Select value={form.priority} onChange={(e) => set('priority', e.target.value)}>{PRIORITIES.map((p) => <option key={p}>{p}</option>)}</Select></Field>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Assigned To"><TextInput value={form.assigned_to || ''} onChange={(e) => set('assigned_to', e.target.value)} /></Field>
+              <Field label="Allocate to">
+                <Select value={form.assigned_to || ''} onChange={(e) => assignUser(e.target.value)}>
+                  <option value="">Unassigned</option>
+                  {users.map((u) => <option key={u.id} value={u.full_name}>{u.full_name || u.email}</option>)}
+                  {form.assigned_to && !users.some((u) => u.full_name === form.assigned_to) && <option value={form.assigned_to}>{form.assigned_to}</option>}
+                </Select>
+              </Field>
+              <div className="grid grid-cols-3 gap-3">
                 <Field label="Due Date"><DateInput value={form.due_date || ''} onChange={(e) => set('due_date', e.target.value)} /></Field>
+                <Field label="Estimated hours"><TextInput type="number" value={form.estimated_hours ?? ''} onChange={(e) => set('estimated_hours', e.target.value)} /></Field>
+                <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
               </div>
-              <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
+              {form.status === 'Completed' && <Field label="Completed date"><DateInput value={form.completed_date || ''} onChange={(e) => set('completed_date', e.target.value)} /></Field>}
+              <Field label="Linked entity type (e.g. Incident, Policy)"><TextInput value={form.linked_entity_type || ''} onChange={(e) => set('linked_entity_type', e.target.value)} /></Field>
+              <Field label="Linked entity ID"><TextInput value={form.linked_entity_id || ''} onChange={(e) => set('linked_entity_id', e.target.value)} /></Field>
               <Field label="Notes"><TextArea value={form.notes || ''} onChange={(e) => set('notes', e.target.value)} /></Field>
+              {form.assigned_to && (
+                <label className="flex items-center gap-2 text-sm">
+                  <input type="checkbox" checked={emailAssignee} onChange={(e) => setEmailAssignee(e.target.checked)} />
+                  Email the task to {form.assigned_to} and send an in-app alert
+                </label>
+              )}
               <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
             </form>
           </div>
         </div>
       )}
+
+      <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
     </div>
   );
 }

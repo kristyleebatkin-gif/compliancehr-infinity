@@ -23,6 +23,10 @@
       "type": "string",
       "title": "Assigned To"
     },
+    "assigned_email": {
+      "type": "string",
+      "title": "Assignee Email"
+    },
     "due_date": {
       "type": "string",
       "format": "date",
@@ -59,6 +63,15 @@
       "default": "Medium",
       "title": "Priority"
     },
+    "estimated_hours": {
+      "type": "number",
+      "title": "Estimated Hours"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
@@ -70,6 +83,7 @@
         "Audit declined"
       ],
       "default": "Audit declined",
+      "title": "Audit Consent",
       "rls": {
         "write": {
           "user_condition": {
