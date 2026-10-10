@@ -57,6 +57,42 @@ export function rangesOverlap(aStart, aEnd, bStart, bEnd) {
   return aS < bE && bS < aE;
 }
 
+// Overlapping-shift detection for the rostering calendar.
+// Returns a Set of shift ids that clash with another shift for the same staff member:
+// same-date overlaps, or an overnight shift spilling into the next day's shift.
+export function findShiftConflicts(shifts) {
+  const ids = new Set();
+  const active = shifts.filter((s) => s.status !== 'Cancelled' && s.employee_name);
+  const byStaff = {};
+  active.forEach((s) => {
+    const key = s.employee_name.toLowerCase();
+    (byStaff[key] = byStaff[key] || []).push(s);
+  });
+  Object.values(byStaff).forEach((list) => {
+    list.forEach((a, i) => {
+      list.slice(i + 1).forEach((b) => {
+        const aSpills = timeToMinutes(a.end_time) !== null && timeToMinutes(a.end_time) <= timeToMinutes(a.start_time);
+        const bSpills = timeToMinutes(b.end_time) !== null && timeToMinutes(b.end_time) <= timeToMinutes(b.start_time);
+        const sameDay = a.date === b.date;
+        const bNext = b.date === nextDateStr(a.date);
+        const aNext = a.date === nextDateStr(b.date);
+        const clashes =
+          (sameDay && rangesOverlap(a.start_time, a.end_time, b.start_time, b.end_time)) ||
+          (bNext && aSpills && rangesOverlap('00:00', a.end_time, b.start_time, b.end_time)) ||
+          (aNext && bSpills && rangesOverlap('00:00', b.end_time, a.start_time, a.end_time));
+        if (clashes) { ids.add(a.id); ids.add(b.id); }
+      });
+    });
+  });
+  return ids;
+}
+
+function nextDateStr(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
 // Expand a shift occurrence list from repeat_rule/repeat_until (weekly / fortnightly).
 export function expandRecurrence(base, rule, until) {
   if (!rule || rule === 'none' || !until) return [base.date];
