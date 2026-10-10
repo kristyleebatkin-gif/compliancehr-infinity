@@ -1,0 +1,47 @@
+{
+  "name": "GoalProgressNote",
+  "type": "object",
+  "properties": {
+    "goal_id": {
+      "type": "string",
+      "title": "Goal"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "entry_type": {
+      "type": "string",
+      "enum": [
+        "Progress Note",
+        "Progress Report"
+      ],
+      "default": "Progress Note",
+      "title": "Entry Type"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "recorded_by": {
+      "type": "string",
+      "title": "Recorded By"
+    },
+    "recorded_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Recorded Date"
+    }
+  },
+  "required": [
+    "goal_id"
+  ]
+}

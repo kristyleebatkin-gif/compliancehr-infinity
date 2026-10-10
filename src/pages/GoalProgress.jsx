@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,10 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Target } from 'lucide-react';
+import { Plus, Trash2, Target, Users } from 'lucide-react';
 import { format } from 'date-fns';
-
+import GoalNotes from '@/components/goals/GoalNotes';
 
 export default function GoalProgress() {
   const [goals, setGoals] = useState([]);
@@ -22,7 +23,7 @@ export default function GoalProgress() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Goal.filter({}, { sort: '-created_date', limit: 50 });
+      const page = await base44.entities.Goal.filter({}, { sort: '-created_date', limit: 200 });
       setGoals(page.items);
     } finally {
       setLoading(false);
@@ -49,12 +50,58 @@ export default function GoalProgress() {
     await load();
   };
 
+  const participants = useMemo(() => {
+    const map = new Map();
+    goals.forEach((g) => {
+      const name = g.participant_name || 'Unassigned';
+      if (!map.has(name)) map.set(name, []);
+      map.get(name).push(g);
+    });
+    return [...map.entries()].map(([name, list]) => {
+      const avg = Math.round(list.reduce((sum, g) => sum + (g.progress || 0), 0) / list.length);
+      const achieved = list.filter((g) => g.status === 'Achieved').length;
+      return { name, goals: list, avg, achieved };
+    }).sort((a, b) => b.avg - a.avg);
+  }, [goals]);
+
+  const GoalCard = ({ g, compact }) => (
+    <Card key={g.id}>
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <p className="font-semibold">{g.goal}</p>
+            <p className="text-sm text-muted-foreground">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
+          </div>
+          <Badge className={statusTone(g.status)}>{g.status}</Badge>
+        </div>
+        <div className="mt-3 flex items-center gap-3">
+          <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(g.progress || 0, 100)}%` }} />
+          </div>
+          {!compact && (
+            <Input type="number" min="0" max="100" value={g.progress ?? 0} onChange={(e) => setProgress(g, Number(e.target.value) || 0)} className="h-8 w-20 text-sm" />
+          )}
+          {compact && <span className="text-sm font-semibold">{g.progress || 0}%</span>}
+        </div>
+        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+          <span>{g.target_date ? `Target ${format(new Date(g.target_date), 'd MMM yyyy')}` : ''}{g.support_needed ? ` · Support: ${g.support_needed}` : ''}</span>
+          {!compact && (
+            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Goal.delete(g.id); await load(); }}>
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
+          )}
+        </div>
+        {!compact && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} /></div>}
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold"><Target className="h-6 w-6" /> Goal Progress</h1>
-          <p className="text-sm text-muted-foreground">Participant goals and their progress toward achievement.</p>
+          <p className="text-sm text-muted-foreground">Participant goals, progress notes and reports.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
@@ -85,34 +132,54 @@ export default function GoalProgress() {
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : goals.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No goals recorded yet.</CardContent></Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {goals.map((g) => (
-            <Card key={g.id}>
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="font-semibold">{g.goal}</p>
-                    <p className="text-sm text-muted-foreground">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
-                  </div>
-                  <Badge className={statusTone(g.status)}>{g.status}</Badge>
-                </div>
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                    <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(g.progress || 0, 100)}%` }} />
-                  </div>
-                  <Input type="number" min="0" max="100" value={g.progress ?? 0} onChange={(e) => setProgress(g, Number(e.target.value) || 0)} className="h-8 w-20 text-sm" />
-                </div>
-                <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                  {g.target_date && <span>Target {format(new Date(g.target_date), 'd MMM yyyy')}</span>}
-                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Goal.delete(g.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <Tabs defaultValue="all">
+          <TabsList>
+            <TabsTrigger value="all">All goals</TabsTrigger>
+            <TabsTrigger value="participants">Progress by participant</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="all" className="mt-4">
+            {goals.length === 0 ? (
+              <Card><CardContent className="p-10 text-center text-muted-foreground">No goals recorded yet.</CardContent></Card>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2">
+                {goals.map((g) => <GoalCard key={g.id} g={g} />)}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="participants" className="mt-4">
+            {participants.length === 0 ? (
+              <Card><CardContent className="p-10 text-center text-muted-foreground">No goals recorded yet.</CardContent></Card>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2">
+                {participants.map((p) => (
+                  <Card key={p.name}>
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand/10 text-brand"><Users className="h-4 w-4" /></div>
+                          <div>
+                            <p className="font-semibold">{p.name}</p>
+                            <p className="text-xs text-muted-foreground">{p.goals.length} goal{p.goals.length === 1 ? '' : 's'} · {p.achieved} achieved</p>
+                          </div>
+                        </div>
+                        <Badge className={statusTone(p.avg >= 100 ? 'Achieved' : p.avg >= 50 ? 'In Progress' : 'On Hold')}>{p.avg}% overall</Badge>
+                      </div>
+                      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
+                        <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(p.avg, 100)}%` }} />
+                      </div>
+                      <div className="mt-3 space-y-2">
+                        {p.goals.map((g) => <GoalCard key={g.id} g={g} compact />)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       )}
     </div>
   );

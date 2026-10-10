@@ -1,0 +1,43 @@
+{
+  "name": "VisitorLog",
+  "type": "object",
+  "properties": {
+    "visitor_name": {
+      "type": "string",
+      "title": "Visitor Name"
+    },
+    "organisation": {
+      "type": "string",
+      "title": "Organisation"
+    },
+    "host": {
+      "type": "string",
+      "title": "Host / Visiting"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "time_in": {
+      "type": "string",
+      "title": "Sign In Time"
+    },
+    "time_out": {
+      "type": "string",
+      "title": "Sign Out Time"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose of Visit"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "visitor_name",
+    "date"
+  ]
+}

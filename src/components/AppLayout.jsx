@@ -31,7 +31,6 @@ const PRIMARY_NAV = [
   { label: 'Rostering Facility', path: '/rostering', key: 'rostering', icon: CalendarClock },
   { label: 'Invoicing Centre', path: '/invoicing', key: 'invoicing', icon: FileSpreadsheet },
   { label: 'Goal Progress', path: '/goals', key: 'goals', icon: Target },
-  { label: 'Compliance Checklists', path: '/checklists', key: 'checklists', icon: ClipboardList },
   { label: 'Emergency Response', path: '/emergency-response', key: 'emergency-response', icon: Siren },
   { label: 'Meeting Centre', path: '/meetings', key: 'meetings', icon: CalendarDays },
   { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },

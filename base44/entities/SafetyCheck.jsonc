@@ -1,0 +1,78 @@
+{
+  "name": "SafetyCheck",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "check_type": {
+      "type": "string",
+      "enum": [
+        "Smoke Alarm Test",
+        "Fire Safety Equipment Check",
+        "Fire Extinguisher Check",
+        "Emergency Lighting Test",
+        "Natural Disaster Kit Check",
+        "First Aid Kit Check",
+        "First Aid Check",
+        "MSDS Review",
+        "Evacuation Drill",
+        "Other"
+      ],
+      "default": "Smoke Alarm Test",
+      "title": "Check Type"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "date_completed": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Completed"
+    },
+    "next_due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Due (6 months)"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "Pass",
+        "Issues Found",
+        "Scheduled"
+      ],
+      "default": "Pass",
+      "title": "Result"
+    },
+    "issues_found": {
+      "type": "string",
+      "title": "Issues Found"
+    },
+    "action_taken": {
+      "type": "string",
+      "title": "Action Taken"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Record File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "Record File Name"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

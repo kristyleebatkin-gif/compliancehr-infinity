@@ -1,0 +1,70 @@
+{
+  "name": "EmergencyDocument",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "doc_type": {
+      "type": "string",
+      "enum": [
+        "Evacuation Plan",
+        "Fire Safety Plan",
+        "Business Emergency Response Plan",
+        "Evacuation Diagram",
+        "Smoke Alarm Test Record",
+        "Fire Safety Equipment Check Record",
+        "MSDS / Safety Data Sheet",
+        "Participant Personal Emergency Plan",
+        "Natural Disaster Checklist",
+        "First Aid Kit Checklist",
+        "Visitor Sign In / Out Sheet",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Document Type"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant (for personal emergency plans)"
+    },
+    "site_location": {
+      "type": "string",
+      "title": "Site / Location"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Issue / Check Date"
+    },
+    "next_review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review Due"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

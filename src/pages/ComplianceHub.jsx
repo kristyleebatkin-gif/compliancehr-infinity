@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
+import Checklists from '@/pages/Checklists';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -82,9 +83,10 @@ export default function ComplianceHub() {
       </div>
 
       <Tabs defaultValue="policies">
-        <TabsList>
+        <TabsList className="flex-wrap">
           <TabsTrigger value="policies">Policies</TabsTrigger>
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
+          <TabsTrigger value="checklists">Compliance Checklists</TabsTrigger>
         </TabsList>
 
         <TabsContent value="policies" className="mt-4 space-y-4">
@@ -215,6 +217,10 @@ export default function ComplianceHub() {
               ))}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="checklists" className="mt-4">
+          <Checklists />
         </TabsContent>
       </Tabs>
     </div>

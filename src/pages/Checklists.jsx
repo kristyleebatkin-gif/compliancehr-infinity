@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, ClipboardList, Check } from 'lucide-react';
+import { Plus, Trash2, ClipboardList, Check, Download } from 'lucide-react';
 import { format } from 'date-fns';
+import { downloadChecklistPdf } from '@/lib/checklistsPdf';
 
 export default function Checklists() {
   const [lists, setLists] = useState([]);
@@ -130,7 +131,14 @@ export default function Checklists() {
 
                   <AddItemRow onAdd={(text) => addItem(list, text)} />
 
-                  <div className="mt-3 flex justify-end">
+                  <div className="mt-3 flex justify-end gap-2">
+                    <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => downloadChecklistPdf({
+                      title: list.title,
+                      code: 'CHK-CHECKLIST',
+                      subtitle: list.category || 'Compliance checklist',
+                      items: (list.items || []).map((i) => i.text),
+                      signoffFields: ['Completed by', 'Date', 'Signature'],
+                    })}><Download className="h-3 w-3" />Download PDF</Button>
                     <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Checklist.delete(list.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                   </div>
                 </CardContent>

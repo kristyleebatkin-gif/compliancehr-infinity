@@ -1,0 +1,157 @@
+// Blank emergency-response document templates rendered as branded fillable PDFs
+// via buildChecklistPdf (fields = labeled fillable boxes, columns = register grid,
+// items = tick-box checklist).
+
+export const EMERGENCY_TEMPLATES = {
+  'Evacuation Plan': {
+    code: 'EMG-001',
+    subtitle: 'Site evacuation plan and emergency procedure',
+    fields: [
+      { label: 'Site name / address' },
+      { label: 'Chief warden and contact number' },
+      { label: 'Assembly area' },
+      { label: 'Evacuation routes and exits', multiline: true },
+      { label: 'Assistance for people with disability or special needs', multiline: true },
+      { label: 'Post-evacuation procedure and roll call', multiline: true },
+    ],
+  },
+  'Fire Safety Plan': {
+    code: 'EMG-002',
+    subtitle: 'Fire safety plan, hazards and responsibilities',
+    fields: [
+      { label: 'Site name / address' },
+      { label: 'Plan prepared by' },
+      { label: 'Fire hazards identified on site', multiline: true },
+      { label: 'Fire fighting equipment on site (extinguishers, hose reels, blankets)', multiline: true },
+      { label: 'Equipment inspection and maintenance schedule' },
+      { label: 'Staff responsibilities during a fire emergency', multiline: true },
+    ],
+  },
+  'Business Emergency Response Plan': {
+    code: 'EMG-003',
+    subtitle: 'Organisation-wide emergency response plan',
+    fields: [
+      { label: 'Plan version' },
+      { label: 'Approved by' },
+      { label: 'Approval date' },
+      { label: 'Emergency contacts (internal and external)', multiline: true },
+      { label: 'Emergency types covered and activation procedure', multiline: true },
+      { label: 'Evacuation, lockdown and shelter-in-place procedures', multiline: true },
+      { label: 'Business continuity and recovery arrangements', multiline: true },
+    ],
+  },
+  'Participant Personal Emergency Plan': {
+    code: 'EMG-004',
+    subtitle: 'Individual personal emergency plan',
+    fields: [
+      { label: 'Participant name' },
+      { label: 'NDIS number' },
+      { label: 'Personal emergency contacts (name, relationship, phone)', multiline: true },
+      { label: 'Medical conditions, allergies and medications', multiline: true },
+      { label: 'Mobility, transport and evacuation needs', multiline: true },
+      { label: 'Communication needs and preferences', multiline: true },
+      { label: 'Preferred assembly point and support person', multiline: true },
+    ],
+  },
+  'Smoke Alarm Test Record': {
+    code: 'EMG-005',
+    subtitle: 'Record of smoke alarm testing',
+    columns: ['Date tested', 'Location', 'Result', 'Battery replaced', 'Tested by'],
+    rows: 14,
+  },
+  'Fire Safety Equipment Check': {
+    code: 'EMG-006',
+    subtitle: 'Record of fire safety equipment checks',
+    columns: ['Date', 'Equipment', 'Location', 'Result', 'Next due', 'Checked by'],
+    rows: 14,
+  },
+  'Fire Drill & Evacuation Log': {
+    code: 'EMG-007',
+    subtitle: 'Log of fire drills and evacuation exercises',
+    columns: ['Date', 'Drill type', 'Location', 'Duration', 'Participants', 'Outcome', 'Recorded by'],
+    rows: 14,
+  },
+  'First Aid Check Register': {
+    code: 'EMG-008',
+    subtitle: 'Register of first aid kit and first aid checks',
+    columns: ['Date checked', 'Kit / item location', 'Items replaced', 'Expiring items', 'Result', 'Checked by'],
+    rows: 14,
+  },
+  'MSDS Register': {
+    code: 'EMG-009',
+    subtitle: 'Register of material safety data sheets held',
+    columns: ['Product / chemical', 'SDS date', 'Stored location', 'Risk notes', 'Next review', 'Added by'],
+    rows: 14,
+  },
+  'Natural Disaster Checklist': {
+    code: 'EMG-010',
+    subtitle: 'Natural disaster preparedness checklist',
+    items: [
+      'Drinking water stored (3 days supply per person)',
+      'Non-perishable food stocked and in date',
+      'Battery-powered radio available',
+      'Torches available with spare batteries',
+      'First aid kit complete and in date',
+      'Medications and prescriptions current and accessible',
+      'Copies of important documents in waterproof bag',
+      'Emergency contact list printed and accessible',
+      'Phone chargers and power bank charged',
+      'Blankets and warm clothing available',
+      'Sturdy shoes and protective clothing accessible',
+      'Cash on hand in small notes',
+      'Whistle or signal device available',
+      'Water containers filled',
+      'Hygiene and sanitation supplies stocked',
+      'Pet / animal supplies ready',
+      'Evacuation plan reviewed with everyone on site',
+      'Local emergency alerts and warnings monitored',
+    ],
+  },
+  'First Aid Kit Checklist': {
+    code: 'EMG-011',
+    subtitle: 'First aid kit contents checklist',
+    items: [
+      'Adhesive bandages (assorted sizes)',
+      'Sterile wound dressings (assorted)',
+      'Non-adhesive dressings',
+      'Gauze bandages and rolls',
+      'Adhesive tape',
+      'Antiseptic liquid / wipes',
+      'Sterile eye pad',
+      'Scissors and tweezers',
+      'Instant cold pack',
+      'Burn gel / burn dressings',
+      'CPR face shield or resuscitation mask',
+      'Disposable gloves',
+      'First aid instructions booklet',
+      'Emergency thermal blanket',
+      'Saline solution / eye wash',
+      'Contents list attached and in date',
+    ],
+  },
+  'Visitor Sign In / Out Sheet': {
+    code: 'EMG-012',
+    subtitle: 'Visitor sign in and sign out register',
+    columns: ['Date', 'Full name', 'Organisation', 'Time in', 'Time out', 'Host', 'Purpose'],
+    rows: 16,
+  },
+};
+
+export const EMERGENCY_DOC_GROUPS = [
+  {
+    name: 'Plans & procedures',
+    types: ['Evacuation Plan', 'Fire Safety Plan', 'Business Emergency Response Plan', 'Participant Personal Emergency Plan'],
+  },
+  {
+    name: 'Fire & smoke safety records',
+    types: ['Smoke Alarm Test Record', 'Fire Safety Equipment Check Record', 'Evacuation Diagram'],
+  },
+  {
+    name: 'Kits, checklists & MSDS',
+    types: ['Natural Disaster Checklist', 'First Aid Kit Checklist', 'MSDS / Safety Data Sheet'],
+  },
+  {
+    name: 'Registers & logs',
+    types: ['Visitor Sign In / Out Sheet', 'Other'],
+  },
+];
