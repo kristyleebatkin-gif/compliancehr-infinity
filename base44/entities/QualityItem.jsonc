@@ -1,0 +1,50 @@
+{
+  "name": "QualityItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Improvement Idea",
+        "Corrective Action"
+      ],
+      "default": "Improvement Idea",
+      "title": "Type"
+    },
+    "source": {
+      "type": "string",
+      "title": "Source"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "New",
+        "In Progress",
+        "Implemented",
+        "Closed"
+      ],
+      "default": "New",
+      "title": "Status"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

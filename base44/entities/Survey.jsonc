@@ -1,0 +1,52 @@
+{
+  "name": "Survey",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Satisfaction",
+        "Feedback",
+        "Census",
+        "Other"
+      ],
+      "default": "Satisfaction",
+      "title": "Type"
+    },
+    "open_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Opens"
+    },
+    "close_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Closes"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Open",
+        "Closed"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "responses": {
+      "type": "number",
+      "title": "Responses"
+    },
+    "avg_rating": {
+      "type": "number",
+      "title": "Average Rating"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

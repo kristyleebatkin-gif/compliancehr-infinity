@@ -1,0 +1,49 @@
+{
+  "name": "Audit",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "audit_area": {
+      "type": "string",
+      "title": "Audit Area"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Audit Date"
+    },
+    "auditor": {
+      "type": "string",
+      "title": "Auditor"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "In Progress",
+        "Complete",
+        "Follow-up Required"
+      ],
+      "default": "Scheduled",
+      "title": "Status"
+    },
+    "score": {
+      "type": "number",
+      "title": "Score (%)"
+    },
+    "findings": {
+      "type": "string",
+      "title": "Findings"
+    },
+    "actions": {
+      "type": "string",
+      "title": "Corrective Actions"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

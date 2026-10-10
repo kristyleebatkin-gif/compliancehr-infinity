@@ -1,0 +1,46 @@
+{
+  "name": "Intake",
+  "type": "object",
+  "properties": {
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "referrer": {
+      "type": "string",
+      "title": "Referrer"
+    },
+    "source": {
+      "type": "string",
+      "title": "Referral Source"
+    },
+    "date_received": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Received"
+    },
+    "ndis_number": {
+      "type": "string",
+      "title": "NDIS Number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "New",
+        "In Assessment",
+        "Approved",
+        "Declined",
+        "Active"
+      ],
+      "default": "New",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "participant_name"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Goal",
+  "type": "object",
+  "properties": {
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "goal": {
+      "type": "string",
+      "title": "Goal"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "progress": {
+      "type": "number",
+      "title": "Progress (%)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "In Progress",
+        "Achieved",
+        "On Hold"
+      ],
+      "default": "In Progress",
+      "title": "Status"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+    },
+    "support_needed": {
+      "type": "string",
+      "title": "Support Needed"
+    }
+  },
+  "required": [
+    "participant_name",
+    "goal"
+  ]
+}

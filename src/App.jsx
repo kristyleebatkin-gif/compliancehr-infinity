@@ -32,6 +32,14 @@ import MeetingCentre from '@/pages/MeetingCentre';
 import EmergencyResponse from '@/pages/EmergencyResponse';
 import ProgramsEvents from '@/pages/ProgramsEvents';
 import Communications from '@/pages/Communications';
+import AuditCentre from '@/pages/AuditCentre';
+import Intake from '@/pages/Intake';
+import GoalProgress from '@/pages/GoalProgress';
+import QualityImprovement from '@/pages/QualityImprovement';
+import Surveys from '@/pages/Surveys';
+import KeyContacts from '@/pages/KeyContacts';
+import Volunteers from '@/pages/Volunteers';
+import Rostering from '@/pages/Rostering';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -83,6 +91,14 @@ const AuthenticatedApp = () => {
           <Route path="/emergency-response" element={<EmergencyResponse />} />
           <Route path="/programs" element={<ProgramsEvents />} />
           <Route path="/communications" element={<Communications />} />
+          <Route path="/audit" element={<AuditCentre />} />
+          <Route path="/intake" element={<Intake />} />
+          <Route path="/goals" element={<GoalProgress />} />
+          <Route path="/quality" element={<QualityImprovement />} />
+          <Route path="/surveys" element={<Surveys />} />
+          <Route path="/contacts" element={<KeyContacts />} />
+          <Route path="/volunteers" element={<Volunteers />} />
+          <Route path="/roster" element={<Rostering />} />
           <Route path="/github" element={<GitHubActivity />} />
         </Route>
       </Route>

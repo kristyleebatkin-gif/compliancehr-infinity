@@ -1,0 +1,46 @@
+{
+  "name": "Contact",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "organisation": {
+      "type": "string",
+      "title": "Organisation"
+    },
+    "role": {
+      "type": "string",
+      "title": "Role"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Medical",
+        "Emergency",
+        "Government",
+        "Supplier",
+        "Family",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Category"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

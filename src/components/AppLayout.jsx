@@ -7,6 +7,8 @@ import {
   ClipboardList, Github, Menu, LogOut, X, Building2, AlertTriangle,
   Heart, ShieldAlert, CalendarClock, Megaphone,
   Boxes, FileSpreadsheet, Siren, PartyPopper, CalendarDays,
+  ClipboardCheck, UserPlus, Target, TrendingUp, BarChart3, Phone,
+  HeartHandshake, CalendarRange,
 } from 'lucide-react';
 
 const NAV = [
@@ -28,6 +30,14 @@ const NAV = [
   { label: 'Emergency Response', path: '/emergency-response', icon: Siren },
   { label: 'Programs & Events', path: '/programs', icon: PartyPopper },
   { label: 'Communication Centre', path: '/communications', icon: Megaphone },
+  { label: 'Audit Centre', path: '/audit', icon: ClipboardCheck },
+  { label: 'Intake & Referrals', path: '/intake', icon: UserPlus },
+  { label: 'Goal Progress', path: '/goals', icon: Target },
+  { label: 'Quality & Improvement', path: '/quality', icon: TrendingUp },
+  { label: 'Surveys', path: '/surveys', icon: BarChart3 },
+  { label: 'Key Contacts', path: '/contacts', icon: Phone },
+  { label: 'Volunteers', path: '/volunteers', icon: HeartHandshake },
+  { label: 'Rostering', path: '/roster', icon: CalendarRange },
   { label: 'GitHub Activity', path: '/github', icon: Github },
 ];
 
