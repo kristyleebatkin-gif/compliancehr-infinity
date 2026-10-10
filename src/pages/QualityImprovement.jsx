@@ -1,33 +1,57 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent } from '@/components/ui/card';
+import PageHeader from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, TrendingUp, ArrowRight } from 'lucide-react';
+import QualityItemDialog from '@/components/quality/QualityItemDialog';
+import { changeStatus } from '@/lib/statusLog';
+import { downloadCsv } from '@/lib/csvExport';
+import { useToast } from '@/components/ui/use-toast';
+import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, ClipboardList, TrendingUp, CheckCircle2, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
-const FLOW = ['New', 'In Progress', 'Implemented', 'Closed'];
-const NEXT = { New: 'In Progress', 'In Progress': 'Implemented', Implemented: 'Closed', Closed: 'New' };
+const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
+const TABS = [
+  { value: 'Idea', label: 'Ideas', legacy: 'Improvement Idea', icon: Lightbulb },
+  { value: 'Suggestion', label: 'Suggestions', icon: MessageSquarePlus },
+  { value: 'Corrective Action', label: 'Corrective Actions', icon: Wrench },
+];
+
+const exportColumns = [
+  { key: 'title', label: 'Title' }, { key: 'type', label: 'Type' }, { key: 'status', label: 'Status' },
+  { key: 'priority', label: 'Priority' }, { key: 'description', label: 'Description' },
+  { key: 'source', label: 'Source' }, { key: 'raised_by', label: 'Raised By' }, { key: 'raised_date', label: 'Raised Date' },
+  { key: 'owner', label: 'Owner' }, { key: 'nominated_to', label: 'Nominated To' },
+  { key: 'nominated_email', label: 'Nominated Email' }, { key: 'nominated_date', label: 'Nominated Date' },
+  { key: 'target_date', label: 'Target Date' }, { key: 'completed_date', label: 'Completed Date' },
+  { key: 'outcome', label: 'Outcome' }, { key: 'notes', label: 'Notes' }, { key: 'status_log', label: 'Status History' },
+];
 
 export default function QualityImprovement() {
+  const { toast } = useToast();
   const [items, setItems] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ title: '', type: 'Improvement Idea', source: '', owner: '', status: 'New', target_date: '', notes: '' });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [sending, setSending] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 50 });
-      setItems(page.items);
+      const [itemPage, logPage, userPage] = await Promise.all([
+        base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 300 }),
+        base44.entities.StatusLog.filter({ entity_type: 'QualityItem' }, { sort: '-created_date', limit: 300 }),
+        base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
+      ]);
+      setItems(itemPage.items);
+      setLogs(logPage.items);
+      setUsers(userPage.items);
     } finally {
       setLoading(false);
     }
@@ -35,105 +59,151 @@ export default function QualityImprovement() {
 
   useEffect(() => { load(); }, [load]);
 
-  const save = async () => {
-    if (!form.title.trim()) return;
-    setSaving(true);
-    try {
-      await base44.entities.QualityItem.create(form);
-      setForm({ title: '', type: 'Improvement Idea', source: '', owner: '', status: 'New', target_date: '', notes: '' });
-      setOpen(false);
-      await load();
-    } finally {
-      setSaving(false);
-    }
-  };
+  const matchesTab = (item, tab) => item.type === tab.value || (tab.legacy && item.type === tab.legacy);
 
-  const advance = async (i) => {
-    await base44.entities.QualityItem.update(i.id, { status: NEXT[i.status] });
+  const setStatus = async (item, status) => {
+    if (status === item.status) return;
+    await changeStatus({ entityType: 'QualityItem', entity: 'QualityItem', record: item, toStatus: status });
     await load();
   };
 
-  const List = ({ type }) => {
-    const filtered = items.filter((i) => i.type === type);
-    if (filtered.length === 0) {
-      return <Card><CardContent className="p-10 text-center text-muted-foreground">Nothing here yet.</CardContent></Card>;
+  const sendToResponsible = async (item) => {
+    if (!item.nominated_email) {
+      toast({ title: 'Nominate a person with an email first', variant: 'destructive' });
+      return;
     }
-    return (
-      <div className="space-y-3">
-        {filtered.map((i) => (
-          <Card key={i.id}>
-            <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
-              <div>
-                <p className="font-medium">{i.title}</p>
-                <p className="text-sm text-muted-foreground">
-                  {[i.source, i.owner, i.target_date ? format(new Date(i.target_date), 'd MMM yyyy') : ''].filter(Boolean).join(' · ')}
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge className={statusTone(i.status)}>{i.status}</Badge>
-                <Button variant="ghost" size="icon" onClick={() => advance(i)} title="Cycle status"><ArrowRight className="h-4 w-4" /></Button>
-                <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.QualityItem.delete(i.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    );
+    setSending(item.id);
+    try {
+      await base44.functions.invoke('sendAppEmail', {
+        to: item.nominated_email,
+        subject: `You are responsible for: ${item.title}`,
+        body: `You have been nominated as the person responsible for the following ${item.type.toLowerCase()}.\n\nTitle: ${item.title}\nPriority: ${item.priority}\nStatus: ${item.status}\nTarget date: ${item.target_date ? format(new Date(item.target_date), 'd MMM yyyy') : 'Not set'}\n\nDetails: ${item.description || '-'}\nNotes: ${item.notes || '-'}\n\nPlease log into the portal to keep the status up to date.`,
+      });
+      await base44.entities.Notification.create({
+        type: 'Quality Action',
+        recipient: item.nominated_to,
+        message: `${item.type} nominated to you: ${item.title}${item.target_date ? ` (target ${format(new Date(item.target_date), 'd MMM yyyy')})` : ''}`,
+        read: false,
+        linked_entity_type: 'QualityItem',
+        linked_entity_id: item.id,
+      });
+      toast({ title: 'Sent', description: `Emailed to ${item.nominated_email} with an in-app alert.` });
+    } catch (error) {
+      toast({ title: 'Could not send', description: error.message, variant: 'destructive' });
+    } finally {
+      setSending('');
+    }
   };
+
+  const exportItems = (rows, name) => {
+    downloadCsv(name, exportColumns, rows.map((i) => ({
+      ...i,
+      raised_date: i.raised_date || '', nominated_date: i.nominated_date || '', target_date: i.target_date || '',
+      completed_date: i.completed_date || '', status_log: i.status_log || '',
+    })));
+    toast({ title: `${name} exported` });
+  };
+
+  const exportStatusLog = () => {
+    downloadCsv('quality-status-log.csv', [
+      { key: 'record_title', label: 'Record' }, { key: 'from_status', label: 'From' },
+      { key: 'to_status', label: 'To' }, { key: 'changed_by', label: 'Changed By' },
+      { key: 'created_date', label: 'Changed At' }, { key: 'notes', label: 'Notes' },
+    ], logs.map((l) => ({ ...l, notes: l.notes || '' })));
+    toast({ title: 'Status change log exported' });
+  };
+
+  const ItemCard = ({ item }) => (
+    <Card>
+      <CardContent className="p-4">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <button className="text-left" onClick={() => { setEditing(item); setDialogOpen(true); }}>
+            <p className="font-medium hover:underline">{item.title}</p>
+            <p className="text-sm text-muted-foreground">
+              {[[item.source], [item.raised_by ? `Raised by ${item.raised_by}` : ''], [item.raised_date ? format(new Date(item.raised_date), 'd MMM yyyy') : ''],
+                [item.nominated_to ? `Nominated to ${item.nominated_to}` : ''], [item.target_date ? `Target ${format(new Date(item.target_date), 'd MMM yyyy')}` : '']]
+                .map((p) => p[0]).filter(Boolean).join(' · ') || 'No details yet'}
+            </p>
+          </button>
+          <div className="flex items-center gap-2">
+            <Badge className={statusTone(item.status)}>{item.status}</Badge>
+            <Select value={item.status} onValueChange={(v) => setStatus(item, v)}>
+              <SelectTrigger className="h-7 w-[130px] text-xs"><SelectValue /></SelectTrigger>
+              <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+        </div>
+        {item.description && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>}
+        {item.outcome && <p className="mt-1 text-sm text-muted-foreground"><span className="font-medium">Outcome:</span> {item.outcome}</p>}
+        {item.status_log && <p className="mt-1 truncate text-xs text-muted-foreground" title={item.status_log}>{item.status_log.split('\n').slice(-1)[0]}</p>}
+        <div className="mt-3 flex flex-wrap items-center justify-end gap-1.5">
+          {item.type === 'Corrective Action' && (
+            <Button variant="outline" size="sm" disabled={sending === item.id} onClick={() => sendToResponsible(item)}>
+              {sending === item.id ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <Send className="mr-2 h-3.5 w-3.5" />}Send to person responsible
+            </Button>
+          )}
+          <Button variant="ghost" size="sm" onClick={() => { setEditing(item); setDialogOpen(true); }}>Edit</Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { if (confirm('Delete this item?')) { await base44.entities.QualityItem.delete(item.id); await load(); } }}>
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><TrendingUp className="h-6 w-6" /> Quality & Improvement</h1>
-          <p className="text-sm text-muted-foreground">Continuous improvement register and corrective actions.</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New item</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New quality item</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Type</Label>
-                  <Select value={form.type} onValueChange={(v) => setForm({ ...form, type: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Improvement Idea', 'Corrective Action'].map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Owner</Label><Input value={form.owner} onChange={(e) => setForm({ ...form, owner: e.target.value })} /></div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="grid gap-1.5"><Label>Source</Label><Input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Target date</Label><Input type="date" value={form.target_date} onChange={(e) => setForm({ ...form, target_date: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{FLOW.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid gap-1.5"><Label>Notes</Label><Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
-              <Button onClick={save} disabled={saving || !form.title.trim()}>Save item</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <PageHeader
+        title="Quality & Improvement"
+        subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
+        action={
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={exportStatusLog}><ClipboardList className="mr-2 h-4 w-4" />Export status log</Button>
+            <Button variant="outline" onClick={() => exportItems(items, 'quality-register.csv')}><Download className="mr-2 h-4 w-4" />Export all</Button>
+            <Button onClick={() => { setEditing(null); setDialogOpen(true); }}><TrendingUp className="mr-2 h-4 w-4" />New item</Button>
+          </div>
+        }
+      />
+
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+        {[
+          ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length, Lightbulb],
+          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length, MessageSquarePlus],
+          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length, Wrench],
+          ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length, CheckCircle2],
+        ].map(([label, value, Icon]) => (
+          <Card key={label}><CardContent className="p-3">
+            <div className="flex items-center gap-2"><Icon className="h-4 w-4 text-muted-foreground" /><p className="text-xs text-muted-foreground">{label}</p></div>
+            <p className="mt-1 text-xl font-bold">{value}</p>
+          </CardContent></Card>
+        ))}
       </div>
 
-      <Tabs defaultValue="Improvement Idea">
+      <Tabs defaultValue="Idea">
         <TabsList>
-          <TabsTrigger value="Improvement Idea">Improvement Ideas</TabsTrigger>
-          <TabsTrigger value="Corrective Action">Corrective Actions</TabsTrigger>
+          {TABS.map((t) => <TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}
         </TabsList>
-        <TabsContent value="Improvement Idea" className="mt-4">
-          {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-          ) : <List type="Improvement Idea" />}
-        </TabsContent>
-        <TabsContent value="Corrective Action" className="mt-4">
-          {!loading && <List type="Corrective Action" />}
-        </TabsContent>
+        {TABS.map((tab) => (
+          <TabsContent key={tab.value} value={tab.value} className="mt-4 space-y-4">
+            <div className="flex justify-end">
+              <Button variant="outline" size="sm" onClick={() => exportItems(items.filter((i) => matchesTab(i, tab)), `${tab.value.toLowerCase().replace(/ /g, '-')}-register.csv`)}>
+                <Download className="mr-2 h-4 w-4" />Export {tab.label.toLowerCase()}
+              </Button>
+            </div>
+            {loading ? (
+              <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+            ) : items.filter((i) => matchesTab(i, tab)).length === 0 ? (
+              <Card><CardContent className="p-10 text-center text-muted-foreground">No {tab.label.toLowerCase()} recorded yet.</CardContent></Card>
+            ) : (
+              <div className="space-y-3">
+                {items.filter((i) => matchesTab(i, tab)).map((item) => <ItemCard key={item.id} item={item} />)}
+              </div>
+            )}
+          </TabsContent>
+        ))}
       </Tabs>
+
+      <QualityItemDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} users={users} onSaved={load} />
     </div>
   );
 }

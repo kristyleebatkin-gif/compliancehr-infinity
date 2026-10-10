@@ -43,7 +43,6 @@ import ParticipantIntake from '@/pages/ParticipantIntake';
 import EmployeeIntake from '@/pages/EmployeeIntake';
 import GoalProgress from '@/pages/GoalProgress';
 import QualityImprovement from '@/pages/QualityImprovement';
-import Surveys from '@/pages/Surveys';
 import KeyContacts from '@/pages/KeyContacts';
 import Volunteers from '@/pages/Volunteers';
 import Rostering from '@/pages/Rostering';
@@ -119,7 +118,6 @@ const AuthenticatedApp = () => {
           <Route path="/intake/employee" element={<RoleGate navKey="intake"><EmployeeIntake /></RoleGate>} />
           <Route path="/goals" element={<RoleGate navKey="goals"><GoalProgress /></RoleGate>} />
           <Route path="/quality" element={<RoleGate navKey="quality"><QualityImprovement /></RoleGate>} />
-          <Route path="/surveys" element={<RoleGate navKey="surveys"><Surveys /></RoleGate>} />
           <Route path="/contacts" element={<RoleGate navKey="key-contacts"><KeyContacts /></RoleGate>} />
           <Route path="/volunteers" element={<RoleGate navKey="volunteering-placements"><Volunteers /></RoleGate>} />
           <Route path="/roster" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />

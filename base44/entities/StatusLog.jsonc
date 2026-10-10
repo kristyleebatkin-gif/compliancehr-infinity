@@ -1,0 +1,37 @@
+{
+  "name": "StatusLog",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "title": "Module"
+    },
+    "record_id": {
+      "type": "string",
+      "title": "Record ID"
+    },
+    "record_title": {
+      "type": "string",
+      "title": "Record"
+    },
+    "from_status": {
+      "type": "string",
+      "title": "From Status"
+    },
+    "to_status": {
+      "type": "string",
+      "title": "To Status"
+    },
+    "changed_by": {
+      "type": "string",
+      "title": "Changed By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "record_title"
+  ]
+}

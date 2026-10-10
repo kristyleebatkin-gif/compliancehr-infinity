@@ -9,19 +9,56 @@
     "type": {
       "type": "string",
       "enum": [
-        "Improvement Idea",
+        "Idea",
+        "Suggestion",
         "Corrective Action"
       ],
-      "default": "Improvement Idea",
+      "default": "Idea",
       "title": "Type"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
     },
     "source": {
       "type": "string",
       "title": "Source"
     },
+    "raised_by": {
+      "type": "string",
+      "title": "Raised By"
+    },
+    "raised_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Raised Date"
+    },
     "owner": {
       "type": "string",
       "title": "Owner"
+    },
+    "nominated_to": {
+      "type": "string",
+      "title": "Nominated To (Person Responsible)"
+    },
+    "nominated_email": {
+      "type": "string",
+      "title": "Nominated Person Email"
+    },
+    "nominated_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Nominated Date"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default": "Medium",
+      "title": "Priority"
     },
     "status": {
       "type": "string",
@@ -39,9 +76,22 @@
       "format": "date",
       "title": "Target Date"
     },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome / Result"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
     }
   },
   "required": [

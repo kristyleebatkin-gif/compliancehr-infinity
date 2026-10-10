@@ -17,6 +17,14 @@
       "default": "Satisfaction",
       "title": "Type"
     },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "questions": {
+      "type": "string",
+      "title": "Questions (one per line)"
+    },
     "open_date": {
       "type": "string",
       "format": "date",
@@ -44,6 +52,14 @@
     "avg_rating": {
       "type": "number",
       "title": "Average Rating"
+    },
+    "survey_file_uri": {
+      "type": "string",
+      "title": "Survey Form File URI"
+    },
+    "survey_file_name": {
+      "type": "string",
+      "title": "Survey Form File Name"
     }
   },
   "required": [

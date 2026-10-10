@@ -23,6 +23,14 @@
       "type": "string",
       "title": "Submitted By"
     },
+    "contact_details": {
+      "type": "string",
+      "title": "Contact Details"
+    },
+    "received_via": {
+      "type": "string",
+      "title": "Received Via (phone, email, in person, form)"
+    },
     "rating": {
       "type": "number",
       "title": "Rating (1-5)"
@@ -30,13 +38,53 @@
     "status": {
       "type": "string",
       "enum": [
-        "New",
-        "In Review",
-        "Resolved",
-        "Closed"
+        "Received",
+        "Viewed",
+        "Pending Further Action",
+        "Finalised"
       ],
-      "default": "New",
+      "default": "Received",
       "title": "Status"
+    },
+    "received_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Received At"
+    },
+    "viewed_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Viewed At"
+    },
+    "pending_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Pending Further Action At"
+    },
+    "finalised_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Finalised At"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome / Resolution"
+    },
+    "form_uri": {
+      "type": "string",
+      "title": "Feedback Form File URI"
+    },
+    "form_name": {
+      "type": "string",
+      "title": "Feedback Form File Name"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
     }
   },
   "required": [
