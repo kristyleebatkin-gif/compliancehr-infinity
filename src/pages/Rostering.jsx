@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays } from 'lucide-react';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
@@ -31,7 +32,9 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
 export default function Rostering() {
   const [tab, setTab] = useState('roster');
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
-  const [calStart, setCalStart] = useState(startOfMonth(new Date()));
+  const [calFrom, setCalFrom] = useState(format(startOfMonth(new Date()), 'yyyy-MM-dd'));
+  const [calTo, setCalTo] = useState(format(endOfMonth(new Date()), 'yyyy-MM-dd'));
+  const [calStaff, setCalStaff] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -85,12 +88,12 @@ export default function Rostering() {
     }
   }, []);
 
-  const loadCalendar = useCallback(async (start) => {
+  const loadCalendar = useCallback(async (from, to, staffName) => {
     setLoading(true);
     try {
-      const page = await base44.entities.Shift.filter({
-        date: { $gte: format(startOfMonth(start), 'yyyy-MM-dd'), $lte: format(endOfMonth(start), 'yyyy-MM-dd') },
-      }, { sort: 'date', limit: 300 });
+      const query = { date: { $gte: from, $lte: to } };
+      if (staffName) query.employee_name = staffName;
+      const page = await base44.entities.Shift.filter(query, { sort: 'date', limit: 300 });
       setBoardShifts(page.items);
     } finally {
       setLoading(false);
@@ -120,12 +123,12 @@ export default function Rostering() {
 
   useEffect(() => {
     if (tab === 'roster') loadBoard(weekStart);
-    else if (tab === 'calendar') loadCalendar(calStart);
+    else if (tab === 'calendar') loadCalendar(calFrom, calTo, calStaff);
     else if (tab === 'shifts') loadList(listRange);
     else if (tab === 'approvals') loadApprovals();
-  }, [tab, weekStart, calStart, listRange, loadBoard, loadCalendar, loadList, loadApprovals]);
+  }, [tab, weekStart, calFrom, calTo, calStaff, listRange, loadBoard, loadCalendar, loadList, loadApprovals]);
 
-  const refresh = () => { loadStats(); if (tab === 'roster') return loadBoard(weekStart); if (tab === 'calendar') return loadCalendar(calStart); if (tab === 'shifts') return loadList(listRange); return loadApprovals(); };
+  const refresh = () => { loadStats(); if (tab === 'roster') return loadBoard(weekStart); if (tab === 'calendar') return loadCalendar(calFrom, calTo, calStaff); if (tab === 'shifts') return loadList(listRange); return loadApprovals(); };
 
   const openNew = (date) => { setEditingShift(null); setFormOpen(true); if (date) setPrefillDate(date); };
   const [prefillDate, setPrefillDate] = useState(null);
@@ -211,11 +214,20 @@ export default function Rostering() {
               </>
             )}
             {tab === 'calendar' && (
-              <>
-                <Button variant="outline" size="icon" onClick={() => setCalStart(addDays(calStart, -1))}><ChevronLeft className="h-4 w-4" /></Button>
-                <span className="text-sm font-medium">{format(calStart, 'MMMM yyyy')}</span>
-                <Button variant="outline" size="icon" onClick={() => setCalStart(addDays(calStart, 32))}><ChevronRight className="h-4 w-4" /></Button>
-              </>
+              <div className="flex flex-wrap items-center gap-2">
+                <Select value={calStaff || 'all'} onValueChange={(v) => setCalStaff(v === 'all' ? '' : v)}>
+                  <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All staff</SelectItem>
+                    {staff.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <Input type="date" value={calFrom} onChange={(e) => setCalFrom(e.target.value)} className="w-36" />
+                <span className="text-sm text-muted-foreground">to</span>
+                <Input type="date" value={calTo} onChange={(e) => setCalTo(e.target.value)} className="w-36" />
+                <Button variant="outline" size="icon" title="Previous month" onClick={() => { const prev = addDays(new Date(calFrom + 'T00:00:00'), -1); setCalFrom(format(startOfMonth(prev), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(prev), 'yyyy-MM-dd')); }}><ChevronLeft className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" title="Next month" onClick={() => { const next = addDays(new Date(calFrom + 'T00:00:00'), 32); setCalFrom(format(startOfMonth(next), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(next), 'yyyy-MM-dd')); }}><ChevronRight className="h-4 w-4" /></Button>
+              </div>
             )}
             {tab === 'shifts' && (
               <div className="flex items-center gap-2">
@@ -261,7 +273,7 @@ export default function Rostering() {
           {loading ? (
             <Loading />
           ) : (
-            <ShiftCalendar monthStart={calStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
+            <ShiftCalendar from={calFrom} to={calTo} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
         </TabsContent>
 
