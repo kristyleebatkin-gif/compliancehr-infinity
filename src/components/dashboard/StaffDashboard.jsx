@@ -1,5 +1,6 @@
 import React from 'react';
 import DashboardTile from './DashboardTile';
+import MyAvailability from '@/components/rostering/MyAvailability';
 import { useRole } from '@/lib/useRole';
 import {
   UserPlus, FolderOpen, Users, Megaphone,
@@ -29,6 +30,8 @@ export default function StaffDashboard() {
   const visibleModules = MODULES.filter((module) => can(module.to.slice(1)));
   return (
     <div className="space-y-6">
+      <MyAvailability />
+
       <div>
         <div className="mb-3 text-base font-semibold">Your Tools</div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
