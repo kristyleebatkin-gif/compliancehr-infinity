@@ -61,6 +61,8 @@ export const NAV_PERMISSIONS = {
   'data-control': [...MANAGEMENT_ROLES, ROLES.AUDITOR],
   receipts: [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER],
   'equipment-manuals': [...STAFF_ROLES, ROLES.AUDITOR],
+  msds: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR],
+  'community-council': [...ALL_ROLES],
   'insurance-finance': MANAGEMENT_ROLES,
   programs: [...ALL_ROLES],
   events: [...ALL_ROLES],

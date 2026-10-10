@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin } from 'lucide-react';
 
-const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Supplier', 'Family', 'Other'];
+const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
 const BLANK = { name: '', organisation: '', role: '', phone: '', mobile: '', after_hours_phone: '', email: '', hours_available: '', address: '', category: 'Other', notes: '' };
 

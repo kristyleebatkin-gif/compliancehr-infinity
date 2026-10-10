@@ -10,6 +10,7 @@ import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, Github, BarChart3,
+  FlaskConical, MapPin,
 } from 'lucide-react';
 
 const PRIMARY_NAV = [
@@ -36,6 +37,8 @@ const PRIMARY_NAV = [
   { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },
   { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
   { label: 'Equipment Manuals and MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
+  { label: 'MSDS Chemical Library', path: '/msds', key: 'msds', icon: FlaskConical },
+  { label: 'Community & Council', path: '/community-council', key: 'community-council', icon: MapPin },
   { label: 'Quote Centre', path: '/quotes', key: 'quotes', icon: Landmark },
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },

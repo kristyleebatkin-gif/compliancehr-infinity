@@ -1,0 +1,47 @@
+{
+  "name": "Chemical",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Chemical / Product Name"
+    },
+    "cas_number": {
+      "type": "string",
+      "title": "CAS Number"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Cleaning & Disinfectants",
+        "Solvents & Fuels",
+        "Garden & Pest Control",
+        "Industrial & Construction",
+        "Laboratory & Salts",
+        "Medical & First Aid",
+        "Gases"
+      ],
+      "default": "Cleaning & Disinfectants",
+      "title": "Category"
+    },
+    "hazard_class": {
+      "type": "string",
+      "title": "Hazard Class / GHS"
+    },
+    "first_aid": {
+      "type": "string",
+      "title": "First Aid Measures"
+    },
+    "storage_notes": {
+      "type": "string",
+      "title": "Storage Notes"
+    },
+    "sds_url": {
+      "type": "string",
+      "title": "SDS Link (optional override)"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
