@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRole } from '@/lib/useRole';
-import { ROLES } from '@/lib/roles';
+import { ROLES, canAccessNav } from '@/lib/roles';
+import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
 import AdminDashboard from '@/components/dashboard/AdminDashboard';
 import StaffDashboard from '@/components/dashboard/StaffDashboard';
 import ParticipantDashboard from '@/components/dashboard/ParticipantDashboard';
@@ -56,6 +57,8 @@ export default function Dashboard() {
         : (role === ROLES.SUPPORT)
           ? <StaffDashboard />
           : <AdminDashboard />}
+
+      {canAccessNav(role, 'safety-insights') && <SafetyTrendsDashboard />}
     </div>
   );
 }
