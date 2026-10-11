@@ -17,7 +17,7 @@
           "then": "end",
           "x-base44": {
             "title": "Scan expiring training",
-            "description": "Emails each staff member one week before their certification expires"
+            "description": "Emails each staff member and their supervisor 30 days before their certification expires"
           }
         }
       }
@@ -41,5 +41,5 @@
     }
   },
   "name": "Training Expiry Alerts",
-  "description": "Daily at 9am: emails staff whose training certifications expire in exactly one week."
+  "description": "Daily at 9am: emails staff and their supervisor whose training certifications expire in exactly 30 days."
 }
