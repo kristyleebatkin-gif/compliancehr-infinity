@@ -6,6 +6,7 @@ import EmptyState from '@/components/EmptyState';
 import { AlertTriangle, FileSearch, ShieldAlert, Clock } from 'lucide-react';
 import { format, subMonths, startOfMonth, isBefore } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import SafetyHeatmap from '@/components/safety/SafetyHeatmap';
 
 const SEVERITY_KEYS = ['Low', 'Medium', 'High', 'Critical'];
 const SEVERITY_COLORS = { Low: '#22c55e', Medium: '#6366f1', High: '#f59e0b', Critical: '#dc2626' };
@@ -147,6 +148,8 @@ export default function SafetyTrendsDashboard() {
               )}
             </div>
           </div>
+
+          <SafetyHeatmap />
         </div>
       )}
     </SectionCard>
