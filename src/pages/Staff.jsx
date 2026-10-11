@@ -9,8 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Trash2, UserRound, Users } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Plus, Search, Trash2, UserRound, Users, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import CertificationOverview from '@/components/staff/CertificationOverview';
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -62,82 +64,93 @@ export default function Staff() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Users} title="Staff Profiles" subtitle="Your team members and their compliance roles." />
-      <div className="flex flex-wrap items-center justify-end gap-2">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="mr-2 h-4 w-4" /> Add staff member</Button>
-          </DialogTrigger>
-          <DialogContent className="max-h-[85vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>New staff member</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid gap-1.5"><Label>Full name *</Label><Input value={form.full_name} onChange={(e) => set('full_name')(e.target.value)} /></div>
-              <div className="grid gap-1.5"><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => set('email')(e.target.value)} /></div>
-              <div className="grid gap-1.5"><Label>Phone</Label><Input value={form.phone} onChange={(e) => set('phone')(e.target.value)} /></div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Role</Label>
-                  <Select value={form.role} onValueChange={set('role')}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{ROLES.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={set('status')}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Position</Label><Input value={form.position} onChange={(e) => set('position')(e.target.value)} /></div>
-                <div className="grid gap-1.5"><Label>Start date</Label><Input type="date" value={form.start_date} onChange={(e) => set('start_date')(e.target.value)} /></div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Supervisor</Label><Input value={form.supervisor} onChange={(e) => set('supervisor')(e.target.value)} /></div>
-                <div className="grid gap-1.5"><Label>Emergency contact</Label><Input value={form.emergency_contact} onChange={(e) => set('emergency_contact')(e.target.value)} /></div>
-              </div>
-              <Button onClick={save} disabled={saving || !form.full_name.trim()}>Save staff member</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input className="pl-9" placeholder="Search staff by name" value={search} onChange={(e) => setSearch(e.target.value)} />
-      </div>
-
-      {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : staff.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No staff members found. Add your first one above.</CardContent></Card>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {staff.map((s) => (
-            <Card key={s.id}>
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="font-semibold">{s.full_name}</p>
-                    <p className="text-sm text-muted-foreground">{s.position || s.role}{s.employee_number ? ` · ${s.employee_number}` : ''}</p>
+      <Tabs defaultValue="profiles">
+        <TabsList>
+          <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
+          <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Certifications</TabsTrigger>
+        </TabsList>
+        <TabsContent value="profiles" className="space-y-6">
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+                <Button><Plus className="mr-2 h-4 w-4" /> Add staff member</Button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[85vh] overflow-y-auto">
+                <DialogHeader><DialogTitle>New staff member</DialogTitle></DialogHeader>
+                <div className="grid gap-3">
+                  <div className="grid gap-1.5"><Label>Full name *</Label><Input value={form.full_name} onChange={(e) => set('full_name')(e.target.value)} /></div>
+                  <div className="grid gap-1.5"><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => set('email')(e.target.value)} /></div>
+                  <div className="grid gap-1.5"><Label>Phone</Label><Input value={form.phone} onChange={(e) => set('phone')(e.target.value)} /></div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5"><Label>Role</Label>
+                      <Select value={form.role} onValueChange={set('role')}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>{ROLES.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </div>
+                    <div className="grid gap-1.5"><Label>Status</Label>
+                      <Select value={form.status} onValueChange={set('status')}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <Badge className={statusTone(s.status)}>{s.status}</Badge>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5"><Label>Position</Label><Input value={form.position} onChange={(e) => set('position')(e.target.value)} /></div>
+                    <div className="grid gap-1.5"><Label>Start date</Label><Input type="date" value={form.start_date} onChange={(e) => set('start_date')(e.target.value)} /></div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5"><Label>Supervisor</Label><Input value={form.supervisor} onChange={(e) => set('supervisor')(e.target.value)} /></div>
+                    <div className="grid gap-1.5"><Label>Emergency contact</Label><Input value={form.emergency_contact} onChange={(e) => set('emergency_contact')(e.target.value)} /></div>
+                  </div>
+                  <Button onClick={save} disabled={saving || !form.full_name.trim()}>Save staff member</Button>
                 </div>
-                <div className="mt-3 space-y-1 text-sm text-muted-foreground">
-                  {s.email && <p>{s.email}</p>}
-                  {s.phone && <p>{s.phone}</p>}
-                  <p>Role: {s.role}</p>
-                </div>
-                <div className="mt-3 flex justify-end gap-1">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link to={`/staff/${s.id}`}><UserRound className="h-4 w-4" />Open profile</Link>
-                  </Button>
-                  <Button variant="ghost" size="icon" onClick={() => remove(s.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="relative max-w-sm">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input className="pl-9" placeholder="Search staff by name" value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+          ) : staff.length === 0 ? (
+            <Card><CardContent className="p-10 text-center text-muted-foreground">No staff members found. Add your first one above.</CardContent></Card>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {staff.map((s) => (
+                <Card key={s.id}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="font-semibold">{s.full_name}</p>
+                        <p className="text-sm text-muted-foreground">{s.position || s.role}{s.employee_number ? ` · ${s.employee_number}` : ''}</p>
+                      </div>
+                      <Badge className={statusTone(s.status)}>{s.status}</Badge>
+                    </div>
+                    <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+                      {s.email && <p>{s.email}</p>}
+                      {s.phone && <p>{s.phone}</p>}
+                      <p>Role: {s.role}</p>
+                    </div>
+                    <div className="mt-3 flex justify-end gap-1">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/staff/${s.id}`}><UserRound className="h-4 w-4" />Open profile</Link>
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => remove(s.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+        <TabsContent value="certifications">
+          <CertificationOverview />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
