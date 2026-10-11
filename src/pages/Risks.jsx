@@ -14,6 +14,7 @@ import { downloadTake5AssessmentPdf, downloadRiskAssessmentTemplatePdf } from '@
 import TemplatePicker from '@/components/TemplatePicker';
 import { MITIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
+import AssessmentDuePanel from '@/components/risks/AssessmentDuePanel';
 import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
@@ -29,7 +30,7 @@ const RATINGS = ['Low', 'Medium', 'High', 'Critical'];
 const STATUSES = ['Identified', 'Assessed', 'Treating', 'Monitored', 'Closed'];
 const CONTROL_CATEGORIES = ['Preventative', 'Protective', 'Training & Capability', 'Policy & Procedure', 'Environmental', 'Equipment & Technology', 'Supervision & Monitoring', 'Emergency Response', 'Administrative'];
 
-const blank = { title: '', report_type: 'Risk', risk_id: '', description: '', hazards_identified: '', risk_assessment: '', control_measures: '', category: 'Operational', likelihood: 'Possible', consequence: 'Moderate', rating: 'Medium', status: 'Identified', owner: '', mitigation_plan: '', control_measure_category: 'Preventative', elimination_actions: '', minimise_actions: '', isolate_actions: '', staff_training_controls: '', compliance_controls: '', review_date: '', identified_date: '' };
+const blank = { title: '', report_type: 'Risk', risk_id: '', description: '', hazards_identified: '', risk_assessment: '', control_measures: '', category: 'Operational', likelihood: 'Possible', consequence: 'Moderate', rating: 'Medium', status: 'Identified', owner: '', mitigation_plan: '', control_measure_category: 'Preventative', elimination_actions: '', minimise_actions: '', isolate_actions: '', staff_training_controls: '', compliance_controls: '', review_date: '', identified_date: '', assessment_type: 'Not scheduled', last_assessed_date: '', next_due_date: '', action_log: '' };
 
 // 5x5 matrix cell rating
 function cellRating(l, c) {
@@ -106,6 +107,11 @@ export default function Risks() {
     e.preventDefault();
     if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
     const payload = { ...form, rating: cellRating(form.likelihood, form.consequence) };
+    if (payload.assessment_type !== 'Not scheduled' && payload.last_assessed_date) {
+      const next = new Date(`${payload.last_assessed_date}T00:00:00`);
+      next.setMonth(next.getMonth() + (payload.assessment_type === 'Home' ? 1 : 3));
+      payload.next_due_date = next.toISOString().slice(0, 10);
+    }
     try {
       let rec;
       if (editing === 'new') {
@@ -214,6 +220,17 @@ export default function Risks() {
           toast({ title: 'Risk register exported' });
         }}
         emptyTitle="No risks recorded"
+      />
+
+      {/* Individual (3-monthly) and home (monthly) assessment due tracking */}
+      <AssessmentDuePanel
+        risks={risks}
+        canEdit={can('risks')}
+        onUpdate={async (risk, patch) => {
+          await base44.entities.Risk.update(risk.id, patch);
+          toast({ title: 'Assessment logged; next due date set' });
+          load();
+        }}
       />
 
       {/* Hazard Register - live updates as hazards are entered */}
@@ -501,6 +518,10 @@ export default function Risks() {
               <div className="grid grid-cols-2 gap-3">
                 <Field label="Date Identified"><DateInput value={form.identified_date || ''} onChange={(e) => set('identified_date', e.target.value)} /></Field>
                 <Field label="Review Date"><DateInput value={form.review_date || ''} onChange={(e) => set('review_date', e.target.value)} /></Field>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Assessment Schedule"><Select value={form.assessment_type || 'Not scheduled'} onChange={(e) => set('assessment_type', e.target.value)}><option value="Not scheduled">Not scheduled</option><option value="Individual">Individual (every 3 months)</option><option value="Home">Home (every month)</option></Select></Field>
+                <Field label="Last Assessed"><DateInput value={form.last_assessed_date || ''} onChange={(e) => set('last_assessed_date', e.target.value)} /></Field>
               </div>
               <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
             </form>

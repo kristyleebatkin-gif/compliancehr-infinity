@@ -8,7 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { statusTone } from '@/lib/statusStyles';
 import { SIGN_LIBRARY, findSign } from '@/lib/signPrompts';
 import { printRoutine, routineStepsToCsv } from '@/lib/visualPrint';
-import { Check, ChevronDown, ChevronUp, Download, ListChecks, Loader2, Plus, Printer, Trash2 } from 'lucide-react';
+import { CalendarDays, Check, ChevronDown, ChevronUp, Download, ImagePlus, ListChecks, Loader2, Mail, Plus, Printer, Trash2 } from 'lucide-react';
+import { ROUTINE_RESOURCE_GROUPS } from '@/lib/routineResources';
+import StepImage from '@/components/visual/StepImage';
 
 const downloadCsv = (filename, csv) => {
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -30,6 +32,11 @@ export default function VisualRoutine() {
   const [newTitle, setNewTitle] = useState('');
   const [newParticipant, setNewParticipant] = useState('');
   const [participants, setParticipants] = useState([]);
+  const [uploadFor, setUploadFor] = useState('');
+  const [emailOpen, setEmailOpen] = useState(false);
+  const [emailTo, setEmailTo] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const fileRef = React.useRef(null);
 
   const load = async () => {
     setLoading(true);
@@ -87,6 +94,48 @@ export default function VisualRoutine() {
     persist(steps.map((s) => (s.id === id ? { ...s, sign: word, sign_description: sign?.description || '' } : s)));
   };
 
+  const setRoutineDate = (value) => {
+    if (!activeId) return;
+    setRoutines((prev) => prev.map((r) => (r.id === activeId ? { ...r, routine_date: value } : r)));
+    base44.entities.VisualRoutine.update(activeId, { routine_date: value }).catch((error) => toast({ title: 'Could not save date', description: error.message, variant: 'destructive' }));
+  };
+
+  const addResourceStep = (item) => {
+    persist([...steps, { id: `${Date.now()}`, text: item.label, icon: item.emoji, done: false, sign: '' }]);
+  };
+
+  const onPickFile = async (e) => {
+    const file = e.target.files?.[0];
+    const stepId = uploadFor;
+    e.target.value = '';
+    setUploadFor('');
+    if (!file || !stepId) return;
+    try {
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      persist(steps.map((s) => (s.id === stepId ? { ...s, image_uri: file_uri } : s)));
+      toast({ title: 'Picture added (stored privately)' });
+    } catch (error) {
+      toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
+    }
+  };
+
+  const sendRoutineEmail = async () => {
+    if (!active || !emailTo.trim()) return;
+    setEmailSending(true);
+    try {
+      const rows = steps.map((s, i) => `<tr><td style="padding:6px;border:1px solid #e5e7eb;">${i + 1}</td><td style="padding:6px;border:1px solid #e5e7eb;">${s.icon || ''} ${s.text}</td><td style="padding:6px;border:1px solid #e5e7eb;">${s.done ? 'Done' : 'To do'}</td><td style="padding:6px;border:1px solid #e5e7eb;">${s.sign || ''}</td></tr>`).join('');
+      const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><h2 style="color:#0a0a0a;">Visual routine: ${active.title}</h2><p style="color:#737373;">${active.participant_name ? `Participant: ${active.participant_name} · ` : ''}${active.routine_date ? `Date: ${active.routine_date}` : ''}</p><table style="border-collapse:collapse;width:100%;font-size:14px;"><thead><tr><th style="padding:6px;border:1px solid #e5e7eb;text-align:left;">#</th><th style="padding:6px;border:1px solid #e5e7eb;text-align:left;">Step</th><th style="padding:6px;border:1px solid #e5e7eb;text-align:left;">Status</th><th style="padding:6px;border:1px solid #e5e7eb;text-align:left;">Sign prompt</th></tr></thead><tbody>${rows}</tbody></table><p style="color:#737373;font-size:12px;">Sent from ComplianceHR Portal visual boards.</p></div>`;
+      await base44.functions.invoke('sendAppEmail', { to: emailTo.trim(), subject: `Visual routine: ${active.title}`, body: html });
+      toast({ title: 'Routine emailed' });
+      setEmailOpen(false);
+      setEmailTo('');
+    } catch (error) {
+      toast({ title: 'Could not email routine', description: error.message, variant: 'destructive' });
+    } finally {
+      setEmailSending(false);
+    }
+  };
+
   const createRoutine = async () => {
     if (!newTitle.trim()) return;
     setCreating(true);
@@ -133,6 +182,7 @@ export default function VisualRoutine() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPickFile} />
       <div className="mb-4 flex flex-wrap items-end gap-2">
         <ListChecks className="h-4 w-4 text-brand" />
         <span className="text-sm font-semibold">Visual routine</span>
@@ -161,9 +211,28 @@ export default function VisualRoutine() {
           <Button size="sm" onClick={createRoutine} disabled={creating || !newTitle.trim()}>{creating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}Add</Button>
           <Button size="sm" variant="outline" onClick={doPrint} disabled={!active}><Printer className="h-3.5 w-3.5" />Print</Button>
           <Button size="sm" variant="outline" onClick={doExport} disabled={!active}><Download className="h-3.5 w-3.5" />Export</Button>
+          <Button size="sm" variant="outline" onClick={() => setEmailOpen((v) => !v)} disabled={!active}><Mail className="h-3.5 w-3.5" />Email</Button>
+          <div className="grid gap-1.5">
+            <Label className="flex items-center gap-1"><CalendarDays className="h-3 w-3" />Date</Label>
+            <Input type="date" value={active?.routine_date || ''} onChange={(e) => setRoutineDate(e.target.value)} className="h-9 w-[150px]" disabled={!active} />
+          </div>
           <Button size="sm" variant="ghost" onClick={doDeleteRoutine} disabled={!active}><Trash2 className="h-3.5 w-3.5 text-destructive/60" /></Button>
         </div>
       </div>
+
+      {emailOpen && (
+        <div className="mb-4 flex flex-wrap items-end gap-2 rounded-lg border border-border/60 bg-muted/30 p-3">
+          <div className="grid gap-1.5">
+            <Label>Email routine to</Label>
+            <Input type="email" placeholder="name@example.com" value={emailTo} onChange={(e) => setEmailTo(e.target.value)} className="w-64" />
+          </div>
+          <Button size="sm" onClick={sendRoutineEmail} disabled={emailSending || !emailTo.trim() || !active}>
+            {emailSending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Mail className="h-3.5 w-3.5" />}Send
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => setEmailOpen(false)}>Cancel</Button>
+          <p className="w-full text-[11px] text-muted-foreground">Steps, signs and progress are sent as a formatted email.</p>
+        </div>
+      )}
 
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
@@ -176,6 +245,21 @@ export default function VisualRoutine() {
             <Button onClick={addStep} disabled={!newStep.trim()}><Plus className="h-4 w-4" />Add step</Button>
             <span className="ml-auto text-xs text-muted-foreground">{active.participant_name ? `${active.participant_name} · ` : ''}{doneCount}/{steps.length} done</span>
           </div>
+          <div className="mb-3 rounded-lg border border-border/60 bg-muted/20 p-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Picture resources - tap to add a step</p>
+            <div className="space-y-2">
+              {ROUTINE_RESOURCE_GROUPS.map((group) => (
+                <div key={group.group} className="flex flex-wrap items-center gap-1.5">
+                  <span className="mr-1 w-28 shrink-0 text-[11px] font-semibold text-muted-foreground">{group.group}</span>
+                  {group.items.map((item) => (
+                    <button key={item.label} onClick={() => addResourceStep(item)} className="flex items-center gap-1 rounded-full border border-border/60 bg-background px-2.5 py-1 text-xs font-medium hover:border-brand/50 hover:bg-brand/5">
+                      <span>{item.emoji}</span>{item.label}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="space-y-1.5">
             {steps.length === 0 && <p className="text-sm text-muted-foreground">No steps yet - add the first step above.</p>}
             {steps.map((step, index) => (
@@ -184,6 +268,8 @@ export default function VisualRoutine() {
                   {step.done && <Check className="h-3.5 w-3.5" />}
                 </button>
                 <span className="w-5 text-xs font-bold text-muted-foreground">{index + 1}</span>
+                {step.icon && <span className="text-lg">{step.icon}</span>}
+                {step.image_uri && <StepImage uri={step.image_uri} className="h-10 w-10 rounded-md" />}
                 <input className="min-w-0 flex-1 bg-transparent text-sm outline-none" value={step.text} onChange={(e) => rename(step.id, e.target.value)} />
                 <Select value={step.sign || 'none'} onValueChange={(v) => setSign(step.id, v === 'none' ? '' : v)}>
                   <SelectTrigger className="h-7 w-[150px] text-xs"><SelectValue placeholder="Sign prompt" /></SelectTrigger>
@@ -192,6 +278,7 @@ export default function VisualRoutine() {
                     {SIGN_LIBRARY.map((s) => <SelectItem key={s.word} value={s.word}>{s.emoji} {s.word}</SelectItem>)}
                   </SelectContent>
                 </Select>
+                <button onClick={() => { setUploadFor(step.id); fileRef.current?.click(); }} title="Add a picture to this step" className="rounded p-1 hover:bg-muted"><ImagePlus className="h-3.5 w-3.5 text-muted-foreground" /></button>
                 <button onClick={() => move(index, -1)} className="rounded p-1 hover:bg-muted"><ChevronUp className="h-3.5 w-3.5 text-muted-foreground" /></button>
                 <button onClick={() => move(index, 1)} className="rounded p-1 hover:bg-muted"><ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /></button>
                 <button onClick={() => remove(step.id)} className="rounded p-1 hover:bg-muted"><Trash2 className="h-3.5 w-3.5 text-destructive/60" /></button>

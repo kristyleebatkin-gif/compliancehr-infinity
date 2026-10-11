@@ -5,11 +5,13 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SIGN_CATEGORIES, SIGN_LIBRARY } from '@/lib/signPrompts';
 import { printSignSheet } from '@/lib/visualPrint';
-import { Hand, Info, Printer } from 'lucide-react';
+import AttachSignDialog from '@/components/visual/AttachSignDialog';
+import { Hand, Info, Paperclip, Printer } from 'lucide-react';
 
 export default function SignPrompts() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
+  const [attachSign, setAttachSign] = useState(null);
 
   const signs = useMemo(() => SIGN_LIBRARY.filter((s) => {
     const matchesCategory = category === 'all' || s.category === category;
@@ -52,11 +54,14 @@ export default function SignPrompts() {
               <div className="mt-1 text-sm font-bold">{s.word}</div>
               <div className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-brand">{s.category}</div>
               <p className="mt-2 text-xs text-muted-foreground">{s.description}</p>
+              <Button size="sm" variant="outline" className="mt-2" onClick={() => setAttachSign(s)}><Paperclip className="h-3.5 w-3.5" />Attach to routine</Button>
             </div>
           ))}
         </div>
         {signs.length === 0 && <p className="text-sm text-muted-foreground">No signs match your search.</p>}
       </div>
+
+      <AttachSignDialog sign={attachSign} onClose={() => setAttachSign(null)} />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ShieldAlert, TrendingUp } from 'lucide-react';
 import ProfileHeader from '@/components/profile/ProfileHeader';
+import TeamSection from '@/components/profile/TeamSection';
 import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
 import StaffDetailsTab from '@/components/staff/StaffDetailsTab';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
@@ -55,6 +56,14 @@ export default function StaffDetail() {
       </div>
 
       <ProfileHeader profile={staff} kind="staff" onUpdated={load} />
+
+      <TeamSection
+        title={`${staff.full_name}'s participant team`}
+        description="The participants this staff member supports, shown on their profile and used for rostering."
+        values={staff.participant_team || []}
+        kind="participants"
+        onUpdate={async (next) => { await base44.entities.StaffProfile.update(staff.id, { participant_team: next }); await load(); }}
+      />
 
       <Tabs defaultValue="details">
         <TabsList>

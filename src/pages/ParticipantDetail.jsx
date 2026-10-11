@@ -7,6 +7,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, FileSignature, Files, Heart, ScrollText } from 'lucide-react';
 import ProfileHeader from '@/components/profile/ProfileHeader';
+import TeamSection from '@/components/profile/TeamSection';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
@@ -53,6 +54,17 @@ export default function ParticipantDetail() {
       </div>
 
       <ProfileHeader profile={participant} kind="participant" onUpdated={load} />
+
+      <TeamSection
+        title={`${participant.full_name}'s support worker team`}
+        description="The staff team who support this participant."
+        values={participant.support_team || []}
+        kind="staff"
+        onUpdate={async (next) => { await base44.entities.ParticipantProfile.update(participant.id, { support_team: next }); await load(); }}
+        footer={participant.progress_notes_due_date ? (
+          <p className="mt-3 text-[11px] text-muted-foreground">Progress note and report copies are emailed to administrators every 10 weeks. Progress notes due (3-monthly): <span className="font-semibold text-foreground">{participant.progress_notes_due_date}</span></p>
+        ) : null}
+      />
 
       <Tabs defaultValue="details">
         <TabsList>

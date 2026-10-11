@@ -57,12 +57,21 @@ export default async function(req) {
     }
 
     // ---------- 2. Progress note & report copies to admin users every 10 weeks; due 3-monthly ----------
-    const [participantPage, notePage, userPage] = await Promise.all([
+    const [participantPage, notePage] = await Promise.all([
       service.entities.ParticipantProfile.filter({}, { limit: 1000 }),
       service.entities.GoalProgressNote.filter({}, { limit: 1000, fields: ['participant_name', 'entry_type', 'notes', 'recorded_date'] }),
-      service.entities.User.list({ limit: 1000 }),
     ]);
-    const admins = pageItems(userPage).filter((u) => u.role === 'admin' && u.email);
+    // Admin recipients: registered admin users plus staff flagged with admin app access.
+    const adminMap = new Map();
+    try {
+      const userPage = await service.entities.User.filter({ role: 'admin' }, { limit: 1000 });
+      for (const u of pageItems(userPage)) if (u.email) adminMap.set(String(u.email).toLowerCase(), u.email);
+    } catch (error) { /* fall through to staff admins */ }
+    try {
+      const staffAdminPage = await service.entities.StaffProfile.filter({ app_role: 'admin' }, { limit: 1000 });
+      for (const s of pageItems(staffAdminPage)) if (s.email) adminMap.set(String(s.email).toLowerCase(), s.email);
+    } catch (error) { /* no staff admins flagged */ }
+    const admins = Array.from(adminMap.values()).map((email) => ({ email, role: 'admin' }));
     const notes = pageItems(notePage);
     const latestOf = (name, type) => notes
       .filter((n) => n.participant_name === name && (!type || n.entry_type === type))
