@@ -1,0 +1,45 @@
+{
+  "description": "Emails the staff training audit report PDF to the admin inbox at 9am on the 1st of every month",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Monthly Training Audit Report",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "monthly_training_audit_report",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "trainingAuditReportEmail",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Generate and email audit report",
+            "description": "Builds the training audit PDF and emails it to the admin inbox"
+          }
+        }
+      }
+    ]
+  }
+}
