@@ -70,6 +70,25 @@ function autofillIntakeValue(label, intakeCase = {}) {
   if (l.includes('weekly hours')) return intakeCase.weekly_hours_goal || '';
   if (l.includes('employment provider')) return intakeCase.employment_provider || '';
   if (l.includes('supports to provide')) return (intakeCase.supports_to_provide || []).join(', ');
+  if (l.includes('risks identified')) return intakeCase.risks_identified || intakeCase.risk_summary || '';
+  if (l.includes('control measures')) return intakeCase.control_measures || '';
+  if (l.includes('medical diagnosis')) return intakeCase.medical_diagnosis || '';
+  if (l.includes('medication') || l.includes('current medicines')) return intakeCase.medications_dosage || intakeCase.health_summary || '';
+  if (l.includes('special meals') || l.includes('diet')) return intakeCase.special_meals_diets || '';
+  if (l.includes('likes')) return intakeCase.likes || '';
+  if (l.includes('dislikes')) return intakeCase.dislikes || '';
+  if (l.includes('shift dates')) return intakeCase.shift_dates || '';
+  if (l.includes('shift times')) return intakeCase.shift_times || '';
+  if (l.includes('shifts requested') || l.includes('phone number for shifts')) return intakeCase.shift_contact_phone || '';
+  if (l.includes('support type')) return intakeCase.support_type_requested || intakeCase.requested_supports || '';
+  if (l.includes('occupational therapist')) return intakeCase.occupational_therapist || '';
+  if (l.includes('speech')) return intakeCase.speech_therapist || '';
+  if (l.includes('physio')) return intakeCase.physiotherapist || '';
+  if (l.includes('other services')) return intakeCase.other_services || '';
+  if (l.includes('preferred worker')) return intakeCase.preferred_workers_description || '';
+  if (l.includes('advocate')) return join(intakeCase.advocate_name, intakeCase.advocate_contact);
+  if (l.includes('consent to share') && l.includes('person')) return intakeCase.consent_to_share_persons || '';
+  if (l.includes('pets')) return intakeCase.pets_on_property ? 'Yes' : 'No';
   return '';
 }
 

@@ -482,6 +482,92 @@
     "notes": {
       "type": "string",
       "title": "Notes"
+    },
+    "likes": {
+      "type": "string",
+      "title": "Likes"
+    },
+    "dislikes": {
+      "type": "string",
+      "title": "Dislikes"
+    },
+    "shift_dates": {
+      "type": "string",
+      "title": "Shift Dates Requested"
+    },
+    "shift_times": {
+      "type": "string",
+      "title": "Shift Times Requested"
+    },
+    "shift_contact_phone": {
+      "type": "string",
+      "title": "Phone Number for Shifts Requested"
+    },
+    "support_type_requested": {
+      "type": "string",
+      "title": "Support Type Requested"
+    },
+    "travel_assistance_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Wants Assistance with Travel"
+    },
+    "pets_on_property": {
+      "type": "boolean",
+      "default": false,
+      "title": "Pets on Property"
+    },
+    "occupational_therapist": {
+      "type": "string",
+      "title": "Occupational Therapist"
+    },
+    "speech_therapist": {
+      "type": "string",
+      "title": "Speech Therapist"
+    },
+    "physiotherapist": {
+      "type": "string",
+      "title": "Physiotherapist"
+    },
+    "other_services": {
+      "type": "string",
+      "title": "Other Services"
+    },
+    "preferred_workers_description": {
+      "type": "string",
+      "title": "Preferred Workers Description"
+    },
+    "risks_identified": {
+      "type": "string",
+      "title": "Risks Identified"
+    },
+    "control_measures": {
+      "type": "string",
+      "title": "Control Measures"
+    },
+    "medical_diagnosis": {
+      "type": "string",
+      "title": "Medical Diagnosis"
+    },
+    "medications_dosage": {
+      "type": "string",
+      "title": "Medications and Dosage"
+    },
+    "special_meals_diets": {
+      "type": "string",
+      "title": "Special Meals or Diets"
+    },
+    "advocate_name": {
+      "type": "string",
+      "title": "Advocate Name"
+    },
+    "advocate_contact": {
+      "type": "string",
+      "title": "Advocate Contact Details"
+    },
+    "consent_to_share_persons": {
+      "type": "string",
+      "title": "Names of Persons for Consent to Share"
     }
   },
   "required": [

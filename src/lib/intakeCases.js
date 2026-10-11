@@ -12,6 +12,18 @@ export const INTAKE_REQUIREMENTS = {
     'Home Risk Assessment',
     'Personal Emergency Form',
     'Provider Declaration',
+    'Authority to Act as Advocate',
+    'Satisfaction Survey',
+    'Feedback and Complaints',
+    'Investigation Form',
+    'Incident Reports',
+    'Medication Record Sheet',
+    'Medication Evaluation',
+    'Medication Consent',
+    'SAM Medication Assessment',
+    'Mealtime Management Plan',
+    'Behaviour Support Plan',
+    'Restrictive Practices Record',
   ],
   Employee: [
     'Staff Information Form',
@@ -99,6 +111,9 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'Australian Commission on Safety and Quality in Health Care Medication Safety Certificate',
   'Australian Commission on Safety and Quality in Health Care Hand Hygiene Certificate',
   'Australian Commission on Safety and Quality in Health Care Infection Control Certificate',
+  'NDIS Plan',
+  'Behaviour Support Plan',
+  'Restrictive Practices Record',
 ]);;
 
 const INTAKE_DOCUMENT_ALIASES = {

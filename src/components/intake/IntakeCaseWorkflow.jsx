@@ -50,6 +50,28 @@ const PARTICIPANT_BLANK = {
   address: '',
   ndis_number: '',
   ndis_reference_number: '',
+  preferred_name: '',
+  likes: '',
+  dislikes: '',
+  support_type_requested: '',
+  shift_dates: '',
+  shift_times: '',
+  shift_contact_phone: '',
+  travel_assistance_required: false,
+  pets_on_property: false,
+  occupational_therapist: '',
+  speech_therapist: '',
+  physiotherapist: '',
+  other_services: '',
+  preferred_workers_description: '',
+  risks_identified: '',
+  control_measures: '',
+  medical_diagnosis: '',
+  medications_dosage: '',
+  special_meals_diets: '',
+  advocate_name: '',
+  advocate_contact: '',
+  consent_to_share_persons: '',
   gender: '',
   language_spoken: '',
   interpreter_required: false,
@@ -383,6 +405,19 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           ndis_number: activeCase.ndis_number || '',
           ndis_reference_number: activeCase.ndis_reference_number || '',
           support_coordinator: activeCase.support_coordinator || '',
+          occupational_therapist: activeCase.occupational_therapist || '',
+          support_type: activeCase.support_type_requested || '',
+          support_shifts: [
+            activeCase.shift_dates ? `Dates: ${activeCase.shift_dates}` : '',
+            activeCase.shift_times ? `Times: ${activeCase.shift_times}` : '',
+            activeCase.shift_contact_phone ? `Phone: ${activeCase.shift_contact_phone}` : '',
+          ].filter(Boolean).join(' | '),
+          medical_diagnosis: activeCase.medical_diagnosis || '',
+          medications_dosage: activeCase.medications_dosage || '',
+          risks: activeCase.risks_identified || '',
+          control_measures: activeCase.control_measures || '',
+          likes: activeCase.likes || '',
+          dislikes: activeCase.dislikes || '',
           status: 'Active',
           notes: [
             activeCase.notes,
@@ -400,6 +435,16 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             activeCase.health_summary ? `Health summary: ${activeCase.health_summary}` : '',
             activeCase.risk_summary ? `Risks and safeguards: ${activeCase.risk_summary}` : '',
             activeCase.representative_details ? `Representative / advocate: ${activeCase.representative_details}` : '',
+            activeCase.advocate_name ? `Advocate: ${activeCase.advocate_name} (${activeCase.advocate_contact || 'no contact details'})` : '',
+            activeCase.speech_therapist ? `Speech therapist: ${activeCase.speech_therapist}` : '',
+            activeCase.physiotherapist ? `Physiotherapist: ${activeCase.physiotherapist}` : '',
+            activeCase.other_services ? `Other services: ${activeCase.other_services}` : '',
+            activeCase.plan_manager ? `Plan manager: ${activeCase.plan_manager}` : '',
+            activeCase.preferred_workers_description ? `Preferred workers: ${activeCase.preferred_workers_description}` : '',
+            activeCase.special_meals_diets ? `Special meals or diets: ${activeCase.special_meals_diets}` : '',
+            activeCase.consent_to_share_persons ? `Consent to share with: ${activeCase.consent_to_share_persons}` : '',
+            activeCase.travel_assistance_required ? 'Wants assistance with travel' : '',
+            `Pets on property: ${activeCase.pets_on_property ? 'Yes' : 'No'}`,
           ].filter(Boolean).join('\n'),
         });
       } else {
@@ -498,6 +543,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         document_type: canonical,
         file_name: file.name,
         file_uri,
+        ...(activeCase.related_profile_id ? { profile_id: activeCase.related_profile_id } : {}),
         uploaded_by: user?.full_name || user?.email || 'Intake team',
         uploaded_date: businessDateTime().date,
       });
@@ -579,6 +625,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         document_type: canonical,
         file_name: file.name,
         file_uri,
+        ...(activeCase.related_profile_id ? { profile_id: activeCase.related_profile_id } : {}),
         uploaded_by: `${user?.full_name || user?.email || 'Intake team'} (completed online)`,
         uploaded_date: businessDateTime().date,
       });
@@ -651,6 +698,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         document_type: canonical,
         file_name: file.name,
         file_uri,
+        ...(activeCase.related_profile_id ? { profile_id: activeCase.related_profile_id } : {}),
         uploaded_by: `${acknowledgedBy} (acknowledgement)`,
         uploaded_date: date,
       });
@@ -784,6 +832,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Field label="NDIS number"><TextInput value={form.ndis_number} onChange={(e) => setValue('ndis_number', e.target.value)} /></Field>
           <Field label="NDIS reference number"><TextInput value={form.ndis_reference_number} onChange={(e) => setValue('ndis_reference_number', e.target.value)} /></Field>
           <Field label="Preferred name and pronouns"><TextInput value={form.preferred_name_pronouns} onChange={(e) => setValue('preferred_name_pronouns', e.target.value)} /></Field>
+          <Field label="Preferred name"><TextInput value={form.preferred_name} onChange={(e) => setValue('preferred_name', e.target.value)} /></Field>
+          <Field label="Likes"><TextArea value={form.likes} onChange={(e) => setValue('likes', e.target.value)} /></Field>
+          <Field label="Dislikes"><TextArea value={form.dislikes} onChange={(e) => setValue('dislikes', e.target.value)} /></Field>
           <Field label="Gender"><TextInput value={form.gender} onChange={(e) => setValue('gender', e.target.value)} /></Field>
           <Field label="Language spoken"><TextInput value={form.language_spoken} onChange={(e) => setValue('language_spoken', e.target.value)} /></Field>
           <Checkbox checked={form.interpreter_required} onChange={(e) => setValue('interpreter_required', e.target.checked)} label="Interpreter required" />
@@ -794,8 +845,27 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Field label="GP name"><TextInput value={form.gp_name} onChange={(e) => setValue('gp_name', e.target.value)} /></Field>
           <Field label="GP contact"><TextInput value={form.gp_contact} onChange={(e) => setValue('gp_contact', e.target.value)} /></Field>
           <Field label="NDIS funding categories"><TextInput value={form.funding_categories} onChange={(e) => setValue('funding_categories', e.target.value)} /></Field>
+          <Field label="Support type requested"><TextInput value={form.support_type_requested} onChange={(e) => setValue('support_type_requested', e.target.value)} /></Field>
+          <Field label="Shift dates requested"><TextInput value={form.shift_dates} onChange={(e) => setValue('shift_dates', e.target.value)} /></Field>
+          <Field label="Shift times requested"><TextInput value={form.shift_times} onChange={(e) => setValue('shift_times', e.target.value)} /></Field>
+          <Field label="Phone number for shifts requested"><TextInput type="tel" value={form.shift_contact_phone} onChange={(e) => setValue('shift_contact_phone', e.target.value)} /></Field>
+          <Field label="Support coordinator"><TextInput value={form.support_coordinator} onChange={(e) => setValue('support_coordinator', e.target.value)} /></Field>
+          <Field label="Occupational therapist (OT)"><TextInput value={form.occupational_therapist} onChange={(e) => setValue('occupational_therapist', e.target.value)} /></Field>
+          <Field label="Plan manager"><TextInput value={form.plan_manager} onChange={(e) => setValue('plan_manager', e.target.value)} /></Field>
+          <Field label="Speech therapist"><TextInput value={form.speech_therapist} onChange={(e) => setValue('speech_therapist', e.target.value)} /></Field>
+          <Field label="Physiotherapist"><TextInput value={form.physiotherapist} onChange={(e) => setValue('physiotherapist', e.target.value)} /></Field>
+          <Field label="Other services"><TextInput value={form.other_services} onChange={(e) => setValue('other_services', e.target.value)} /></Field>
+          <Field label="Advocate name"><TextInput value={form.advocate_name} onChange={(e) => setValue('advocate_name', e.target.value)} /></Field>
+          <Field label="Advocate contact details"><TextInput value={form.advocate_contact} onChange={(e) => setValue('advocate_contact', e.target.value)} /></Field>
+          <Field label="Names of any person for consent to share"><TextInput value={form.consent_to_share_persons} onChange={(e) => setValue('consent_to_share_persons', e.target.value)} /></Field>
           <Field label="Transport needs" className="sm:col-span-2"><TextArea value={form.transport_needs} onChange={(e) => setValue('transport_needs', e.target.value)} /></Field>
           <Field label="NDIS plan goals" className="sm:col-span-2"><TextArea value={form.ndis_plan_goals} onChange={(e) => setValue('ndis_plan_goals', e.target.value)} /></Field>
+          <Field label="Preferred workers description" className="sm:col-span-2"><TextArea value={form.preferred_workers_description} onChange={(e) => setValue('preferred_workers_description', e.target.value)} /></Field>
+          <Field label="Medical diagnosis"><TextArea value={form.medical_diagnosis} onChange={(e) => setValue('medical_diagnosis', e.target.value)} /></Field>
+          <Field label="Medications"><TextArea value={form.medications_dosage} onChange={(e) => setValue('medications_dosage', e.target.value)} /></Field>
+          <Field label="Any special meals or diets"><TextArea value={form.special_meals_diets} onChange={(e) => setValue('special_meals_diets', e.target.value)} /></Field>
+          <Field label="Risks identified"><TextArea value={form.risks_identified} onChange={(e) => setValue('risks_identified', e.target.value)} /></Field>
+          <Field label="Control measures"><TextArea value={form.control_measures} onChange={(e) => setValue('control_measures', e.target.value)} /></Field>
           <Field label="Primary contact / nominee"><TextInput value={form.primary_contact} onChange={(e) => setValue('primary_contact', e.target.value)} /></Field>
           <Field label="Representative / advocate"><TextInput value={form.representative_details} onChange={(e) => setValue('representative_details', e.target.value)} /></Field>
         </>
@@ -901,7 +971,6 @@ export default function IntakeCaseWorkflow({ intakeType }) {
               <option>NDIA Managed</option>
             </Select>
           </Field>
-          <Field label="Plan manager"><TextInput value={form.plan_manager} onChange={(e) => setValue('plan_manager', e.target.value)} /></Field>
           <Field label="NDIS plan start"><DateInput value={form.plan_start_date} onChange={(e) => setValue('plan_start_date', e.target.value)} /></Field>
           <Field label="NDIS plan end"><DateInput value={form.plan_end_date} onChange={(e) => setValue('plan_end_date', e.target.value)} /></Field>
           <div className="grid gap-2 rounded-lg border border-border p-3 sm:col-span-2 sm:grid-cols-2">
@@ -909,6 +978,8 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             <Checkbox checked={form.mealtime_support_required} onChange={(e) => setValue('mealtime_support_required', e.target.checked)} label="Mealtime support required" />
             <Checkbox checked={form.behaviour_support_required} onChange={(e) => setValue('behaviour_support_required', e.target.checked)} label="Behaviour support required" />
             <Checkbox checked={form.restrictive_practice_identified} onChange={(e) => setValue('restrictive_practice_identified', e.target.checked)} label="Restrictive practice identified" />
+            <Checkbox checked={form.travel_assistance_required} onChange={(e) => setValue('travel_assistance_required', e.target.checked)} label="Wants assistance with travel" />
+            <Checkbox checked={form.pets_on_property} onChange={(e) => setValue('pets_on_property', e.target.checked)} label="Pets on property" />
           </div>
         </>
       )}
@@ -1106,7 +1177,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                                 <Pencil className="h-3.5 w-3.5" /> Complete online
                               </Button>
                             )}
-                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label) && (
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && (
                               <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
                                 {downloadingTemplate === check.label
                                   ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
