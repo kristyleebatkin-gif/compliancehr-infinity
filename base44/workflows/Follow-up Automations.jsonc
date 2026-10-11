@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "follow_up_automations",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_follow_ups": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "runFollowUps",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Run staff surveys, progress copies and assessment dues",
+            "description": "Emails staff their survey 6 weeks after start then every 3 months (logged to profile and feedback register), emails admin users a copy of each participant's progress note and report every 10 weeks with a 3-monthly due date, and creates overdue tasks for individual (3-monthly) and home (monthly) risk assessments with an action log"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Follow-up Automations",
+  "description": "Daily at 8am: staff surveys (6 weeks after start, then 3-monthly, recorded in the feedback register), admin progress note/report copies every 10 weeks (due 3-monthly), and individual (3-monthly) / home (monthly) risk assessment due tracking with action logging."
+}

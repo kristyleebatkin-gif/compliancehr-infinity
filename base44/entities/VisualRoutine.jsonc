@@ -10,6 +10,11 @@
       "type": "string",
       "title": "Participant"
     },
+    "routine_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Routine Date"
+    },
     "steps": {
       "type": "string",
       "title": "Steps (JSON)"

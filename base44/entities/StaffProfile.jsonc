@@ -144,6 +144,23 @@
       "type": "string",
       "title": "Car Registration (Rego)"
     },
+    "participant_team": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Participant Team (Participants Supported)"
+    },
+    "last_survey_sent_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Staff Survey Sent"
+    },
+    "survey_log": {
+      "type": "string",
+      "title": "Survey Log"
+    },
     "audit_consent": {
       "type": "string",
       "enum": [

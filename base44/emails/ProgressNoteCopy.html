@@ -1,0 +1,48 @@
+<mjml>
+  <mj-head>
+    <mj-title>Progress update copy: {{participant_name}}</mj-title>
+    <mj-preview>Latest progress note and report, with the next 3-monthly due date</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, Helvetica, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0a0a0a" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#0a0a0a" color="#ffffff" border-radius="6px" font-weight="700" inner-padding="14px 28px" align="left" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f4f4f5">
+    <mj-section background-color="#0a0a0a" padding="20px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3352e3dd7_logo.png" alt="ComplianceHR Portal" width="140" align="left" />
+        <mj-text color="#ffffff" font-size="18px" font-weight="700">ComplianceHR Portal</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="40px 36px 12px">
+      <mj-column>
+        <mj-text font-size="28px" font-weight="700" line-height="1.2">Progress update for {{participant_name}}</mj-text>
+        <mj-text color="#737373" font-size="15px">A copy of the latest progress note and progress report, sent to administrators every 10 weeks. Progress notes are due every 3 months. Next due date: {{due_date}}.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="12px 36px 0">
+      <mj-column>
+        <mj-text font-weight="700">Latest progress note ({{latest_note_date}})</mj-text>
+        <mj-text background-color="#f4f4f5" border="1px solid #e5e7eb" border-radius="6px" padding="16px">{{latest_note}}</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="20px 36px 0">
+      <mj-column>
+        <mj-text font-weight="700">Latest progress report</mj-text>
+        <mj-text background-color="#f4f4f5" border="1px solid #e5e7eb" border-radius="6px" padding="16px">{{latest_report}}</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="20px 36px 40px">
+      <mj-column>
+        <mj-button href="https://polite-safe-hire-flow.base44.app/goals">Open goal progress</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#0a0a0a" padding="18px 36px">
+      <mj-column>
+        <mj-text color="#ffffff" font-size="12px">ComplianceHR Portal. Goal progress tracking for {{participant_name}}.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

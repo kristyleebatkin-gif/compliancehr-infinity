@@ -125,6 +125,28 @@
       "type": "string",
       "title": "Medications and Dosage"
     },
+    "support_team": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Support Worker Team"
+    },
+    "last_progress_copy_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Progress Copy Sent (10 Weekly)"
+    },
+    "progress_notes_due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Progress Notes Due (3 Monthly)"
+    },
+    "progress_email_log": {
+      "type": "string",
+      "title": "Progress Email Log"
+    },
     "status": {
       "type": "string",
       "enum": [

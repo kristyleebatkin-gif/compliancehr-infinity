@@ -158,6 +158,30 @@
       "format": "date",
       "title": "Date Identified"
     },
+    "assessment_type": {
+      "type": "string",
+      "enum": [
+        "Not scheduled",
+        "Individual",
+        "Home"
+      ],
+      "default": "Not scheduled",
+      "title": "Assessment Schedule"
+    },
+    "last_assessed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Assessed Date"
+    },
+    "next_due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Assessment Due"
+    },
+    "action_log": {
+      "type": "string",
+      "title": "Assessment Action Log"
+    },
     "source_entity_type": {
       "type": "string",
       "title": "Source Entity Type"
