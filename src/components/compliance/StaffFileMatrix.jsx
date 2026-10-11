@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
  * rego or card. Updates automatically from training completions, employee
  * documents, intake documents and the staff profile.
  */
-const COLUMNS = [
+export const STAFF_COLUMNS = [
   { label: 'First Aid', training: 'First Aid Certificate', employeeDoc: 'First Aid Certificate' },
   { label: 'CPR', training: 'CPR Certificate', employeeDoc: 'CPR Certificate' },
   { label: 'NDIS Orientation', training: 'NDIS Worker Orientation Module Certificate' },
@@ -60,8 +60,8 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
     const trainingSet = trainingByName.get(nameKey) || new Set();
     const docSet = docsByName.get(nameKey) || new Set();
     const intakeSet = intakeByProfile.get(member.id) || new Set();
-    const cells = COLUMNS.map((column) => staffColumnStatus(member, column, trainingSet, docSet, intakeSet));
-    const pct = Math.round((cells.filter(Boolean).length / COLUMNS.length) * 100);
+    const cells = STAFF_COLUMNS.map((column) => staffColumnStatus(member, column, trainingSet, docSet, intakeSet));
+    const pct = Math.round((cells.filter(Boolean).length / STAFF_COLUMNS.length) * 100);
     return { member, cells, pct };
   });
   const overall = rows.length
@@ -84,7 +84,7 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
               <tr className="border-b bg-muted/40 text-left text-[11px] uppercase tracking-wide text-muted-foreground">
                 <th className="sticky left-0 bg-muted/40 px-3 py-2">Staff member</th>
                 <th className="px-3 py-2">ID</th>
-                {COLUMNS.map((column) => <th key={column.label} className="whitespace-nowrap px-2 py-2 text-center">{column.label}</th>)}
+                {STAFF_COLUMNS.map((column) => <th key={column.label} className="whitespace-nowrap px-2 py-2 text-center">{column.label}</th>)}
                 <th className="px-3 py-2 text-center">Ready</th>
               </tr>
             </thead>

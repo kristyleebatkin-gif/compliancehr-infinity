@@ -49,7 +49,6 @@ const PRIMARY_NAV = [
   { label: 'Tasks', path: '/tasks', key: 'tasks', icon: ClipboardList },
   { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
   { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },
-  { label: 'Audit Centre', path: '/audit', key: 'audit-log', icon: ClipboardCheck },
 
 ];
 

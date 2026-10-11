@@ -14,6 +14,10 @@ import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink } from 'lucide
 import { format } from 'date-fns';
 import Checklists from '@/pages/Checklists';
 import ComplianceReadiness from '@/components/compliance/ComplianceReadiness';
+import AuditsTab from '@/components/compliance/AuditsTab';
+import MasterChecklist from '@/components/compliance/MasterChecklist';
+import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
+import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -84,13 +88,33 @@ export default function ComplianceHub() {
       <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">
           <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
+          <TabsTrigger value="master-checklist">Master Checklist</TabsTrigger>
+          <TabsTrigger value="kits-drills">Kits &amp; Drills Checklists</TabsTrigger>
+          <TabsTrigger value="audits">Audits</TabsTrigger>
+          <TabsTrigger value="visitors">Visitor Sign In/Out</TabsTrigger>
           <TabsTrigger value="policies">Policies</TabsTrigger>
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
-          <TabsTrigger value="checklists">Compliance Checklists</TabsTrigger>
+          <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
         </TabsList>
 
         <TabsContent value="readiness" className="mt-4">
           <ComplianceReadiness />
+        </TabsContent>
+
+        <TabsContent value="master-checklist" className="mt-4">
+          <MasterChecklist />
+        </TabsContent>
+
+        <TabsContent value="kits-drills" className="mt-4">
+          <KitDrillChecklists />
+        </TabsContent>
+
+        <TabsContent value="audits" className="mt-4">
+          <AuditsTab />
+        </TabsContent>
+
+        <TabsContent value="visitors" className="mt-4">
+          <VisitorSignInOut />
         </TabsContent>
 
         <TabsContent value="policies" className="mt-4 space-y-4">

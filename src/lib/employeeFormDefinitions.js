@@ -250,6 +250,17 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
       field('Acknowledged by and date'),
     ],
   },
+  'Fire Drill Form': {
+    fields: [
+      ...personal,
+      field('Drill date, time and location'),
+      field('Alarm sounded and evacuation start time'),
+      field('Evacuation route used and assembly point'),
+      field('Roll call completed and all staff accounted for'),
+      field('Issues identified and improvements required', true),
+      field('Completed by and signature date'),
+    ],
+  },
   'Staff File Checklist': {
     fields: [
       field('Employee full name'),

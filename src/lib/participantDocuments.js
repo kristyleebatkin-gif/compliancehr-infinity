@@ -283,6 +283,15 @@ const BASE_PARTICIPANT_FORM_DEFINITIONS = {
     { label: 'Controls, responsible person and due date', multiline: true },
     { label: 'Overall rating and review date', multiline: true },
   ]),
+  'Fire Drill Form': definition('CM-FORM-052', 'Fire Drill Form', [
+    ...personalFields,
+    { label: 'Drill date, time and location' },
+    { label: 'Assistance and equipment used to evacuate' },
+    { label: 'Evacuation route used and assembly point' },
+    { label: 'Roll call and participant accounted for' },
+    { label: 'Issues identified and improvements required', multiline: true },
+    { label: 'Completed by and date' },
+  ]),
   'Personal Emergency Form': definition('CM-FORM-018', 'Personal Emergency Management Plan', [
     ...personalFields,
     { label: 'Disability, health and communication needs', multiline: true },
@@ -319,7 +328,7 @@ export const PARTICIPANT_FILE_SECTIONS = [
   { name: '3. Service Delivery & Safeguards', icon: Megaphone, docs: ['Progress Reports', 'Progress Notes', 'Incident Reports', 'Behaviour Support Plan', 'Restrictive Practices Record'] },
   { name: '4. Medication & Mealtime Support', icon: Heart, docs: ['Medication Evaluation', 'SAM Medication Assessment', 'Medication Administration Record', 'Medication Consent', 'Medication Record Sheet', 'Mealtime Management Plan'] },
   { name: '5. Feedback, Investigations & Finance', icon: DollarSign, docs: ['Satisfaction Survey', 'Feedback and Complaints', 'Investigation Form', 'Participant Money Register'] },
-  { name: '6. Emergency Management', icon: LogOut, docs: ['Personal Emergency Form'] },
+  { name: '6. Emergency Management', icon: LogOut, docs: ['Personal Emergency Form', 'Fire Drill Form'] },
 ];
 
 export const PARTICIPANT_DOC_TYPES = PARTICIPANT_FILE_SECTIONS.flatMap((section) => section.docs);

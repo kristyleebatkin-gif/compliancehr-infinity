@@ -784,6 +784,15 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       await base44.entities.IntakeCase.update(activeCase.id, {
         buddy_shift_log: [activeCase.buddy_shift_log || '', entry].filter(Boolean).join('\n'),
       });
+      await base44.entities.TrainingCompletion.create({
+        learner_type: 'Employee',
+        learner_name: activeCase.applicant_name,
+        employee_name: activeCase.applicant_name,
+        module_title: 'Buddy Shift (Skill Assessment)',
+        completed_date: buddyShift.date,
+        status: 'Completed',
+        training_notes: `Buddy shift on ${buddyShift.date}${buddyShift.time ? ` at ${buddyShift.time}` : ''} with ${buddyShift.other_employee.trim()}. ${buddyShift.notes.trim()}`.trim(),
+      });
       await load(activeCase.id);
       setBuddyShift({ date: '', time: '', other_employee: '', notes: '' });
       toast({ title: 'Buddy shift recorded' });

@@ -39,13 +39,14 @@ export default async function(req) {
       service.entities.EmergencyDrill.filter({}, { limit: 500 }),
       service.entities.ComplianceChecklistEntry.filter({}, { limit: 500 }),
       service.entities.Notification.filter({ type: 'Compliance Kit Due' }, { limit: 500 }),
-      service.entities.User.list({ limit: 500 }),
+      service.entities.User.list(),
     ]);
-    const checkItems = checks.items || [];
-    const drillItems = drills.items || [];
-    const entryItems = entries.items || [];
-    const notifItems = existingNotifs.items || [];
-    const userItems = users.items || [];
+    const pageItems = (page) => page?.items || page || [];
+    const checkItems = pageItems(checks);
+    const drillItems = pageItems(drills);
+    const entryItems = pageItems(entries);
+    const notifItems = pageItems(existingNotifs);
+    const userItems = pageItems(users);
 
     const due = [];
 
