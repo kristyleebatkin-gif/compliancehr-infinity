@@ -24,6 +24,7 @@ export default function TrainingTemplates() {
 
   const [assignTemplate, setAssignTemplate] = useState(null);
   const [assignStaff, setAssignStaff] = useState('');
+  const [assignMode, setAssignMode] = useState('one');
   const [assignResult, setAssignResult] = useState('');
   const [assigning, setAssigning] = useState(false);
 
@@ -70,45 +71,58 @@ export default function TrainingTemplates() {
   const openAssign = (tpl) => {
     setAssignTemplate(tpl);
     setAssignStaff('');
+    setAssignMode('one');
     setAssignResult('');
   };
 
   const doAssign = async () => {
-    if (!assignStaff || !assignTemplate) return;
+    if (!assignTemplate) return;
     setAssigning(true);
     setAssignResult('');
     try {
-      const existing = await base44.entities.TrainingCompletion.filter(
-        { employee_name: assignStaff, status: 'Completed' },
-        { limit: 200, fields: ['module_title', 'expiry_date'] },
-      );
-      const currentTitles = new Set(
-        (existing.items || [])
-          .filter((c) => !c.expiry_date || c.expiry_date >= todayStr())
-          .map((c) => c.module_title),
-      );
       const titles = (assignTemplate.module_titles || '').split('\n').map((t) => t.trim()).filter(Boolean);
-      const due = titles.filter((t) => !currentTitles.has(t));
-      if (due.length === 0) {
-        setAssignResult('All modules in this template are already current for this staff member.');
+      if (titles.length === 0) { setAssignResult('This template has no modules.'); return; }
+      const today = todayStr();
+      const targets = assignMode === 'role'
+        ? staff.filter((s) => s.role === assignTemplate.role).map((s) => s.full_name)
+        : [assignStaff];
+      if (targets.length === 0) {
+        setAssignResult(`No active staff with the ${assignTemplate.role} role.`);
         return;
       }
-      const today = todayStr();
-      await base44.entities.TrainingCompletion.bulkCreate(due.map((title) => {
-        const mod = LMS_MODULES.find((m) => m.title === title);
-        const months = mod?.validity_months;
-        return {
-          employee_name: assignStaff,
-          learner_type: 'Employee',
-          learner_name: assignStaff,
-          module_title: title,
-          completed_date: today,
-          expiry_date: months ? format(addMonths(new Date(), months), 'yyyy-MM-dd') : undefined,
-          status: 'Completed',
-          training_notes: `Assigned via "${assignTemplate.name}" template`,
-        };
-      }));
-      setAssignResult(`Recorded ${due.length} module${due.length === 1 ? '' : 's'}${titles.length - due.length > 0 ? ` (${titles.length - due.length} already current, skipped)` : ''}.`);
+      const compsPage = await base44.entities.TrainingCompletion.filter(
+        { status: 'Completed' },
+        { limit: 500, fields: ['employee_name', 'module_title', 'expiry_date'] },
+      );
+      const current = new Set(
+        (compsPage.items || [])
+          .filter((c) => !c.expiry_date || c.expiry_date >= today)
+          .map((c) => `${c.employee_name}|${c.module_title}`),
+      );
+      const records = [];
+      targets.forEach((name) => {
+        titles.forEach((title) => {
+          if (current.has(`${name}|${title}`)) return;
+          const mod = LMS_MODULES.find((m) => m.title === title);
+          const months = mod?.validity_months;
+          records.push({
+            employee_name: name,
+            learner_type: 'Employee',
+            learner_name: name,
+            module_title: title,
+            completed_date: today,
+            expiry_date: months ? format(addMonths(new Date(), months), 'yyyy-MM-dd') : undefined,
+            status: 'Completed',
+            training_notes: `Assigned via "${assignTemplate.name}" template${assignMode === 'role' ? ' (role auto-assign)' : ''}`,
+          });
+        });
+      });
+      if (records.length === 0) {
+        setAssignResult('Everyone already holds all modules in this bundle.');
+        return;
+      }
+      await base44.entities.TrainingCompletion.bulkCreate(records);
+      setAssignResult(`Recorded ${records.length} module${records.length === 1 ? '' : 's'} for ${targets.length} staff member${targets.length === 1 ? '' : 's'}${assignMode === 'role' ? ` with the ${assignTemplate.role} role` : ''}.`);
     } finally {
       setAssigning(false);
     }
@@ -204,24 +218,34 @@ export default function TrainingTemplates() {
         <DialogContent className="max-w-md">
           <DialogHeader><DialogTitle>Assign "{assignTemplate?.name}"</DialogTitle></DialogHeader>
           <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <Button size="sm" variant={assignMode === 'one' ? 'default' : 'outline'} onClick={() => setAssignMode('one')}>Single staff</Button>
+              <Button size="sm" variant={assignMode === 'role' ? 'default' : 'outline'} onClick={() => setAssignMode('role')}>All {assignTemplate?.role}s</Button>
+            </div>
+            {assignMode === 'role' ? (
+              <p className="rounded-lg bg-brand/10 p-2 text-xs text-brand">
+                {staff.filter((s) => s.role === assignTemplate?.role).length} active staff member(s) have the {assignTemplate?.role} role — the bundle will be recorded for all of them.
+              </p>
+            ) : (
+              <Select value={assignStaff || ''} onValueChange={setAssignStaff}>
+                <SelectTrigger><SelectValue placeholder="Select staff member" /></SelectTrigger>
+                <SelectContent>
+                  {staff.map((s) => (
+                    <SelectItem key={s.full_name} value={s.full_name}>
+                      {s.full_name}{s.role ? ` (${s.role})` : ''}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
             <p className="text-sm text-muted-foreground">
-              {moduleCount(assignTemplate || {})} modules will be recorded for the selected staff member. Modules they already hold currently are skipped.
+              {moduleCount(assignTemplate || {})} modules per person. Modules already held currently are skipped.
             </p>
-            <Select value={assignStaff || ''} onValueChange={setAssignStaff}>
-              <SelectTrigger><SelectValue placeholder="Select staff member" /></SelectTrigger>
-              <SelectContent>
-                {staff.map((s) => (
-                  <SelectItem key={s.full_name} value={s.full_name}>
-                    {s.full_name}{s.role ? ` (${s.role})` : ''}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
             {assignResult && <p className="rounded-lg bg-safe/10 p-2 text-xs font-medium text-safe">{assignResult}</p>}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setAssignTemplate(null)}>Close</Button>
-            <Button onClick={doAssign} disabled={!assignStaff || assigning}>
+            <Button onClick={doAssign} disabled={assigning || (assignMode === 'one' && !assignStaff)}>
               {assigning ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Assign bundle'}
             </Button>
           </DialogFooter>
