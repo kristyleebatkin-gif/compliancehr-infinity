@@ -3,7 +3,8 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { differenceInDays, parseISO, format } from 'date-fns';
-import { ShieldCheck, AlertTriangle, Clock, Users } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, Clock, Users, FileDown } from 'lucide-react';
+import { downloadTrainingAuditReport } from '@/lib/trainingAuditPdf';
 
 const SOON_DAYS = 60;
 
@@ -85,6 +86,14 @@ export default function CertificationOverview() {
 
   return (
     <div className="space-y-5">
+      <div className="flex justify-end">
+        <button
+          onClick={() => downloadTrainingAuditReport({ rows, totals, fullyCompliant })}
+          className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
+        >
+          <FileDown className="h-4 w-4" /> Download Audit Report
+        </button>
+      </div>
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         {tiles.map((t) => (
           <Card key={t.label}><CardContent className="flex items-center gap-3 p-4">
