@@ -3,7 +3,7 @@ import { ClipboardList, ShieldCheck, GraduationCap, ClipboardCheck, CarFront, Bo
 export const EMPLOYEE_FILE_SECTIONS = [
   { name: 'Employment & Onboarding', icon: ClipboardCheck, docs: ['Staff Information Form', 'Staff Onboarding Form', 'Staff Induction Form', 'Employment Contract', 'Position Description', 'Secondary Employment Form', 'Staff Commitment Declaration Form'] },
   { name: 'Identity, Qualifications & Vehicle Records', icon: ShieldCheck, docs: ['100 Points of Identification Checklist', "Driver's License", 'Medicare Card', 'Passport', 'Birth Certificate', 'Qualifications', 'Resume', 'Car Registration', 'Immunisation Record', 'Vehicle Safety Inspection', 'Superannuation Details', 'Tax File Number'] },
-  { name: 'NDIS Screening, Clearances & Referees', icon: ShieldCheck, docs: ['NDIS Code of Conduct Acknowledgement', 'NDIS Worker Screening Clearance', 'Blue Card and/or Police Check', 'Referee Checks Form'] },
+  { name: 'NDIS Screening & Clearances', icon: ShieldCheck, docs: ['NDIS Code of Conduct Acknowledgement', 'NDIS Worker Screening Clearance', 'Blue Card and/or Police Check'] },
   {
     name: 'Mandatory NDIS Training Certificates',
     icon: GraduationCap,
@@ -18,6 +18,7 @@ export const EMPLOYEE_FILE_SECTIONS = [
       'Manual Handling Training Certificate',
       'First Aid Certificate',
       'CPR Certificate',
+      'Medication Administration Training Certificate',
       'NDIS Relevant Qualification',
     ],
   },

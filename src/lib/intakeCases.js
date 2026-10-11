@@ -20,8 +20,11 @@ export const INTAKE_REQUIREMENTS = {
     'Employment Contract',
     'Position Description',
     '100 Points of Identification Checklist',
+    "Driver's License",
+    'Medicare Card',
+    'Birth Certificate or Passport',
+    'Tax File Number',
     'Resume',
-    'Referee Checks Form',
     'Qualifications',
     'NDIS Code of Conduct Acknowledgement',
     'NDIS Act 2013 Acknowledgement',
@@ -45,10 +48,58 @@ export const INTAKE_REQUIREMENTS = {
     'Australian Commission on Safety and Quality in Health Care Medication Safety Certificate',
     'Australian Commission on Safety and Quality in Health Care Hand Hygiene Certificate',
     'Australian Commission on Safety and Quality in Health Care Infection Control Certificate',
+    'Medication Administration Training Certificate',
+    'Manual Handling Training Certificate',
+    'First Aid Certificate',
+    'CPR Certificate',
     'Immunisation Record',
     'Staff Handbook',
   ],
+}
+
+export const LEGISLATION_ACK_DOC_TYPES = new Set([
+  'NDIS Code of Conduct Acknowledgement',
+  'NDIS Act 2013 Acknowledgement',
+  'NDIS Practice Standards Acknowledgement',
+  'Work Health and Safety Act 2011 (Qld) Acknowledgement',
+]);
+
+export const TRAINING_DOC_LINKS = {
+  'NDIS Worker Orientation Module Certificate': { label: 'NDIS worker orientation module (free)', url: 'https://training.ndiscommission.gov.au/' },
+  'NDIS Worker Induction Module Certificate': { label: 'NDIS Commission worker modules (free)', url: 'https://training.ndiscommission.gov.au/' },
+  'NDIS Supporting Safe and Enjoyable Meals Certificate': { label: 'Supporting Safe and Enjoyable Meals e-learning (free)', url: 'https://elearn.nds.org.au/' },
+  'NDIS Supporting Effective Communication Certificate': { label: 'Supporting Effective Communication e-learning (free)', url: 'https://elearn.nds.org.au/' },
+  'Australian Commission on Safety and Quality in Health Care Medication Safety Certificate': { label: 'Medication Safety education (free)', url: 'https://education.safetyandquality.gov.au/' },
+  'Australian Commission on Safety and Quality in Health Care Hand Hygiene Certificate': { label: 'Hand Hygiene education (free)', url: 'https://education.safetyandquality.gov.au/' },
+  'Australian Commission on Safety and Quality in Health Care Infection Control Certificate': { label: 'Infection Control education (free)', url: 'https://education.safetyandquality.gov.au/' },
+  'Manual Handling Training Certificate': { label: 'Free manual handling training', url: 'https://cloudassess.com/course-library/manual-handling-aged-care/' },
+  'Medication Administration Training Certificate': { label: 'Free medication administration training', url: 'https://alison.com/course/medication-management-and-administration' },
 };
+
+export const TRAINING_REGISTER_DOC_TYPES = new Set([
+  ...Object.keys(TRAINING_DOC_LINKS),
+  'First Aid Certificate',
+  'CPR Certificate',
+]);
+
+export const UPLOAD_ONLY_DOC_TYPES = new Set([
+  "Driver's License",
+  'Medicare Card',
+  'Birth Certificate or Passport',
+  'Tax File Number',
+  'Qualifications',
+  'NDIS Worker Screening Clearance',
+  'Blue Card and/or Police Check',
+  'Car Registration',
+  'Immunisation Record',
+  'Manual Handling Training Certificate',
+  'First Aid Certificate',
+  'CPR Certificate',
+  'Medication Administration Training Certificate',
+  'Australian Commission on Safety and Quality in Health Care Medication Safety Certificate',
+  'Australian Commission on Safety and Quality in Health Care Hand Hygiene Certificate',
+  'Australian Commission on Safety and Quality in Health Care Infection Control Certificate',
+]);;
 
 const INTAKE_DOCUMENT_ALIASES = {
   'Intake Assessment': 'Participant Intake Assessment',
@@ -81,6 +132,10 @@ const INTAKE_DOCUMENT_ALIASES = {
   'First Aid': 'First Aid Certificate',
   CPR: 'CPR Certificate',
   'Vehicle Registration': 'Car Registration',
+  Passport: 'Birth Certificate or Passport',
+  'Birth Certificate': 'Birth Certificate or Passport',
+  'NDIS Workers Card': 'NDIS Worker Screening Clearance',
+  'Medication Administration Training': 'Medication Administration Training Certificate',
 };
 
 export function canonicalIntakeDocumentType(documentType) {

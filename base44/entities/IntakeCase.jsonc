@@ -249,6 +249,14 @@
       "type": "string",
       "title": "Previous Employer"
     },
+    "previous_employer_phone": {
+      "type": "string",
+      "title": "Previous Employer Phone"
+    },
+    "previous_employer_email": {
+      "type": "string",
+      "title": "Previous Employer Email"
+    },
     "referees": {
       "type": "string",
       "title": "Referees"
@@ -273,6 +281,54 @@
       "type": "string",
       "title": "Position"
     },
+    "preferred_name": {
+      "type": "string",
+      "title": "Preferred Name"
+    },
+    "banking_details": {
+      "type": "string",
+      "title": "Banking Details (BSB, Account, Account Name)"
+    },
+    "superannuation_details": {
+      "type": "string",
+      "title": "Superannuation Details"
+    },
+    "tax_file_number": {
+      "type": "string",
+      "title": "Tax File Number"
+    },
+    "current_rego": {
+      "type": "string",
+      "title": "Current Rego (State and Expiry)"
+    },
+    "rego_number": {
+      "type": "string",
+      "title": "Rego Number"
+    },
+    "qualifications_certificates": {
+      "type": "string",
+      "title": "Qualifications and Certificates"
+    },
+    "weekly_hours_goal": {
+      "type": "string",
+      "title": "Weekly Hours Goal"
+    },
+    "employment_provider": {
+      "type": "string",
+      "title": "Employment Provider"
+    },
+    "hobbies_interests": {
+      "type": "string",
+      "title": "Hobbies and Interests"
+    },
+    "supports_to_provide": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Supports They Want to Provide"
+    },
     "referral_source": {
       "type": "string",
       "title": "Referral Source"
@@ -285,7 +341,12 @@
     "target_start_date": {
       "type": "string",
       "format": "date",
-      "title": "Target Start Date"
+      "title": "Proposed Start Date"
+    },
+    "date_completed": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Completed"
     },
     "assigned_to": {
       "type": "string",
@@ -330,6 +391,18 @@
       "default": false,
       "title": "Consent to Collect and Store Intake Information"
     },
+    "privacy_consent_by": {
+      "type": "string",
+      "title": "Privacy Consent Recorded By"
+    },
+    "privacy_consent_date": {
+      "type": "string",
+      "title": "Privacy Consent Date"
+    },
+    "privacy_consent_time": {
+      "type": "string",
+      "title": "Privacy Consent Time"
+    },
     "recognition_dashboard_consent": {
       "type": "boolean",
       "default": false,
@@ -339,6 +412,14 @@
       "type": "string",
       "format": "date",
       "title": "Recognition Dashboard Consent Date"
+    },
+    "recognition_dashboard_consent_by": {
+      "type": "string",
+      "title": "Recognition Dashboard Consent By"
+    },
+    "recognition_dashboard_consent_time": {
+      "type": "string",
+      "title": "Recognition Dashboard Consent Time"
     },
     "audit_consent": {
       "type": "string",
@@ -364,6 +445,14 @@
     "audit_consent_note": {
       "type": "string",
       "title": "Audit Consent Note (who consented / declined)"
+    },
+    "acknowledgement_log": {
+      "type": "string",
+      "title": "Acknowledgement Log"
+    },
+    "referee_check_log": {
+      "type": "string",
+      "title": "Referee Check Log"
     },
     "completed_document_types": {
       "type": "array",

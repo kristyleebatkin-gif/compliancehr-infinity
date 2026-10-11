@@ -4,7 +4,7 @@ import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
 /**
  * Branded participant form PDF with in-app answers written into each field.
  */
-export function buildFilledFormDoc({ title, code, subtitle = 'ComplianceHR Form', fields = [], values = {}, columns, rows = 12, completedBy = '' }) {
+export function buildFilledFormDoc({ title, code, subtitle = 'ComplianceHR Form', fields = [], values = {}, columns, rows = 12, completedBy = '', completedAt = '' }) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -108,6 +108,20 @@ export function buildFilledFormDoc({ title, code, subtitle = 'ComplianceHR Form'
   doc.text('Authorised By (Signature)', 40, y + 13);
   doc.line(pageW - 250, y, pageW - 40, y);
   doc.text('Date', pageW - 250, y + 13);
+
+  if (completedBy || completedAt) {
+    if (y > pageH - 80) { doc.addPage(); y = 54; }
+    y += 18;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(40);
+    doc.text('Completion log', 40, y);
+    y += 13;
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(90);
+    if (completedBy) { doc.text(`Completed by: ${completedBy}`, 40, y); y += 12; }
+    if (completedAt) { doc.text(`Completed on: ${completedAt}`, 40, y); y += 12; }
+  }
 
   drawDocumentFooter(doc, { title, code });
 

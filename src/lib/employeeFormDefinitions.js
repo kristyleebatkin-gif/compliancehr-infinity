@@ -17,6 +17,7 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
   'Staff Information Form': {
     fields: [
       ...personal,
+      field('Preferred name'),
       field('Position and employment type'),
       field('Tax file number'),
       field('Superannuation fund and member number'),
@@ -78,19 +79,6 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
     ],
     columns: ['Document type', 'Reference number', 'Expiry date', 'Points'],
     rows: 10,
-  },
-  'Referee Checks Form': {
-    fields: [
-      field('Applicant full name'),
-      field('Position applied for'),
-      field('Referee 1 name, role and organisation'),
-      field('Referee 1 contact'),
-      field('Referee 1 comments', true),
-      field('Referee 2 name, role and organisation'),
-      field('Referee 2 contact'),
-      field('Referee 2 comments', true),
-      field('Outcome and completed by', true),
-    ],
   },
   'NDIS Code of Conduct Acknowledgement': {
     fields: [

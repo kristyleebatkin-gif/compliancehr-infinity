@@ -56,6 +56,20 @@ function autofillIntakeValue(label, intakeCase = {}) {
   if (l.includes('plan manager')) return intakeCase.plan_manager || '';
   if (l.includes('support coordinator')) return intakeCase.support_coordinator || '';
   if (l.includes('referral source')) return intakeCase.referral_source || '';
+  if (l.includes('rego number')) return intakeCase.rego_number || '';
+  if (l.includes('rego')) return intakeCase.current_rego || '';
+  if (l.includes('banking details')) return intakeCase.banking_details || '';
+  if (l.includes('superannuation')) return intakeCase.superannuation_details || '';
+  if (l.includes('tax file number')) return intakeCase.tax_file_number || '';
+  if (l.includes('preferred name')) return intakeCase.preferred_name || '';
+  if (l.includes('previous employer phone')) return intakeCase.previous_employer_phone || '';
+  if (l.includes('previous employer email')) return intakeCase.previous_employer_email || '';
+  if (l.includes('previous employer')) return intakeCase.previous_employer || '';
+  if (l.includes('qualifications')) return intakeCase.qualifications_certificates || '';
+  if (l.includes('hobbies')) return intakeCase.hobbies_interests || '';
+  if (l.includes('weekly hours')) return intakeCase.weekly_hours_goal || '';
+  if (l.includes('employment provider')) return intakeCase.employment_provider || '';
+  if (l.includes('supports to provide')) return (intakeCase.supports_to_provide || []).join(', ');
   return '';
 }
 
