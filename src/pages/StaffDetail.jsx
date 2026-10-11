@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, TrendingUp, Users } from 'lucide-react';
+import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ShieldAlert, TrendingUp, Users } from 'lucide-react';
+import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
 import StaffDetailsTab from '@/components/staff/StaffDetailsTab';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffRecordsTab from '@/components/staff/StaffRecordsTab';
@@ -63,12 +64,14 @@ export default function StaffDetail() {
           <TabsTrigger value="records"><GraduationCap className="mr-1 inline h-3.5 w-3.5" />Buddy Shifts &amp; Training</TabsTrigger>
           <TabsTrigger value="access"><KeyRound className="mr-1 inline h-3.5 w-3.5" />Access &amp; Permissions</TabsTrigger>
           <TabsTrigger value="performance"><TrendingUp className="mr-1 inline h-3.5 w-3.5" />Performance Reviews</TabsTrigger>
+          <TabsTrigger value="safety"><ShieldAlert className="mr-1 inline h-3.5 w-3.5" />Safety Records</TabsTrigger>
         </TabsList>
         <TabsContent value="details"><StaffDetailsTab staff={staff} onUpdated={load} /></TabsContent>
         <TabsContent value="forms"><StaffFillableForms staff={staff} /></TabsContent>
         <TabsContent value="records"><StaffRecordsTab staff={staff} /></TabsContent>
         <TabsContent value="access"><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>
         <TabsContent value="performance"><StaffPerformanceTab staff={staff} /></TabsContent>
+        <TabsContent value="safety"><StaffSafetyTab staff={staff} /></TabsContent>
       </Tabs>
     </div>
   );
