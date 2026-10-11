@@ -134,6 +134,18 @@
         }
       }
     },
+    "audit_consent_recorded_by": {
+      "type": "string",
+      "title": "Audit Consent Recorded By"
+    },
+    "audit_consent_recorded_date": {
+      "type": "string",
+      "title": "Audit Consent Recorded Date"
+    },
+    "audit_consent_recorded_time": {
+      "type": "string",
+      "title": "Audit Consent Recorded Time"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"

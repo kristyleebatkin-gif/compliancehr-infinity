@@ -7,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
+import { useRole } from '@/lib/useRole';
+import { businessDateTime } from '@/lib/intakeCases';
 import { Loader2, ShieldCheck, ShieldOff } from 'lucide-react';
 
 const SECTIONS = [
@@ -57,6 +59,7 @@ const SECTIONS = [
 
 export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const { toast } = useToast();
+  const { user } = useRole();
   const [form, setForm] = useState(participant);
   const [saving, setSaving] = useState(false);
   const [consentReason, setConsentReason] = useState('');
@@ -84,10 +87,14 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const recordConsent = async (consent) => {
     setConsentBusy(true);
     try {
+      const { date, time } = businessDateTime();
       await base44.functions.invoke('participantAuditConsent', {
         participant_id: participant.id,
         consent,
         reason: consentReason,
+        recorded_by: user?.full_name || user?.email || '',
+        recorded_date: date,
+        recorded_time: time,
       });
       toast({ title: `Audit consent logged: ${consent}` });
       setConsentReason('');
@@ -122,6 +129,11 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
             </Button>
           </div>
         </div>
+        {(form.audit_consent_recorded_by || form.audit_consent_recorded_date) && (
+          <p className="mt-1 text-xs text-muted-foreground">
+            Recorded by {form.audit_consent_recorded_by || 'unknown'} on {form.audit_consent_recorded_date || '-'}{form.audit_consent_recorded_time ? ` at ${form.audit_consent_recorded_time}` : ''}
+          </p>
+        )}
         <p className="mt-2 text-xs text-muted-foreground">Consent changes are logged to the audit trail with who changed them, when and why.</p>
       </div>
 

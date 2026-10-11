@@ -40,6 +40,10 @@
       "type": "string",
       "title": "NDIS Number"
     },
+    "ndis_reference_number": {
+      "type": "string",
+      "title": "NDIS Reference Number"
+    },
     "preferred_name_pronouns": {
       "type": "string",
       "title": "Preferred Name and Pronouns"
@@ -108,6 +112,56 @@
       "type": "string",
       "title": "Representative / Advocate Details"
     },
+    "gender": {
+      "type": "string",
+      "title": "Gender"
+    },
+    "language_spoken": {
+      "type": "string",
+      "title": "Language Spoken"
+    },
+    "interpreter_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Interpreter Required"
+    },
+    "cultural_background": {
+      "type": "string",
+      "title": "Cultural Background"
+    },
+    "guardian_name": {
+      "type": "string",
+      "title": "Guardian / Nominee Name"
+    },
+    "guardian_contact": {
+      "type": "string",
+      "title": "Guardian / Nominee Contact"
+    },
+    "guardian_consent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Guardian Consent Obtained"
+    },
+    "gp_name": {
+      "type": "string",
+      "title": "GP Name"
+    },
+    "gp_contact": {
+      "type": "string",
+      "title": "GP Contact"
+    },
+    "funding_categories": {
+      "type": "string",
+      "title": "NDIS Funding Categories"
+    },
+    "transport_needs": {
+      "type": "string",
+      "title": "Transport Needs"
+    },
+    "ndis_plan_goals": {
+      "type": "string",
+      "title": "NDIS Plan Goals"
+    },
     "plan_type": {
       "type": "string",
       "enum": [
@@ -154,6 +208,58 @@
       "type": "boolean",
       "default": false,
       "title": "Restrictive Practice Identified"
+    },
+    "current_employment_status": {
+      "type": "string",
+      "title": "Current Employment Status"
+    },
+    "years_experience": {
+      "type": "number",
+      "title": "Years of Experience"
+    },
+    "right_to_work": {
+      "type": "boolean",
+      "default": false,
+      "title": "Right to Work in Australia"
+    },
+    "drivers_licence": {
+      "type": "boolean",
+      "default": false,
+      "title": "Current Driver Licence"
+    },
+    "own_vehicle": {
+      "type": "boolean",
+      "default": false,
+      "title": "Own Vehicle"
+    },
+    "wwcc_number": {
+      "type": "string",
+      "title": "Working With Children Check Number"
+    },
+    "ndis_worker_screening_number": {
+      "type": "string",
+      "title": "NDIS Worker Screening Check Number"
+    },
+    "first_aid_current": {
+      "type": "boolean",
+      "default": false,
+      "title": "First Aid Certificate Current"
+    },
+    "previous_employer": {
+      "type": "string",
+      "title": "Previous Employer"
+    },
+    "referees": {
+      "type": "string",
+      "title": "Referees"
+    },
+    "availability": {
+      "type": "string",
+      "title": "Availability"
+    },
+    "why_apply": {
+      "type": "string",
+      "title": "Why Do You Want This Role"
     },
     "workplace_adjustments": {
       "type": "string",
@@ -233,6 +339,31 @@
       "type": "string",
       "format": "date",
       "title": "Recognition Dashboard Consent Date"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "title": "Consent to NDIS Audit"
+    },
+    "audit_consent_by": {
+      "type": "string",
+      "title": "Audit Consent Given By (person)"
+    },
+    "audit_consent_date": {
+      "type": "string",
+      "title": "Audit Consent Date"
+    },
+    "audit_consent_time": {
+      "type": "string",
+      "title": "Audit Consent Time"
+    },
+    "audit_consent_note": {
+      "type": "string",
+      "title": "Audit Consent Note (who consented / declined)"
     },
     "completed_document_types": {
       "type": "array",

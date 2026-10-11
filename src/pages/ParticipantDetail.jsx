@@ -10,6 +10,7 @@ import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsT
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
 import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsTab';
+import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 
 export default function ParticipantDetail() {
   const { id } = useParams();
@@ -52,6 +53,7 @@ export default function ParticipantDetail() {
           <h1 className="flex items-center gap-2 text-2xl font-bold"><Heart className="h-6 w-6" />{participant.full_name}</h1>
           <Badge className={statusTone(participant.status)}>{participant.status}</Badge>
           {participant.ndis_number && <Badge variant="outline">NDIS {participant.ndis_number}</Badge>}
+          {participant.ndis_reference_number && <Badge variant="outline">Ref {participant.ndis_reference_number}</Badge>}
         </div>
       </div>
 
@@ -63,7 +65,12 @@ export default function ParticipantDetail() {
           <TabsTrigger value="records"><Heart className="mr-1 inline h-3.5 w-3.5" />Incidents &amp; Goals</TabsTrigger>
         </TabsList>
         <TabsContent value="details"><ParticipantDetailsTab participant={participant} onUpdated={load} /></TabsContent>
-        <TabsContent value="documents"><ParticipantDocumentsTab participant={participant} /></TabsContent>
+        <TabsContent value="documents">
+          <div className="space-y-6">
+            <ParticipantDocumentsTab participant={participant} />
+            <ProfileIntakeDocuments profileId={participant.id} />
+          </div>
+        </TabsContent>
         <TabsContent value="forms"><ParticipantFillableForms participant={participant} /></TabsContent>
         <TabsContent value="records"><ParticipantRecordsTab participant={participant} /></TabsContent>
       </Tabs>

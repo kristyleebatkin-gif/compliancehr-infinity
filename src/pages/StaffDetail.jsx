@@ -12,6 +12,7 @@ import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffRecordsTab from '@/components/staff/StaffRecordsTab';
 import StaffAccessTab from '@/components/staff/StaffAccessTab';
 import StaffPerformanceTab from '@/components/staff/StaffPerformanceTab';
+import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 
 export default function StaffDetail() {
   const { id } = useParams();
@@ -66,7 +67,12 @@ export default function StaffDetail() {
           <TabsTrigger value="performance"><TrendingUp className="mr-1 inline h-3.5 w-3.5" />Performance Reviews</TabsTrigger>
           <TabsTrigger value="safety"><ShieldAlert className="mr-1 inline h-3.5 w-3.5" />Safety Records</TabsTrigger>
         </TabsList>
-        <TabsContent value="details"><StaffDetailsTab staff={staff} onUpdated={load} /></TabsContent>
+        <TabsContent value="details">
+          <div className="space-y-6">
+            <StaffDetailsTab staff={staff} onUpdated={load} />
+            <ProfileIntakeDocuments profileId={staff.id} />
+          </div>
+        </TabsContent>
         <TabsContent value="forms"><StaffFillableForms staff={staff} /></TabsContent>
         <TabsContent value="records"><StaffRecordsTab staff={staff} /></TabsContent>
         <TabsContent value="access"><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>

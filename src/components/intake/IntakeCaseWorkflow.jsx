@@ -37,6 +37,19 @@ const PARTICIPANT_BLANK = {
   phone: '',
   address: '',
   ndis_number: '',
+  ndis_reference_number: '',
+  gender: '',
+  language_spoken: '',
+  interpreter_required: false,
+  cultural_background: '',
+  guardian_name: '',
+  guardian_contact: '',
+  guardian_consent: false,
+  gp_name: '',
+  gp_contact: '',
+  funding_categories: '',
+  transport_needs: '',
+  ndis_plan_goals: '',
   preferred_name_pronouns: '',
   primary_contact: '',
   communication_needs: '',
@@ -67,6 +80,7 @@ const PARTICIPANT_BLANK = {
   target_start_date: '',
   service_fit: 'Pending',
   privacy_consent: false,
+  audit_consent_agreed: false,
   notes: '',
 };
 
@@ -76,7 +90,21 @@ const EMPLOYEE_BLANK = {
   employee_role: 'Support Worker (JR)',
   position: '',
   workplace_adjustments: '',
+  current_employment_status: '',
+  years_experience: '',
+  right_to_work: false,
+  drivers_licence: false,
+  own_vehicle: false,
+  wwcc_number: '',
+  ndis_worker_screening_number: '',
+  first_aid_current: false,
+  previous_employer: '',
+  referees: '',
+  availability: '',
+  why_apply: '',
 };
+
+const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
 const EMPLOYEE_ROLES = [
   'Support Worker (JR)',
@@ -180,13 +208,18 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     }
     setBusy(true);
     try {
-      const { date } = businessDateTime();
+      const { date, time } = businessDateTime();
       const intakeDetails = Object.fromEntries(
         Object.entries(form).filter(([, value]) => value !== '' && value !== undefined),
       );
+      delete intakeDetails.audit_consent_agreed;
       const created = await base44.entities.IntakeCase.create({
         ...intakeDetails,
         applicant_name: form.applicant_name.trim(),
+        audit_consent: form.audit_consent_agreed ? 'Audit consent received' : 'Audit declined',
+        audit_consent_by: user?.full_name || user?.email || 'Intake team',
+        audit_consent_date: date,
+        audit_consent_time: time,
         case_number: createProfileId(cases, 'case_number', intakeType === 'Participant' ? 'PIC' : 'EIC'),
         intake_type: intakeType,
         referral_date: date,
@@ -282,6 +315,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           phone: activeCase.phone || '',
           address: activeCase.address || '',
           ndis_number: activeCase.ndis_number || '',
+          ndis_reference_number: activeCase.ndis_reference_number || '',
           support_coordinator: activeCase.support_coordinator || '',
           status: 'Active',
           notes: [
@@ -311,6 +345,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           date_of_birth: activeCase.date_of_birth || '',
           role: mapStaffRole(activeCase.employee_role),
           position: activeCase.position || '',
+          employee_number: generateEmployeeNumber(),
           start_date: activeCase.target_start_date || date,
           status: 'Active',
           supervisor: '',
@@ -323,6 +358,23 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             activeCase.workplace_adjustments ? `Workplace adjustments: ${activeCase.workplace_adjustments}` : '',
           ].filter(Boolean).join('\n'),
         });
+      }
+      if (activeCase.audit_consent === 'Audit consent received') {
+        try {
+          await base44.functions.invoke(
+            intakeType === 'Participant' ? 'participantAuditConsent' : 'staffAuditConsent',
+            {
+              ...(intakeType === 'Participant' ? { participant_id: profile.id } : { staff_id: profile.id }),
+              consent: 'Audit consent received',
+              reason: `Carried from intake case ${activeCase.case_number}`,
+              recorded_by: activeCase.audit_consent_by || user?.full_name || '',
+              recorded_date: activeCase.audit_consent_date || '',
+              recorded_time: activeCase.audit_consent_time || '',
+            },
+          );
+        } catch (consentError) {
+          console.error('Audit consent carry-over failed', consentError);
+        }
       }
       await base44.entities.IntakeDocument.updateMany(
         { intake_case_id: activeCase.id },
@@ -467,7 +519,20 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       {intakeType === 'Participant' ? (
         <>
           <Field label="NDIS number"><TextInput value={form.ndis_number} onChange={(e) => setValue('ndis_number', e.target.value)} /></Field>
+          <Field label="NDIS reference number"><TextInput value={form.ndis_reference_number} onChange={(e) => setValue('ndis_reference_number', e.target.value)} /></Field>
           <Field label="Preferred name and pronouns"><TextInput value={form.preferred_name_pronouns} onChange={(e) => setValue('preferred_name_pronouns', e.target.value)} /></Field>
+          <Field label="Gender"><TextInput value={form.gender} onChange={(e) => setValue('gender', e.target.value)} /></Field>
+          <Field label="Language spoken"><TextInput value={form.language_spoken} onChange={(e) => setValue('language_spoken', e.target.value)} /></Field>
+          <Checkbox checked={form.interpreter_required} onChange={(e) => setValue('interpreter_required', e.target.checked)} label="Interpreter required" />
+          <Field label="Cultural background"><TextInput value={form.cultural_background} onChange={(e) => setValue('cultural_background', e.target.value)} /></Field>
+          <Field label="Guardian / nominee name"><TextInput value={form.guardian_name} onChange={(e) => setValue('guardian_name', e.target.value)} /></Field>
+          <Field label="Guardian / nominee contact"><TextInput value={form.guardian_contact} onChange={(e) => setValue('guardian_contact', e.target.value)} /></Field>
+          <Checkbox checked={form.guardian_consent} onChange={(e) => setValue('guardian_consent', e.target.checked)} label="Guardian consent obtained" />
+          <Field label="GP name"><TextInput value={form.gp_name} onChange={(e) => setValue('gp_name', e.target.value)} /></Field>
+          <Field label="GP contact"><TextInput value={form.gp_contact} onChange={(e) => setValue('gp_contact', e.target.value)} /></Field>
+          <Field label="NDIS funding categories"><TextInput value={form.funding_categories} onChange={(e) => setValue('funding_categories', e.target.value)} /></Field>
+          <Field label="Transport needs" className="sm:col-span-2"><TextArea value={form.transport_needs} onChange={(e) => setValue('transport_needs', e.target.value)} /></Field>
+          <Field label="NDIS plan goals" className="sm:col-span-2"><TextArea value={form.ndis_plan_goals} onChange={(e) => setValue('ndis_plan_goals', e.target.value)} /></Field>
           <Field label="Primary contact / nominee"><TextInput value={form.primary_contact} onChange={(e) => setValue('primary_contact', e.target.value)} /></Field>
           <Field label="Representative / advocate"><TextInput value={form.representative_details} onChange={(e) => setValue('representative_details', e.target.value)} /></Field>
         </>
@@ -482,6 +547,20 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Field label="Medical alerts, allergies or workplace adjustments" className="sm:col-span-2">
             <TextArea value={form.workplace_adjustments} onChange={(e) => setValue('workplace_adjustments', e.target.value)} />
           </Field>
+          <Field label="Current employment status"><TextInput value={form.current_employment_status} onChange={(e) => setValue('current_employment_status', e.target.value)} /></Field>
+          <Field label="Years of experience"><TextInput type="number" value={form.years_experience} onChange={(e) => setValue('years_experience', e.target.value)} /></Field>
+          <Field label="Availability" className="sm:col-span-2"><TextArea value={form.availability} onChange={(e) => setValue('availability', e.target.value)} /></Field>
+          <Field label="Why do you want this role?" className="sm:col-span-2"><TextArea value={form.why_apply} onChange={(e) => setValue('why_apply', e.target.value)} /></Field>
+          <Field label="Previous employer"><TextInput value={form.previous_employer} onChange={(e) => setValue('previous_employer', e.target.value)} /></Field>
+          <Field label="Referees (name, role and contact)" className="sm:col-span-2"><TextArea value={form.referees} onChange={(e) => setValue('referees', e.target.value)} /></Field>
+          <Field label="Working With Children Check number"><TextInput value={form.wwcc_number} onChange={(e) => setValue('wwcc_number', e.target.value)} /></Field>
+          <Field label="NDIS Worker Screening Check number"><TextInput value={form.ndis_worker_screening_number} onChange={(e) => setValue('ndis_worker_screening_number', e.target.value)} /></Field>
+          <div className="grid gap-2 rounded-lg border border-border p-3 sm:col-span-2 sm:grid-cols-2">
+            <Checkbox checked={form.right_to_work} onChange={(e) => setValue('right_to_work', e.target.checked)} label="Right to work in Australia" />
+            <Checkbox checked={form.drivers_licence} onChange={(e) => setValue('drivers_licence', e.target.checked)} label="Current driver licence" />
+            <Checkbox checked={form.own_vehicle} onChange={(e) => setValue('own_vehicle', e.target.checked)} label="Own vehicle" />
+            <Checkbox checked={form.first_aid_current} onChange={(e) => setValue('first_aid_current', e.target.checked)} label="First aid certificate current" />
+          </div>
           <Field label="Employee recognition dashboard consent" className="sm:col-span-2">
             <Checkbox
               checked={form.recognition_dashboard_consent}
@@ -551,12 +630,18 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         </Select>
       </Field>
       <Field label="Notes"><TextArea value={form.notes} onChange={(e) => setValue('notes', e.target.value)} /></Field>
-      <div className="sm:col-span-2">
+      <div className="space-y-2 sm:col-span-2">
         <Checkbox
           checked={form.privacy_consent}
           onChange={(e) => setValue('privacy_consent', e.target.checked)}
           label="Consent to collect and store intake information (required)"
         />
+        <Checkbox
+          checked={form.audit_consent_agreed}
+          onChange={(e) => setValue('audit_consent_agreed', e.target.checked)}
+          label="Consent to NDIS Audit - this profile may be included in NDIS audit records (declining is also recorded)"
+        />
+        <p className="text-xs text-muted-foreground">Either choice is recorded against the intake case with the date, time and the person who recorded it.</p>
       </div>
       <div className="flex items-center justify-end gap-2 sm:col-span-2">
         <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
@@ -571,13 +656,13 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-sm text-foreground/60">
-          <span className="font-semibold text-foreground">{cases.length}</span> {intakeType.toLowerCase()} intake cases
+          <span className="font-semibold text-foreground">{cases.length}</span> {intakeType} intake cases
         </div>
-        <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> New {intakeType.toLowerCase()} intake case</Button>
+        <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> New {intakeType} intake case</Button>
       </div>
 
       {cases.length === 0 && !showNew ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No {intakeType.toLowerCase()} intake cases yet.</CardContent></Card>
+        <Card><CardContent className="p-10 text-center text-muted-foreground">No {intakeType} intake cases yet.</CardContent></Card>
       ) : (
         <div className="grid gap-5 lg:grid-cols-[19rem_minmax(0,1fr)]">
           <div className="space-y-2">
@@ -634,6 +719,13 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                 <div><span className="text-foreground/45">Eligibility / service fit</span><div className="font-medium">{activeCase.service_fit || 'Pending'}</div></div>
                 <div><span className="text-foreground/45">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
                 <div><span className="text-foreground/45">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
+                <div className="sm:col-span-2 lg:col-span-3">
+                  <span className="text-foreground/45">Consent to NDIS Audit</span>
+                  <div className="font-medium">
+                    {activeCase.audit_consent || 'Audit declined'}
+                    {activeCase.audit_consent_by ? ` · ${activeCase.audit_consent_by}${activeCase.audit_consent_date ? `, ${activeCase.audit_consent_date}${activeCase.audit_consent_time ? ` ${activeCase.audit_consent_time}` : ''}` : ''}` : ''}
+                  </div>
+                </div>
               </div>
 
               {activeCase.outstanding_actions && (
@@ -653,7 +745,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                 )}
                 {activeCase.status === 'Approved' && (
                   <Button size="sm" onClick={convertToProfile} disabled={busy}>
-                    <UserCheck className="mr-1.5 h-4 w-4" /> Convert to {intakeType.toLowerCase()} profile
+                    <UserCheck className="mr-1.5 h-4 w-4" /> Convert to {intakeType} profile
                   </Button>
                 )}
                 {!TERMINAL_STATUSES.has(activeCase.status) && (
@@ -778,7 +870,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>New {intakeType.toLowerCase()} intake case</DialogTitle>
+            <DialogTitle>New {intakeType} intake case</DialogTitle>
           </DialogHeader>
           {newForm}
         </DialogContent>

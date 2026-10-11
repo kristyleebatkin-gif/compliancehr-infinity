@@ -21,7 +21,15 @@ export default async function(req) {
     if (!profile) return Response.json({ error: 'Staff member not found' }, { status: 404 });
 
     const previous = profile.audit_consent || 'Audit declined';
-    await service.entities.StaffProfile.update(staffId, { audit_consent: consent });
+    const recordedBy = String(body.recorded_by || user.full_name || user.email || '').trim();
+    const recordedDate = String(body.recorded_date || '').trim();
+    const recordedTime = String(body.recorded_time || '').trim();
+    await service.entities.StaffProfile.update(staffId, {
+      audit_consent: consent,
+      audit_consent_recorded_by: recordedBy,
+      audit_consent_recorded_date: recordedDate,
+      audit_consent_recorded_time: recordedTime,
+    });
 
     await service.entities.AuditLog.create({
       action: 'Audit Consent Updated',
@@ -35,8 +43,11 @@ export default async function(req) {
       profile_type: 'staff',
       audit_consent: consent,
       previous_audit_consent: previous,
+      recorded_by: recordedBy,
+      recorded_date: recordedDate,
+      recorded_time: recordedTime,
       change_reason: reason,
-      details: `Staff audit consent set to "${consent}"${reason ? `. Reason: ${reason}` : ''}.`,
+      details: `Staff audit consent set to "${consent}" by ${recordedBy} on ${recordedDate || 'not recorded'} at ${recordedTime || 'not recorded'}${reason ? `. Reason: ${reason}` : ''}.`,
       timestamp: new Date().toISOString(),
     });
 

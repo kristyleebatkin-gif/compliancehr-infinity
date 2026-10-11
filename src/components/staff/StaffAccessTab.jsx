@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { NAV_PERMISSIONS, canAccessNav } from '@/lib/roles';
+import { useRole } from '@/lib/useRole';
+import { businessDateTime } from '@/lib/intakeCases';
 import { KeyRound, Loader2, ShieldCheck, ShieldOff } from 'lucide-react';
 
 const PERMISSION_LABELS = {
@@ -49,6 +51,7 @@ const APP_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Adm
 
 export default function StaffAccessTab({ staff, onUpdated }) {
   const { toast } = useToast();
+  const { user } = useRole();
   const [username, setUsername] = useState(staff.username || '');
   const [appRole, setAppRole] = useState(staff.app_role || 'user');
   const [saving, setSaving] = useState(false);
@@ -73,7 +76,15 @@ export default function StaffAccessTab({ staff, onUpdated }) {
   const recordConsent = async (consent) => {
     setConsentBusy(true);
     try {
-      await base44.functions.invoke('staffAuditConsent', { staff_id: staff.id, consent, reason: consentReason });
+      const { date, time } = businessDateTime();
+      await base44.functions.invoke('staffAuditConsent', {
+        staff_id: staff.id,
+        consent,
+        reason: consentReason,
+        recorded_by: user?.full_name || user?.email || '',
+        recorded_date: date,
+        recorded_time: time,
+      });
       toast({ title: `Audit consent logged: ${consent}` });
       setConsentReason('');
       onUpdated();
@@ -133,6 +144,11 @@ export default function StaffAccessTab({ staff, onUpdated }) {
             </Button>
           </div>
         </div>
+        {(staff.audit_consent_recorded_by || staff.audit_consent_recorded_date) && (
+          <p className="mt-1 text-xs text-muted-foreground">
+            Recorded by {staff.audit_consent_recorded_by || 'unknown'} on {staff.audit_consent_recorded_date || '-'}{staff.audit_consent_recorded_time ? ` at ${staff.audit_consent_recorded_time}` : ''}
+          </p>
+        )}
         <p className="mt-2 text-xs text-muted-foreground">Consent changes are logged to the audit trail with who changed them, when and why.</p>
       </div>
     </div>
