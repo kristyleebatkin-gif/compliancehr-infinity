@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "details_check_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_details_checks": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "detailsCheckReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email details check reminders",
+            "description": "Emails every staff member and participant whose personal details were last checked more than three months ago, and logs the request on their profile"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 1,4,7,10 *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Details Check Reminders",
+  "description": "Every 3 months (1st Jan, Apr, Jul, Oct, 9am): prompts staff and participants to check their personal details via email and logs the request on their profile."
+}

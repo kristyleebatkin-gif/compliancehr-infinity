@@ -59,6 +59,15 @@
       "format": "date",
       "title": "Start Date"
     },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "End Date"
+    },
+    "exit_reason": {
+      "type": "string",
+      "title": "Exit Reason"
+    },
     "induction_date": {
       "type": "string",
       "format": "date",
@@ -85,6 +94,23 @@
       ],
       "default": "user",
       "title": "App Role (Permissions)"
+    },
+    "profile_photo_uri": {
+      "type": "string",
+      "title": "Profile Photo (File URI)"
+    },
+    "about_me": {
+      "type": "string",
+      "title": "About Me"
+    },
+    "change_log": {
+      "type": "string",
+      "title": "Details Check & Change Log"
+    },
+    "last_details_check_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Details Check Requested"
     },
     "supervisor": {
       "type": "string",
@@ -125,14 +151,7 @@
         "Audit declined"
       ],
       "default": "Audit declined",
-      "title": "Audit Consent",
-      "rls": {
-        "write": {
-          "user_condition": {
-            "role": "__service_role_only__"
-          }
-        }
-      }
+      "title": "Audit Consent"
     },
     "audit_consent_recorded_by": {
       "type": "string",
@@ -145,6 +164,10 @@
     "audit_consent_recorded_time": {
       "type": "string",
       "title": "Audit Consent Recorded Time"
+    },
+    "consents_received": {
+      "type": "string",
+      "title": "Consents Received (Log)"
     },
     "notes": {
       "type": "string",

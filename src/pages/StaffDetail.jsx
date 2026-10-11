@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ShieldAlert, TrendingUp, Users } from 'lucide-react';
+import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ShieldAlert, TrendingUp } from 'lucide-react';
+import ProfileHeader from '@/components/profile/ProfileHeader';
 import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
 import StaffDetailsTab from '@/components/staff/StaffDetailsTab';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
@@ -51,12 +52,9 @@ export default function StaffDetail() {
     <div className="space-y-6">
       <div>
         <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/staff"><ArrowLeft className="h-4 w-4" />Staff</Link></Button>
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><Users className="h-6 w-6" />{staff.full_name}</h1>
-          <Badge className={statusTone(staff.status)}>{staff.status}</Badge>
-          {staff.employee_number && <Badge variant="outline">Employee {staff.employee_number}</Badge>}
-        </div>
       </div>
+
+      <ProfileHeader profile={staff} kind="staff" onUpdated={load} />
 
       <Tabs defaultValue="details">
         <TabsList>

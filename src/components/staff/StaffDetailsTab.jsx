@@ -16,6 +16,8 @@ const SECTIONS = [
       { key: 'position_level', label: 'Position level' },
       { key: 'hourly_rate', label: 'Hourly rate ($)' },
       { key: 'start_date', label: 'Start date', type: 'date' },
+      { key: 'end_date', label: 'End date', type: 'date' },
+      { key: 'exit_reason', label: 'Exit reason' },
       { key: 'induction_date', label: 'Induction date', type: 'date' },
       { key: 'supervisor', label: 'Supervisor' },
     ],

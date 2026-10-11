@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import { ChevronDown, Download, ExternalLink, FileText, Loader2, UploadCloud } from 'lucide-react';
+import { ChevronDown, Download, ExternalLink, FileText, Loader2, Search, UploadCloud } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 export default function AttachedFormsLibrary({
   title,
@@ -18,6 +19,7 @@ export default function AttachedFormsLibrary({
 }) {
   const { toast } = useToast();
   const [open, setOpen] = useState(defaultOpen);
+  const [search, setSearch] = useState('');
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
   const [downloading, setDownloading] = useState('');
@@ -103,15 +105,24 @@ export default function AttachedFormsLibrary({
       </button>
       {open && (
         <div className="space-y-5 border-t border-border/60 p-5">
+          <div className="relative max-w-sm">
+            <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input className="pl-8" placeholder={`Search ${libraryKey.toLowerCase()} forms...`} value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
           {sections.map((section) => {
             const Icon = section.icon;
+            const term = search.trim().toLowerCase();
+            const matched = term
+              ? section.docs.filter((docType) => `${formCodes[docType] || ''} ${docType}`.toLowerCase().includes(term))
+              : section.docs;
+            if (term && matched.length === 0) return null;
             return (
               <div key={section.name}>
                 <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">
                   <Icon className="h-3.5 w-3.5" />{section.name}
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                  {section.docs.map((docType) => {
+                  {matched.map((docType) => {
                     const code = formCodes[docType];
                     const label = code ? `${code} - ${docType}` : docType;
                     const uploaded = documents.filter((d) => d.document_type === docType);

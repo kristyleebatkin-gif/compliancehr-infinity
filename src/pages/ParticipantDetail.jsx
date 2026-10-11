@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, FileSignature, Files, Heart, ScrollText } from 'lucide-react';
+import ProfileHeader from '@/components/profile/ProfileHeader';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
@@ -49,13 +50,9 @@ export default function ParticipantDetail() {
     <div className="space-y-6">
       <div>
         <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/participants"><ArrowLeft className="h-4 w-4" />Participants</Link></Button>
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="flex items-center gap-2 text-2xl font-bold"><Heart className="h-6 w-6" />{participant.full_name}</h1>
-          <Badge className={statusTone(participant.status)}>{participant.status}</Badge>
-          {participant.ndis_number && <Badge variant="outline">NDIS {participant.ndis_number}</Badge>}
-          {participant.ndis_reference_number && <Badge variant="outline">Ref {participant.ndis_reference_number}</Badge>}
-        </div>
       </div>
+
+      <ProfileHeader profile={participant} kind="participant" onUpdated={load} />
 
       <Tabs defaultValue="details">
         <TabsList>

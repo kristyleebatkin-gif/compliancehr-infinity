@@ -1,13 +1,14 @@
 import { jsPDF } from 'jspdf';
 import { getCompanyBranding, COMPLIANCE_HR_FOOTER } from '@/lib/companyBranding';
 
-function buildBadgeDoc({ staffName = '', position = '', employeeNumber = '' }) {
+function buildBadgeDoc({ staffName = '', position = '', employeeNumber = '', colour = null }) {
   const branding = getCompanyBranding();
   const doc = new jsPDF({ unit: 'pt', format: [340, 210] });
   const w = 340;
+  const [r, g, b] = Array.isArray(colour) && colour.length === 3 ? colour : [79, 70, 229];
 
   // Header band with logo + business name
-  doc.setFillColor(79, 70, 229);
+  doc.setFillColor(r, g, b);
   doc.rect(0, 0, w, 62, 'F');
   let textX = 20;
   if (branding.logoDataUrl) {
@@ -44,7 +45,7 @@ function buildBadgeDoc({ staffName = '', position = '', employeeNumber = '' }) {
   doc.setFontSize(9);
   doc.setTextColor(100, 116, 139);
   doc.text(employeeNumber ? `Employee No. ${employeeNumber}` : 'Employee No. -', 20, 150);
-  doc.setFillColor(79, 70, 229);
+  doc.setFillColor(r, g, b);
   doc.rect(20, 162, 42, 2, 'F');
 
   // Footer strip
