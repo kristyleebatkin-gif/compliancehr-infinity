@@ -7,7 +7,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
-import { Download } from 'lucide-react';
+import { Download, Pencil } from 'lucide-react';
+import { loadCompanyBranding } from '@/lib/companyBranding';
+import { buildFilledFormDoc } from '@/lib/participantFormPdf';
+import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
+import {
+  buildIntakeAutofilledAnswers,
+  canCompleteIntakeFormOnline,
+  intakeFormDefinition,
+} from '@/lib/intakeOnlineForms';
 import {
   CheckCircle2,
   FileWarning,
@@ -148,6 +156,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const [busy, setBusy] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState('');
   const [downloadingTemplate, setDownloadingTemplate] = useState('');
+  const [onlineForm, setOnlineForm] = useState(null);
+  const [showOnline, setShowOnline] = useState(false);
+  const [submittingOnline, setSubmittingOnline] = useState(false);
 
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
@@ -185,6 +196,10 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   }, [intakeType, activeCaseId]);
 
   useEffect(() => { load(); }, [intakeType]);
+
+  // Load the company name and logo from Company Safe so generated
+  // intake forms are branded in the header.
+  useEffect(() => { loadCompanyBranding().catch(() => {}); }, []);
 
   const setValue = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -444,6 +459,63 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     }
   };
 
+  const startOnlineForm = (docType) => {
+    if (!activeCase) return;
+    const definition = intakeFormDefinition(intakeType, docType);
+    if (!definition) return;
+    setOnlineForm({
+      docType,
+      definition,
+      answers: buildIntakeAutofilledAnswers(definition.fields || [], activeCase),
+    });
+    setShowOnline(true);
+  };
+
+  const submitOnlineForm = async () => {
+    if (!onlineForm || !activeCase) return;
+    setSubmittingOnline(true);
+    try {
+      const doc = buildFilledFormDoc({
+        title: onlineForm.docType,
+        code: templateCodes[onlineForm.docType],
+        subtitle: `${onlineForm.docType} - ${activeCase.applicant_name}`,
+        fields: onlineForm.definition.fields || [],
+        values: onlineForm.answers,
+        columns: onlineForm.definition.columns,
+        rows: onlineForm.definition.rows,
+        completedBy: user?.full_name || user?.email || '',
+      });
+      const blob = doc.output('blob');
+      const file = new File([blob], `${onlineForm.docType} (completed online).pdf`, { type: 'application/pdf' });
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      const canonical = canonicalIntakeDocumentType(onlineForm.docType);
+      await base44.entities.IntakeDocument.create({
+        intake_case_id: activeCase.id,
+        intake_case_number: activeCase.case_number,
+        intake_type: intakeType,
+        document_type: canonical,
+        file_name: file.name,
+        file_uri,
+        uploaded_by: `${user?.full_name || user?.email || 'Intake team'} (completed online)`,
+        uploaded_date: businessDateTime().date,
+      });
+      const completed = Array.from(new Set([
+        ...(activeCase.completed_document_types || []),
+        canonical,
+      ]));
+      await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
+      await load(activeCase.id);
+      setShowOnline(false);
+      setOnlineForm(null);
+      toast({ title: `${canonical} completed online and attached` });
+    } catch (error) {
+      console.error(error);
+      toast({ title: 'Unable to save the completed form', description: error.message, variant: 'destructive' });
+    } finally {
+      setSubmittingOnline(false);
+    }
+  };
+
   const viewDocument = async (doc) => {
     try {
       const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
@@ -478,7 +550,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const templateCodes = intakeType === 'Participant'
     ? Object.fromEntries(Object.entries(PARTICIPANT_FORM_META).map(([key, meta]) => [key, meta.code]))
     : EMPLOYEE_FORM_CODES;
-  const templateDefinitions = intakeType === 'Participant' ? PARTICIPANT_FORM_DEFINITIONS : {};
+  const templateDefinitions = intakeType === 'Participant'
+    ? PARTICIPANT_FORM_DEFINITIONS
+    : { ...EMPLOYEE_FORM_DEFINITIONS };
 
   const downloadTemplate = async (docType) => {
     setDownloadingTemplate(docType);
@@ -487,10 +561,10 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       if (officialUrl) {
         await downloadOriginalDocument(officialUrl, `${docType} - Official Template`);
       } else {
-        const definition = templateDefinitions[docType] || {};
+        const definition = templateDefinitions[docType] || templateDefinitions['Participant Handbook'] || {};
         downloadBlankFormPdf({
           title: docType,
-          code: templateCodes[docType],
+          code: templateCodes[docType] || templateCodes['Participant Handbook'],
           subtitle: definition.label || 'ComplianceHR Form',
           fields: definition.fields || [],
           columns: definition.columns,
@@ -785,9 +859,14 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                               {doc && <div className="text-xs text-foreground/45">{doc.file_name}</div>}
                             </div>
                           </div>
-                          <div className="flex shrink-0 items-center gap-2">
+                          <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                             {doc && (
                               <Button variant="outline" size="sm" onClick={() => viewDocument(doc)}>View</Button>
+                            )}
+                            {canCompleteIntakeFormOnline(intakeType, check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
+                              <Button variant="outline" size="sm" onClick={() => startOnlineForm(check.label)} disabled={busy}>
+                                <Pencil className="h-3.5 w-3.5" /> Complete online
+                              </Button>
                             )}
                             <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
                               {downloadingTemplate === check.label
@@ -873,6 +952,48 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             <DialogTitle>New {intakeType} intake case</DialogTitle>
           </DialogHeader>
           {newForm}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showOnline} onOpenChange={(open) => { setShowOnline(open); if (!open) setOnlineForm(null); }}>
+        <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Complete {onlineForm?.docType} online</DialogTitle>
+          </DialogHeader>
+          {onlineForm && (
+            <form
+              onSubmit={(event) => { event.preventDefault(); submitOnlineForm(); }}
+              className="grid gap-3 sm:grid-cols-2"
+            >
+              <p className="text-xs text-muted-foreground sm:col-span-2">
+                Same questions as the official form, with the company name and logo in the header. Known details are filled in automatically and the finished PDF is attached to this intake case and, after conversion, to the profile.
+              </p>
+              {onlineForm.definition.fields.map((field) => (
+                <Field key={field.label} label={field.label} className={field.multiline ? 'sm:col-span-2' : ''}>
+                  {field.multiline
+                    ? (
+                      <TextArea
+                        rows={3}
+                        value={onlineForm.answers[field.label] || ''}
+                        onChange={(e) => setOnlineForm({ ...onlineForm, answers: { ...onlineForm.answers, [field.label]: e.target.value } })}
+                      />
+                    )
+                    : (
+                      <TextInput
+                        value={onlineForm.answers[field.label] || ''}
+                        onChange={(e) => setOnlineForm({ ...onlineForm, answers: { ...onlineForm.answers, [field.label]: e.target.value } })}
+                      />
+                    )}
+                </Field>
+              ))}
+              <div className="flex items-center justify-end gap-2 sm:col-span-2">
+                <Button type="button" variant="outline" onClick={() => { setShowOnline(false); setOnlineForm(null); }}>Cancel</Button>
+                <Button type="submit" disabled={submittingOnline}>
+                  {submittingOnline && <Loader2 className="h-4 w-4 animate-spin" />} Save &amp; attach to case
+                </Button>
+              </div>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
     </div>

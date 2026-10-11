@@ -4,7 +4,7 @@ import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
 /**
  * Branded participant form PDF with in-app answers written into each field.
  */
-export function downloadFilledFormPdf({ title, code, subtitle = 'ComplianceHR Form', fields = [], values = {}, columns, rows = 12, completedBy = '' }) {
+export function buildFilledFormDoc({ title, code, subtitle = 'ComplianceHR Form', fields = [], values = {}, columns, rows = 12, completedBy = '' }) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -111,5 +111,9 @@ export function downloadFilledFormPdf({ title, code, subtitle = 'ComplianceHR Fo
 
   drawDocumentFooter(doc, { title, code });
 
-  doc.save(`${title}.pdf`);
+  return doc;
+}
+
+export function downloadFilledFormPdf(options) {
+  buildFilledFormDoc(options).save(`${options.title}.pdf`);
 }
