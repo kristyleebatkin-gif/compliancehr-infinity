@@ -22,13 +22,13 @@ export default function Dashboard() {
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 via-fuchsia-600 to-cyan-600 p-6 text-white shadow-2xl shadow-violet-500/25 md:p-8">
-        <div className="absolute -right-12 -top-20 h-56 w-56 rounded-full bg-pink-300/25 blur-sm" />
-        <div className="absolute left-[42%] top-[-5rem] h-40 w-40 rounded-full bg-amber-300/20 blur-xl" />
-        <div className="absolute -bottom-20 right-28 h-44 w-44 rounded-full bg-cyan-200/25" />
-        <div className="absolute -bottom-24 -left-12 h-48 w-48 rounded-full bg-indigo-900/20" />
+      <div className="relative overflow-hidden rounded-3xl gradient-brand p-6 text-white shadow-2xl shadow-indigo-500/25 md:p-8">
+        <div className="absolute -right-12 -top-20 h-56 w-56 rounded-full bg-indigo-200/20 blur-sm" />
+        <div className="absolute left-[42%] top-[-5rem] h-40 w-40 rounded-full bg-cyan-300/20 blur-xl" />
+        <div className="absolute -bottom-20 right-28 h-44 w-44 rounded-full bg-teal-200/20" />
+        <div className="absolute -bottom-24 -left-12 h-48 w-48 rounded-full bg-indigo-900/25" />
         <div className="relative mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur">
-          <Sparkles className="h-3.5 w-3.5 text-amber-200" />
+          <Sparkles className="h-3.5 w-3.5 text-cyan-100" />
           Your ComplianceHR workspace
         </div>
         <h1 className="relative font-display text-3xl font-extrabold tracking-tight text-white md:text-4xl">
