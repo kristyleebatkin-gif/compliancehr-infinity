@@ -1,0 +1,45 @@
+{
+  "name": "Compliance Kit Reminders",
+  "description": "Daily reminder to administrators when natural disaster kits, first aid kits, fire drills and completed compliance checklists fall due within 30 days (6-monthly cycle).",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "compliance_kit_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_compliance_due": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "complianceKitReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan and remind administrators",
+            "description": "Kits, fire drills and checklists due within 30 days"
+          }
+        }
+      }
+    ]
+  }
+}

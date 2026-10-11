@@ -1,0 +1,55 @@
+{
+  "name": "ComplianceChecklistEntry",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Checklist Title"
+    },
+    "checklist_key": {
+      "type": "string",
+      "title": "Checklist Key"
+    },
+    "section": {
+      "type": "string",
+      "title": "Compliance Section"
+    },
+    "answers": {
+      "type": "string",
+      "title": "Completed Answers (JSON)"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "completed_time": {
+      "type": "string",
+      "title": "Completed Time"
+    },
+    "next_due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Due Date (6 months)"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
