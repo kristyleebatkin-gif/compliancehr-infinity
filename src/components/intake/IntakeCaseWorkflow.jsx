@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
-import { Download, Pencil } from 'lucide-react';
+import { Download, ExternalLink, Pencil } from 'lucide-react';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { buildFilledFormDoc } from '@/lib/participantFormPdf';
 import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
@@ -30,6 +30,10 @@ import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocument
 import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, PARTICIPANT_FORM_META } from '@/lib/participantDocuments';
 import {
   INTAKE_FILE_ACCEPT,
+  LEGISLATION_ACK_DOC_TYPES,
+  TRAINING_DOC_LINKS,
+  TRAINING_REGISTER_DOC_TYPES,
+  UPLOAD_ONLY_DOC_TYPES,
   businessDateTime,
   canonicalIntakeDocumentType,
   createProfileId,
@@ -96,7 +100,7 @@ const EMPLOYEE_BLANK = {
   ...PARTICIPANT_BLANK,
   ndis_number: '',
   employee_role: 'Support Worker (JR)',
-  position: '',
+  preferred_name: '',
   workplace_adjustments: '',
   current_employment_status: '',
   years_experience: '',
@@ -107,9 +111,21 @@ const EMPLOYEE_BLANK = {
   ndis_worker_screening_number: '',
   first_aid_current: false,
   previous_employer: '',
+  previous_employer_phone: '',
+  previous_employer_email: '',
   referees: '',
   availability: '',
   why_apply: '',
+  banking_details: '',
+  superannuation_details: '',
+  tax_file_number: '',
+  current_rego: '',
+  rego_number: '',
+  qualifications_certificates: '',
+  weekly_hours_goal: '',
+  employment_provider: '',
+  hobbies_interests: '',
+  supports_to_provide: [],
 };
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
@@ -124,6 +140,16 @@ const EMPLOYEE_ROLES = [
 ];
 
 const TERMINAL_STATUSES = new Set(['Converted to Profile', 'Declined', 'Withdrawn']);
+
+const SUPPORT_OPTIONS = [
+  'All supports',
+  'Domestic assistance',
+  'Yard Maintenance',
+  'Community Access',
+  'Respite',
+  'Personal care',
+  'Capacity Building',
+];
 
 const STATUS_CLASS = {
   Draft: 'bg-primary/10 text-primary',
@@ -159,6 +185,11 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const [onlineForm, setOnlineForm] = useState(null);
   const [showOnline, setShowOnline] = useState(false);
   const [submittingOnline, setSubmittingOnline] = useState(false);
+  const [answersBank, setAnswersBank] = useState({});
+  const [ackForm, setAckForm] = useState(null);
+  const [showAck, setShowAck] = useState(false);
+  const [submittingAck, setSubmittingAck] = useState(false);
+  const [refereeCheck, setRefereeCheck] = useState({ checked_by: '', date: '', time: '', outcome: '' });
 
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
@@ -203,6 +234,17 @@ export default function IntakeCaseWorkflow({ intakeType }) {
 
   const setValue = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
+  const toggleSupport = (option) => setForm((current) => {
+    const selected = new Set(current.supports_to_provide || []);
+    if (selected.has(option)) {
+      selected.delete(option);
+    } else {
+      selected.add(option);
+      if (option === 'All supports') SUPPORT_OPTIONS.forEach((support) => selected.add(support));
+    }
+    return { ...current, supports_to_provide: Array.from(selected) };
+  });
+
   const createCase = async () => {
     if (!form.applicant_name.trim() || !form.date_of_birth) {
       toast({ title: 'Name and date of birth are required', variant: 'destructive' });
@@ -224,6 +266,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     setBusy(true);
     try {
       const { date, time } = businessDateTime();
+      const consentBy = user?.full_name || user?.email || 'Intake team';
       const intakeDetails = Object.fromEntries(
         Object.entries(form).filter(([, value]) => value !== '' && value !== undefined),
       );
@@ -232,9 +275,13 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         ...intakeDetails,
         applicant_name: form.applicant_name.trim(),
         audit_consent: form.audit_consent_agreed ? 'Audit consent received' : 'Audit declined',
-        audit_consent_by: user?.full_name || user?.email || 'Intake team',
+        audit_consent_by: consentBy,
         audit_consent_date: date,
         audit_consent_time: time,
+        date_completed: date,
+        privacy_consent_by: form.privacy_consent ? consentBy : '',
+        privacy_consent_date: form.privacy_consent ? date : '',
+        privacy_consent_time: form.privacy_consent ? time : '',
         case_number: createProfileId(cases, 'case_number', intakeType === 'Participant' ? 'PIC' : 'EIC'),
         intake_type: intakeType,
         referral_date: date,
@@ -242,7 +289,11 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         status: 'Draft',
         completed_document_types: [],
         ...(intakeType === 'Employee' && form.recognition_dashboard_consent
-          ? { recognition_dashboard_consent_date: date }
+          ? {
+              recognition_dashboard_consent_date: date,
+              recognition_dashboard_consent_by: consentBy,
+              recognition_dashboard_consent_time: time,
+            }
           : {}),
       });
       setCases((current) => [created, ...current]);
@@ -395,6 +446,12 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         { intake_case_id: activeCase.id },
         { $set: { profile_id: profile.id } },
       );
+      if (intakeType === 'Employee') {
+        await base44.entities.TrainingCompletion.updateMany(
+          { learner_name: activeCase.applicant_name, learner_type: 'Employee' },
+          { $set: { learner_id: profile.id, employee_id: profile.id } },
+        );
+      }
       await base44.entities.IntakeCase.update(activeCase.id, {
         status: 'Converted to Profile',
         related_profile_id: profile.id,
@@ -444,6 +501,17 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         uploaded_by: user?.full_name || user?.email || 'Intake team',
         uploaded_date: businessDateTime().date,
       });
+      if (TRAINING_REGISTER_DOC_TYPES.has(canonical)) {
+        await base44.entities.TrainingCompletion.create({
+          learner_type: 'Employee',
+          learner_name: activeCase.applicant_name,
+          employee_name: activeCase.applicant_name,
+          module_title: canonical,
+          completed_date: businessDateTime().date,
+          status: 'Completed',
+          training_notes: `Training certificate uploaded via intake case ${activeCase.case_number}`,
+        });
+      }
       const completed = Array.from(new Set([
         ...(activeCase.completed_document_types || []),
         canonical,
@@ -466,24 +534,39 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     setOnlineForm({
       docType,
       definition,
-      answers: buildIntakeAutofilledAnswers(definition.fields || [], activeCase),
+      answers: {
+        ...answersBank,
+        ...buildIntakeAutofilledAnswers(definition.fields || [], activeCase),
+      },
     });
     setShowOnline(true);
   };
 
   const submitOnlineForm = async () => {
     if (!onlineForm || !activeCase) return;
+    const fields = onlineForm.definition.fields || [];
+    const missing = fields.filter((f) => !String(onlineForm.answers[f.label] || '').trim());
+    if (missing.length) {
+      toast({
+        title: 'Please answer every question before submitting',
+        description: `Still needed: ${missing.slice(0, 3).map((f) => f.label).join(', ')}${missing.length > 3 ? ' and more' : ''}`,
+        variant: 'destructive',
+      });
+      return;
+    }
     setSubmittingOnline(true);
     try {
+      const { date, time } = businessDateTime();
       const doc = buildFilledFormDoc({
         title: onlineForm.docType,
         code: templateCodes[onlineForm.docType],
         subtitle: `${onlineForm.docType} - ${activeCase.applicant_name}`,
-        fields: onlineForm.definition.fields || [],
+        fields,
         values: onlineForm.answers,
         columns: onlineForm.definition.columns,
         rows: onlineForm.definition.rows,
         completedBy: user?.full_name || user?.email || '',
+        completedAt: `${date} at ${time}`,
       });
       const blob = doc.output('blob');
       const file = new File([blob], `${onlineForm.docType} (completed online).pdf`, { type: 'application/pdf' });
@@ -504,6 +587,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         canonical,
       ]));
       await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
+      setAnswersBank((bank) => ({ ...bank, ...onlineForm.answers }));
       await load(activeCase.id);
       setShowOnline(false);
       setOnlineForm(null);
@@ -513,6 +597,111 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       toast({ title: 'Unable to save the completed form', description: error.message, variant: 'destructive' });
     } finally {
       setSubmittingOnline(false);
+    }
+  };
+
+  const startAcknowledgement = (docType) => {
+    if (!activeCase) return;
+    const definition = intakeFormDefinition(intakeType, docType);
+    if (!definition) return;
+    setAckForm({
+      docType,
+      definition,
+      answers: {
+        ...answersBank,
+        ...buildIntakeAutofilledAnswers(definition.fields || [], activeCase),
+      },
+    });
+    setShowAck(true);
+  };
+
+  const submitAcknowledgement = async () => {
+    if (!ackForm || !activeCase) return;
+    const fields = ackForm.definition.fields || [];
+    const missing = fields.filter((f) => !String(ackForm.answers[f.label] || '').trim());
+    if (missing.length) {
+      toast({
+        title: 'Please answer every question before submitting',
+        description: `Still needed: ${missing.slice(0, 3).map((f) => f.label).join(', ')}${missing.length > 3 ? ' and more' : ''}`,
+        variant: 'destructive',
+      });
+      return;
+    }
+    setSubmittingAck(true);
+    try {
+      const { date, time } = businessDateTime();
+      const acknowledgedBy = user?.full_name || user?.email || 'Intake team';
+      const doc = buildFilledFormDoc({
+        title: ackForm.docType,
+        code: templateCodes[ackForm.docType],
+        subtitle: `${ackForm.docType} - ${activeCase.applicant_name}`,
+        fields,
+        values: ackForm.answers,
+        completedBy: acknowledgedBy,
+        completedAt: `${date} at ${time}`,
+      });
+      const blob = doc.output('blob');
+      const file = new File([blob], `${ackForm.docType} (acknowledged).pdf`, { type: 'application/pdf' });
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      const canonical = canonicalIntakeDocumentType(ackForm.docType);
+      await base44.entities.IntakeDocument.create({
+        intake_case_id: activeCase.id,
+        intake_case_number: activeCase.case_number,
+        intake_type: intakeType,
+        document_type: canonical,
+        file_name: file.name,
+        file_uri,
+        uploaded_by: `${acknowledgedBy} (acknowledgement)`,
+        uploaded_date: date,
+      });
+      const completed = Array.from(new Set([
+        ...(activeCase.completed_document_types || []),
+        canonical,
+      ]));
+      await base44.entities.IntakeCase.update(activeCase.id, {
+        completed_document_types: completed,
+        acknowledgement_log: [
+          activeCase.acknowledgement_log || '',
+          `${canonical} acknowledged by ${acknowledgedBy} on ${date} at ${time}`,
+        ].filter(Boolean).join('\n'),
+      });
+      setAnswersBank((bank) => ({ ...bank, ...ackForm.answers }));
+      await load(activeCase.id);
+      setShowAck(false);
+      setAckForm(null);
+      toast({ title: `${canonical} acknowledgement recorded` });
+    } catch (error) {
+      console.error(error);
+      toast({ title: 'Unable to record the acknowledgement', description: error.message, variant: 'destructive' });
+    } finally {
+      setSubmittingAck(false);
+    }
+  };
+
+  const addRefereeCheck = async () => {
+    if (!activeCase) return;
+    if (!refereeCheck.checked_by.trim() || !refereeCheck.date || !refereeCheck.time) {
+      toast({ title: 'Record the person, date and time of the check', variant: 'destructive' });
+      return;
+    }
+    setBusy(true);
+    try {
+      const entry = [
+        `${refereeCheck.date} ${refereeCheck.time}`,
+        refereeCheck.checked_by.trim(),
+        refereeCheck.outcome.trim(),
+      ].filter(Boolean).join(' - ');
+      await base44.entities.IntakeCase.update(activeCase.id, {
+        referee_check_log: [activeCase.referee_check_log || '', entry].filter(Boolean).join('\n'),
+      });
+      await load(activeCase.id);
+      setRefereeCheck({ checked_by: '', date: '', time: '', outcome: '' });
+      toast({ title: 'Referee check recorded' });
+    } catch (error) {
+      console.error(error);
+      toast({ title: 'Unable to record the referee check', description: error.message, variant: 'destructive' });
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -617,15 +806,45 @@ export default function IntakeCaseWorkflow({ intakeType }) {
               {EMPLOYEE_ROLES.map((r) => <option key={r}>{r}</option>)}
             </Select>
           </Field>
-          <Field label="Position"><TextInput value={form.position} onChange={(e) => setValue('position', e.target.value)} /></Field>
+          <Field label="Preferred name"><TextInput value={form.preferred_name} onChange={(e) => setValue('preferred_name', e.target.value)} /></Field>
           <Field label="Medical alerts, allergies or workplace adjustments" className="sm:col-span-2">
             <TextArea value={form.workplace_adjustments} onChange={(e) => setValue('workplace_adjustments', e.target.value)} />
           </Field>
           <Field label="Current employment status"><TextInput value={form.current_employment_status} onChange={(e) => setValue('current_employment_status', e.target.value)} /></Field>
           <Field label="Years of experience"><TextInput type="number" value={form.years_experience} onChange={(e) => setValue('years_experience', e.target.value)} /></Field>
+          <Field label="Employment provider"><TextInput value={form.employment_provider} onChange={(e) => setValue('employment_provider', e.target.value)} /></Field>
+          <Field label="Weekly hours goal"><TextInput value={form.weekly_hours_goal} onChange={(e) => setValue('weekly_hours_goal', e.target.value)} /></Field>
+          <Field label="Hobbies and interests" className="sm:col-span-2"><TextArea value={form.hobbies_interests} onChange={(e) => setValue('hobbies_interests', e.target.value)} /></Field>
+          <Field label="Qualifications and certificates" className="sm:col-span-2"><TextArea value={form.qualifications_certificates} onChange={(e) => setValue('qualifications_certificates', e.target.value)} /></Field>
+          <div className="rounded-lg border border-border p-3 sm:col-span-2">
+            <h4 className="mb-2 text-sm font-bold">Supports they want to provide</h4>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {SUPPORT_OPTIONS.map((option) => (
+                <Checkbox
+                  key={option}
+                  checked={(form.supports_to_provide || []).includes(option)}
+                  onChange={() => toggleSupport(option)}
+                  label={option}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border border-border p-3 sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-3">
+            <h4 className="mb-1 text-sm font-bold sm:col-span-2">Pay details (wages)</h4>
+            <Field label="Banking details (BSB, account number, account name)"><TextInput value={form.banking_details} onChange={(e) => setValue('banking_details', e.target.value)} /></Field>
+            <Field label="Superannuation details (fund and member number)"><TextInput value={form.superannuation_details} onChange={(e) => setValue('superannuation_details', e.target.value)} /></Field>
+            <Field label="Tax file number"><TextInput value={form.tax_file_number} onChange={(e) => setValue('tax_file_number', e.target.value)} /></Field>
+          </div>
+          <div className="rounded-lg border border-border p-3 sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-3">
+            <h4 className="mb-1 text-sm font-bold sm:col-span-2">Vehicle</h4>
+            <Field label="Current rego (state and expiry)"><TextInput value={form.current_rego} onChange={(e) => setValue('current_rego', e.target.value)} /></Field>
+            <Field label="Rego number"><TextInput value={form.rego_number} onChange={(e) => setValue('rego_number', e.target.value)} /></Field>
+          </div>
           <Field label="Availability" className="sm:col-span-2"><TextArea value={form.availability} onChange={(e) => setValue('availability', e.target.value)} /></Field>
           <Field label="Why do you want this role?" className="sm:col-span-2"><TextArea value={form.why_apply} onChange={(e) => setValue('why_apply', e.target.value)} /></Field>
           <Field label="Previous employer"><TextInput value={form.previous_employer} onChange={(e) => setValue('previous_employer', e.target.value)} /></Field>
+          <Field label="Previous employer phone"><TextInput type="tel" value={form.previous_employer_phone} onChange={(e) => setValue('previous_employer_phone', e.target.value)} /></Field>
+          <Field label="Previous employer email"><TextInput type="email" value={form.previous_employer_email} onChange={(e) => setValue('previous_employer_email', e.target.value)} /></Field>
           <Field label="Referees (name, role and contact)" className="sm:col-span-2"><TextArea value={form.referees} onChange={(e) => setValue('referees', e.target.value)} /></Field>
           <Field label="Working With Children Check number"><TextInput value={form.wwcc_number} onChange={(e) => setValue('wwcc_number', e.target.value)} /></Field>
           <Field label="NDIS Worker Screening Check number"><TextInput value={form.ndis_worker_screening_number} onChange={(e) => setValue('ndis_worker_screening_number', e.target.value)} /></Field>
@@ -694,7 +913,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         </>
       )}
       <Field label="Referral source"><TextInput value={form.referral_source} onChange={(e) => setValue('referral_source', e.target.value)} /></Field>
-      <Field label="Target start date"><DateInput value={form.target_start_date} onChange={(e) => setValue('target_start_date', e.target.value)} /></Field>
+      <Field label={intakeType === 'Participant' ? 'Target start date' : 'Proposed start date'}><DateInput value={form.target_start_date} onChange={(e) => setValue('target_start_date', e.target.value)} /></Field>
       <Field label="Eligibility / service fit">
         <Select value={form.service_fit} onChange={(e) => setValue('service_fit', e.target.value)}>
           <option>Pending</option>
@@ -732,7 +951,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         <div className="flex items-center gap-2 text-sm text-foreground/60">
           <span className="font-semibold text-foreground">{cases.length}</span> {intakeType} intake cases
         </div>
-        <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> New {intakeType} intake case</Button>
+        <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>
       </div>
 
       {cases.length === 0 && !showNew ? (
@@ -787,18 +1006,28 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                 ) : (
                   <>
                     <div><span className="text-foreground/45">Role</span><div className="font-medium">{activeCase.employee_role || 'Not set'}</div></div>
-                    <div><span className="text-foreground/45">Position</span><div className="font-medium">{activeCase.position || 'Not set'}</div></div>
+                    <div><span className="text-foreground/45">Preferred name</span><div className="font-medium">{activeCase.preferred_name || 'Not provided'}</div></div>
+                    <div><span className="text-foreground/45">Proposed start date</span><div className="font-medium">{activeCase.target_start_date ? format(new Date(activeCase.target_start_date), 'd MMM yyyy') : 'Not set'}</div></div>
                   </>
                 )}
                 <div><span className="text-foreground/45">Eligibility / service fit</span><div className="font-medium">{activeCase.service_fit || 'Pending'}</div></div>
                 <div><span className="text-foreground/45">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
                 <div><span className="text-foreground/45">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
+                <div><span className="text-foreground/45">Date completed</span><div className="font-medium">{activeCase.date_completed ? format(new Date(activeCase.date_completed), 'd MMM yyyy') : 'Not recorded'}</div></div>
                 <div className="sm:col-span-2 lg:col-span-3">
-                  <span className="text-foreground/45">Consent to NDIS Audit</span>
+                  <span className="text-foreground/45">Consent and acknowledgement log</span>
                   <div className="font-medium">
-                    {activeCase.audit_consent || 'Audit declined'}
+                    Privacy consent: {activeCase.privacy_consent_by
+                      ? `${activeCase.privacy_consent_by}, ${activeCase.privacy_consent_date || ''}${activeCase.privacy_consent_time ? ` ${activeCase.privacy_consent_time}` : ''}`
+                      : 'Not recorded'}
+                  </div>
+                  <div className="font-medium">
+                    NDIS audit: {activeCase.audit_consent || 'Audit declined'}
                     {activeCase.audit_consent_by ? ` · ${activeCase.audit_consent_by}${activeCase.audit_consent_date ? `, ${activeCase.audit_consent_date}${activeCase.audit_consent_time ? ` ${activeCase.audit_consent_time}` : ''}` : ''}` : ''}
                   </div>
+                  {(activeCase.acknowledgement_log || '').split('\n').filter(Boolean).map((entry, index) => (
+                    <div key={index} className="text-xs text-foreground/60">{entry}</div>
+                  ))}
                 </div>
               </div>
 
@@ -857,24 +1086,45 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                             <div className="min-w-0">
                               <div className={`text-sm ${check.complete ? 'text-foreground/70' : 'font-medium'}`}>{check.label}</div>
                               {doc && <div className="text-xs text-foreground/45">{doc.file_name}</div>}
+                              {UPLOAD_ONLY_DOC_TYPES.has(check.label) && !check.complete && (
+                                <p className="text-[10px] text-muted-foreground">please upload</p>
+                              )}
                             </div>
                           </div>
                           <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                             {doc && (
                               <Button variant="outline" size="sm" onClick={() => viewDocument(doc)}>View</Button>
                             )}
-                            {canCompleteIntakeFormOnline(intakeType, check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
+                            {LEGISLATION_ACK_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
+                              <Button variant="outline" size="sm" onClick={() => startAcknowledgement(check.label)} disabled={busy}>
+                                <CheckCircle2 className="h-3.5 w-3.5" /> Acknowledgement
+                              </Button>
+                            )}
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label)
+                              && canCompleteIntakeFormOnline(intakeType, check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
                               <Button variant="outline" size="sm" onClick={() => startOnlineForm(check.label)} disabled={busy}>
                                 <Pencil className="h-3.5 w-3.5" /> Complete online
                               </Button>
                             )}
-                            <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
-                              {downloadingTemplate === check.label
-                                ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
-                                : <Download className="h-3.5 w-3.5" />}
-                              Download
-                            </Button>
-                            {!TERMINAL_STATUSES.has(activeCase.status) && (
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label) && (
+                              <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
+                                {downloadingTemplate === check.label
+                                  ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+                                  : <Download className="h-3.5 w-3.5" />}
+                                Download
+                              </Button>
+                            )}
+                            {TRAINING_DOC_LINKS[check.label] && (
+                              <a
+                                href={TRAINING_DOC_LINKS[check.label].url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent"
+                              >
+                                <ExternalLink className="h-3.5 w-3.5" /> Free training
+                              </a>
+                            )}
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
                               <label className="cursor-pointer">
                                 <input
                                   type="file"
@@ -941,6 +1191,38 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                   ))}
                 </aside>
               </div>
+
+              {intakeType === 'Employee' && (
+                <div className="rounded-xl border border-border bg-muted/20 p-4">
+                  <h4 className="text-sm font-bold">Referee checks (office personnel)</h4>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Every referee check completed by office staff is logged here with the date, time and person who completed it.
+                  </p>
+                  {(activeCase.referee_check_log || '').trim() ? (
+                    <ul className="mt-3 space-y-1 text-xs">
+                      {(activeCase.referee_check_log || '').split('\n').filter(Boolean).map((entry, index) => (
+                        <li key={index} className="rounded-md bg-card px-2 py-1.5">{entry}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-3 text-xs text-muted-foreground">No referee checks recorded yet.</p>
+                  )}
+                  <form
+                    onSubmit={(event) => { event.preventDefault(); addRefereeCheck(); }}
+                    className="mt-3 grid gap-3 sm:grid-cols-4"
+                  >
+                    <Field label="Checked by (office personnel)">
+                      <TextInput value={refereeCheck.checked_by} onChange={(e) => setRefereeCheck({ ...refereeCheck, checked_by: e.target.value })} />
+                    </Field>
+                    <Field label="Date"><DateInput value={refereeCheck.date} onChange={(e) => setRefereeCheck({ ...refereeCheck, date: e.target.value })} /></Field>
+                    <Field label="Time"><TextInput type="time" value={refereeCheck.time} onChange={(e) => setRefereeCheck({ ...refereeCheck, time: e.target.value })} /></Field>
+                    <Field label="Outcome / notes" className="sm:col-span-4"><TextArea rows={2} value={refereeCheck.outcome} onChange={(e) => setRefereeCheck({ ...refereeCheck, outcome: e.target.value })} /></Field>
+                    <div className="flex justify-end sm:col-span-4">
+                      <Button type="submit" size="sm" disabled={busy}>Log referee check</Button>
+                    </div>
+                  </form>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -949,7 +1231,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>New {intakeType} intake case</DialogTitle>
+            <DialogTitle>{intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</DialogTitle>
           </DialogHeader>
           {newForm}
         </DialogContent>
@@ -990,6 +1272,48 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                 <Button type="button" variant="outline" onClick={() => { setShowOnline(false); setOnlineForm(null); }}>Cancel</Button>
                 <Button type="submit" disabled={submittingOnline}>
                   {submittingOnline && <Loader2 className="h-4 w-4 animate-spin" />} Save &amp; attach to case
+                </Button>
+              </div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showAck} onOpenChange={(open) => { setShowAck(open); if (!open) setAckForm(null); }}>
+        <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Record acknowledgement - {ackForm?.docType}</DialogTitle>
+          </DialogHeader>
+          {ackForm && (
+            <form
+              onSubmit={(event) => { event.preventDefault(); submitAcknowledgement(); }}
+              className="grid gap-3 sm:grid-cols-2"
+            >
+              <p className="text-xs text-muted-foreground sm:col-span-2">
+                The applicant reads and acknowledges this legislation or standard. The acknowledgement PDF is saved to this intake case with the person, date and time recorded, and follows them onto their profile after conversion.
+              </p>
+              {ackForm.definition.fields.map((field) => (
+                <Field key={field.label} label={field.label} className={field.multiline ? 'sm:col-span-2' : ''}>
+                  {field.multiline
+                    ? (
+                      <TextArea
+                        rows={3}
+                        value={ackForm.answers[field.label] || ''}
+                        onChange={(e) => setAckForm({ ...ackForm, answers: { ...ackForm.answers, [field.label]: e.target.value } })}
+                      />
+                    )
+                    : (
+                      <TextInput
+                        value={ackForm.answers[field.label] || ''}
+                        onChange={(e) => setAckForm({ ...ackForm, answers: { ...ackForm.answers, [field.label]: e.target.value } })}
+                      />
+                    )}
+                </Field>
+              ))}
+              <div className="flex items-center justify-end gap-2 sm:col-span-2">
+                <Button type="button" variant="outline" onClick={() => { setShowAck(false); setAckForm(null); }}>Cancel</Button>
+                <Button type="submit" disabled={submittingAck}>
+                  {submittingAck && <Loader2 className="h-4 w-4 animate-spin" />} Record acknowledgement
                 </Button>
               </div>
             </form>
