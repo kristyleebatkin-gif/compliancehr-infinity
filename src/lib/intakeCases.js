@@ -12,6 +12,7 @@ export const INTAKE_REQUIREMENTS = {
     'Home Risk Assessment',
     'Personal Emergency Form',
     'Provider Declaration',
+    'Participant File Audit Checklist',
     'Authority to Act as Advocate',
     'Satisfaction Survey',
     'Feedback and Complaints',
@@ -31,17 +32,18 @@ export const INTAKE_REQUIREMENTS = {
     'Staff Induction Form',
     'Employment Contract',
     'Position Description',
-    '100 Points of Identification Checklist',
     "Driver's License",
     'Medicare Card',
     'Birth Certificate or Passport',
     'Tax File Number',
     'Resume',
     'Qualifications',
+    'Super Details Declaration Form',
     'NDIS Code of Conduct Acknowledgement',
     'NDIS Act 2013 Acknowledgement',
     'NDIS Practice Standards Acknowledgement',
     'Work Health and Safety Act 2011 (Qld) Acknowledgement',
+    'Disability Discrimination Act 1992 Acknowledgement',
     'NDIS Worker Screening Clearance',
     'Blue Card and/or Police Check',
     'Secondary Employment Form',
@@ -53,6 +55,8 @@ export const INTAKE_REQUIREMENTS = {
     'Staff Exit Form',
     'Car Registration',
     'Car Safety Check Form',
+    'Mandatory Reporting Information',
+    'Staff File Checklist',
     'NDIS Worker Orientation Module Certificate',
     'NDIS Worker Induction Module Certificate',
     'NDIS Supporting Safe and Enjoyable Meals Certificate',
@@ -114,7 +118,14 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'NDIS Plan',
   'Behaviour Support Plan',
   'Restrictive Practices Record',
-]);;
+]);
+
+// Information sheets and audit checklists: download-only, no upload or online completion.
+export const DOWNLOAD_ONLY_DOC_TYPES = new Set([
+  'Mandatory Reporting Information',
+  'Staff File Checklist',
+  'Participant File Audit Checklist',
+]);
 
 const INTAKE_DOCUMENT_ALIASES = {
   'Intake Assessment': 'Participant Intake Assessment',
@@ -222,6 +233,16 @@ export function intakeReadiness(intakeCase) {
   } else {
     identityChecks.splice(2, 0,
       { label: 'Employee role', complete: Boolean(intakeCase?.employee_role?.trim()) },
+      { label: 'Qualifications', complete: Boolean(intakeCase?.qualifications_certificates?.trim()) },
+      { label: 'Tax file number', complete: Boolean(intakeCase?.tax_file_number?.trim()) },
+      { label: 'Banking details', complete: Boolean(intakeCase?.banking_details?.trim()) },
+      { label: 'Superannuation details', complete: Boolean(intakeCase?.superannuation_details?.trim()) },
+      { label: 'Availability', complete: Boolean(intakeCase?.availability?.trim()) },
+      { label: 'Weekly hours goal', complete: Boolean(intakeCase?.weekly_hours_goal?.trim()) },
+      { label: 'Referees provided', complete: Boolean((intakeCase?.referee_1_name?.trim() && intakeCase?.referee_2_name?.trim()) || intakeCase?.referees?.trim()) },
+      { label: 'Supports to provide selected', complete: (intakeCase?.supports_to_provide || []).length > 0 },
+      { label: 'Allergies', complete: Boolean(intakeCase?.allergies?.trim()) },
+      { label: 'Medical conditions', complete: Boolean(intakeCase?.medical_conditions?.trim()) },
       {
         label: 'Emergency contact',
         complete: Boolean(

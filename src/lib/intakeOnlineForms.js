@@ -42,6 +42,15 @@ function autofillIntakeValue(label, intakeCase = {}) {
     );
   }
   if (l.includes('ndis number')) return intakeCase.ndis_number || '';
+  if (l.includes('employee number') || l.includes('employee id')) return intakeCase.employee_id_number || '';
+  if (l.includes('medical conditions')) return intakeCase.medical_conditions || '';
+  if (l.includes('allerg') || l.includes('anaphylaxis')) return intakeCase.allergies || intakeCase.workplace_adjustments || '';
+  if (l.includes('referee 1 name')) return intakeCase.referee_1_name || '';
+  if (l.includes('referee 1 phone') || l.includes('referee 1 contact')) return join(intakeCase.referee_1_phone, intakeCase.referee_1_email);
+  if (l.includes('referee 2 name')) return intakeCase.referee_2_name || '';
+  if (l.includes('referee 2 phone') || l.includes('referee 2 contact')) return join(intakeCase.referee_2_phone, intakeCase.referee_2_email);
+  if (l.includes('referees')) return join(intakeCase.referee_1_name, intakeCase.referee_1_phone, intakeCase.referee_2_name, intakeCase.referee_2_phone);
+  if (l.includes('availability')) return intakeCase.availability || '';
   if (l.includes('position')) return intakeCase.position || '';
   if (l.includes('commencement date') || l.includes('start date')) return intakeCase.target_start_date || '';
   if (l.includes('primary support') || l.includes('requested supports') || l.includes('requested services')) {

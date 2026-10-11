@@ -568,6 +568,63 @@
     "consent_to_share_persons": {
       "type": "string",
       "title": "Names of Persons for Consent to Share"
+    },
+    "employee_id_number": {
+      "type": "string",
+      "title": "Employee ID Number"
+    },
+    "allergies": {
+      "type": "string",
+      "title": "Allergies"
+    },
+    "medical_conditions": {
+      "type": "string",
+      "title": "Medical Conditions"
+    },
+    "referee_1_name": {
+      "type": "string",
+      "title": "Referee 1 Name"
+    },
+    "referee_1_phone": {
+      "type": "string",
+      "title": "Referee 1 Phone"
+    },
+    "referee_1_email": {
+      "type": "string",
+      "title": "Referee 1 Email"
+    },
+    "referee_2_name": {
+      "type": "string",
+      "title": "Referee 2 Name"
+    },
+    "referee_2_phone": {
+      "type": "string",
+      "title": "Referee 2 Phone"
+    },
+    "referee_2_email": {
+      "type": "string",
+      "title": "Referee 2 Email"
+    },
+    "office_use_notes": {
+      "type": "string",
+      "title": "Office Use Notes"
+    },
+    "buddy_shift_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Buddy Shift Date"
+    },
+    "buddy_shift_time": {
+      "type": "string",
+      "title": "Buddy Shift Time"
+    },
+    "buddy_shift_other_employee": {
+      "type": "string",
+      "title": "Other Employee Present on Buddy Shift"
+    },
+    "buddy_shift_log": {
+      "type": "string",
+      "title": "Buddy Shift Log"
     }
   },
   "required": [

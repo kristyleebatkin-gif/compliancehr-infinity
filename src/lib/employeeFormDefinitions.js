@@ -224,4 +224,38 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
     columns: ['Vaccine', 'Date given', 'Provider', 'Next due'],
     rows: 10,
   },
+  'Super Details Declaration Form': {
+    fields: [
+      ...personal,
+      field('Superannuation fund name'),
+      field('Fund USI'),
+      field('Member number'),
+      field('Fund phone and address'),
+      field('Declaration: I declare the superannuation details above are correct and I consent to my employer making contributions to this fund', true),
+      field('Employee signature and date'),
+      field('Office use: processed by and date'),
+    ],
+  },
+  'Disability Discrimination Act 1992 Acknowledgement': {
+    fields: [
+      ...personal,
+      field('Acknowledgement: I understand my obligations under the Disability Discrimination Act 1992 and will support inclusive, non-discriminatory practice', true),
+      field('Signature date'),
+    ],
+  },
+  'Mandatory Reporting Information': {
+    fields: [
+      field('Employee full name'),
+      field('Information acknowledged: reportable incidents, allegations, serious injury and abuse must be reported to the NDIS Commission, and child protection and WHS notifications to the relevant authority', true),
+      field('Acknowledged by and date'),
+    ],
+  },
+  'Staff File Checklist': {
+    fields: [
+      field('Employee full name'),
+      field('File completed by and date'),
+    ],
+    columns: ['Document', 'On file', 'Date sighted', 'Expiry', 'Verified by'],
+    rows: 20,
+  },
 };

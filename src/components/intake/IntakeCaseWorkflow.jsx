@@ -29,6 +29,7 @@ import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, PARTICIPANT_FORM_META } from '@/lib/participantDocuments';
 import {
+  DOWNLOAD_ONLY_DOC_TYPES,
   INTAKE_FILE_ACCEPT,
   LEGISLATION_ACK_DOC_TYPES,
   TRAINING_DOC_LINKS,
@@ -122,8 +123,21 @@ const EMPLOYEE_BLANK = {
   ...PARTICIPANT_BLANK,
   ndis_number: '',
   employee_role: 'Support Worker (JR)',
+  employee_id_number: '',
   preferred_name: '',
   workplace_adjustments: '',
+  allergies: '',
+  medical_conditions: '',
+  referee_1_name: '',
+  referee_1_phone: '',
+  referee_1_email: '',
+  referee_2_name: '',
+  referee_2_phone: '',
+  referee_2_email: '',
+  office_use_notes: '',
+  buddy_shift_date: '',
+  buddy_shift_time: '',
+  buddy_shift_other_employee: '',
   current_employment_status: '',
   years_experience: '',
   right_to_work: false,
@@ -212,6 +226,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const [showAck, setShowAck] = useState(false);
   const [submittingAck, setSubmittingAck] = useState(false);
   const [refereeCheck, setRefereeCheck] = useState({ checked_by: '', date: '', time: '', outcome: '' });
+  const [buddyShift, setBuddyShift] = useState({ date: '', time: '', other_employee: '', notes: '' });
 
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
@@ -305,6 +320,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         privacy_consent_date: form.privacy_consent ? date : '',
         privacy_consent_time: form.privacy_consent ? time : '',
         case_number: createProfileId(cases, 'case_number', intakeType === 'Participant' ? 'PIC' : 'EIC'),
+        ...(intakeType === 'Employee'
+          ? { employee_id_number: String(form.employee_id_number || '').trim() || generateEmployeeNumber() }
+          : {}),
         intake_type: intakeType,
         referral_date: date,
         assigned_to: user?.full_name || user?.email || 'Intake team',
@@ -456,7 +474,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           date_of_birth: activeCase.date_of_birth || '',
           role: mapStaffRole(activeCase.employee_role),
           position: activeCase.position || '',
-          employee_number: generateEmployeeNumber(),
+          employee_number: activeCase.employee_id_number || generateEmployeeNumber(),
           start_date: activeCase.target_start_date || date,
           status: 'Active',
           supervisor: '',
@@ -464,9 +482,33 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             activeCase.emergency_contact_1_name || activeCase.emergency_contact,
             activeCase.emergency_contact_1_phone,
           ].filter(Boolean).join(' - '),
+          emergency_contact_phone: activeCase.emergency_contact_1_phone || '',
+          banking_details: activeCase.banking_details || '',
+          superannuation_details: activeCase.superannuation_details || '',
+          tax_file_number: activeCase.tax_file_number || '',
+          car_rego: [
+            activeCase.current_rego,
+            activeCase.rego_number,
+          ].filter(Boolean).join(' - '),
           notes: [
             activeCase.notes,
             activeCase.workplace_adjustments ? `Workplace adjustments: ${activeCase.workplace_adjustments}` : '',
+            activeCase.allergies ? `Allergies: ${activeCase.allergies}` : '',
+            activeCase.medical_conditions ? `Medical conditions: ${activeCase.medical_conditions}` : '',
+            activeCase.hobbies_interests ? `Hobbies and interests: ${activeCase.hobbies_interests}` : '',
+            activeCase.qualifications_certificates ? `Qualifications: ${activeCase.qualifications_certificates}` : '',
+            activeCase.supports_to_provide?.length ? `Supports they want to provide: ${activeCase.supports_to_provide.join(', ')}` : '',
+            activeCase.availability ? `Availability: ${activeCase.availability}` : '',
+            activeCase.weekly_hours_goal ? `Weekly hours goal: ${activeCase.weekly_hours_goal}` : '',
+            activeCase.current_employment_status ? `Current/previous employment status: ${activeCase.current_employment_status}` : '',
+            activeCase.previous_employer ? `Previous employer: ${activeCase.previous_employer} (phone: ${activeCase.previous_employer_phone || 'n/a'}, email: ${activeCase.previous_employer_email || 'n/a'})` : '',
+            activeCase.referee_1_name ? `Referee 1: ${activeCase.referee_1_name} (phone: ${activeCase.referee_1_phone || 'n/a'}, email: ${activeCase.referee_1_email || 'n/a'})` : '',
+            activeCase.referee_2_name ? `Referee 2: ${activeCase.referee_2_name} (phone: ${activeCase.referee_2_phone || 'n/a'}, email: ${activeCase.referee_2_email || 'n/a'})` : '',
+            activeCase.why_apply ? `Why they applied: ${activeCase.why_apply}` : '',
+            activeCase.office_use_notes ? `Office use notes: ${activeCase.office_use_notes}` : '',
+            activeCase.acknowledgement_log ? `Acknowledgements:\n${activeCase.acknowledgement_log}` : '',
+            activeCase.referee_check_log ? `Referee checks (office):\n${activeCase.referee_check_log}` : '',
+            activeCase.buddy_shift_log ? `Buddy shifts:\n${activeCase.buddy_shift_log}` : '',
           ].filter(Boolean).join('\n'),
         });
       }
@@ -726,6 +768,33 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     }
   };
 
+  const addBuddyShift = async () => {
+    if (!activeCase) return;
+    if (!buddyShift.date || !buddyShift.other_employee.trim()) {
+      toast({ title: 'Record the date and the other employee present', variant: 'destructive' });
+      return;
+    }
+    setBusy(true);
+    try {
+      const entry = [
+        `${buddyShift.date}${buddyShift.time ? ` ${buddyShift.time}` : ''}`,
+        `Other employee present: ${buddyShift.other_employee.trim()}`,
+        buddyShift.notes.trim(),
+      ].filter(Boolean).join(' - ');
+      await base44.entities.IntakeCase.update(activeCase.id, {
+        buddy_shift_log: [activeCase.buddy_shift_log || '', entry].filter(Boolean).join('\n'),
+      });
+      await load(activeCase.id);
+      setBuddyShift({ date: '', time: '', other_employee: '', notes: '' });
+      toast({ title: 'Buddy shift recorded' });
+    } catch (error) {
+      console.error(error);
+      toast({ title: 'Unable to record the buddy shift', description: error.message, variant: 'destructive' });
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const addRefereeCheck = async () => {
     if (!activeCase) return;
     if (!refereeCheck.checked_by.trim() || !refereeCheck.date || !refereeCheck.time) {
@@ -877,15 +946,18 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             </Select>
           </Field>
           <Field label="Preferred name"><TextInput value={form.preferred_name} onChange={(e) => setValue('preferred_name', e.target.value)} /></Field>
-          <Field label="Medical alerts, allergies or workplace adjustments" className="sm:col-span-2">
+          <Field label="Qualifications and certificates" className="sm:col-span-2"><TextArea value={form.qualifications_certificates} onChange={(e) => setValue('qualifications_certificates', e.target.value)} /></Field>
+          <Field label="Tax file number"><TextInput value={form.tax_file_number} onChange={(e) => setValue('tax_file_number', e.target.value)} /></Field>
+          <Field label="Medical alerts or workplace adjustments" className="sm:col-span-2">
             <TextArea value={form.workplace_adjustments} onChange={(e) => setValue('workplace_adjustments', e.target.value)} />
           </Field>
+          <Field label="Allergies"><TextArea value={form.allergies} onChange={(e) => setValue('allergies', e.target.value)} /></Field>
+          <Field label="Medical conditions"><TextArea value={form.medical_conditions} onChange={(e) => setValue('medical_conditions', e.target.value)} /></Field>
           <Field label="Current employment status"><TextInput value={form.current_employment_status} onChange={(e) => setValue('current_employment_status', e.target.value)} /></Field>
           <Field label="Years of experience"><TextInput type="number" value={form.years_experience} onChange={(e) => setValue('years_experience', e.target.value)} /></Field>
           <Field label="Employment provider"><TextInput value={form.employment_provider} onChange={(e) => setValue('employment_provider', e.target.value)} /></Field>
           <Field label="Weekly hours goal"><TextInput value={form.weekly_hours_goal} onChange={(e) => setValue('weekly_hours_goal', e.target.value)} /></Field>
           <Field label="Hobbies and interests" className="sm:col-span-2"><TextArea value={form.hobbies_interests} onChange={(e) => setValue('hobbies_interests', e.target.value)} /></Field>
-          <Field label="Qualifications and certificates" className="sm:col-span-2"><TextArea value={form.qualifications_certificates} onChange={(e) => setValue('qualifications_certificates', e.target.value)} /></Field>
           <div className="rounded-lg border border-border p-3 sm:col-span-2">
             <h4 className="mb-2 text-sm font-bold">Supports they want to provide</h4>
             <div className="grid gap-2 sm:grid-cols-3">
@@ -903,7 +975,6 @@ export default function IntakeCaseWorkflow({ intakeType }) {
             <h4 className="mb-1 text-sm font-bold sm:col-span-2">Pay details (wages)</h4>
             <Field label="Banking details (BSB, account number, account name)"><TextInput value={form.banking_details} onChange={(e) => setValue('banking_details', e.target.value)} /></Field>
             <Field label="Superannuation details (fund and member number)"><TextInput value={form.superannuation_details} onChange={(e) => setValue('superannuation_details', e.target.value)} /></Field>
-            <Field label="Tax file number"><TextInput value={form.tax_file_number} onChange={(e) => setValue('tax_file_number', e.target.value)} /></Field>
           </div>
           <div className="rounded-lg border border-border p-3 sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-3">
             <h4 className="mb-1 text-sm font-bold sm:col-span-2">Vehicle</h4>
@@ -915,7 +986,33 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Field label="Previous employer"><TextInput value={form.previous_employer} onChange={(e) => setValue('previous_employer', e.target.value)} /></Field>
           <Field label="Previous employer phone"><TextInput type="tel" value={form.previous_employer_phone} onChange={(e) => setValue('previous_employer_phone', e.target.value)} /></Field>
           <Field label="Previous employer email"><TextInput type="email" value={form.previous_employer_email} onChange={(e) => setValue('previous_employer_email', e.target.value)} /></Field>
-          <Field label="Referees (name, role and contact)" className="sm:col-span-2"><TextArea value={form.referees} onChange={(e) => setValue('referees', e.target.value)} /></Field>
+          <div className="rounded-xl border border-border bg-muted/30 p-3 sm:col-span-2">
+            <h4 className="mb-3 text-sm font-bold">Referee 1</h4>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Field label="Full name"><TextInput value={form.referee_1_name} onChange={(e) => setValue('referee_1_name', e.target.value)} /></Field>
+              <Field label="Phone"><TextInput type="tel" value={form.referee_1_phone} onChange={(e) => setValue('referee_1_phone', e.target.value)} /></Field>
+              <Field label="Email"><TextInput type="email" value={form.referee_1_email} onChange={(e) => setValue('referee_1_email', e.target.value)} /></Field>
+            </div>
+          </div>
+          <div className="rounded-xl border border-border bg-muted/30 p-3 sm:col-span-2">
+            <h4 className="mb-3 text-sm font-bold">Referee 2</h4>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Field label="Full name"><TextInput value={form.referee_2_name} onChange={(e) => setValue('referee_2_name', e.target.value)} /></Field>
+              <Field label="Phone"><TextInput type="tel" value={form.referee_2_phone} onChange={(e) => setValue('referee_2_phone', e.target.value)} /></Field>
+              <Field label="Email"><TextInput type="email" value={form.referee_2_email} onChange={(e) => setValue('referee_2_email', e.target.value)} /></Field>
+            </div>
+          </div>
+          <Field label="Office use only (notes, decisions and file checks)" className="sm:col-span-2">
+            <TextArea value={form.office_use_notes} onChange={(e) => setValue('office_use_notes', e.target.value)} />
+          </Field>
+          <div className="rounded-xl border border-border bg-muted/30 p-3 sm:col-span-2">
+            <h4 className="mb-3 text-sm font-bold">Buddy shift (induction)</h4>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Field label="Buddy shift date"><DateInput value={form.buddy_shift_date} onChange={(e) => setValue('buddy_shift_date', e.target.value)} /></Field>
+              <Field label="Buddy shift time"><TextInput value={form.buddy_shift_time} onChange={(e) => setValue('buddy_shift_time', e.target.value)} /></Field>
+              <Field label="Other employee present"><TextInput value={form.buddy_shift_other_employee} onChange={(e) => setValue('buddy_shift_other_employee', e.target.value)} /></Field>
+            </div>
+          </div>
           <Field label="Working With Children Check number"><TextInput value={form.wwcc_number} onChange={(e) => setValue('wwcc_number', e.target.value)} /></Field>
           <Field label="NDIS Worker Screening Check number"><TextInput value={form.ndis_worker_screening_number} onChange={(e) => setValue('ndis_worker_screening_number', e.target.value)} /></Field>
           <div className="grid gap-2 rounded-lg border border-border p-3 sm:col-span-2 sm:grid-cols-2">
@@ -1062,6 +1159,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                 <h3 className="text-lg font-bold">{activeCase.applicant_name}</h3>
                 <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_CLASS[activeCase.status]}`}>{activeCase.status}</span>
                 <span className="text-xs text-foreground/50">{activeCase.case_number}</span>
+                {intakeType === 'Employee' && (
+                  <span className="text-xs text-foreground/50">Employee ID: {activeCase.employee_id_number || 'Generated at conversion'}</span>
+                )}
               </div>
 
               <div className="grid gap-3 rounded-xl border border-border p-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
@@ -1172,12 +1272,13 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                               </Button>
                             )}
                             {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label)
+                              && !DOWNLOAD_ONLY_DOC_TYPES.has(check.label)
                               && canCompleteIntakeFormOnline(intakeType, check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
                               <Button variant="outline" size="sm" onClick={() => startOnlineForm(check.label)} disabled={busy}>
                                 <Pencil className="h-3.5 w-3.5" /> Complete online
                               </Button>
                             )}
-                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && (
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label) && (
                               <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
                                 {downloadingTemplate === check.label
                                   ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
@@ -1195,7 +1296,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                                 <ExternalLink className="h-3.5 w-3.5" /> Free training
                               </a>
                             )}
-                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
+                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !DOWNLOAD_ONLY_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
                               <label className="cursor-pointer">
                                 <input
                                   type="file"
@@ -1290,6 +1391,35 @@ export default function IntakeCaseWorkflow({ intakeType }) {
                     <Field label="Outcome / notes" className="sm:col-span-4"><TextArea rows={2} value={refereeCheck.outcome} onChange={(e) => setRefereeCheck({ ...refereeCheck, outcome: e.target.value })} /></Field>
                     <div className="flex justify-end sm:col-span-4">
                       <Button type="submit" size="sm" disabled={busy}>Log referee check</Button>
+                    </div>
+                  </form>
+                </div>
+              )}
+              {intakeType === 'Employee' && (
+                <div className="rounded-xl border border-border bg-muted/20 p-4">
+                  <h4 className="text-sm font-bold">Buddy shift log</h4>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Record each buddy shift with the date, time and the other employee present. Entries follow the employee onto their profile and skill assessment.
+                  </p>
+                  {(activeCase.buddy_shift_log || '').trim() ? (
+                    <ul className="mt-3 space-y-1 text-xs">
+                      {(activeCase.buddy_shift_log || '').split('\n').filter(Boolean).map((entry, index) => (
+                        <li key={index} className="rounded-md bg-card px-2 py-1.5">{entry}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-3 text-xs text-muted-foreground">No buddy shifts recorded yet.</p>
+                  )}
+                  <form
+                    onSubmit={(event) => { event.preventDefault(); addBuddyShift(); }}
+                    className="mt-3 grid gap-3 sm:grid-cols-4"
+                  >
+                    <Field label="Date"><DateInput value={buddyShift.date} onChange={(e) => setBuddyShift({ ...buddyShift, date: e.target.value })} /></Field>
+                    <Field label="Time"><TextInput value={buddyShift.time} onChange={(e) => setBuddyShift({ ...buddyShift, time: e.target.value })} /></Field>
+                    <Field label="Other employee present"><TextInput value={buddyShift.other_employee} onChange={(e) => setBuddyShift({ ...buddyShift, other_employee: e.target.value })} /></Field>
+                    <Field label="Notes" className="sm:col-span-4"><TextArea rows={2} value={buddyShift.notes} onChange={(e) => setBuddyShift({ ...buddyShift, notes: e.target.value })} /></Field>
+                    <div className="flex justify-end sm:col-span-4">
+                      <Button type="submit" size="sm" disabled={busy}>Log buddy shift</Button>
                     </div>
                   </form>
                 </div>
