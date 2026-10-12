@@ -47,6 +47,7 @@ export const NAV_PERMISSIONS = {
   dashboard: EVERYONE,
   notifications: EVERYONE,
   help: EVERYONE,
+  'user-guides': EVERYONE,
   'key-contacts': EVERYONE,
   'community-council': EVERYONE,
   'community-referral': EVERYONE,

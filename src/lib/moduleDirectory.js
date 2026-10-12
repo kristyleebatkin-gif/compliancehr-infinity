@@ -4,7 +4,7 @@ import {
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
-  ClipboardList, MessageSquare, Lightbulb, LifeBuoy,
+  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -49,4 +49,5 @@ export const MODULE_DIRECTORY = [
   { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, blurb: 'Feedback register, complaint routing and branded surveys.' },
   { key: 'quality', label: 'Quality & Improvement', path: '/quality', icon: Lightbulb, blurb: 'Continuous improvement register, actions and quality reviews.' },
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, blurb: 'Guides, AI troubleshooter, system health and support desk.' },
+  { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, blurb: 'Complete downloadable user guides for every module in the platform.' },
 ];

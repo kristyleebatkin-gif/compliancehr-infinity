@@ -5,7 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Lightbulb, Siren, Stethoscope, Activity } from 'lucide-react';
+import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Stethoscope, Activity } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { moduleGuides } from '@/lib/moduleGuides';
 import { HELP_ARTICLES, HELP_CATEGORIES } from '@/lib/helpCentreContent';
 import SupportTickets from '@/components/help/SupportTickets';
@@ -67,12 +69,27 @@ export default function HelpCentre() {
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="guides"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
+          <TabsTrigger value="manuals"><Library className="mr-1.5 inline h-3.5 w-3.5" />User guides</TabsTrigger>
           <TabsTrigger value="howtos"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
           <TabsTrigger value="troubleshoot"><Stethoscope className="mr-1.5 inline h-3.5 w-3.5" />AI troubleshooter</TabsTrigger>
           <TabsTrigger value="health"><Activity className="mr-1.5 inline h-3.5 w-3.5" />System health &amp; quick fixes</TabsTrigger>
           <TabsTrigger value="support"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
           <TabsTrigger value="escalate"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="manuals" className="mt-4">
+          <Card className="border-primary/30 bg-primary/5"><CardContent className="p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="font-bold text-primary">Complete User Guide Library</p>
+                <p className="mt-0.5 text-sm text-foreground/70">
+                  Extensive, professional guides for all {Object.keys(USER_GUIDES).length} modules — every feature, process, tool and resource, each downloadable as a branded PDF, plus the full library in one document.
+                </p>
+              </div>
+              <Button asChild><Link to="/user-guides">Open User Guides</Link></Button>
+            </div>
+          </CardContent></Card>
+        </TabsContent>
 
         <TabsContent value="guides" className="mt-4">
           {guides.length === 0 ? (
