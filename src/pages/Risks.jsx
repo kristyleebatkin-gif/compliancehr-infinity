@@ -62,6 +62,7 @@ export default function Risks() {
   const [form, setForm] = useState(blank);
   const [ratingFilter, setRatingFilter] = useState(searchParams.get('rating') === 'high-critical' ? 'High / Critical' : 'All');
   const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
+  const [issueFilter, setIssueFilter] = useState('All');
 
   const load = async () => {
     setLoading(true);
@@ -176,14 +177,16 @@ export default function Risks() {
       || (ratingFilter === 'High / Critical' ? isHighCriticalRisk(risk) : risk.rating === ratingFilter);
     const statusMatches = statusFilter === 'All'
       || (statusFilter === 'Open' ? isOpenRisk(risk) : risk.status === statusFilter);
-    return ratingMatches && statusMatches;
+    const folderMatches = issueFilter === 'All'
+      || (issueFilter === 'Issues and Concerns' ? risk.source_entity_type === 'Issue or Concern Report' : true);
+    return ratingMatches && statusMatches && folderMatches;
   });
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Risk Management" subtitle={`${risks.length} risks in register`} accent={['#0d9488', '#22d3ee']} action={can('risks') && (
+      <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} action={can('risks') && (
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk</button>
+          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk Report</button>
           <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3.5 py-2 text-sm font-semibold text-warning hover:bg-warning/25"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
           <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-safe/15 px-3.5 py-2 text-sm font-semibold text-safe hover:bg-safe/25"><FileWarning className="h-4 w-4" />Report Near Miss</button>
           <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-100 px-3.5 py-2 text-sm font-semibold text-yellow-800 hover:bg-yellow-200"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
@@ -203,7 +206,7 @@ export default function Risks() {
         {RATINGS.map((r) => (
           <div key={r} className={`rounded-xl border border-border/60 p-4 ${ratingColor[r]}`}>
             <div className="text-2xl font-bold font-display">{counts[r]}</div>
-            <div className="text-xs font-medium opacity-80">{r} Risk</div>
+            <div className="text-xs font-medium opacity-80">{r} Risk Report</div>
           </div>
         ))}
       </div>
@@ -339,9 +342,13 @@ export default function Risks() {
       <SectionCard
         id="risk-register"
         title="Risk Register"
-        description={`Displaying ${filteredRisks.length} of ${risks.length} risks`}
+        description={`Displaying ${filteredRisks.length} of ${risks.length} risk reports`}
         action={(
           <div className="flex flex-wrap gap-2">
+            <select value={issueFilter} onChange={(event) => setIssueFilter(event.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-xs font-semibold">
+              <option>All</option>
+              <option>Issues and Concerns</option>
+            </select>
             <select value={ratingFilter} onChange={(event) => setRatingFilter(event.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-xs font-semibold">
               <option>All</option>
               <option>High / Critical</option>
@@ -490,7 +497,7 @@ export default function Risks() {
             <form onSubmit={save} className="space-y-3">
               <Field label="Risk Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
               <div className="grid grid-cols-2 gap-3">
-                <Field label="Report Type"><Select value={form.report_type || 'Risk'} onChange={(e) => set('report_type', e.target.value)}><option value="Risk">Risk</option><option value="Hazard">Hazard</option><option value="Near Miss">Near Miss</option></Select></Field>
+                <Field label="Report Type"><Select value={form.report_type || 'Risk'} onChange={(e) => set('report_type', e.target.value)}><option value="Risk">Risk Report</option><option value="Hazard">Hazard</option><option value="Near Miss">Near Miss</option></Select></Field>
                 <Field label="Risk ID"><TextInput value={form.risk_id || ''} onChange={(e) => set('risk_id', e.target.value)} /></Field>
               </div>
               <Field label="Description"><TextArea value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>

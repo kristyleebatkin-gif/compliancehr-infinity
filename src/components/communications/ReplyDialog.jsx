@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Loader2, MessageSquare } from 'lucide-react';
+import { logCommunicationRegister } from '@/lib/commRouting';
 
 export default function ReplyDialog({ entry, open, onOpenChange, onSaved }) {
   const { toast } = useToast();
@@ -19,7 +20,7 @@ export default function ReplyDialog({ entry, open, onOpenChange, onSaved }) {
     setSaving(true);
     try {
       const user = await base44.auth.me();
-      await base44.entities.CommunicationEntry.create({
+      const record = await base44.entities.CommunicationEntry.create({
         entry_kind: 'Message',
         person_type: entry.person_type || 'General',
         person_name: entry.person_name || '',
@@ -33,6 +34,7 @@ export default function ReplyDialog({ entry, open, onOpenChange, onSaved }) {
         sender_email: user?.email || '',
         ...(emailCopy && entry.sender_email ? { send_copy_emails: [entry.sender_email], email_sent: true, management_copy: true } : {}),
       });
+      await logCommunicationRegister(record);
       if (emailCopy && entry.sender_email) {
         try {
           await base44.functions.invoke('sendProfessionalEmail', {

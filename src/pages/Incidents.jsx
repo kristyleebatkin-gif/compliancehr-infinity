@@ -14,6 +14,7 @@ import IncidentKanban from '@/components/incidents/IncidentKanban';
 import TemplatePicker from '@/components/TemplatePicker';
 import { INVESTIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
+import { logCommunicationRegister } from '@/lib/commRouting';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports, { INCIDENT_CSV_COLUMNS, INVESTIGATION_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 import { downloadCsv } from '@/lib/csvExport';
@@ -160,7 +161,7 @@ export default function Incidents() {
     try {
       const user = await base44.auth.me();
       const isParticipant = Boolean(inc.participant_name);
-      await base44.entities.CommunicationEntry.create({
+      const record = await base44.entities.CommunicationEntry.create({
         entry_kind: 'Shift Note',
         person_type: isParticipant ? 'Participant' : 'Employee',
         person_name: inc.participant_name || inc.staff_name || '',
@@ -179,6 +180,7 @@ export default function Incidents() {
         sender_email: user?.email || '',
         module: 'Incident Clinic',
       });
+      await logCommunicationRegister(record);
       toast({ title: 'Incident copied to the person\'s profile', description: 'It now appears in their communication diary.' });
     } catch (e) { toast({ title: 'Copy failed', description: e.message, variant: 'destructive' }); }
   };

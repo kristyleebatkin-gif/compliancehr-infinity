@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, NotebookPen, Paperclip, Trash2, X } from 'lucide-react';
 import { NOTE_TYPES, SHIFT_TYPES, NOTE_TIPS, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
+import { routeDiaryEntry } from '@/lib/commRouting';
 
 const EMPTY = {
   participant_name: '', note_type: 'Shift Note', shift_type: '', staff_involved: [],
@@ -110,13 +111,14 @@ export default function ShiftNotes() {
         sender_email: user?.email || '',
         module: 'Communications',
       });
+      await routeDiaryEntry(record);
       if (form.goal) {
         const goalRec = goals.find((g) => g.goal === form.goal);
         try {
           await base44.entities.GoalProgressNote.create({
             goal_id: goalRec?.id || '',
             participant_name: form.participant_name,
-            entry_type: form.note_type === 'Progress' ? 'Progress Report' : 'Progress Note',
+            entry_type: form.note_type === 'Progress Reports' ? 'Progress Report' : 'Progress Note',
             notes: form.body,
             recorded_by: user?.full_name || '',
             recorded_date: form.date,

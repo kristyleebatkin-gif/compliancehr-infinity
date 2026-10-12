@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Loader2, Megaphone } from 'lucide-react';
 import { loadCommContacts, loadManagementEmails } from '@/lib/commTypes';
+import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
 
 const GROUPS = ['All Staff', 'Management', 'All Participants', 'All Employees', 'Custom'];
@@ -56,7 +57,7 @@ export default function BulkMessage() {
         if (response.data?.error) throw new Error(response.data.error);
       }
       const user = await base44.auth.me();
-      await base44.entities.CommunicationEntry.create({
+      const record = await base44.entities.CommunicationEntry.create({
         entry_kind: audience === 'Custom' ? 'Message' : 'Broadcast',
         person_type: audience.includes('Participant') ? 'Participant' : 'General',
         subject: form.subject,
@@ -70,6 +71,7 @@ export default function BulkMessage() {
         sender_email: user?.email || '',
         module: 'Communications',
       });
+      await logCommunicationRegister(record);
       toast({ title: `Message sent to ${recipients.length} recipient${recipients.length === 1 ? '' : 's'}`, description: 'Saved in the communication diary and every recipient\'s inbox.' });
       setForm({ subject: '', message: '', date: new Date().toISOString().slice(0, 10), time: '' });
       setCustom([]);

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Mail, Paperclip, X } from 'lucide-react';
 import { loadCommContacts, loadManagementEmails } from '@/lib/commTypes';
+import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
 
 export default function ProfessionalEmail() {
@@ -66,7 +67,7 @@ export default function ProfessionalEmail() {
       });
       if (response.data?.error) throw new Error(response.data.error);
       const user = await base44.auth.me();
-      await base44.entities.CommunicationEntry.create({
+      const record = await base44.entities.CommunicationEntry.create({
         entry_kind: 'Email',
         person_type: 'General',
         subject: form.subject,
@@ -82,6 +83,7 @@ export default function ProfessionalEmail() {
         sender_email: user?.email || '',
         module: 'Communications',
       });
+      await logCommunicationRegister(record);
       toast({
         title: `Email sent to ${response.data.sent} recipient${response.data.sent === 1 ? '' : 's'}`,
         description: response.data.failed?.length ? `Could not send to: ${response.data.failed.join(', ')}` : 'A copy is saved in the communication diary and each recipient\'s inbox.',

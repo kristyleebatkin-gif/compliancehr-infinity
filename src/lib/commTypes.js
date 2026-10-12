@@ -1,6 +1,6 @@
 import { base44 } from '@/api/base44Client';
 
-export const NOTE_TYPES = ['Shift Note', 'Participant Incident', 'Risk', 'Feedback', 'Issue/Concern', 'Changes', 'Progress'];
+export const NOTE_TYPES = ['Shift Note', 'Employee Incident', 'Feedback Form', 'Issue or Concern Report', 'Change Request', 'Progress Notes', 'Progress Reports'];
 
 export const SHIFT_TYPES = [
   'Community Access', 'In-Home Supports', 'Domestic Assistance', 'Yard Assistance',
@@ -33,12 +33,12 @@ export const COMMON_SUBJECTS = [
 
 export const NOTE_TIPS = {
   'Shift Note': 'Tips for effective shift notes: record what you saw, heard and did - facts only, no opinions. Write it as if the family, a supervisor or an auditor will read it. Include times, who was present, and any changes to the participant\'s wellbeing. Avoid abbreviations others may not understand.',
-  'Participant Incident': 'Tips for effective incident reports: report facts, not assumptions - what happened, when, where, who was present, and what you did in response. Note injuries, witnesses and notifications made. Report within required timeframes and never leave out details because they seem minor.',
-  'Risk': 'Tips for effective risk reports: describe the risk clearly, who or what it affects, how likely it is, and the controls already in place. Suggest practical controls - elimination first, then engineering, then training and supervision. Update the risk register rather than keeping a personal list.',
-  'Feedback': 'Tips for effective participant feedback: record feedback in the participant\'s own words where possible, note the date and context, and separate what was said from your interpretation. Include both positives and concerns, and whether the participant wants any action taken.',
-  'Issue/Concern': 'Tips for effective issue/concern reports: state the issue plainly, its impact on the participant or service, and any immediate action taken. Raise it early - small concerns are easier to resolve. Note who you reported it to and when.',
-  'Changes': 'Tips for recording changes: note exactly what changed (routine, health, behaviour, supports, contacts), when you noticed it, and who has been informed. Link the change to the participant\'s plan or routine so the team can adjust supports consistently.',
-  'Progress': 'Tips for effective progress reports: link observations to the participant\'s goals, give concrete examples rather than general impressions, and note both progress and barriers. Keep language strengths-based and objective - describe what the participant did, not labels.',
+  'Employee Incident': 'Tips for effective incident reports: report facts, not assumptions - what happened, when, where, who was present, and what you did in response. Note injuries, witnesses and notifications made. The entry is copied to the Incident Clinic as a formal incident report.',
+  'Feedback Form': 'Tips for effective feedback forms: record feedback in the participant\'s own words where possible, note the date and context, and separate what was said from your interpretation. The entry is copied to the Feedback log and register.',
+  'Issue or Concern Report': 'Tips for effective issue or concern reports: state the issue plainly, its impact on the participant or service, and any immediate action taken. The entry is copied to Risk Reporting under the Issues and Concerns folder.',
+  'Change Request': 'Tips for change requests: note exactly what changed (routine, health, behaviour, supports, contacts), when you noticed it, and who should action it. The entry is created as a to-do task on the Task Dashboard and allocated to the responsible person.',
+  'Progress Notes': 'Tips for effective progress notes: link observations to the participant\'s goals, give concrete examples rather than general impressions, and note both progress and barriers. Keep language strengths-based and objective.',
+  'Progress Reports': 'Tips for effective progress reports: link observations to the participant\'s goals, give concrete examples rather than general impressions, and note both progress and barriers. Keep language strengths-based and objective - describe what the participant did, not labels.',
 };
 
 const CHARACTERS = [

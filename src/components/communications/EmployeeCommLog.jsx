@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ChevronDown, ChevronRight, Download, Loader2, NotebookPen, Paperclip } from 'lucide-react';
 import { EMPLOYEE_LOG_TYPES, COMMON_SUBJECTS, loadCommContacts, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
+import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
 
 export default function EmployeeCommLog() {
@@ -96,6 +97,7 @@ export default function EmployeeCommLog() {
         sender_email: user?.email || '',
         module: 'Communications',
       });
+      await logCommunicationRegister(record);
       if (emails.length) {
         try {
           await base44.functions.invoke('sendProfessionalEmail', {
