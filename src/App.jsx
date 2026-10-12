@@ -48,8 +48,7 @@ import Rostering from '@/pages/Rostering';
 
 import VisualBoards from '@/pages/VisualBoards';
 import CompanySafe from '@/pages/CompanySafe';
-import EquipmentManuals from '@/pages/EquipmentManuals';
-import MsdsLibrary from '@/pages/MsdsLibrary';
+import EquipmentMsds from '@/pages/EquipmentMsds';
 import CommunityCouncil from '@/pages/CommunityCouncil';
 import ReferralSupport from '@/pages/ReferralSupport';
 import NdisProviderPortal from '@/pages/NdisProviderPortal';
@@ -129,8 +128,8 @@ const AuthenticatedApp = () => {
           <Route path="/roster" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
           <Route path="/visual-boards" element={<RoleGate navKey="visual-boards"><VisualBoards /></RoleGate>} />
           <Route path="/company-safe" element={<RoleGate navKey="company-safe"><CompanySafe /></RoleGate>} />
-          <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentManuals /></RoleGate>} />
-          <Route path="/msds" element={<RoleGate navKey="msds"><MsdsLibrary /></RoleGate>} />
+          <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentMsds /></RoleGate>} />
+          <Route path="/msds" element={<Navigate to="/equipment-manuals" replace />} />
           <Route path="/community-council" element={<RoleGate navKey="community-council"><CommunityCouncil /></RoleGate>} />
           <Route path="/referrals" element={<RoleGate navKey="community-referral"><ReferralSupport /></RoleGate>} />
           <Route path="/ndis-portal" element={<RoleGate navKey="ndis-provider"><NdisProviderPortal /></RoleGate>} />

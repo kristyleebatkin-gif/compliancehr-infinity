@@ -228,25 +228,14 @@ export const moduleGuides = {
     ],
   },
   '/equipment-manuals': {
-    title: 'Equipment Manuals & MSDS',
-    purpose: 'Operating, maintenance and safety manuals for every piece of equipment.',
+    title: 'Equipment & MSDS',
+    purpose: 'Equipment manuals and the chemical MSDS register, side by side in one module.',
     steps: [
-      'Add each piece of equipment as a manual record.',
-      'Upload the manufacturer manual (stored privately) or link it online.',
-      'Record operating instructions, safety notes and the maintenance schedule.',
-      'Set the review date and replace the manual when a new version arrives.',
-      'Download the record PDF for audits and handovers.',
-    ],
-  },
-  '/msds': {
-    title: 'MSDS Chemical Library',
-    purpose: 'Safety data sheets for every chemical on site, ready for staff and audits.',
-    steps: [
-      'Search the built-in library of the 50 most common chemicals first.',
-      'Add any new product as soon as it is received, with its SDS link.',
-      'Update hazard, first aid and storage details when the SDS changes.',
-      'Train staff on first aid measures and keep emergency numbers visible.',
-      'Export or print the chemical register for the safety folder.',
+      'Equipment: add each piece of equipment as a manual record, with instructions, safety notes and maintenance schedule.',
+      'Equipment: upload the manufacturer manual (stored privately) or link it online, and set the review date.',
+      'MSDS: search the built-in library of the 50 most common chemicals first.',
+      'MSDS: add any new product as soon as it is received, with its SDS link and first aid measures.',
+      'Keep review dates and SDS details current, then export the registers for audits.',
     ],
   },
   '/community-council': {

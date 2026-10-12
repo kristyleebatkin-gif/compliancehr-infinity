@@ -11,7 +11,7 @@ import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, BarChart3,
-  FlaskConical, MapPin, HeartHandshake, Building2, Newspaper,
+  MapPin, HeartHandshake, Building2, Newspaper,
 } from 'lucide-react';
 
 const PRIMARY_NAV = [
@@ -37,8 +37,7 @@ const PRIMARY_NAV = [
   { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },
   { label: 'Users & Permissions Hub', path: '/users', key: 'users', icon: Users },
   { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
-  { label: 'Equipment Manuals and MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
-  { label: 'MSDS Chemical Library', path: '/msds', key: 'msds', icon: FlaskConical },
+  { label: 'Equipment & MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
   { label: 'Community & Council', path: '/community-council', key: 'community-council', icon: MapPin },
   { label: 'Referral & Support', path: '/referrals', key: 'community-referral', icon: HeartHandshake },
   { label: 'NDIS Provider Portal', path: '/ndis-portal', key: 'ndis-provider', icon: Building2 },
