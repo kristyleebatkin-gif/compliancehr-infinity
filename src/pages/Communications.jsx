@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
@@ -8,6 +8,8 @@ import ProfessionalEmail from '@/components/communications/ProfessionalEmail';
 import BulkMessage from '@/components/communications/BulkMessage';
 import ShiftNotes from '@/components/communications/ShiftNotes';
 import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
+import VideoCalls from '@/components/communications/VideoCalls';
+import AiCompose from '@/components/communications/AiCompose';
 
 export default function Communications() {
   return (
@@ -26,6 +28,8 @@ export default function Communications() {
           <TabsTrigger value="inbox"><InboxIcon className="mr-1 inline h-3.5 w-3.5" />Inbox</TabsTrigger>
           <TabsTrigger value="email"><Mail className="mr-1 inline h-3.5 w-3.5" />Send Email</TabsTrigger>
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
+          <TabsTrigger value="video"><Video className="mr-1 inline h-3.5 w-3.5" />Video Calls</TabsTrigger>
+          <TabsTrigger value="ai"><Sparkles className="mr-1 inline h-3.5 w-3.5" />AI Compose</TabsTrigger>
           <TabsTrigger value="shift-notes"><NotebookPen className="mr-1 inline h-3.5 w-3.5" />Shift Notes</TabsTrigger>
           <TabsTrigger value="employee-log"><Briefcase className="mr-1 inline h-3.5 w-3.5" />Employee Log</TabsTrigger>
         </TabsList>
@@ -33,6 +37,8 @@ export default function Communications() {
         <TabsContent value="inbox"><Inbox /></TabsContent>
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
+        <TabsContent value="video"><VideoCalls /></TabsContent>
+        <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes"><ShiftNotes /></TabsContent>
         <TabsContent value="employee-log"><EmployeeCommLog /></TabsContent>
       </Tabs>

@@ -10,7 +10,8 @@
         "Message",
         "Email",
         "Broadcast",
-        "Team Banter"
+        "Team Banter",
+        "Video Call"
       ],
       "title": "Entry Kind"
     },
