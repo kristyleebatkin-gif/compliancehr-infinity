@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav } from '@/lib/roles';
+import ModuleGuide from '@/components/ModuleGuide';
 import {
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, AlertTriangle,
   ShieldAlert, FolderOpen, UserPlus, Megaphone,
@@ -324,6 +325,9 @@ export default function AppLayout() {
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
+          <div className="mx-auto max-w-6xl px-4 pt-4 md:px-8 md:pt-6">
+            <ModuleGuide />
+          </div>
           <Outlet />
         </main>
 

@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { BookOpen, Download, History, Loader2, Plus, Search, Trash2, UploadCloud, FileText, Pencil } from 'lucide-react';
+import { BookOpen, Download, History, Loader2, Plus, Search, Trash2, UploadCloud, FileText, Pencil, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
@@ -32,6 +32,7 @@ export default function EquipmentManuals() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [form, setForm] = useState(EMPTY_FORM);
+  const [viewing, setViewing] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -175,6 +176,7 @@ export default function EquipmentManuals() {
                 </div>
                 {m.operating_instructions && <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">{m.operating_instructions}</p>}
                 <div className="mt-3 flex flex-wrap gap-1.5 border-t border-border/60 pt-3">
+                  <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setViewing(m)}><Eye className="h-3 w-3" />View manual</Button>
                   {m.manual_file_uri && (
                     <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => openManualFile(m)}>
                       <FileText className="h-3 w-3" />Download manual
@@ -198,6 +200,41 @@ export default function EquipmentManuals() {
           ))}
         </div>
       )}
+
+      <Dialog open={Boolean(viewing)} onOpenChange={(v) => !v && setViewing(null)}>
+        <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader><DialogTitle>{viewing?.title}</DialogTitle></DialogHeader>
+          {viewing && (
+            <div className="space-y-4 text-sm">
+              <div className="flex flex-wrap gap-1.5">
+                {viewing.category && <Badge variant="secondary">{viewing.category}</Badge>}
+                {viewing.manufacturer && <Badge variant="outline">{viewing.manufacturer}</Badge>}
+                {viewing.model && <Badge variant="outline">{viewing.model}</Badge>}
+                {viewing.version && <Badge variant="outline">v{viewing.version}</Badge>}
+              </div>
+              <div className="rounded-xl border border-border/60 bg-muted/40 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Operating instructions</p>
+                <p className="mt-2 whitespace-pre-line">{viewing.operating_instructions || 'No operating instructions recorded yet. Add them via Edit.'}</p>
+              </div>
+              <div className="rounded-xl border border-warning/30 bg-warning/10 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-warning">Safety notes</p>
+                <p className="mt-2 whitespace-pre-line">{viewing.safety_notes || 'No safety notes recorded yet.'}</p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-border/60 p-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Maintenance schedule</p>
+                  <p className="mt-1.5">{viewing.maintenance_schedule || 'Not set'}</p>
+                </div>
+                <div className="rounded-xl border border-border/60 p-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Next review</p>
+                  <p className="mt-1.5">{viewing.review_date ? format(new Date(viewing.review_date), 'd MMM yyyy') : 'Not set'}</p>
+                </div>
+              </div>
+              {viewing.notes && <p className="text-xs text-muted-foreground">{viewing.notes}</p>}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[92vh] overflow-y-auto">

@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2 } from 'lucide-react';
+import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
 import EventAdBuilder from '@/components/events/EventAdBuilder';
 import EventInviteDialog from '@/components/events/EventInviteDialog';
@@ -123,35 +124,73 @@ export default function ProgramsEvents() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-fuchsia-700 via-purple-700 to-indigo-700 p-6 text-white shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-orange-500 via-rose-500 to-fuchsia-600 p-6 text-white shadow-lg">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><PartyPopper className="h-7 w-7" /></div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Programs &amp; Events</h1>
-              <p className="text-sm text-purple-200">Plan community programs and events, build advertisements and invite attendees.</p>
+              <h1 className="text-2xl font-bold tracking-tight">Program Design Centre</h1>
+              <p className="text-sm text-orange-100">Design bright community programs and events, advertise them and invite attendees.</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-purple-200">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-orange-100">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
         </div>
         <div className="mt-4">
-          <Button className="bg-white text-purple-800 hover:bg-purple-100" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
+          <Button className="bg-white text-rose-700 hover:bg-rose-50" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
         </div>
       </div>
 
-      <Tabs defaultValue="Upcoming">
+      {!loading && grouped.Upcoming[0] && (() => {
+        const spotlight = grouped.Upcoming[0];
+        return (
+          <Card className="overflow-hidden border-0 bg-gradient-to-br from-fuchsia-600 via-purple-600 to-indigo-700 text-white shadow-lg">
+            <CardContent className="flex flex-col gap-5 p-6 md:flex-row md:items-center">
+              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-4 backdrop-blur">
+                <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(spotlight.date), 'MMM')}</span>
+                <span className="text-3xl font-bold">{format(new Date(spotlight.date), 'd')}</span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide">Next up</span>
+                  <p className="text-lg font-bold">{spotlight.title}</p>
+                </div>
+                {spotlight.description && <p className="mt-1 line-clamp-2 text-sm text-white/80">{spotlight.description}</p>}
+                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/80">
+                  {spotlight.start_time && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{spotlight.start_time}{spotlight.end_time ? ` - ${spotlight.end_time}` : ''}</span>}
+                  {spotlight.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{spotlight.location}</span>}
+                  {spotlight.cost_text && <span className="flex items-center gap-1"><DollarSign className="h-3 w-3" />{spotlight.cost_text}</span>}
+                </div>
+              </div>
+              <div className="flex shrink-0 flex-wrap gap-2">
+                <Button className="bg-white text-purple-700 hover:bg-purple-50" size="sm" onClick={() => setViewing(spotlight)}><Eye className="mr-1.5 h-3.5 w-3.5" />Details</Button>
+                <Button variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10" size="sm" onClick={() => setInviteFor(spotlight)}><Mail className="mr-1.5 h-3.5 w-3.5" />Invite</Button>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })()}
+
+      <Tabs defaultValue="calendar">
         <TabsList>
+          <TabsTrigger value="calendar">Calendar</TabsTrigger>
           <TabsTrigger value="Upcoming">Upcoming &amp; current ({grouped.Upcoming.length})</TabsTrigger>
           <TabsTrigger value="Past">Past ({grouped.Past.length})</TabsTrigger>
           <TabsTrigger value="All">All ({items.length})</TabsTrigger>
         </TabsList>
+        <TabsContent value="calendar" className="mt-4">
+          {loading ? (
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+          ) : (
+            <EventCalendar events={items.filter((i) => i.date)} onSelect={(event) => setViewing(event)} />
+          )}
+        </TabsContent>
         {['Upcoming', 'Past', 'All'].map((tab) => (
           <TabsContent key={tab} value={tab} className="mt-4">
             {loading ? (
