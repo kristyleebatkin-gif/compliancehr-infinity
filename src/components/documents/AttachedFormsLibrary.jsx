@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown, Download, ExternalLink, FileText, Loader2, Search, UploadCloud } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
+import { routeDocument } from '@/lib/documentRouting';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
@@ -63,7 +64,7 @@ export default function AttachedFormsLibrary({
       const user = await base44.auth.me();
       // Completed forms stay private in the app's own storage.
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      await base44.entities.FormsLibraryDocument.create({
+      const record = await base44.entities.FormsLibraryDocument.create({
         library: libraryKey,
         document_type: docType,
         title: file.name,
@@ -72,7 +73,8 @@ export default function AttachedFormsLibrary({
         uploaded_date: new Date().toISOString().slice(0, 10),
         uploaded_by: user?.full_name || user?.email || '',
       });
-      toast({ title: `${docType} uploaded` });
+      routeDocument(record);
+      toast({ title: `${docType} uploaded`, description: 'Copy linked to this record and filed on the Document Register.' });
       load();
     } catch (error) {
       toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });

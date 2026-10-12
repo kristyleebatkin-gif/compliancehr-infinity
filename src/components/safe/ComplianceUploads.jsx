@@ -59,7 +59,7 @@ export default function ComplianceUploads() {
     try {
       const user = await base44.auth.me();
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      await base44.entities.FormsLibraryDocument.create({
+      const record = await base44.entities.FormsLibraryDocument.create({
         library: 'company-safe',
         document_type: docType,
         title: file.name,
@@ -68,7 +68,8 @@ export default function ComplianceUploads() {
         uploaded_date: new Date().toISOString().slice(0, 10),
         uploaded_by: user?.full_name || user?.email || '',
       });
-      toast({ title: `${docType} uploaded` });
+      routeDocument(record);
+      toast({ title: `${docType} uploaded`, description: 'Filed on the Document Register.' });
       await load();
     } catch (error) {
       toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
