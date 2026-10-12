@@ -11,7 +11,7 @@ import LandingFooter from '@/components/landing/LandingFooter';
 
 export default function Landing() {
   return (
-    <div className="min-h-screen overflow-hidden bg-gradient-to-b from-white via-slate-50/50 to-white dark:from-background dark:via-slate-950 dark:to-background">
+    <div className="min-h-screen overflow-hidden bg-background font-elegant antialiased">
       <LandingNav />
       <main>
         <LandingHero />

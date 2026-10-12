@@ -1,57 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck, Sparkles, Users } from 'lucide-react';
+import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 export default function LandingHero() {
   const [authed, setAuthed] = useState(false);
   useEffect(() => { base44.auth.isAuthenticated().then(setAuthed).catch(() => {}); }, []);
 
-  return (
-    <section className="relative overflow-hidden border-b border-violet-100 dark:border-violet-950">
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-100 via-white to-cyan-100 dark:from-violet-950/40 dark:via-background dark:to-cyan-950/30" />
-      <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-fuchsia-400/20 blur-3xl" />
-      <div className="absolute left-[40%] top-8 h-72 w-72 rounded-full bg-amber-300/15 blur-3xl" />
-      <div className="absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" />
+  const highlights = [
+    { icon: Users, title: 'People connected', text: 'Staff, participants and volunteers' },
+    { icon: BarChart3, title: 'Operations connected', text: 'Rosters, invoices, registers and alerts' },
+    { icon: CheckCircle2, title: 'Audit confidence', text: 'Registration, evidence and reminders ready' },
+  ];
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-8 md:py-28">
+  return (
+    <section className="relative overflow-hidden border-b border-border/70 bg-background">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-48 left-1/2 h-[30rem] w-[72rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-300/40 via-fuchsia-200/30 to-cyan-300/40 blur-3xl dark:from-violet-800/30 dark:via-fuchsia-900/20 dark:to-cyan-800/25" />
+        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-amber-200/25 blur-3xl dark:bg-amber-500/10" />
+        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-cyan-200/30 blur-3xl dark:bg-cyan-500/10" />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none font-editorial text-[22vw] font-bold leading-none text-slate-900/[0.03] dark:text-white/[0.02]">HR</div>
+
+      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white/80 px-4 py-1.5 text-xs font-semibold text-violet-700 shadow-sm backdrop-blur dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-200">
-            <ShieldCheck className="h-3.5 w-3.5" />
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+            <ShieldCheck className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
             NDIS provider operations and compliance platform
           </div>
-          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground md:text-6xl">
-            Compliance management,<br />
-            <span className="bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">simplified end to end</span>
+
+          <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
+            Compliance management,
+            <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">simplified end to end.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-foreground/60 md:text-xl">
+
+          <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
             Connect intake, people, rostering, shift notes, HR, invoicing, safety, provider registration and audit evidence in one secure platform built for disability and community service providers.
           </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to={authed ? '/dashboard' : '/register'} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-700 via-indigo-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl">
-              {authed ? 'Go to Dashboard' : 'Get started free'}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            {authed ? <a href="#quick-start" className="inline-flex items-center gap-2 rounded-xl border border-cyan-200 bg-white/80 px-6 py-3.5 text-base font-semibold text-cyan-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white">View quick start guide</a> : <Link to="/login" className="inline-flex items-center gap-2 rounded-xl border border-cyan-200 bg-white/80 px-6 py-3.5 text-base font-semibold text-cyan-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white">Sign in</Link>}
-          </div>
-          <p className="mt-5 text-sm font-medium text-foreground/50">No credit card required • Set up in minutes</p>
 
-          <div className="mt-12 grid gap-3 text-left sm:grid-cols-3">
-            {[
-              [Users, 'People connected', 'Staff, participants and volunteers', 'from-violet-600 to-fuchsia-500'],
-              [BarChart3, 'Operations connected', 'Rosters, invoices, registers and alerts', 'from-blue-600 to-cyan-500'],
-              [CheckCircle2, 'Audit confidence', 'Registration, evidence and reminders ready', 'from-emerald-600 to-teal-500'],
-            ].map(([Icon, title, text, colour]) => (
-              <div key={title} className="rounded-2xl border border-white/80 bg-white/75 p-4 shadow-lg shadow-slate-900/5 backdrop-blur dark:border-white/10 dark:bg-card/70">
-                <div className={`mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br ${colour} text-white`}><Icon className="h-4 w-4" /></div>
-                <div className="text-sm font-bold text-foreground">{title}</div>
-                <div className="mt-1 text-xs text-foreground/55">{text}</div>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link to={authed ? '/dashboard' : '/register'} className="group inline-flex items-center gap-2.5 rounded-full bg-slate-950 px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:shadow-2xl dark:bg-white dark:text-slate-950">
+              {authed ? 'Go to Dashboard' : 'Get started free'}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            {authed ? (
+              <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View quick start guide</a>
+            ) : (
+              <Link to="/login" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">Sign in</Link>
+            )}
+          </div>
+          <p className="mt-5 text-[13px] font-medium tracking-wide text-foreground/45">No credit card required · Set up in minutes</p>
+
+          <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
+            {highlights.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="group rounded-2xl border border-slate-200/80 bg-white/75 p-5 shadow-lg shadow-slate-900/5 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-cyan-100 text-violet-700 shadow-sm transition-transform group-hover:scale-105 dark:from-violet-500/20 dark:to-cyan-500/20 dark:text-violet-300">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="mt-4 font-editorial text-lg font-semibold text-foreground">{title}</div>
+                <div className="mt-1 text-sm text-foreground/55">{text}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <Sparkles className="absolute bottom-10 right-[8%] h-8 w-8 text-amber-400/60" />
     </section>
   );
 }

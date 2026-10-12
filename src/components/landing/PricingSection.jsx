@@ -18,66 +18,58 @@ const INCLUDED = [
   'Compliance records, reporting and audit tools',
   'Incident, risk, training and document management',
 ];
-const TIER_STYLES = [
-  'from-violet-100/80 to-fuchsia-50 dark:from-violet-950/50 dark:to-fuchsia-950/30',
-  'from-blue-100/80 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/30',
-  'from-emerald-100/80 to-teal-50 dark:from-emerald-950/50 dark:to-teal-950/30',
-  'from-amber-100/80 to-orange-50 dark:from-amber-950/50 dark:to-orange-950/30',
-  'from-pink-100/80 to-rose-50 dark:from-pink-950/50 dark:to-rose-950/30',
-  'from-indigo-100/80 to-violet-50 dark:from-indigo-950/50 dark:to-violet-950/30',
-];
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="mx-auto my-8 max-w-6xl rounded-[2.5rem] border border-violet-200 bg-gradient-to-br from-violet-100 via-white to-cyan-100 px-4 py-20 shadow-xl shadow-violet-500/10 dark:border-violet-900 dark:from-violet-950/30 dark:via-background dark:to-cyan-950/30 md:px-8">
+    <section id="pricing" className="mx-auto my-10 max-w-6xl rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-50/60 px-4 py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
       <div className="mx-auto max-w-2xl text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-gradient-to-r from-violet-600 to-fuchsia-500 px-4 py-1.5 text-xs font-semibold text-white shadow-md shadow-fuchsia-500/20">
+        <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-fuchsia-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-fuchsia-700 dark:border-fuchsia-500/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
           <Sparkles className="h-3.5 w-3.5" />
           Start with a 14-day free trial
         </div>
-        <h2 className="mt-5 font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          Simple pricing that grows with your team
+        <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
+          Simple pricing that <span className="font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">grows with your team</span>
         </h2>
         <p className="mt-4 text-lg text-foreground/60">
           Choose monthly repayments on a 12-month agreement or pay yearly upfront.
         </p>
       </div>
 
-      <div className="mt-12 overflow-hidden rounded-2xl border border-violet-200 bg-card shadow-xl shadow-violet-500/5 dark:border-violet-900">
-        <div className="hidden grid-cols-[1.2fr_1fr_1fr] bg-gradient-to-r from-violet-700 to-blue-600 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-white sm:grid">
+      <div className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-card shadow-xl shadow-slate-900/5 dark:border-white/10">
+        <div className="hidden grid-cols-[1.2fr_1fr_1fr] bg-slate-950 px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white sm:grid dark:bg-slate-900">
           <div>Access users</div>
           <div>Monthly repayment</div>
           <div>Yearly upfront</div>
         </div>
-        <div className="divide-y divide-border/60">
-          {PRICING_TIERS.map((tier, index) => (
+        <div className="divide-y divide-slate-100 dark:divide-white/10">
+          {PRICING_TIERS.map((tier) => (
             <div
               key={tier.users}
-              className={`grid gap-4 bg-gradient-to-r px-5 py-5 transition-colors hover:brightness-[0.98] sm:grid-cols-[1.2fr_1fr_1fr] sm:items-center sm:px-6 ${TIER_STYLES[index]}`}
+              className="grid gap-4 px-5 py-5 transition-colors hover:bg-violet-50/50 dark:hover:bg-white/5 sm:grid-cols-[1.2fr_1fr_1fr] sm:items-center sm:px-6"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <span className="font-semibold text-foreground">{tier.users}</span>
                 {tier.featured && (
-                  <span className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm">
+                  <span className="rounded-full bg-slate-950 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white dark:bg-white dark:text-slate-950">
                     Starting plan
                   </span>
                 )}
               </div>
               <div>
-                <div className="text-xs font-medium uppercase tracking-wide text-foreground/45 sm:hidden">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-foreground/40 sm:hidden">
                   Monthly repayment
                 </div>
                 <div className="mt-1 sm:mt-0">
-                  <span className="text-2xl font-bold text-foreground">${tier.monthly}</span>
+                  <span className="font-editorial text-3xl font-semibold text-foreground">${tier.monthly}</span>
                   <span className="text-sm text-foreground/50"> / month</span>
                 </div>
               </div>
               <div>
-                <div className="text-xs font-medium uppercase tracking-wide text-foreground/45 sm:hidden">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-foreground/40 sm:hidden">
                   Yearly upfront
                 </div>
                 <div className="mt-1 sm:mt-0">
-                  <span className="text-2xl font-bold text-foreground">${tier.yearly}</span>
+                  <span className="font-editorial text-3xl font-semibold text-foreground">${tier.yearly}</span>
                   <span className="text-sm text-foreground/50"> / year</span>
                 </div>
               </div>
@@ -86,13 +78,13 @@ export default function PricingSection() {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 rounded-2xl border border-cyan-200 bg-gradient-to-r from-violet-100 via-blue-50 to-cyan-100 p-6 shadow-lg shadow-cyan-500/10 dark:border-cyan-900 dark:from-violet-950/30 dark:via-blue-950/20 dark:to-cyan-950/30 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+      <div className="mt-8 grid gap-6 rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-lg backdrop-blur dark:border-white/10 dark:bg-card/80 md:grid-cols-[1fr_auto] md:items-center md:p-8">
         <div>
-          <h3 className="font-display text-xl font-bold text-foreground">Every plan includes</h3>
+          <h3 className="font-editorial text-xl font-semibold text-foreground">Every plan includes</h3>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2">
             {INCLUDED.map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-foreground/70">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-violet-600 dark:text-violet-400" />
                 {item}
               </li>
             ))}
@@ -100,10 +92,10 @@ export default function PricingSection() {
         </div>
         <Link
           to="/register"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition-colors hover:bg-brand/90"
+          className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:shadow-2xl dark:bg-white dark:text-slate-950"
         >
           Start free trial
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
 

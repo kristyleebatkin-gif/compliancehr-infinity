@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@400..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -154,5 +156,15 @@
     background:
       linear-gradient(180deg, rgba(79, 70, 229, 0.06), transparent 13rem),
       hsl(var(--sidebar-background));
+  }
+  .font-editorial {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  }
+  .font-editorial-italic {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-style: italic;
+  }
+  .font-elegant {
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
   }
 }

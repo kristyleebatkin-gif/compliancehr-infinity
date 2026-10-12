@@ -10,24 +10,27 @@ export default function LandingFooter() {
   ];
 
   return (
-    <footer className="border-t border-violet-900 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
-      <div className="mx-auto max-w-6xl px-4 py-12 md:px-8">
+    <footer className="relative overflow-hidden border-t border-slate-900 bg-slate-950 text-white">
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-violet-600/15 blur-3xl" />
+      <div className="relative mx-auto max-w-6xl px-4 py-14 md:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-brand text-white">
-                <ShieldCheck className="h-5 w-5" />
+            <Link to="/" className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10">
+                <ShieldCheck className="h-5 w-5 text-white" />
               </div>
-              <span className="font-display text-lg font-bold tracking-tight text-white">Compliance<span className="text-cyan-300">HR</span></span>
+              <span className="font-editorial text-xl font-semibold tracking-tight text-white">
+                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
+              </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-white/60">Comprehensive compliance management for disability and community service providers.</p>
+            <p className="mt-4 text-sm leading-relaxed text-white/55">Comprehensive compliance management for disability and community service providers.</p>
           </div>
           {cols.map((c) => (
             <div key={c.title}>
-              <h4 className="text-sm font-semibold text-white">{c.title}</h4>
+              <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/40">{c.title}</h4>
               <ul className="mt-4 space-y-2.5">
                 {c.links.map((l) => (
-                  <li key={l}><a href="#features" className="text-sm text-white/55 transition-colors hover:text-cyan-300">{l}</a></li>
+                  <li key={l}><a href="#features" className="text-sm text-white/55 transition-colors hover:text-white">{l}</a></li>
                 ))}
               </ul>
             </div>

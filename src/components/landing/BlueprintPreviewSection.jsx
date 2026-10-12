@@ -89,14 +89,14 @@ export default function BlueprintPreviewSection() {
   const moduleCount = APP_MODULE_GROUPS.reduce((total, group) => total + group.modules.length, 0);
 
   return (
-    <section className="relative mx-auto my-8 max-w-7xl overflow-hidden rounded-[2.5rem] border border-cyan-200 bg-gradient-to-br from-cyan-100 via-white to-violet-100 px-4 py-20 shadow-xl shadow-cyan-500/5 dark:border-cyan-900 dark:from-cyan-950/30 dark:via-background dark:to-violet-950/30 md:px-8">
+    <section id="blueprint" className="relative mx-auto my-10 max-w-7xl overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-cyan-50/70 via-white to-violet-50/70 px-4 py-20 shadow-xl shadow-cyan-500/5 dark:border-white/10 dark:from-cyan-950/25 dark:via-background dark:to-violet-950/25 md:px-8">
       <div className="absolute -left-20 bottom-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-3xl text-center">
-        <div className="mx-auto inline-flex rounded-full bg-gradient-to-r from-cyan-600 to-violet-600 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white shadow-md">Current platform blueprint</div>
-        <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
-          An accurate map of the <span className="bg-gradient-to-r from-cyan-700 via-blue-600 to-violet-700 bg-clip-text text-transparent">ComplianceHR app</span>
+        <div className="mx-auto inline-flex rounded-full border border-cyan-200 bg-cyan-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-300">Current platform blueprint</div>
+        <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
+          An accurate map of the <span className="font-editorial-italic bg-gradient-to-r from-cyan-700 via-blue-600 to-violet-700 bg-clip-text text-transparent">ComplianceHR app</span>
         </h2>
         <p className="mt-4 text-lg font-medium text-foreground/65">
           All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
@@ -135,7 +135,7 @@ export default function BlueprintPreviewSection() {
           <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/70 p-4 sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div className="flex items-center gap-2 text-lg font-bold text-white"><LayoutDashboard className="h-5 w-5 text-cyan-300" />Organisation Dashboard</div>
+                <div className="flex items-center gap-2 font-editorial text-xl font-semibold text-white"><LayoutDashboard className="h-5 w-5 text-cyan-300" />Organisation Dashboard</div>
                 <div className="mt-1 text-xs text-slate-400">People, service delivery, compliance and business operations connected.</div>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -171,7 +171,7 @@ export default function BlueprintPreviewSection() {
 
       <div className="relative mt-8 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
         <div className="rounded-2xl border border-blue-200 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-blue-900 dark:bg-card/75">
-          <h3 className="text-base font-bold text-blue-950 dark:text-blue-100">How information connects</h3>
+          <h3 className="font-editorial text-lg font-semibold text-blue-950 dark:text-blue-100">How information connects</h3>
           <p className="mt-1 text-xs text-foreground/55">Records move through connected workflows instead of being entered repeatedly.</p>
           <div className="mt-4 space-y-3">
             {DATA_FLOWS.map((flow) => (
@@ -188,7 +188,7 @@ export default function BlueprintPreviewSection() {
         </div>
 
         <div className="rounded-2xl border border-violet-200 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-violet-900 dark:bg-card/75">
-          <h3 className="text-base font-bold text-violet-950 dark:text-violet-100">Access follows the person&apos;s role</h3>
+          <h3 className="font-editorial text-lg font-semibold text-violet-950 dark:text-violet-100">Access follows the person&apos;s role</h3>
           <div className="mt-4 space-y-3">
             {ACCESS_LEVELS.map(([title, description]) => (
               <div key={title} className="border-l-2 border-violet-400 pl-3">
