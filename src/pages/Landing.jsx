@@ -4,6 +4,7 @@ import LandingHero from '@/components/landing/LandingHero';
 import QuickStartSection from '@/components/landing/QuickStartSection';
 import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
+import ExpressAuditSection from '@/components/landing/ExpressAuditSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
 import PricingSection from '@/components/landing/PricingSection';
 import LandingCTA from '@/components/landing/LandingCTA';
@@ -17,6 +18,7 @@ export default function Landing() {
         <LandingHero />
         <QuickStartSection />
         <FeaturesSection />
+        <ExpressAuditSection />
         <BlueprintPreviewSection />
         <BenefitsSection />
         <LandingCTA />

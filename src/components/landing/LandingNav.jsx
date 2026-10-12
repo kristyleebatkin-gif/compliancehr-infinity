@@ -13,6 +13,7 @@ export default function LandingNav() {
 
   const links = [
     { label: 'Quick Start', href: '#quick-start' },
+    { label: 'Express Audit', href: '#express-audit' },
     { label: 'Features', href: '#features' },
     { label: 'Benefits', href: '#benefits' },
     { label: 'Pricing', href: '#pricing' },

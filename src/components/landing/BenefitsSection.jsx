@@ -5,7 +5,7 @@ const BENEFITS = [
   { icon: ShieldCheck, title: 'Stay Compliant', desc: 'Meet NDIS standards and regulatory obligations with confidence.' },
   { icon: ShieldAlert, title: 'Reduce Risk', desc: 'Identify, assess, and manage risks before they become incidents.' },
   { icon: TrendingUp, title: 'Improve Quality', desc: 'Deliver safe, consistent, and high-quality supports.' },
-  { icon: ClipboardCheck, title: 'Audit Ready', desc: 'Maintain accurate records and evidence at all times.' },
+  { icon: ClipboardCheck, title: 'Audit Ready in Minutes', desc: 'Express internal audits with evidence and corrective actions captured automatically.' },
   { icon: RefreshCw, title: 'Continuous Improvement', desc: 'Use data and feedback to drive better participant outcomes.' },
   { icon: Lock, title: 'Secure & Role-Based', desc: 'Granular access keeps sensitive data protected and private.' },
 ];

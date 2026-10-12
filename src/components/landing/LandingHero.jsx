@@ -10,7 +10,7 @@ export default function LandingHero() {
   const highlights = [
     { icon: Users, title: 'People connected', text: 'Staff, participants and volunteers' },
     { icon: BarChart3, title: 'Operations connected', text: 'Rosters, invoices, registers and alerts' },
-    { icon: CheckCircle2, title: 'Audit confidence', text: 'Registration, evidence and reminders ready' },
+    { icon: CheckCircle2, title: 'Audit confidence', text: 'Two-minute internal audits, evidence and reports ready' },
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function LandingHero() {
           </h1>
 
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
-            Connect intake, people, rostering, shift notes, HR, invoicing, safety, provider registration and audit evidence in one secure platform built for disability and community service providers.
+            Connect intake, people, rostering, shift notes, HR, invoicing, safety, provider registration and audit evidence in one secure platform built for disability and community service providers. Internal audits are completed in minutes, from checklist to branded report, ready for your next NDIS audit.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">

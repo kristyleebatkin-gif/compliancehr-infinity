@@ -24,7 +24,7 @@ const FEATURES = [
   { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess, and treat risks and hazards with a live register and mitigation tracking.', color: '#f97316' },
   { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions, and stay on top of expiring certifications automatically.', color: '#d946ef' },
   { icon: BadgeCheck, title: 'NDIS Provider Governance', desc: 'Store registration certificates and groups, schedule audits and renewals, receive reminders and open official Commission portals.', color: '#4338ca' },
-  { icon: ClipboardCheck, title: 'Audit & Certification', desc: 'Run internal audits, manage NDIS deadlines, control evidence and prepare printable staff and participant file checklists.', color: '#4f46e5' },
+  { icon: ClipboardCheck, title: 'Express Audit & Certification', desc: 'Complete internal audits in minutes from checklists with evidence attached, generate branded reports, manage NDIS deadlines and prepare printable file checklists.', color: '#4f46e5' },
   { icon: MapPinned, title: 'Community Referral', desc: 'Find essential crisis contacts, verified provider contacts and nearby community services from a postcode.', color: '#0284c7' },
   { icon: Sparkles, title: 'Automation & Spreadsheet Exchange', desc: 'Use assisted checks, scheduled reminders and secure Excel import, preview and export across connected modules.', color: '#be185d' },
 ];

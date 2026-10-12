@@ -16,6 +16,7 @@ const INCLUDED = [
   'Access to the complete ComplianceHR platform',
   'Role-based access for your team and participants',
   'Compliance records, reporting and audit tools',
+  'Express two-minute audits with branded reports',
   'Incident, risk, training and document management',
 ];
 
