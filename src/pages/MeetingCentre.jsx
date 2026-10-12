@@ -12,10 +12,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ChevronDown, Download, FileDown, Plus, Trash2, CalendarDays, Pencil } from 'lucide-react';
-import { format } from 'date-fns';
+import { ChevronDown, Copy, Download, FileDown, Plus, Trash2, CalendarDays, Pencil, Search, Clock } from 'lucide-react';
+import { format, differenceInCalendarDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { downloadMinutesTemplate } from '@/lib/meetingPdf';
+import { AGENDA_TEMPLATES } from '@/lib/meetingAgendaTemplates';
 import MeetingCalendar from '@/components/meetings/MeetingCalendar';
 import MeetingDetail from '@/components/meetings/MeetingDetail';
 
@@ -35,12 +36,17 @@ export default function MeetingCentre() {
   const [editingId, setEditingId] = useState(null);
   const [expanded, setExpanded] = useState({});
   const [form, setForm] = useState(EMPTY_FORM);
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [openActions, setOpenActions] = useState(0);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
       const page = await base44.entities.Meeting.filter({}, { sort: '-date', limit: 200 });
       setMeetings(page.items);
+      const actions = await base44.entities.Task.count({ linked_entity_type: 'Meeting', status: { $in: ['Open', 'In Progress', 'Overdue'] } });
+      setOpenActions(actions);
     } finally {
       setLoading(false);
     }
@@ -98,12 +104,39 @@ export default function MeetingCentre() {
     toast({ title: 'Meeting register exported' });
   };
 
+  const todayStr = format(new Date(), 'yyyy-MM-dd');
+  const upcoming = meetings
+    .filter((m) => m.status === 'Scheduled' && m.date && m.date >= todayStr)
+    .sort((a, b) => `${a.date}${a.time || ''}`.localeCompare(`${b.date}${b.time || ''}`));
+  const nextMeeting = upcoming[0];
+  const minutesOutstanding = meetings.filter((m) => m.status === 'Scheduled' && m.date && m.date < todayStr && !m.minutes);
+  const completedCount = meetings.filter((m) => m.status === 'Completed').length;
+  const visibleMeetings = meetings.filter((m) =>
+    (typeFilter === 'All' || m.meeting_type === typeFilter) &&
+    (!search.trim() || [m.title, m.meeting_type, m.chair, m.attendees, m.location].some((v) => (v || '').toLowerCase().includes(search.trim().toLowerCase())))
+  );
+
+  const duplicateMeeting = async (m) => {
+    try {
+      const { id, created_date, updated_date, created_by_id, attendance, minutes, assessment, minutes_file_uri, minutes_file_name, invited_at, invited_to, status, ...rest } = m;
+      await base44.entities.Meeting.create({
+        ...rest,
+        status: 'Scheduled',
+        attendance: '', minutes: '', assessment: '', minutes_file_uri: '', minutes_file_name: '', invited_at: '', invited_to: '',
+      });
+      await load();
+      toast({ title: 'Meeting duplicated', description: 'A fresh scheduled copy was created. Set the new date and details.' });
+    } catch (error) {
+      toast({ title: 'Could not duplicate', description: error.message, variant: 'destructive' });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
         icon={CalendarDays}
         title="Meeting Centre"
-        subtitle="Meeting register, calendar, invites, minutes and follow-up tasks."
+        subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         action={
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
@@ -113,20 +146,86 @@ export default function MeetingCentre() {
         }
       />
 
+      {nextMeeting && (
+        <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-indigo-600 to-brand text-white shadow-lg">
+          <CardContent className="flex flex-wrap items-center gap-5 p-5">
+            <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-3">
+              <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(nextMeeting.date), 'MMM')}</span>
+              <span className="text-2xl font-bold">{format(new Date(nextMeeting.date), 'd')}</span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide">Next meeting</span>
+                <p className="text-lg font-bold">{nextMeeting.title}</p>
+              </div>
+              <p className="mt-1 text-sm text-white/80">
+                {format(new Date(nextMeeting.date), 'EEEE d MMM yyyy')}{nextMeeting.time ? ` at ${nextMeeting.time}` : ''}
+                {nextMeeting.location ? ` · ${nextMeeting.location}` : ''}
+                {' '}· in {Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date()))} day{Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date())) === 1 ? '' : 's'}
+              </p>
+            </div>
+            {nextMeeting.meeting_link && (
+              <a href={nextMeeting.meeting_link} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-indigo-700 hover:bg-indigo-50">
+                <Clock className="h-4 w-4" />Join online
+              </a>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          ['Scheduled', String(meetings.filter((m) => m.status === 'Scheduled').length)],
+          ['Completed', String(completedCount)],
+          ['Open follow-up actions', String(openActions)],
+          ['Minutes outstanding', String(minutesOutstanding.length)],
+        ].map(([label, value]) => (
+          <Card key={label}>
+            <CardContent className="p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
+              <p className="mt-1 text-xl font-bold">{value}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       <Tabs defaultValue="register">
         <TabsList className="flex-wrap">
           <TabsTrigger value="register">Meeting register</TabsTrigger>
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="register" className="mt-4">
+        <TabsContent value="register" className="mt-4 space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative min-w-52 flex-1">
+              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input className="pl-8" placeholder="Search meetings, chair or attendees..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            </div>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-52"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All meeting types</SelectItem>
+                {TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {minutesOutstanding.length > 0 && (
+            <div className="rounded-xl border border-warning/30 bg-warning/10 p-3 text-sm">
+              <p className="font-bold text-warning">Minutes outstanding ({minutesOutstanding.length})</p>
+              <p className="mt-1 text-xs text-foreground/70">{minutesOutstanding.map((m) => `${m.title}${m.date ? ` (${format(new Date(m.date), 'd MMM')})` : ''}`).join(' · ')} - open a meeting below to record its minutes.</p>
+            </div>
+          )}
+
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : meetings.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No meetings scheduled yet. Schedule your first meeting above.</CardContent></Card>
+          ) : visibleMeetings.length === 0 ? (
+            <Card><CardContent className="p-10 text-center text-muted-foreground">No meetings match this search or filter.</CardContent></Card>
           ) : (
             <div className="space-y-3">
-              {meetings.map((m) => (
+              {visibleMeetings.map((m) => (
                 <Card key={m.id}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-2">
@@ -139,7 +238,9 @@ export default function MeetingCentre() {
                       </button>
                       <div className="flex shrink-0 items-center gap-2">
                         <Badge className={statusTone(m.status)}>{m.status}</Badge>
+                        {m.status === 'Scheduled' && m.date && m.date < todayStr && <Badge className="bg-warning/10 text-warning text-[10px]">Minutes due</Badge>}
                         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(m)} title="Edit"><Pencil className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => duplicateMeeting(m)} title="Duplicate"><Copy className="h-4 w-4" /></Button>
                         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={async () => { await base44.entities.Meeting.delete(m.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                         <ChevronDown className={`h-4 w-4 text-foreground/40 transition-transform ${expanded[m.id] ? 'rotate-180' : ''}`} />
                       </div>
@@ -196,7 +297,15 @@ export default function MeetingCentre() {
             <div className="grid gap-1.5"><Label>Attendees</Label><Input value={form.attendees} onChange={(e) => setForm({ ...form, attendees: e.target.value })} placeholder="Names of expected attendees" /></div>
             <div className="grid gap-1.5"><Label>Attendee emails (for invites)</Label><Input value={form.attendee_emails} onChange={(e) => setForm({ ...form, attendee_emails: e.target.value })} placeholder="name@example.com, name2@example.com" /></div>
             <div className="grid gap-1.5"><Label>Purpose</Label><Input value={form.purpose} onChange={(e) => setForm({ ...form, purpose: e.target.value })} /></div>
-            <div className="grid gap-1.5"><Label>Agenda</Label><Textarea rows={3} value={form.agenda} onChange={(e) => setForm({ ...form, agenda: e.target.value })} /></div>
+            <div className="rounded-xl border border-border/60 bg-muted/40 p-2.5">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/50">Agenda assistant - insert a structured template</p>
+              <div className="flex flex-wrap gap-1.5">
+                {Object.keys(AGENDA_TEMPLATES).map((t) => (
+                  <Button key={t} variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => setForm((f) => ({ ...f, agenda: AGENDA_TEMPLATES[t] }))}>{t}</Button>
+                ))}
+              </div>
+            </div>
+            <div className="grid gap-1.5"><Label>Agenda</Label><Textarea rows={5} value={form.agenda} onChange={(e) => setForm({ ...form, agenda: e.target.value })} /></div>
             <Button onClick={save} disabled={saving || !form.title.trim()}>{editingId ? 'Save changes' : 'Schedule meeting'}</Button>
           </div>
         </DialogContent>
