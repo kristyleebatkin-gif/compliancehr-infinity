@@ -9,7 +9,7 @@ import {
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, AlertTriangle,
   ShieldAlert, FolderOpen, UserPlus, Megaphone,
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
-  Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark,
+  Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark, LifeBuoy,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, BarChart3,
   MapPin, HeartHandshake, Building2, Newspaper,
 } from 'lucide-react';
@@ -49,6 +49,7 @@ const PRIMARY_NAV = [
   { label: 'Task Dashboard', path: '/tasks', key: 'tasks', icon: ClipboardList },
   { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
   { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },
+  { label: 'Help Centre', path: '/help', key: 'help', icon: LifeBuoy },
 
 ];
 
