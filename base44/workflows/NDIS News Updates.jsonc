@@ -1,0 +1,45 @@
+{
+  "description": "Fetches the latest NDIS news, pricing and compliance updates daily at 7am and saves them to the NDIS Updates library.",
+  "name": "NDIS News Updates",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "ndis_news_updates",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_ndis_news": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "ndisNewsSync",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Fetch NDIS news",
+            "description": "Daily fetch from NDIS websites"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}

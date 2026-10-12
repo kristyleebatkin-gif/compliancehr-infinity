@@ -1,0 +1,25 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { fetchNdisItems, cleanNdisItems } from '../../shared/ndisNews.ts';
+
+// Fetches the latest NDIS news and upserts it into the NdisUpdate library.
+// Called daily by the "NDIS News Updates" scheduled workflow.
+export default async function(req) {
+  try {
+    const base44 = createClientFromRequest(req);
+    const service = base44.asServiceRole;
+    const core = service.integrations.Core;
+
+    const result = await fetchNdisItems(core);
+    const cleaned = cleanNdisItems(result?.items);
+    if (!cleaned.length) return Response.json({ created: 0, updated: 0, items: 0 });
+
+    const upsert = await service.entities.NdisUpdate.upsert(cleaned, { key: 'url' });
+    return Response.json({
+      created: upsert.created || 0,
+      updated: upsert.updated || 0,
+      items: cleaned.length,
+    });
+  } catch (error) {
+    return Response.json({ error: error.message || 'NDIS news sync failed.' }, { status: 500 });
+  }
+}

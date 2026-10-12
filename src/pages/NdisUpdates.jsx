@@ -8,9 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
-import { Newspaper, RefreshCw, ExternalLink, Mail } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Newspaper, RefreshCw, ExternalLink, Mail, Search } from 'lucide-react';
 
 const TYPE_FILTERS = ['News', 'Update', 'Consultation'];
+
+const buildQuery = (tab, typeFilter, search) => {
+  const conds = [];
+  if (tab === 'newsletters') conds.push({ news_type: 'Newsletter' });
+  else if (typeFilter !== 'all') conds.push({ news_type: typeFilter });
+  const term = search.trim();
+  if (term) conds.push({ $or: [
+    { title: { $regex: term, $options: 'i' } },
+    { summary: { $regex: term, $options: 'i' } },
+    { category: { $regex: term, $options: 'i' } },
+  ] });
+  if (conds.length === 0) return {};
+  if (conds.length === 1) return conds[0];
+  return { $and: conds };
+};
 
 export default function NdisUpdates() {
   const { toast } = useToast();
@@ -19,6 +35,7 @@ export default function NdisUpdates() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [typeFilter, setTypeFilter] = useState('all');
+  const [search, setSearch] = useState('');
   const [tab, setTab] = useState('updates');
 
   const load = useCallback(async () => {
@@ -31,13 +48,12 @@ export default function NdisUpdates() {
       const cutoff = format(new Date(Date.now() - 30 * 86400000), 'yyyy-MM-dd');
       const recent = await base44.entities.NdisUpdate.count({ published_date: { $gte: cutoff } });
       setStats({ total, recent, byType });
-      const query = tab === 'newsletters' ? { news_type: 'Newsletter' } : (typeFilter === 'all' ? {} : { news_type: typeFilter });
-      const list = await base44.entities.NdisUpdate.filter(query, { sort: '-published_date', limit: 60 });
+      const list = await base44.entities.NdisUpdate.filter(buildQuery(tab, typeFilter, search), { sort: '-published_date', limit: 60 });
       setItems(list.items);
     } finally {
       setLoading(false);
     }
-  }, [typeFilter, tab]);
+  }, [typeFilter, tab, search]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -108,6 +124,10 @@ export default function NdisUpdates() {
                 {TYPE_FILTERS.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
               </SelectContent>
             </Select>
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search updates..." className="pl-8" />
+            </div>
           </div>
           <NdisUpdateList items={items} loading={loading} />
         </TabsContent>
