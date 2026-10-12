@@ -91,6 +91,19 @@
     "sent_to": {
       "type": "string",
       "title": "Sent To"
+    },
+    "pdf_file_uri": {
+      "type": "string",
+      "title": "Stored Quote PDF (File URI)"
+    },
+    "pdf_file_name": {
+      "type": "string",
+      "title": "Stored Quote PDF Name"
+    },
+    "pdf_generated_date": {
+      "type": "string",
+      "format": "date",
+      "title": "PDF Copy Filed On"
     }
   },
   "required": [

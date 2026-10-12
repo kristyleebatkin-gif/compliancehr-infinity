@@ -9,10 +9,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { SUPPORT_ITEMS, lineAmount, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
 import { Plus, Trash2 } from 'lucide-react';
 import { format, addDays } from 'date-fns';
+import { archiveQuoteCopy } from '@/lib/quoteArchive';
+import { useToast } from '@/components/ui/use-toast';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
 export default function QuoteBuilder({ open, onOpenChange, editing, business, onSaved }) {
+  const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(null);
   const [lines, setLines] = useState([]);
@@ -52,11 +55,21 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
         subtotal: Math.round(subtotal * 100) / 100,
         total: Math.round(subtotal * 100) / 100,
       };
-      if (editing) await base44.entities.Quote.update(editing.id, data);
-      else {
+      let saved;
+      if (editing) {
+        await base44.entities.Quote.update(editing.id, data);
+        saved = { ...editing, ...data };
+      } else {
         const count = await base44.entities.Quote.count({});
         data.quote_number = data.quote_number || `Q-${new Date().getFullYear()}-${String(count + 1).padStart(3, '0')}`;
-        await base44.entities.Quote.create(data);
+        saved = await base44.entities.Quote.create(data);
+      }
+      // Automated filing: generate the branded PDF and store copies on the quote and client file.
+      try {
+        await archiveQuoteCopy(saved, business);
+        toast({ title: 'Quote filed', description: 'A branded PDF copy was generated and saved to the client file.' });
+      } catch (pdfError) {
+        toast({ title: 'Quote saved, PDF copy pending', description: pdfError.message });
       }
       onSaved();
       onOpenChange(false);

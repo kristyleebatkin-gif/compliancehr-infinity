@@ -7,7 +7,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil } from 'lucide-react';
+import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { SUPPORT_ITEMS, lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
@@ -172,6 +172,16 @@ export default function QuoteCentre() {
                   <div className="mt-3 flex flex-wrap gap-1.5 border-t border-border/60 pt-3">
                     <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setPreviewing(q)}><Eye className="h-3 w-3" />Preview</Button>
                     <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => downloadQuotePdf(q, business)}><Download className="h-3 w-3" />Download PDF</Button>
+                    {q.pdf_file_uri && (
+                      <Button variant="outline" size="sm" className="h-7 text-xs" onClick={async () => {
+                        try {
+                          const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: q.pdf_file_uri });
+                          window.open(signed_url, '_blank');
+                        } catch (error) {
+                          toast({ title: 'Could not open copy', description: error.message, variant: 'destructive' });
+                        }
+                      }}><FileText className="h-3 w-3" />Stored copy</Button>
+                    )}
                     <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => printQuotePdf(q, business)}><Eye className="h-3 w-3" />Print</Button>
                     <Button variant="outline" size="sm" className="h-7 text-xs" disabled={sending === q.id} onClick={() => sendQuote(q)}>
                       {sending === q.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Mail className="h-3 w-3" />}Send quote
