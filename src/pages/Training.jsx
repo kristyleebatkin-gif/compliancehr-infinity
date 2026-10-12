@@ -8,7 +8,8 @@ import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/l
 import LmsLearner from '@/components/training/LmsLearner';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
-import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap } from 'lucide-react';
+import TrainingLadder from '@/components/training/TrainingLadder';
+import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award } from 'lucide-react';
 
 function statusFor(title, completions) {
   const recs = completions.filter((c) => c.module_title === title && c.status === 'Completed');
@@ -24,6 +25,7 @@ function statusFor(title, completions) {
 export default function Training() {
   const { user } = useAuth();
   const [completions, setCompletions] = useState([]);
+  const [allCompletions, setAllCompletions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeGroup, setActiveGroup] = useState('All');
   const [learnerNumber, setLearnerNumber] = useState(null);
@@ -33,6 +35,7 @@ export default function Training() {
     setLoading(true);
     try {
       const all = await base44.entities.TrainingCompletion.list('-completed_date', 200);
+      setAllCompletions(all);
       const mine = all.filter((c) => (c.learner_id || '') === (user?.id || '') || (c.employee_name || '') === (user?.full_name || '') || (c.created_by_id || '') === (user?.id || ''));
       setCompletions(mine);
     } catch (e) { console.error(e); }
@@ -71,6 +74,7 @@ export default function Training() {
             <button onClick={() => setView('modules')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'modules' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />Modules</button>
             <button onClick={() => setView('calendar')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'calendar' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><CalendarDays className="h-3.5 w-3.5" />Calendar</button>
             <button onClick={() => setView('templates')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'templates' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><GraduationCap className="h-3.5 w-3.5" />Role templates</button>
+            <button onClick={() => setView('ladder')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'ladder' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Award className="h-3.5 w-3.5" />Ladder</button>
           </div>
         }
       />
@@ -89,7 +93,13 @@ export default function Training() {
         </div>
       </SectionCard>
 
-      {view === 'templates' ? (
+      {view === 'ladder' ? (
+        loading ? (
+          <div className="py-12 text-center text-sm text-foreground/40">Loading ladder...</div>
+        ) : (
+          <TrainingLadder completions={allCompletions} meName={user?.full_name || ''} />
+        )
+      ) : view === 'templates' ? (
         <TrainingTemplates />
       ) : view === 'calendar' ? (
         loading ? (
