@@ -76,6 +76,10 @@ export const NAV_PERMISSIONS = {
   communications: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR],
   portal: [ROLES.PARTICIPANT, ...STAFF_ROLES, ROLES.AUDITOR],
   'safety-insights': [...MANAGEMENT_ROLES, ROLES.AUDITOR],
+  analytics: MANAGEMENT_ROLES,
+  crm: MANAGEMENT_ROLES,
+  procurement: MANAGEMENT_ROLES,
+  projects: MANAGEMENT_ROLES,
 };
 
 export function canAccessNav(role, navKey) {

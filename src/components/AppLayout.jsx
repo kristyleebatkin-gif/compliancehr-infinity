@@ -11,7 +11,7 @@ import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
   Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark, LifeBuoy,
   Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, BarChart3,
-  MapPin, HeartHandshake, Building2, Newspaper,
+  MapPin, HeartHandshake, Building2, Newspaper, UsersRound, Briefcase, ShoppingCart, KanbanSquare,
 } from 'lucide-react';
 
 const PRIMARY_NAV = [
@@ -45,6 +45,11 @@ const PRIMARY_NAV = [
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },
   { label: 'Volunteering & Student Placement', path: '/volunteering-placements', key: 'volunteering-placements', icon: Handshake },
+  { label: 'Business Analytics', path: '/analytics', key: 'analytics', icon: BarChart3 },
+  { label: 'HR Hub', path: '/hr', key: 'human-resources', icon: UsersRound },
+  { label: 'CRM & Leads', path: '/crm', key: 'crm', icon: Briefcase },
+  { label: 'Procurement', path: '/procurement', key: 'procurement', icon: ShoppingCart },
+  { label: 'Projects Hub', path: '/projects', key: 'projects', icon: KanbanSquare },
   { label: 'Task Dashboard', path: '/tasks', key: 'tasks', icon: ClipboardList },
   { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
   { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },

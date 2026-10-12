@@ -56,6 +56,11 @@ import NdisUpdates from '@/pages/NdisUpdates';
 import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import HelpCentre from '@/pages/HelpCentre';
+import AnalyticsHub from '@/pages/AnalyticsHub';
+import HrHub from '@/pages/HrHub';
+import CrmHub from '@/pages/CrmHub';
+import ProcurementHub from '@/pages/ProcurementHub';
+import ProjectsHub from '@/pages/ProjectsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import Landing from '@/pages/Landing';
@@ -140,6 +145,11 @@ const AuthenticatedApp = () => {
           <Route path="/data-control" element={<Navigate to="/documents" replace />} />
           <Route path="/users" element={<RoleGate navKey="users"><UsersPermissionsHub /></RoleGate>} />
           <Route path="/help" element={<HelpCentre />} />
+          <Route path="/analytics" element={<RoleGate navKey="analytics"><AnalyticsHub /></RoleGate>} />
+          <Route path="/hr" element={<RoleGate navKey="human-resources"><HrHub /></RoleGate>} />
+          <Route path="/crm" element={<RoleGate navKey="crm"><CrmHub /></RoleGate>} />
+          <Route path="/procurement" element={<RoleGate navKey="procurement"><ProcurementHub /></RoleGate>} />
+          <Route path="/projects" element={<RoleGate navKey="projects"><ProjectsHub /></RoleGate>} />
           {/* Original app paths — aliases kept so original links keep working */}
           <Route path="/key-contacts" element={<RoleGate navKey="key-contacts"><KeyContacts /></RoleGate>} />
           <Route path="/insurance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
