@@ -5,6 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
+import TaskProgressChart from '@/components/tasks/TaskProgressChart';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TodoBoard from '@/components/communications/TodoBoard';
@@ -130,6 +131,8 @@ export default function Tasks() {
       <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
+
+      <TaskProgressChart tasks={list} users={users} />
 
       <div className="flex gap-1 overflow-x-auto">
         {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
