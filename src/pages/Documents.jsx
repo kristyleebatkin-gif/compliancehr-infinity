@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye } from 'lucide-react';
+import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye, Database } from 'lucide-react';
+import DataControlPanel from '@/components/documents/DataControlPanel';
 import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
@@ -116,7 +117,15 @@ export default function Documents() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Employee documents and their expiry tracking." />
+      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Employee documents, expiry tracking and data control." />
+
+      <Tabs defaultValue="documents">
+        <TabsList className="flex-wrap">
+          <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Employee documents</TabsTrigger>
+          <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="documents" className="mt-4 space-y-6">
       <div className="flex flex-wrap items-center justify-end gap-2">
         <div className="flex items-center gap-2">
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
@@ -226,6 +235,12 @@ export default function Documents() {
           ))}
         </div>
       )}
+        </TabsContent>
+
+        <TabsContent value="data-control" className="mt-4">
+          <DataControlPanel />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

@@ -56,7 +56,7 @@ import NdisUpdates from '@/pages/NdisUpdates';
 import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import HelpCentre from '@/pages/HelpCentre';
-import DataControl from '@/pages/DataControl';
+
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import Landing from '@/pages/Landing';
 import RoleGate from '@/components/RoleGate';
@@ -137,7 +137,7 @@ const AuthenticatedApp = () => {
           <Route path="/ndis-updates" element={<RoleGate navKey="ndis-news"><NdisUpdates /></RoleGate>} />
           <Route path="/quotes" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
           <Route path="/receipts" element={<RoleGate navKey="receipts"><ReceiptHub /></RoleGate>} />
-          <Route path="/data-control" element={<RoleGate navKey="data-control"><DataControl /></RoleGate>} />
+          <Route path="/data-control" element={<Navigate to="/documents" replace />} />
           <Route path="/users" element={<RoleGate navKey="users"><UsersPermissionsHub /></RoleGate>} />
           <Route path="/help" element={<HelpCentre />} />
           {/* Original app paths — aliases kept so original links keep working */}

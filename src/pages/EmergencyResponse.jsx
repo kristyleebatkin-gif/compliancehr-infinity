@@ -17,6 +17,8 @@ import SafetyChecksLog from '@/components/emergency/SafetyChecksLog';
 import EmergencyDocumentsLibrary from '@/components/emergency/EmergencyDocumentsLibrary';
 import VisitorLogTable from '@/components/emergency/VisitorLogTable';
 import EmergencyResources from '@/components/emergency/EmergencyResources';
+import LiveAlerts from '@/components/emergency/LiveAlerts';
+import EmergencyQuickDial from '@/components/emergency/EmergencyQuickDial';
 
 const TYPES = ['Fire Evacuation', 'Fire Drill', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
 
@@ -73,6 +75,8 @@ export default function EmergencyResponse() {
     <div className="space-y-6">
       <PageHeader icon={Siren} title="Emergency Response" subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources." />
 
+      <EmergencyQuickDial />
+
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { label: 'Drills & evacuations logged', value: drills.length, icon: Siren },
@@ -106,6 +110,7 @@ export default function EmergencyResponse() {
           <TabsTrigger value="documents">Documents &amp; plans</TabsTrigger>
           <TabsTrigger value="visitors">Visitor log</TabsTrigger>
           <TabsTrigger value="resources">Resources &amp; links</TabsTrigger>
+          <TabsTrigger value="alerts">Live alerts &amp; warnings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="drills" className="mt-4 space-y-4">
@@ -176,6 +181,7 @@ export default function EmergencyResponse() {
         <TabsContent value="documents" className="mt-4"><EmergencyDocumentsLibrary /></TabsContent>
         <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>
         <TabsContent value="resources" className="mt-4"><EmergencyResources /></TabsContent>
+        <TabsContent value="alerts" className="mt-4"><LiveAlerts /></TabsContent>
       </Tabs>
     </div>
   );

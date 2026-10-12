@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -45,7 +44,7 @@ const MODULES = [
   ['Receipt', 'Receipts'],
 ];
 
-export default function DataControl() {
+export default function DataControlPanel() {
   const [selected, setSelected] = useState('StaffProfile');
   const [count, setCount] = useState(null);
   const [counting, setCounting] = useState(false);
@@ -94,13 +93,17 @@ export default function DataControl() {
   };
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        icon={Database}
-        title="Data Control"
-        subtitle="Users and permissions, access logging, breach response, and data exports."
-        action={<Button variant="outline" onClick={downloadBreachResponsePlan}><FileDown className="mr-2 h-4 w-4" />Data breach response plan</Button>}
-      />
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <div className="rounded-lg bg-brand/10 p-2"><Database className="h-4 w-4 text-brand" /></div>
+          <div>
+            <p className="font-semibold">Data Control Panel</p>
+            <p className="text-xs text-muted-foreground">Users and permissions, access logging, breach response, and data exports.</p>
+          </div>
+        </div>
+        <Button variant="outline" onClick={downloadBreachResponsePlan}><FileDown className="mr-2 h-4 w-4" />Data breach response plan</Button>
+      </div>
 
       <Tabs defaultValue="users">
         <TabsList className="flex-wrap">

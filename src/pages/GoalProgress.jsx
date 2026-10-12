@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Trash2, Target, Users } from 'lucide-react';
 import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
+import GoalInsights from '@/components/goals/GoalInsights';
+import GoalCoach from '@/components/goals/GoalCoach';
 
 export default function GoalProgress() {
   const [goals, setGoals] = useState([]);
@@ -135,6 +137,8 @@ export default function GoalProgress() {
           <TabsList>
             <TabsTrigger value="all">All goals</TabsTrigger>
             <TabsTrigger value="participants">Progress by participant</TabsTrigger>
+            <TabsTrigger value="insights">Insights</TabsTrigger>
+            <TabsTrigger value="coach">AI goal coach</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-4">
@@ -176,6 +180,14 @@ export default function GoalProgress() {
                 ))}
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="insights" className="mt-4">
+            <GoalInsights goals={goals} />
+          </TabsContent>
+
+          <TabsContent value="coach" className="mt-4">
+            <GoalCoach goals={goals} />
           </TabsContent>
         </Tabs>
       )}

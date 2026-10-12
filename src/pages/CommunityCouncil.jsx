@@ -3,7 +3,9 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MapPin, ExternalLink, Phone, Mail, CalendarDays, Search, Loader2, Building2 } from 'lucide-react';
+import { MapPin, ExternalLink, Phone, Mail, CalendarDays, Search, Loader2, Building2, Heart } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import LocalServices from '@/components/referral/LocalServices';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;
@@ -61,6 +63,13 @@ export default function CommunityCouncil() {
         </div>
       </div>
 
+      <Tabs defaultValue="council">
+        <TabsList className="flex-wrap">
+          <TabsTrigger value="council"><Building2 className="mr-1.5 inline h-3.5 w-3.5" />Council &amp; events</TabsTrigger>
+          <TabsTrigger value="services"><Heart className="mr-1.5 inline h-3.5 w-3.5" />Local support services</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="council" className="mt-4 space-y-4">
       <Card>
         <CardContent className="p-5">
           <label className="text-sm font-semibold">Postcode</label>
@@ -143,6 +152,12 @@ export default function CommunityCouncil() {
           </Card>
         </div>
       )}
+        </TabsContent>
+
+        <TabsContent value="services" className="mt-4">
+          <LocalServices />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

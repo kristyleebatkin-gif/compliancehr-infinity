@@ -34,7 +34,6 @@ const PRIMARY_NAV = [
   { label: 'Goal Progress', path: '/goals', key: 'goals', icon: Target },
   { label: 'Emergency Response', path: '/emergency-response', key: 'emergency-response', icon: Siren },
   { label: 'Meeting Centre', path: '/meetings', key: 'meetings', icon: CalendarDays },
-  { label: 'Data Control Panel', path: '/data-control', key: 'data-control', icon: Database },
   { label: 'Users & Permissions Hub', path: '/users', key: 'users', icon: Users },
   { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
   { label: 'Equipment & MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
