@@ -1,0 +1,65 @@
+{
+  "name": "PurchaseOrder",
+  "type": "object",
+  "properties": {
+    "po_number": {
+      "type": "string",
+      "title": "PO Number"
+    },
+    "supplier_name": {
+      "type": "string",
+      "title": "Supplier"
+    },
+    "items": {
+      "type": "string",
+      "title": "Items Ordered"
+    },
+    "total": {
+      "type": "number",
+      "title": "Total ($)"
+    },
+    "order_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Order Date"
+    },
+    "required_by_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Required By"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Approved",
+        "Received",
+        "Cancelled"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "received_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Received Date"
+    },
+    "receipt_id": {
+      "type": "string",
+      "title": "Linked Receipt"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "po_number",
+    "supplier_name"
+  ]
+}

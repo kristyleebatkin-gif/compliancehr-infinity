@@ -1,0 +1,80 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string",
+      "title": "Business / Participant Name"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact Person"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Website",
+        "Word of Mouth",
+        "Referral",
+        "NDIS Plan Manager",
+        "Google",
+        "Social Media",
+        "Event",
+        "Other"
+      ],
+      "default": "Website",
+      "title": "Source"
+    },
+    "service_interest": {
+      "type": "string",
+      "title": "Services Interested In"
+    },
+    "value": {
+      "type": "number",
+      "title": "Estimated Value ($)"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Contacted",
+        "Proposal Sent",
+        "Negotiation",
+        "Won",
+        "Lost"
+      ],
+      "default": "New",
+      "title": "Pipeline Stage"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Follow Up Date"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "won_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Won Date"
+    }
+  },
+  "required": [
+    "business_name"
+  ]
+}

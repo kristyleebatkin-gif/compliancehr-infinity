@@ -1,0 +1,61 @@
+{
+  "name": "Supplier",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Supplier Name"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact Person"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "abn": {
+      "type": "string",
+      "title": "ABN"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Equipment",
+        "Consumables",
+        "Training",
+        "IT & Software",
+        "Vehicles",
+        "Cleaning",
+        "Professional Services",
+        "Other"
+      ],
+      "default": "Other",
+      "title": "Category"
+    },
+    "website": {
+      "type": "string",
+      "title": "Website"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "BusinessProject",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Project Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planning",
+        "Active",
+        "On Hold",
+        "Complete"
+      ],
+      "default": "Planning",
+      "title": "Status"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "progress": {
+      "type": "number",
+      "title": "Progress (%)",
+      "default": 0
+    },
+    "milestones": {
+      "type": "string",
+      "title": "Milestones (one per line)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
