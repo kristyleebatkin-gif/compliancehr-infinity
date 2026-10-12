@@ -77,6 +77,14 @@ export default function AppLayout() {
   const isActive = (path) =>
     location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
 
+  const currentLabel = PRIMARY_NAV.find((item) => isActive(item.path))?.label || 'Dashboard';
+  const initials = (user?.full_name || 'CH')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join('') || 'CH';
+
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-5 py-5">
@@ -105,11 +113,12 @@ export default function AppLayout() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  active ? 'bg-brand/10 text-brand' : 'text-foreground/60 hover:bg-brand/5 hover:text-brand'
+                className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all ${
+                  active ? 'bg-brand/10 font-bold text-brand shadow-sm' : 'font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand'
                 }`}
               >
-                <Icon className={`h-4 w-4 ${active ? 'text-brand' : 'text-foreground/40'}`} />
+                {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
+                <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
                 <span className="truncate">{item.label}</span>
               </Link>
             );
@@ -194,7 +203,8 @@ export default function AppLayout() {
               <Menu className="h-5 w-5" />
             </button>
             <div className="hidden sm:block">
-              <div className="text-xs font-medium text-foreground/40">Compliance HR Platform</div>
+              <div className="text-sm font-bold tracking-tight font-display text-foreground">{currentLabel}</div>
+              <div className="text-[11px] font-medium text-foreground/40">Compliance HR Platform</div>
             </div>
           </div>
 
@@ -256,8 +266,8 @@ export default function AppLayout() {
                 onClick={() => setUserMenuOpen((v) => !v)}
                 className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-brand/5"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-full gradient-brand text-xs font-bold text-white">
-                  CH
+                <div className="flex h-8 w-8 items-center justify-center rounded-full gradient-brand text-xs font-bold text-white shadow-md">
+                  {initials}
                 </div>
                 <ChevronDown className="hidden h-4 w-4 text-foreground/40 sm:block" />
               </button>
