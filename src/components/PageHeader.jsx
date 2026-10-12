@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 
 export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent }) {
   const primary = accent?.[0] || moduleColour(title);
@@ -33,7 +34,10 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           {subtitle && <p className="mt-1.5 max-w-3xl text-sm font-medium text-foreground/65">{subtitle}</p>}
         </div>
       </div>
-      {action && <div className="relative mt-3 w-full sm:mt-0 md:w-auto md:max-w-full">{action}</div>}
+      <div className="relative mt-3 flex w-full items-start justify-start gap-2 sm:mt-0 md:w-auto md:justify-end">
+        <ModuleAuditButton />
+        {action && <div className="flex-1 sm:flex-none">{action}</div>}
+      </div>
     </div>
   );
 }
