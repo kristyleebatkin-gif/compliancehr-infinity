@@ -1,0 +1,59 @@
+{
+  "name": "HelpDeskTicket",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string",
+      "title": "Subject"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Resolved"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "response": {
+      "type": "string",
+      "title": "Support Response"
+    },
+    "requested_by": {
+      "type": "string",
+      "title": "Requested By"
+    },
+    "requested_email": {
+      "type": "string",
+      "title": "Requester Email"
+    },
+    "resolved_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Resolved Date"
+    }
+  },
+  "required": [
+    "subject"
+  ]
+}

@@ -54,6 +54,22 @@
       "type": "string",
       "title": "Primary Contact"
     },
+    "business_goal": {
+      "type": "string",
+      "title": "Business Goal"
+    },
+    "mission": {
+      "type": "string",
+      "title": "Mission"
+    },
+    "vision": {
+      "type": "string",
+      "title": "Vision"
+    },
+    "values": {
+      "type": "string",
+      "title": "Values"
+    },
     "bank_name": {
       "type": "string",
       "title": "Bank Name"

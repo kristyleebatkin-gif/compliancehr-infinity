@@ -5,7 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ShieldAlert, TrendingUp } from 'lucide-react';
+import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
+import StaffCommPanel from '@/components/communications/StaffCommPanel';
+import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import TeamSection from '@/components/profile/TeamSection';
 import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
@@ -73,6 +75,8 @@ export default function StaffDetail() {
           <TabsTrigger value="access"><KeyRound className="mr-1 inline h-3.5 w-3.5" />Access &amp; Permissions</TabsTrigger>
           <TabsTrigger value="performance"><TrendingUp className="mr-1 inline h-3.5 w-3.5" />Performance Reviews</TabsTrigger>
           <TabsTrigger value="safety"><ShieldAlert className="mr-1 inline h-3.5 w-3.5" />Safety Records</TabsTrigger>
+          <TabsTrigger value="comm"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Communication Log</TabsTrigger>
+          <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do</TabsTrigger>
         </TabsList>
         <TabsContent value="details">
           <div className="space-y-6">
@@ -85,6 +89,8 @@ export default function StaffDetail() {
         <TabsContent value="access"><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>
         <TabsContent value="performance"><StaffPerformanceTab staff={staff} /></TabsContent>
         <TabsContent value="safety"><StaffSafetyTab staff={staff} /></TabsContent>
+        <TabsContent value="comm"><StaffCommPanel staff={staff} /></TabsContent>
+        <TabsContent value="todo"><ProfileTodoList staff={staff} /></TabsContent>
       </Tabs>
     </div>
   );

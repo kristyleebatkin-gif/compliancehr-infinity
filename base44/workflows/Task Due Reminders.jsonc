@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "task_due_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_task_reminders": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "taskDueReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send due task reminders",
+            "description": "Emails everyone responsible for pending shared to-dos that are due today or overdue"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Task Due Reminders",
+  "description": "Daily at 7am: emails a reminder to every person responsible for a pending shared to-do that is due today or overdue."
+}

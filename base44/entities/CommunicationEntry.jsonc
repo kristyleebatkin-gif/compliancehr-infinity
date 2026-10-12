@@ -1,0 +1,151 @@
+{
+  "name": "CommunicationEntry",
+  "type": "object",
+  "properties": {
+    "entry_kind": {
+      "type": "string",
+      "enum": [
+        "Shift Note",
+        "Employee Log",
+        "Message",
+        "Email",
+        "Broadcast",
+        "Team Banter"
+      ],
+      "title": "Entry Kind"
+    },
+    "person_type": {
+      "type": "string",
+      "enum": [
+        "Participant",
+        "Employee",
+        "General"
+      ],
+      "default": "General",
+      "title": "Person Type"
+    },
+    "person_name": {
+      "type": "string",
+      "title": "Person Name"
+    },
+    "note_type": {
+      "type": "string",
+      "title": "Note Type"
+    },
+    "shift_type": {
+      "type": "string",
+      "title": "Shift Type"
+    },
+    "travel_km": {
+      "type": "number",
+      "title": "Travel (km)"
+    },
+    "travel_location": {
+      "type": "string",
+      "title": "Travel Location"
+    },
+    "goal": {
+      "type": "string",
+      "title": "Relevant Goal"
+    },
+    "medication_supervised": {
+      "type": "string",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "title": "Medication Supervised"
+    },
+    "log_type": {
+      "type": "string",
+      "title": "Log Type"
+    },
+    "attention": {
+      "type": "string",
+      "title": "Attention Line"
+    },
+    "subject": {
+      "type": "string",
+      "title": "Subject"
+    },
+    "body": {
+      "type": "string",
+      "title": "Communication"
+    },
+    "issues_concerns": {
+      "type": "string",
+      "title": "Issues or Concerns"
+    },
+    "incident_report": {
+      "type": "string",
+      "title": "Incident Report Reference"
+    },
+    "entry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "entry_time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "staff_involved": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Staff Involved"
+    },
+    "attachments_json": {
+      "type": "string",
+      "title": "Attachments (JSON)"
+    },
+    "send_copy_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Email Copies Sent To"
+    },
+    "management_copy": {
+      "type": "boolean",
+      "default": false,
+      "title": "Copy Emailed to Management"
+    },
+    "recipients_json": {
+      "type": "string",
+      "title": "Recipients (JSON)"
+    },
+    "sender_name": {
+      "type": "string",
+      "title": "Sent By"
+    },
+    "sender_email": {
+      "type": "string",
+      "title": "Sender Email"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module / Location"
+    },
+    "parent_id": {
+      "type": "string",
+      "title": "Reply To (Entry ID)"
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Email Copy Sent"
+    },
+    "goal_note_created": {
+      "type": "boolean",
+      "default": false,
+      "title": "Goal Progress Updated"
+    }
+  },
+  "required": [
+    "entry_kind"
+  ]
+}

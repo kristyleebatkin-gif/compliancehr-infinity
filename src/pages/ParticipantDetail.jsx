@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, FileSignature, Files, Heart, ScrollText } from 'lucide-react';
+import { ArrowLeft, FileSignature, Files, Heart, MessagesSquare, ScrollText } from 'lucide-react';
+import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import TeamSection from '@/components/profile/TeamSection';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
@@ -72,6 +73,7 @@ export default function ParticipantDetail() {
           <TabsTrigger value="documents"><Files className="mr-1 inline h-3.5 w-3.5" />Documents</TabsTrigger>
           <TabsTrigger value="forms"><FileSignature className="mr-1 inline h-3.5 w-3.5" />Fillable Forms</TabsTrigger>
           <TabsTrigger value="records"><Heart className="mr-1 inline h-3.5 w-3.5" />Incidents &amp; Goals</TabsTrigger>
+          <TabsTrigger value="comm"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Communication Diary</TabsTrigger>
         </TabsList>
         <TabsContent value="details"><ParticipantDetailsTab participant={participant} onUpdated={load} /></TabsContent>
         <TabsContent value="documents">
@@ -82,6 +84,7 @@ export default function ParticipantDetail() {
         </TabsContent>
         <TabsContent value="forms"><ParticipantFillableForms participant={participant} /></TabsContent>
         <TabsContent value="records"><ParticipantRecordsTab participant={participant} /></TabsContent>
+        <TabsContent value="comm"><ProfileCommDiary participant={participant} /></TabsContent>
       </Tabs>
     </div>
   );

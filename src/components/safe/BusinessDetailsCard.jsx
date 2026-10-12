@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2, Save, Landmark, Building2, Wallet } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 const EMPTY = {
   business_name: '', trading_name: '', abn: '', acn: '', ndis_provider_number: '',
@@ -118,6 +119,15 @@ export default function BusinessDetailsCard() {
             <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Input value={form.quote_terms} onChange={set('quote_terms')} /></div>
           </div>
           <p className="mt-1.5 text-xs text-muted-foreground">Used as the default terms on every new quote; individual quotes can override them.</p>
+        </div>
+        <div>
+          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Business goal, mission, vision &amp; values (shown in the professional email footer)</div>
+          <div className="grid gap-2">
+            <div className="grid gap-1.5"><Label>Business goal</Label><Textarea rows={2} value={form.business_goal || ''} onChange={set('business_goal')} /></div>
+            <div className="grid gap-1.5"><Label>Mission</Label><Textarea rows={2} value={form.mission || ''} onChange={set('mission')} /></div>
+            <div className="grid gap-1.5"><Label>Vision</Label><Textarea rows={2} value={form.vision || ''} onChange={set('vision')} /></div>
+            <div className="grid gap-1.5"><Label>Values</Label><Textarea rows={2} value={form.values || ''} onChange={set('values')} /></div>
+          </div>
         </div>
       </div>
       <div className="mt-4 flex gap-2">

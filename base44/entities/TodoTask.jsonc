@@ -1,0 +1,85 @@
+{
+  "name": "TodoTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Task / Subject"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module (Location)"
+    },
+    "task_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "task_time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "responsible": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Responsible (Staff)"
+    },
+    "responsible_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Responsible Emails"
+    },
+    "how_to_complete": {
+      "type": "string",
+      "title": "How to Complete"
+    },
+    "resources_needed": {
+      "type": "string",
+      "title": "Resources Needed"
+    },
+    "important_info": {
+      "type": "string",
+      "title": "Important Info"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Finalised"
+      ],
+      "default": "Pending",
+      "title": "Status"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed Date"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "time_taken_minutes": {
+      "type": "number",
+      "title": "Time Taken (min)"
+    },
+    "shared_by": {
+      "type": "string",
+      "title": "Shared By"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
