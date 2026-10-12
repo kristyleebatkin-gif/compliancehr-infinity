@@ -5,10 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Lightbulb, Siren } from 'lucide-react';
+import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Lightbulb, Siren, Stethoscope, Activity } from 'lucide-react';
 import { moduleGuides } from '@/lib/moduleGuides';
 import { HELP_ARTICLES, HELP_CATEGORIES } from '@/lib/helpCentreContent';
 import SupportTickets from '@/components/help/SupportTickets';
+import AiTroubleshooter from '@/components/help/AiTroubleshooter';
+import SystemHealth from '@/components/help/SystemHealth';
 
 const ESCALATIONS = [
   { name: 'Emergency (police, fire, ambulance)', phone: '000', note: 'Immediate danger to life' },
@@ -66,6 +68,8 @@ export default function HelpCentre() {
         <TabsList className="flex-wrap">
           <TabsTrigger value="guides"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
           <TabsTrigger value="howtos"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
+          <TabsTrigger value="troubleshoot"><Stethoscope className="mr-1.5 inline h-3.5 w-3.5" />AI troubleshooter</TabsTrigger>
+          <TabsTrigger value="health"><Activity className="mr-1.5 inline h-3.5 w-3.5" />System health &amp; quick fixes</TabsTrigger>
           <TabsTrigger value="support"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
           <TabsTrigger value="escalate"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
         </TabsList>
@@ -142,6 +146,14 @@ export default function HelpCentre() {
               ))}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="troubleshoot" className="mt-4">
+          <AiTroubleshooter onAskSupport={() => setTab('support')} />
+        </TabsContent>
+
+        <TabsContent value="health" className="mt-4">
+          <SystemHealth />
         </TabsContent>
 
         <TabsContent value="support" className="mt-4">
