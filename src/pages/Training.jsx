@@ -9,7 +9,9 @@ import LmsLearner from '@/components/training/LmsLearner';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
-import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award } from 'lucide-react';
+import TrainingInsights from '@/components/training/TrainingInsights';
+import AiQuizDrill from '@/components/training/AiQuizDrill';
+import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play } from 'lucide-react';
 
 function statusFor(title, completions) {
   const recs = completions.filter((c) => c.module_title === title && c.status === 'Completed');
@@ -75,6 +77,8 @@ export default function Training() {
             <button onClick={() => setView('calendar')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'calendar' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><CalendarDays className="h-3.5 w-3.5" />Calendar</button>
             <button onClick={() => setView('templates')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'templates' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><GraduationCap className="h-3.5 w-3.5" />Role templates</button>
             <button onClick={() => setView('ladder')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'ladder' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Award className="h-3.5 w-3.5" />Ladder</button>
+            <button onClick={() => setView('drills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'drills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Sparkles className="h-3.5 w-3.5" />AI Drills</button>
+            <button onClick={() => setView('insights')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'insights' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><TrendingUp className="h-3.5 w-3.5" />Insights</button>
           </div>
         }
       />
@@ -93,7 +97,15 @@ export default function Training() {
         </div>
       </SectionCard>
 
-      {view === 'ladder' ? (
+      {view === 'insights' ? (
+        loading ? (
+          <div className="py-12 text-center text-sm text-foreground/40">Loading insights...</div>
+        ) : (
+          <TrainingInsights completions={allCompletions} />
+        )
+      ) : view === 'drills' ? (
+        <AiQuizDrill />
+      ) : view === 'ladder' ? (
         loading ? (
           <div className="py-12 text-center text-sm text-foreground/40">Loading ladder...</div>
         ) : (
