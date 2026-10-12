@@ -18,6 +18,7 @@ import AuditsTab from '@/components/compliance/AuditsTab';
 import MasterChecklist from '@/components/compliance/MasterChecklist';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
+import AuditReportList from '@/components/compliance/AuditReportList';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -95,6 +96,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="policies">Policies</TabsTrigger>
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
           <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
+          <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
         </TabsList>
 
         <TabsContent value="readiness" className="mt-4">
@@ -245,6 +247,10 @@ export default function ComplianceHub() {
               ))}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="audit-report-list" className="mt-4">
+          <AuditReportList />
         </TabsContent>
 
         <TabsContent value="checklists" className="mt-4">

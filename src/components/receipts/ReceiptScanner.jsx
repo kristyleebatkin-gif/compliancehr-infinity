@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2, ScanLine, UploadCloud } from 'lucide-react';
 import { imageFileToPdf } from '@/lib/imageToPdf';
+import { fileReceiptToAssetRegister } from '@/lib/assetRegister';
 
 const EMPTY_EXTRACTED = { description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled' };
 
@@ -73,13 +74,14 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
     if (!data.description.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.Receipt.create({
+      const record = await base44.entities.Receipt.create({
         ...data,
         amount: data.amount === '' ? undefined : Number(data.amount),
         gst_amount: data.gst_amount === '' ? undefined : Number(data.gst_amount),
         file_uri: fileUri,
         file_name: fileName,
       });
+      await fileReceiptToAssetRegister(record, data.paid_by);
       onSaved();
       onOpenChange(false);
       reset();

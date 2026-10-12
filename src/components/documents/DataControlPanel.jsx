@@ -11,38 +11,7 @@ import UsersPermissions from '@/components/datacontrol/UsersPermissions';
 import ActivityLog from '@/components/datacontrol/ActivityLog';
 import BreachRegister from '@/components/datacontrol/BreachRegister';
 
-const MODULES = [
-  ['StaffProfile', 'Staff Profiles'],
-  ['EmployeeDocument', 'Employee Documents'],
-  ['Task', 'Tasks'],
-  ['Policy', 'Policies'],
-  ['LegalRequirement', 'Legal Requirements'],
-  ['TrainingModule', 'Training Modules'],
-  ['Certificate', 'Certificates'],
-  ['ParticipantProfile', 'Participants'],
-  ['Incident', 'Incidents'],
-  ['Risk', 'Risks'],
-  ['Shift', 'Shifts'],
-  ['Feedback', 'Feedback & Complaints'],
-  ['Checklist', 'Checklists'],
-  ['Asset', 'Assets'],
-  ['Invoice', 'Invoices'],
-  ['Meeting', 'Meetings'],
-  ['EmergencyDrill', 'Emergency Drills'],
-  ['Event', 'Programs & Events'],
-  ['Announcement', 'Announcements'],
-  ['Audit', 'Audits'],
-  ['Intake', 'Intake & Referrals'],
-  ['Goal', 'Goals'],
-  ['QualityItem', 'Quality & Improvement'],
-  ['Survey', 'Surveys'],
-  ['Contact', 'Key Contacts'],
-  ['Volunteer', 'Volunteers'],
-  ['CompanyDocument', 'Company Safe'],
-  ['EquipmentManual', 'Equipment Manuals'],
-  ['InsurancePolicy', 'Insurance Policies'],
-  ['Receipt', 'Receipts'],
-];
+import { DATA_MODULES as MODULES } from '@/lib/dataModules';
 
 export default function DataControlPanel() {
   const [selected, setSelected] = useState('StaffProfile');

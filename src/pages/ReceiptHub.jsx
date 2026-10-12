@@ -14,6 +14,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
 import ReceiptScanner from '@/components/receipts/ReceiptScanner';
 import ScanToPdf from '@/components/receipts/ScanToPdf';
+import { fileReceiptToAssetRegister } from '@/lib/assetRegister';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
@@ -44,11 +45,12 @@ export default function ReceiptHub() {
     if (!form.description.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.Receipt.create({
+      const record = await base44.entities.Receipt.create({
         ...form,
         amount: form.amount === '' ? undefined : Number(form.amount),
         gst_amount: form.gst_amount === '' ? undefined : Number(form.gst_amount),
       });
+      await fileReceiptToAssetRegister(record, form.paid_by);
       setForm({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
       setOpen(false);
       await load();
