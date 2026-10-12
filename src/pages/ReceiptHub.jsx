@@ -8,11 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Download, History, Loader2, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2 } from 'lucide-react';
+import { Download, History, Loader2, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
 import ReceiptScanner from '@/components/receipts/ReceiptScanner';
+import ScanToPdf from '@/components/receipts/ScanToPdf';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
@@ -22,6 +23,7 @@ export default function ReceiptHub() {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [scanOpen, setScanOpen] = useState(false);
+  const [pdfOpen, setPdfOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [form, setForm] = useState({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
@@ -124,6 +126,7 @@ export default function ReceiptHub() {
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
+          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
           <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
           <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
           <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
@@ -131,6 +134,7 @@ export default function ReceiptHub() {
       </div>
 
       <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />
+      <ScanToPdf open={pdfOpen} onOpenChange={setPdfOpen} />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
