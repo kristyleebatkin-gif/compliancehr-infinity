@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2, UserPlus, Users } from 'lucide-react';
 import { format } from 'date-fns';
+import { ALL_ROLES } from '@/lib/roles';
 
 const ROLE_TONES = { admin: 'bg-purple-100 text-purple-800', user: 'bg-slate-100 text-slate-700' };
 
@@ -101,8 +102,9 @@ export default function UsersTable() {
                     onChange={(e) => changeRole(user, e.target.value)}
                     className="h-8 rounded-md border border-input bg-transparent px-2 text-xs"
                   >
-                    <option value="admin">admin</option>
-                    <option value="user">user</option>
+                    {ALL_ROLES.map((roleOption) => (
+                      <option key={roleOption} value={roleOption}>{roleOption}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -121,7 +123,11 @@ export default function UsersTable() {
             <div className="grid gap-1.5"><Label>Role</Label>
               <Select value={invite.role} onValueChange={(v) => setInvite({ ...invite, role: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent><SelectItem value="user">user</SelectItem><SelectItem value="admin">admin</SelectItem></SelectContent>
+                <SelectContent>
+                  {ALL_ROLES.map((roleOption) => (
+                    <SelectItem key={roleOption} value={roleOption}>{roleOption}</SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
           </div>

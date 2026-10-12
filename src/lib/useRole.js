@@ -7,6 +7,7 @@ export function useRole() {
   const rawRole = user?.role;
   const role = rawRole === 'admin' ? ROLES.ADMIN
     : rawRole === 'user' ? ROLES.SUPPORT
+    : rawRole === 'Team Leader' ? ROLES.TEAM_LEADER
     : (rawRole || ROLES.SUPPORT);
   return {
     user,

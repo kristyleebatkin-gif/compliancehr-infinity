@@ -9,23 +9,31 @@ const MODULE_LABELS = {
   'company-safe': 'Company Safe', certificates: 'Certificates', feedback: 'Feedback & Surveys', 'audit-log': 'Audit Log',
   tasks: 'Tasks', quality: 'Quality & Improvement', assets: 'Asset Management', goals: 'Goal Progress',
   shifts: 'Shift Scheduling (legacy)', rostering: 'Rostering', 'human-resources': 'Human Resources',
-  invoicing: 'Invoicing Centre', manual: 'Manual', users: 'Users & Permissions', forms: 'Forms',
+  invoicing: 'Invoicing Centre', quotes: 'Quote Centre', manual: 'Manual', users: 'Users & Permissions', forms: 'Forms',
   checklists: 'Checklists', 'emergency-response': 'Emergency Response', meetings: 'Meeting Centre',
   'data-control': 'Data Control Panel', receipts: 'Receipt Hub', 'equipment-manuals': 'Equipment Manuals',
   msds: 'MSDS Chemical Library', 'community-council': 'Community & Council', 'insurance-finance': 'Insurance & Finance',
   programs: 'Programs & Events', events: 'Events', 'ndis-news': 'NDIS Updates & News', weather: 'Weather',
   'key-contacts': 'Key Personnel Contacts', 'community-referral': 'Referral & Support', 'ndis-provider': 'NDIS Provider Portal',
   'volunteering-placements': 'Volunteering & Placements', 'whats-on': "What's On", communications: 'Communication Centre',
-  portal: 'Participant Portal', 'safety-insights': 'Safety Insights',
+  portal: 'Participant Portal', 'safety-insights': 'Safety Insights', analytics: 'Business Analytics',
+  crm: 'CRM & Leads', procurement: 'Procurement', projects: 'Projects Hub', help: 'Help Centre',
 };
 
 const ROLE_COLUMNS = [
-  ['admin / Provider Administrator', ['admin', 'Provider Administrator']],
+  ['Provider Administrator', ['admin', 'Provider Administrator']],
   ['Compliance Manager', ['Compliance Manager']],
-  ['Administration / Team Leader', ['Administration']],
+  ['Administration / Team Leader', ['Administration', 'Team Leader']],
   ['Support Worker', ['Support Worker']],
+  ['Finance & Accounts', ['Finance & Accounts Officer']],
+  ['HR Manager', ['Human Resources Manager']],
+  ['Rostering Coordinator', ['Rostering Coordinator']],
+  ['Quality & Improvement', ['Quality & Improvement Manager']],
+  ['CRM & Marketing', ['CRM & Marketing Officer']],
+  ['Intake Officer', ['Intake Officer']],
   ['Participant', ['Participant']],
   ['Auditor', ['Auditor']],
+  ['Volunteer', ['Volunteer']],
 ];
 
 export default function PermissionMatrix() {
@@ -35,7 +43,7 @@ export default function PermissionMatrix() {
     <div className="rounded-xl border border-border/60 bg-card p-4">
       <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-4 w-4 text-brand" />Role permission matrix</div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-left text-xs">
+        <table className="w-full min-w-[1100px] text-left text-xs">
           <thead>
             <tr className="border-b border-border/60">
               <th className="py-2 pr-3 font-semibold">Module</th>

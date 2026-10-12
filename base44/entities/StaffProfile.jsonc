@@ -88,9 +88,17 @@
         "Provider Administrator",
         "Compliance Manager",
         "Administration",
+        "Team Leader",
         "Support Worker",
+        "Finance & Accounts Officer",
+        "Human Resources Manager",
+        "Rostering Coordinator",
+        "Quality & Improvement Manager",
+        "CRM & Marketing Officer",
+        "Intake Officer",
         "Participant",
-        "Auditor"
+        "Auditor",
+        "Volunteer"
       ],
       "default": "user",
       "title": "App Role (Permissions)"
