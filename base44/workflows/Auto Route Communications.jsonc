@@ -1,0 +1,42 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_route_communications",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "route_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoRouteEntry",
+            "args": {
+              "entity": "CommunicationEntry",
+              "record_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "File to Communication Register",
+            "description": "Auto-route new communication"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "CommunicationEntry"
+    }
+  },
+  "description": "Files every new communication or message into the Communication Register automatically",
+  "name": "Auto Route: Communications"
+}

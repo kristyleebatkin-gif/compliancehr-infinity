@@ -1,0 +1,42 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_route_data_breaches",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "route_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoRouteEntry",
+            "args": {
+              "entity": "DataBreach",
+              "record_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "File to Data Breach Register",
+            "description": "Auto-route new breach"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "DataBreach"
+    }
+  },
+  "description": "Files every new data breach into the Data Breach Register and escalates it to management",
+  "name": "Auto Route: Data Breaches"
+}

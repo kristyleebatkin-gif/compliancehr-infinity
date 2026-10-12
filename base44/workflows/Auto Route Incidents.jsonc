@@ -1,0 +1,43 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_route_incidents",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "route_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoRouteEntry",
+            "args": {
+              "entity": "Incident",
+              "record_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "File to Incident Register",
+            "description": "Auto-route incident and keep register in sync"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "Incident"
+    }
+  },
+  "description": "Files every new or updated incident into the Incident Register and escalates new incidents to management",
+  "name": "Auto Route: Incidents"
+}

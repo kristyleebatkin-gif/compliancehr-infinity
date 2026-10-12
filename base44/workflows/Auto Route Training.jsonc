@@ -1,0 +1,42 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_route_training",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "route_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoRouteEntry",
+            "args": {
+              "entity": "TrainingCompletion",
+              "record_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "File to Training Register",
+            "description": "Auto-route new training completion"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "TrainingCompletion"
+    }
+  },
+  "description": "Files every new training completion into the Training Register automatically",
+  "name": "Auto Route: Training"
+}

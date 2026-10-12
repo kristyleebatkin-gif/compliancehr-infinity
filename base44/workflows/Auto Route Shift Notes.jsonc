@@ -1,0 +1,42 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_route_shift_notes",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "route_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoRouteEntry",
+            "args": {
+              "entity": "ShiftNote",
+              "record_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "File shift note",
+            "description": "Auto-route new shift note"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ShiftNote"
+    }
+  },
+  "description": "Files every new shift note into the Communication Register and its linked profile automatically",
+  "name": "Auto Route: Shift Notes"
+}
