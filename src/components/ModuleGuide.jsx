@@ -7,10 +7,8 @@ import { BookMarked, ChevronDown } from 'lucide-react';
 export default function ModuleGuide() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const guide = useMemo(() => {
-    const seg = `/${pathname.split('/')[1] || ''}`;
-    return moduleGuides[seg] || null;
-  }, [pathname]);
+  const seg = `/${pathname.split('/')[1] || ''}`;
+  const guide = useMemo(() => moduleGuides[seg] || null, [seg]);
 
   useEffect(() => { setOpen(false); }, [guide?.title]);
 
