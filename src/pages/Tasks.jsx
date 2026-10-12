@@ -6,6 +6,7 @@ import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Fiel
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
+import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -209,6 +210,8 @@ export default function Tasks() {
       )}
 
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
+
+      <TaskLeaderboard />
     </div>
   );
 }

@@ -7,7 +7,8 @@ import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { Field, TextInput, TextArea, Select, DateInput } from '@/components/Field';
 import { Button } from '@/components/ui/button';
-import { Plus, Search, AlertTriangle, FileSearch, X, Download, LayoutGrid, KanbanSquare } from 'lucide-react';
+import { Plus, Search, AlertTriangle, FileSearch, UserPlus, X, Download, LayoutGrid, KanbanSquare } from 'lucide-react';
+import HealthMedicationResponse from '@/components/incidents/HealthMedicationResponse';
 import { downloadIncidentReport } from '@/lib/compliancePdf';
 import IncidentKanban from '@/components/incidents/IncidentKanban';
 import TemplatePicker from '@/components/TemplatePicker';
@@ -155,6 +156,33 @@ export default function Incidents() {
     return inc ? inc.title : '—';
   };
 
+  const copyToProfile = async (inc) => {
+    try {
+      const user = await base44.auth.me();
+      const isParticipant = Boolean(inc.participant_name);
+      await base44.entities.CommunicationEntry.create({
+        entry_kind: 'Shift Note',
+        person_type: isParticipant ? 'Participant' : 'Employee',
+        person_name: inc.participant_name || inc.staff_name || '',
+        note_type: 'Incident',
+        subject: `Incident report copy: ${inc.title || inc.incident_id || inc.id}`,
+        body: [
+          inc.incident_id && `Incident ID: ${inc.incident_id}`,
+          inc.severity && `Severity: ${inc.severity}`,
+          inc.date_occurred && `Date: ${inc.date_occurred}${inc.time_occurred ? ` ${inc.time_occurred}` : ''}`,
+          inc.description && `What happened: ${inc.description}`,
+          inc.immediate_actions && `Follow-up: ${inc.immediate_actions}`,
+        ].filter(Boolean).join('\n\n'),
+        incident_report: inc.incident_id || inc.id,
+        entry_date: new Date().toISOString().slice(0, 10),
+        sender_name: user?.full_name || '',
+        sender_email: user?.email || '',
+        module: 'Incident Clinic',
+      });
+      toast({ title: 'Incident copied to the person\'s profile', description: 'It now appears in their communication diary.' });
+    } catch (e) { toast({ title: 'Copy failed', description: e.message, variant: 'destructive' }); }
+  };
+
   const exportRegister = (filename, columns, rows, label) => {
     if (!rows.length) { toast({ title: `No ${label} to export` }); return; }
     downloadCsv(filename, columns, rows);
@@ -176,6 +204,8 @@ export default function Incidents() {
           </div>
         }
       />
+
+      <HealthMedicationResponse />
 
       <SafetyOperationsDashboard />
 
@@ -260,6 +290,9 @@ export default function Incidents() {
                   </div>
                   <div className="flex items-center gap-2">
                     <button onClick={() => downloadIncidentReport([inc])} className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted"><Download className="h-3 w-3" />PDF</button>
+                    {(inc.participant_name || inc.staff_name) && (
+                      <button onClick={() => copyToProfile(inc)} className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-brand hover:bg-brand/5"><UserPlus className="h-3 w-3" />Copy to profile</button>
+                    )}
                     <select disabled={!canReview} value={inc.severity || ''} onChange={(e) => commitInc(inc, 'severity', e.target.value)} className={`${fieldBase} w-auto disabled:opacity-70`}>
                       {SEVERITIES.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>

@@ -15,6 +15,7 @@ import TemplatePicker from '@/components/TemplatePicker';
 import { MITIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import AssessmentDuePanel from '@/components/risks/AssessmentDuePanel';
+import CommonRiskLibrary from '@/components/risks/CommonRiskLibrary';
 import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
@@ -180,7 +181,7 @@ export default function Risks() {
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Risk Management" subtitle={`${risks.length} risks in register`} action={can('risks') && (
+      <PageHeader title="Risk Management" subtitle={`${risks.length} risks in register`} accent={['#0d9488', '#22d3ee']} action={can('risks') && (
         <div className="flex flex-wrap items-center gap-2">
           <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk</button>
           <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3.5 py-2 text-sm font-semibold text-warning hover:bg-warning/25"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
@@ -190,6 +191,8 @@ export default function Risks() {
           <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg bg-muted px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted/70 disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
         </div>
       )} />
+
+      <CommonRiskLibrary onAdded={load} />
 
       <TakeFiveRegister />
       <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />

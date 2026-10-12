@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Trophy, LifeBuoy, Inbox as InboxIcon, MessagesSquare, ListTodo } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, LifeBuoy, Inbox as InboxIcon, MessagesSquare, ListTodo } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
@@ -10,7 +10,6 @@ import ShiftNotes from '@/components/communications/ShiftNotes';
 import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
 import HelpDesk from '@/components/communications/HelpDesk';
 import TodoBoard from '@/components/communications/TodoBoard';
-import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 
 export default function Communications() {
   return (
@@ -28,7 +27,7 @@ export default function Communications() {
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
           <TabsTrigger value="shift-notes"><NotebookPen className="mr-1 inline h-3.5 w-3.5" />Shift Notes</TabsTrigger>
           <TabsTrigger value="employee-log"><Briefcase className="mr-1 inline h-3.5 w-3.5" />Employee Log</TabsTrigger>
-          <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do &amp; Leaderboard</TabsTrigger>
+          <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do Board</TabsTrigger>
           <TabsTrigger value="help"><LifeBuoy className="mr-1 inline h-3.5 w-3.5" />Help Desk</TabsTrigger>
         </TabsList>
         <TabsContent value="diary"><CommunicationDiary /></TabsContent>
@@ -37,12 +36,7 @@ export default function Communications() {
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="shift-notes"><ShiftNotes /></TabsContent>
         <TabsContent value="employee-log"><EmployeeCommLog /></TabsContent>
-        <TabsContent value="todo">
-          <div className="space-y-6">
-            <TodoBoard />
-            <TaskLeaderboard />
-          </div>
-        </TabsContent>
+        <TabsContent value="todo"><TodoBoard /></TabsContent>
         <TabsContent value="help"><HelpDesk /></TabsContent>
       </Tabs>
     </div>
