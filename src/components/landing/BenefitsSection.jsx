@@ -2,7 +2,7 @@ import React from 'react';
 import { ShieldCheck, ShieldAlert, TrendingUp, ClipboardCheck, RefreshCw, Lock } from 'lucide-react';
 
 const BENEFITS = [
-  { icon: ShieldCheck, title: 'Stay Compliant', desc: 'Meet NDIS standards and regulatory obligations with confidence.' },
+  { icon: ShieldCheck, title: 'Stay Compliant', desc: 'Live compliance trackers show every document in every area is fully compliant, every day.' },
   { icon: ShieldAlert, title: 'Reduce Risk', desc: 'Identify, assess, and manage risks before they become incidents.' },
   { icon: TrendingUp, title: 'Improve Quality', desc: 'Deliver safe, consistent, and high-quality supports.' },
   { icon: ClipboardCheck, title: 'Audit Ready in Minutes', desc: 'Express internal audits with evidence and corrective actions captured automatically.' },
@@ -39,7 +39,7 @@ export default function BenefitsSection() {
           <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
             Why providers choose <span className="font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">ComplianceHR</span>
           </h2>
-          <p className="mt-4 text-lg font-medium text-foreground/65">Built for the realities of disability and community service delivery.</p>
+          <p className="mt-4 text-lg font-medium text-foreground/65">The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.</p>
         </div>
         <div className="relative mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b, index) => (

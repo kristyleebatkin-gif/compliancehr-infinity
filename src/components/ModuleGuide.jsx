@@ -12,7 +12,8 @@ export default function ModuleGuide() {
 
   useEffect(() => { setOpen(false); }, [guide?.title]);
 
-  if (!guide) return null;
+  // User guides are consolidated in the User Guides module only.
+  return null;
 
   return (
     <div className="mb-3 overflow-hidden rounded-2xl border border-brand/20 bg-gradient-to-r from-brand/5 via-accent to-transparent shadow-sm">

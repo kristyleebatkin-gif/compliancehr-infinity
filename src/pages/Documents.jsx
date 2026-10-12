@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye, Database } from 'lucide-react';
+import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye, Database, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
 import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
@@ -102,6 +103,15 @@ export default function Documents() {
     }
   };
 
+  const exportAll = async () => {
+    const page = await base44.entities.EmployeeDocument.filter({}, { sort: '-created_date', limit: 1000 });
+    downloadCsv('document-vault-full-register.csv', [
+      { key: 'title', label: 'Title' }, { key: 'employee_name', label: 'Employee' }, { key: 'document_type', label: 'Type' },
+      { key: 'issue_date', label: 'Issue Date' }, { key: 'expiry_date', label: 'Expiry Date' },
+      { key: 'status', label: 'Status' }, { key: 'notes', label: 'Notes' },
+    ], page.items.map((d) => ({ ...d, notes: d.notes || '' })));
+  };
+
   const runScan = async () => {
     setScanning(true);
     setScanMsg('');
@@ -117,11 +127,12 @@ export default function Documents() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Employee documents, expiry tracking and data control." />
+      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." />
+      <DataControlPanel />
 
       <Tabs defaultValue="documents">
         <TabsList className="flex-wrap">
-          <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Employee documents</TabsTrigger>
+          <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>
         </TabsList>
 
@@ -131,6 +142,9 @@ export default function Documents() {
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
           <Button variant="outline" onClick={runScan} disabled={scanning}>
             <RefreshCw className={`mr-2 h-4 w-4 ${scanning ? 'animate-spin' : ''}`} /> Scan expiries
+          </Button>
+          <Button variant="outline" onClick={exportAll}>
+            <Download className="mr-2 h-4 w-4" /> Bulk export all documents
           </Button>
         </div>
         <BulkUploadDocuments staff={staff} onDone={load} />

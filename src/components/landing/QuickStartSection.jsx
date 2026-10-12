@@ -21,7 +21,7 @@ const STEPS = [
   {
     icon: Bell,
     title: 'Stay up to date',
-    text: 'Check alerts, expiries, appraisals and audit reminders, and open the Manual Library whenever you need current instructions.',
+    text: 'Live compliance trackers show what is in date across every module, alerts surface anything due, and the User Guides library holds current instructions.',
   },
 ];
 const ACCENTS = [

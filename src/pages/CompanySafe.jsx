@@ -52,7 +52,7 @@ export default function CompanySafe() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Lock} title="Company Safe" subtitle="Central register of organisational documents, certificates and licences." />
+      <PageHeader icon={Lock} title="Company Safe" subtitle="Business identity, business documents and important business information, secured in one safe." />
       <div className="flex flex-wrap items-center justify-end gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
@@ -89,13 +89,14 @@ export default function CompanySafe() {
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Business identity</div>
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Business Identity</div>
         <BusinessIdentityCard />
-        <BusinessDetailsCard />
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><FolderLock className="h-4 w-4" />Compliance &amp; business documents</div>
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><FolderLock className="h-4 w-4" />Business Documents</div>
         <ComplianceUploads />
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><IdCard className="h-4 w-4" />Staff badges</div>
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><IdCard className="h-4 w-4" />Staff Badge Creator</div>
         <StaffBadgeCreator />
+        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Important Business Information</div>
+        <BusinessDetailsCard />
       </div>
 
       {loading ? (

@@ -10,9 +10,10 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Plus, Search, Trash2, UserRound, Users, ShieldCheck } from 'lucide-react';
+import { Plus, Search, Trash2, UserRound, Users, ShieldCheck, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CertificationOverview from '@/components/staff/CertificationOverview';
+import StaffRecognition from '@/components/staff/StaffRecognition';
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -63,11 +64,12 @@ export default function Staff() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Users} title="Staff Profiles" subtitle="Your team members and their compliance roles." />
+      <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." />
       <Tabs defaultValue="profiles">
         <TabsList>
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
-          <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Certifications</TabsTrigger>
+          <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Staff certificates</TabsTrigger>
+          <TabsTrigger value="recognition"><Trophy className="mr-1.5 h-4 w-4" />Leaderboard &amp; recognition</TabsTrigger>
         </TabsList>
         <TabsContent value="profiles" className="space-y-6">
           <div className="flex flex-wrap items-center justify-end gap-2">
@@ -149,6 +151,9 @@ export default function Staff() {
         </TabsContent>
         <TabsContent value="certifications">
           <CertificationOverview />
+        </TabsContent>
+        <TabsContent value="recognition">
+          <StaffRecognition />
         </TabsContent>
       </Tabs>
     </div>

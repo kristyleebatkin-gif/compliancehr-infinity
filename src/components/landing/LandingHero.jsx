@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
 
 export default function LandingHero() {
   const [authed, setAuthed] = useState(false);
@@ -34,8 +35,12 @@ export default function LandingHero() {
             <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">simplified end to end.</span>
           </h1>
 
-          <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
-            Connect intake, people, rostering, shift notes, HR, invoicing, safety, provider registration and audit evidence in one secure platform built for disability and community service providers. Internal audits are completed in minutes, from checklist to branded report, ready for your next NDIS audit.
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.16em] sm:text-[13px]">
+            <span className="bg-gradient-to-r from-violet-700 via-fuchsia-600 to-orange-500 bg-clip-text text-transparent">The Smartest, Simplest, Easiest and Effortless Business Super Platform</span>
+          </p>
+
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
+            ComplianceHR empowers you to achieve an impossible quality and impossible standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -49,7 +54,9 @@ export default function LandingHero() {
               <Link to="/login" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">Sign in</Link>
             )}
           </div>
-          <p className="mt-5 text-[13px] font-medium tracking-wide text-foreground/45">No credit card required · Set up in minutes</p>
+          <p className="mt-5 text-[13px] font-medium tracking-wide text-foreground/45">No credit card required · 14-day free trial · Set up in minutes</p>
+
+          <ModuleChipStrip />
 
           <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
             {highlights.map(({ icon: Icon, title, text }) => (

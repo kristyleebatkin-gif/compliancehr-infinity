@@ -37,9 +37,9 @@ export default function FeaturesSection() {
       <div className="relative mx-auto max-w-2xl text-center">
         <div className="inline-flex rounded-full border border-pink-200 bg-pink-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-pink-700 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-300">Latest platform capabilities</div>
         <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
-          Everything you need to <span className="font-editorial-italic bg-gradient-to-r from-pink-700 via-violet-600 to-blue-600 bg-clip-text text-transparent">stay compliant</span>
+          An impossible standard, <span className="font-editorial-italic bg-gradient-to-r from-pink-700 via-violet-600 to-blue-600 bg-clip-text text-transparent">achieved effortlessly</span>
         </h2>
-        <p className="mt-4 text-lg font-medium text-foreground/65">One platform covering the full provider lifecycle, from intake and rostering to invoicing, registration and audit.</p>
+        <p className="mt-4 text-lg font-medium text-foreground/65">One super platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker that shows you are audit prepared, every day.</p>
       </div>
       <div className="relative mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((f) => (

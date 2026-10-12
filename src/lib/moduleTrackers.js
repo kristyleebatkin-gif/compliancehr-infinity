@@ -49,6 +49,13 @@ export const MODULE_TRACKERS = {
   '/participants': [
     { label: 'Progress notes overdue', entity: 'ParticipantProfile', base: { progress_notes_due_date: { $lt: '' } }, dynamic: 'overdue' },
   ],
+  '/staff': [
+    { label: 'Certificates expired', entity: 'Certificate', base: { expiry_date: { $lt: '' } }, dynamic: 'overdue' },
+    { label: 'Staff documents expiring soon', entity: 'EmployeeDocument', base: { expiry_date: { $gte: '', $lte: '' }, status: { $ne: 'Archived' } }, dynamic: 'soon', soon: 30 },
+  ],
+  '/intake': [
+    { label: 'Intake cases ready for review', entity: 'IntakeCase', base: { status: 'Ready for Review' }, dynamic: 'overdue' },
+  ],
   '/dashboard': [
     { label: 'Tasks overdue', entity: 'TodoTask', base: { due_date: { $lt: '' }, status: 'Pending' }, dynamic: 'overdue' },
     { label: 'Certificates expired', entity: 'Certificate', base: { expiry_date: { $lt: '' } }, dynamic: 'overdue' },

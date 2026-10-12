@@ -10,7 +10,7 @@ export default function EmployeeIntake() {
       <Link to="/intake" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
         <ArrowLeft className="h-4 w-4" /> Intake Centre
       </Link>
-      <PageHeader title="Employee Intake" subtitle="Complete employee details and securely upload every required onboarding record." />
+      <PageHeader title="Employee Intake" subtitle="Employee details, intake information and intake forms, in one guided profile." />
       <IntakeCaseWorkflow intakeType="Employee" />
     </div>
   );

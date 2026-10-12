@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
 
 const PRICING_TIERS = [
-  { users: 'Up to 20 users', monthly: '200', yearly: '2,000', featured: true },
-  { users: '21–30 users', monthly: '250', yearly: '2,500' },
-  { users: '31–40 users', monthly: '300', yearly: '3,000' },
-  { users: '41–50 users', monthly: '350', yearly: '3,500' },
-  { users: '51–100 users', monthly: '450', yearly: '4,500' },
-  { users: '101+ users', monthly: '600', yearly: '6,500' },
+  { users: 'Up to 20 users', monthly: '250', yearly: '3,000', featured: true },
+  { users: '21–30 users', monthly: '313', yearly: '3,750' },
+  { users: '31–40 users', monthly: '375', yearly: '4,500' },
+  { users: '41–50 users', monthly: '438', yearly: '5,250' },
+  { users: '51–100 users', monthly: '500', yearly: '6,000' },
+  { users: '101+ users', monthly: '625', yearly: '7,500' },
 ];
 
 const INCLUDED = [
@@ -32,7 +32,7 @@ export default function PricingSection() {
           Simple pricing that <span className="font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">grows with your team</span>
         </h2>
         <p className="mt-4 text-lg text-foreground/60">
-          Choose monthly repayments on a 12-month agreement or pay yearly upfront.
+          Choose monthly repayments on a 24-month lock-in agreement or pay yearly upfront. Every plan starts with a 14-day free trial.
         </p>
       </div>
 
@@ -101,7 +101,7 @@ export default function PricingSection() {
       </div>
 
       <p className="mt-5 text-center text-xs leading-relaxed text-foreground/45">
-        Monthly repayments require a 12-month agreement. User tiers are based on the number of users with platform access.
+        Monthly repayments require a 24-month lock-in agreement, with a yearly upfront option also available. All plans begin with a 14-day free trial. User tiers are based on the number of users with platform access.
       </p>
     </section>
   );
