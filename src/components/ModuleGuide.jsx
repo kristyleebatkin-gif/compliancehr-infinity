@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { moduleGuides } from '@/lib/moduleGuides';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { BookMarked, ChevronDown } from 'lucide-react';
 
 export default function ModuleGuide() {
@@ -23,6 +24,7 @@ export default function ModuleGuide() {
           <p className="text-sm font-bold text-brand">User Guide: {guide.title}</p>
           <p className="text-xs text-muted-foreground">Order of documents and process steps for this module.</p>
         </div>
+        <ModuleComplianceStrip path={seg} />
         <span className="hidden rounded-md border border-brand/20 bg-white px-2 py-1 text-[10px] font-semibold text-brand sm:block">{open ? 'Hide steps' : 'Show steps'}</span>
         <ChevronDown className={`h-4 w-4 shrink-0 text-brand transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
