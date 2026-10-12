@@ -7,8 +7,9 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText } from 'lucide-react';
-import { format } from 'date-fns';
+import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText, Search, Copy } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { format, addDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { SUPPORT_ITEMS, lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
 import { downloadQuotePdf, downloadQuoteTemplatePdf, printQuotePdf, quotePdfBase64, quotePdfFilename } from '@/lib/quotePdf';
@@ -17,6 +18,8 @@ import QuotePreview from '@/components/quotes/QuotePreview';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`);
 const STATUSES = ['Draft', 'Sent', 'Accepted', 'Declined', 'Expired'];
+const todayStr = format(new Date(), 'yyyy-MM-dd');
+const soonStr = format(addDays(new Date(), 14), 'yyyy-MM-dd');
 
 export default function QuoteCentre() {
   const { toast } = useToast();
@@ -28,6 +31,8 @@ export default function QuoteCentre() {
   const [previewing, setPreviewing] = useState(null);
   const [sending, setSending] = useState(null);
   const [exporting, setExporting] = useState(false);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -111,6 +116,37 @@ export default function QuoteCentre() {
 
   const totalValue = quotes.reduce((sum, q) => sum + (Number(q.total) || 0), 0);
   const acceptedValue = quotes.filter((q) => q.status === 'Accepted').reduce((sum, q) => sum + (Number(q.total) || 0), 0);
+  const responded = quotes.filter((q) => ['Accepted', 'Declined'].includes(q.status)).length;
+  const winRate = responded ? Math.round((quotes.filter((q) => q.status === 'Accepted').length / responded) * 100) : 0;
+  const expiringSoon = quotes.filter((q) => q.expiry_date && ['Draft', 'Sent'].includes(q.status) && q.expiry_date >= todayStr && q.expiry_date <= soonStr).length;
+
+  const visibleQuotes = quotes.filter((q) =>
+    (statusFilter === 'All' || q.status === statusFilter) &&
+    (!search.trim() || [q.quote_number, q.client_name, q.participant_name, q.ndis_number].some((v) => (v || '').toLowerCase().includes(search.trim().toLowerCase())))
+  );
+
+  const duplicateQuote = async (q) => {
+    try {
+      const count = await base44.entities.Quote.count({});
+      const { id, created_date, updated_date, created_by_id, ...rest } = q;
+      await base44.entities.Quote.create({
+        ...rest,
+        quote_number: `Q-${new Date().getFullYear()}-${String(count + 1).padStart(3, '0')}`,
+        issue_date: format(new Date(), 'yyyy-MM-dd'),
+        expiry_date: format(addDays(new Date(), Number(business.quote_validity_days) || 30), 'yyyy-MM-dd'),
+        status: 'Draft',
+        sent_at: '',
+        sent_to: '',
+        pdf_file_uri: '',
+        pdf_file_name: '',
+        pdf_generated_date: '',
+      });
+      await load();
+      toast({ title: 'Quote duplicated', description: 'A fresh draft was created. Edit it and send when ready.' });
+    } catch (error) {
+      toast({ title: 'Could not duplicate', description: error.message, variant: 'destructive' });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -124,7 +160,7 @@ export default function QuoteCentre() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {[['Quotes', String(quotes.length)], ['Quoted value', money(totalValue)], ['Accepted', money(acceptedValue)]].map(([label, value]) => (
+            {[['Quotes', String(quotes.length)], ['Quoted value', money(totalValue)], ['Accepted', money(acceptedValue)], ['Win rate', `${winRate}%`], ['Expiring soon', String(expiringSoon)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
                 <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
@@ -140,13 +176,29 @@ export default function QuoteCentre() {
         <p className="mt-3 text-[11px] text-slate-400">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="relative min-w-52 flex-1">
+          <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input className="pl-8" placeholder="Search quote number, client, participant or NDIS number..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">All statuses</SelectItem>
+            {STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+          </SelectContent>
+        </Select>
+      </div>
+
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : quotes.length === 0 ? (
         <Card><CardContent className="p-10 text-center text-muted-foreground">No quotes yet. Create your first quote above.</CardContent></Card>
+      ) : visibleQuotes.length === 0 ? (
+        <Card><CardContent className="p-10 text-center text-muted-foreground">No quotes match this search or filter.</CardContent></Card>
       ) : (
         <div className="space-y-3">
-          {quotes.map((q) => {
+          {visibleQuotes.map((q) => {
             const lines = parseLineItems(q.line_items);
             const total = lines.length ? lines.reduce((sum, l) => sum + lineAmount(l), 0) : (Number(q.total) || 0);
             return (
@@ -163,6 +215,11 @@ export default function QuoteCentre() {
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="font-semibold">{money(total)}</p>
                       <Badge className={statusTone(q.status)}>{q.status}</Badge>
+                      {q.expiry_date && !['Accepted', 'Declined'].includes(q.status) && (q.expiry_date < todayStr ? (
+                        <Badge className="bg-danger/10 text-danger text-[10px]">Expired</Badge>
+                      ) : q.expiry_date <= soonStr ? (
+                        <Badge className="bg-warning/10 text-warning text-[10px]">Expiring soon</Badge>
+                      ) : null)}
                       <Select value={q.status} onValueChange={async (v) => { await base44.entities.Quote.update(q.id, { status: v }); await load(); }}>
                         <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
                         <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
@@ -187,6 +244,7 @@ export default function QuoteCentre() {
                       {sending === q.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Mail className="h-3 w-3" />}Send quote
                     </Button>
                     <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => openEdit(q)}><Pencil className="h-3 w-3" />Edit</Button>
+                    <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => duplicateQuote(q)}><Copy className="h-3 w-3" />Duplicate</Button>
                     <Button variant="ghost" size="icon" className="ml-auto h-7 w-7" onClick={async () => { await base44.entities.Quote.delete(q.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                   </div>
                 </CardContent>

@@ -11,6 +11,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { archiveQuoteCopy } from '@/lib/quoteArchive';
 import { useToast } from '@/components/ui/use-toast';
+import QuotePreview from '@/components/quotes/QuotePreview';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -19,9 +20,11 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(null);
   const [lines, setLines] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     if (!open) return;
+    setShowPreview(false);
     if (editing) {
       setForm({ ...editing });
       setLines(JSON.parse(editing.line_items || '[]'));
@@ -82,8 +85,17 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader><DialogTitle>{editing ? 'Edit quote' : 'New quote'}</DialogTitle></DialogHeader>
+      <DialogContent className={`max-h-[92vh] overflow-y-auto ${showPreview ? 'sm:max-w-4xl' : 'sm:max-w-2xl'}`}>
+        <DialogHeader>
+          <DialogTitle>{editing ? 'Edit quote' : 'New quote'}</DialogTitle>
+        </DialogHeader>
+        <div className="flex gap-1.5">
+          <Button variant={showPreview ? 'outline' : 'default'} size="sm" className="h-7 text-xs" onClick={() => setShowPreview(false)}>Edit details</Button>
+          <Button variant={showPreview ? 'default' : 'outline'} size="sm" className="h-7 text-xs" onClick={() => setShowPreview(true)}>Live preview</Button>
+        </div>
+        {showPreview ? (
+          <QuotePreview quote={{ ...form, line_items: JSON.stringify(lines), quote_number: editing?.quote_number || 'Preview' }} business={business} />
+        ) : (
         <div className="grid gap-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="grid gap-1.5"><Label>Quote for (client) *</Label><Input value={form.client_name || ''} onChange={(e) => setForm({ ...form, client_name: e.target.value })} placeholder="Participant, plan manager or NDIA" /></div>
@@ -156,6 +168,7 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
           <div className="grid gap-1.5"><Label>Notes</Label><Textarea rows={2} value={form.notes || ''} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
           <Button onClick={save} disabled={saving || !form.client_name?.trim()}>{editing ? 'Save changes' : 'Create quote'}</Button>
         </div>
+        )}
       </DialogContent>
     </Dialog>
   );
