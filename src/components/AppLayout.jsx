@@ -46,7 +46,7 @@ const PRIMARY_NAV = [
   { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
   { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },
   { label: 'Volunteering & Student Placement', path: '/volunteering-placements', key: 'volunteering-placements', icon: Handshake },
-  { label: 'Tasks', path: '/tasks', key: 'tasks', icon: ClipboardList },
+  { label: 'Task Dashboard', path: '/tasks', key: 'tasks', icon: ClipboardList },
   { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
   { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },
 

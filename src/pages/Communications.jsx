@@ -9,7 +9,7 @@ import BulkMessage from '@/components/communications/BulkMessage';
 import ShiftNotes from '@/components/communications/ShiftNotes';
 import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
 import HelpDesk from '@/components/communications/HelpDesk';
-import TodoBoard from '@/components/communications/TodoBoard';
+
 
 export default function Communications() {
   return (
@@ -27,7 +27,7 @@ export default function Communications() {
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
           <TabsTrigger value="shift-notes"><NotebookPen className="mr-1 inline h-3.5 w-3.5" />Shift Notes</TabsTrigger>
           <TabsTrigger value="employee-log"><Briefcase className="mr-1 inline h-3.5 w-3.5" />Employee Log</TabsTrigger>
-          <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do Board</TabsTrigger>
+
           <TabsTrigger value="help"><LifeBuoy className="mr-1 inline h-3.5 w-3.5" />Help Desk</TabsTrigger>
         </TabsList>
         <TabsContent value="diary"><CommunicationDiary /></TabsContent>
@@ -36,7 +36,6 @@ export default function Communications() {
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="shift-notes"><ShiftNotes /></TabsContent>
         <TabsContent value="employee-log"><EmployeeCommLog /></TabsContent>
-        <TabsContent value="todo"><TodoBoard /></TabsContent>
         <TabsContent value="help"><HelpDesk /></TabsContent>
       </Tabs>
     </div>

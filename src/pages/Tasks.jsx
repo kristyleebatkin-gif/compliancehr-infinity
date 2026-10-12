@@ -7,6 +7,7 @@ import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
+import TodoBoard from '@/components/communications/TodoBoard';
 import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -126,7 +127,7 @@ export default function Tasks() {
 
   return (
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Tasks" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
+      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
 
@@ -210,6 +211,8 @@ export default function Tasks() {
       )}
 
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
+
+      <TodoBoard />
 
       <TaskLeaderboard />
     </div>
