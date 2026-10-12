@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
+import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding, getCompanyBranding } from '@/lib/companyBranding';
 
 export const NAVY = '#1B2A4A';
 export const GOLD = '#C9A227';
@@ -26,7 +26,7 @@ function drawCertificatePage(doc, data) {
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(27, 42, 74);
-  doc.text('COMPLIANCEHR TRAINING HUB', pageW / 2, y + 16, { align: 'center' });
+  doc.text((data.academyName || `${getCompanyBranding().companyName || 'ComplianceHR'} Training Hub`).toUpperCase(), pageW / 2, y + 16, { align: 'center' });
 
   y += 60;
   doc.setFont('helvetica', 'bold');
@@ -122,13 +122,15 @@ function drawCertificatePage(doc, data) {
   );
 }
 
-export function buildCertificatePdfBlob(data) {
+export async function buildCertificatePdfBlob(data) {
+  await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   drawCertificatePage(doc, data);
   return doc.output('blob');
 }
 
 export async function downloadCertificatePdf(data, filename) {
+  await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   drawCertificatePage(doc, data);
   doc.save(filename);

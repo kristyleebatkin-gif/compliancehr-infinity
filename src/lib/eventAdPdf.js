@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf';
+import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -68,12 +69,24 @@ export async function buildEventAdPdf(event, business = {}) {
   const margin = 0;
   const pad = 40;
 
+  await loadCompanyBranding().catch(() => {});
+  const branding = getCompanyBranding();
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, pageW, 64, 'F');
+  let textX = pad;
+  if (branding.logoDataUrl) {
+    try {
+      const props = doc.getImageProperties(branding.logoDataUrl);
+      const ratio = Math.min(30 / props.width, 30 / props.height);
+      doc.addImage(branding.logoDataUrl, pad, 17, props.width * ratio, props.height * ratio);
+      textX = pad + props.width * ratio + 14;
+    } catch { /* text header still renders */ }
+  }
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
   doc.setTextColor(255, 255, 255);
-  doc.text(safeText(business.business_name || 'You are invited'), pad, 38, { maxWidth: pageW - pad * 2 - 120 });
+  doc.text(safeText(business.business_name || branding.companyName || 'You are invited'), textX, 38, { maxWidth: pageW - textX - 120 });
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(203, 213, 225);

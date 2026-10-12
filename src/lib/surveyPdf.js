@@ -1,10 +1,12 @@
 import { jsPDF } from 'jspdf';
 import { format } from 'date-fns';
+import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
 
 /**
- * Generates a printable survey document (A4) for a survey record.
+ * Generates a printable, company-branded survey document (A4) for a survey record.
  */
-export function downloadSurveyDocument(survey) {
+export async function downloadSurveyDocument(survey) {
+  await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 48;
@@ -12,13 +14,15 @@ export function downloadSurveyDocument(survey) {
 
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, pageWidth, 90, 'F');
-  doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(20);
-  doc.text('Participant & Staff Survey', margin, 40);
+  doc.setFontSize(18);
+  doc.setTextColor(255, 255, 255);
+  drawCompanyBranding(doc, margin, 26, { fontSize: 16, logoSize: 28, maxWidth: pageWidth - margin * 2 - 170 });
+  doc.text('Participant & Staff Survey', margin + 190, 40, { maxWidth: pageWidth - margin - 190 - 40 });
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.text('Quality and Improvement Program', margin, 62);
+  doc.setTextColor(203, 213, 225);
+  doc.text('Quality and Improvement Program', margin + 190, 58);
   y = 130;
 
   doc.setTextColor(15, 23, 42);
@@ -91,5 +95,6 @@ export function downloadSurveyDocument(survey) {
   doc.setTextColor(120, 128, 136);
   doc.text(`Generated ${format(new Date(), 'd MMM yyyy')}`, margin, doc.internal.pageSize.getHeight() - 40);
 
+  drawDocumentFooter(doc, { title: survey.title || 'Survey', code: 'QI-SURVEY' });
   doc.save(`Survey - ${(survey.title || 'survey').replace(/[^\w -]/g, '')}.pdf`);
 }
