@@ -7,19 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Camera, FileDown, Images, Loader2, Trash2, UploadCloud, FileText, X } from 'lucide-react';
-
-// Reads an image file into a JPEG data URL and returns its pixel dimensions.
-const readImage = (file) => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.onload = () => {
-    const img = new Image();
-    img.onload = () => resolve({ dataUrl: reader.result, w: img.naturalWidth, h: img.naturalHeight });
-    img.onerror = reject;
-    img.src = reader.result;
-  };
-  reader.onerror = reject;
-  reader.readAsDataURL(file);
-});
+import { readImageDataUrl as readImage } from '@/lib/imageToPdf';
 
 export default function ScanToPdf({ open, onOpenChange }) {
   const { toast } = useToast();

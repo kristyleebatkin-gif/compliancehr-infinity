@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2, ScanLine, UploadCloud } from 'lucide-react';
+import { imageFileToPdf } from '@/lib/imageToPdf';
 
 const EMPTY_EXTRACTED = { description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled' };
 
@@ -26,10 +27,24 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
     setScanning(true);
     setData(EMPTY_EXTRACTED);
     try {
-      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file: selected });
-      setFileUri(file_uri);
-      setFileName(selected.name);
-      const res = await base44.functions.invoke('scanReceipt', { file_uri });
+      // The image is uploaded for detail capture, then automatically converted to a
+      // PDF which is stored with the receipt record.
+      const { file_uri: imageUri } = await base44.integrations.Core.UploadPrivateFile({ file: selected });
+      let storedUri = imageUri;
+      let storedName = selected.name;
+      if (selected.type.startsWith('image/')) {
+        try {
+          const pdfFile = await imageFileToPdf(selected);
+          const { file_uri: pdfUri } = await base44.integrations.Core.UploadPrivateFile({ file: pdfFile });
+          storedUri = pdfUri;
+          storedName = pdfFile.name;
+        } catch (pdfError) {
+          toast({ title: 'PDF conversion skipped', description: 'The receipt is stored as its original image.' });
+        }
+      }
+      setFileUri(storedUri);
+      setFileName(storedName);
+      const res = await base44.functions.invoke('scanReceipt', { file_uri: imageUri });
       const scan = res.data || {};
       if (scan.error) {
         toast({ title: 'Scan incomplete', description: scan.error });
@@ -81,7 +96,7 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
         <label className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-muted/30 p-6 text-center hover:bg-muted/50 ${scanning ? 'pointer-events-none opacity-60' : ''}`}>
           {scanning ? <Loader2 className="h-6 w-6 animate-spin text-brand" /> : file ? <ScanLine className="h-6 w-6 text-brand" /> : <UploadCloud className="h-6 w-6 text-muted-foreground" />}
           <span className="text-sm font-medium">{scanning ? 'Reading receipt details...' : file ? file.name : 'Take or choose a photo of the receipt'}</span>
-          <span className="text-xs text-muted-foreground">The image is stored with the receipt and its details are captured automatically.</span>
+          <span className="text-xs text-muted-foreground">The image is converted to a PDF, stored with the receipt, and its details are captured automatically.</span>
           <input type="file" className="hidden" accept="image/*,.pdf" onChange={(e) => pickFile(e.target.files?.[0])} />
         </label>
         <div className="grid grid-cols-2 gap-3">
