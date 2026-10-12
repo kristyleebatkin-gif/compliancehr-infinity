@@ -6,6 +6,7 @@ import AdminDashboard from '@/components/dashboard/AdminDashboard';
 import StaffDashboard from '@/components/dashboard/StaffDashboard';
 import ParticipantDashboard from '@/components/dashboard/ParticipantDashboard';
 import DashboardQuickStart from '@/components/dashboard/DashboardQuickStart';
+import AllModulesHub from '@/components/dashboard/AllModulesHub';
 import { Activity, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 
 const HEADINGS = {
@@ -51,6 +52,8 @@ export default function Dashboard() {
       </div>
 
       <DashboardQuickStart />
+
+      <AllModulesHub />
 
       {role === ROLES.PARTICIPANT
         ? <ParticipantDashboard />

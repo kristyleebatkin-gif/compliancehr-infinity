@@ -5,57 +5,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav } from '@/lib/roles';
 import ModuleGuide from '@/components/ModuleGuide';
+import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import {
-  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, AlertTriangle,
-  ShieldAlert, FolderOpen, UserPlus, Megaphone,
-  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Vault,
-  Boxes, Target, UserCog, UserCircle, CalendarClock, BookOpen, ClipboardList, Siren, CalendarDays, Database, ReceiptText, Wrench, Landmark, LifeBuoy,
-  Handshake, PartyPopper, LayoutPanelTop, FileSpreadsheet, BadgeCheck, MessageSquare, Lightbulb, ClipboardCheck, BarChart3,
-  MapPin, HeartHandshake, Building2, Newspaper, UsersRound, Briefcase, ShoppingCart, KanbanSquare,
+  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
+  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
 } from 'lucide-react';
-
-const PRIMARY_NAV = [
-  { label: 'Dashboard', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
-  { label: 'Intake Centre', path: '/intake', key: 'intake', icon: UserPlus },
-  { label: 'Document Vault', path: '/documents', key: 'documents', icon: FolderOpen },
-  { label: 'Company Safe', path: '/company-safe', key: 'company-safe', icon: Vault },
-  { label: 'Staff Profiles', path: '/staff', key: 'staff', icon: Users },
-  { label: 'Participant Profiles', path: '/participants', key: 'participants', icon: Heart },
-  { label: 'Visual Boards', path: '/visual-boards', key: 'visual-boards', icon: LayoutPanelTop },
-  { label: 'Communication Centre', path: '/communications', key: 'communications', icon: Megaphone },
-  { label: 'Incident Clinic', path: '/incidents', key: 'incidents', icon: AlertTriangle },
-  { label: 'Risk Reporting', path: '/risks', key: 'risks', icon: ShieldAlert },
-  { label: 'Compliance & Report Centre', path: '/compliance', key: 'compliance', icon: ShieldCheck },
-  { label: 'Training Centre', path: '/training', key: 'training', icon: GraduationCap },
-  { label: 'Certificates', path: '/certificates', key: 'certificates', icon: BadgeCheck },
-  { label: 'Asset Management', path: '/assets', key: 'assets', icon: Boxes },
-  { label: 'Rostering', path: '/rostering', key: 'rostering', icon: CalendarClock },
-  { label: 'Invoicing Centre', path: '/invoicing', key: 'invoicing', icon: FileSpreadsheet },
-  { label: 'Goal Progress', path: '/goals', key: 'goals', icon: Target },
-  { label: 'Emergency Response', path: '/emergency-response', key: 'emergency-response', icon: Siren },
-  { label: 'Meeting Centre', path: '/meetings', key: 'meetings', icon: CalendarDays },
-  { label: 'Users & Permissions Hub', path: '/users', key: 'users', icon: Users },
-  { label: 'Receipt Hub', path: '/receipts', key: 'receipts', icon: ReceiptText },
-  { label: 'Equipment & MSDS', path: '/equipment-manuals', key: 'equipment-manuals', icon: Wrench },
-  { label: 'Community & Council', path: '/community-council', key: 'community-council', icon: MapPin },
-  { label: 'Referral & Support', path: '/referrals', key: 'community-referral', icon: HeartHandshake },
-  { label: 'NDIS Provider Portal', path: '/ndis-portal', key: 'ndis-provider', icon: Building2 },
-  { label: 'NDIS Updates & News', path: '/ndis-updates', key: 'ndis-news', icon: Newspaper },
-  { label: 'Quote Centre', path: '/quotes', key: 'quotes', icon: Landmark },
-  { label: 'Programs', path: '/programs', key: 'programs', icon: Users },
-  { label: 'Key Personnel Contacts', path: '/key-contacts', key: 'key-contacts', icon: UserCog },
-  { label: 'Volunteering & Student Placement', path: '/volunteering-placements', key: 'volunteering-placements', icon: Handshake },
-  { label: 'Business Analytics', path: '/analytics', key: 'analytics', icon: BarChart3 },
-  { label: 'HR Hub', path: '/hr', key: 'human-resources', icon: UsersRound },
-  { label: 'CRM & Leads', path: '/crm', key: 'crm', icon: Briefcase },
-  { label: 'Procurement', path: '/procurement', key: 'procurement', icon: ShoppingCart },
-  { label: 'Projects Hub', path: '/projects', key: 'projects', icon: KanbanSquare },
-  { label: 'Task Dashboard', path: '/tasks', key: 'tasks', icon: ClipboardList },
-  { label: 'Feedback & Surveys', path: '/feedback', key: 'feedback', icon: MessageSquare },
-  { label: 'Quality & Improvement', path: '/quality', key: 'quality', icon: Lightbulb },
-  { label: 'Help Centre', path: '/help', key: 'help', icon: LifeBuoy },
-
-];
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
