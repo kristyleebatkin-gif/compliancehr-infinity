@@ -10,6 +10,7 @@ import { Download, Loader2, Save, Sparkles, UploadCloud } from 'lucide-react';
 import { PARTICIPANT_FILLABLE_FORMS } from '@/lib/participantFillableForms';
 import { buildAutofilledAnswers, autofillParticipantValue } from '@/lib/participantAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
+import { routeDocument } from '@/lib/documentRouting';
 
 export default function ParticipantFillableForms({ participant }) {
   const { toast } = useToast();

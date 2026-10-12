@@ -1,5 +1,6 @@
 import { base44 } from '@/api/base44Client';
 import { buildQuotePdf, quotePdfFilename } from '@/lib/quotePdf';
+import { routeDocument } from '@/lib/documentRouting';
 
 // Automated quote filing: generates the branded quote PDF, uploads it to the
 // app's private storage, saves the copy on the quote record, and files a copy
@@ -23,7 +24,7 @@ export async function archiveQuoteCopy(quote, business = {}) {
     const participant = matches.items?.[0];
     if (participant) {
       const user = await base44.auth.me().catch(() => null);
-      await base44.entities.FormsLibraryDocument.create({
+      const copyRecord = await base44.entities.FormsLibraryDocument.create({
         library: `participant-${participant.id}`,
         document_type: 'Quote',
         title: name,
@@ -32,6 +33,7 @@ export async function archiveQuoteCopy(quote, business = {}) {
         uploaded_date: today,
         uploaded_by: user?.full_name || user?.email || '',
       });
+      routeDocument(copyRecord, { person_name: participantName, person_type: 'Participant' });
     }
   }
 

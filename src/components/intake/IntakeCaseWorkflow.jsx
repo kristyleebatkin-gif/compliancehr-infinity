@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { format } from 'date-fns';
 import { Download, ExternalLink, Pencil } from 'lucide-react';
 import { loadCompanyBranding } from '@/lib/companyBranding';
+import { routeDocument } from '@/lib/documentRouting';
 import { buildFilledFormDoc } from '@/lib/participantFormPdf';
 import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
 import {
@@ -578,7 +579,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     try {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const canonical = canonicalIntakeDocumentType(docType);
-      await base44.entities.IntakeDocument.create({
+      const intakeDoc = await base44.entities.IntakeDocument.create({
         intake_case_id: activeCase.id,
         intake_case_number: activeCase.case_number,
         intake_type: intakeType,
@@ -589,6 +590,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         uploaded_by: user?.full_name || user?.email || 'Intake team',
         uploaded_date: businessDateTime().date,
       });
+      routeDocument(intakeDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
       if (TRAINING_REGISTER_DOC_TYPES.has(canonical)) {
         await base44.entities.TrainingCompletion.create({
           learner_type: 'Employee',
@@ -660,7 +662,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       const file = new File([blob], `${onlineForm.docType} (completed online).pdf`, { type: 'application/pdf' });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const canonical = canonicalIntakeDocumentType(onlineForm.docType);
-      await base44.entities.IntakeDocument.create({
+      const onlineDoc = await base44.entities.IntakeDocument.create({
         intake_case_id: activeCase.id,
         intake_case_number: activeCase.case_number,
         intake_type: intakeType,
@@ -671,6 +673,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         uploaded_by: `${user?.full_name || user?.email || 'Intake team'} (completed online)`,
         uploaded_date: businessDateTime().date,
       });
+      routeDocument(onlineDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
       const completed = Array.from(new Set([
         ...(activeCase.completed_document_types || []),
         canonical,
@@ -733,7 +736,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
       const file = new File([blob], `${ackForm.docType} (acknowledged).pdf`, { type: 'application/pdf' });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const canonical = canonicalIntakeDocumentType(ackForm.docType);
-      await base44.entities.IntakeDocument.create({
+      const ackDoc = await base44.entities.IntakeDocument.create({
         intake_case_id: activeCase.id,
         intake_case_number: activeCase.case_number,
         intake_type: intakeType,
@@ -744,6 +747,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         uploaded_by: `${acknowledgedBy} (acknowledgement)`,
         uploaded_date: date,
       });
+      routeDocument(ackDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
       const completed = Array.from(new Set([
         ...(activeCase.completed_document_types || []),
         canonical,

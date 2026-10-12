@@ -10,6 +10,7 @@ import { Download, Loader2, Save, Sparkles, UploadCloud } from 'lucide-react';
 import { STAFF_FILLABLE_FORMS } from '@/lib/staffFillableForms';
 import { autofillStaffValue, buildStaffAutofilledAnswers } from '@/lib/staffAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
+import { routeDocument } from '@/lib/documentRouting';
 
 export default function StaffFillableForms({ staff }) {
   const { toast } = useToast();

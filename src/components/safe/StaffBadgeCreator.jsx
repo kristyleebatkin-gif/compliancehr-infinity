@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Download, Loader2, Save } from 'lucide-react';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadStaffBadgePdf, staffBadgeBlob } from '@/lib/staffBadgePdf';
+import { routeDocument } from '@/lib/documentRouting';
 
 export default function StaffBadgeCreator() {
   const { toast } = useToast();
@@ -38,7 +39,7 @@ export default function StaffBadgeCreator() {
       const user = await base44.auth.me();
       const blob = staffBadgeBlob({ staffName: selected.full_name, position: selected.position, employeeNumber: selected.employee_number });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file: new File([blob], `Staff Badge - ${selected.full_name}.pdf`, { type: 'application/pdf' }) });
-      await base44.entities.FormsLibraryDocument.create({
+      const record = await base44.entities.FormsLibraryDocument.create({
         library: 'company-safe',
         document_type: 'Staff Badge',
         title: `Staff Badge - ${selected.full_name}`,
@@ -47,6 +48,7 @@ export default function StaffBadgeCreator() {
         uploaded_date: new Date().toISOString().slice(0, 10),
         uploaded_by: user?.full_name || user?.email || '',
       });
+      routeDocument(record, { person_name: selected.full_name, person_type: 'Employee' });
       toast({ title: 'Badge stored in the company safe' });
     } catch (error) {
       toast({ title: 'Could not store badge', description: error.message, variant: 'destructive' });

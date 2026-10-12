@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { ExternalLink, FileText, Loader2, Trash2, UploadCloud } from 'lucide-react';
+import { routeDocument } from '@/lib/documentRouting';
 
 const DOC_TYPES = [
   'NDIS Registration Certificate',
