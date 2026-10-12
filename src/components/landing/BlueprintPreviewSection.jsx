@@ -7,82 +7,53 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+
+// The map is generated from the live module directory, so it always matches the app exactly.
+const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
+const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean).map((m) => [m.label, m.blurb]);
+
 const APP_MODULE_GROUPS = [
   {
-    title: 'People, intake and records',
+    title: 'People, intake and profiles',
     colour: 'from-violet-600 to-fuchsia-500',
-    modules: [
-      ['Dashboard', 'Role-based modules, alerts and attention items'],
-      ['Intake Centre', 'Employee and participant intake workflows'],
-      ['Document Vault', 'Controlled documents, evidence and expiry tracking'],
-      ['Company Safe', 'Completed forms and submitted documents'],
-      ['Staff Profiles', 'Employee records, documents, training and certificates'],
-      ['Employee Performance Reviews', 'Online appraisals, review schedules and employment records'],
-      ['Participant Profiles', 'Plans, agreements, journeys, goals and support records'],
-      ['Visual Boards', 'Accessible routines and communication prompts'],
-    ],
+    modules: pick('dashboard', 'intake', 'staff', 'participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'),
   },
   {
     title: 'Service delivery and workforce',
     colour: 'from-blue-600 to-cyan-500',
-    modules: [
-      ['Communication Centre', 'Announcements and communication records'],
-      ['Incident Clinic', 'Reporting, investigation, actions and escalation'],
-      ['Risk Reporting', 'Risk, hazard, Take 5 and control registers'],
-      ['Compliance & Report Centre', 'Deadlines, audits, controls and reports'],
-      ['AI Safety Insights', 'Assisted analysis of safety patterns and actions'],
-      ['Training Centre', 'Learning, quizzes, completions and certificates'],
-      ['Asset Management', 'Assets, maintenance, audits and improvements'],
-      ['Shift Scheduling', 'Calendar-based worker and participant shifts'],
-      ['Rostering Facility', 'Roster views, notes, teams, approvals and vehicle checks'],
-      ['Invoicing Centre', 'NDIS invoices, price guides, Xero exchange and timesheets'],
-      ['Community Referral', 'Postcode-based crisis and community contacts'],
-      ['NDIS Provider Portal', 'Registration, groups, audits, renewals and Commission access'],
-      ['Goal Progress', 'Participant outcomes, evidence and achievement tracking'],
-    ],
+    modules: pick('communications', 'incidents', 'risks', 'rostering', 'goals', 'tasks', 'emergency-response'),
   },
   {
-    title: 'Governance, safety and evidence',
+    title: 'Compliance, safety and evidence',
     colour: 'from-emerald-600 to-teal-500',
-    modules: [
-      ['Compliance Checklists', 'Operational checklists with completion evidence'],
-      ['Emergency Response', 'Plans, emergency kits, drills and readiness'],
-      ['Meeting Centre', 'Meeting minutes, attendance, actions and registers'],
-      ['Data Control Panel', 'Backups, privacy, breaches and data governance'],
-      ['Receipt Hub', 'Receipt capture, search, reconciliation and archives'],
-      ['Equipment Manuals and SDS/MSDS', 'Safety booklets, chemical register and official SDS'],
-      ['Insurance & Finance Management', 'Policies, renewals, bills and finance registers'],
-    ],
+    modules: pick('compliance', 'documents', 'company-safe', 'training', 'certificates', 'quality', 'feedback', 'meetings'),
   },
   {
-    title: 'Community, information and access',
+    title: 'Business, finance and growth',
+    colour: 'from-indigo-600 to-blue-500',
+    modules: pick('invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'analytics', 'human-resources', 'crm', 'projects'),
+  },
+  {
+    title: 'Information, providers and access',
     colour: 'from-orange-500 to-rose-500',
-    modules: [
-      ['Programs', 'Community and participant program records'],
-      ['Events', 'Event planning, brochures and registers'],
-      ['NDIS Latest News', 'Official current NDIS information feed'],
-      ['Weather', 'Local conditions and five-day forecast'],
-      ['Key Personnel Contacts', 'Personnel profiles and delegated-authority registers'],
-      ['Volunteering & Student Placement', 'Interest, screening, supervision and evidence'],
-      ["What's On", 'Live local community events'],
-      ['Users & Permissions', 'Approval, roles, archives and access governance'],
-      ['My Portal', 'Participant and employee self-service access'],
-      ['Manual Library', 'Quick-start and module operating guidance'],
-    ],
+    modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'help', 'user-guides'),
   },
 ];
 
 const DATA_FLOWS = [
-  ['Intake', 'Profiles', 'Rostering', 'Shift notes', 'Invoices & timesheets'],
-  ['Documents & forms', 'Company Safe', 'Reviews & reminders', 'Audit evidence', 'NDIS registration'],
-  ['Incidents & risks', 'Safety insights', 'Actions & controls', 'Reports', 'Continuous improvement'],
+  ['Intake Centre', 'Staff & Participant Profiles', 'Rostering', 'Communication Centre', 'Invoicing Centre'],
+  ['Document Vault & forms', 'Company Safe', 'Details checks & reminders', 'Compliance & Report Centre', 'NDIS Provider Portal'],
+  ['Incident Clinic & Risk Reporting', 'Safety insights & controls', 'Quality & Improvement', 'Registers & reports', 'Continuous improvement'],
+  ['Tasks & Goal Progress', 'Feedback & Surveys', 'Business Analytics', 'Projects Hub', 'CRM & growth'],
 ];
 
 const ACCESS_LEVELS = [
-  ['Provider administration', 'Organisation-wide setup, governance and operational management'],
-  ['Administration', 'Authorised daily records, rostering and operational workflows'],
-  ['Auditor', 'Read-only access to records with employee or participant audit consent'],
-  ['Employees and participants', 'Only their connected profile, forms, training, shifts and responses'],
+  ['Admin & Provider Administrator', 'Full organisation-wide setup, governance and management'],
+  ['Compliance, Quality, HR & Finance', 'Compliance Manager, Quality & Improvement Manager, Human Resources Manager and Finance & Accounts Officer'],
+  ['Operational & coordination roles', 'Administration, Team Leader, Rostering Coordinator, Intake Officer and CRM & Marketing Officer'],
+  ['Support Workers & Volunteers', 'Only their connected profiles, shifts, training and records'],
+  ['Participants & Auditors', 'Participants see their own profile, goals and forms; Auditors see only audit-consented records'],
 ];
 
 export default function BlueprintPreviewSection() {

@@ -22,17 +22,17 @@ export default function LandingNav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 shadow-sm backdrop-blur-2xl dark:border-white/10 dark:bg-background/80">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-8">
-        <Link to="/" className="group flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-white shadow-md shadow-slate-900/20 transition-transform group-hover:scale-105 dark:bg-white dark:text-slate-950">
-            <ShieldCheck className="h-5 w-5" />
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-3 md:px-6">
+        <Link to="/" className="group flex shrink-0 items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-950 text-white shadow-md shadow-slate-900/20 transition-transform group-hover:scale-105 dark:bg-white dark:text-slate-950">
+            <ShieldCheck className="h-4.5 w-4.5" />
           </div>
-          <span className="font-editorial text-xl font-semibold tracking-tight text-foreground">
+          <span className="font-editorial text-lg font-semibold tracking-tight text-foreground">
             Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-600 to-cyan-500 bg-clip-text text-transparent">HR</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-6 md:flex lg:gap-5">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="group relative text-[13px] font-semibold tracking-wide text-foreground/60 transition-colors hover:text-foreground">
               {l.label}
@@ -43,11 +43,11 @@ export default function LandingNav() {
 
         <div className="hidden items-center gap-4 md:flex">
           {authed ? (
-            <Link to="/dashboard" className="rounded-full bg-slate-950 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-slate-900/15 transition-all hover:-translate-y-0.5 hover:shadow-lg dark:bg-white dark:text-slate-950">Go to Dashboard</Link>
+            <Link to="/dashboard" className="rounded-full bg-slate-950 px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-md shadow-slate-900/15 transition-all hover:-translate-y-0.5 hover:shadow-lg dark:bg-white dark:text-slate-950">Go to Dashboard</Link>
           ) : (
             <>
-              <Link to="/login" className="text-sm font-semibold text-foreground/60 transition-colors hover:text-foreground">Sign in</Link>
-              <Link to="/register" className="rounded-full bg-slate-950 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-slate-900/15 transition-all hover:-translate-y-0.5 hover:shadow-lg dark:bg-white dark:text-slate-950">Get started</Link>
+              <Link to="/login" className="text-[13px] font-semibold text-foreground/60 transition-colors hover:text-foreground">Sign in</Link>
+              <Link to="/register" className="rounded-full bg-slate-950 px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-md shadow-slate-900/15 transition-all hover:-translate-y-0.5 hover:shadow-lg dark:bg-white dark:text-slate-950">Get started</Link>
             </>
           )}
         </div>

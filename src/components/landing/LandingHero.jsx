@@ -9,9 +9,36 @@ export default function LandingHero() {
   useEffect(() => { base44.auth.isAuthenticated().then(setAuthed).catch(() => {}); }, []);
 
   const highlights = [
-    { icon: Users, title: 'People connected', text: 'Staff, participants and volunteers' },
-    { icon: BarChart3, title: 'Operations connected', text: 'Rosters, invoices, registers and alerts' },
-    { icon: CheckCircle2, title: 'Audit confidence', text: 'Two-minute internal audits, evidence and reports ready' },
+    {
+      icon: Users,
+      title: 'People connected',
+      reasons: [
+        'Staff, participants, volunteers and key personnel in one place',
+        'Intake flows straight into live, kept-current profiles',
+        'Consents, screening and certificates tracked automatically',
+        'Teams, support workers and supervisors always visible',
+      ],
+    },
+    {
+      icon: BarChart3,
+      title: 'Operations connected',
+      reasons: [
+        'Rosters, shift notes, invoices and timesheets in one flow',
+        'Registers, alerts and reminders run themselves',
+        'Every action and conversation documented as it happens',
+        'Quotes, receipts, assets and purchase orders reconciled',
+      ],
+    },
+    {
+      icon: CheckCircle2,
+      title: 'Audit confidence',
+      reasons: [
+        'Two-minute internal audits with branded reports',
+        'Evidence attached as you work, ready for your NDIS auditor',
+        'Live trackers prove every document is compliant, every day',
+        'Corrective actions raised and closed with full history',
+      ],
+    },
   ];
 
   return (
@@ -26,8 +53,8 @@ export default function LandingHero() {
       <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-            <ShieldCheck className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
-            NDIS provider operations and compliance platform
+            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
+            Compliance HR the Smartest, Fastest and Greatest, Super Tool Platform
           </div>
 
           <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
@@ -48,24 +75,27 @@ export default function LandingHero() {
               {authed ? 'Go to Dashboard' : 'Get started free'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-            {authed ? (
-              <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View quick start guide</a>
-            ) : (
-              <Link to="/login" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">Sign in</Link>
-            )}
+            <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View all quick start guide</a>
           </div>
           <p className="mt-5 text-[13px] font-medium tracking-wide text-foreground/45">No credit card required · 14-day free trial · Set up in minutes</p>
 
           <ModuleChipStrip />
 
           <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
-            {highlights.map(({ icon: Icon, title, text }) => (
+            {highlights.map(({ icon: Icon, title, reasons }) => (
               <div key={title} className="group rounded-2xl border border-slate-200/80 bg-white/75 p-5 shadow-lg shadow-slate-900/5 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-cyan-100 text-violet-700 shadow-sm transition-transform group-hover:scale-105 dark:from-violet-500/20 dark:to-cyan-500/20 dark:text-violet-300">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="mt-4 font-editorial text-lg font-semibold text-foreground">{title}</div>
-                <div className="mt-1 text-sm text-foreground/55">{text}</div>
+                <ul className="mt-2 space-y-1.5">
+                  {reasons.map((r) => (
+                    <li key={r} className="flex items-start gap-1.5 text-[13px] leading-snug text-foreground/60">
+                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-violet-500 dark:text-violet-400" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>

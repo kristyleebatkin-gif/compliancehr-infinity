@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
 
 const PRICING_TIERS = [
-  { users: 'Up to 20 users', monthly: '250', yearly: '3,000', featured: true },
-  { users: '21–30 users', monthly: '313', yearly: '3,750' },
-  { users: '31–40 users', monthly: '375', yearly: '4,500' },
-  { users: '41–50 users', monthly: '438', yearly: '5,250' },
-  { users: '51–100 users', monthly: '500', yearly: '6,000' },
-  { users: '101+ users', monthly: '625', yearly: '7,500' },
+  { users: 'Up to 20 users', monthly: '500', yearly: '6,000', featured: true },
+  { users: '21–30 users', monthly: '563', yearly: '6,750' },
+  { users: '31–40 users', monthly: '625', yearly: '7,500' },
+  { users: '41–50 users', monthly: '688', yearly: '8,250' },
+  { users: '51–100 users', monthly: '750', yearly: '9,000' },
+  { users: '101+ users', monthly: '875', yearly: '10,500' },
 ];
 
 const INCLUDED = [
