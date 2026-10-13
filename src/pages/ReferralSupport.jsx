@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { HeartHandshake, Library, Phone, Send } from 'lucide-react';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 import CrisisInformation from '@/components/referral/CrisisInformation';
 import LocalServices from '@/components/referral/LocalServices';
 import ReferralForm from '@/components/referral/ReferralForm';
@@ -24,7 +25,10 @@ export default function ReferralSupport() {
               <p className="text-sm text-slate-300">Crisis information, local services by postcode, a national resource library, and a referral form you can log, PDF and email.</p>
             </div>
           </div>
-          <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
+          <div className="flex items-center gap-2">
+            <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
+            <ModuleAuditButton />
+          </div>
         </div>
       </div>
 

@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin } from 'lucide-react';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -76,6 +77,7 @@ export default function KeyContacts() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <ModuleAuditButton />
             {[['Contacts', String(contacts.length)], ['Emergency', String(contacts.filter((c) => c.category === 'Emergency').length)], ['Medical', String(contacts.filter((c) => c.category === 'Medical').length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
                 <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>

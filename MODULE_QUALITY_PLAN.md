@@ -251,6 +251,15 @@ Every module must pass this universal checklist:
 
 ---
 
+## PROGRESS LOG
+
+- ✅ Completed: Live compliance tracker + audit-engine button wired into every module header that was missing them (Receipt Hub, Quote Centre, Programs, Key Contacts, Volunteers, NDIS Updates, NDIS Provider Portal, Referral & Support, Equipment & MSDS — full standard header added).
+- ✅ Completed: Live trackers extended to 8 more modules (receipts, procurement, CRM follow-ups, HR leave, projects, volunteers, programs/events, equipment manual reviews).
+- ✅ Completed: Fixed the due-soon date window in the tracker engine so "expiring soon" counts are accurate everywhere.
+- ✅ Completed: Route aliases added so every URL of a module (e.g. /key-contacts, /volunteering-placements, /community-referral) gets the same audit scope and tracker.
+
+---
+
 ## PART 3 — EXECUTION ORDER
 
 1. Verify and complete the platform-wide standards (Part 1) in one shared pass.

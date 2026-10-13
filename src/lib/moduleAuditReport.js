@@ -53,6 +53,11 @@ export const MODULE_AUDIT_ENTITIES = {
   '/hr': [['LeaveRequest', 'Leave requests'], ['PerformanceReview', 'Performance reviews']],
 };
 
+// Route aliases so every URL of a module gets the same audit scope.
+MODULE_AUDIT_ENTITIES['/key-contacts'] = MODULE_AUDIT_ENTITIES['/contacts'];
+MODULE_AUDIT_ENTITIES['/volunteering-placements'] = MODULE_AUDIT_ENTITIES['/volunteers'];
+MODULE_AUDIT_ENTITIES['/community-referral'] = MODULE_AUDIT_ENTITIES['/referrals'];
+
 const COL = {
   green: [22, 163, 74],
   amber: [202, 138, 4],

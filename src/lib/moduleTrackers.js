@@ -56,6 +56,30 @@ export const MODULE_TRACKERS = {
   '/intake': [
     { label: 'Intake cases ready for review', entity: 'IntakeCase', base: { status: 'Ready for Review' }, dynamic: 'overdue' },
   ],
+  '/receipts': [
+    { label: 'Receipts unreconciled', entity: 'Receipt', base: { status: 'Unreconciled' }, dynamic: 'overdue' },
+  ],
+  '/procurement': [
+    { label: 'Orders awaiting approval', entity: 'PurchaseOrder', base: { status: 'Submitted' }, dynamic: 'overdue' },
+  ],
+  '/crm': [
+    { label: 'Follow-ups overdue', entity: 'Lead', base: { follow_up_date: { $lt: '' }, stage: { $nin: ['Won', 'Lost'] } }, dynamic: 'overdue' },
+  ],
+  '/hr': [
+    { label: 'Leave requests pending', entity: 'LeaveRequest', base: { status: 'Pending' }, dynamic: 'overdue' },
+  ],
+  '/projects': [
+    { label: 'Projects overdue', entity: 'BusinessProject', base: { due_date: { $lt: '' }, status: { $ne: 'Complete' } }, dynamic: 'overdue' },
+  ],
+  '/volunteers': [
+    { label: 'Volunteers onboarding', entity: 'Volunteer', base: { status: 'Onboarding' }, dynamic: 'overdue' },
+  ],
+  '/programs': [
+    { label: 'Events coming up', entity: 'Event', base: { date: { $gte: '', $lte: '' }, status: 'Planned' }, dynamic: 'soon', soon: 14 },
+  ],
+  '/equipment-manuals': [
+    { label: 'Manuals past review', entity: 'EquipmentManual', base: { review_date: { $lt: '' } }, dynamic: 'overdue' },
+  ],
   '/dashboard': [
     { label: 'Tasks overdue', entity: 'TodoTask', base: { due_date: { $lt: '' }, status: 'Pending' }, dynamic: 'overdue' },
     { label: 'Certificates expired', entity: 'Certificate', base: { expiry_date: { $lt: '' } }, dynamic: 'overdue' },
@@ -68,5 +92,10 @@ export function trackerQuery(item, mode) {
   const t = today();
   if (mode === 'overdue') return { ...item.base, ...Object.fromEntries(Object.entries(item.base).map(([k, v]) => [k, typeof v === 'object' && v !== null && '$lt' in v ? { ...v, $lt: t } : v])) };
   const soon = plus(item.soon || 30);
-  return { ...item.base, ...Object.fromEntries(Object.entries(item.base).map(([k, v]) => [k, typeof v === 'object' && v !== null && '$lt' in v ? { $gte: t, $lte: soon } : v])) };
+  return { ...item.base, ...Object.fromEntries(Object.entries(item.base).map(([k, v]) => [k, typeof v === 'object' && v !== null && ('$lt' in v || '$lte' in v) ? { $gte: t, $lte: soon } : v])) };
 }
+
+// Route aliases so every URL of a module shares one live tracker.
+MODULE_TRACKERS['/volunteering-placements'] = MODULE_TRACKERS['/volunteers'];
+MODULE_TRACKERS['/key-contacts'] = MODULE_TRACKERS['/contacts'];
+MODULE_TRACKERS['/community-referral'] = MODULE_TRACKERS['/referrals'];

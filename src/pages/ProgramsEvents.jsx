@@ -16,6 +16,8 @@ import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
 import EventAdBuilder from '@/components/events/EventAdBuilder';
 import EventInviteDialog from '@/components/events/EventInviteDialog';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 
 const EMPTY = {
   title: '', type: 'Program', date: '', end_date: '', start_time: '', end_time: '',
@@ -134,6 +136,8 @@ export default function ProgramsEvents() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <ModuleComplianceStrip path="/programs" />
+            <ModuleAuditButton />
             {[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
                 <p className="text-[10px] font-semibold uppercase tracking-wide text-orange-100">{label}</p>
