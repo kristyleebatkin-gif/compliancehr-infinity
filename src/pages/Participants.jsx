@@ -10,7 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Trash2, Heart, UserRound } from 'lucide-react';
+import { Plus, Search, Trash2, Heart, UserRound, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { Link } from 'react-router-dom';
 
 
@@ -54,10 +55,23 @@ export default function Participants() {
     await load(search);
   };
 
+  const exportRegister = async () => {
+    const page = await base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 1000 });
+    downloadCsv('Participant-Register.csv', [
+      { key: 'full_name', label: 'Full Name' }, { key: 'ndis_number', label: 'NDIS Number' },
+      { key: 'ndis_reference_number', label: 'NDIS Reference Number' }, { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' }, { key: 'address', label: 'Address' },
+      { key: 'date_of_birth', label: 'Date of Birth' }, { key: 'support_coordinator', label: 'Support Coordinator' },
+      { key: 'plan_manager', label: 'Plan Manager' }, { key: 'status', label: 'Status' },
+      { key: 'notes', label: 'Notes' },
+    ], page.items);
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
       <div className="flex flex-wrap items-center justify-end gap-2">
+        <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add participant</Button></DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">

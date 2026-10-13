@@ -10,8 +10,9 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Plus, Search, Trash2, UserRound, Users, ShieldCheck, Trophy } from 'lucide-react';
+import { Plus, Search, Trash2, UserRound, Users, ShieldCheck, Trophy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { downloadCsv } from '@/lib/csvExport';
 import CertificationOverview from '@/components/staff/CertificationOverview';
 import StaffRecognition from '@/components/staff/StaffRecognition';
 
@@ -62,6 +63,19 @@ export default function Staff() {
     await load(search);
   };
 
+  const exportRegister = async () => {
+    const page = await base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 1000 });
+    downloadCsv('Staff-Register.csv', [
+      { key: 'full_name', label: 'Full Name' }, { key: 'employee_number', label: 'Employee Number' },
+      { key: 'email', label: 'Email' }, { key: 'phone', label: 'Phone' },
+      { key: 'position', label: 'Position' }, { key: 'role', label: 'Role' },
+      { key: 'app_role', label: 'App Role (Permissions)' }, { key: 'status', label: 'Status' },
+      { key: 'start_date', label: 'Start Date' }, { key: 'supervisor', label: 'Supervisor' },
+      { key: 'emergency_contact', label: 'Emergency Contact' }, { key: 'emergency_contact_phone', label: 'Emergency Contact Phone' },
+      { key: 'notes', label: 'Notes' },
+    ], page.items);
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." />
@@ -73,6 +87,7 @@ export default function Staff() {
         </TabsList>
         <TabsContent value="profiles" className="space-y-6">
           <div className="flex flex-wrap items-center justify-end gap-2">
+            <Button variant="outline" onClick={exportRegister} disabled={loading || staff.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button><Plus className="mr-2 h-4 w-4" /> Add staff member</Button>

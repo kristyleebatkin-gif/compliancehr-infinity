@@ -11,7 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2 } from 'lucide-react';
+import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
 import EventAdBuilder from '@/components/events/EventAdBuilder';
@@ -53,6 +54,19 @@ export default function ProgramsEvents() {
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  const exportRegister = async () => {
+    const page = await base44.entities.Event.filter({}, { sort: 'date', limit: 1000 });
+    downloadCsv('Programs-Events-Register.csv', [
+      { key: 'title', label: 'Title' }, { key: 'type', label: 'Type' },
+      { key: 'date', label: 'Date' }, { key: 'end_date', label: 'End Date' },
+      { key: 'start_time', label: 'Start Time' }, { key: 'end_time', label: 'End Time' },
+      { key: 'location', label: 'Location' }, { key: 'status', label: 'Status' },
+      { key: 'organiser', label: 'Organiser' }, { key: 'contact_email', label: 'Contact Email' },
+      { key: 'cost_text', label: 'Cost' }, { key: 'attendees', label: 'Attendees' },
+      { key: 'description', label: 'Description' },
+    ], page.items);
+  };
 
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -148,6 +162,7 @@ export default function ProgramsEvents() {
         </div>
         <div className="mt-4">
           <Button className="bg-white text-rose-700 hover:bg-rose-50" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
+          <Button variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         </div>
       </div>
 

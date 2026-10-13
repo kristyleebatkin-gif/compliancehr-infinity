@@ -10,7 +10,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin } from 'lucide-react';
+import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
@@ -54,6 +55,18 @@ export default function KeyContacts() {
     }
   };
 
+  const exportContacts = async () => {
+    const page = await base44.entities.Contact.filter({}, { sort: 'name', limit: 1000 });
+    downloadCsv('Key-Contacts-Register.csv', [
+      { key: 'name', label: 'Name' }, { key: 'organisation', label: 'Organisation' },
+      { key: 'role', label: 'Role' }, { key: 'phone', label: 'Phone' },
+      { key: 'mobile', label: 'Mobile' }, { key: 'after_hours_phone', label: 'After Hours Phone' },
+      { key: 'email', label: 'Email' }, { key: 'hours_available', label: 'Hours Available' },
+      { key: 'address', label: 'Address' }, { key: 'category', label: 'Category' },
+      { key: 'notes', label: 'Notes' },
+    ], page.items);
+  };
+
   const ContactButtons = ({ c }) => (
     <div className="flex flex-wrap gap-1.5 border-t border-border/60 pt-3">
       {c.email && <Button size="sm" className="h-7 text-xs" onClick={() => { window.location.href = `mailto:${c.email}`; }}><Mail className="h-3 w-3" />Email</Button>}
@@ -88,6 +101,7 @@ export default function KeyContacts() {
         </div>
         <div className="mt-4">
           <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>
+          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         </div>
       </div>
 

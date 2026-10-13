@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ClipboardList, Check, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
 
@@ -68,10 +69,19 @@ export default function Checklists() {
     return Math.round((items.filter((i) => i.done).length / items.length) * 100);
   };
 
+  const exportRegister = async () => {
+    const page = await base44.entities.Checklist.filter({}, { sort: 'title', limit: 1000 });
+    downloadCsv('Compliance-Checklist-Register.csv', [
+      { key: 'title', label: 'Checklist Title' }, { key: 'category', label: 'Category' },
+      { key: 'due_date', label: 'Due Date' }, { key: 'created_date', label: 'Created' },
+    ], page.items);
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader icon={ClipboardList} title="Compliance Checklists" subtitle="Working checklists with item tracking." />
       <div className="flex flex-wrap items-center justify-end gap-2">
+        <Button variant="outline" onClick={exportRegister} disabled={loading || !lists.length}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New checklist</Button></DialogTrigger>
           <DialogContent>

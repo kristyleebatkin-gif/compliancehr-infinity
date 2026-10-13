@@ -257,6 +257,7 @@ Every module must pass this universal checklist:
 - ✅ Completed: Live trackers extended to 8 more modules (receipts, procurement, CRM follow-ups, HR leave, projects, volunteers, programs/events, equipment manual reviews).
 - ✅ Completed: Fixed the due-soon date window in the tracker engine so "expiring soon" counts are accurate everywhere.
 - ✅ Completed: Route aliases added so every URL of a module (e.g. /key-contacts, /volunteering-placements, /community-referral) gets the same audit scope and tracker.
+- ✅ Completed: Full register CSV exports added to Staff Profiles, Participant Profiles, Key Personnel Contacts, Programs & Events, Certificates, Asset Management and Compliance Checklists (these export every record, not just the loaded page).
 
 ---
 
