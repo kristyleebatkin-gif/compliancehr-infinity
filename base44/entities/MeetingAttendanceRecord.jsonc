@@ -1,0 +1,150 @@
+{
+  "type": "object",
+  "name": "MeetingAttendanceRecord",
+  "properties": {
+    "meeting_id": {
+      "type": "string",
+      "title": "Meeting ID"
+    },
+    "meeting_title": {
+      "type": "string",
+      "title": "Meeting Title"
+    },
+    "meeting_type": {
+      "type": "string",
+      "title": "Meeting Type"
+    },
+    "meeting_date": {
+      "type": "string",
+      "title": "Meeting Date",
+      "format": "date"
+    },
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "role": {
+      "type": "string",
+      "title": "Role"
+    },
+    "phone_email": {
+      "type": "string",
+      "title": "Phone / Email"
+    },
+    "time_in": {
+      "type": "string",
+      "title": "Time In"
+    },
+    "time_out": {
+      "type": "string",
+      "title": "Time Out"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "meeting_title",
+    "meeting_date",
+    "full_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

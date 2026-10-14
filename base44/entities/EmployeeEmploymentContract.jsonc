@@ -1,0 +1,168 @@
+{
+  "type": "object",
+  "name": "EmployeeEmploymentContract",
+  "properties": {
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Linked Employee User"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "position_title": {
+      "type": "string",
+      "title": "Position Title"
+    },
+    "employment_type": {
+      "type": "string",
+      "title": "Employment Type",
+      "enum": [
+        "Full Time",
+        "Part Time",
+        "Casual",
+        "Fixed Term",
+        "Contractor"
+      ],
+      "default": "Part Time"
+    },
+    "classification": {
+      "type": "string",
+      "title": "Classification / Level"
+    },
+    "industrial_instrument": {
+      "type": "string",
+      "title": "Award / Agreement"
+    },
+    "manager_name": {
+      "type": "string",
+      "title": "Manager / Supervisor"
+    },
+    "commencement_date": {
+      "type": "string",
+      "title": "Commencement Date",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "title": "End Date",
+      "format": "date"
+    },
+    "probation_end_date": {
+      "type": "string",
+      "title": "Probation End Date",
+      "format": "date"
+    },
+    "ordinary_weekly_hours": {
+      "type": "number",
+      "title": "Ordinary Weekly Hours"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "title": "Hourly Rate"
+    },
+    "contract_status": {
+      "type": "string",
+      "title": "Contract Status",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Signed",
+        "Active",
+        "Ended"
+      ],
+      "default": "Draft"
+    },
+    "employee_signed_date": {
+      "type": "string",
+      "title": "Employee Signed Date",
+      "format": "date"
+    },
+    "employer_signed_date": {
+      "type": "string",
+      "title": "Employer Signed Date",
+      "format": "date"
+    },
+    "completed_date": {
+      "type": "string",
+      "title": "Contract Completed Date",
+      "format": "date"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "position_duties": {
+      "type": "string",
+      "title": "Position Duties"
+    },
+    "document_url": {
+      "type": "string",
+      "title": "Signed Contract File",
+      "format": "uri"
+    },
+    "source_employee_document_id": {
+      "type": "string",
+      "title": "Source Employee Document"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Contract Notes"
+    },
+    "archived": {
+      "type": "boolean",
+      "title": "Archived",
+      "default": false
+    }
+  },
+  "required": [
+    "staff_profile_id",
+    "employee_name",
+    "position_title",
+    "commencement_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

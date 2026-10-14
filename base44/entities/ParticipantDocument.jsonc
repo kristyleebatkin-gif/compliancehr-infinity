@@ -1,0 +1,330 @@
+{
+  "type": "object",
+  "name": "ParticipantDocument",
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
+    },
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "enum": [
+        "Participant Handbook",
+        "Participant Easy Read Handbook",
+        "Participant File Audit Checklist",
+        "Participant Intake Form",
+        "Participant Intake Assessment",
+        "Intake Assessment",
+        "Referral Form",
+        "NDIS Plan",
+        "Service Agreement",
+        "Individual Risk Assessment",
+        "Participant Consent for Audits",
+        "Consent to Share Information",
+        "Participant Consent",
+        "Medication Consent",
+        "Audit Consent",
+        "Authority to Act as Advocate",
+        "Authority to Advocate",
+        "Provider Declaration",
+        "Participant Support Plan",
+        "Behaviour Support Plan",
+        "Restrictive Practices Record",
+        "Positive Behaviour Support Plan",
+        "Mealtime Management Plan",
+        "Home Risk Assessment",
+        "Personal Emergency Form",
+        "Personal Emergency Record",
+        "Fire Drill",
+        "SAM Medication Assessment",
+        "Medication Evaluation",
+        "Medication Administration Record",
+        "Medication Administration Form",
+        "Medication Record Sheet",
+        "Medication Record Form",
+        "Progress Notes",
+        "Progress Reports",
+        "Communication Log",
+        "Incident Reports",
+        "Feedback and Complaints",
+        "Complaint Form",
+        "Investigation Form",
+        "Satisfaction Survey",
+        "Participant Money Register",
+        "Cash Register",
+        "Invoices",
+        "Participant Exit Form"
+      ],
+      "default": "Participant Intake Form"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Missing",
+        "Requested",
+        "Pending Review",
+        "Received",
+        "Completed",
+        "Verified",
+        "Expired"
+      ],
+      "default": "Missing"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "responsible_staff": {
+      "type": "string",
+      "title": "Responsible Staff Member"
+    },
+    "expiry_date": {
+      "type": "string",
+      "title": "Expiry Date",
+      "format": "date"
+    },
+    "uploaded_date": {
+      "type": "string",
+      "title": "Uploaded Date",
+      "format": "date"
+    },
+    "submitted_date": {
+      "type": "string",
+      "title": "Submission Date",
+      "format": "date"
+    },
+    "submission_method": {
+      "type": "string",
+      "title": "Submission Method",
+      "enum": [
+        "Online",
+        "Upload",
+        "Imported",
+        "Manual"
+      ],
+      "default": "Upload"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "title": "Reviewed Date",
+      "format": "date"
+    },
+    "review_outcome": {
+      "type": "string",
+      "title": "Review Outcome",
+      "enum": [
+        "Pending Review",
+        "Approved",
+        "Changes Required",
+        "Rejected",
+        "Expired"
+      ],
+      "default": "Pending Review"
+    },
+    "document_summary": {
+      "type": "string",
+      "title": "Document Outcome / Summary"
+    },
+    "source_submission_id": {
+      "type": "string",
+      "title": "Related Online Submission"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "review_period": {
+      "type": "string",
+      "title": "Review Period",
+      "default": ""
+    },
+    "team_worker_ids": {
+      "type": "array",
+      "title": "Team Support Worker IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "audit_consent": {
+      "type": "string",
+      "title": "Audit Consent",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "participant_id",
+    "document_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": "{{user.id}}"
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

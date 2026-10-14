@@ -1,0 +1,436 @@
+{
+  "type": "object",
+  "name": "VolunteerPlacement",
+  "properties": {
+    "engagement_type": {
+      "type": "string",
+      "title": "Engagement Type",
+      "enum": [
+        "Volunteer",
+        "Student Placement"
+      ],
+      "default": "Volunteer"
+    },
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "preferred_name": {
+      "type": "string",
+      "title": "Preferred Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "title": "Emergency Contact"
+    },
+    "emergency_contact_relationship": {
+      "type": "string",
+      "title": "Emergency Contact Relationship"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "institution_name": {
+      "type": "string",
+      "title": "Education Institution"
+    },
+    "course_name": {
+      "type": "string",
+      "title": "Course or Program"
+    },
+    "student_number": {
+      "type": "string",
+      "title": "Student Number"
+    },
+    "institution_contact_name": {
+      "type": "string",
+      "title": "Institution Contact"
+    },
+    "institution_contact_email": {
+      "type": "string",
+      "title": "Institution Contact Email",
+      "format": "email"
+    },
+    "institution_contact_phone": {
+      "type": "string",
+      "title": "Institution Contact Phone"
+    },
+    "role_title": {
+      "type": "string",
+      "title": "Volunteer or Placement Role"
+    },
+    "service_area": {
+      "type": "string",
+      "title": "Service Area"
+    },
+    "duties": {
+      "type": "string",
+      "title": "Duties and Learning Activities"
+    },
+    "supervisor_name": {
+      "type": "string",
+      "title": "Supervisor"
+    },
+    "supervisor_email": {
+      "type": "string",
+      "title": "Supervisor Email",
+      "format": "email"
+    },
+    "start_date": {
+      "type": "string",
+      "title": "Start Date",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "title": "End Date",
+      "format": "date"
+    },
+    "weekly_hours": {
+      "type": "number",
+      "title": "Weekly Hours"
+    },
+    "target_hours": {
+      "type": "number",
+      "title": "Target Placement Hours"
+    },
+    "completed_hours": {
+      "type": "number",
+      "title": "Completed Hours"
+    },
+    "participant_contact": {
+      "type": "boolean",
+      "title": "Participant Contact",
+      "default": false
+    },
+    "risk_assessed_role": {
+      "type": "boolean",
+      "title": "Risk-assessed Role",
+      "default": false
+    },
+    "works_with_children": {
+      "type": "boolean",
+      "title": "Works With Children",
+      "default": false
+    },
+    "identity_verified": {
+      "type": "boolean",
+      "title": "Identity Verified",
+      "default": false
+    },
+    "agreement_signed": {
+      "type": "boolean",
+      "title": "Agreement Signed",
+      "default": false
+    },
+    "code_of_conduct_signed": {
+      "type": "boolean",
+      "title": "Code of Conduct Signed",
+      "default": false
+    },
+    "confidentiality_signed": {
+      "type": "boolean",
+      "title": "Confidentiality and Privacy Agreement Signed",
+      "default": false
+    },
+    "risk_assessment_completed": {
+      "type": "boolean",
+      "title": "Role Risk Assessment Completed",
+      "default": false
+    },
+    "insurance_confirmed": {
+      "type": "boolean",
+      "title": "Insurance Confirmed",
+      "default": false
+    },
+    "induction_completed": {
+      "type": "boolean",
+      "title": "Induction Completed",
+      "default": false
+    },
+    "induction_date": {
+      "type": "string",
+      "title": "Induction Date",
+      "format": "date"
+    },
+    "safeguarding_training_completed": {
+      "type": "boolean",
+      "title": "Safeguarding Training Completed",
+      "default": false
+    },
+    "work_health_safety_completed": {
+      "type": "boolean",
+      "title": "WHS Training Completed",
+      "default": false
+    },
+    "incident_reporting_training_completed": {
+      "type": "boolean",
+      "title": "Incident Reporting Training Completed",
+      "default": false
+    },
+    "police_check_status": {
+      "type": "string",
+      "title": "Police Check Status",
+      "enum": [
+        "Not Required",
+        "Pending",
+        "Clear",
+        "Expired"
+      ],
+      "default": "Not Required"
+    },
+    "police_check_reference": {
+      "type": "string",
+      "title": "Police Check Reference"
+    },
+    "police_check_expiry": {
+      "type": "string",
+      "title": "Police Check Expiry",
+      "format": "date"
+    },
+    "ndis_screening_status": {
+      "type": "string",
+      "title": "NDIS Worker Screening Status",
+      "enum": [
+        "Not Required",
+        "Pending",
+        "Clear",
+        "Expired"
+      ],
+      "default": "Not Required"
+    },
+    "ndis_screening_reference": {
+      "type": "string",
+      "title": "NDIS Worker Screening Reference"
+    },
+    "ndis_screening_expiry": {
+      "type": "string",
+      "title": "NDIS Worker Screening Expiry",
+      "format": "date"
+    },
+    "wwcc_status": {
+      "type": "string",
+      "title": "Working With Children Check Status",
+      "enum": [
+        "Not Required",
+        "Pending",
+        "Clear",
+        "Expired"
+      ],
+      "default": "Not Required"
+    },
+    "wwcc_reference": {
+      "type": "string",
+      "title": "Working With Children Check Reference"
+    },
+    "wwcc_expiry": {
+      "type": "string",
+      "title": "Working With Children Check Expiry",
+      "format": "date"
+    },
+    "supervision_frequency": {
+      "type": "string",
+      "title": "Supervision Frequency"
+    },
+    "last_supervision_date": {
+      "type": "string",
+      "title": "Last Supervision Date",
+      "format": "date"
+    },
+    "next_review_date": {
+      "type": "string",
+      "title": "Next Review Date",
+      "format": "date"
+    },
+    "performance_notes": {
+      "type": "string",
+      "title": "Performance and Support Notes"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Applicant",
+        "Onboarding",
+        "Active",
+        "On Hold",
+        "Completed",
+        "Withdrawn"
+      ],
+      "default": "Applicant"
+    },
+    "compliance_status": {
+      "type": "string",
+      "title": "Compliance Status",
+      "enum": [
+        "Action Required",
+        "Pending",
+        "Ready",
+        "Expired",
+        "Completed"
+      ],
+      "default": "Action Required"
+    },
+    "documents": {
+      "type": "array",
+      "title": "Evidence Documents",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "File Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "File URL",
+            "format": "uri"
+          },
+          "file_type": {
+            "type": "string",
+            "title": "File Type"
+          },
+          "file_size": {
+            "type": "number",
+            "title": "File Size"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "title": "Uploaded At",
+            "format": "date-time"
+          }
+        }
+      },
+      "maxItems": 20
+    },
+    "notes": {
+      "type": "string",
+      "title": "General Notes"
+    }
+  },
+  "required": [
+    "engagement_type",
+    "full_name",
+    "role_title",
+    "supervisor_name",
+    "start_date",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "type": "object",
+  "name": "DataBreachLog",
+  "properties": {
+    "breach_id": {
+      "type": "string",
+      "title": "Breach ID"
+    },
+    "date_detected": {
+      "type": "string",
+      "title": "Date Detected",
+      "format": "date"
+    },
+    "time_detected": {
+      "type": "string",
+      "title": "Time Detected"
+    },
+    "detected_by": {
+      "type": "string",
+      "title": "Detected By"
+    },
+    "breach_type": {
+      "type": "string",
+      "title": "Breach Type"
+    },
+    "data_affected": {
+      "type": "string",
+      "title": "Data Affected"
+    },
+    "people_affected": {
+      "type": "string",
+      "title": "People Affected"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "risk_rating": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "default": "Medium"
+    },
+    "containment_actions": {
+      "type": "string",
+      "title": "Immediate Containment"
+    },
+    "notifications_made": {
+      "type": "string",
+      "title": "Notifications Made"
+    },
+    "assessment_started_date": {
+      "type": "string",
+      "title": "Assessment Started",
+      "format": "date"
+    },
+    "assessment_due_date": {
+      "type": "string",
+      "title": "Assessment Due",
+      "format": "date"
+    },
+    "assessment_completed_date": {
+      "type": "string",
+      "title": "Assessment Completed",
+      "format": "date"
+    },
+    "eligible_data_breach_decision": {
+      "type": "string",
+      "title": "Eligible Data Breach Decision",
+      "enum": [
+        "Not Assessed",
+        "Eligible Data Breach",
+        "Not Eligible",
+        "Remedial Action Prevented Harm"
+      ],
+      "default": "Not Assessed"
+    },
+    "decision_reasons": {
+      "type": "string",
+      "title": "Decision Reasons"
+    },
+    "oaic_notification_required": {
+      "type": "boolean",
+      "title": "OAIC Notification Required",
+      "default": false
+    },
+    "oaic_notified_date": {
+      "type": "string",
+      "title": "OAIC Notified",
+      "format": "date"
+    },
+    "oaic_reference": {
+      "type": "string",
+      "title": "OAIC Reference"
+    },
+    "affected_people_notified_date": {
+      "type": "string",
+      "title": "Affected People Notified",
+      "format": "date"
+    },
+    "notification_method": {
+      "type": "string",
+      "title": "Notification Method"
+    },
+    "ndis_notification_required": {
+      "type": "boolean",
+      "title": "NDIS Notification Required",
+      "default": false
+    },
+    "ndis_notified_date": {
+      "type": "string",
+      "title": "NDIS Commission Notified",
+      "format": "date"
+    },
+    "ndis_reference": {
+      "type": "string",
+      "title": "NDIS Reference"
+    },
+    "root_cause": {
+      "type": "string",
+      "title": "Root Cause"
+    },
+    "corrective_actions": {
+      "type": "string",
+      "title": "Corrective Actions"
+    },
+    "responsible_person": {
+      "type": "string",
+      "title": "Responsible Person"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Date",
+      "format": "date"
+    },
+    "effectiveness_review_date": {
+      "type": "string",
+      "title": "Effectiveness Review Date",
+      "format": "date"
+    },
+    "effectiveness_review_outcome": {
+      "type": "string",
+      "title": "Effectiveness Review Outcome"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Contained",
+        "Under Investigation",
+        "Notifications Complete",
+        "Closed"
+      ],
+      "default": "Open"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "date_detected",
+    "description"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

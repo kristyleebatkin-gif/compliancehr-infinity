@@ -1,0 +1,268 @@
+{
+  "type": "object",
+  "name": "InformationSharingConsent",
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Profile ID"
+    },
+    "participant_reference": {
+      "type": "string",
+      "title": "Participant ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "team_worker_ids": {
+      "type": "array",
+      "title": "Team Support Worker IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "recipient_name": {
+      "type": "string",
+      "title": "Authorised Person Name"
+    },
+    "organisation": {
+      "type": "string",
+      "title": "Organisation"
+    },
+    "relationship": {
+      "type": "string",
+      "title": "Relationship to Participant"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "information_authorised": {
+      "type": "string",
+      "title": "Information Authorised to Share"
+    },
+    "information_excluded": {
+      "type": "string",
+      "title": "Information Excluded"
+    },
+    "sharing_purpose": {
+      "type": "string",
+      "title": "Purpose of Sharing"
+    },
+    "sharing_method": {
+      "type": "string",
+      "title": "Approved Sharing Method"
+    },
+    "consent_start_date": {
+      "type": "string",
+      "title": "Consent Start Date",
+      "format": "date"
+    },
+    "consent_end_date": {
+      "type": "string",
+      "title": "Consent End Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Consent Status",
+      "enum": [
+        "Active",
+        "Withdrawn",
+        "Expired"
+      ],
+      "default": "Active"
+    },
+    "withdrawal_date": {
+      "type": "string",
+      "title": "Withdrawal Date",
+      "format": "date"
+    },
+    "participant_signatory_name": {
+      "type": "string",
+      "title": "Participant / Representative Name"
+    },
+    "participant_signed_date": {
+      "type": "string",
+      "title": "Date Signed",
+      "format": "date"
+    },
+    "participant_signature": {
+      "type": "string",
+      "title": "Participant / Representative Signature"
+    },
+    "signed_form_url": {
+      "type": "string",
+      "title": "Signed Consent Form URL"
+    },
+    "signed_form_name": {
+      "type": "string",
+      "title": "Signed Consent Form Name"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Consent Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "title": "Audit Consent",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "participant_id",
+    "participant_name",
+    "recipient_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": "{{user.id}}"
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "type": "object",
+  "name": "StaffTrainingAudit",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "title": "Employee"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "audit_type": {
+      "type": "string",
+      "title": "Audit Type",
+      "enum": [
+        "Training Audit",
+        "Performance Review"
+      ],
+      "default": "Training Audit"
+    },
+    "audit_interval_months": {
+      "type": "number",
+      "title": "Audit Interval (months)",
+      "enum": [
+        12
+      ],
+      "default": 12
+    },
+    "last_audit_date": {
+      "type": "string",
+      "title": "Last Audit Date",
+      "format": "date"
+    },
+    "next_audit_date": {
+      "type": "string",
+      "title": "Next Audit Due",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Upcoming",
+        "Due",
+        "Overdue",
+        "Completed"
+      ],
+      "default": "Upcoming"
+    },
+    "auditor": {
+      "type": "string",
+      "title": "Auditor / Reviewer"
+    },
+    "findings": {
+      "type": "string",
+      "title": "Findings"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "staff_name",
+    "audit_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

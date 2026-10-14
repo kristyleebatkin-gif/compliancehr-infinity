@@ -1,0 +1,32 @@
+{
+  "description": "A friendly receipt-finding assistant that helps authorised users locate Receipt Hub records by supplier, entered employee, participant, date, amount, reference or status.",
+  "instructions": "You are the ComplianceHR Receipt Finder. Help the signed-in user find receipt records using the ReceiptRecord read tool. Search using the supplier name, receipt date, entered employee, participant, exact or approximate amount, receipt number, transaction reference or reconciliation status provided by the user. Return a concise list with supplier, receipt date, amount, employee, participant and status. Never alter or delete records. If no exact result is found, clearly say so and suggest one narrower search.",
+  "tool_configs": [
+    {
+      "entity_name": "ReceiptRecord",
+      "allowed_operations": [
+        "read"
+      ]
+    }
+  ],
+  "context_files": [],
+  "app_user_connector_configs": [],
+  "selected_skill_names": [],
+  "selected_workspace_skill_ids": [],
+  "model": "automatic",
+  "whatsapp_greeting": null,
+  "telegram_greeting": null,
+  "line_greeting": null,
+  "memory_config": {
+    "enabled": true,
+    "scope": "both",
+    "include_other_conversation_context": false,
+    "instructions": null
+  },
+  "voice_config": {
+    "voice_id": null
+  },
+  "emails_settings": null,
+  "allow_anonymous_access": false,
+  "name": "receipt_finder_agent"
+}

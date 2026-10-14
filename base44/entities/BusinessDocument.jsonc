@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "name": "BusinessDocument",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module",
+      "enum": [
+        "Business Documents",
+        "Business Plan",
+        "Strategic Plan",
+        "Operational Plan",
+        "Business Policies and procedures",
+        "Equipment Manuals"
+      ],
+      "default": "Business Documents"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "equipment_name": {
+      "type": "string",
+      "title": "Equipment Name"
+    },
+    "manufacturer": {
+      "type": "string",
+      "title": "Manufacturer"
+    },
+    "model_number": {
+      "type": "string",
+      "title": "Model Number"
+    },
+    "serial_number": {
+      "type": "string",
+      "title": "Serial Number"
+    },
+    "asset_id": {
+      "type": "string",
+      "title": "Asset ID"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Draft",
+        "Under Review",
+        "Expired",
+        "Archived"
+      ],
+      "default": "Active"
+    },
+    "upload_date": {
+      "type": "string",
+      "title": "Upload Date",
+      "format": "date"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "title": "Expiry Date",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "module"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

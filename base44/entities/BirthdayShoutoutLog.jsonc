@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "name": "BirthdayShoutoutLog",
+  "properties": {
+    "recipient_type": {
+      "type": "string",
+      "title": "Recipient Type",
+      "enum": [
+        "Employee",
+        "Participant"
+      ]
+    },
+    "profile_id": {
+      "type": "string",
+      "title": "Profile"
+    },
+    "recipient_user_id": {
+      "type": "string",
+      "title": "Recipient User"
+    },
+    "recipient_name": {
+      "type": "string",
+      "title": "Recipient Name"
+    },
+    "birthday_date": {
+      "type": "string",
+      "title": "Birthday Date",
+      "format": "date"
+    },
+    "birthday_year": {
+      "type": "number",
+      "title": "Birthday Year"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message"
+    },
+    "company_name": {
+      "type": "string",
+      "title": "Company Name"
+    },
+    "company_logo_url": {
+      "type": "string",
+      "title": "Company Logo URL"
+    },
+    "company_slogan": {
+      "type": "string",
+      "title": "Company Slogan"
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "title": "In-app Notification Sent",
+      "default": false
+    },
+    "email_sent": {
+      "type": "boolean",
+      "title": "Email Sent",
+      "default": false
+    },
+    "email_address": {
+      "type": "string",
+      "title": "Email Address"
+    },
+    "processed_at": {
+      "type": "string",
+      "title": "Processed At",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "recipient_type",
+    "profile_id",
+    "recipient_name",
+    "birthday_year",
+    "message",
+    "processed_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.recipient_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

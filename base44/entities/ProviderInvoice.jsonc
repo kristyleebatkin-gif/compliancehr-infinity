@@ -1,0 +1,225 @@
+{
+  "type": "object",
+  "name": "ProviderInvoice",
+  "properties": {
+    "invoice_number": {
+      "type": "string",
+      "title": "Invoice Number"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Profile"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "participant_ndis_number": {
+      "type": "string",
+      "title": "Participant NDIS Number"
+    },
+    "plan_manager_name": {
+      "type": "string",
+      "title": "Plan Manager"
+    },
+    "plan_manager_email": {
+      "type": "string",
+      "title": "Plan Manager Email",
+      "format": "email"
+    },
+    "period_start": {
+      "type": "string",
+      "title": "Period Start",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "title": "Period End",
+      "format": "date"
+    },
+    "invoice_date": {
+      "type": "string",
+      "title": "Invoice Date",
+      "format": "date"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Sent",
+        "Paid",
+        "Void"
+      ],
+      "default": "Draft"
+    },
+    "line_items": {
+      "type": "array",
+      "title": "Invoice Line Items",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "shift_id": {
+            "type": "string"
+          },
+          "service_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "employee_id": {
+            "type": "string"
+          },
+          "employee_name": {
+            "type": "string"
+          },
+          "support_item_number": {
+            "type": "string"
+          },
+          "support_item_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit_price": {
+            "type": "number"
+          },
+          "kms": {
+            "type": "number"
+          },
+          "gst_rate": {
+            "type": "number"
+          },
+          "line_total": {
+            "type": "number"
+          },
+          "price_guide_release_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "shift_ids": {
+      "type": "array",
+      "title": "Rostered Shifts",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "subtotal": {
+      "type": "number",
+      "title": "Subtotal",
+      "default": 0
+    },
+    "gst_total": {
+      "type": "number",
+      "title": "GST",
+      "default": 0
+    },
+    "total": {
+      "type": "number",
+      "title": "Total",
+      "default": 0
+    },
+    "payment_details": {
+      "type": "string",
+      "title": "Payment Details Snapshot"
+    },
+    "payment_terms": {
+      "type": "string",
+      "title": "Payment Terms Snapshot"
+    },
+    "provider_snapshot": {
+      "type": "string",
+      "title": "Provider Details Snapshot"
+    },
+    "ai_validation_status": {
+      "type": "string",
+      "title": "AI Validation Status",
+      "enum": [
+        "Not Checked",
+        "Passed",
+        "Review Required"
+      ],
+      "default": "Not Checked"
+    },
+    "ai_validation_summary": {
+      "type": "string",
+      "title": "AI Validation Summary"
+    },
+    "pdf_url": {
+      "type": "string",
+      "title": "Invoice PDF",
+      "format": "uri"
+    },
+    "sent_at": {
+      "type": "string",
+      "title": "Sent At",
+      "format": "date-time"
+    },
+    "sent_by": {
+      "type": "string",
+      "title": "Sent By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "invoice_number",
+    "participant_id",
+    "participant_name",
+    "invoice_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

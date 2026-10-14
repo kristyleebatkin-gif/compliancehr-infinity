@@ -1,0 +1,123 @@
+{
+  "type": "object",
+  "name": "InvoiceTemplateSettings",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "title": "Provider"
+    },
+    "invoice_prefix": {
+      "type": "string",
+      "title": "Invoice Prefix",
+      "default": "INV"
+    },
+    "next_invoice_number": {
+      "type": "number",
+      "title": "Next Invoice Number",
+      "default": 1
+    },
+    "default_due_days": {
+      "type": "number",
+      "title": "Default Due Days",
+      "default": 14
+    },
+    "payment_details": {
+      "type": "string",
+      "title": "Payment Details"
+    },
+    "payment_terms": {
+      "type": "string",
+      "title": "Payment Terms"
+    },
+    "invoice_notes": {
+      "type": "string",
+      "title": "Invoice Notes"
+    },
+    "key_contacts": {
+      "type": "string",
+      "title": "Key Contacts"
+    },
+    "xero_account_code": {
+      "type": "string",
+      "title": "Xero Account Code",
+      "default": "200"
+    },
+    "xero_tax_type": {
+      "type": "string",
+      "title": "Xero Tax Type",
+      "default": "GST Free Income"
+    },
+    "kms_support_item_number": {
+      "type": "string",
+      "title": "KMS Support Item Number"
+    },
+    "kms_rate": {
+      "type": "number",
+      "title": "Default KMS Rate",
+      "default": 0
+    },
+    "default_remoteness": {
+      "type": "string",
+      "title": "Default Price Region",
+      "enum": [
+        "National",
+        "Remote",
+        "Very Remote"
+      ],
+      "default": "National"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    },
+    "updated_by": {
+      "type": "string",
+      "title": "Updated By"
+    },
+    "updated_at": {
+      "type": "string",
+      "title": "Updated At",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "invoice_prefix"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

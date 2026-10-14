@@ -1,0 +1,245 @@
+{
+  "type": "object",
+  "name": "MeetingRecord",
+  "properties": {
+    "meeting_id": {
+      "type": "string",
+      "title": "Meeting ID"
+    },
+    "meeting_type": {
+      "type": "string",
+      "title": "Meeting Type"
+    },
+    "title": {
+      "type": "string",
+      "title": "Meeting Title"
+    },
+    "meeting_date": {
+      "type": "string",
+      "title": "Meeting Date",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string",
+      "title": "Start Time"
+    },
+    "end_time": {
+      "type": "string",
+      "title": "End Time"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location / Link"
+    },
+    "chairperson": {
+      "type": "string",
+      "title": "Chairperson"
+    },
+    "minute_taker": {
+      "type": "string",
+      "title": "Minute Taker"
+    },
+    "attendees": {
+      "type": "string",
+      "title": "Attendees"
+    },
+    "participant_ids": {
+      "type": "array",
+      "title": "Connected Participant IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "participant_names": {
+      "type": "array",
+      "title": "Connected Participants",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "team_member_names": {
+      "type": "array",
+      "title": "Connected Team Members",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "apologies": {
+      "type": "string",
+      "title": "Apologies"
+    },
+    "agenda": {
+      "type": "string",
+      "title": "Agenda"
+    },
+    "discussion": {
+      "type": "string",
+      "title": "Discussion"
+    },
+    "decisions": {
+      "type": "string",
+      "title": "Decisions"
+    },
+    "action_items": {
+      "type": "string",
+      "title": "Action Items"
+    },
+    "risk_assessment_outcome": {
+      "type": "string",
+      "title": "Risk Assessment Outcome"
+    },
+    "risk_assessments_completed": {
+      "type": "string",
+      "title": "Risk Assessments Completed"
+    },
+    "take_five_risk_assessments": {
+      "type": "string",
+      "title": "Take 5 Risk Assessments"
+    },
+    "follow_up_required": {
+      "type": "string",
+      "title": "Follow-up Required"
+    },
+    "responsible_people": {
+      "type": "string",
+      "title": "Responsible People"
+    },
+    "due_dates": {
+      "type": "string",
+      "title": "Action Due Dates"
+    },
+    "next_meeting_date": {
+      "type": "string",
+      "title": "Next Meeting",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "Completed",
+        "Actions Open",
+        "Closed"
+      ],
+      "default": "Scheduled"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "title",
+    "meeting_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

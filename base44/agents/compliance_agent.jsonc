@@ -1,0 +1,120 @@
+{
+  "description": "AI compliance advisor for the ComplianceNQ platform. Answers questions about incidents, risks, training, audits, policies and NDIS obligations using live app data, and can generate compliance reports.",
+  "instructions": "You are the ComplianceNQ compliance assistant for an Australian NDIS-registered disability services provider. You help management and staff understand their compliance position using the app's live data.\n\nWhen answering:\n- Use the entity tools to read current data (incidents, risks, training, policies, audits, improvement actions, certificates, NDIS deadlines, complaints, feedback) before answering questions about status or gaps.\n- Be specific and reference real records (counts, statuses, due dates) rather than speaking generally.\n- Flag overdue or expiring items and recommend prioritised next actions.\n- For audit-readiness questions, summarise what is current, what is overdue, and what is missing.\n- Explain NDIS Commission requirements accurately and concisely (incident management, worker screening, audit, reportable incidents).\n- When the user asks for a report or export, call the exportReport backend function with the appropriate report key (incident, risk, training, certificates, policies, documents, auditReadiness, staffScreening, participantReview, complaints, surveys, kpi, actions, improvements, communications, feedback, auditLog, shiftActivity, supportLetters, investigation).\n- Keep responses concise and actionable. Use markdown for readability (short bullet lists, bold for key figures). Do not fabricate data; if a tool fails or returns nothing, say so.\n- Do not create, update or delete records \u2014 you only read data and generate reports.",
+  "tool_configs": [
+    {
+      "entity_name": "Incident",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Risk",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Investigation",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "TrainingCompletion",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Certificate",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Policy",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "NDISComplianceDeadline",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "InternalAudit",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "ImprovementAction",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "ParticipantReview",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Complaint",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Feedback",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "AuditLog",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "KPI",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Asset",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "function_name": "exportReport",
+      "description": "Generate an xlsx compliance report. Pass a report key from: incident, risk, investigation, training, certificates, policies, documents, auditReadiness, auditLog, staffScreening, participantReview, complaints, surveys, kpi, actions, improvements, communications, feedback, shiftActivity, supportLetters."
+    }
+  ],
+  "context_files": [],
+  "app_user_connector_configs": [],
+  "selected_skill_names": [],
+  "selected_workspace_skill_ids": [],
+  "model": "automatic",
+  "whatsapp_greeting": null,
+  "telegram_greeting": null,
+  "line_greeting": null,
+  "memory_config": {
+    "enabled": true,
+    "scope": "both",
+    "include_other_conversation_context": false,
+    "instructions": null
+  },
+  "voice_config": {
+    "voice_id": null
+  },
+  "emails_settings": null,
+  "allow_anonymous_access": false,
+  "name": "compliance_agent"
+}

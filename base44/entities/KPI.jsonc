@@ -1,0 +1,201 @@
+{
+  "type": "object",
+  "name": "KPI",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "KPI Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Participant Outcomes",
+        "Service Quality",
+        "Workforce",
+        "Compliance",
+        "Safety",
+        "Financial"
+      ],
+      "default": "Service Quality"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "target_value": {
+      "type": "number",
+      "title": "Target"
+    },
+    "current_value": {
+      "type": "number",
+      "title": "Current"
+    },
+    "unit": {
+      "type": "string",
+      "title": "Unit",
+      "default": "%"
+    },
+    "frequency": {
+      "type": "string",
+      "title": "Review Frequency",
+      "enum": [
+        "Monthly",
+        "Quarterly",
+        "Annually"
+      ],
+      "default": "Quarterly"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "On Track",
+        "At Risk",
+        "Off Track",
+        "Exceeded"
+      ],
+      "default": "On Track"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "title": "Last Reviewed",
+      "format": "date"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Employee Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Employee User"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "title",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        },
+        {
+          "data.employee_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "type": "object",
+  "name": "GovernanceControlRecord",
+  "properties": {
+    "control_type": {
+      "type": "string",
+      "title": "Control Type",
+      "enum": [
+        "Compliance Obligation",
+        "Evidence Index",
+        "Retention and Legal Hold",
+        "Risk Control Test",
+        "Vendor Due Diligence",
+        "Finance Control",
+        "Asset Control",
+        "Privacy Request",
+        "AI Governance"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework or Standard"
+    },
+    "clause": {
+      "type": "string",
+      "title": "Clause or Quality Indicator"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "title": "Jurisdiction"
+    },
+    "registration_group": {
+      "type": "string",
+      "title": "Registration Group or Service"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "source_entity": {
+      "type": "string",
+      "title": "Source Entity"
+    },
+    "source_record_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "evidence_url": {
+      "type": "string",
+      "title": "Evidence URL"
+    },
+    "evidence_hash_or_version": {
+      "type": "string",
+      "title": "Evidence Hash or Version"
+    },
+    "test_procedure": {
+      "type": "string",
+      "title": "Test Procedure"
+    },
+    "sample_details": {
+      "type": "string",
+      "title": "Sample Details"
+    },
+    "test_result": {
+      "type": "string",
+      "title": "Test Result",
+      "enum": [
+        "Not Tested",
+        "Effective",
+        "Partially Effective",
+        "Ineffective"
+      ],
+      "default": "Not Tested"
+    },
+    "retention_period_years": {
+      "type": "number",
+      "title": "Retention Period (Years)"
+    },
+    "legal_hold": {
+      "type": "boolean",
+      "title": "Legal Hold",
+      "default": false
+    },
+    "destruction_approved_by": {
+      "type": "string",
+      "title": "Destruction Approved By"
+    },
+    "destruction_date": {
+      "type": "string",
+      "title": "Destruction Date",
+      "format": "date"
+    },
+    "vendor_name": {
+      "type": "string",
+      "title": "Vendor"
+    },
+    "contract_expiry": {
+      "type": "string",
+      "title": "Contract Expiry",
+      "format": "date"
+    },
+    "insurance_expiry": {
+      "type": "string",
+      "title": "Insurance Expiry",
+      "format": "date"
+    },
+    "security_review_date": {
+      "type": "string",
+      "title": "Security Review Date",
+      "format": "date"
+    },
+    "approval_reference": {
+      "type": "string",
+      "title": "Approval Reference"
+    },
+    "segregation_of_duties_checked": {
+      "type": "boolean",
+      "title": "Segregation of Duties Checked",
+      "default": false
+    },
+    "risk_rating": {
+      "type": "string",
+      "title": "Risk Rating",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Planned",
+        "Current",
+        "Due Soon",
+        "Overdue",
+        "Action Required",
+        "Completed",
+        "Archived"
+      ],
+      "default": "Planned"
+    },
+    "findings": {
+      "type": "string",
+      "title": "Findings"
+    },
+    "actions": {
+      "type": "string",
+      "title": "Actions"
+    }
+  },
+  "required": [
+    "control_type",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}

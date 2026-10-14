@@ -1,0 +1,321 @@
+{
+  "type": "object",
+  "name": "FormSubmission",
+  "properties": {
+    "form_template_id": {
+      "type": "string",
+      "title": "Form Template"
+    },
+    "form_title": {
+      "type": "string",
+      "title": "Form Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "submitted_by": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "saved_by_user_id": {
+      "type": "string",
+      "title": "Draft Owner User ID"
+    },
+    "submitted_date": {
+      "type": "string",
+      "title": "Submitted Date",
+      "format": "date"
+    },
+    "submission_method": {
+      "type": "string",
+      "title": "Submission Method",
+      "enum": [
+        "Online",
+        "Upload",
+        "Imported"
+      ],
+      "default": "Online"
+    },
+    "submitted_document_url": {
+      "type": "string",
+      "title": "Submitted Document URL"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Related Participant"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Related Employee"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
+    },
+    "data": {
+      "type": "string",
+      "title": "Submission Data (JSON)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Reviewed",
+        "Actioned"
+      ],
+      "default": "Submitted"
+    },
+    "review_notes": {
+      "type": "string",
+      "title": "Review Notes"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "title": "Reviewed Date",
+      "format": "date"
+    },
+    "review_outcome": {
+      "type": "string",
+      "title": "Review Outcome",
+      "enum": [
+        "Pending Review",
+        "Approved",
+        "Changes Required",
+        "Rejected"
+      ],
+      "default": "Pending Review"
+    },
+    "submission_summary": {
+      "type": "string",
+      "title": "Submission Outcome / Summary"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "form_title",
+    "submitted_by"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.status": "Draft"
+            },
+            {
+              "data.saved_by_user_id": "{{user.id}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "data.category": {
+                "$nin": [
+                  "Participant Intake",
+                  "Employee Intake"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "data.category": {
+                "$nin": [
+                  "Participant Intake",
+                  "Employee Intake"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "data.category": {
+                "$nin": [
+                  "Participant Intake",
+                  "Employee Intake"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.category": {
+                "$nin": [
+                  "Participant Intake",
+                  "Employee Intake"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.category": {
+                "$nin": [
+                  "Participant Intake",
+                  "Employee Intake"
+                ]
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

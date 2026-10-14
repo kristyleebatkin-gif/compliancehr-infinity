@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "name": "HRDocumentTemplate",
+  "properties": {
+    "template_type": {
+      "type": "string",
+      "title": "Template Type",
+      "enum": [
+        "Performance Appraisal",
+        "Employment Contract",
+        "Position Description"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "title": "Template Title"
+    },
+    "content": {
+      "type": "string",
+      "title": "Template Content"
+    },
+    "instructions": {
+      "type": "string",
+      "title": "Completion Instructions"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Uploaded Template File",
+      "format": "uri"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    },
+    "updated_by": {
+      "type": "string",
+      "title": "Updated By"
+    },
+    "updated_at": {
+      "type": "string",
+      "title": "Updated At",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "template_type",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

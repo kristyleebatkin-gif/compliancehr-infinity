@@ -1,0 +1,240 @@
+{
+  "type": "object",
+  "name": "MSDSRecord",
+  "properties": {
+    "template_id": {
+      "type": "string",
+      "title": "Template ID"
+    },
+    "product_name": {
+      "type": "string",
+      "title": "Exact Product Name"
+    },
+    "supplier": {
+      "type": "string",
+      "title": "Supplier",
+      "default": "Coles"
+    },
+    "manufacturer": {
+      "type": "string",
+      "title": "Manufacturer / Brand"
+    },
+    "product_code": {
+      "type": "string",
+      "title": "Product Code / Barcode"
+    },
+    "category": {
+      "type": "string",
+      "title": "Cleaning Product Category"
+    },
+    "hazardous_chemical": {
+      "type": "boolean",
+      "title": "Hazardous Chemical",
+      "default": false
+    },
+    "signal_word": {
+      "type": "string",
+      "title": "SDS Signal Word",
+      "enum": [
+        "Not Confirmed",
+        "None",
+        "Warning",
+        "Danger"
+      ],
+      "default": "Not Confirmed"
+    },
+    "sds_file_url": {
+      "type": "string",
+      "title": "Official SDS File URL"
+    },
+    "sds_file_name": {
+      "type": "string",
+      "title": "Official SDS File Name"
+    },
+    "sds_revision_date": {
+      "type": "string",
+      "title": "SDS Preparation / Revision Date",
+      "format": "date"
+    },
+    "sds_next_review_date": {
+      "type": "string",
+      "title": "SDS Review Due",
+      "format": "date"
+    },
+    "sds_status": {
+      "type": "string",
+      "title": "SDS Status",
+      "enum": [
+        "SDS Required",
+        "Current",
+        "Review Due",
+        "Superseded",
+        "Not Required",
+        "Archived"
+      ],
+      "default": "SDS Required"
+    },
+    "workplace_locations": {
+      "type": "string",
+      "title": "Workplace Storage / Use Locations"
+    },
+    "quantity": {
+      "type": "string",
+      "title": "Typical Maximum Quantity"
+    },
+    "risk_assessment_completed": {
+      "type": "boolean",
+      "title": "Chemical Risk Assessment Completed",
+      "default": false
+    },
+    "risk_assessment_date": {
+      "type": "string",
+      "title": "Risk Assessment Date",
+      "format": "date"
+    },
+    "ppe_summary": {
+      "type": "string",
+      "title": "PPE from Official SDS"
+    },
+    "storage_summary": {
+      "type": "string",
+      "title": "Storage and Incompatibilities from Official SDS"
+    },
+    "first_aid_summary": {
+      "type": "string",
+      "title": "First Aid from Official SDS"
+    },
+    "spill_response_summary": {
+      "type": "string",
+      "title": "Spill Response from Official SDS"
+    },
+    "disposal_summary": {
+      "type": "string",
+      "title": "Disposal from Official SDS"
+    },
+    "emergency_phone": {
+      "type": "string",
+      "title": "Emergency Contact",
+      "default": "Poisons Information Centre 13 11 26"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Compliance Notes"
+    }
+  },
+  "required": [
+    "template_id",
+    "product_name",
+    "supplier",
+    "category",
+    "sds_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

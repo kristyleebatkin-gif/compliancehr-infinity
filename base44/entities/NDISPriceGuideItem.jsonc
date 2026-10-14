@@ -1,0 +1,126 @@
+{
+  "type": "object",
+  "name": "NDISPriceGuideItem",
+  "properties": {
+    "release_id": {
+      "type": "string",
+      "title": "Price Guide Release"
+    },
+    "support_item_number": {
+      "type": "string",
+      "title": "Support Item Number"
+    },
+    "support_item_name": {
+      "type": "string",
+      "title": "Support Item Name"
+    },
+    "registration_group_number": {
+      "type": "string",
+      "title": "Registration Group Number"
+    },
+    "registration_group_name": {
+      "type": "string",
+      "title": "Registration Group Name"
+    },
+    "support_category_number": {
+      "type": "string",
+      "title": "Support Category Number"
+    },
+    "support_category_name": {
+      "type": "string",
+      "title": "Support Category Name"
+    },
+    "unit": {
+      "type": "string",
+      "title": "Unit"
+    },
+    "national_price": {
+      "type": "number",
+      "title": "National Price"
+    },
+    "remote_price": {
+      "type": "number",
+      "title": "Remote Price"
+    },
+    "very_remote_price": {
+      "type": "number",
+      "title": "Very Remote Price"
+    },
+    "quote_required": {
+      "type": "boolean",
+      "title": "Quote Required",
+      "default": false
+    },
+    "claim_type": {
+      "type": "string",
+      "title": "Claim Type"
+    },
+    "provider_travel": {
+      "type": "boolean",
+      "title": "Provider Travel",
+      "default": false
+    },
+    "non_face_to_face": {
+      "type": "boolean",
+      "title": "Non Face-to-Face",
+      "default": false
+    },
+    "effective_from": {
+      "type": "string",
+      "title": "Effective From",
+      "format": "date"
+    },
+    "effective_to": {
+      "type": "string",
+      "title": "Effective To",
+      "format": "date"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    }
+  },
+  "required": [
+    "release_id",
+    "support_item_number",
+    "support_item_name",
+    "effective_from"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

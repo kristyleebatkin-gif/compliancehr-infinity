@@ -1,0 +1,153 @@
+{
+  "type": "object",
+  "name": "EmployeeLeaderboardSettings",
+  "properties": {
+    "settings_name": {
+      "type": "string",
+      "title": "Settings Name",
+      "default": "Default Employee Leaderboard"
+    },
+    "training_completion_points": {
+      "type": "number",
+      "title": "Training Completion Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 1
+    },
+    "goal_tracking_points": {
+      "type": "number",
+      "title": "Goal Tracking Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 1
+    },
+    "goal_success_points": {
+      "type": "number",
+      "title": "Goal Success Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 1
+    },
+    "business_milestone_points": {
+      "type": "number",
+      "title": "Business Milestone Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 1
+    },
+    "employment_anniversary_points": {
+      "type": "number",
+      "title": "Employment Anniversary Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 1
+    },
+    "kpi_achievement_points": {
+      "type": "number",
+      "title": "KPI Achievement Points",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "birthday_shoutouts_enabled": {
+      "type": "boolean",
+      "title": "Automatic Birthday Shout-outs",
+      "default": true
+    },
+    "birthday_emails_enabled": {
+      "type": "boolean",
+      "title": "Birthday Emails",
+      "default": true
+    },
+    "birthday_message_template": {
+      "type": "string",
+      "title": "Birthday Message Template",
+      "default": "Happy Birthday, {first_name}! Wishing you a wonderful day from everyone at {company_name}."
+    },
+    "updated_by": {
+      "type": "string",
+      "title": "Updated By"
+    }
+  },
+  "required": [
+    "settings_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

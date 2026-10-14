@@ -1,0 +1,223 @@
+{
+  "type": "object",
+  "name": "EmployeePerformanceAppraisal",
+  "properties": {
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "position_title": {
+      "type": "string",
+      "title": "Position Title"
+    },
+    "review_type": {
+      "type": "string",
+      "title": "Review Type",
+      "enum": [
+        "12-Month Review",
+        "Probation Review",
+        "Performance Support",
+        "Other"
+      ],
+      "default": "12-Month Review"
+    },
+    "scheduled_review_date": {
+      "type": "string",
+      "title": "Scheduled Review Date",
+      "format": "date"
+    },
+    "review_period_start": {
+      "type": "string",
+      "title": "Review Period Start",
+      "format": "date"
+    },
+    "review_period_end": {
+      "type": "string",
+      "title": "Review Period End",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Scheduled",
+        "In Progress",
+        "Completed",
+        "Overdue",
+        "Cancelled"
+      ],
+      "default": "Scheduled"
+    },
+    "completed_date": {
+      "type": "string",
+      "title": "Completed Date",
+      "format": "date"
+    },
+    "reviewer_name": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "overall_rating": {
+      "type": "number",
+      "title": "Overall Rating",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "service_delivery_rating": {
+      "type": "number",
+      "title": "Service Delivery Rating",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "participant_goal_rating": {
+      "type": "number",
+      "title": "Participant Goal Rating",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "training_compliance_rating": {
+      "type": "number",
+      "title": "Training Compliance Rating",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "reliability_rating": {
+      "type": "number",
+      "title": "Reliability Rating",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "rostered_hours_snapshot": {
+      "type": "number",
+      "title": "Rostered Hours Snapshot"
+    },
+    "completed_hours_snapshot": {
+      "type": "number",
+      "title": "Completed Hours Snapshot"
+    },
+    "participant_goals_supported": {
+      "type": "number",
+      "title": "Participant Goals Supported"
+    },
+    "participant_goals_achieved": {
+      "type": "number",
+      "title": "Participant Goals Achieved"
+    },
+    "training_completions_snapshot": {
+      "type": "number",
+      "title": "Training Completions Snapshot"
+    },
+    "current_certificates_snapshot": {
+      "type": "number",
+      "title": "Current Certificates Snapshot"
+    },
+    "strengths": {
+      "type": "string",
+      "title": "Strengths"
+    },
+    "achievements": {
+      "type": "string",
+      "title": "Achievements"
+    },
+    "improvement_areas": {
+      "type": "string",
+      "title": "Improvement Areas"
+    },
+    "development_plan": {
+      "type": "string",
+      "title": "Development and Training Plan"
+    },
+    "employee_comments": {
+      "type": "string",
+      "title": "Employee Comments"
+    },
+    "manager_comments": {
+      "type": "string",
+      "title": "Manager Comments"
+    },
+    "goals_next_period": {
+      "type": "string",
+      "title": "Goals for Next Review Period"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Review Outcome",
+      "enum": [
+        "Pending",
+        "Meets Expectations",
+        "Exceeds Expectations",
+        "Development Required",
+        "Performance Support Required"
+      ],
+      "default": "Pending"
+    },
+    "next_review_date": {
+      "type": "string",
+      "title": "Next 12-Month Review",
+      "format": "date"
+    },
+    "source_employee_document_id": {
+      "type": "string",
+      "title": "Source Performance Review Document"
+    },
+    "email_last_sent_at": {
+      "type": "string",
+      "title": "Last Digest Email",
+      "format": "date-time"
+    },
+    "archived": {
+      "type": "boolean",
+      "title": "Archived",
+      "default": false
+    }
+  },
+  "required": [
+    "staff_profile_id",
+    "employee_name",
+    "scheduled_review_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

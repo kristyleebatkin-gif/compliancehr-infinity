@@ -1,0 +1,185 @@
+{
+  "type": "object",
+  "name": "VolunteerInterest",
+  "properties": {
+    "interest_type": {
+      "type": "string",
+      "title": "Interest Type",
+      "enum": [
+        "Volunteer",
+        "Student Placement"
+      ],
+      "default": "Volunteer"
+    },
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "suburb": {
+      "type": "string",
+      "title": "Suburb"
+    },
+    "institution_name": {
+      "type": "string",
+      "title": "Education Institution"
+    },
+    "course_name": {
+      "type": "string",
+      "title": "Course"
+    },
+    "student_number": {
+      "type": "string",
+      "title": "Student Number"
+    },
+    "preferred_service_area": {
+      "type": "string",
+      "title": "Preferred Service Area"
+    },
+    "availability": {
+      "type": "string",
+      "title": "Availability"
+    },
+    "relevant_experience": {
+      "type": "string",
+      "title": "Relevant Experience"
+    },
+    "motivation": {
+      "type": "string",
+      "title": "Motivation"
+    },
+    "support_or_adjustments": {
+      "type": "string",
+      "title": "Support or Adjustments Requested"
+    },
+    "privacy_consent": {
+      "type": "boolean",
+      "title": "Privacy Consent",
+      "default": false
+    },
+    "submitted_at": {
+      "type": "string",
+      "title": "Submitted At",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Received",
+        "Reviewing",
+        "Contacted",
+        "Accepted",
+        "Not Proceeding",
+        "Withdrawn"
+      ],
+      "default": "Received"
+    },
+    "review_notes": {
+      "type": "string",
+      "title": "Review Notes"
+    },
+    "next_contact_date": {
+      "type": "string",
+      "title": "Next Contact Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "interest_type",
+    "full_name",
+    "email",
+    "phone",
+    "motivation",
+    "privacy_consent",
+    "submitted_at",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

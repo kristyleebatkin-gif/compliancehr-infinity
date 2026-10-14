@@ -1,0 +1,160 @@
+{
+  "type": "object",
+  "name": "ImprovementReview",
+  "properties": {
+    "improvement_id": {
+      "type": "string",
+      "title": "Improvement ID"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "title": "Reviewed By"
+    },
+    "effectiveness_reviewed": {
+      "type": "string",
+      "title": "Effectiveness Reviewed"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome"
+    },
+    "additional_improvements_required": {
+      "type": "string",
+      "title": "Additional Improvements Required"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "improvement_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

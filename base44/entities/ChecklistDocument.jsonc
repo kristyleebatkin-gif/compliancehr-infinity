@@ -1,0 +1,174 @@
+{
+  "type": "object",
+  "name": "ChecklistDocument",
+  "properties": {
+    "template_key": {
+      "type": "string",
+      "title": "Template Key"
+    },
+    "title": {
+      "type": "string",
+      "title": "Form Title"
+    },
+    "module_type": {
+      "type": "string",
+      "title": "Module",
+      "enum": [
+        "Checklists",
+        "Emergency Response",
+        "Meeting Centre",
+        "Data Control Panel"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Uploaded File"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "title": "Uploaded By"
+    },
+    "upload_date": {
+      "type": "string",
+      "title": "Upload Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Uploaded",
+        "Reviewed",
+        "Archived"
+      ],
+      "default": "Uploaded"
+    }
+  },
+  "required": [
+    "template_key",
+    "title",
+    "module_type",
+    "file_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "type": "object",
+  "name": "InternalAudit",
+  "properties": {
+    "audit_id": {
+      "type": "string",
+      "title": "Audit ID"
+    },
+    "audit_category": {
+      "type": "string",
+      "title": "Audit Category"
+    },
+    "register_audited": {
+      "type": "string",
+      "title": "Register / File Audited"
+    },
+    "audit_frequency": {
+      "type": "string",
+      "title": "Audit Frequency"
+    },
+    "scheduled_months": {
+      "type": "string",
+      "title": "Scheduled Audit Months"
+    },
+    "audit_date_completed": {
+      "type": "string",
+      "title": "Audit Date Completed",
+      "format": "date"
+    },
+    "auditor": {
+      "type": "string",
+      "title": "Auditor"
+    },
+    "audit_scope": {
+      "type": "string",
+      "title": "Audit Scope"
+    },
+    "framework_standard": {
+      "type": "string",
+      "title": "Framework or Standard"
+    },
+    "clauses_quality_indicators": {
+      "type": "string",
+      "title": "Clauses or Quality Indicators"
+    },
+    "sampling_method": {
+      "type": "string",
+      "title": "Sampling Method"
+    },
+    "sample_size": {
+      "type": "number",
+      "title": "Sample Size"
+    },
+    "test_procedures": {
+      "type": "string",
+      "title": "Test Procedures"
+    },
+    "evidence_reviewed": {
+      "type": "string",
+      "title": "Evidence Reviewed"
+    },
+    "findings_identified": {
+      "type": "string",
+      "title": "Findings Identified"
+    },
+    "finding_reference": {
+      "type": "string",
+      "title": "Finding Reference"
+    },
+    "linked_improvement_action_id": {
+      "type": "string",
+      "title": "Linked Improvement Action"
+    },
+    "risk_rating": {
+      "type": "string",
+      "title": "Risk Rating"
+    },
+    "corrective_actions_required": {
+      "type": "string",
+      "title": "Corrective Actions Required"
+    },
+    "responsible_person": {
+      "type": "string",
+      "title": "Responsible Person"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "default": "Scheduled"
+    },
+    "evidence_attached": {
+      "type": "string",
+      "title": "Evidence Attached"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "title": "Follow Up Date",
+      "format": "date"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "audit_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

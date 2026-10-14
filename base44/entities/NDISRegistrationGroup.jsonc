@@ -1,0 +1,169 @@
+{
+  "type": "object",
+  "name": "NDISRegistrationGroup",
+  "properties": {
+    "registration_profile_id": {
+      "type": "string",
+      "title": "Registration Profile"
+    },
+    "group_number": {
+      "type": "string",
+      "title": "Registration Group Number"
+    },
+    "group_name": {
+      "type": "string",
+      "title": "Registration Group Name"
+    },
+    "audit_module": {
+      "type": "string",
+      "title": "Applicable Audit Module / Standard"
+    },
+    "approval_date": {
+      "type": "string",
+      "title": "Successful Registration Date",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "title": "Group Expiry Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Successfully Registered",
+        "Application Pending",
+        "Variation Pending",
+        "Suspended",
+        "Expired",
+        "Removed"
+      ],
+      "default": "Successfully Registered"
+    },
+    "conditions": {
+      "type": "string",
+      "title": "Group Conditions / Scope"
+    },
+    "evidence_file_url": {
+      "type": "string",
+      "title": "Registration Group Evidence URL"
+    },
+    "evidence_file_name": {
+      "type": "string",
+      "title": "Registration Group Evidence File Name"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "group_number",
+    "group_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "type": "object",
+  "name": "WorkforceAssuranceRecord",
+  "properties": {
+    "record_type": {
+      "type": "string",
+      "title": "Record Type",
+      "enum": [
+        "Screening Verification",
+        "Competency Assessment",
+        "Supervision",
+        "Performance Review",
+        "Offboarding"
+      ]
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Staff ID"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Member"
+    },
+    "record_date": {
+      "type": "string",
+      "title": "Record Date",
+      "format": "date"
+    },
+    "reviewer": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "screening_type": {
+      "type": "string",
+      "title": "Screening Type",
+      "enum": [
+        "Not Applicable",
+        "NDIS Worker Screening",
+        "Working With Children",
+        "Police Check",
+        "Right to Work",
+        "Registration",
+        "Other"
+      ],
+      "default": "Not Applicable"
+    },
+    "verification_source": {
+      "type": "string",
+      "title": "Verification Source"
+    },
+    "verification_reference": {
+      "type": "string",
+      "title": "Verification Reference"
+    },
+    "verification_date": {
+      "type": "string",
+      "title": "Verification Date",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "title": "Expiry Date",
+      "format": "date"
+    },
+    "competency_area": {
+      "type": "string",
+      "title": "Competency Area"
+    },
+    "assessment_method": {
+      "type": "string",
+      "title": "Assessment Method"
+    },
+    "assessment_outcome": {
+      "type": "string",
+      "title": "Assessment Outcome",
+      "enum": [
+        "Not Assessed",
+        "Competent",
+        "Development Required",
+        "Not Competent"
+      ],
+      "default": "Not Assessed"
+    },
+    "supervision_topics": {
+      "type": "string",
+      "title": "Supervision or Review Topics"
+    },
+    "agreed_actions": {
+      "type": "string",
+      "title": "Agreed Actions"
+    },
+    "next_review_date": {
+      "type": "string",
+      "title": "Next Review Date",
+      "format": "date"
+    },
+    "exit_date": {
+      "type": "string",
+      "title": "Exit Date",
+      "format": "date"
+    },
+    "equipment_returned": {
+      "type": "boolean",
+      "title": "Equipment Returned",
+      "default": false
+    },
+    "system_access_revoked": {
+      "type": "boolean",
+      "title": "System Access Revoked",
+      "default": false
+    },
+    "records_handover_completed": {
+      "type": "boolean",
+      "title": "Records Handover Completed",
+      "default": false
+    },
+    "final_pay_confirmed": {
+      "type": "boolean",
+      "title": "Final Pay Confirmed",
+      "default": false
+    },
+    "evidence_url": {
+      "type": "string",
+      "title": "Evidence URL"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Verified",
+        "Current",
+        "Action Required",
+        "Expired",
+        "Completed"
+      ],
+      "default": "Draft"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "record_type",
+    "staff_name",
+    "record_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}

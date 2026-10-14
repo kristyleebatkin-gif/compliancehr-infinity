@@ -1,0 +1,234 @@
+{
+  "type": "object",
+  "name": "LeaseRecord",
+  "properties": {
+    "lease_type": {
+      "type": "string",
+      "title": "Lease Type",
+      "enum": [
+        "Office or Commercial Property",
+        "Participant Accommodation",
+        "Vehicle",
+        "Equipment",
+        "Technology",
+        "Other"
+      ],
+      "default": "Office or Commercial Property"
+    },
+    "asset_name": {
+      "type": "string",
+      "title": "Property, Vehicle or Asset"
+    },
+    "address_location": {
+      "type": "string",
+      "title": "Address or Location"
+    },
+    "agreement_number": {
+      "type": "string",
+      "title": "Agreement Number"
+    },
+    "lessor_name": {
+      "type": "string",
+      "title": "Lessor or Owner"
+    },
+    "lessee_name": {
+      "type": "string",
+      "title": "Lessee"
+    },
+    "lessor_contact_name": {
+      "type": "string",
+      "title": "Lessor Contact"
+    },
+    "lessor_phone": {
+      "type": "string",
+      "title": "Lessor Phone"
+    },
+    "lessor_email": {
+      "type": "string",
+      "title": "Lessor Email",
+      "format": "email"
+    },
+    "start_date": {
+      "type": "string",
+      "title": "Start Date",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "title": "End Date",
+      "format": "date"
+    },
+    "renewal_notice_date": {
+      "type": "string",
+      "title": "Renewal Notice Date",
+      "format": "date"
+    },
+    "payment_amount": {
+      "type": "number",
+      "title": "Lease Payment"
+    },
+    "payment_frequency": {
+      "type": "string",
+      "enum": [
+        "Weekly",
+        "Fortnightly",
+        "Monthly",
+        "Quarterly",
+        "Annually",
+        "Other"
+      ],
+      "default": "Monthly"
+    },
+    "bond_deposit": {
+      "type": "number",
+      "title": "Bond or Deposit"
+    },
+    "next_review_date": {
+      "type": "string",
+      "title": "Next Review Date",
+      "format": "date"
+    },
+    "permitted_use": {
+      "type": "string",
+      "title": "Permitted Use"
+    },
+    "maintenance_responsibilities": {
+      "type": "string",
+      "title": "Maintenance Responsibilities"
+    },
+    "insurance_requirements": {
+      "type": "string",
+      "title": "Insurance Requirements"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Lease Agreement",
+      "format": "uri"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Active",
+        "Renewal Due",
+        "Expired",
+        "Terminated"
+      ],
+      "default": "Active"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "lease_type",
+    "asset_name",
+    "lessor_name",
+    "start_date",
+    "end_date",
+    "payment_amount"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

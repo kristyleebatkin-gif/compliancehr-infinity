@@ -1,0 +1,263 @@
+{
+  "type": "object",
+  "name": "Complaint",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "complaint_id": {
+      "type": "string",
+      "title": "Complaint ID"
+    },
+    "date_received": {
+      "type": "string",
+      "title": "Date Received",
+      "format": "date"
+    },
+    "time_received": {
+      "type": "string",
+      "title": "Time Received"
+    },
+    "complainant_name": {
+      "type": "string",
+      "title": "Complainant Name"
+    },
+    "complainant_relationship": {
+      "type": "string",
+      "title": "Relationship",
+      "enum": [
+        "Participant",
+        "Family Member",
+        "Staff",
+        "Advocate",
+        "Other"
+      ],
+      "default": "Participant"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Related Participant"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Service Quality",
+        "Staff Conduct",
+        "Communication",
+        "Safety",
+        "Financial",
+        "Other"
+      ],
+      "default": "Service Quality"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Received",
+        "Acknowledged",
+        "Under Investigation",
+        "Resolved",
+        "Closed"
+      ],
+      "default": "Received"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "resolution": {
+      "type": "string",
+      "title": "Resolution"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "target_resolution_date": {
+      "type": "string",
+      "title": "Target Resolution Date",
+      "format": "date"
+    },
+    "source_entity_type": {
+      "type": "string",
+      "title": "Source Entity Type"
+    },
+    "source_entity_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "source_item_key": {
+      "type": "string",
+      "title": "Source Item Key"
+    },
+    "source_document_url": {
+      "type": "string",
+      "title": "Source Document URL"
+    },
+    "source_form_title": {
+      "type": "string",
+      "title": "Source Form Title"
+    },
+    "source_answers_json": {
+      "type": "string",
+      "title": "Source Answers JSON"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Related Intake Case"
+    }
+  },
+  "required": [
+    "title",
+    "date_received"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

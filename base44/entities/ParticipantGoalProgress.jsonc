@@ -1,0 +1,261 @@
+{
+  "type": "object",
+  "name": "ParticipantGoalProgress",
+  "properties": {
+    "date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date"
+    },
+    "time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Profile ID"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "team_worker_ids": {
+      "type": "array",
+      "title": "Team Worker IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Supporting Staff Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Supporting Employee ID"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Supporting Employee User"
+    },
+    "goal": {
+      "type": "string",
+      "title": "Goal"
+    },
+    "desired_outcome": {
+      "type": "string",
+      "title": "Desired Outcome"
+    },
+    "measurement_unit": {
+      "type": "string",
+      "title": "Measurement Unit"
+    },
+    "measurement_direction": {
+      "type": "string",
+      "title": "Progress Direction",
+      "enum": [
+        "Increase",
+        "Decrease"
+      ],
+      "default": "Increase"
+    },
+    "baseline_value": {
+      "type": "number",
+      "title": "Baseline Value"
+    },
+    "target_value": {
+      "type": "number",
+      "title": "Target Value"
+    },
+    "current_value": {
+      "type": "number",
+      "title": "Current Value"
+    },
+    "progress_pct": {
+      "type": "number",
+      "title": "Progress Percentage"
+    },
+    "source_type": {
+      "type": "string",
+      "title": "Progress Source"
+    },
+    "source_record_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "source_document_url": {
+      "type": "string",
+      "title": "Source Document URL"
+    },
+    "profile_goal_index": {
+      "type": "number",
+      "title": "Participant Profile Goal Index"
+    },
+    "progress_towards_goal": {
+      "type": "string",
+      "title": "Progress Towards Goal"
+    },
+    "achievement": {
+      "type": "string",
+      "title": "Achievement"
+    }
+  },
+  "required": [
+    "name",
+    "goal"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": "{{user.id}}"
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

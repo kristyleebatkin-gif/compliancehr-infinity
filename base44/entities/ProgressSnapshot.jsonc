@@ -1,0 +1,225 @@
+{
+  "type": "object",
+  "name": "ProgressSnapshot",
+  "properties": {
+    "snapshot_type": {
+      "type": "string",
+      "title": "Snapshot Type",
+      "enum": [
+        "Goal Progress",
+        "Overall Progress"
+      ],
+      "default": "Goal Progress"
+    },
+    "progress_pct": {
+      "type": "number",
+      "title": "Progress (%)"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date"
+    },
+    "time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Profile ID"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "team_worker_ids": {
+      "type": "array",
+      "title": "Team Worker IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    },
+    "participant_goal": {
+      "type": "string",
+      "title": "Participant Goal"
+    },
+    "goal_outcome": {
+      "type": "string",
+      "title": "Goal Outcome",
+      "enum": [
+        "Successful",
+        "Unsuccessful"
+      ]
+    },
+    "follow_up_actions": {
+      "type": "string",
+      "title": "Follow-up Actions"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Feedback Note"
+    },
+    "recorded_by": {
+      "type": "string",
+      "title": "Recorded By"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary"
+    }
+  },
+  "required": [
+    "snapshot_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

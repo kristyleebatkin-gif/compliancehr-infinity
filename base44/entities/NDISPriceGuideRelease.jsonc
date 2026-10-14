@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "name": "NDISPriceGuideRelease",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Release Title"
+    },
+    "effective_from": {
+      "type": "string",
+      "title": "Effective From",
+      "format": "date"
+    },
+    "effective_to": {
+      "type": "string",
+      "title": "Effective To",
+      "format": "date"
+    },
+    "source_url": {
+      "type": "string",
+      "title": "Official NDIA Source URL",
+      "format": "uri"
+    },
+    "source_file_url": {
+      "type": "string",
+      "title": "Imported Catalogue File",
+      "format": "uri"
+    },
+    "source_hash": {
+      "type": "string",
+      "title": "Source Hash"
+    },
+    "last_checked_at": {
+      "type": "string",
+      "title": "Last Official Source Check",
+      "format": "date-time"
+    },
+    "last_alerted_hash": {
+      "type": "string",
+      "title": "Last Alerted Source Hash"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Imported",
+        "Active",
+        "Superseded",
+        "Rejected"
+      ],
+      "default": "Imported"
+    },
+    "item_count": {
+      "type": "number",
+      "title": "Items Imported",
+      "default": 0
+    },
+    "imported_by": {
+      "type": "string",
+      "title": "Imported By"
+    },
+    "imported_at": {
+      "type": "string",
+      "title": "Imported At",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Import Notes"
+    }
+  },
+  "required": [
+    "title",
+    "effective_from",
+    "source_url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

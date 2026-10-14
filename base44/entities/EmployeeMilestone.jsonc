@@ -1,0 +1,165 @@
+{
+  "type": "object",
+  "name": "EmployeeMilestone",
+  "properties": {
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Linked Employee User"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "milestone_type": {
+      "type": "string",
+      "title": "Milestone Type",
+      "enum": [
+        "Employment Anniversary",
+        "Promotion",
+        "Recognition",
+        "Business Achievement",
+        "Training Achievement",
+        "Participant Goal Achievement",
+        "Other"
+      ],
+      "default": "Recognition"
+    },
+    "title": {
+      "type": "string",
+      "title": "Milestone Title"
+    },
+    "date_achieved": {
+      "type": "string",
+      "title": "Date Achieved",
+      "format": "date"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Record Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Record ID"
+    }
+  },
+  "required": [
+    "staff_profile_id",
+    "employee_name",
+    "milestone_type",
+    "title",
+    "date_achieved"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.employee_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

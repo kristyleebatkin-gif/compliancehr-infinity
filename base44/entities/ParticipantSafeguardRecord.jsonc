@@ -1,0 +1,304 @@
+{
+  "type": "object",
+  "name": "ParticipantSafeguardRecord",
+  "properties": {
+    "record_type": {
+      "type": "string",
+      "title": "Record Type",
+      "enum": [
+        "Service Delivery",
+        "Medication Administration",
+        "Mealtime Safety",
+        "Restrictive Practice",
+        "Exit Checklist"
+      ]
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Staff ID"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Staff Member"
+    },
+    "record_date": {
+      "type": "string",
+      "title": "Record Date",
+      "format": "date"
+    },
+    "record_time": {
+      "type": "string",
+      "title": "Record Time"
+    },
+    "service_or_activity": {
+      "type": "string",
+      "title": "Service or Activity"
+    },
+    "plan_verified": {
+      "type": "boolean",
+      "title": "Current Plan Verified",
+      "default": false
+    },
+    "agreement_verified": {
+      "type": "boolean",
+      "title": "Service Agreement Verified",
+      "default": false
+    },
+    "medication_name": {
+      "type": "string",
+      "title": "Medication"
+    },
+    "dose_route": {
+      "type": "string",
+      "title": "Dose and Route"
+    },
+    "administration_outcome": {
+      "type": "string",
+      "title": "Administration Outcome",
+      "enum": [
+        "Not Applicable",
+        "Administered",
+        "Refused",
+        "Withheld",
+        "Omitted",
+        "Error"
+      ],
+      "default": "Not Applicable"
+    },
+    "mealtime_plan_followed": {
+      "type": "boolean",
+      "title": "Mealtime Plan Followed",
+      "default": false
+    },
+    "swallowing_concern": {
+      "type": "boolean",
+      "title": "Swallowing Concern",
+      "default": false
+    },
+    "restrictive_practice_type": {
+      "type": "string",
+      "title": "Restrictive Practice Type"
+    },
+    "authorisation_reference": {
+      "type": "string",
+      "title": "Authorisation Reference"
+    },
+    "authorisation_expiry": {
+      "type": "string",
+      "title": "Authorisation Expiry",
+      "format": "date"
+    },
+    "practice_duration_minutes": {
+      "type": "number",
+      "title": "Duration (Minutes)"
+    },
+    "monthly_report_reference": {
+      "type": "string",
+      "title": "Monthly Report Reference"
+    },
+    "reduction_actions": {
+      "type": "string",
+      "title": "Reduction and Elimination Actions"
+    },
+    "handover_completed": {
+      "type": "boolean",
+      "title": "Handover Completed",
+      "default": false
+    },
+    "records_transferred": {
+      "type": "boolean",
+      "title": "Records Transferred or Retained",
+      "default": false
+    },
+    "access_revoked": {
+      "type": "boolean",
+      "title": "Access Revoked",
+      "default": false
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome"
+    },
+    "incident_id": {
+      "type": "string",
+      "title": "Linked Incident"
+    },
+    "evidence_url": {
+      "type": "string",
+      "title": "Evidence URL"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Current",
+        "Action Required",
+        "Completed",
+        "Archived"
+      ],
+      "default": "Draft"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "record_type",
+    "participant_name",
+    "record_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}

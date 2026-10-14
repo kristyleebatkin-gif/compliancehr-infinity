@@ -1,0 +1,203 @@
+{
+  "type": "object",
+  "name": "VehicleSafetyCheck",
+  "properties": {
+    "shift_id": {
+      "type": "string",
+      "title": "Linked Shift"
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "staff_user_id": {
+      "type": "string",
+      "title": "Linked Employee User"
+    },
+    "vehicle_registration": {
+      "type": "string",
+      "title": "Vehicle Registration"
+    },
+    "current_kms": {
+      "type": "number",
+      "title": "Current Odometer (km)"
+    },
+    "check_date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date"
+    },
+    "check_time": {
+      "type": "string",
+      "title": "Time"
+    },
+    "tyres_pressure": {
+      "type": "boolean",
+      "title": "Tyres and Pressure",
+      "default": false
+    },
+    "lights_indicators": {
+      "type": "boolean",
+      "title": "Lights and Indicators",
+      "default": false
+    },
+    "brakes_steering": {
+      "type": "boolean",
+      "title": "Brakes and Steering",
+      "default": false
+    },
+    "windscreen_mirrors": {
+      "type": "boolean",
+      "title": "Windscreen and Mirrors",
+      "default": false
+    },
+    "seatbelts_restraints": {
+      "type": "boolean",
+      "title": "Seatbelts and Restraints",
+      "default": false
+    },
+    "fuel_warning_lights": {
+      "type": "boolean",
+      "title": "Fuel and Warning Lights",
+      "default": false
+    },
+    "first_aid_fire_equipment": {
+      "type": "boolean",
+      "title": "First Aid and Fire Equipment",
+      "default": false
+    },
+    "hazards_defects": {
+      "type": "string",
+      "title": "Hazards or Defects"
+    },
+    "control_action": {
+      "type": "string",
+      "title": "Control Action or Vehicle Isolation"
+    },
+    "safe_to_operate": {
+      "type": "boolean",
+      "title": "Safe to Operate",
+      "default": false
+    },
+    "inspection_result": {
+      "type": "string",
+      "title": "Inspection Result",
+      "enum": [
+        "Successful",
+        "Unsuccessful"
+      ],
+      "default": "Unsuccessful"
+    },
+    "worker_signature": {
+      "type": "string",
+      "title": "Worker Signature"
+    },
+    "signed_at": {
+      "type": "string",
+      "title": "Signed At",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "staff_id",
+    "staff_name",
+    "check_date",
+    "check_time",
+    "worker_signature"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.staff_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

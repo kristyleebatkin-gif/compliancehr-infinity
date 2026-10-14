@@ -1,0 +1,307 @@
+{
+  "type": "object",
+  "name": "ImprovementAction",
+  "properties": {
+    "improvement_id": {
+      "type": "string",
+      "title": "Improvement ID"
+    },
+    "date_identified": {
+      "type": "string",
+      "title": "Date Identified",
+      "format": "date"
+    },
+    "identified_by": {
+      "type": "string",
+      "title": "Identified By"
+    },
+    "area_department": {
+      "type": "string",
+      "title": "Area / Department"
+    },
+    "source": {
+      "type": "string",
+      "title": "Source of Improvement",
+      "enum": [
+        "Participant Feedback",
+        "Staff Feedback",
+        "Incident Reviews",
+        "Audits",
+        "Risk Reviews",
+        "Other"
+      ],
+      "default": "Other"
+    },
+    "title": {
+      "type": "string",
+      "title": "Issue / Opportunity Identified"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "current_process": {
+      "type": "string",
+      "title": "Current Process"
+    },
+    "risk_impact": {
+      "type": "string",
+      "title": "Risk / Impact"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority Level",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium"
+    },
+    "improvement_action_required": {
+      "type": "string",
+      "title": "Improvement Action Required"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Person Responsible"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Completion Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Identified",
+        "Investigating",
+        "Implementing",
+        "Reviewing",
+        "Closed"
+      ],
+      "default": "Identified"
+    },
+    "completed_date": {
+      "type": "string",
+      "title": "Action Completed Date",
+      "format": "date"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome / Result"
+    },
+    "evidence_attached": {
+      "type": "string",
+      "title": "Evidence Attached"
+    },
+    "policy_procedure_updated": {
+      "type": "string",
+      "title": "Policy / Procedure Updated"
+    },
+    "staff_communication_completed": {
+      "type": "string",
+      "title": "Staff Communication Completed",
+      "enum": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "default": "N/A"
+    },
+    "participant_impact_considered": {
+      "type": "string",
+      "title": "Participant Impact Considered",
+      "enum": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "default": "N/A"
+    },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "title": "Reviewed By"
+    },
+    "effectiveness_criteria": {
+      "type": "string",
+      "title": "Effectiveness Criteria"
+    },
+    "effectiveness_result": {
+      "type": "string",
+      "title": "Effectiveness Result",
+      "enum": [
+        "Not Reviewed",
+        "Effective",
+        "Partially Effective",
+        "Ineffective"
+      ],
+      "default": "Not Reviewed"
+    },
+    "effectiveness_evidence": {
+      "type": "string",
+      "title": "Effectiveness Evidence"
+    },
+    "closure_approved_by": {
+      "type": "string",
+      "title": "Closure Approved By"
+    },
+    "further_actions_required": {
+      "type": "string",
+      "title": "Further Actions Required"
+    },
+    "root_cause": {
+      "type": "string",
+      "title": "Root Cause"
+    },
+    "actions_taken": {
+      "type": "string",
+      "title": "Actions Taken"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "title",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

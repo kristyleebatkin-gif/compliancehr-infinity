@@ -1,0 +1,173 @@
+{
+  "type": "object",
+  "name": "AssetMaintenance",
+  "properties": {
+    "date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date"
+    },
+    "asset_id": {
+      "type": "string",
+      "title": "Asset"
+    },
+    "asset_name": {
+      "type": "string",
+      "title": "Asset Name"
+    },
+    "maintenance_required": {
+      "type": "string",
+      "title": "Maintenance Required"
+    },
+    "action_taken": {
+      "type": "string",
+      "title": "Action Taken"
+    },
+    "completed_by": {
+      "type": "string",
+      "title": "Completed By"
+    },
+    "cost": {
+      "type": "number",
+      "title": "Cost"
+    },
+    "next_maintenance_date": {
+      "type": "string",
+      "title": "Next Maintenance Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "asset_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

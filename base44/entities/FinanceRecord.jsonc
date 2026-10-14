@@ -1,0 +1,265 @@
+{
+  "type": "object",
+  "name": "FinanceRecord",
+  "properties": {
+    "transaction_date": {
+      "type": "string",
+      "title": "Transaction Date",
+      "format": "date"
+    },
+    "record_type": {
+      "type": "string",
+      "enum": [
+        "Income",
+        "Expense",
+        "Regular Expense",
+        "Bill",
+        "Due",
+        "Invoice",
+        "Payment",
+        "Reimbursement",
+        "Refund",
+        "Other"
+      ],
+      "default": "Expense"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount"
+    },
+    "amount_paid": {
+      "type": "number",
+      "title": "Amount Paid"
+    },
+    "balance_due": {
+      "type": "number",
+      "title": "Balance Due"
+    },
+    "gst_amount": {
+      "type": "number",
+      "title": "GST Amount"
+    },
+    "reference_number": {
+      "type": "string",
+      "title": "Reference Number"
+    },
+    "payee_payer": {
+      "type": "string",
+      "title": "Payee or Payer"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "cost_centre": {
+      "type": "string",
+      "title": "Cost Centre"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "title": "Regular or Recurring Expense",
+      "default": false
+    },
+    "recurrence_frequency": {
+      "type": "string",
+      "title": "Recurrence Frequency",
+      "enum": [
+        "Not Recurring",
+        "Weekly",
+        "Fortnightly",
+        "Monthly",
+        "Quarterly",
+        "Six Monthly",
+        "Annually",
+        "Other"
+      ],
+      "default": "Not Recurring"
+    },
+    "next_due_date": {
+      "type": "string",
+      "title": "Next Due Date",
+      "format": "date"
+    },
+    "billing_period": {
+      "type": "string",
+      "title": "Billing Period"
+    },
+    "payment_date": {
+      "type": "string",
+      "title": "Payment Date",
+      "format": "date"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "Bank Transfer",
+        "Company Card",
+        "Cash",
+        "Direct Debit",
+        "BPAY",
+        "Other"
+      ],
+      "default": "Bank Transfer"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Pending",
+        "Paid",
+        "Received",
+        "Overdue",
+        "Cancelled"
+      ],
+      "default": "Pending"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Supporting Document",
+      "format": "uri"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "bill_file_url": {
+      "type": "string",
+      "title": "Bill Document",
+      "format": "uri"
+    },
+    "bill_file_name": {
+      "type": "string",
+      "title": "Bill File Name"
+    },
+    "receipt_file_url": {
+      "type": "string",
+      "title": "Expense Receipt",
+      "format": "uri"
+    },
+    "receipt_file_name": {
+      "type": "string",
+      "title": "Receipt File Name"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "transaction_date",
+    "record_type",
+    "description",
+    "amount"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

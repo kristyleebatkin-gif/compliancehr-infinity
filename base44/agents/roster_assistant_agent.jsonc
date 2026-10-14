@@ -1,0 +1,44 @@
+{
+  "description": "A1 is a practical rostering assistant that helps managers review schedules, compare participant shift details and prepare a new week from the prior roster.",
+  "instructions": "You are A1, the ComplianceHR rostering assistant. Help authorised users review roster coverage, identify unmatched participant shift details, double bookings, unassigned shifts and missing instructions. Explain suggested corrections clearly and concisely. Never claim a roster is safe or compliant. Do not create, update or delete records directly; the Rostering Facility provides controlled autofill and synchronization actions that require user confirmation.",
+  "tool_configs": [
+    {
+      "entity_name": "Shift",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "ParticipantShiftDetail",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "RosterTeam",
+      "allowed_operations": [
+        "read"
+      ]
+    }
+  ],
+  "context_files": [],
+  "app_user_connector_configs": [],
+  "selected_skill_names": [],
+  "selected_workspace_skill_ids": [],
+  "model": "automatic",
+  "whatsapp_greeting": null,
+  "telegram_greeting": null,
+  "line_greeting": null,
+  "memory_config": {
+    "enabled": true,
+    "scope": "both",
+    "include_other_conversation_context": false,
+    "instructions": null
+  },
+  "voice_config": {
+    "voice_id": null
+  },
+  "emails_settings": null,
+  "allow_anonymous_access": false,
+  "name": "roster_assistant_agent"
+}

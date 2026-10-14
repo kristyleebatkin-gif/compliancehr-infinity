@@ -1,0 +1,116 @@
+{
+  "type": "object",
+  "name": "ArchivedUser",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "title": "User ID"
+    },
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "previous_role": {
+      "type": "string",
+      "title": "Previous Role"
+    },
+    "archived_date": {
+      "type": "string",
+      "title": "Archived Date",
+      "format": "date"
+    },
+    "archived_time": {
+      "type": "string",
+      "title": "Archived Time"
+    },
+    "archive_reason": {
+      "type": "string",
+      "title": "Archive Reason"
+    },
+    "archived_by": {
+      "type": "string",
+      "title": "Archived By"
+    },
+    "archived_by_user_id": {
+      "type": "string",
+      "title": "Archived By User ID"
+    },
+    "linked_staff_profile_id": {
+      "type": "string",
+      "title": "Linked Staff Profile ID"
+    },
+    "linked_participant_profile_id": {
+      "type": "string",
+      "title": "Linked Participant Profile ID"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Archived",
+        "Restored"
+      ],
+      "default": "Archived"
+    },
+    "restored_date": {
+      "type": "string",
+      "title": "Restored Date",
+      "format": "date"
+    },
+    "restored_time": {
+      "type": "string",
+      "title": "Restored Time"
+    }
+  },
+  "required": [
+    "user_id",
+    "full_name",
+    "archived_date",
+    "archived_time"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

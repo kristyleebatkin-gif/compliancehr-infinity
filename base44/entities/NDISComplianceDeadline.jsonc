@@ -1,0 +1,196 @@
+{
+  "type": "object",
+  "name": "NDISComplianceDeadline",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Item / Deadline"
+    },
+    "deadline_type": {
+      "type": "string",
+      "title": "Deadline Type",
+      "enum": [
+        "NDIS Audit / Re-certification",
+        "Mid-Term Audit",
+        "Reportable Incident Submission",
+        "Plan Review",
+        "Self-Assessment",
+        "NDIS Registration Renewal",
+        "Worker Screening Audit",
+        "Module Compliance Review",
+        "Other"
+      ],
+      "default": "Other"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Owner / Responsible"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Submitted",
+        "Completed",
+        "Overdue"
+      ],
+      "default": "Not Started"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Module"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "signoff_full_name": {
+      "type": "string",
+      "title": "Sign-off Full Name"
+    },
+    "signoff_date": {
+      "type": "string",
+      "title": "Sign-off Date",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "title",
+    "due_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

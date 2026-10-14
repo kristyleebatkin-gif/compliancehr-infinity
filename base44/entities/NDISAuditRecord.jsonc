@@ -1,0 +1,230 @@
+{
+  "type": "object",
+  "name": "NDISAuditRecord",
+  "properties": {
+    "audit_reference": {
+      "type": "string",
+      "title": "Audit Reference"
+    },
+    "registration_profile_id": {
+      "type": "string",
+      "title": "Registration Profile"
+    },
+    "audit_type": {
+      "type": "string",
+      "title": "Audit Type",
+      "enum": [
+        "Initial Certification",
+        "Initial Verification",
+        "Mid-term Audit",
+        "Recertification Audit",
+        "Renewal Verification Audit",
+        "Internal Annual Readiness Review",
+        "Condition Audit",
+        "Out-of-cycle Audit",
+        "Other"
+      ]
+    },
+    "requirement_basis": {
+      "type": "string",
+      "title": "Requirement Basis",
+      "enum": [
+        "NDIS Commission Required",
+        "Registration Condition",
+        "Internal Readiness Review"
+      ],
+      "default": "NDIS Commission Required"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "title": "Scheduled Date",
+      "format": "date"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date",
+      "format": "date"
+    },
+    "completed_date": {
+      "type": "string",
+      "title": "Completed Date",
+      "format": "date"
+    },
+    "audit_body": {
+      "type": "string",
+      "title": "Approved Quality Auditor / Audit Body"
+    },
+    "lead_auditor": {
+      "type": "string",
+      "title": "Lead Auditor"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Planned",
+        "Preparation Underway",
+        "Scheduled",
+        "Audit Completed",
+        "Corrective Actions Open",
+        "Closed",
+        "Cancelled"
+      ],
+      "default": "Planned"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Audit Outcome",
+      "enum": [
+        "Pending",
+        "Recommended",
+        "Recommended with Corrective Actions",
+        "Not Recommended",
+        "Passed Internal Review",
+        "Action Required",
+        "Not Applicable"
+      ],
+      "default": "Pending"
+    },
+    "audit_scope": {
+      "type": "string",
+      "title": "Audit Scope and Registration Groups"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Audit Summary"
+    },
+    "nonconformities": {
+      "type": "string",
+      "title": "Nonconformities / Findings"
+    },
+    "corrective_actions": {
+      "type": "string",
+      "title": "Corrective Actions and Due Dates"
+    },
+    "audit_report_url": {
+      "type": "string",
+      "title": "Audit Report File URL"
+    },
+    "audit_report_name": {
+      "type": "string",
+      "title": "Audit Report File Name"
+    },
+    "outcome_file_url": {
+      "type": "string",
+      "title": "Audit Outcome File URL"
+    },
+    "outcome_file_name": {
+      "type": "string",
+      "title": "Audit Outcome File Name"
+    },
+    "portal_outcome_reference": {
+      "type": "string",
+      "title": "Commission Portal Outcome Reference"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "audit_reference",
+    "audit_type",
+    "requirement_basis",
+    "due_date",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

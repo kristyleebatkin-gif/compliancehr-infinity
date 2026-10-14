@@ -1,0 +1,304 @@
+{
+  "type": "object",
+  "name": "VisualBoard",
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Profile ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "team_worker_ids": {
+      "type": "array",
+      "title": "Team Support Worker IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "board_title": {
+      "type": "string",
+      "title": "Board Title"
+    },
+    "selected_clock_time": {
+      "type": "string",
+      "title": "Selected Clock Time",
+      "format": "time"
+    },
+    "routine_prompts": {
+      "type": "array",
+      "title": "Routine Prompts",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "enabled",
+          "completed"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Prompt ID"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "time": {
+            "type": "string",
+            "title": "Prompt Time",
+            "format": "time"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Visible",
+            "default": true
+          },
+          "completed": {
+            "type": "boolean",
+            "title": "Completed",
+            "default": false
+          }
+        }
+      },
+      "maxItems": 30
+    },
+    "communication_prompts": {
+      "type": "array",
+      "title": "Communication Prompts",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "enabled",
+          "is_active"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Prompt ID"
+          },
+          "label": {
+            "type": "string",
+            "title": "Message"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Visible",
+            "default": true
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Active Message",
+            "default": false
+          },
+          "last_used_at": {
+            "type": "string",
+            "title": "Last Used At",
+            "format": "date-time"
+          }
+        }
+      },
+      "maxItems": 30
+    },
+    "active_communication_message": {
+      "type": "string",
+      "title": "Active Communication Message"
+    },
+    "custom_communication_message": {
+      "type": "string",
+      "title": "Custom Communication Message"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Board Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "title": "Audit Consent",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "participant_id",
+    "participant_name",
+    "board_title",
+    "selected_clock_time"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_ids": "{{user.id}}"
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

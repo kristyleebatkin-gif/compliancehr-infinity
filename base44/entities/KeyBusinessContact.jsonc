@@ -1,0 +1,216 @@
+{
+  "type": "object",
+  "name": "KeyBusinessContact",
+  "properties": {
+    "slot_number": {
+      "type": "number",
+      "title": "Contact Position",
+      "minimum": 1,
+      "maximum": 999
+    },
+    "full_name": {
+      "type": "string",
+      "title": "Full Name"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Profile Photo",
+      "format": "uri"
+    },
+    "role_title": {
+      "type": "string",
+      "title": "Role"
+    },
+    "business_functions": {
+      "type": "string",
+      "title": "Business Functions"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number"
+    },
+    "contact_type": {
+      "type": "string",
+      "title": "Contact Type",
+      "enum": [
+        "Manager",
+        "Administration",
+        "Key Personnel",
+        "Other"
+      ],
+      "default": "Manager"
+    },
+    "profile_summary": {
+      "type": "string",
+      "title": "Profile Summary"
+    },
+    "authority_level": {
+      "type": "string",
+      "title": "Authority Level"
+    },
+    "delegated_authorities": {
+      "type": "string",
+      "title": "Delegated Authorities"
+    },
+    "authority_start_date": {
+      "type": "string",
+      "title": "Authority Start Date",
+      "format": "date"
+    },
+    "authority_end_date": {
+      "type": "string",
+      "title": "Authority End Date",
+      "format": "date"
+    },
+    "registers": {
+      "type": "array",
+      "title": "Registers",
+      "default": [
+        "Key Personnel Register"
+      ],
+      "items": {
+        "type": "string",
+        "enum": [
+          "Key Personnel Register",
+          "Delegated Authority Register"
+        ]
+      }
+    },
+    "archived": {
+      "type": "boolean",
+      "title": "Archived",
+      "default": false
+    },
+    "archived_at": {
+      "type": "string",
+      "title": "Archived At",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "slot_number",
+    "full_name",
+    "role_title",
+    "business_functions",
+    "email",
+    "phone"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "type": "object",
+  "name": "NDISRegistrationProfile",
+  "properties": {
+    "provider_name": {
+      "type": "string",
+      "title": "Registered Provider Name"
+    },
+    "abn": {
+      "type": "string",
+      "title": "ABN"
+    },
+    "ndis_registration_number": {
+      "type": "string",
+      "title": "NDIS Registration Number"
+    },
+    "registration_status": {
+      "type": "string",
+      "title": "Registration Status",
+      "enum": [
+        "Application",
+        "Active",
+        "Renewal In Progress",
+        "Suspended",
+        "Revoked",
+        "Expired"
+      ],
+      "default": "Active"
+    },
+    "audit_pathway": {
+      "type": "string",
+      "title": "Audit Pathway",
+      "enum": [
+        "Certification",
+        "Verification",
+        "Both / Mixed Scope"
+      ],
+      "default": "Certification"
+    },
+    "registration_start_date": {
+      "type": "string",
+      "title": "Registration Start Date",
+      "format": "date"
+    },
+    "registration_expiry_date": {
+      "type": "string",
+      "title": "Registration Expiry Date",
+      "format": "date"
+    },
+    "certificate_issue_date": {
+      "type": "string",
+      "title": "Certificate Issue Date",
+      "format": "date"
+    },
+    "certificate_file_url": {
+      "type": "string",
+      "title": "Registration Certificate File URL"
+    },
+    "certificate_file_name": {
+      "type": "string",
+      "title": "Registration Certificate File Name"
+    },
+    "registration_groups": {
+      "type": "string",
+      "title": "Approved Registration Groups"
+    },
+    "registration_conditions": {
+      "type": "string",
+      "title": "Registration Conditions"
+    },
+    "certificate_summary": {
+      "type": "string",
+      "title": "Certificate and Scope Summary"
+    },
+    "key_contact_name": {
+      "type": "string",
+      "title": "Registration Contact Name"
+    },
+    "key_contact_email": {
+      "type": "string",
+      "title": "Registration Contact Email",
+      "format": "email"
+    },
+    "key_contact_phone": {
+      "type": "string",
+      "title": "Registration Contact Phone"
+    },
+    "portal_reference": {
+      "type": "string",
+      "title": "Portal / Application Reference"
+    },
+    "last_portal_check_date": {
+      "type": "string",
+      "title": "Last Portal Check Date",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Registration Notes"
+    }
+  },
+  "required": [
+    "provider_name",
+    "ndis_registration_number",
+    "registration_status",
+    "audit_pathway"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "name": "EmployeePositionDescription",
+  "properties": {
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Linked Employee User"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "position_title": {
+      "type": "string",
+      "title": "Position Title"
+    },
+    "reports_to": {
+      "type": "string",
+      "title": "Reports To"
+    },
+    "employment_type": {
+      "type": "string",
+      "title": "Employment Type"
+    },
+    "position_purpose": {
+      "type": "string",
+      "title": "Position Purpose"
+    },
+    "key_responsibilities": {
+      "type": "string",
+      "title": "Key Responsibilities"
+    },
+    "essential_requirements": {
+      "type": "string",
+      "title": "Essential Requirements"
+    },
+    "qualifications_experience": {
+      "type": "string",
+      "title": "Qualifications and Experience"
+    },
+    "performance_measures": {
+      "type": "string",
+      "title": "Performance Measures"
+    },
+    "acknowledged_date": {
+      "type": "string",
+      "title": "Acknowledged Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Issued",
+        "Acknowledged",
+        "Superseded"
+      ],
+      "default": "Draft"
+    },
+    "document_url": {
+      "type": "string",
+      "title": "Completed Position Description",
+      "format": "uri"
+    },
+    "source_employee_document_id": {
+      "type": "string",
+      "title": "Source Employee Document"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "archived": {
+      "type": "boolean",
+      "title": "Archived",
+      "default": false
+    }
+  },
+  "required": [
+    "staff_profile_id",
+    "employee_name",
+    "position_title"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

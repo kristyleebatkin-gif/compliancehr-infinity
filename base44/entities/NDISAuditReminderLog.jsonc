@@ -1,0 +1,134 @@
+{
+  "type": "object",
+  "name": "NDISAuditReminderLog",
+  "properties": {
+    "audit_id": {
+      "type": "string",
+      "title": "Audit Record"
+    },
+    "audit_reference": {
+      "type": "string",
+      "title": "Audit Reference"
+    },
+    "threshold_days": {
+      "type": "number",
+      "title": "Reminder Threshold Days"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Audit Due Date",
+      "format": "date"
+    },
+    "sent_at": {
+      "type": "string",
+      "title": "Sent At",
+      "format": "date-time"
+    },
+    "recipient_id": {
+      "type": "string",
+      "title": "Recipient User ID"
+    },
+    "recipient_email": {
+      "type": "string",
+      "title": "Recipient Email"
+    },
+    "channel": {
+      "type": "string",
+      "title": "Delivery Channel",
+      "enum": [
+        "Email",
+        "In-app Notification"
+      ]
+    },
+    "delivery_status": {
+      "type": "string",
+      "title": "Delivery Status",
+      "enum": [
+        "Delivered",
+        "Failed"
+      ]
+    },
+    "delivery_error": {
+      "type": "string",
+      "title": "Delivery Error"
+    },
+    "email_recipients": {
+      "type": "number",
+      "title": "Email Recipients",
+      "default": 0
+    },
+    "notification_recipients": {
+      "type": "number",
+      "title": "Notification Recipients",
+      "default": 0
+    },
+    "register_snapshot": {
+      "type": "string",
+      "title": "Register Snapshot"
+    }
+  },
+  "required": [
+    "audit_id",
+    "threshold_days",
+    "due_date",
+    "sent_at",
+    "recipient_id",
+    "channel",
+    "delivery_status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

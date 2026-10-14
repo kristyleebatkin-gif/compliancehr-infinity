@@ -1,0 +1,210 @@
+{
+  "type": "object",
+  "name": "CommunityProgram",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Program Name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Community Participation",
+        "Capacity Building",
+        "Health and Wellbeing",
+        "Employment",
+        "Education",
+        "Social and Recreation",
+        "Independent Living",
+        "Carer Support",
+        "Other"
+      ],
+      "default": "Community Participation"
+    },
+    "description": {
+      "type": "string",
+      "title": "Program Description"
+    },
+    "eligibility": {
+      "type": "string",
+      "title": "Eligibility"
+    },
+    "schedule": {
+      "type": "string",
+      "title": "Schedule"
+    },
+    "start_date": {
+      "type": "string",
+      "title": "Start Date",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "title": "End Date",
+      "format": "date"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact Name"
+    },
+    "contact_phone": {
+      "type": "string",
+      "title": "Contact Phone"
+    },
+    "contact_email": {
+      "type": "string",
+      "title": "Contact Email",
+      "format": "email"
+    },
+    "registration_url": {
+      "type": "string",
+      "title": "Registration Link",
+      "format": "uri"
+    },
+    "brochures": {
+      "type": "array",
+      "title": "Program Brochures",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "File Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "File URL",
+            "format": "uri"
+          },
+          "file_type": {
+            "type": "string",
+            "title": "File Type"
+          },
+          "file_size": {
+            "type": "number",
+            "title": "File Size"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "title": "Uploaded At",
+            "format": "date-time"
+          }
+        }
+      },
+      "maxItems": 10
+    },
+    "capacity": {
+      "type": "number",
+      "title": "Capacity"
+    },
+    "cost": {
+      "type": "number",
+      "title": "Cost"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planning",
+        "Open",
+        "Full",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Open"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "description",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

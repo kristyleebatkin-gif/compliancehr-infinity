@@ -1,0 +1,209 @@
+{
+  "type": "object",
+  "name": "CommunityReferralService",
+  "properties": {
+    "service_name": {
+      "type": "string",
+      "title": "Service Name"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Crisis Support",
+        "Mental Health",
+        "Housing",
+        "Food Relief",
+        "Domestic Violence",
+        "Disability Support",
+        "Health",
+        "Legal",
+        "Financial Counselling",
+        "Community Group",
+        "Other"
+      ],
+      "default": "Community Group"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "postcode": {
+      "type": "string",
+      "title": "Postcode"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "format": "email"
+    },
+    "website": {
+      "type": "string",
+      "title": "Website",
+      "format": "uri"
+    },
+    "latitude": {
+      "type": "number",
+      "title": "Latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "title": "Longitude"
+    },
+    "service_area_notes": {
+      "type": "string",
+      "title": "Service Area Notes"
+    },
+    "crisis_service": {
+      "type": "boolean",
+      "title": "Crisis Service",
+      "default": false
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    },
+    "verified_date": {
+      "type": "string",
+      "title": "Last Verified Date",
+      "format": "date"
+    }
+  },
+  "required": [
+    "service_name",
+    "category",
+    "phone"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker (JR)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Workers (SN)"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "type": "object",
+  "name": "ParticipantShiftDetail",
+  "properties": {
+    "shift_id": {
+      "type": "string",
+      "title": "Linked Roster Shift"
+    },
+    "shift_type": {
+      "type": "string",
+      "title": "Shift Type",
+      "enum": [
+        "Morning",
+        "Afternoon",
+        "Evening",
+        "Night",
+        "Sleepover",
+        "Active Overnight",
+        "Buddy Shift",
+        "Training Shift",
+        "Team Training",
+        "Activity"
+      ],
+      "default": "Activity"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant"
+    },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Linked Participant User ID"
+    },
+    "staff_id": {
+      "type": "string",
+      "title": "Primary Employee ID"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Primary Employee"
+    },
+    "team_staff_ids": {
+      "type": "array",
+      "title": "Employee Team",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "team_worker_user_ids": {
+      "type": "array",
+      "title": "Linked Employee User IDs",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "shift_date": {
+      "type": "string",
+      "title": "Shift Date",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string",
+      "title": "Start Time"
+    },
+    "end_time": {
+      "type": "string",
+      "title": "End Time"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location"
+    },
+    "planned_mileage_km": {
+      "type": "number",
+      "title": "Planned Mileage (km)"
+    },
+    "risks_identified": {
+      "type": "string",
+      "title": "Risks Identified"
+    },
+    "incident_issue_concern": {
+      "type": "string",
+      "title": "Incident, Issue or Concern"
+    },
+    "shift_instructions": {
+      "type": "string",
+      "title": "Shift Instructions"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Scheduled",
+        "Confirmed",
+        "In Progress",
+        "Completed",
+        "Cancelled",
+        "No-Show"
+      ],
+      "default": "Scheduled"
+    },
+    "participant_response": {
+      "type": "string",
+      "title": "Participant Response",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Declined"
+      ],
+      "default": "Pending"
+    },
+    "participant_response_comment": {
+      "type": "string",
+      "title": "Participant Response Comment"
+    },
+    "participant_responded_at": {
+      "type": "string",
+      "title": "Participant Responded At",
+      "format": "date-time"
+    },
+    "participant_responded_by": {
+      "type": "string",
+      "title": "Participant Responded By"
+    },
+    "archived": {
+      "type": "boolean",
+      "title": "Archived",
+      "default": false
+    },
+    "archived_at": {
+      "type": "string",
+      "title": "Archived At",
+      "format": "date-time"
+    },
+    "archived_by": {
+      "type": "string",
+      "title": "Archived By"
+    }
+  },
+  "required": [
+    "participant_id",
+    "participant_name",
+    "shift_date",
+    "start_time",
+    "end_time"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.team_worker_user_ids": "{{user.id}}"
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

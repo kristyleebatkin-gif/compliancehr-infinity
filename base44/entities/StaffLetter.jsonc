@@ -1,0 +1,199 @@
+{
+  "type": "object",
+  "name": "StaffLetter",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "title": "Employee"
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "letter_type": {
+      "type": "string",
+      "title": "Letter Type",
+      "enum": [
+        "Offer Letter",
+        "Employment Contract",
+        "Warning Letter",
+        "Show Cause",
+        "Termination",
+        "Performance Review",
+        "Confirmation",
+        "Leave Approval",
+        "General Correspondence",
+        "Other"
+      ],
+      "default": "General Correspondence"
+    },
+    "subject": {
+      "type": "string",
+      "title": "Subject"
+    },
+    "date_sent": {
+      "type": "string",
+      "title": "Date Sent",
+      "format": "date"
+    },
+    "sent_by": {
+      "type": "string",
+      "title": "Sent By"
+    },
+    "delivery_method": {
+      "type": "string",
+      "title": "Delivery Method",
+      "enum": [
+        "Email",
+        "Post",
+        "Hand Delivered",
+        "Registered Post"
+      ],
+      "default": "Email"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Letter File URL"
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "title": "Acknowledged",
+      "default": false
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "title": "Audit Consent",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "staff_id",
+    "letter_type",
+    "date_sent"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}
