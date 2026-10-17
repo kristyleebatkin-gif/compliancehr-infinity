@@ -27,7 +27,7 @@ const PARTICIPANT_COLUMNS = [
 const statusFor = (pct) => (pct >= 90 ? 'Compliant' : pct >= 70 ? 'Needs Attention' : 'At Risk');
 const TONE = { Compliant: 'bg-safe/10 text-safe', 'Needs Attention': 'bg-warning/10 text-warning', 'At Risk': 'bg-red-600/10 text-red-600' };
 
-const SectionSummary = ({ title, icon: Icon, status, readiness, lines }) => (
+const SectionSummary = ({ title, icon: Icon, status, readiness, lines, action }) => (
   <div className="rounded-xl border border-border bg-card p-4">
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex items-center gap-2">
@@ -35,6 +35,7 @@ const SectionSummary = ({ title, icon: Icon, status, readiness, lines }) => (
         <p className="font-semibold">{title}</p>
       </div>
       <div className="flex items-center gap-2">
+        {action}
         <span className="text-xs font-semibold text-muted-foreground">{readiness == null ? 'n/a' : `${Math.round(readiness)}%`}</span>
         <Badge className={TONE[status]}>{status}</Badge>
       </div>
@@ -106,28 +107,30 @@ export default function MasterChecklist() {
 
   const today = format(new Date(), 'yyyy-MM-dd');
 
+  // Shared document / training indexes (used for readiness and exports)
+  const trainingByName = new Map();
+  const docsByName = new Map();
+  const intakeByProfile = new Map();
+  completions.forEach((r) => {
+    const key = String(r.employee_name || r.learner_name || '').trim().toLowerCase();
+    if (!key) return;
+    if (!trainingByName.has(key)) trainingByName.set(key, new Set());
+    trainingByName.get(key).add(r.module_title);
+  });
+  employeeDocs.forEach((r) => {
+    const key = String(r.employee_name || '').trim().toLowerCase();
+    if (!key) return;
+    if (!docsByName.has(key)) docsByName.set(key, new Set());
+    docsByName.get(key).add(r.document_type);
+  });
+  intakeDocs.forEach((r) => {
+    if (!r.profile_id) return;
+    if (!intakeByProfile.has(r.profile_id)) intakeByProfile.set(r.profile_id, new Set());
+    intakeByProfile.get(r.profile_id).add(r.document_type);
+  });
+
   // Staff matrix readiness
   const staffOverall = (() => {
-    const trainingByName = new Map();
-    const docsByName = new Map();
-    const intakeByProfile = new Map();
-    completions.forEach((r) => {
-      const key = String(r.employee_name || r.learner_name || '').trim().toLowerCase();
-      if (!key) return;
-      if (!trainingByName.has(key)) trainingByName.set(key, new Set());
-      trainingByName.get(key).add(r.module_title);
-    });
-    employeeDocs.forEach((r) => {
-      const key = String(r.employee_name || '').trim().toLowerCase();
-      if (!key) return;
-      if (!docsByName.has(key)) docsByName.set(key, new Set());
-      docsByName.get(key).add(r.document_type);
-    });
-    intakeDocs.forEach((r) => {
-      if (!r.profile_id) return;
-      if (!intakeByProfile.has(r.profile_id)) intakeByProfile.set(r.profile_id, new Set());
-      intakeByProfile.get(r.profile_id).add(r.document_type);
-    });
     if (!staff.length) return null;
     const percents = staff.map((member) => {
       const nameKey = String(member.full_name || '').trim().toLowerCase();
@@ -143,14 +146,8 @@ export default function MasterChecklist() {
   // Participant matrix readiness
   const participantOverall = (() => {
     if (!participants.length) return null;
-    const byProfile = new Map();
-    intakeDocs.forEach((doc) => {
-      if (!doc.profile_id) return;
-      if (!byProfile.has(doc.profile_id)) byProfile.set(doc.profile_id, new Set());
-      byProfile.get(doc.profile_id).add(doc.document_type);
-    });
     const percents = participants.map((participant) => {
-      const docs = byProfile.get(participant.id) || new Set();
+      const docs = intakeByProfile.get(participant.id) || new Set();
       return (PARTICIPANT_COLUMNS.filter((column) => docs.has(column)).length / PARTICIPANT_COLUMNS.length) * 100;
     });
     return percents.reduce((sum, pct) => sum + pct, 0) / percents.length;
@@ -314,6 +311,79 @@ export default function MasterChecklist() {
     toast({ title: 'Corrective actions exported' });
   };
 
+  const exportPolicies = () => {
+    downloadCsv('policies.csv', [
+      { key: 'document_name', label: 'Policy' }, { key: 'category', label: 'Category' }, { key: 'version', label: 'Version' },
+      { key: 'status', label: 'Status' }, { key: 'approved_by', label: 'Approved By' }, { key: 'review_date', label: 'Review Date' },
+    ], policies);
+    toast({ title: 'Policies exported' });
+  };
+
+  const exportKits = () => {
+    downloadCsv('emergency-kits-and-drills.csv', [
+      { key: 'check_type', label: 'Check / Drill' }, { key: 'last_completed', label: 'Last Completed' },
+      { key: 'next_due', label: 'Next Due' }, { key: 'current', label: 'Current' },
+    ], [
+      ...kitStatuses.map((k) => ({ check_type: k.checkType, last_completed: k.latest?.date_completed || '', next_due: k.due || '', current: k.current ? 'Yes' : 'No' })),
+      { check_type: 'Fire Evacuation Drill', last_completed: latestFireDrill?.date || '', next_due: fireDrillDue || '', current: fireDrillDue && fireDrillDue >= today ? 'Yes' : 'No' },
+    ]);
+    toast({ title: 'Kits and drills exported' });
+  };
+
+  const exportCarDocs = () => {
+    downloadCsv('car-safety-checks.csv', [
+      { key: 'file_name', label: 'File' }, { key: 'intake_case_number', label: 'Case Number' },
+      { key: 'profile_id', label: 'Profile ID' }, { key: 'uploaded_by', label: 'Uploaded By' }, { key: 'uploaded_date', label: 'Uploaded Date' },
+    ], carSafetyDocs);
+    toast({ title: 'Car safety checks exported' });
+  };
+
+  const exportAssets = () => {
+    downloadCsv('asset-register.csv', [
+      { key: 'name', label: 'Asset' }, { key: 'category', label: 'Category' }, { key: 'serial_number', label: 'Serial Number' },
+      { key: 'condition', label: 'Condition' }, { key: 'status', label: 'Status' }, { key: 'location', label: 'Location' },
+      { key: 'next_service_date', label: 'Next Service' },
+    ], assets);
+    toast({ title: 'Asset register exported' });
+  };
+
+  const exportStaffFiles = () => {
+    downloadCsv('staff-file-checklist.csv', [
+      { key: 'name', label: 'Staff Member' }, { key: 'position', label: 'Position' }, { key: 'status', label: 'Status' },
+      ...STAFF_COLUMNS.map((col) => ({ key: col, label: col })),
+    ], staff.map((member) => {
+      const nameKey = String(member.full_name || '').trim().toLowerCase();
+      const trainingSet = trainingByName.get(nameKey) || new Set();
+      const docSet = docsByName.get(nameKey) || new Set();
+      const intakeSet = intakeByProfile.get(member.id) || new Set();
+      const row = { name: member.full_name, position: member.position || member.role || '', status: member.status || '' };
+      STAFF_COLUMNS.forEach((col) => { row[col] = staffColumnStatus(member, col, trainingSet, docSet, intakeSet) ? 'Yes' : 'No'; });
+      return row;
+    }));
+    toast({ title: 'Staff file checklist exported' });
+  };
+
+  const exportParticipantFiles = () => {
+    downloadCsv('participant-file-checklist.csv', [
+      { key: 'name', label: 'Participant' }, { key: 'ndis_number', label: 'NDIS Number' }, { key: 'status', label: 'Status' },
+      ...PARTICIPANT_COLUMNS.map((col) => ({ key: col, label: col })),
+    ], participants.map((participant) => {
+      const docs = intakeByProfile.get(participant.id) || new Set();
+      const row = { name: participant.full_name, ndis_number: participant.ndis_number || '', status: participant.status || '' };
+      PARTICIPANT_COLUMNS.forEach((col) => { row[col] = docs.has(col) ? 'Yes' : 'No'; });
+      return row;
+    }));
+    toast({ title: 'Participant file checklist exported' });
+  };
+
+  const exportFireDrills = () => {
+    downloadCsv('fire-drills.csv', [
+      { key: 'title', label: 'Drill' }, { key: 'date', label: 'Date' }, { key: 'location', label: 'Location' },
+      { key: 'attendees_count', label: 'Attendees' }, { key: 'outcome', label: 'Outcome' },
+    ], drills.filter((d) => d.drill_type === 'Fire Evacuation'));
+    toast({ title: 'Fire drills exported' });
+  };
+
   if (loading) {
     return <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
@@ -335,6 +405,7 @@ export default function MasterChecklist() {
           status={statusFor(policies.length ? (activePolicies.length / policies.length) * 100 : 100)}
           readiness={policies.length ? (activePolicies.length / policies.length) * 100 : 100}
           lines={[`${activePolicies.length} of ${policies.length} policies active.`]}
+          action={<Button variant="outline" size="sm" onClick={exportPolicies}><Download className="h-3.5 w-3.5" /> Export</Button>}
         />
         <SectionSummary
           title="Emergency Kits & Fire Drills"
@@ -345,6 +416,7 @@ export default function MasterChecklist() {
             ...kitStatuses.map((kit) => `${kit.checkType}: ${kit.latest ? `next due ${kit.due ? format(new Date(`${kit.due}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no check recorded yet'}`),
             `Fire evacuation drill: ${latestFireDrill ? `next due ${fireDrillDue ? format(new Date(`${fireDrillDue}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no drill recorded yet'}`,
           ]}
+          action={<Button variant="outline" size="sm" onClick={exportKits}><Download className="h-3.5 w-3.5" /> Export</Button>}
         />
         <SectionSummary
           title="Vehicles & Car Safety Checks"
@@ -352,6 +424,7 @@ export default function MasterChecklist() {
           status={statusFor(carSafetyDocs.length > 0 ? 100 : 0)}
           readiness={carSafetyDocs.length > 0 ? 100 : 0}
           lines={[`${carSafetyDocs.length} car safety check(s) filed in this section.`]}
+          action={<Button variant="outline" size="sm" onClick={exportCarDocs}><Download className="h-3.5 w-3.5" /> Export</Button>}
         />
         <SectionSummary
           title="Asset Register"
@@ -359,18 +432,27 @@ export default function MasterChecklist() {
           status={statusFor(assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100)}
           readiness={assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100}
           lines={[`${assets.length} assets on the register, ${overdueAssets.length} overdue for service.`]}
+          action={<Button variant="outline" size="sm" onClick={exportAssets}><Download className="h-3.5 w-3.5" /> Export</Button>}
         />
       </div>
 
-      <SectionCard title="Staff file checklist" description="Live checklist for every staff member in the system: certificates, licences, identifications, car rego, first aid, CPR, NDIS module certificates and cards.">
+      <SectionCard
+        title="Staff file checklist"
+        description="Live checklist for every staff member in the system: certificates, licences, identifications, car rego, first aid, CPR, NDIS module certificates and cards."
+        action={<Button variant="outline" size="sm" onClick={exportStaffFiles}><Download className="h-3.5 w-3.5" /> Export</Button>}
+      >
         <StaffFileMatrix staff={staff} completions={completions} employeeDocs={employeeDocs} intakeDocs={intakeDocs} />
       </SectionCard>
 
-      <SectionCard title="Participant file checklist" description="Live checklist for every participant in the system with their name and NDIS number.">
+      <SectionCard
+        title="Participant file checklist"
+        description="Live checklist for every participant in the system with their name and NDIS number."
+        action={<Button variant="outline" size="sm" onClick={exportParticipantFiles}><Download className="h-3.5 w-3.5" /> Export</Button>}
+      >
         <ParticipantFileMatrix participants={participants} intakeDocs={intakeDocs} />
       </SectionCard>
 
-      <SectionCard title="Car safety checks" description="Copies of all uploaded car safety checks, filed in the correct compliance section.">
+      <SectionCard title="Car safety checks" description="Copies of all uploaded car safety checks, filed in the correct compliance section." action={<Button variant="outline" size="sm" onClick={exportCarDocs}><Download className="h-3.5 w-3.5" /> Export</Button>}>
         {carSafetyDocs.length === 0 ? (
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-sm text-muted-foreground">No car safety checks uploaded yet.</p>
@@ -406,7 +488,7 @@ export default function MasterChecklist() {
         )}
       </SectionCard>
 
-      <SectionCard title="Fire drills completed" description="Fire evacuation drills recorded and submitted.">
+      <SectionCard title="Fire drills completed" description="Fire evacuation drills recorded and submitted." action={<Button variant="outline" size="sm" onClick={exportFireDrills}><Download className="h-3.5 w-3.5" /> Export</Button>}>
         {drills.filter((d) => d.drill_type === 'Fire Evacuation').length === 0 ? (
           <p className="text-sm text-muted-foreground">No fire drills recorded yet. Complete the Fire Drill Plan and Evacuation Checklist to log one.</p>
         ) : (

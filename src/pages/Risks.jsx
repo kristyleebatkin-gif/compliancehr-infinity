@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import PageHeader from '@/components/PageHeader';
+import PageHeader, { HeaderUnderRow } from '@/components/PageHeader';
 import SectionCard from '@/components/SectionCard';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
@@ -184,16 +184,17 @@ export default function Risks() {
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} action={can('risks') && (
-        <div className="flex flex-wrap items-center gap-2">
+      <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />
+      {can('risks') && (
+        <HeaderUnderRow>
           <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk Report</button>
           <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3.5 py-2 text-sm font-semibold text-warning hover:bg-warning/25"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
           <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-safe/15 px-3.5 py-2 text-sm font-semibold text-safe hover:bg-safe/25"><FileWarning className="h-4 w-4" />Report Near Miss</button>
           <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-100 px-3.5 py-2 text-sm font-semibold text-yellow-800 hover:bg-yellow-200"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
           <button onClick={() => downloadRiskAssessmentTemplatePdf()} className="flex items-center gap-1.5 rounded-lg bg-danger/10 px-3.5 py-2 text-sm font-semibold text-danger hover:bg-danger/20"><FileDown className="h-4 w-4" />Risk Assessment Template</button>
           <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg bg-muted px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted/70 disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
-        </div>
-      )} />
+        </HeaderUnderRow>
+      )}
 
       <CommonRiskLibrary onAdded={load} />
 

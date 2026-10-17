@@ -159,7 +159,7 @@ export default function AuditsTab() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <div className="flex gap-2">
           <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
           <Dialog open={open} onOpenChange={setOpen}>

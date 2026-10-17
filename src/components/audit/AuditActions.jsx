@@ -85,7 +85,7 @@ export default function AuditActions({ audits }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="space-y-2">
         <p className="text-sm text-muted-foreground">Corrective and improvement actions from audits. Every status change is logged.</p>
         <div className="flex gap-2">
           <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export register</Button>
