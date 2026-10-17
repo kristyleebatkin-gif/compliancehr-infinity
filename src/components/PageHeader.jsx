@@ -3,7 +3,6 @@ import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
   const primary = accent?.[0] || moduleColour(title);
   const secondary = accent?.[1] || moduleColour(title, 3);
   return (
+    <div className="space-y-3">
     <div
       className={cn('relative overflow-hidden rounded-2xl border p-6 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 md:flex-row md:items-center md:justify-between md:gap-4', className)}
       style={{
@@ -44,13 +44,15 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           {subtitle && <p className="mt-1.5 max-w-3xl text-sm font-medium text-foreground/65">{subtitle}</p>}
         </div>
       </div>
-      <div className="relative mt-3 flex w-full flex-wrap items-center justify-start gap-2 sm:mt-0 md:w-auto md:justify-end">
-        {showAlerts && <ModuleAlertsButton />}
-        {showCompliance && <ModuleComplianceStrip path={seg} />}
-        {showAudit && <ModuleAuditChecklistButton />}
-        {showAudit && <ModuleAuditButton />}
-        {action && <div className="flex-1 sm:flex-none">{action}</div>}
-      </div>
+    </div>
+      {(showCompliance || showAudit || action) && (
+        <div className="flex flex-wrap items-center gap-2">
+          {showCompliance && <ModuleComplianceStrip path={seg} />}
+          {showAudit && <ModuleAuditChecklistButton />}
+          {showAudit && <ModuleAuditButton />}
+          {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
+        </div>
+      )}
     </div>
   );
 }
