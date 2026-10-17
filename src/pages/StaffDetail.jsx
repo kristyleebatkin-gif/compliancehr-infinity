@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, ClipboardCheck, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
+import { ArrowLeft, ClipboardCheck, FileCheck2, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import ProfileHeader from '@/components/profile/ProfileHeader';
@@ -14,6 +14,7 @@ import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
 import StaffDetailsTab from '@/components/staff/StaffDetailsTab';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffRecordsTab from '@/components/staff/StaffRecordsTab';
+import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
 import StaffAccessTab from '@/components/staff/StaffAccessTab';
 import StaffPerformanceTab from '@/components/staff/StaffPerformanceTab';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
@@ -72,6 +73,7 @@ export default function StaffDetail() {
         <TabsList>
           <TabsTrigger value="details"><ClipboardCheck className="mr-1 inline h-3.5 w-3.5" />Details</TabsTrigger>
           <TabsTrigger value="forms"><FileSignature className="mr-1 inline h-3.5 w-3.5" />Fillable Forms</TabsTrigger>
+          <TabsTrigger value="filechecklist"><FileCheck2 className="mr-1 inline h-3.5 w-3.5" />File Checklist</TabsTrigger>
           <TabsTrigger value="records"><GraduationCap className="mr-1 inline h-3.5 w-3.5" />Buddy Shifts &amp; Training</TabsTrigger>
           <TabsTrigger value="access"><KeyRound className="mr-1 inline h-3.5 w-3.5" />Access &amp; Permissions</TabsTrigger>
           <TabsTrigger value="performance"><TrendingUp className="mr-1 inline h-3.5 w-3.5" />Performance Reviews</TabsTrigger>
@@ -87,6 +89,7 @@ export default function StaffDetail() {
           </div>
         </TabsContent>
         <TabsContent value="forms"><StaffFillableForms staff={staff} /></TabsContent>
+        <TabsContent value="filechecklist"><StaffFileChecklist staff={staff} /></TabsContent>
         <TabsContent value="records"><StaffRecordsTab staff={staff} /></TabsContent>
         <TabsContent value="access"><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>
         <TabsContent value="performance"><StaffPerformanceTab staff={staff} /></TabsContent>
