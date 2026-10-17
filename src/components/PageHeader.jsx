@@ -21,10 +21,14 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         boxShadow: `0 10px 40px -18px ${primary}66, 0 2px 6px rgba(15, 23, 42, 0.04)`
       }}
     >
-      {/* Decorative glows */}
-      <div className="pointer-events-none absolute -right-12 -top-20 h-48 w-48 rounded-full opacity-20 blur-2xl" style={{ backgroundColor: secondary }} />
-      <div className="pointer-events-none absolute -bottom-16 left-24 h-32 w-32 rounded-full opacity-15 blur-2xl" style={{ backgroundColor: primary }} />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary}, ${primary}00)` }} />
+      {/* Decorative glows, sheen and shading */}
+      <div className="pointer-events-none absolute -right-12 -top-20 h-56 w-56 rounded-full opacity-25 blur-2xl" style={{ backgroundColor: secondary }} />
+      <div className="pointer-events-none absolute -bottom-16 left-24 h-36 w-36 rounded-full opacity-20 blur-2xl" style={{ backgroundColor: primary }} />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-24 w-24 rounded-full opacity-10 blur-xl" style={{ backgroundColor: primary }} />
+      <div className="pointer-events-none absolute -right-20 top-0 h-full w-44 rotate-12" style={{ background: 'linear-gradient(90deg, transparent 15%, rgba(255,255,255,0.14) 50%, transparent 85%)' }} />
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-32" style={{ background: `linear-gradient(90deg, ${primary}14, transparent)` }} />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary}, ${primary}00)` }} />
+      <div className="pointer-events-none absolute left-0 top-0 h-[2px] w-2/3" style={{ background: `linear-gradient(90deg, ${secondary}, transparent)` }} />
       <div className="relative flex items-start gap-4">
         {Icon && (
           <div

@@ -7,10 +7,12 @@ export default function DashboardTile({ icon: Icon, title, desc, to, color }) {
     <Link
       to={to}
       className="group relative flex min-h-48 flex-col items-center overflow-hidden rounded-2xl border p-4 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
-      style={{ borderColor: `${color}35`, background: `linear-gradient(160deg, ${color}1f 0%, ${color}0b 42%, hsl(var(--card)) 78%)` }}
+      style={{ borderColor: `${color}40`, background: `linear-gradient(165deg, ${color}29 0%, ${color}12 46%, hsl(var(--card)) 82%)`, boxShadow: `0 10px 30px -18px ${color}77` }}
     >
       <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${color}99)` }} />
-      <div className="absolute -right-8 -top-10 h-24 w-24 rounded-full opacity-10 transition-transform group-hover:scale-125" style={{ backgroundColor: color }} />
+      <div className="absolute inset-x-0 bottom-0 h-1 opacity-60" style={{ background: `linear-gradient(90deg, ${color}00, ${color}, ${color}00)` }} />
+      <div className="absolute -right-8 -top-10 h-24 w-24 rounded-full opacity-15 transition-transform group-hover:scale-125" style={{ backgroundColor: color }} />
+      <div className="absolute -bottom-8 -left-6 h-20 w-20 rounded-full opacity-10 blur-lg" style={{ backgroundColor: color }} />
       <div className="relative mb-3 flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-transform group-hover:rotate-3 group-hover:scale-105" style={{ background: `linear-gradient(135deg, ${color}, ${color}cc)` }}>
         <Icon className="h-6 w-6" />
       </div>

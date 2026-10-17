@@ -27,6 +27,7 @@
         "Driver's License",
         "Qualifications",
         "Reference Check",
+        "Staff Badge",
         "Other"
       ],
       "default": "Other",
