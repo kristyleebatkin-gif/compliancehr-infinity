@@ -1,0 +1,45 @@
+{
+  "name": "Staff Document Expiry Reminders",
+  "description": "Daily scan of staff compliance documents (police checks, cards, certificates, licences) that have expired or expire within 30 days. Posts an alert into the Communication Centre diary, notifies administrators and emails the affected staff member once per document state.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "staff_doc_expiry_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_staff_doc_expiry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffDocExpiryReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan staff documents and raise alerts",
+            "description": "Posts Communication Centre alerts, admin notifications and staff reminder emails"
+          }
+        }
+      }
+    ]
+  }
+}

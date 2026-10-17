@@ -1,20 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-
-const SYDNEY = 'Australia/Sydney';
-const auDate = (d) => new Intl.DateTimeFormat('en-CA', {
-  timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit',
-}).format(d);
-const pretty = (iso) => iso
-  ? new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
-    .format(new Date(`${iso}T00:00:00Z`))
-  : '';
-const addDays = (iso, days) => {
-  if (!iso) return '';
-  const d = new Date(`${iso}T00:00:00Z`);
-  if (Number.isNaN(d.getTime())) return '';
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
-};
+import { auDate, pretty, addDays, pageItems } from '../../shared/reminders.ts';
 
 const KIT_CHECK_TYPES = ['Natural Disaster Kit Check', 'First Aid Kit Check', 'Fire Safety Equipment Check'];
 const SIX_MONTHS_DAYS = 182;
@@ -41,7 +26,6 @@ export default async function(req) {
       service.entities.Notification.filter({ type: 'Compliance Kit Due' }, { limit: 500 }),
       service.entities.User.list(),
     ]);
-    const pageItems = (page) => page?.items || page || [];
     const checkItems = pageItems(checks);
     const drillItems = pageItems(drills);
     const entryItems = pageItems(entries);
