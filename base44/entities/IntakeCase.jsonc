@@ -1,6 +1,6 @@
 {
-  "name": "IntakeCase",
   "type": "object",
+  "name": "IntakeCase",
   "properties": {
     "case_number": {
       "type": "string",
@@ -8,11 +8,11 @@
     },
     "intake_type": {
       "type": "string",
+      "title": "Intake Type",
       "enum": [
         "Participant",
         "Employee"
-      ],
-      "title": "Intake Type"
+      ]
     },
     "applicant_name": {
       "type": "string",
@@ -20,13 +20,13 @@
     },
     "date_of_birth": {
       "type": "string",
-      "format": "date",
-      "title": "Date of Birth"
+      "title": "Date of Birth",
+      "format": "date"
     },
     "email": {
       "type": "string",
-      "format": "email",
-      "title": "Email"
+      "title": "Email",
+      "format": "email"
     },
     "phone": {
       "type": "string",
@@ -112,6 +112,31 @@
       "type": "string",
       "title": "Representative / Advocate Details"
     },
+    "has_representative": {
+      "type": "string",
+      "title": "Has Representative / Nominee",
+      "enum": [
+        "No",
+        "Yes"
+      ],
+      "default": "No"
+    },
+    "representative_name": {
+      "type": "string",
+      "title": "Representative Name"
+    },
+    "representative_relationship": {
+      "type": "string",
+      "title": "Representative Relationship"
+    },
+    "representative_phone": {
+      "type": "string",
+      "title": "Representative Phone"
+    },
+    "representative_email": {
+      "type": "string",
+      "title": "Representative Email"
+    },
     "gender": {
       "type": "string",
       "title": "Gender"
@@ -122,8 +147,8 @@
     },
     "interpreter_required": {
       "type": "boolean",
-      "default": false,
-      "title": "Interpreter Required"
+      "title": "Interpreter Required",
+      "default": false
     },
     "cultural_background": {
       "type": "string",
@@ -139,8 +164,8 @@
     },
     "guardian_consent": {
       "type": "boolean",
-      "default": false,
-      "title": "Guardian Consent Obtained"
+      "title": "Guardian Consent Obtained",
+      "default": false
     },
     "gp_name": {
       "type": "string",
@@ -149,6 +174,50 @@
     "gp_contact": {
       "type": "string",
       "title": "GP Contact"
+    },
+    "medicare_card_number": {
+      "type": "string",
+      "title": "Medicare Card Number"
+    },
+    "medicare_irn": {
+      "type": "string",
+      "title": "Medicare Individual Reference Number"
+    },
+    "medicare_expiry": {
+      "type": "string",
+      "title": "Medicare Expiry"
+    },
+    "doctor_name": {
+      "type": "string",
+      "title": "Doctor Name"
+    },
+    "doctor_phone": {
+      "type": "string",
+      "title": "Doctor Phone"
+    },
+    "doctor_email": {
+      "type": "string",
+      "title": "Doctor Email"
+    },
+    "doctor_address": {
+      "type": "string",
+      "title": "Doctor Address"
+    },
+    "specialist_name": {
+      "type": "string",
+      "title": "Specialist Name"
+    },
+    "specialist_phone": {
+      "type": "string",
+      "title": "Specialist Phone"
+    },
+    "specialist_email": {
+      "type": "string",
+      "title": "Specialist Email"
+    },
+    "specialist_address": {
+      "type": "string",
+      "title": "Specialist Address"
     },
     "funding_categories": {
       "type": "string",
@@ -164,50 +233,70 @@
     },
     "plan_type": {
       "type": "string",
+      "title": "Plan Type",
       "enum": [
         "Plan Managed",
         "Self Managed",
         "NDIA Managed"
-      ],
-      "title": "Plan Type"
+      ]
     },
     "plan_start_date": {
       "type": "string",
-      "format": "date",
-      "title": "NDIS Plan Start Date"
+      "title": "NDIS Plan Start Date",
+      "format": "date"
     },
     "plan_end_date": {
       "type": "string",
-      "format": "date",
-      "title": "NDIS Plan End Date"
+      "title": "NDIS Plan End Date",
+      "format": "date"
     },
     "plan_manager": {
       "type": "string",
       "title": "Plan Manager"
     },
+    "plan_manager_phone": {
+      "type": "string",
+      "title": "Plan Manager Phone"
+    },
+    "plan_manager_email": {
+      "type": "string",
+      "title": "Plan Manager Email"
+    },
     "support_coordinator": {
       "type": "string",
       "title": "Support Coordinator"
     },
+    "support_coordinator_phone": {
+      "type": "string",
+      "title": "Support Coordinator Phone"
+    },
+    "support_coordinator_email": {
+      "type": "string",
+      "title": "Support Coordinator Email"
+    },
     "medication_support_required": {
       "type": "boolean",
-      "default": false,
-      "title": "Medication Support Required"
+      "title": "Medication Support Required",
+      "default": false
     },
     "mealtime_support_required": {
       "type": "boolean",
-      "default": false,
-      "title": "Mealtime Support Required"
+      "title": "Mealtime Support Required",
+      "default": false
+    },
+    "meal_plan_management_plan": {
+      "type": "string",
+      "title": "Mealtime Management Plan"
     },
     "behaviour_support_required": {
       "type": "boolean",
-      "default": false,
-      "title": "Behaviour Support Required"
+      "title": "Behaviour Support Required",
+      "default": false
     },
     "restrictive_practice_identified": {
       "type": "boolean",
-      "default": false,
-      "title": "Restrictive Practice Identified"
+      "title": "Restrictive Practice Identified",
+      "default": false
     },
     "current_employment_status": {
       "type": "string",
@@ -219,18 +308,18 @@
     },
     "right_to_work": {
       "type": "boolean",
-      "default": false,
-      "title": "Right to Work in Australia"
+      "title": "Right to Work in Australia",
+      "default": false
     },
     "drivers_licence": {
       "type": "boolean",
-      "default": false,
-      "title": "Current Driver Licence"
+      "title": "Current Driver Licence",
+      "default": false
     },
     "own_vehicle": {
       "type": "boolean",
-      "default": false,
-      "title": "Own Vehicle"
+      "title": "Own Vehicle",
+      "default": false
     },
     "wwcc_number": {
       "type": "string",
@@ -242,8 +331,8 @@
     },
     "first_aid_current": {
       "type": "boolean",
-      "default": false,
-      "title": "First Aid Certificate Current"
+      "title": "First Aid Certificate Current",
+      "default": false
     },
     "previous_employer": {
       "type": "string",
@@ -323,11 +412,11 @@
     },
     "supports_to_provide": {
       "type": "array",
+      "title": "Supports They Want to Provide",
+      "default": [],
       "items": {
         "type": "string"
-      },
-      "default": [],
-      "title": "Supports They Want to Provide"
+      }
     },
     "referral_source": {
       "type": "string",
@@ -335,18 +424,18 @@
     },
     "referral_date": {
       "type": "string",
-      "format": "date",
-      "title": "Referral / Application Date"
+      "title": "Referral / Application Date",
+      "format": "date"
     },
     "target_start_date": {
       "type": "string",
-      "format": "date",
-      "title": "Proposed Start Date"
+      "title": "Proposed Start Date",
+      "format": "date"
     },
     "date_completed": {
       "type": "string",
-      "format": "date",
-      "title": "Date Completed"
+      "title": "Date Completed",
+      "format": "date"
     },
     "assigned_to": {
       "type": "string",
@@ -358,11 +447,12 @@
     },
     "reviewed_date": {
       "type": "string",
-      "format": "date",
-      "title": "Reviewed Date"
+      "title": "Reviewed Date",
+      "format": "date"
     },
     "status": {
       "type": "string",
+      "title": "Status",
       "enum": [
         "Draft",
         "Information Required",
@@ -372,24 +462,23 @@
         "Declined",
         "Withdrawn"
       ],
-      "default": "Draft",
-      "title": "Status"
+      "default": "Draft"
     },
     "service_fit": {
       "type": "string",
+      "title": "Eligibility / Service Fit",
       "enum": [
         "Pending",
         "Eligible",
         "Waitlist",
         "Not Suitable"
       ],
-      "default": "Pending",
-      "title": "Eligibility / Service Fit"
+      "default": "Pending"
     },
     "privacy_consent": {
       "type": "boolean",
-      "default": false,
-      "title": "Consent to Collect and Store Intake Information"
+      "title": "Consent to Collect and Store Intake Information",
+      "default": false
     },
     "privacy_consent_by": {
       "type": "string",
@@ -403,15 +492,24 @@
       "type": "string",
       "title": "Privacy Consent Time"
     },
+    "information_sharing_consent": {
+      "type": "string",
+      "title": "Consent to Share Information",
+      "enum": [
+        "Consent declined",
+        "Consent provided"
+      ],
+      "default": "Consent declined"
+    },
     "recognition_dashboard_consent": {
       "type": "boolean",
-      "default": false,
-      "title": "Consent to Appear on Employee Recognition Dashboard"
+      "title": "Consent to Appear on Employee Recognition Dashboard",
+      "default": false
     },
     "recognition_dashboard_consent_date": {
       "type": "string",
-      "format": "date",
-      "title": "Recognition Dashboard Consent Date"
+      "title": "Recognition Dashboard Consent Date",
+      "format": "date"
     },
     "recognition_dashboard_consent_by": {
       "type": "string",
@@ -423,12 +521,12 @@
     },
     "audit_consent": {
       "type": "string",
+      "title": "Consent to NDIS Audit",
       "enum": [
         "Audit consent received",
         "Audit declined"
       ],
-      "default": "Audit declined",
-      "title": "Consent to NDIS Audit"
+      "default": "Audit declined"
     },
     "audit_consent_by": {
       "type": "string",
@@ -456,11 +554,11 @@
     },
     "completed_document_types": {
       "type": "array",
+      "title": "Completed or Uploaded Documents",
+      "default": [],
       "items": {
         "type": "string"
-      },
-      "default": [],
-      "title": "Completed or Uploaded Documents"
+      }
     },
     "outstanding_actions": {
       "type": "string",
@@ -476,8 +574,8 @@
     },
     "converted_date": {
       "type": "string",
-      "format": "date",
-      "title": "Converted Date"
+      "title": "Converted Date",
+      "format": "date"
     },
     "notes": {
       "type": "string",
@@ -509,13 +607,13 @@
     },
     "travel_assistance_required": {
       "type": "boolean",
-      "default": false,
-      "title": "Wants Assistance with Travel"
+      "title": "Wants Assistance with Travel",
+      "default": false
     },
     "pets_on_property": {
       "type": "boolean",
-      "default": false,
-      "title": "Pets on Property"
+      "title": "Pets on Property",
+      "default": false
     },
     "occupational_therapist": {
       "type": "string",
@@ -553,6 +651,10 @@
       "type": "string",
       "title": "Medications and Dosage"
     },
+    "current_medications": {
+      "type": "string",
+      "title": "Current Medications"
+    },
     "special_meals_diets": {
       "type": "string",
       "title": "Special Meals or Diets"
@@ -560,6 +662,18 @@
     "advocate_name": {
       "type": "string",
       "title": "Advocate Name"
+    },
+    "advocate_relationship": {
+      "type": "string",
+      "title": "Advocate Relationship"
+    },
+    "advocate_phone": {
+      "type": "string",
+      "title": "Advocate Phone"
+    },
+    "advocate_email": {
+      "type": "string",
+      "title": "Advocate Email"
     },
     "advocate_contact": {
       "type": "string",
@@ -611,8 +725,8 @@
     },
     "buddy_shift_date": {
       "type": "string",
-      "format": "date",
-      "title": "Buddy Shift Date"
+      "title": "Buddy Shift Date",
+      "format": "date"
     },
     "buddy_shift_time": {
       "type": "string",
@@ -625,9 +739,83 @@
     "buddy_shift_log": {
       "type": "string",
       "title": "Buddy Shift Log"
+    },
+    "resume_autofill_data": {
+      "type": "string",
+      "title": "Resume Autofill Data (JSON)"
+    },
+    "resume_autofill_source_url": {
+      "type": "string",
+      "title": "Resume Autofill Source URL"
+    },
+    "resume_autofill_source_name": {
+      "type": "string",
+      "title": "Resume Autofill Source Name"
+    },
+    "resume_autofill_updated_at": {
+      "type": "string",
+      "title": "Resume Autofill Updated At"
     }
   },
   "required": [
     "applicant_name"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
 }

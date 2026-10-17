@@ -72,6 +72,9 @@ const PARTICIPANT_BLANK = {
   medications_dosage: '',
   special_meals_diets: '',
   advocate_name: '',
+  advocate_relationship: '',
+  advocate_phone: '',
+  advocate_email: '',
   advocate_contact: '',
   consent_to_share_persons: '',
   gender: '',
@@ -103,11 +106,34 @@ const PARTICIPANT_BLANK = {
   emergency_contact_2_relationship: '',
   emergency_contact_2_phone: '',
   representative_details: '',
+  has_representative: 'No',
+  representative_name: '',
+  representative_relationship: '',
+  representative_phone: '',
+  representative_email: '',
+  medicare_card_number: '',
+  medicare_irn: '',
+  medicare_expiry: '',
+  doctor_name: '',
+  doctor_phone: '',
+  doctor_email: '',
+  doctor_address: '',
+  specialist_name: '',
+  specialist_phone: '',
+  specialist_email: '',
+  specialist_address: '',
+  current_medications: '',
+  meal_plan_management_plan: '',
+  information_sharing_consent: 'Consent declined',
   plan_type: 'Plan Managed',
   plan_start_date: '',
   plan_end_date: '',
   plan_manager: '',
+  plan_manager_phone: '',
+  plan_manager_email: '',
   support_coordinator: '',
+  support_coordinator_phone: '',
+  support_coordinator_email: '',
   medication_support_required: false,
   mealtime_support_required: false,
   behaviour_support_required: false,
@@ -163,6 +189,8 @@ const EMPLOYEE_BLANK = {
   employment_provider: '',
   hobbies_interests: '',
   supports_to_provide: [],
+  has_representative: '',
+  information_sharing_consent: '',
 };
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
@@ -424,6 +452,8 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           ndis_number: activeCase.ndis_number || '',
           ndis_reference_number: activeCase.ndis_reference_number || '',
           support_coordinator: activeCase.support_coordinator || '',
+          support_coordinator_phone: activeCase.support_coordinator_phone || '',
+          support_coordinator_email: activeCase.support_coordinator_email || '',
           occupational_therapist: activeCase.occupational_therapist || '',
           support_type: activeCase.support_type_requested || '',
           support_shifts: [
@@ -437,6 +467,33 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           control_measures: activeCase.control_measures || '',
           likes: activeCase.likes || '',
           dislikes: activeCase.dislikes || '',
+          plan_manager: activeCase.plan_manager || '',
+          plan_manager_phone: activeCase.plan_manager_phone || '',
+          plan_manager_email: activeCase.plan_manager_email || '',
+          current_medications: activeCase.medications_dosage || '',
+          meal_plan_management_plan: activeCase.meal_plan_management_plan || '',
+          medicare_card_number: activeCase.medicare_card_number || '',
+          medicare_irn: activeCase.medicare_irn || '',
+          medicare_expiry: activeCase.medicare_expiry || '',
+          doctor_name: activeCase.doctor_name || '',
+          doctor_phone: activeCase.doctor_phone || '',
+          doctor_email: activeCase.doctor_email || '',
+          doctor_address: activeCase.doctor_address || '',
+          specialist_name: activeCase.specialist_name || '',
+          specialist_phone: activeCase.specialist_phone || '',
+          specialist_email: activeCase.specialist_email || '',
+          specialist_address: activeCase.specialist_address || '',
+          has_representative: activeCase.has_representative || 'No',
+          representative_name: activeCase.representative_name || '',
+          representative_relationship: activeCase.representative_relationship || '',
+          representative_phone: activeCase.representative_phone || '',
+          representative_email: activeCase.representative_email || '',
+          information_sharing_consent_status: activeCase.information_sharing_consent || 'Consent declined',
+          has_advocate: activeCase.advocate_name ? 'Yes' : 'No',
+          advocate_name: activeCase.advocate_name || '',
+          advocate_relationship: activeCase.advocate_relationship || '',
+          advocate_phone: activeCase.advocate_phone || '',
+          advocate_email: activeCase.advocate_email || '',
           status: 'Active',
           notes: [
             activeCase.notes,
@@ -926,26 +983,60 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Checkbox checked={form.guardian_consent} onChange={(e) => setValue('guardian_consent', e.target.checked)} label="Guardian consent obtained" />
           <Field label="GP name"><TextInput value={form.gp_name} onChange={(e) => setValue('gp_name', e.target.value)} /></Field>
           <Field label="GP contact"><TextInput value={form.gp_contact} onChange={(e) => setValue('gp_contact', e.target.value)} /></Field>
+          <Field label="Medicare card number"><TextInput value={form.medicare_card_number} onChange={(e) => setValue('medicare_card_number', e.target.value)} /></Field>
+          <Field label="Medicare individual reference number (IRN)"><TextInput value={form.medicare_irn} onChange={(e) => setValue('medicare_irn', e.target.value)} /></Field>
+          <Field label="Medicare expiry"><TextInput value={form.medicare_expiry} onChange={(e) => setValue('medicare_expiry', e.target.value)} /></Field>
+          <Field label="Doctor name"><TextInput value={form.doctor_name} onChange={(e) => setValue('doctor_name', e.target.value)} /></Field>
+          <Field label="Doctor phone"><TextInput type="tel" value={form.doctor_phone} onChange={(e) => setValue('doctor_phone', e.target.value)} /></Field>
+          <Field label="Doctor email"><TextInput type="email" value={form.doctor_email} onChange={(e) => setValue('doctor_email', e.target.value)} /></Field>
+          <Field label="Doctor address"><TextInput value={form.doctor_address} onChange={(e) => setValue('doctor_address', e.target.value)} /></Field>
+          <Field label="Specialist name"><TextInput value={form.specialist_name} onChange={(e) => setValue('specialist_name', e.target.value)} /></Field>
+          <Field label="Specialist phone"><TextInput type="tel" value={form.specialist_phone} onChange={(e) => setValue('specialist_phone', e.target.value)} /></Field>
+          <Field label="Specialist email"><TextInput type="email" value={form.specialist_email} onChange={(e) => setValue('specialist_email', e.target.value)} /></Field>
+          <Field label="Specialist address"><TextInput value={form.specialist_address} onChange={(e) => setValue('specialist_address', e.target.value)} /></Field>
           <Field label="NDIS funding categories"><TextInput value={form.funding_categories} onChange={(e) => setValue('funding_categories', e.target.value)} /></Field>
           <Field label="Support type requested"><TextInput value={form.support_type_requested} onChange={(e) => setValue('support_type_requested', e.target.value)} /></Field>
           <Field label="Shift dates requested"><TextInput value={form.shift_dates} onChange={(e) => setValue('shift_dates', e.target.value)} /></Field>
           <Field label="Shift times requested"><TextInput value={form.shift_times} onChange={(e) => setValue('shift_times', e.target.value)} /></Field>
           <Field label="Phone number for shifts requested"><TextInput type="tel" value={form.shift_contact_phone} onChange={(e) => setValue('shift_contact_phone', e.target.value)} /></Field>
           <Field label="Support coordinator"><TextInput value={form.support_coordinator} onChange={(e) => setValue('support_coordinator', e.target.value)} /></Field>
+          <Field label="Support coordinator phone"><TextInput type="tel" value={form.support_coordinator_phone} onChange={(e) => setValue('support_coordinator_phone', e.target.value)} /></Field>
+          <Field label="Support coordinator email"><TextInput type="email" value={form.support_coordinator_email} onChange={(e) => setValue('support_coordinator_email', e.target.value)} /></Field>
           <Field label="Occupational therapist (OT)"><TextInput value={form.occupational_therapist} onChange={(e) => setValue('occupational_therapist', e.target.value)} /></Field>
           <Field label="Plan manager"><TextInput value={form.plan_manager} onChange={(e) => setValue('plan_manager', e.target.value)} /></Field>
+          <Field label="Plan manager phone"><TextInput type="tel" value={form.plan_manager_phone} onChange={(e) => setValue('plan_manager_phone', e.target.value)} /></Field>
+          <Field label="Plan manager email"><TextInput type="email" value={form.plan_manager_email} onChange={(e) => setValue('plan_manager_email', e.target.value)} /></Field>
           <Field label="Speech therapist"><TextInput value={form.speech_therapist} onChange={(e) => setValue('speech_therapist', e.target.value)} /></Field>
           <Field label="Physiotherapist"><TextInput value={form.physiotherapist} onChange={(e) => setValue('physiotherapist', e.target.value)} /></Field>
           <Field label="Other services"><TextInput value={form.other_services} onChange={(e) => setValue('other_services', e.target.value)} /></Field>
           <Field label="Advocate name"><TextInput value={form.advocate_name} onChange={(e) => setValue('advocate_name', e.target.value)} /></Field>
+          <Field label="Advocate relationship"><TextInput value={form.advocate_relationship} onChange={(e) => setValue('advocate_relationship', e.target.value)} /></Field>
+          <Field label="Advocate phone"><TextInput type="tel" value={form.advocate_phone} onChange={(e) => setValue('advocate_phone', e.target.value)} /></Field>
+          <Field label="Advocate email"><TextInput type="email" value={form.advocate_email} onChange={(e) => setValue('advocate_email', e.target.value)} /></Field>
           <Field label="Advocate contact details"><TextInput value={form.advocate_contact} onChange={(e) => setValue('advocate_contact', e.target.value)} /></Field>
+          <Field label="Has representative / nominee">
+            <Select value={form.has_representative} onChange={(e) => setValue('has_representative', e.target.value)}>
+              <option>No</option>
+              <option>Yes</option>
+            </Select>
+          </Field>
+          <Field label="Representative name"><TextInput value={form.representative_name} onChange={(e) => setValue('representative_name', e.target.value)} /></Field>
+          <Field label="Representative relationship"><TextInput value={form.representative_relationship} onChange={(e) => setValue('representative_relationship', e.target.value)} /></Field>
+          <Field label="Representative phone"><TextInput type="tel" value={form.representative_phone} onChange={(e) => setValue('representative_phone', e.target.value)} /></Field>
+          <Field label="Representative email"><TextInput type="email" value={form.representative_email} onChange={(e) => setValue('representative_email', e.target.value)} /></Field>
           <Field label="Names of any person for consent to share"><TextInput value={form.consent_to_share_persons} onChange={(e) => setValue('consent_to_share_persons', e.target.value)} /></Field>
+          <Checkbox
+            checked={form.information_sharing_consent === 'Consent provided'}
+            onChange={(e) => setValue('information_sharing_consent', e.target.checked ? 'Consent provided' : 'Consent declined')}
+            label="Consent to share information with providers, coordinators and nominees"
+          />
           <Field label="Transport needs" className="sm:col-span-2"><TextArea value={form.transport_needs} onChange={(e) => setValue('transport_needs', e.target.value)} /></Field>
           <Field label="NDIS plan goals" className="sm:col-span-2"><TextArea value={form.ndis_plan_goals} onChange={(e) => setValue('ndis_plan_goals', e.target.value)} /></Field>
           <Field label="Preferred workers description" className="sm:col-span-2"><TextArea value={form.preferred_workers_description} onChange={(e) => setValue('preferred_workers_description', e.target.value)} /></Field>
           <Field label="Medical diagnosis"><TextArea value={form.medical_diagnosis} onChange={(e) => setValue('medical_diagnosis', e.target.value)} /></Field>
           <Field label="Medications"><TextArea value={form.medications_dosage} onChange={(e) => setValue('medications_dosage', e.target.value)} /></Field>
           <Field label="Any special meals or diets"><TextArea value={form.special_meals_diets} onChange={(e) => setValue('special_meals_diets', e.target.value)} /></Field>
+          <Field label="Mealtime management plan" className="sm:col-span-2"><TextArea value={form.meal_plan_management_plan} onChange={(e) => setValue('meal_plan_management_plan', e.target.value)} /></Field>
           <Field label="Risks identified"><TextArea value={form.risks_identified} onChange={(e) => setValue('risks_identified', e.target.value)} /></Field>
           <Field label="Control measures"><TextArea value={form.control_measures} onChange={(e) => setValue('control_measures', e.target.value)} /></Field>
           <Field label="Primary contact / nominee"><TextInput value={form.primary_contact} onChange={(e) => setValue('primary_contact', e.target.value)} /></Field>

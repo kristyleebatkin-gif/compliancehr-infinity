@@ -5,19 +5,19 @@ import { Bell, BookOpen, LayoutGrid, ShieldAlert } from 'lucide-react';
 const STEPS = [
   {
     icon: LayoutGrid,
-    colour: '#4f46e5',
+    colour: '#2563eb',
     title: 'Choose a module',
     text: 'Use the role-based sidebar or dashboard tiles to open the area you need.',
   },
   {
     icon: BookOpen,
-    colour: '#0891b2',
+    colour: '#7c3aed',
     title: 'Add or update records',
     text: 'Follow the on-screen workflow, review any pre-filled details, then save or submit.',
   },
   {
     icon: Bell,
-    colour: '#ca8a04',
+    colour: '#ec4899',
     title: 'Check notifications',
     text: 'Review the bell for expiries, appraisals, audit reminders, escalations and updates.',
   },
@@ -35,7 +35,7 @@ export default function DashboardQuickStart() {
       aria-labelledby="dashboard-quick-start"
       className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30 sm:p-5"
     >
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-500" />
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 id="dashboard-quick-start" className="text-base font-bold font-display text-foreground">
@@ -46,8 +46,8 @@ export default function DashboardQuickStart() {
           </p>
         </div>
         <Link
-          to="/manual"
-          className="inline-flex items-center gap-1.5 self-start rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-md shadow-violet-500/15 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+          to="/user-guides"
+          className="inline-flex items-center gap-1.5 self-start rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-3 py-1.5 text-xs font-semibold text-white shadow-md shadow-violet-500/15 transition-all hover:-translate-y-0.5 hover:shadow-lg"
         >
           <BookOpen className="h-3.5 w-3.5" />
           View full user manual
