@@ -85,7 +85,7 @@ export default function ComplianceHub() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={ShieldCheck} title="Compliance & Report Centre" subtitle="Policies, legal obligations and their review cycles." />
+      <PageHeader icon={ShieldCheck} title="Compliance & Report Centre" subtitle="Policies, legal obligations and their review cycles." showAlerts={false} />
 
       <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">

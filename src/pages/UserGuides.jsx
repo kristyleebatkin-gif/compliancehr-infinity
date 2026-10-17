@@ -99,11 +99,7 @@ export default function UserGuides() {
         subtitle={`Professional guides for all ${guides.length} modules — every feature, process, tool and resource, each one downloadable as a branded PDF.`}
         icon={BookOpen}
         accent={ACCENTS.overview}
-        action={(
-          <Button onClick={downloadFullLibraryPdf} className="w-full sm:w-auto">
-            <Library className="h-4 w-4" /> Download complete library (PDF)
-          </Button>
-        )}
+        showAlerts={false}
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -116,6 +112,9 @@ export default function UserGuides() {
             className="pl-9"
           />
         </div>
+        <Button onClick={downloadFullLibraryPdf} className="w-full sm:w-auto">
+          <Library className="h-4 w-4" /> Download complete library (PDF)
+        </Button>
         <Button variant="outline" onClick={downloadFullLibraryPdf} className="sm:hidden">
           <Download className="h-4 w-4" /> Full library
         </Button>

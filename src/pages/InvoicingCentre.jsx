@@ -139,6 +139,7 @@ export default function InvoicingCentre() {
         icon={FileSpreadsheet}
         title="Invoicing Centre"
         subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
+        showAlerts={false}
       />
 
       <div className="flex flex-wrap items-center gap-2">

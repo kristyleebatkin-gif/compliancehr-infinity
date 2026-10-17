@@ -233,45 +233,7 @@ export default function Rostering() {
         icon={CalendarRange}
         title="Rostering"
         subtitle="Roster board, shift register, timesheet approvals and staff availability."
-        action={
-          <div className="flex items-center gap-2">
-            {tab === 'roster' && (
-              <>
-                <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, -7))}><ChevronLeft className="h-4 w-4" /></Button>
-                <span className="text-sm font-medium">{format(weekStart, 'd MMM')} – {format(addDays(weekStart, 6), 'd MMM yyyy')}</span>
-                <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, 7))}><ChevronRight className="h-4 w-4" /></Button>
-              </>
-            )}
-            {tab === 'calendar' && (
-              <div className="flex flex-wrap items-center gap-2">
-                <Button variant="outline" size="sm" onClick={() => { const t = format(new Date(), 'yyyy-MM-dd'); setCalFrom(t); setCalTo(t); }} title="Today only">Today</Button>
-                <Button variant="outline" size="sm" onClick={() => setCalPreset('week')}>This week</Button>
-                <Button variant="outline" size="sm" onClick={() => setCalPreset('month')}>This month</Button>
-                <Button variant="outline" size="sm" onClick={() => setCalPreset('next7')}>Next 7 days</Button>
-                <Button variant="outline" size="sm" onClick={() => setCalPreset('next30')}>Next 30 days</Button>
-                <Select value={calStaff || 'all'} onValueChange={(v) => setCalStaff(v === 'all' ? '' : v)}>
-                  <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All staff</SelectItem>
-                    {staff.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-                <Input type="date" value={calFrom} onChange={(e) => setCalFrom(e.target.value)} className="w-36" />
-                <span className="text-sm text-muted-foreground">to</span>
-                <Input type="date" value={calTo} onChange={(e) => setCalTo(e.target.value)} className="w-36" />
-                <Button variant="outline" size="icon" title="Previous month" onClick={() => { const prev = addDays(new Date(calFrom + 'T00:00:00'), -1); setCalFrom(format(startOfMonth(prev), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(prev), 'yyyy-MM-dd')); }}><ChevronLeft className="h-4 w-4" /></Button>
-                <Button variant="outline" size="icon" title="Next month" onClick={() => { const next = addDays(new Date(calFrom + 'T00:00:00'), 32); setCalFrom(format(startOfMonth(next), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(next), 'yyyy-MM-dd')); }}><ChevronRight className="h-4 w-4" /></Button>
-              </div>
-            )}
-            {tab === 'shifts' && (
-              <div className="flex items-center gap-2">
-                <Input type="date" value={listRange.from} onChange={(e) => setListRange({ ...listRange, from: e.target.value })} className="w-36" />
-                <span className="text-sm text-muted-foreground">to</span>
-                <Input type="date" value={listRange.to} onChange={(e) => setListRange({ ...listRange, to: e.target.value })} className="w-36" />
-              </div>
-            )}
-          </div>
-        }
+        showAlerts={false}
       />
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -292,7 +254,13 @@ export default function Rostering() {
         </TabsList>
 
         <TabsContent value="roster" className="mt-4 space-y-4">
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, -7))}><ChevronLeft className="h-4 w-4" /></Button>
+              <span className="text-sm font-medium">{format(weekStart, 'd MMM')} – {format(addDays(weekStart, 6), 'd MMM yyyy')}</span>
+              <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, 7))}><ChevronRight className="h-4 w-4" /></Button>
+            </div>
+            <div className="flex-1" />
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (
@@ -303,6 +271,26 @@ export default function Rostering() {
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => { const t = format(new Date(), 'yyyy-MM-dd'); setCalFrom(t); setCalTo(t); }} title="Today only">Today</Button>
+            <Button variant="outline" size="sm" onClick={() => setCalPreset('week')}>This week</Button>
+            <Button variant="outline" size="sm" onClick={() => setCalPreset('month')}>This month</Button>
+            <Button variant="outline" size="sm" onClick={() => setCalPreset('next7')}>Next 7 days</Button>
+            <Button variant="outline" size="sm" onClick={() => setCalPreset('next30')}>Next 30 days</Button>
+            <Select value={calStaff || 'all'} onValueChange={(v) => setCalStaff(v === 'all' ? '' : v)}>
+              <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All staff</SelectItem>
+                {staff.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Input type="date" value={calFrom} onChange={(e) => setCalFrom(e.target.value)} className="w-36" />
+            <span className="text-sm text-muted-foreground">to</span>
+            <Input type="date" value={calTo} onChange={(e) => setCalTo(e.target.value)} className="w-36" />
+            <Button variant="outline" size="icon" title="Previous month" onClick={() => { const prev = addDays(new Date(calFrom + 'T00:00:00'), -1); setCalFrom(format(startOfMonth(prev), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(prev), 'yyyy-MM-dd')); }}><ChevronLeft className="h-4 w-4" /></Button>
+            <Button variant="outline" size="icon" title="Next month" onClick={() => { const next = addDays(new Date(calFrom + 'T00:00:00'), 32); setCalFrom(format(startOfMonth(next), 'yyyy-MM-dd')); setCalTo(format(endOfMonth(next), 'yyyy-MM-dd')); }}><ChevronRight className="h-4 w-4" /></Button>
+          </div>
+
           <div className="flex flex-wrap items-center gap-2">
             <Badge className="bg-brand/10 text-brand border-transparent">{boardShifts.length} shifts</Badge>
             <Badge className="bg-warning/10 text-warning border-transparent">
@@ -326,7 +314,11 @@ export default function Rostering() {
         </TabsContent>
 
         <TabsContent value="shifts" className="mt-4 space-y-4">
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center gap-2">
+            <Input type="date" value={listRange.from} onChange={(e) => setListRange({ ...listRange, from: e.target.value })} className="w-36" />
+            <span className="text-sm text-muted-foreground">to</span>
+            <Input type="date" value={listRange.to} onChange={(e) => setListRange({ ...listRange, to: e.target.value })} className="w-36" />
+            <div className="flex-1" />
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (

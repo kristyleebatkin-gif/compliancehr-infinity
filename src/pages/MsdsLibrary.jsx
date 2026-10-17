@@ -112,6 +112,9 @@ export default function MsdsLibrary() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
+        <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add chemical</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={loading || chemicals.length === 0}><Download className="mr-2 h-4 w-4" />Export chemical list</Button>
+        <Button variant="outline" onClick={() => downloadChemicalRegister(chemicals)} disabled={loading || chemicals.length === 0}><Printer className="mr-2 h-4 w-4" />Print register PDF</Button>
         <div className="relative min-w-52 flex-1">
           <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search by chemical name or CAS number..." value={search} onChange={(e) => setSearch(e.target.value)} />

@@ -137,13 +137,7 @@ export default function MeetingCentre() {
         icon={CalendarDays}
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
-        action={
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
-            <Button variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Schedule meeting</Button>
-          </div>
-        }
+        showAlerts={false}
       />
 
       {nextMeeting && (
@@ -172,6 +166,12 @@ export default function MeetingCentre() {
           </CardContent>
         </Card>
       )}
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Schedule meeting</Button>
+      </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
