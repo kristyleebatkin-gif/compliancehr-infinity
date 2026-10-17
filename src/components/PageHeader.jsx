@@ -54,3 +54,9 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
     </div>
   );
 }
+
+
+// Row of controls rendered just below the header card (left-aligned by default).
+export function HeaderUnderRow({ children, className }) {
+  return <div className={cn('flex flex-wrap items-center gap-2', className)}>{children}</div>;
+}

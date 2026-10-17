@@ -101,8 +101,8 @@ export default function GoalProgress() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." />
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />
+      <div className="flex flex-wrap items-center gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
           <DialogContent>

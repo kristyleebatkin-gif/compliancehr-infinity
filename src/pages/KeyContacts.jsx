@@ -15,7 +15,6 @@ import { downloadCsv } from '@/lib/csvExport';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
-import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -83,32 +82,32 @@ export default function KeyContacts() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><ContactIcon className="h-7 w-7" /></div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Key Personnel Contacts</h1>
-              <p className="text-sm text-slate-300">Key people, their roles, hours and contact details — reach them directly by email, text or phone.</p>
+              <p className="text-sm text-white/75">Key people, their roles, hours and contact details — reach them directly by email, text or phone.</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <ModuleAlertsButton />
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/contacts" />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Contacts', String(contacts.length)], ['Emergency', String(contacts.filter((c) => c.category === 'Emergency').length)], ['Medical', String(contacts.filter((c) => c.category === 'Medical').length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-4">
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>
+        <Button variant="outline" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
       </div>
 
       {loading ? (

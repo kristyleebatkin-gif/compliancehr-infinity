@@ -78,7 +78,7 @@ export default function Staff() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." />
+      <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} />
       <Tabs defaultValue="profiles">
         <TabsList>
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
@@ -86,7 +86,7 @@ export default function Staff() {
           <TabsTrigger value="recognition"><Trophy className="mr-1.5 h-4 w-4" />Leaderboard &amp; recognition</TabsTrigger>
         </TabsList>
         <TabsContent value="profiles" className="space-y-6">
-          <div className="flex flex-wrap items-center justify-end gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={exportRegister} disabled={loading || staff.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>

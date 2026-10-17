@@ -61,7 +61,7 @@ export default function AssetManagement() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules." />
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add asset</Button></DialogTrigger>

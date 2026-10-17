@@ -19,22 +19,20 @@ export default function ReferralSupport() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-violet-900 to-slate-800 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><HeartHandshake className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Referral &amp; Support</h1>
-              <p className="text-sm text-slate-300">Crisis information, local services by postcode, a national resource library, and a referral form you can log, PDF and email.</p>
-            </div>
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex items-center gap-4">
+          <div className="rounded-xl bg-white/10 p-3"><HeartHandshake className="h-7 w-7" /></div>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Referral &amp; Support</h1>
+            <p className="text-sm text-white/75">Crisis information, local services by postcode, a national resource library, and a referral form you can log, PDF and email.</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
-            <ModuleAlertsButton />
-            <ModuleComplianceStrip path="/referrals" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
-          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
+          <ModuleAlertsButton />
+          <ModuleComplianceStrip path="/referrals" />
+          <ModuleAuditChecklistButton />
+          <ModuleAuditButton />
         </div>
       </div>
 

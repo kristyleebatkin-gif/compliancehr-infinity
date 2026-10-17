@@ -91,25 +91,26 @@ export default function NdisUpdates() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-teal-900 to-slate-800 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><Newspaper className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">NDIS Updates &amp; News</h1>
-              <p className="text-sm text-slate-300">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
-            </div>
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex items-center gap-4">
+          <div className="rounded-xl bg-white/10 p-3"><Newspaper className="h-7 w-7" /></div>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">NDIS Updates &amp; News</h1>
+            <p className="text-sm text-white/75">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <ModuleAlertsButton />
-            <ModuleComplianceStrip path="/ndis-updates" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
-          </div>
-          <Button onClick={refresh} disabled={refreshing} className="bg-white/10 text-white hover:bg-white/20">
-            {refreshing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
-            {refreshing ? 'Checking NDIS...' : 'Refresh from NDIS'}
-          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-start gap-2">
+        <Button onClick={refresh} disabled={refreshing} className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15">
+          {refreshing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
+          {refreshing ? 'Checking NDIS...' : 'Refresh from NDIS'}
+        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <ModuleAlertsButton />
+          <ModuleComplianceStrip path="/ndis-updates" />
+          <ModuleAuditChecklistButton />
+          <ModuleAuditButton />
         </div>
       </div>
 

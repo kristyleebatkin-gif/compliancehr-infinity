@@ -18,7 +18,6 @@ import { fileReceiptToAssetRegister } from '@/lib/assetRegister';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
@@ -112,35 +111,35 @@ export default function ReceiptHub() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><ReceiptIcon className="h-7 w-7" /></div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Receipt Hub</h1>
-              <p className="text-sm text-slate-300">Scan, store, reconcile and reimburse receipts with full records.</p>
+              <p className="text-sm text-white/75">Scan, store, reconcile and reimburse receipts with full records.</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/receipts" />
-            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Receipts', String(receipts.length)], ['Unreconciled', money(unrecTotal)], ['To reimburse', money(reimburseTotal)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
-        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
+        <Button variant="outline" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        <Button variant="outline" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
       </div>
 
       <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />

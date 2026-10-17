@@ -70,7 +70,7 @@ export default function Participants() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add participant</Button></DialogTrigger>

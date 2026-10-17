@@ -139,7 +139,7 @@ export default function Documents() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." />
+      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />
       <DataControlPanel />
 
       <Tabs defaultValue="documents">

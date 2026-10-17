@@ -20,7 +20,6 @@ import EventInviteDialog from '@/components/events/EventInviteDialog';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const EMPTY = {
   title: '', type: 'Program', date: '', end_date: '', start_time: '', end_time: '',
@@ -142,32 +141,32 @@ export default function ProgramsEvents() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-orange-500 via-rose-500 to-fuchsia-600 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><PartyPopper className="h-7 w-7" /></div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Program Design Centre</h1>
-              <p className="text-sm text-orange-100">Design bright community programs and events, advertise them and invite attendees.</p>
+              <p className="text-sm text-white/75">Design bright community programs and events, advertise them and invite attendees.</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/programs" />
-            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-orange-100">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-4">
-          <Button className="bg-white text-rose-700 hover:bg-rose-50" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
-          <Button variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
       </div>
 
       {!loading && grouped.Upcoming[0] && (() => {

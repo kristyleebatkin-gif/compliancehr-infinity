@@ -11,7 +11,6 @@ import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 
@@ -60,7 +59,7 @@ export default function Volunteers() {
   return (
     <div className="space-y-6">
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-teal-700 via-cyan-700 to-sky-700 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><HeartHandshake className="h-7 w-7" /></div>
             <div>
@@ -68,9 +67,8 @@ export default function Volunteers() {
               <p className="text-sm text-cyan-100">Volunteer register with full staff intake requirements, training records and compliance documents.</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/volunteers" />
-            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Total', String(volunteers.length)], ['Active', String(volunteers.filter((v) => v.status === 'Active').length)], ['Onboarding', String(volunteers.filter((v) => v.status === 'Onboarding').length)]].map(([label, value]) => (
@@ -81,10 +79,11 @@ export default function Volunteers() {
             ))}
           </div>
         </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="bg-white text-teal-800 hover:bg-teal-100" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
       </div>
 
       {loading ? (

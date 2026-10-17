@@ -154,34 +154,35 @@ export default function QuoteCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><ClipboardList className="h-7 w-7" /></div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Quote Centre</h1>
-              <p className="text-sm text-slate-300">NDIS support quotations with price guide items, business details and terms from Company Safe.</p>
+              <p className="text-sm text-white/75">NDIS support quotations with price guide items, business details and terms from Company Safe.</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/quotes" />
             <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Quotes', String(quotes.length)], ['Quoted value', money(totalValue)], ['Accepted', money(acceptedValue)], ['Win rate', `${winRate}%`], ['Expiring soon', String(expiringSoon)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => downloadQuoteTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Quote template</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={exporting || loading || quotes.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        </div>
-        <p className="mt-3 text-[11px] text-slate-400">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>
+        <Button variant="outline" onClick={() => downloadQuoteTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Quote template</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || quotes.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        <p className="text-[11px] text-muted-foreground">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

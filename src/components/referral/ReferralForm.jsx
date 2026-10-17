@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { format } from 'date-fns';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Send } from 'lucide-react';
 
 const SERVICE_TYPES = ['NDIS / Disability Supports', 'Mental Health', 'Housing', 'Family & Domestic Violence', 'Alcohol & Other Drugs', 'Youth Services', 'Emergency Relief', 'Health / Medical', 'Employment & Training', 'Other'];
 const URGENCIES = ['Routine', 'Urgent (48 hours)', 'Immediate - Crisis'];
@@ -34,8 +34,8 @@ export default function ReferralForm({ editing, onSaved, onSend }) {
 
   const set = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e?.target?.value ?? e }));
 
-  const save = async () => {
-    if (!form.client_name.trim()) { toast({ title: 'Name of the person referred is required' }); return; }
+  const persist = async () => {
+    if (!form.client_name.trim()) { toast({ title: 'Name of the person referred is required' }); return null; }
     setSaving(true);
     try {
       const payload = { ...form };
@@ -47,10 +47,25 @@ export default function ReferralForm({ editing, onSaved, onSend }) {
       const saved = editing
         ? await base44.entities.Referral.update(editing.id, payload)
         : await base44.entities.Referral.create({ ...payload, status: 'Draft' });
-      toast({ title: editing ? 'Referral updated' : 'Referral saved as Draft' });
-      onSaved(saved);
+      return saved;
     } finally {
       setSaving(false);
+    }
+  };
+
+  const save = async () => {
+    const saved = await persist();
+    if (saved) {
+      toast({ title: editing ? 'Referral updated' : 'Referral saved as Draft' });
+      onSaved(saved);
+    }
+  };
+
+  const saveAndSend = async () => {
+    const saved = await persist();
+    if (saved) {
+      toast({ title: editing ? 'Referral updated' : 'Referral saved as Draft' });
+      onSend(saved);
     }
   };
 
@@ -121,9 +136,9 @@ export default function ReferralForm({ editing, onSaved, onSend }) {
         </div>
       </Section>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <Button onClick={save} disabled={saving || !form.client_name.trim()}>{saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}{editing ? 'Save changes' : 'Save referral (Draft)'}</Button>
-        {editing && form.provider_email && <Button variant="outline" onClick={() => onSend(editing)}>Send via email</Button>}
+        <Button variant="outline" onClick={saveAndSend} disabled={saving || !form.client_name.trim()}><Send className="mr-2 h-4 w-4" />Send referral</Button>
       </div>
     </div>
   );

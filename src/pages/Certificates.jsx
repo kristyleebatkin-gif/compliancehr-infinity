@@ -71,18 +71,17 @@ export default function Certificates() {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
-      <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry"
-        action={
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [
-              { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
-              { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
-              { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
-              { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
-            ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
-            <Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" /> Issue Certificate</Button>
-          </div>
-        } />
+      <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry" showAlerts={false} showCompliance={false} />
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [
+          { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
+          { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
+          { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
+          { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
+        ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
+        <Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" /> Issue Certificate</Button>
+      </div>
 
       {showForm && (
         <form onSubmit={save} className="rounded-xl border border-slate-200/70 bg-white p-6 space-y-4">

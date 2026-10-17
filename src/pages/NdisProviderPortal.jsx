@@ -18,14 +18,16 @@ const PORTALS = [
 export default function NdisProviderPortal() {
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 p-6 text-white shadow-lg">
-        <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-white/10 p-3"><Building2 className="h-7 w-7" /></div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">NDIS Registered Provider Portal</h1>
-            <p className="text-sm text-slate-300">Direct access points to the official NDIS portals and provider resources.</p>
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="rounded-xl bg-white/10 p-3"><Building2 className="h-7 w-7" /></div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">NDIS Registered Provider Portal</h1>
+              <p className="text-sm text-white/75">Direct access points to the official NDIS portals and provider resources.</p>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleAlertsButton />
             <ModuleComplianceStrip path="/ndis-portal" />
             <ModuleAuditChecklistButton />
