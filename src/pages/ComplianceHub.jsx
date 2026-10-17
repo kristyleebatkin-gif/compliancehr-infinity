@@ -19,6 +19,7 @@ import MasterChecklist from '@/components/compliance/MasterChecklist';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
+import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -89,6 +90,7 @@ export default function ComplianceHub() {
       <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">
           <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
+          <TabsTrigger value="trend-charts">Trend Charts</TabsTrigger>
           <TabsTrigger value="master-checklist">Master Checklist</TabsTrigger>
           <TabsTrigger value="kits-drills">Kits &amp; Drills Checklists</TabsTrigger>
           <TabsTrigger value="audits">Audits</TabsTrigger>
@@ -101,6 +103,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="readiness" className="mt-4">
           <ComplianceReadiness />
+        </TabsContent>
+
+        <TabsContent value="trend-charts" className="mt-4">
+          <SafetyTrendChart />
         </TabsContent>
 
         <TabsContent value="master-checklist" className="mt-4">
