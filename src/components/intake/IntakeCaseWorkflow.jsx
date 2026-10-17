@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { Download, ExternalLink, Pencil } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { routeDocument } from '@/lib/documentRouting';
 import { buildFilledFormDoc } from '@/lib/participantFormPdf';
@@ -227,6 +228,45 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const { user } = useRole();
   const { toast } = useToast();
   const [cases, setCases] = useState([]);
+  const [exporting, setExporting] = useState(false);
+
+  const exportRegister = async () => {
+    setExporting(true);
+    try {
+      const page = await base44.entities.IntakeCase.filter(
+        { intake_type: intakeType }, { sort: '-created_date', limit: 500 },
+      );
+      const columns = [
+        { key: 'case_number', label: 'Case Number' },
+        { key: 'applicant_name', label: 'Applicant Name' },
+        { key: 'intake_type', label: 'Intake Type' },
+        { key: 'status', label: 'Status' },
+        { key: 'service_fit', label: 'Eligibility / Service Fit' },
+        { key: 'email', label: 'Email' },
+        { key: 'phone', label: 'Phone' },
+        { key: 'assigned_to', label: 'Intake Owner' },
+        { key: 'reviewer', label: 'Reviewer' },
+        { key: 'referral_date', label: 'Referral Date' },
+        { key: 'target_start_date', label: 'Proposed Start Date' },
+        { key: 'date_completed', label: 'Date Completed' },
+        { key: 'converted_date', label: 'Converted Date' },
+        { key: 'privacy_consent', label: 'Privacy Consent' },
+        { key: 'audit_consent', label: 'Audit Consent' },
+        { key: 'decision_reason', label: 'Decision Reason' },
+        { key: 'created_date', label: 'Created' },
+      ];
+      const rows = page.items.map((c) => ({
+        ...c,
+        privacy_consent: c.privacy_consent ? 'Yes' : 'No',
+      }));
+      downloadCsv(`${intakeType.toLowerCase()}-intake-register.csv`, columns, rows);
+      toast({ title: 'Register exported', description: `${rows.length} intake case(s) downloaded as CSV.` });
+    } catch (error) {
+      toast({ title: 'Export failed', description: error.message, variant: 'destructive' });
+    } finally {
+      setExporting(false);
+    }
+  };
   const [profiles, setProfiles] = useState([]);
   const [documents, setDocuments] = useState([]);
   const [activeCaseId, setActiveCaseId] = useState('');
@@ -974,7 +1014,12 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         <div className="flex items-center gap-2 text-sm text-foreground/60">
           <span className="font-semibold text-foreground">{cases.length}</span> {intakeType} intake cases
         </div>
-        <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" onClick={exportRegister} disabled={exporting}>
+            <Download className="mr-2 h-4 w-4" /> {exporting ? 'Exporting...' : 'Export Register (CSV)'}
+          </Button>
+          <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>
+        </div>
       </div>
 
       {cases.length === 0 && !showNew ? (

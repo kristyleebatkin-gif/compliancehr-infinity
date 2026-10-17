@@ -10,7 +10,31 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink } from 'lucide-react';
+import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
+
+const exportPoliciesCsv = (policies) => downloadCsv('compliance-policy-register.csv', [
+  { key: 'document_name', label: 'Document Name' },
+  { key: 'category', label: 'Category' },
+  { key: 'version', label: 'Version' },
+  { key: 'status', label: 'Status' },
+  { key: 'review_date', label: 'Review Date' },
+  { key: 'approved_by', label: 'Approved By' },
+  { key: 'description', label: 'Description' },
+  { key: 'created_date', label: 'Created' },
+], policies);
+
+const exportRequirementsCsv = (requirements) => downloadCsv('legal-requirements-register.csv', [
+  { key: 'title', label: 'Title' },
+  { key: 'category', label: 'Category' },
+  { key: 'jurisdiction', label: 'Jurisdiction' },
+  { key: 'authority', label: 'Authority' },
+  { key: 'status', label: 'Status' },
+  { key: 'next_review', label: 'Next Review' },
+  { key: 'purpose', label: 'Purpose / Obligation' },
+  { key: 'official_url', label: 'Official URL' },
+  { key: 'created_date', label: 'Created' },
+], requirements);
 import { format } from 'date-fns';
 import Checklists from '@/pages/Checklists';
 import ComplianceReadiness from '@/components/compliance/ComplianceReadiness';
@@ -126,7 +150,8 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="policies" className="mt-4 space-y-4">
-          <div className="flex">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" onClick={() => exportPoliciesCsv(policies)}><Download className="mr-2 h-4 w-4" /> Export Register (CSV)</Button>
             <Dialog open={pOpen} onOpenChange={setPOpen}>
               <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add policy</Button></DialogTrigger>
               <DialogContent>
@@ -190,7 +215,8 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="requirements" className="mt-4 space-y-4">
-          <div className="flex">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" onClick={() => exportRequirementsCsv(requirements)}><Download className="mr-2 h-4 w-4" /> Export Register (CSV)</Button>
             <Dialog open={rOpen} onOpenChange={setROpen}>
               <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add requirement</Button></DialogTrigger>
               <DialogContent>
