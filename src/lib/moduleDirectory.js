@@ -4,7 +4,7 @@ import {
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
-  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen,
+  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -18,6 +18,7 @@ export const MODULE_DIRECTORY = [
   { key: 'participants', label: 'Participant Profiles', path: '/participants', icon: Heart, blurb: 'Participant plans, support teams, goals, forms and documents.' },
   { key: 'visual-boards', label: 'Visual Boards', path: '/visual-boards', icon: LayoutPanelTop, blurb: 'Accessible routines, communication boards, sign prompts and translators.' },
   { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
+  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
   { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
   { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
   { key: 'compliance', label: 'Compliance & Report Centre', path: '/compliance', icon: ShieldCheck, blurb: 'Checklists, audits, file matrices, expiry scans and full business audit exports.' },

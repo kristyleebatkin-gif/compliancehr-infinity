@@ -10,7 +10,10 @@ import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
+  Search, Sun, Moon,
 } from 'lucide-react';
+import GlobalSearch from '@/components/GlobalSearch';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
@@ -29,6 +32,12 @@ export default function AppLayout() {
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('ch-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
   const accountStatus = user?.account_status || (role === 'Pending Approval' ? 'Pending Approval' : 'Active');
 
   const visiblePrimary = PRIMARY_NAV.filter((item) => canAccessNav(role, item.key));
@@ -219,6 +228,14 @@ export default function AppLayout() {
           </div>
 
           <div className="flex items-center gap-2">
+            <GlobalSearch />
+            <button
+              onClick={() => setDarkMode((v) => !v)}
+              title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="rounded-lg p-2 hover:bg-brand/5"
+            >
+              {darkMode ? <Sun className="h-5 w-5 text-foreground/60" /> : <Moon className="h-5 w-5 text-foreground/60" />}
+            </button>
             {/* Notifications */}
             <div className="relative">
               <button
@@ -313,7 +330,9 @@ export default function AppLayout() {
           <div className="mx-auto max-w-6xl px-4 pt-4 md:px-8 md:pt-6">
             <ModuleGuide />
           </div>
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
           <ModuleDocsFooter />
         </main>
 

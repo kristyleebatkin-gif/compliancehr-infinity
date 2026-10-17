@@ -58,6 +58,7 @@ import ReceiptHub from '@/pages/ReceiptHub';
 import HelpCentre from '@/pages/HelpCentre';
 import Notifications from '@/pages/Notifications';
 import UserGuides from '@/pages/UserGuides';
+import Assistant from '@/pages/Assistant';
 import AnalyticsHub from '@/pages/AnalyticsHub';
 import HrHub from '@/pages/HrHub';
 import CrmHub from '@/pages/CrmHub';
@@ -150,6 +151,7 @@ const AuthenticatedApp = () => {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/user-guides" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
           <Route path="/manual" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
+          <Route path="/assistant" element={<RoleGate navKey="assistant"><Assistant /></RoleGate>} />
           <Route path="/analytics" element={<RoleGate navKey="analytics"><AnalyticsHub /></RoleGate>} />
           <Route path="/hr" element={<RoleGate navKey="human-resources"><HrHub /></RoleGate>} />
           <Route path="/crm" element={<RoleGate navKey="crm"><CrmHub /></RoleGate>} />

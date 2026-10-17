@@ -46,6 +46,7 @@ const EVERYONE = [...ALL_ROLES];
 export const NAV_PERMISSIONS = {
   dashboard: EVERYONE,
   notifications: EVERYONE,
+  assistant: EVERYONE,
   help: EVERYONE,
   'user-guides': EVERYONE,
   'key-contacts': EVERYONE,
