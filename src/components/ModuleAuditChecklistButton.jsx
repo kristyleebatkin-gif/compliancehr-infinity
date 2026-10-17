@@ -7,7 +7,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { MODULE_AUDIT_ENTITIES, gatherModuleAudit } from '@/lib/moduleAuditReport';
 import { buildModuleAuditChecklist, buildCorrectiveActions } from '@/lib/moduleAuditChecklists';
-import { ClipboardCheck, Loader2 } from 'lucide-react';
+import { downloadAuditChecklistPdf, printAuditChecklist } from '@/lib/auditChecklistPdf';
+import { ClipboardCheck, Download, Loader2, Printer } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const itemTone = (status) => (status === 'Pass'
@@ -27,6 +28,7 @@ export default function ModuleAuditChecklistButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checklist, setChecklist] = useState(null);
+  const [exporting, setExporting] = useState(false);
 
   const run = async () => {
     if (!inScope) return;
@@ -50,6 +52,35 @@ export default function ModuleAuditChecklistButton() {
 
   if (!inScope) return null;
 
+  const exportPdf = async () => {
+    if (!checklist) return;
+    setExporting(true);
+    try {
+      let generatedBy = '';
+      try { generatedBy = (await base44.auth.me())?.full_name || ''; } catch { }
+      downloadAuditChecklistPdf({
+        moduleLabel: checklist.label,
+        items: checklist.items,
+        actions: checklist.actions,
+        generatedBy,
+      });
+      toast({ title: 'Audit checklist PDF downloaded' });
+    } catch (e) {
+      toast({ title: 'Export failed', description: e?.message || 'Please try again', variant: 'destructive' });
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const printNow = () => {
+    if (!checklist) return;
+    printAuditChecklist({
+      moduleLabel: checklist.label,
+      items: checklist.items,
+      actions: checklist.actions,
+    });
+  };
+
   const passes = checklist?.items?.filter((i) => i.status === 'Pass').length || 0;
   const attentions = checklist?.items?.filter((i) => i.status === 'Attention').length || 0;
 
@@ -63,9 +94,23 @@ export default function ModuleAuditChecklistButton() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="font-display text-xl">
-              Compliance Audit Checklist — {module.label}
-            </DialogTitle>
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <DialogTitle className="font-display text-xl">
+                Compliance Audit Checklist — {module.label}
+              </DialogTitle>
+              {checklist && !loading && (
+                <div className="flex shrink-0 items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={printNow} className="rounded-lg border-border/60 bg-white/75 text-[13px] font-semibold shadow-sm hover:bg-white">
+                    <Printer className="mr-1.5 h-3.5 w-3.5" />
+                    Print
+                  </Button>
+                  <Button size="sm" onClick={exportPdf} disabled={exporting} className="rounded-lg bg-primary text-[13px] font-semibold shadow-sm">
+                    {exporting ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Download className="mr-1.5 h-3.5 w-3.5" />}
+                    Download PDF
+                  </Button>
+                </div>
+              )}
+            </div>
           </DialogHeader>
 
           {loading ? (
