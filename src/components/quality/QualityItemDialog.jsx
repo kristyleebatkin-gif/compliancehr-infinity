@@ -14,14 +14,14 @@ const PRIORITIES = ['Low', 'Medium', 'High'];
 
 const blank = { title: '', type: 'Idea', description: '', source: '', raised_by: '', raised_date: '', owner: '', nominated_to: '', nominated_email: '', nominated_date: '', priority: 'Medium', status: 'New', target_date: '', outcome: '', notes: '' };
 
-export default function QualityItemDialog({ open, onOpenChange, editing, users, onSaved }) {
+export default function QualityItemDialog({ open, onOpenChange, editing, users, onSaved, defaultType = 'Idea' }) {
   const [form, setForm] = useState(blank);
   const [saving, setSaving] = useState(false);
   const [ready, setReady] = useState(false);
 
   if (open && !ready) {
     setReady(true);
-    setForm(editing ? { ...blank, ...editing } : { ...blank, raised_date: new Date().toISOString().slice(0, 10) });
+    setForm(editing ? { ...blank, ...editing } : { ...blank, type: defaultType, raised_date: new Date().toISOString().slice(0, 10) });
   }
   if (!open && ready) setReady(false);
 

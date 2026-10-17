@@ -117,28 +117,10 @@ export default function EquipmentManuals() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><BookOpen className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Equipment Manuals</h1>
-              <p className="text-sm text-slate-300">Operating, maintenance and safety manuals for office, electrical and garden equipment.</p>
-            </div>
-          </div>
-          <div className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">Manuals</p>
-            <p className="text-sm font-bold">{manuals.length}</p>
-          </div>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add manual</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={loading || manuals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
-        </div>
-      </div>
-
       <div className="flex flex-wrap items-center gap-2">
+        <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add manual</Button>
+        <Button variant="outline" onClick={exportRegister} disabled={loading || manuals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        <Button variant="outline" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
         <div className="relative min-w-52 flex-1">
           <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search equipment, manufacturer or model..." value={search} onChange={(e) => setSearch(e.target.value)} />

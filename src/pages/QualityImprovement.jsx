@@ -11,7 +11,7 @@ import QualityItemDialog from '@/components/quality/QualityItemDialog';
 import { changeStatus } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
-import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, ClipboardList, TrendingUp, CheckCircle2, Trash2 } from 'lucide-react';
+import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, Plus, CheckCircle2, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
@@ -40,6 +40,7 @@ export default function QualityImprovement() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [sending, setSending] = useState('');
+  const [defaultType, setDefaultType] = useState('Idea');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -104,14 +105,7 @@ export default function QualityImprovement() {
     toast({ title: `${name} exported` });
   };
 
-  const exportStatusLog = () => {
-    downloadCsv('quality-status-log.csv', [
-      { key: 'record_title', label: 'Record' }, { key: 'from_status', label: 'From' },
-      { key: 'to_status', label: 'To' }, { key: 'changed_by', label: 'Changed By' },
-      { key: 'created_date', label: 'Changed At' }, { key: 'notes', label: 'Notes' },
-    ], logs.map((l) => ({ ...l, notes: l.notes || '' })));
-    toast({ title: 'Status change log exported' });
-  };
+  const openNewFor = (tab) => { setDefaultType(tab.value); setEditing(null); setDialogOpen(true); };
 
   const ItemCard = ({ item }) => (
     <Card>
@@ -156,13 +150,7 @@ export default function QualityImprovement() {
       <PageHeader
         title="Quality & Improvement"
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
-        action={
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={exportStatusLog}><ClipboardList className="mr-2 h-4 w-4" />Export status log</Button>
-            <Button variant="outline" onClick={() => exportItems(items, 'quality-register.csv')}><Download className="mr-2 h-4 w-4" />Export all</Button>
-            <Button onClick={() => { setEditing(null); setDialogOpen(true); }}><TrendingUp className="mr-2 h-4 w-4" />New item</Button>
-          </div>
-        }
+        showAlerts={false}
       />
 
       <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
@@ -185,7 +173,8 @@ export default function QualityImprovement() {
         </TabsList>
         {TABS.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="mt-4 space-y-4">
-            <div className="flex justify-end">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <Button size="sm" onClick={() => openNewFor(tab)}><Plus className="mr-2 h-4 w-4" />Add {tab.label.toLowerCase().replace(/s$/, '')}</Button>
               <Button variant="outline" size="sm" onClick={() => exportItems(items.filter((i) => matchesTab(i, tab)), `${tab.value.toLowerCase().replace(/ /g, '-')}-register.csv`)}>
                 <Download className="mr-2 h-4 w-4" />Export {tab.label.toLowerCase()}
               </Button>
@@ -203,7 +192,7 @@ export default function QualityImprovement() {
         ))}
       </Tabs>
 
-      <QualityItemDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} users={users} onSaved={load} />
+      <QualityItemDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} users={users} onSaved={load} defaultType={defaultType} />
     </div>
   );
 }

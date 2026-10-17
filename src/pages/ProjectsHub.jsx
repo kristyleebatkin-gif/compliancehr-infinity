@@ -69,13 +69,7 @@ export default function ProjectsHub() {
         subtitle="Business improvement projects, growth initiatives and internal builds - tracked from planning to complete."
         icon={KanbanSquare}
         accent={['#6366f1', '#4f46e5']}
-        action={<div className="flex gap-2">
-          <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />New project</Button>
-          <Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
-            { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
-            { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
-          ], projects)}>Export CSV</Button>
-        </div>}
+        showAlerts={false}
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -93,6 +87,14 @@ export default function ProjectsHub() {
             <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
           </CardContent></Card>
         ))}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />New project</Button>
+        <Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
+          { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
+          { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
+        ], projects)}>Export CSV</Button>
       </div>
 
       {showForm && (

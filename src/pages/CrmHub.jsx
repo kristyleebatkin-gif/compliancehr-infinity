@@ -76,10 +76,7 @@ export default function CrmHub() {
         subtitle="Track every enquiry through the sales pipeline: enquiries, proposals, wins and follow-ups."
         icon={Briefcase}
         accent={['#16a34a', '#0d9488']}
-        action={<div className="flex gap-2">
-          <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />Add lead</Button>
-          <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
-        </div>}
+        showAlerts={false}
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -97,6 +94,11 @@ export default function CrmHub() {
             <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
           </CardContent></Card>
         ))}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />Add lead</Button>
+        <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
       </div>
 
       {followUpsDue.length > 0 && (

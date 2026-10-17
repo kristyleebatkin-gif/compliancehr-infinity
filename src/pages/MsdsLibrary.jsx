@@ -95,31 +95,6 @@ export default function MsdsLibrary() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-6 text-white shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><FlaskConical className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">MSDS Chemical Library</h1>
-              <p className="text-sm text-slate-300">Safety Data Sheets (MSDS) for the 100 most common workplace chemicals, plus your own products.</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {[['Chemicals', String(total)], ['Categories', String(CATEGORIES.length)]].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-300">{label}</p>
-                <p className="text-sm font-bold">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="bg-white text-slate-900 hover:bg-slate-200" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add chemical</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={exportRegister} disabled={loading || chemicals.length === 0}><Download className="mr-2 h-4 w-4" />Export chemical list</Button>
-          <Button variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" onClick={() => downloadChemicalRegister(chemicals)} disabled={loading || chemicals.length === 0}><Printer className="mr-2 h-4 w-4" />Print register PDF</Button>
-        </div>
-      </div>
-
       {/* Emergency call prompts */}
       <div className="rounded-2xl border border-danger/30 bg-danger/10 p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-3">

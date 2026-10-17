@@ -3,9 +3,8 @@ import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Download, Loader2, RefreshCw, AlertCircle } from 'lucide-react';
+import { BarChart3, Loader2, AlertCircle } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, PieChart, Pie, Cell, Legend } from 'recharts';
-import { downloadCsv } from '@/lib/csvExport';
 
 const PIE_COLOURS = ['#4f46e5', '#0d9488', '#16a34a', '#ca8a04', '#dc2626', '#9333ea', '#2563eb', '#db2777'];
 const BUCKET_COMPUTED = ['count', 'sum_amount', 'avg_amount', 'min_amount', 'max_amount'];
@@ -77,25 +76,6 @@ export default function AnalyticsHub() {
 
   useEffect(() => { load(); }, [load]);
 
-  const exportKpis = () => {
-    if (!stats) return;
-    downloadCsv(`business-analytics-${new Date().toISOString().slice(0, 10)}.csv`, [
-      { label: 'Measure', key: 'measure' }, { label: 'Value', key: 'value' },
-    ], [
-      { measure: 'Total invoiced', value: stats.invoicedTotal },
-      { measure: 'Paid', value: stats.paid },
-      { measure: 'Outstanding (sent + overdue)', value: stats.outstanding },
-      { measure: 'Overdue', value: stats.overdue },
-      { measure: 'Invoices issued', value: stats.invoiceCount },
-      { measure: 'Quote win rate (%)', value: stats.quoteWinRate ?? 'n/a' },
-      { measure: 'Quotes accepted', value: stats.quotesWon },
-      { measure: 'Open tasks', value: stats.openTasks },
-      { measure: 'Completed tasks', value: stats.doneTasks },
-      { measure: 'Active staff', value: stats.activeStaff },
-      { measure: 'Active participants', value: stats.activeParticipants },
-    ]);
-  };
-
   const kpis = [
     { label: 'Total invoiced', value: money(stats?.invoicedTotal), sub: `${stats?.invoiceCount || 0} invoices` },
     { label: 'Paid', value: money(stats?.paid), sub: 'collected revenue' },
@@ -111,10 +91,7 @@ export default function AnalyticsHub() {
         title="Business Analytics"
         subtitle="Live cross-module KPIs: revenue, sales outcomes, operations and workforce - exportable for the board pack."
         icon={BarChart3}
-        action={<div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={load} disabled={loading}><RefreshCw className="mr-2 h-4 w-4" />Refresh</Button>
-          <Button size="sm" onClick={exportKpis} disabled={!stats}><Download className="mr-2 h-4 w-4" />Export KPIs</Button>
-        </div>}
+        showAlerts={false}
       />
 
       {loading && <Card><CardContent className="flex items-center justify-center gap-2 p-10 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Crunching the numbers...</CardContent></Card>}

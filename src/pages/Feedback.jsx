@@ -166,11 +166,10 @@ export default function Feedback() {
       <PageHeader
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
+        showAlerts={false}
         action={
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
+          <div>
             <Dialog open={open} onOpenChange={setOpen}>
-              <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Record entry</Button>
               <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
                 <DialogHeader><DialogTitle>Record feedback or complaint</DialogTitle></DialogHeader>
                 <div className="grid gap-3">
@@ -214,6 +213,10 @@ export default function Feedback() {
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
             <div className="space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
+                <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Record entry</Button>
+              </div>
               <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
                 {[['Received', items.filter((i) => i.status === 'Received').length, Megaphone], ['Viewed', items.filter((i) => i.status === 'Viewed').length, Eye], ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2], ['Finalised', items.filter((i) => i.status === 'Finalised').length, Download]].map(([label, value, Icon]) => (
                   <Card key={label}><CardContent className="p-3">
