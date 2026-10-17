@@ -2,6 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleDocsButton from '@/components/ModuleDocsButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 
@@ -39,6 +40,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         </div>
       </div>
       <div className="relative mt-3 flex w-full items-start justify-start gap-2 sm:mt-0 md:w-auto md:justify-end">
+        <ModuleDocsButton />
         <ModuleComplianceStrip path={seg} />
         <ModuleAuditButton />
         {action && <div className="flex-1 sm:flex-none">{action}</div>}

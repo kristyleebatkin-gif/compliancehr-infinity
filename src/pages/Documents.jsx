@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,6 +33,8 @@ const expiryTone = (expiry) => {
 };
 
 export default function Documents() {
+  const { search } = useLocation();
+  const focus = new URLSearchParams(search).get('focus');
   const [docs, setDocs] = useState([]);
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,6 +60,15 @@ export default function Documents() {
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  // Scroll to the section a module's Docs button asked for (e.g. ?focus=employee)
+  useEffect(() => {
+    if (!focus) return;
+    const timer = setTimeout(() => {
+      document.getElementById(`vault-${focus}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [focus, loading]);
 
   const save = async () => {
     if (!form.title.trim()) return;
@@ -199,6 +211,7 @@ export default function Documents() {
         </Dialog>
       </div>
 
+      <div id="vault-employee" className="scroll-mt-24">
       <AttachedFormsLibrary
         title="Employee Forms Library"
         subtitle="Official employee onboarding forms - download templates or upload completed records"
@@ -207,6 +220,8 @@ export default function Documents() {
         formFiles={EMPLOYEE_FORM_FILES}
         formCodes={EMPLOYEE_FORM_CODES}
       />
+      </div>
+      <div id="vault-participant" className="scroll-mt-24">
       <AttachedFormsLibrary
         title="Participant Forms Library"
         subtitle="Official participant service forms - download templates or upload completed records"
@@ -216,8 +231,13 @@ export default function Documents() {
         formCodes={Object.fromEntries(Object.entries(PARTICIPANT_FORM_META).map(([key, meta]) => [key, meta.code]))}
         definitions={PARTICIPANT_FORM_DEFINITIONS}
       />
+      </div>
+      <div id="vault-business" className="scroll-mt-24">
       <BusinessDocumentsLibrary />
+      </div>
+      <div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
+      </div>
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LocalServices from '@/components/referral/LocalServices';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleDocsButton from '@/components/ModuleDocsButton';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;
@@ -65,6 +66,7 @@ export default function CommunityCouncil() {
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-2">
+            <ModuleDocsButton />
             <ModuleComplianceStrip path="/community-council" />
             <ModuleAuditButton />
           </div>
