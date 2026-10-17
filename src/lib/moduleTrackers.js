@@ -85,6 +85,47 @@ export const MODULE_TRACKERS = {
     { label: 'Certificates expired', entity: 'Certificate', base: { expiry_date: { $lt: '' } }, dynamic: 'overdue' },
     { label: 'Incident follow-ups overdue', entity: 'Incident', base: { five_day_follow_up_due: { $lt: '' }, five_day_follow_up_submitted: { $in: [null, ''] } }, dynamic: 'overdue' },
   ],
+  '/compliance': [
+    { label: 'Compliance checklists overdue', entity: 'ComplianceChecklistEntry', base: { next_due_date: { $lt: '' } }, dynamic: 'overdue' },
+    { label: 'NDIS deadlines overdue', entity: 'NDISComplianceDeadline', base: { due_date: { $lt: '' }, status: { $nin: ['Completed'] } }, dynamic: 'overdue' },
+  ],
+  '/ndis-portal': [
+    { label: 'NDIS deadlines overdue', entity: 'NDISComplianceDeadline', base: { due_date: { $lt: '' }, status: { $nin: ['Completed'] } }, dynamic: 'overdue' },
+  ],
+  '/ndis-updates': [
+    { label: 'NDIS updates to review', entity: 'NdisUpdate', base: { published_date: { $gte: '', $lte: '' } }, dynamic: 'soon', soon: 7 },
+  ],
+  '/feedback': [
+    { label: 'Feedback awaiting action', entity: 'Feedback', base: { status: 'Pending Further Action' }, dynamic: 'overdue' },
+  ],
+  '/goals': [
+    { label: 'Goals past target date', entity: 'Goal', base: { target_date: { $lt: '' }, status: { $nin: ['Achieved'] } }, dynamic: 'overdue' },
+  ],
+  '/meetings': [
+    { label: 'Meeting actions overdue', entity: 'MeetingActionRecord', base: { due_date: { $lt: '' }, status: { $in: ['Open', 'In Progress', 'Overdue'] } }, dynamic: 'overdue' },
+  ],
+  '/quality': [
+    { label: 'Improvement items open', entity: 'QualityItem', base: { status: { $in: ['New', 'In Progress'] } }, dynamic: 'overdue' },
+  ],
+  '/visual-boards': [
+    { label: 'Routines past their date', entity: 'VisualRoutine', base: { routine_date: { $lt: '' } }, dynamic: 'overdue' },
+  ],
+  '/communications': [
+    { label: 'Entries flagging issues', entity: 'CommunicationEntry', base: { issues_concerns: { $exists: true, $ne: '' } }, dynamic: 'overdue' },
+  ],
+  '/analytics': [
+    { label: 'KPIs at risk or off track', entity: 'KPI', base: { status: { $in: ['At Risk', 'Off Track'] } }, dynamic: 'overdue' },
+  ],
+  '/community-council': [
+    { label: 'Community events coming up', entity: 'CommunityEvent', base: { event_date: { $gte: '', $lte: '' } }, dynamic: 'soon', soon: 14 },
+    { label: 'Programs still open', entity: 'CommunityProgram', base: { status: 'Open' }, dynamic: 'overdue' },
+  ],
+  '/contacts': [
+    { label: 'Contacts missing phone or email', entity: 'Contact', base: { $or: [{ phone: { $in: [null, ''] } }, { email: { $in: [null, ''] } }] }, dynamic: 'overdue' },
+  ],
+  '/help': [
+    { label: 'Help tickets open', entity: 'HelpDeskTicket', base: { status: { $in: ['Open', 'In Progress'] } }, dynamic: 'overdue' },
+  ],
 };
 
 // Build concrete Mongo filters with real dates for one entry.
@@ -99,3 +140,5 @@ export function trackerQuery(item, mode) {
 MODULE_TRACKERS['/volunteering-placements'] = MODULE_TRACKERS['/volunteers'];
 MODULE_TRACKERS['/key-contacts'] = MODULE_TRACKERS['/contacts'];
 MODULE_TRACKERS['/community-referral'] = MODULE_TRACKERS['/referrals'];
+MODULE_TRACKERS['/rostering'] = MODULE_TRACKERS['/roster'];
+MODULE_TRACKERS['/msds'] = MODULE_TRACKERS['/equipment-manuals'];

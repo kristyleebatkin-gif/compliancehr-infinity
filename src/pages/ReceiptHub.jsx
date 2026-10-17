@@ -17,6 +17,7 @@ import ScanToPdf from '@/components/receipts/ScanToPdf';
 import { fileReceiptToAssetRegister } from '@/lib/assetRegister';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
@@ -121,6 +122,7 @@ export default function ReceiptHub() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/receipts" />
+            <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Receipts', String(receipts.length)], ['Unreconciled', money(unrecTotal)], ['To reimburse', money(reimburseTotal)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">

@@ -13,6 +13,9 @@ import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleDocsButton from '@/components/ModuleDocsButton';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -90,6 +93,9 @@ export default function KeyContacts() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <ModuleDocsButton />
+            <ModuleComplianceStrip path="/contacts" />
+            <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Contacts', String(contacts.length)], ['Emergency', String(contacts.filter((c) => c.category === 'Emergency').length)], ['Medical', String(contacts.filter((c) => c.category === 'Medical').length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">

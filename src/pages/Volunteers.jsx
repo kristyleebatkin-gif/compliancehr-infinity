@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 
@@ -68,6 +69,7 @@ export default function Volunteers() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/volunteers" />
+            <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Total', String(volunteers.length)], ['Active', String(volunteers.filter((v) => v.status === 'Active').length)], ['Onboarding', String(volunteers.filter((v) => v.status === 'Onboarding').length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">

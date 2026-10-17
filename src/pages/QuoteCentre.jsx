@@ -17,6 +17,7 @@ import QuoteBuilder from '@/components/quotes/QuoteBuilder';
 import QuotePreview from '@/components/quotes/QuotePreview';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`);
 const STATUSES = ['Draft', 'Sent', 'Accepted', 'Declined', 'Expired'];
@@ -163,6 +164,7 @@ export default function QuoteCentre() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/quotes" />
+            <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Quotes', String(quotes.length)], ['Quoted value', money(totalValue)], ['Accepted', money(acceptedValue)], ['Win rate', `${winRate}%`], ['Expiring soon', String(expiringSoon)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">

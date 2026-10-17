@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { Input } from '@/components/ui/input';
 import { Newspaper, RefreshCw, ExternalLink, Mail, Search } from 'lucide-react';
 
@@ -97,6 +99,8 @@ export default function NdisUpdates() {
               <p className="text-sm text-slate-300">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
             </div>
           </div>
+          <ModuleComplianceStrip path="/ndis-updates" />
+          <ModuleAuditChecklistButton />
           <ModuleAuditButton />
           <Button onClick={refresh} disabled={refreshing} className="bg-white/10 text-white hover:bg-white/20">
             {refreshing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
