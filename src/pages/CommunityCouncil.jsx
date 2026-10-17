@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { MapPin, ExternalLink, Phone, Mail, CalendarDays, Search, Loader2, Building2, Heart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LocalServices from '@/components/referral/LocalServices';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;
@@ -54,11 +56,17 @@ export default function CommunityCouncil() {
   return (
     <div className="space-y-6">
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900 p-6 text-white shadow-lg">
-        <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-white/10 p-3"><MapPin className="h-7 w-7" /></div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">Community & Council</h1>
-            <p className="text-sm text-teal-100">Find your local council, its contact details, what's on and community events for your postcode.</p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="rounded-xl bg-white/10 p-3"><MapPin className="h-7 w-7" /></div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Community & Council</h1>
+              <p className="text-sm text-teal-100">Find your local council, its contact details, what's on and community events for your postcode.</p>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <ModuleComplianceStrip path="/community-council" />
+            <ModuleAuditButton />
           </div>
         </div>
       </div>

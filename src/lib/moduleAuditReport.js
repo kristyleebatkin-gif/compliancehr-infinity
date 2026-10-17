@@ -5,6 +5,8 @@ import { jsPDF } from 'jspdf';
 import { base44 } from '@/api/base44Client';
 import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
 import { MODULE_TRACKERS, trackerQuery } from '@/lib/moduleTrackers';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { buildModuleAuditChecklist, buildCorrectiveActions, isDocRegister } from '@/lib/moduleAuditChecklists';
 
 const TITLE_FIELDS = ['title', 'full_name', 'name', 'subject', 'entry_title', 'applicant_name', 'business_name', 'equipment_name', 'message'];
 const recordTitle = (r) => { for (const f of TITLE_FIELDS) { if (r?.[f]) return String(r[f]); } return 'Untitled record'; };
@@ -51,6 +53,8 @@ export const MODULE_AUDIT_ENTITIES = {
   '/projects': [['BusinessProject', 'Business projects']],
   '/visual-boards': [['VisualRoutine', 'Visual routines']],
   '/hr': [['LeaveRequest', 'Leave requests'], ['PerformanceReview', 'Performance reviews']],
+  '/community-council': [['CommunityProgram', 'Community programs'], ['CommunityEvent', 'Community events'], ['CommunityReferralService', 'Community referral services']],
+  '/analytics': [['KPI', 'Business KPIs']],
 };
 
 // Route aliases so every URL of a module gets the same audit scope.
@@ -64,6 +68,19 @@ const COL = {
   red: [220, 38, 38],
   slate: [100, 116, 139],
 };
+
+// Canonical module label for a path (aliases resolve to their module).
+const PATH_ALIASES = {
+  '/key-contacts': '/contacts',
+  '/volunteering-placements': '/volunteers',
+  '/community-referral': '/referrals',
+  '/roster': '/rostering',
+  '/msds': '/equipment-manuals',
+};
+export const moduleLabelFor = (path) =>
+  MODULE_DIRECTORY.find((m) => m.path === (PATH_ALIASES[path] || path))?.label || path;
+
+const escapeRegex = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 async function gatherTrackers(path) {
   const items = MODULE_TRACKERS[path] || [];
@@ -84,11 +101,12 @@ export async function gatherModuleAudit(path) {
     const batch = list.slice(i, i + 6);
     const results = await Promise.allSettled(
       batch.map(async ([entity, label]) => {
-        const [total, recent] = await Promise.all([
+        const [total, recent, recent90] = await Promise.all([
           base44.entities[entity].count({}),
           base44.entities[entity].count({ created_date: { $gte: `${minusDays(30)}T00:00:00` } }),
+          base44.entities[entity].count({ created_date: { $gte: `${minusDays(90)}T00:00:00` } }),
         ]);
-        return { entity, label, count: total, recent };
+        return { entity, label, count: total, recent, recent90 };
       }),
     );
     results.forEach((r) => { if (r.status === 'fulfilled') entities.push(r.value); });
@@ -103,7 +121,38 @@ export async function gatherModuleAudit(path) {
     } catch { recentRecords = []; }
   }
 
-  return { path, entities, trackers: await gatherTrackers(path), recentRecords };
+  // Documents & forms on file for this module (latest entry per document register).
+  const docs = [];
+  for (const e of entities.filter((e) => isDocRegister(e.label))) {
+    let latest = '';
+    try {
+      const p = await base44.entities[e.entity].filter({}, { sort: '-created_date', limit: 1 });
+      latest = p.items?.[0] ? recordTitle(p.items[0]) : '';
+    } catch { latest = ''; }
+    docs.push({ label: e.label, count: e.count, latest });
+  }
+
+  // Forms Library currency (Employee + Participant libraries).
+  const formsCounts = { Employee: 0, Participant: 0 };
+  try {
+    const [emp, par] = await Promise.allSettled([
+      base44.entities.FormsLibraryDocument.count({ library: 'Employee' }),
+      base44.entities.FormsLibraryDocument.count({ library: 'Participant' }),
+    ]);
+    if (emp.status === 'fulfilled') formsCounts.Employee = emp.value;
+    if (par.status === 'fulfilled') formsCounts.Participant = par.value;
+  } catch { /* Forms Library empty */ }
+
+  // Prior internal audit evidence logged for this module.
+  let priorAudits = 0;
+  try {
+    priorAudits = await base44.entities.Register.count({
+      register_type: 'Internal Audit Register',
+      entry_title: { $regex: escapeRegex(moduleLabelFor(path)) },
+    });
+  } catch { priorAudits = 0; }
+
+  return { path, entities, trackers: await gatherTrackers(path), recentRecords, docs, formsCounts, priorAudits };
 }
 
 function trackerColour(mode, value) {
@@ -158,6 +207,9 @@ export async function downloadModuleAuditReport(audit, moduleLabel, { generatedB
   const totalRecords = audit.entities.reduce((s, e) => s + (e.count || 0), 0);
   const recentTotal = audit.entities.reduce((s, e) => s + (e.recent || 0), 0);
   const alerts = audit.trackers.filter((t) => t.value > 0);
+  const { items: checklist } = buildModuleAuditChecklist(audit);
+  const correctiveActions = buildCorrectiveActions(audit, { owner: generatedBy });
+  const passCount = checklist.filter((c) => c.status === 'Pass').length;
   doc.setFillColor(226, 240, 252);
   doc.roundedRect(40, y, pageW - 80, 58, 5, 5, 'F');
   doc.setFont('helvetica', 'bold');
@@ -191,6 +243,28 @@ export async function downloadModuleAuditReport(audit, moduleLabel, { generatedB
     y += 8;
   }
 
+  // Compliance audit checklist (live, evaluated from module data)
+  if (checklist.length) {
+    y = heading(doc, y, `Compliance Audit Checklist (${passCount}/${checklist.length} in place)`);
+    for (const c of checklist) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(50);
+      doc.text(doc.splitTextToSize(c.item, pageW - 200)[0], 40, y);
+      const col = c.status === 'Pass' ? COL.green : c.status === 'Attention' ? COL.amber : COL.slate;
+      doc.setTextColor(col[0], col[1], col[2]);
+      doc.text(c.status.toUpperCase(), pageW - 40, y, { align: 'right' });
+      y += 12;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(120);
+      doc.text(doc.splitTextToSize(c.evidence, pageW - 100)[0], 48, y);
+      y += 13;
+    }
+    y += 8;
+  }
+
   // Data holdings table
   if (audit.entities.length) {
     y = heading(doc, y, 'Data Holdings (records on file)');
@@ -220,6 +294,76 @@ export async function downloadModuleAuditReport(audit, moduleLabel, { generatedB
     y += 8;
   }
 
+  // Corrective action register
+  y = heading(doc, y, 'Corrective Action Register');
+  if (correctiveActions.length === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(70);
+    doc.text('No corrective actions required: all tracked compliance items were in date at audit time.', 40, y);
+    y += 20;
+  } else {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(60);
+    doc.text('ACTION', 40, y);
+    doc.text('OWNER', pageW * 0.56, y);
+    doc.text('DUE', pageW * 0.76, y, { align: 'right' });
+    doc.text('STATUS', pageW - 40, y, { align: 'right' });
+    y += 12;
+    doc.setDrawColor(210);
+    doc.line(40, y, pageW - 40, y);
+    y += 13;
+    doc.setFont('helvetica', 'normal');
+    for (const a of correctiveActions) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFontSize(9);
+      doc.setTextColor(50);
+      doc.text(doc.splitTextToSize(a.action, pageW * 0.5)[0], 40, y);
+      doc.text(a.owner, pageW * 0.56, y);
+      doc.text(a.due, pageW * 0.76, y, { align: 'right' });
+      doc.setTextColor(...COL.red);
+      doc.text(a.status, pageW - 40, y, { align: 'right' });
+      doc.setTextColor(50);
+      y += 16;
+    }
+    y += 6;
+  }
+
+  // Documents & forms on file
+  y = heading(doc, y, 'Documents & Forms on File');
+  const docCount = (audit.docs || []).reduce((s, d) => s + (d.count || 0), 0);
+  const formsTotal = (audit.formsCounts?.Employee || 0) + (audit.formsCounts?.Participant || 0);
+  if (docCount === 0 && formsTotal === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(70);
+    doc.text('No document or form registers apply to this module.', 40, y);
+    y += 20;
+  } else {
+    for (const d of audit.docs) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(50);
+      doc.text(d.label, 40, y, { maxWidth: pageW * 0.35 });
+      doc.text(`${d.count} on file`, pageW * 0.56, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(120);
+      const latest = d.latest ? `Latest: ${doc.splitTextToSize(d.latest, pageW * 0.36)[0]}` : 'No entries yet';
+      doc.text(latest, pageW * 0.64, y, { maxWidth: pageW * 0.3 });
+      y += 16;
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(50);
+    doc.text('Forms Library', 40, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(120);
+    doc.text(`Employee forms: ${audit.formsCounts?.Employee || 0}  |  Participant forms: ${audit.formsCounts?.Participant || 0}`, pageW * 0.56, y);
+    y += 18;
+  }
+
   // Recent records from the primary register
   if (audit.recentRecords.length) {
     y = heading(doc, y, `Most Recent Records (${audit.entities[0]?.label || 'Primary register'})`);
@@ -243,7 +387,7 @@ export async function downloadModuleAuditReport(audit, moduleLabel, { generatedB
   doc.setTextColor(70);
   const statement = [
     `This report provides an internal audit snapshot of the ${moduleLabel} module as at ${generatedAt}.`,
-    `It captures the data held across ${audit.entities.length || 0} register(s) (${totalRecords.toLocaleString()} records in total), recent activity in the last 30 days, and the live compliance tracker results for overdue and soon-due items.`,
+    `It captures the data held across ${audit.entities.length || 0} register(s) (${totalRecords.toLocaleString()} records in total), recent activity, the live compliance tracker results, a compliance audit checklist (${passCount}/${checklist.length} items in place), the corrective action register, and all documents and forms on file for this module.`,
     alerts.length
       ? `Attention required: ${alerts.map((a) => `${a.value} ${a.label}`).join(', ')}. Follow up these items and re-run this audit once resolved.`
       : 'No overdue or soon-due items were detected by the live compliance tracker for this module at the time of the audit.',

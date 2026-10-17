@@ -258,6 +258,9 @@ Every module must pass this universal checklist:
 - ✅ Completed: Fixed the due-soon date window in the tracker engine so "expiring soon" counts are accurate everywhere.
 - ✅ Completed: Route aliases added so every URL of a module (e.g. /key-contacts, /volunteering-placements, /community-referral) gets the same audit scope and tracker.
 - ✅ Completed: Full register CSV exports added to Staff Profiles, Participant Profiles, Key Personnel Contacts, Programs & Events, Certificates, Asset Management and Compliance Checklists (these export every record, not just the loaded page).
+- ✅ Completed: Platform-wide review of all module headers: every module now has a professional header with a description of its contents, the live compliance tracker strip and the audit report button (Community & Council added to the standard).
+- ✅ Completed: Every module's audit report now includes a live Compliance Audit Checklist (evaluated from real data: register maintenance, tracker, documents/forms, Forms Library, exports, prior audit evidence, corrective actions), a Corrective Action Register with owners and due dates, and a Documents & Forms on File section listing each document register with counts and latest entries.
+- ✅ Completed: Audit scope extended to Community & Council and Business Analytics; 90-day register-activity check added to every audit.
 
 ---
 
