@@ -5,6 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav } from '@/lib/roles';
 import ModuleGuide from '@/components/ModuleGuide';
+import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
@@ -297,6 +298,7 @@ export default function AppLayout() {
             <ModuleGuide />
           </div>
           <Outlet />
+          <ModuleDocsFooter />
         </main>
 
         {/* Bottom nav (mobile) */}
