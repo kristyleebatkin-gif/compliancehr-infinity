@@ -5,7 +5,7 @@ import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
  * Compliance Audit Report PDF: current compliance status and readiness for
  * every section of the master compliance checklist, with company branding.
  */
-export function downloadComplianceAuditReport({ sections, generatedBy = '', generatedAt = '', overallReadiness = 0 }) {
+export function downloadComplianceAuditReport({ sections, generatedBy = '', generatedAt = '', overallReadiness = 0, correctiveActions = [] }) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -92,6 +92,56 @@ export function downloadComplianceAuditReport({ sections, generatedBy = '', gene
       y += wrapped.length * 12;
     }
     y += 8;
+  }
+
+  // Corrective action register: every non-compliant section, plus any caller-supplied actions.
+  const register = correctiveActions.slice();
+  for (const s of sections) {
+    if (s.status === 'Compliant') continue;
+    register.push({
+      action: `Bring "${s.title}" back to compliance${s.readiness != null ? ` (readiness ${Math.round(s.readiness)}%)` : ''}`,
+      owner: s.owner || 'Compliance Manager',
+      due: s.target_date || new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10),
+      status: s.status === 'At Risk' ? 'Urgent' : 'Open',
+    });
+  }
+  if (y > pageH - 140) { doc.addPage(); y = 64; }
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(30);
+  doc.text(`Corrective Action Register (${register.length} open)`, 40, y);
+  y += 18;
+  if (register.length === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(70);
+    doc.text('No corrective actions required: all compliance sections were compliant at audit time.', 40, y);
+    y += 20;
+  } else {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(60);
+    doc.text('ACTION', 40, y);
+    doc.text('OWNER', pageW * 0.5, y);
+    doc.text('DUE', pageW * 0.72, y, { align: 'right' });
+    doc.text('STATUS', pageW - 40, y, { align: 'right' });
+    y += 12;
+    doc.setDrawColor(210);
+    doc.line(40, y, pageW - 40, y);
+    y += 13;
+    doc.setFont('helvetica', 'normal');
+    for (const a of register) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFontSize(9);
+      doc.setTextColor(50);
+      doc.text(doc.splitTextToSize(a.action, pageW * 0.44)[0], 40, y);
+      doc.text(a.owner, pageW * 0.5, y);
+      doc.text(a.due, pageW * 0.72, y, { align: 'right' });
+      doc.setTextColor(...(a.status === 'Urgent' ? [220, 38, 38] : [202, 138, 4]));
+      doc.text(a.status, pageW - 40, y, { align: 'right' });
+      doc.setTextColor(50);
+      y += 16;
+    }
   }
 
   drawDocumentFooter(doc, { title: 'Compliance Audit Report', code: 'CM-COMP-REPORT' });

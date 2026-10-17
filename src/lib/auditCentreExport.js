@@ -221,6 +221,44 @@ export async function downloadFullBusinessAuditPdf({ counts, trackers, generated
     y += 16;
   }
 
+  // 3. Complete corrective action register derived from the attention list.
+  const due14 = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+  const due30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  const corrective = [];
+  for (const r of attention) {
+    if (r.overdue > 0) corrective.push({ action: `Resolve ${r.overdue} overdue ${r.label.toLowerCase()}`, owner: 'Module owner', due: due14, status: 'Open' });
+    if (r.soon > 0) corrective.push({ action: `Review ${r.soon} ${r.label.toLowerCase()} due soon`, owner: 'Module owner', due: due30, status: 'Open' });
+  }
+  y += 24;
+  if (y > pageH - 130) { doc.addPage(); y = 64; }
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(30);
+  doc.text(`3. Corrective action register (${corrective.length} open)`, 40, y);
+  y += 18;
+  if (corrective.length === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(70);
+    doc.text('No corrective actions required: every tracked compliance item was in date at audit time.', 40, y);
+    y += 20;
+  } else {
+    tableHeader(['Action', 'Owner', 'Due', 'Status'], [40, pageW * 0.5, pageW * 0.72, pageW - 40]);
+    doc.setFont('helvetica', 'normal');
+    for (const a of corrective) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFontSize(9);
+      doc.setTextColor(30);
+      doc.text(doc.splitTextToSize(a.action, pageW * 0.44)[0], 40, y);
+      doc.setTextColor(120);
+      doc.text(a.owner, pageW * 0.5, y);
+      doc.text(a.due, pageW * 0.72, y, { align: 'right' });
+      doc.setTextColor(185, 60, 40);
+      doc.text(a.status, pageW - 40, y, { align: 'right' });
+      y += 16;
+    }
+  }
+
   y += 24;
   if (y > pageH - 110) { doc.addPage(); y = 64; }
   doc.setFont('helvetica', 'bold');
@@ -245,7 +283,7 @@ export async function downloadFullBusinessAuditPdf({ counts, trackers, generated
     await base44.entities.Register.create({
       register_type: 'Internal Audit Register',
       entry_title: `Full Business Audit Report generated (${generatedAt})`,
-      description: `Full business audit PDF exported: ${rows.length} modules, ${totalRecords} records, ${overdueTotal} overdue attention items.`,
+      description: `Full business audit PDF exported: ${rows.length} modules, ${totalRecords} records, ${overdueTotal} overdue attention items, corrective action register included.`,
       recorded_date: new Date().toISOString().slice(0, 10),
       status: 'Exported',
       owner: generatedBy || 'System',

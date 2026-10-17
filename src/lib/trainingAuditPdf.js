@@ -217,6 +217,40 @@ export function downloadTrainingAuditReport(data) {
     doc.text('No training completions recorded yet.', 40, y);
   }
 
+  // Complete corrective action register: every expired and expiring certification.
+  const due14 = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+  const due30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  const corrective = [];
+  for (const r of rows) {
+    if (r.counts.expired > 0) corrective.push({ action: `Renew ${r.counts.expired} expired certification(s)`, owner: r.full_name || 'Staff member', due: due14, status: 'Open' });
+    if (r.counts.soon > 0) corrective.push({ action: `Schedule renewal of ${r.counts.soon} expiring certification(s)`, owner: r.full_name || 'Staff member', due: due30, status: 'Open' });
+  }
+  doc.addPage();
+  y = 50;
+  y = sectionTitle(doc, `Corrective Action Register (${corrective.length} open)`, y);
+  y += 4;
+  if (corrective.length === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(MUTED);
+    doc.text('No corrective actions required: every staff certification was current at audit time.', 40, y);
+  } else {
+    y = table(doc,
+      [
+        { label: 'Action', width: 260 },
+        { label: 'Owner', width: 160 },
+        { label: 'Due', width: 100 },
+        { label: 'Status', width: 100 },
+      ],
+      corrective.map((a) => [a.action, a.owner, a.due, a.status]),
+      y
+    );
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(MUTED);
+    doc.text('Actions are due 14 days from issue for expired certifications and 30 days for those expiring soon.', 40, y);
+  }
+
   footer(doc);
   doc.save(`Training-Certification-Audit-Report.pdf`);
 }
