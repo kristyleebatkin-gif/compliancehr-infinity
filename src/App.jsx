@@ -56,6 +56,7 @@ import NdisUpdates from '@/pages/NdisUpdates';
 import QuoteCentre from '@/pages/QuoteCentre';
 import ReceiptHub from '@/pages/ReceiptHub';
 import HelpCentre from '@/pages/HelpCentre';
+import Notifications from '@/pages/Notifications';
 import UserGuides from '@/pages/UserGuides';
 import AnalyticsHub from '@/pages/AnalyticsHub';
 import HrHub from '@/pages/HrHub';
@@ -146,6 +147,7 @@ const AuthenticatedApp = () => {
           <Route path="/data-control" element={<Navigate to="/documents" replace />} />
           <Route path="/users" element={<RoleGate navKey="users"><UsersPermissionsHub /></RoleGate>} />
           <Route path="/help" element={<HelpCentre />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/user-guides" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
           <Route path="/manual" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
           <Route path="/analytics" element={<RoleGate navKey="analytics"><AnalyticsHub /></RoleGate>} />

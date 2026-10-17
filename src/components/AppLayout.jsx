@@ -37,9 +37,20 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (!user?.id || accountStatus !== 'Active') return;
-    base44.entities.Notification.filter({ recipient_id: user.id }, { sort: '-created_date', limit: 10 })
-      .then((page) => setNotifications(page.items || []))
-      .catch((error) => console.error(error));
+    const loadNotifications = () => {
+      base44.entities.Notification.filter({ recipient_id: user.id }, { sort: '-created_date', limit: 10 })
+        .then((page) => setNotifications(page.items || []))
+        .catch((error) => console.error(error));
+    };
+    loadNotifications();
+    const unsubscribe = base44.entities.Notification.subscribe((event) => {
+      if (event.type === 'create' && event.data?.recipient_id === user.id) {
+        setNotifications((prev) => [event.data, ...prev].slice(0, 10));
+      } else {
+        loadNotifications();
+      }
+    });
+    return unsubscribe;
   }, [accountStatus, user?.id]);
 
   useEffect(() => {
@@ -254,6 +265,13 @@ export default function AppLayout() {
                         </div>
                       ))}
                     </div>
+                    <Link
+                      to="/notifications"
+                      onClick={() => setNotifOpen(false)}
+                      className="mt-2 block rounded-lg bg-brand/5 py-2 text-center text-xs font-semibold text-brand hover:bg-brand/10"
+                    >
+                      Open notification centre
+                    </Link>
                   </div>
                 </>
               )}
