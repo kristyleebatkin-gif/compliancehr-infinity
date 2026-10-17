@@ -31,7 +31,7 @@ export default function Dashboard() {
         <div className="absolute -bottom-24 -left-12 h-48 w-48 rounded-full bg-violet-900/25" />
         <div className="relative mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur">
           <Sparkles className="h-3.5 w-3.5 text-cyan-100" />
-          Your ComplianceHR workspace
+          Your ComplianceHR Infinitely workspace
         </div>
         <h1 className="relative font-display text-3xl font-extrabold tracking-tight text-white md:text-4xl">
           {firstName ? `Welcome, ${firstName}` : heading.title}
