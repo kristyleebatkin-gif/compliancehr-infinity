@@ -147,6 +147,7 @@ const AuthenticatedApp = () => {
           <Route path="/users" element={<RoleGate navKey="users"><UsersPermissionsHub /></RoleGate>} />
           <Route path="/help" element={<HelpCentre />} />
           <Route path="/user-guides" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
+          <Route path="/manual" element={<RoleGate navKey="user-guides"><UserGuides /></RoleGate>} />
           <Route path="/analytics" element={<RoleGate navKey="analytics"><AnalyticsHub /></RoleGate>} />
           <Route path="/hr" element={<RoleGate navKey="human-resources"><HrHub /></RoleGate>} />
           <Route path="/crm" element={<RoleGate navKey="crm"><CrmHub /></RoleGate>} />

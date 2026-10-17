@@ -18,7 +18,6 @@ import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import VaultUploads from '@/components/documents/VaultUploads';
-import { EMPLOYEE_FILE_SECTIONS, EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -251,16 +250,6 @@ export default function Documents() {
         <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
         <span className="text-sm font-bold font-editorial text-foreground/80">Forms &amp; document libraries</span>
         <span className="h-1 w-8 rounded-full bg-brand" />
-      </div>
-      <div id="vault-employee" className="scroll-mt-24">
-      <AttachedFormsLibrary
-        title="Employee Forms Library"
-        subtitle="Official employee onboarding forms - download templates or upload completed records"
-        libraryKey="Employee"
-        sections={EMPLOYEE_FILE_SECTIONS}
-        formFiles={EMPLOYEE_FORM_FILES}
-        formCodes={EMPLOYEE_FORM_CODES}
-      />
       </div>
       <div id="vault-participant" className="scroll-mt-24">
       <AttachedFormsLibrary

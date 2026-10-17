@@ -18,6 +18,8 @@ const MODULE_LABELS = {
   'volunteering-placements': 'Volunteering & Placements', 'whats-on': "What's On", communications: 'Communication Centre',
   portal: 'Participant Portal', 'safety-insights': 'Safety Insights', analytics: 'Business Analytics',
   crm: 'CRM & Leads', procurement: 'Procurement', projects: 'Projects Hub', help: 'Help Centre',
+  'user-guides': 'User Guides', events: 'Events', 'whats-on': "What's On", weather: 'Weather',
+  notifications: 'Notifications', portal: 'Participant Portal', 'safety-insights': 'Safety Insights',
 };
 
 const ROLE_COLUMNS = [

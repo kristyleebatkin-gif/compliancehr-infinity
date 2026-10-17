@@ -11,6 +11,8 @@ import { Plus, Trash2, ClipboardList, Check, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 
 export default function Checklists() {
   const [lists, setLists] = useState([]);
@@ -79,6 +81,8 @@ export default function Checklists() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
+        <ModuleAuditChecklistButton />
+        <ModuleAuditButton />
         <Button variant="outline" onClick={exportRegister} disabled={loading || !lists.length}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New checklist</Button></DialogTrigger>
