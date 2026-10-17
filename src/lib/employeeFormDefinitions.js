@@ -236,7 +236,7 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
       field('Office use: processed by and date'),
     ],
   },
-  'Disability Discrimination Act 1992 Acknowledgement': {
+  'Disability Discrimination Act 1992': {
     fields: [
       ...personal,
       field('Acknowledgement: I understand my obligations under the Disability Discrimination Act 1992 and will support inclusive, non-discriminatory practice', true),
@@ -259,6 +259,15 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
       field('Roll call completed and all staff accounted for'),
       field('Issues identified and improvements required', true),
       field('Completed by and signature date'),
+    ],
+  },
+  'Staff Handbook': {
+    fields: [
+      ...personal,
+      field('Handbook version received'),
+      field('Topics acknowledged: conduct, safety, privacy, incident reporting and employment conditions', true),
+      field('Acknowledgement: I have read and understood the Staff Handbook', true),
+      field('Signature date'),
     ],
   },
   'Staff File Checklist': {

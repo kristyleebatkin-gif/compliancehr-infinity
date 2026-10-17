@@ -119,8 +119,9 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
       <div className="relative px-6 py-6 text-white" style={{ background: `linear-gradient(120deg, ${primary} 0%, ${accent} 100%)` }}>
-        <div className="flex flex-wrap items-center gap-5">
-          <label className="group relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-full border-2 border-white/60 bg-white/15">
+        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 8%, rgba(255,255,255,0.28), transparent 42%), radial-gradient(circle at 6% 95%, rgba(255,255,255,0.18), transparent 38%)' }} />
+        <div className="relative flex flex-wrap items-center gap-5">
+          <label className="group relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-full border-2 border-white/70 ring-4 ring-white/25 bg-white/15">
             {photoUrl
               ? <img src={photoUrl} alt={profile.full_name} className="h-full w-full object-cover" />
               : <div className="flex h-full w-full items-center justify-center"><UserRound className="h-9 w-9 text-white/80" /></div>}

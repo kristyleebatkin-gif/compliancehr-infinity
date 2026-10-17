@@ -149,7 +149,11 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   doc.setTextColor(71, 85, 105);
   doc.text(branding.slogan, textX, y + 8, { maxWidth });
   doc.setFillColor(37, 99, 235);
-  doc.rect(textX, y + 12, Math.min(42, maxWidth), 2, 'F');
+  doc.rect(textX, y + 14, 18, 2.5, 'F');
+  doc.setFillColor(124, 58, 237);
+  doc.rect(textX + 18, y + 14, 18, 2.5, 'F');
+  doc.setFillColor(236, 72, 153);
+  doc.rect(textX + 36, y + 14, 18, 2.5, 'F');
   return { ...branding, textX };
 }
 
@@ -189,6 +193,12 @@ export function drawDocumentFooter(doc, {
     doc.setPage(page);
     doc.setDrawColor(203, 213, 225);
     doc.line(margin, pageH - 42, pageW - margin, pageH - 42);
+    doc.setFillColor(37, 99, 235);
+    doc.rect(margin, pageH - 46, 18, 2.5, 'F');
+    doc.setFillColor(124, 58, 237);
+    doc.rect(margin + 18, pageH - 46, 18, 2.5, 'F');
+    doc.setFillColor(236, 72, 153);
+    doc.rect(margin + 36, pageH - 46, 18, 2.5, 'F');
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
     doc.setTextColor(100, 116, 139);
@@ -207,9 +217,18 @@ export function drawDocumentFooter(doc, {
         // Preserve the text footer if the cached logo format is unsupported.
       }
     }
-    doc.text(`${companyName}${descriptor ? ` | ${descriptor}` : ''}`, footerTextX, pageH - 29, {
-      maxWidth: pageW - footerTextX - margin - 70,
-    });
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(30, 41, 59);
+    doc.text(companyName, footerTextX, pageH - 29, { maxWidth: pageW - footerTextX - margin - 70 });
+    if (descriptor) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(100, 116, 139);
+      doc.text(descriptor, footerTextX + doc.getTextWidth(companyName) + 10, pageH - 29, {
+        maxWidth: pageW - footerTextX - margin - 70 - doc.getTextWidth(companyName) - 10,
+      });
+    }
     doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 29, { align: 'right' });
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7);

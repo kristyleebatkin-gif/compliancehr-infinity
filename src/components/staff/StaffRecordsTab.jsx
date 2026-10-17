@@ -55,8 +55,12 @@ export default function StaffRecordsTab({ staff }) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><Users className="h-4 w-4 text-brand" />Buddy training shifts ({shifts.length})</div>
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-pink-50 via-violet-50 to-blue-50 px-5 py-3 dark:from-pink-950/30 dark:via-violet-950/30 dark:to-blue-950/30">
+          <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Users className="h-4 w-4" /></span>
+          <span className="text-sm font-bold">Buddy training shifts ({shifts.length})</span>
+        </div>
+        <div className="p-5">
         <div className="mb-4 grid gap-2 sm:grid-cols-4">
           <Input type="date" value={newShift.date} onChange={(e) => setNewShift({ ...newShift, date: e.target.value })} />
           <Input placeholder="Shift" value={newShift.shift} onChange={(e) => setNewShift({ ...newShift, shift: e.target.value })} />
@@ -71,7 +75,7 @@ export default function StaffRecordsTab({ staff }) {
         ) : (
           <div className="space-y-2">
             {shifts.map((s) => (
-              <div key={s.id} className="flex items-start justify-between gap-2 rounded-lg border border-border/60 p-3">
+              <div key={s.id} className="flex items-start justify-between gap-2 rounded-lg border border-border/60 bg-gradient-to-r from-pink-50/60 to-blue-50/60 p-3 dark:from-pink-950/20 dark:to-blue-950/20">
                 <div className="min-w-0">
                   <p className="text-sm font-medium">{s.date} · {s.shift}</p>
                   <p className="text-xs text-muted-foreground">Buddy: {s.buddy_supervisor || 'Not recorded'}{s.comments ? ` · ${s.comments}` : ''}</p>
@@ -83,10 +87,15 @@ export default function StaffRecordsTab({ staff }) {
             ))}
           </div>
         )}
+        </div>
       </div>
 
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><GraduationCap className="h-4 w-4 text-brand" />Training completions ({completions.length})</div>
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-blue-50 via-violet-50 to-pink-50 px-5 py-3 dark:from-blue-950/30 dark:via-violet-950/30 dark:to-pink-950/30">
+          <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><GraduationCap className="h-4 w-4" /></span>
+          <span className="text-sm font-bold">Training completions ({completions.length})</span>
+        </div>
+        <div className="p-5">
         {completions.length === 0 ? (
           <p className="text-sm text-muted-foreground">No training completions recorded.</p>
         ) : (
@@ -102,10 +111,15 @@ export default function StaffRecordsTab({ staff }) {
             ))}
           </div>
         )}
+        </div>
       </div>
 
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><Award className="h-4 w-4 text-brand" />Training certificates ({certificates.length})</div>
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-violet-50 via-pink-50 to-blue-50 px-5 py-3 dark:from-violet-950/30 dark:via-pink-950/30 dark:to-blue-950/30">
+          <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Award className="h-4 w-4" /></span>
+          <span className="text-sm font-bold">Training certificates ({certificates.length})</span>
+        </div>
+        <div className="p-5">
         {certificates.length === 0 ? (
           <p className="text-sm text-muted-foreground">No certificates recorded.</p>
         ) : (
@@ -121,6 +135,7 @@ export default function StaffRecordsTab({ staff }) {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import { format } from 'date-fns';
 
 export const INTAKE_REQUIREMENTS = {
   Participant: [
+    'Participant Intake Form',
+    'Participant Handbook',
     'Participant Intake Assessment',
     'Referral Form',
     'NDIS Plan',
@@ -44,7 +46,7 @@ export const INTAKE_REQUIREMENTS = {
     'NDIS Act 2013 Acknowledgement',
     'NDIS Practice Standards Acknowledgement',
     'Work Health and Safety Act 2011 (Qld) Acknowledgement',
-    'Disability Discrimination Act 1992 Acknowledgement',
+    'Disability Discrimination Act 1992',
     'NDIS Worker Screening Clearance',
     'Blue Card and/or Police Check',
     'Secondary Employment Form',
@@ -78,6 +80,16 @@ export const LEGISLATION_ACK_DOC_TYPES = new Set([
   'NDIS Act 2013 Acknowledgement',
   'NDIS Practice Standards Acknowledgement',
   'Work Health and Safety Act 2011 (Qld) Acknowledgement',
+  'Disability Discrimination Act 1992',
+  'Staff Handbook',
+  'Mandatory Reporting Information',
+]);
+
+// Acknowledgement documents that also keep their Download button, because the
+// download is the information sheet or handbook itself that must be read.
+export const ACK_KEEP_DOWNLOAD_DOC_TYPES = new Set([
+  'Staff Handbook',
+  'Mandatory Reporting Information',
 ]);
 
 export const TRAINING_DOC_LINKS = {
@@ -104,10 +116,15 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'Birth Certificate or Passport',
   'Tax File Number',
   'Qualifications',
+  'Resume',
   'NDIS Worker Screening Clearance',
   'Blue Card and/or Police Check',
   'Car Registration',
   'Immunisation Record',
+  'NDIS Worker Orientation Module Certificate',
+  'NDIS Worker Induction Module Certificate',
+  'NDIS Supporting Safe and Enjoyable Meals Certificate',
+  'NDIS Supporting Effective Communication Certificate',
   'Manual Handling Training Certificate',
   'First Aid Certificate',
   'CPR Certificate',
@@ -124,7 +141,6 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
 export const DOWNLOAD_ONLY_DOC_TYPES = new Set([
   'Mandatory Reporting Information',
   'Staff File Checklist',
-  'Participant File Audit Checklist',
 ]);
 
 const INTAKE_DOCUMENT_ALIASES = {
@@ -163,6 +179,8 @@ const INTAKE_DOCUMENT_ALIASES = {
   'Birth Certificate': 'Birth Certificate or Passport',
   'NDIS Workers Card': 'NDIS Worker Screening Clearance',
   'Medication Administration Training': 'Medication Administration Training Certificate',
+  'Disability Discrimination Act 1992 Acknowledgement': 'Disability Discrimination Act 1992',
+  'Participant handbook or Easy Read handbook': 'Participant Handbook',
 };
 
 export function canonicalIntakeDocumentType(documentType) {
@@ -258,18 +276,6 @@ export function intakeReadiness(intakeCase) {
     complete: completed.has(label),
     kind: 'document',
   }));
-  if (intakeCase?.intake_type === 'Participant') {
-    documentChecks.unshift({
-      label: 'Participant handbook or Easy Read handbook',
-      complete: completed.has('Participant Handbook') || completed.has('Participant Easy Read Handbook'),
-      kind: 'document',
-    });
-    documentChecks.unshift({
-      label: 'Participant Intake Form',
-      complete: completed.has('Participant Intake Form'),
-      kind: 'document',
-    });
-  }
   const checks = [...identityChecks, ...documentChecks];
   const completeCount = checks.filter((check) => check.complete).length;
   return {

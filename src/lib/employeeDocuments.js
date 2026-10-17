@@ -28,7 +28,7 @@ export const EMPLOYEE_FILE_SECTIONS = [
   { name: 'Workforce Exit & File Management', icon: ShieldCheck, docs: ['Staff Exit Form', 'Staff File Checklist'] },
   { name: 'Vehicle & Safety Compliance', icon: CarFront, docs: ['Car Safety Check Form'] },
   { name: 'Staff Resources', icon: BookOpen, docs: ['Staff Handbook'] },
-  { name: 'Legislation & Worker Acknowledgements', icon: BookOpen, docs: ['NDIS Act 2013 Acknowledgement', 'NDIS Practice Standards Acknowledgement', 'Work Health and Safety Act 2011 (Qld) Acknowledgement'] },
+  { name: 'Legislation & Worker Acknowledgements', icon: BookOpen, docs: ['NDIS Act 2013 Acknowledgement', 'NDIS Practice Standards Acknowledgement', 'Work Health and Safety Act 2011 (Qld) Acknowledgement', 'Disability Discrimination Act 1992', 'Mandatory Reporting Information'] },
 ];
 
 export const EMPLOYEE_DOC_TYPES = EMPLOYEE_FILE_SECTIONS.flatMap((s) => s.docs);

@@ -11,34 +11,32 @@ export function downloadBlankFormPdf({ title, code, subtitle = 'ComplianceHR For
   const pageH = doc.internal.pageSize.getHeight();
   let y = 54;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.setTextColor(91, 44, 131);
   drawCompanyBranding(doc, 40, y);
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(130);
-  doc.text('COMPLIANCE MANAGEMENT PLATFORM', 40, y + 14);
-  y += 34;
+  y += 44;
 
-  doc.setFontSize(16);
+  // Title band: soft tinted strip with the form title, subject line and a
+  // violet form-code pill on the right.
+  doc.setFillColor(244, 242, 253);
+  doc.roundedRect(40, y - 16, pageW - 80, 34, 5, 5, 'F');
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(30);
-  doc.text(title, 40, y);
+  doc.setFontSize(14);
+  doc.setTextColor(49, 27, 105);
+  doc.text(title, 54, y + 2);
   if (code) {
-    doc.setFontSize(9);
-    doc.setTextColor(0, 166, 166);
-    doc.text(code, pageW - 40 - doc.getTextWidth(code), y);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    const codeW = doc.getTextWidth(code) + 16;
+    doc.setFillColor(124, 58, 237);
+    doc.roundedRect(pageW - 54 - codeW, y - 9, codeW, 16, 8, 8, 'F');
+    doc.setTextColor(255);
+    doc.text(code, pageW - 54 - codeW + 8, y + 2.5);
   }
-  y += 14;
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(110);
-  doc.text(subtitle, 40, y);
   y += 12;
-  doc.setDrawColor(210);
-  doc.line(40, y, pageW - 40, y);
-  y += 20;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text(subtitle, 54, y + 3);
+  y += 30;
 
   const writeFieldRow = (label) => {
     if (y > pageH - 60) { doc.addPage(); y = 54; }
@@ -61,7 +59,7 @@ export function downloadBlankFormPdf({ title, code, subtitle = 'ComplianceHR For
     const tableW = pageW - margin * 2;
     const colW = tableW / columns.length;
     const rowH = 30;
-    doc.setFillColor(91, 44, 131);
+    doc.setFillColor(124, 58, 237);
     doc.rect(margin, y, tableW, rowH, 'F');
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7.5);
