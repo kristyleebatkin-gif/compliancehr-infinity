@@ -120,7 +120,7 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="policies" className="mt-4 space-y-4">
-          <div className="flex justify-end">
+          <div className="flex">
             <Dialog open={pOpen} onOpenChange={setPOpen}>
               <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add policy</Button></DialogTrigger>
               <DialogContent>
@@ -184,7 +184,7 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="requirements" className="mt-4 space-y-4">
-          <div className="flex justify-end">
+          <div className="flex">
             <Dialog open={rOpen} onOpenChange={setROpen}>
               <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add requirement</Button></DialogTrigger>
               <DialogContent>
