@@ -8,7 +8,7 @@ import { canonicalIntakeDocumentType } from '@/lib/intakeCases';
  * NDIS number), one column per required document. Updates automatically as
  * intake and profile documents are submitted.
  */
-const COLUMNS = [
+export const COLUMNS = [
   'Service Agreement',
   'NDIS Plan',
   'Participant Support Plan',
@@ -19,20 +19,25 @@ const COLUMNS = [
   'Fire Drill Form',
 ];
 
-export default function ParticipantFileMatrix({ participants, intakeDocs }) {
+// Shared with the audit checklist/report: one row per participant, with a
+// boolean per listed document from the participant file checklist.
+export function participantFileCoverage(participants = [], intakeDocs = []) {
   const intakeByProfile = new Map();
   (intakeDocs || []).forEach((record) => {
     if (!record.profile_id) return;
     if (!intakeByProfile.has(record.profile_id)) intakeByProfile.set(record.profile_id, new Set());
     intakeByProfile.get(record.profile_id).add(canonicalIntakeDocumentType(record.document_type));
   });
-
-  const rows = (participants || []).map((participant) => {
+  return (participants || []).map((participant) => {
     const docs = intakeByProfile.get(participant.id) || new Set();
     const cells = COLUMNS.map((column) => docs.has(column));
     const pct = Math.round((cells.filter(Boolean).length / COLUMNS.length) * 100);
     return { participant, cells, pct };
   });
+}
+
+export default function ParticipantFileMatrix({ participants, intakeDocs }) {
+  const rows = participantFileCoverage(participants, intakeDocs);
   const overall = rows.length
     ? Math.round(rows.reduce((sum, row) => sum + row.pct, 0) / rows.length)
     : 0;

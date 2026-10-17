@@ -7,6 +7,8 @@ import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding } from '@/
 import { MODULE_TRACKERS, trackerQuery } from '@/lib/moduleTrackers';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { buildModuleAuditChecklist, buildCorrectiveActions, isDocRegister } from '@/lib/moduleAuditChecklists';
+import { COLUMNS as PARTICIPANT_FILE_COLUMNS, participantFileCoverage } from '@/components/compliance/ParticipantFileMatrix';
+import { STAFF_COLUMNS, buildStaffFileSets, staffFileCoverage } from '@/components/compliance/StaffFileMatrix';
 
 const TITLE_FIELDS = ['title', 'full_name', 'name', 'subject', 'entry_title', 'applicant_name', 'business_name', 'equipment_name', 'message'];
 const recordTitle = (r) => { for (const f of TITLE_FIELDS) { if (r?.[f]) return String(r[f]); } return 'Untitled record'; };
@@ -152,7 +154,61 @@ export async function gatherModuleAudit(path) {
     });
   } catch { priorAudits = 0; }
 
-  return { path, entities, trackers: await gatherTrackers(path), recentRecords, docs, formsCounts, priorAudits };
+  // Participant / staff file checklists: live coverage of every listed
+  // document, gathered when the audited module owns that checklist.
+  let fileChecklist = null;
+  if (path === '/participants') fileChecklist = await gatherParticipantFileChecklist();
+  else if (path === '/staff') fileChecklist = await gatherStaffFileChecklist();
+
+  return { path, entities, trackers: await gatherTrackers(path), recentRecords, docs, formsCounts, priorAudits, fileChecklist };
+}
+
+// Live coverage of the participant file checklist: per listed document, how
+// many participant files hold it.
+async function gatherParticipantFileChecklist() {
+  try {
+    const [participantPage, intakePage] = await Promise.all([
+      base44.entities.ParticipantProfile.filter({}, { sort: '-created_date', limit: 500, fields: ['full_name', 'ndis_number'] }),
+      base44.entities.IntakeDocument.filter({ profile_id: { $exists: true, $ne: '' } }, { limit: 1000, fields: ['profile_id', 'document_type'] }),
+    ]);
+    const rows = participantFileCoverage(participantPage.items || [], intakePage.items || []);
+    const entries = PARTICIPANT_FILE_COLUMNS.map((label, index) => ({
+      label,
+      have: rows.filter((row) => row.cells[index]).length,
+      total: rows.length,
+    }));
+    return { kind: 'participant', entries };
+  } catch (e) {
+    console.error('Participant file checklist audit failed', e);
+    return null;
+  }
+}
+
+// Live coverage of the staff file checklist: per listed certificate, licence,
+// ID, rego or card, how many staff files hold it.
+async function gatherStaffFileChecklist() {
+  try {
+    const [staffPage, completions, employeeDocs, intakeDocs] = await Promise.all([
+      base44.entities.StaffProfile.filter({}, { sort: '-created_date', limit: 500, fields: ['full_name', 'employee_number', 'car_rego'] }),
+      base44.entities.TrainingCompletion.filter({}, { limit: 1000, fields: ['module_title', 'employee_name', 'learner_name'] }),
+      base44.entities.EmployeeDocument.filter({}, { limit: 1000, fields: ['employee_name', 'document_type'] }),
+      base44.entities.IntakeDocument.filter({ profile_id: { $exists: true, $ne: '' } }, { limit: 1000, fields: ['profile_id', 'document_type'] }),
+    ]);
+    const rows = staffFileCoverage(staffPage.items || [], buildStaffFileSets({
+      completions: completions.items || [],
+      employeeDocs: employeeDocs.items || [],
+      intakeDocs: intakeDocs.items || [],
+    }));
+    const entries = STAFF_COLUMNS.map((column, index) => ({
+      label: column.label,
+      have: rows.filter((row) => row.cells[index]).length,
+      total: rows.length,
+    }));
+    return { kind: 'staff', entries };
+  } catch (e) {
+    console.error('Staff file checklist audit failed', e);
+    return null;
+  }
 }
 
 function trackerColour(mode, value) {
@@ -261,6 +317,27 @@ export async function downloadModuleAuditReport(audit, moduleLabel, { generatedB
       doc.setTextColor(120);
       doc.text(doc.splitTextToSize(c.evidence, pageW - 100)[0], 48, y);
       y += 13;
+    }
+    y += 8;
+  }
+
+  // File checklist coverage section (participant / staff modules)
+  if (audit.fileChecklist?.entries?.length) {
+    const subjectLabel = audit.fileChecklist.kind === 'participant' ? 'Participant File Checklist' : 'Staff File Checklist';
+    y = heading(doc, y, `${subjectLabel} Coverage (live)`);
+    for (const e of audit.fileChecklist.entries) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(50);
+      doc.text(e.label, 40, y, { maxWidth: pageW * 0.5 });
+      const complete = e.total > 0 && e.have === e.total;
+      const colour = e.total === 0 ? COL.slate : complete ? COL.green : COL.amber;
+      const statusText = e.total === 0 ? 'No files yet' : `${e.have} of ${e.total} on file`;
+      doc.setTextColor(...colour);
+      doc.text(statusText, pageW - 40, y, { align: 'right' });
+      doc.setTextColor(50);
+      y += 16;
     }
     y += 8;
   }

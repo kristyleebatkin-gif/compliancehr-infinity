@@ -32,7 +32,9 @@ export function staffColumnStatus(staff, column, trainingSet, docSet, intakeSet)
   return false;
 }
 
-export default function StaffFileMatrix({ staff, completions, employeeDocs, intakeDocs }) {
+// Shared with the audit checklist/report: indexes the evidence sets the staff
+// file checklist is evaluated against.
+export function buildStaffFileSets({ completions = [], employeeDocs = [], intakeDocs = [] } = {}) {
   const trainingByName = new Map();
   const docsByName = new Map();
   const intakeByProfile = new Map();
@@ -54,16 +56,24 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
     if (!intakeByProfile.has(record.profile_id)) intakeByProfile.set(record.profile_id, new Set());
     intakeByProfile.get(record.profile_id).add(record.document_type);
   });
+  return { trainingByName, docsByName, intakeByProfile };
+}
 
-  const rows = (staff || []).map((member) => {
+export function staffFileCoverage(staff = [], sets) {
+  const { trainingByName, docsByName, intakeByProfile } = sets || {};
+  return (staff || []).map((member) => {
     const nameKey = String(member.full_name || '').trim().toLowerCase();
-    const trainingSet = trainingByName.get(nameKey) || new Set();
-    const docSet = docsByName.get(nameKey) || new Set();
-    const intakeSet = intakeByProfile.get(member.id) || new Set();
+    const trainingSet = trainingByName?.get(nameKey) || new Set();
+    const docSet = docsByName?.get(nameKey) || new Set();
+    const intakeSet = intakeByProfile?.get(member.id) || new Set();
     const cells = STAFF_COLUMNS.map((column) => staffColumnStatus(member, column, trainingSet, docSet, intakeSet));
     const pct = Math.round((cells.filter(Boolean).length / STAFF_COLUMNS.length) * 100);
     return { member, cells, pct };
   });
+}
+
+export default function StaffFileMatrix({ staff, completions, employeeDocs, intakeDocs }) {
+  const rows = staffFileCoverage(staff, buildStaffFileSets({ completions, employeeDocs, intakeDocs }));
   const overall = rows.length
     ? Math.round(rows.reduce((sum, row) => sum + row.pct, 0) / rows.length)
     : 0;

@@ -62,18 +62,51 @@ export function buildModuleAuditChecklist(audit) {
       : { item: `All ${t.label.toLowerCase()} actioned`, status: 'Attention', evidence: `${t.value} item(s) open.` });
   }
 
+  // 9+. File checklist coverage: every listed document in the participant or
+  // staff file checklist, checked live against the profiles in the system.
+  const fc = audit.fileChecklist;
+  if (fc?.entries?.length) {
+    const subject = fc.kind === 'participant' ? 'participant' : 'staff';
+    const subjectTitle = fc.kind === 'participant' ? 'Participant file checklist' : 'Staff file checklist';
+    for (const e of fc.entries) {
+      if (!e.total) {
+        items.push({ item: `${subjectTitle}: ${e.label} on file`, status: 'Not required', evidence: `No ${subject} profiles in the system yet.` });
+      } else if (e.have === e.total) {
+        items.push({ item: `${subjectTitle}: ${e.label} on file`, status: 'Pass', evidence: `${e.have} of ${e.total} ${subject} file(s) hold this document.` });
+      } else {
+        items.push({ item: `${subjectTitle}: ${e.label} on file`, status: 'Attention', evidence: `${e.have} of ${e.total} ${subject} file(s) hold this document.` });
+      }
+    }
+  }
+
   return { items, alerts };
 }
 
 // Corrective action register rows for one module audit.
 export function buildCorrectiveActions(audit, { owner = '' } = {}) {
-  const alerts = audit.trackers.filter((t) => t.value > 0);
-  if (alerts.length === 0) return [];
+  const actions = [];
   const due = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
-  return alerts.map((a) => ({
-    action: `Review and resolve ${a.value} ${a.label.toLowerCase()}`,
-    owner: owner || 'Module owner',
-    due: due,
-    status: 'Open',
-  }));
+  for (const a of (audit.trackers || []).filter((t) => t.value > 0)) {
+    actions.push({
+      action: `Review and resolve ${a.value} ${a.label.toLowerCase()}`,
+      owner: owner || 'Module owner',
+      due: due,
+      status: 'Open',
+    });
+  }
+  const fc = audit.fileChecklist;
+  if (fc?.entries?.length) {
+    const subject = fc.kind === 'participant' ? 'participant' : 'staff';
+    for (const e of fc.entries) {
+      if (e.total > 0 && e.have < e.total) {
+        actions.push({
+          action: `Obtain ${e.total - e.have} missing ${e.label} record(s) from ${subject} files`,
+          owner: owner || 'Module owner',
+          due: due,
+          status: 'Open',
+        });
+      }
+    }
+  }
+  return actions;
 }
