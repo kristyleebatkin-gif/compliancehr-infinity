@@ -18,6 +18,16 @@ import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 
 const CATEGORIES = ['Policies', 'Templates', 'Certificates', 'Registrations', 'Licences', 'Financial', 'Other'];
 
+function SectionLabel({ icon: Icon, tint, children }) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><Icon className="h-4 w-4 text-white" /></span>
+      <span className="text-sm font-bold font-editorial text-foreground/80">{children}</span>
+      <span className={`h-1 w-8 rounded-full ${tint}`} />
+    </div>
+  );
+}
+
 export default function CompanySafe() {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,63 +63,59 @@ export default function CompanySafe() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Lock} title="Company Safe" subtitle="Business identity, business documents and important business information, secured in one safe." />
-      <div className="flex flex-wrap items-center justify-end gap-2">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New company document</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Category</Label>
-                  <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="grid gap-1.5"><Label>Version</Label><Input value={form.version} onChange={(e) => setForm({ ...form, version: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Owner</Label><Input value={form.owner} onChange={(e) => setForm({ ...form, owner: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Next review</Label><Input type="date" value={form.review_date} onChange={(e) => setForm({ ...form, review_date: e.target.value })} /></div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Current', 'Review Required', 'Archived'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>File URL</Label><Input value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} /></div>
-              </div>
-              <Button onClick={save} disabled={saving || !form.name.trim()}>Save document</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
 
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Business Identity</div>
-        <BusinessIdentityCard />
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><FolderLock className="h-4 w-4" />Business Documents</div>
-        <ComplianceUploads />
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><IdCard className="h-4 w-4" />Staff Badge Creator</div>
-        <StaffBadgeCreator />
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground/60"><Building2 className="h-4 w-4" />Important Business Information</div>
-        <BusinessDetailsCard />
-      </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <div className="space-y-4">
+          <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
+          <SectionLabel icon={FolderLock} tint="bg-brand">Business Documents</SectionLabel>
+          <ComplianceUploads />
+          <SectionLabel icon={IdCard} tint="bg-[#ec4899]">Staff Badge Creator</SectionLabel>
+          <StaffBadgeCreator />
+          <SectionLabel icon={Building2} tint="bg-[#2563eb]">Important Business Information</SectionLabel>
+          <BusinessDetailsCard />
+        </div>
+
+        <DialogContent>
+          <DialogHeader><DialogTitle>New company document</DialogTitle></DialogHeader>
+          <div className="grid gap-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-1.5"><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Category</Label>
+                <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>{CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="grid gap-1.5"><Label>Version</Label><Input value={form.version} onChange={(e) => setForm({ ...form, version: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Owner</Label><Input value={form.owner} onChange={(e) => setForm({ ...form, owner: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Next review</Label><Input type="date" value={form.review_date} onChange={(e) => setForm({ ...form, review_date: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-1.5"><Label>Status</Label>
+                <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>{['Current', 'Review Required', 'Archived'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-1.5"><Label>File URL</Label><Input value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} /></div>
+            </div>
+            <Button onClick={save} disabled={saving || !form.name.trim()}>Save document</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : docs.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No documents in the safe yet.</CardContent></Card>
-      ) : (
+      ) : docs.length === 0 ? null : (
         <div className="space-y-3">
+          <SectionLabel icon={Lock} tint="bg-brand">Saved Safe Documents</SectionLabel>
           {docs.map((d) => (
             <Card key={d.id}>
               <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-muted p-2"><Lock className="h-5 w-5 text-muted-foreground" /></div>
+                  <div className="rounded-lg bg-brand/10 p-2"><Lock className="h-5 w-5 text-brand" /></div>
                   <div>
                     <p className="font-medium">{d.name}{d.version ? ` (v${d.version})` : ''}</p>
                     <p className="text-sm text-muted-foreground">

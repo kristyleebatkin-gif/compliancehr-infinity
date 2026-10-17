@@ -26,6 +26,10 @@
       "type": "string",
       "title": "Street Address"
     },
+    "postal_address": {
+      "type": "string",
+      "title": "Postal Address (PO Box, if different)"
+    },
     "suburb": {
       "type": "string",
       "title": "Suburb"
@@ -42,6 +46,10 @@
       "type": "string",
       "title": "Phone"
     },
+    "after_hours_phone": {
+      "type": "string",
+      "title": "After Hours / On-Call Phone"
+    },
     "email": {
       "type": "string",
       "title": "Email"
@@ -53,6 +61,14 @@
     "contact_person": {
       "type": "string",
       "title": "Primary Contact"
+    },
+    "contact_person_phone": {
+      "type": "string",
+      "title": "Primary Contact Phone"
+    },
+    "contact_person_email": {
+      "type": "string",
+      "title": "Primary Contact Email"
     },
     "business_goal": {
       "type": "string",

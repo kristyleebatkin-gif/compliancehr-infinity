@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import { ExternalLink, FileText, Loader2, Trash2, UploadCloud } from 'lucide-react';
+import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud } from 'lucide-react';
 import { routeDocument } from '@/lib/documentRouting';
+import { COMPLIANCE_DOC_TYPES, downloadComplianceTemplatePdf } from '@/lib/complianceDocTemplates';
 
-const DOC_TYPES = [
-  'NDIS Registration Certificate',
-  'NDIS Audit Report',
-  'Public Liability Insurance',
-  'Professional Indemnity Insurance',
-  'Workcover Insurance',
-  'Fair Work Legislation',
-  'Business Wage Award',
-  'Qleave',
-  'Superannuation Guarantee',
-  'ABN Registration',
-  'Other Insurances',
-  'Business Registration',
-  'Business Access Sites and Codes',
-  'Other Documents',
-];
+const DOC_TYPES = COMPLIANCE_DOC_TYPES;
 
 export default function ComplianceUploads() {
   const { toast } = useToast();
@@ -81,8 +67,8 @@ export default function ComplianceUploads() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 text-sm font-semibold">Compliance & business documents</div>
-      <p className="mb-4 text-xs text-muted-foreground">Upload the provider's certificates, insurances and statutory records. Files are stored in the company safe.</p>
+      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="gradient-brand h-4 w-1.5 rounded-full" />Compliance & business documents</div>
+      <p className="mb-4 text-xs text-muted-foreground">Upload the provider's certificates, insurances and statutory records, or download a professional record template for each one. Files are stored in the company safe.</p>
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : (
@@ -90,16 +76,21 @@ export default function ComplianceUploads() {
           {DOC_TYPES.map((docType) => {
             const uploaded = documents.filter((d) => d.document_type === docType);
             return (
-              <div key={docType} className="rounded-lg border border-border/60 p-2.5">
+              <div key={docType} className="rounded-lg border border-brand/20 bg-brand/[0.03] p-2.5">
                 <div className="flex w-full items-center gap-2 text-sm">
-                  <FileText className="h-4 w-4 shrink-0 text-brand" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md gradient-brand"><FileText className="h-3.5 w-3.5 text-white" /></span>
                   <span className="flex-1 truncate font-medium">{docType}</span>
                 </div>
-                <label className={`mt-2 inline-flex cursor-pointer items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold hover:bg-muted ${uploading === docType ? 'pointer-events-none opacity-50' : ''}`}>
-                  {uploading === docType ? <Loader2 className="h-3 w-3 animate-spin" /> : <UploadCloud className="h-3 w-3" />}
-                  {uploaded.length ? 'Add another' : 'Upload'}
-                  <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" onChange={(e) => upload(docType, e.target.files?.[0])} />
-                </label>
+                <div className="mt-2 grid grid-cols-2 gap-1.5">
+                  <button onClick={() => downloadComplianceTemplatePdf(docType)} className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted">
+                    <Download className="h-3 w-3" />Download
+                  </button>
+                  <label className={`inline-flex cursor-pointer items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold hover:bg-muted ${uploading === docType ? 'pointer-events-none opacity-50' : ''}`}>
+                    {uploading === docType ? <Loader2 className="h-3 w-3 animate-spin" /> : <UploadCloud className="h-3 w-3" />}
+                    {uploaded.length ? 'Add another' : 'Upload'}
+                    <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" onChange={(e) => upload(docType, e.target.files?.[0])} />
+                  </label>
+                </div>
                 <div className="mt-1.5 space-y-0.5">
                   {uploaded.slice(0, 3).map((d) => (
                     <div key={d.id} className="flex items-center gap-1 text-[11px]">

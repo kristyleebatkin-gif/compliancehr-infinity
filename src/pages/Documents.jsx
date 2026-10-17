@@ -149,7 +149,9 @@ export default function Documents() {
         </TabsList>
 
         <TabsContent value="documents" className="mt-4 space-y-6">
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
+        <span className="text-sm font-bold font-editorial text-foreground/80">Every document on file</span>
+        <span className="flex-1" />
         <div className="flex items-center gap-2">
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
           <Button variant="outline" onClick={runScan} disabled={scanning}>
@@ -211,6 +213,45 @@ export default function Documents() {
         </Dialog>
       </div>
 
+      {loading ? (
+        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+      ) : docs.length === 0 ? (
+        <Card><CardContent className="p-10 text-center text-muted-foreground">No documents on file yet.</CardContent></Card>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {docs.map((d) => {
+            const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
+            return (
+            <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold">{d.title}</p>
+                    <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
+                  </div>
+                  <Badge className={expiryTone(d.expiry_date)}>{d.status}</Badge>
+                </div>
+                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                  <span className={expired ? 'font-semibold text-destructive' : ''}>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
+                  <div className="flex items-center gap-1">
+                    {(d.file_uri || d.file_url) && (
+                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
+                    )}
+                    <Button variant="ghost" size="icon" onClick={() => remove(d.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="flex items-center gap-2.5 pt-2">
+        <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
+        <span className="text-sm font-bold font-editorial text-foreground/80">Forms &amp; document libraries</span>
+        <span className="h-1 w-8 rounded-full bg-brand" />
+      </div>
       <div id="vault-employee" className="scroll-mt-24">
       <AttachedFormsLibrary
         title="Employee Forms Library"
@@ -238,37 +279,6 @@ export default function Documents() {
       <div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
       </div>
-
-      {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : docs.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No documents on file yet.</CardContent></Card>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {docs.map((d) => (
-            <Card key={d.id}>
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="font-semibold">{d.title}</p>
-                    <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
-                  </div>
-                  <Badge className={expiryTone(d.expiry_date)}>{d.status}</Badge>
-                </div>
-                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                  <span>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
-                  <div className="flex items-center gap-1">
-                    {(d.file_uri || d.file_url) && (
-                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
-                    )}
-                    <Button variant="ghost" size="icon" onClick={() => remove(d.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
         </TabsContent>
 
         <TabsContent value="data-control" className="mt-4">

@@ -6,7 +6,8 @@
       "type": "string",
       "enum": [
         "Employee",
-        "Participant"
+        "Participant",
+        "company-safe"
       ],
       "title": "Library"
     },
@@ -17,6 +18,10 @@
     "title": {
       "type": "string",
       "title": "Title"
+    },
+    "person_name": {
+      "type": "string",
+      "title": "Person Name"
     },
     "file_name": {
       "type": "string",

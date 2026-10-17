@@ -7,11 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Loader2, Save, UploadCloud } from 'lucide-react';
 import { loadCompanyBranding, saveCompanyBranding } from '@/lib/companyBranding';
 
-export default function BusinessIdentityCard() {
+export default function BusinessIdentityCard({ actions = null }) {
   const { toast } = useToast();
   const [companyName, setCompanyName] = useState('');
   const [slogan, setSlogan] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
+  const [providerId, setProviderId] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -23,6 +24,7 @@ export default function BusinessIdentityCard() {
         setCompanyName(branding.companyName || '');
         setSlogan(branding.slogan || '');
         setLogoUrl(branding.logoUrl || '');
+        setProviderId(branding.providerId || '');
       } finally {
         setLoading(false);
       }
@@ -46,11 +48,12 @@ export default function BusinessIdentityCard() {
   const save = async () => {
     setSaving(true);
     try {
-      const branding = await saveCompanyBranding({ companyName, slogan, logoUrl });
+      const branding = await saveCompanyBranding({ providerId, companyName, slogan, logoUrl });
       setCompanyName(branding.companyName);
       setSlogan(branding.slogan);
       setLogoUrl(branding.logoUrl || '');
-      toast({ title: 'Business identity saved - used on every generated form' });
+      setProviderId(branding.providerId || providerId);
+      toast({ title: 'Business identity saved - logo, name and slogan applied everywhere' });
     } catch (error) {
       toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
     } finally {
@@ -61,11 +64,11 @@ export default function BusinessIdentityCard() {
   if (loading) return <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-3 text-sm font-semibold">Business identity</div>
+    <div className="rounded-2xl border border-brand/25 bg-gradient-brand-soft p-5 shadow-panel">
+      <div className="mb-3 text-sm font-bold font-editorial">Business identity</div>
       <p className="mb-4 text-xs text-muted-foreground">The business name and logo stored here appear on every generated form, plan, register and staff badge.</p>
       <div className="flex flex-wrap items-center gap-4">
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted">
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-brand/30 bg-white shadow-sm">
           {logoUrl
             ? <img src={logoUrl} alt="Business logo" className="h-full w-full object-contain" />
             : <span className="text-[10px] text-muted-foreground">No logo</span>}
@@ -81,6 +84,7 @@ export default function BusinessIdentityCard() {
           <input type="file" className="hidden" accept=".png,.jpg,.jpeg,.webp,.svg" onChange={(e) => uploadLogo(e.target.files?.[0])} />
         </label>
         <Button onClick={save} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save identity</Button>
+        {actions}
       </div>
     </div>
   );

@@ -97,13 +97,14 @@ export default function AttachedFormsLibrary({
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card">
+    <div className="rounded-2xl border border-brand/25 bg-card">
+      <div className="h-1 w-full rounded-t-2xl gradient-brand" />
       <button onClick={() => setOpen((o) => !o)} className="flex w-full items-center justify-between px-5 py-3.5">
         <div className="text-left">
-          <div className="text-sm font-semibold">{title}</div>
+          <div className="text-sm font-bold font-editorial">{title}</div>
           <div className="text-xs text-foreground/50">{subtitle}</div>
         </div>
-        <ChevronDown className={cn('h-4 w-4 text-foreground/40 transition-transform', open && 'rotate-180')} />
+        <ChevronDown className={cn('h-4 w-4 text-brand transition-transform', open && 'rotate-180')} />
       </button>
       {open && (
         <div className="space-y-5 border-t border-border/60 p-5">

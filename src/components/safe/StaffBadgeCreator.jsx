@@ -4,11 +4,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
 import { Download, Loader2, Save } from 'lucide-react';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadStaffBadgePdf, staffBadgeBlob } from '@/lib/staffBadgePdf';
 import { routeDocument } from '@/lib/documentRouting';
+import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 
 export default function StaffBadgeCreator() {
   const { toast } = useToast();
@@ -43,13 +43,23 @@ export default function StaffBadgeCreator() {
         library: 'company-safe',
         document_type: 'Staff Badge',
         title: `Staff Badge - ${selected.full_name}`,
+        person_name: selected.full_name,
         file_name: `Staff Badge - ${selected.full_name}.pdf`,
         file_uri,
         uploaded_date: new Date().toISOString().slice(0, 10),
         uploaded_by: user?.full_name || user?.email || '',
       });
+      // Link the badge to the staff member so it shows on their profile.
+      await base44.entities.EmployeeDocument.create({
+        title: `Staff Badge - ${selected.full_name}`,
+        employee_name: selected.full_name,
+        document_type: 'Staff Badge',
+        status: 'Current',
+        file_uri,
+        notes: 'Generated in Company Safe - Staff Badge Creator.',
+      });
       routeDocument(record, { person_name: selected.full_name, person_type: 'Employee' });
-      toast({ title: 'Badge stored in the company safe' });
+      toast({ title: 'Badge stored in the company safe', description: `Linked to ${selected.full_name} and shown on their profile.` });
     } catch (error) {
       toast({ title: 'Could not store badge', description: error.message, variant: 'destructive' });
     } finally {
@@ -60,7 +70,7 @@ export default function StaffBadgeCreator() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
       <div className="mb-1 text-sm font-semibold">Staff badge creator</div>
-      <p className="mb-4 text-xs text-muted-foreground">Badges use the business name and logo stored in the company safe.</p>
+      <p className="mb-4 text-xs text-muted-foreground">Badges use the business name, logo and slogan stored in the company safe.</p>
       <div className="grid gap-4 md:grid-cols-[1fr_auto]">
         <div className="space-y-3">
           <div className="grid max-w-sm gap-1.5">
@@ -82,25 +92,7 @@ export default function StaffBadgeCreator() {
           </div>
         </div>
 
-        <div className="w-[260px] shrink-0 overflow-hidden rounded-xl border border-border shadow-sm">
-          <div className="flex items-center gap-2.5 bg-primary px-4 py-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white">
-              {branding.logoDataUrl || branding.logoUrl
-                ? <img src={branding.logoDataUrl || branding.logoUrl} alt="Logo" className="h-full w-full object-contain" />
-                : <Badge variant="outline" className="text-[8px]">Logo</Badge>}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-bold text-primary-foreground">{branding.companyName || 'ComplianceHR'}</p>
-              <p className="truncate text-[8px] text-primary-foreground/70">{branding.slogan || ''}</p>
-            </div>
-          </div>
-          <div className="bg-white p-4">
-            <p className="truncate text-base font-bold text-foreground">{selected?.full_name || 'Staff member'}</p>
-            <p className="text-xs text-muted-foreground">{selected?.position || 'Support Worker'}</p>
-            <p className="mt-2 text-[10px] text-muted-foreground">Employee No. {selected?.employee_number || '-'}</p>
-            <div className="mt-2 h-0.5 w-10 rounded bg-primary" />
-          </div>
-        </div>
+        <StaffBadgePreview branding={branding} staff={selected} />
       </div>
     </div>
   );

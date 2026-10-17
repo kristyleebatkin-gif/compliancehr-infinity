@@ -9,8 +9,9 @@ import { Textarea } from '@/components/ui/textarea';
 
 const EMPTY = {
   business_name: '', trading_name: '', abn: '', acn: '', ndis_provider_number: '',
-  address_line: '', suburb: '', state: '', postcode: '',
-  phone: '', email: '', website: '', contact_person: '',
+  address_line: '', postal_address: '', suburb: '', state: '', postcode: '',
+  phone: '', after_hours_phone: '', email: '', website: '',
+  contact_person: '', contact_person_phone: '', contact_person_email: '',
   bank_name: '', bsb: '', account_number: '', account_name: '',
   payment_terms_days: 14, payment_terms_note: 'Payment is due within 14 days of the invoice date.',
   default_invoice_notes: 'NDIS supports are GST free. Please quote the invoice number as the payment reference.',
@@ -80,16 +81,20 @@ export default function BusinessDetailsCard() {
             <div className="grid gap-1.5"><Label>ACN</Label><Input value={form.acn} onChange={set('acn')} /></div>
             <div className="grid gap-1.5"><Label>NDIS provider registration number</Label><Input value={form.ndis_provider_number} onChange={set('ndis_provider_number')} /></div>
             <div className="grid gap-1.5"><Label>Primary contact</Label><Input value={form.contact_person} onChange={set('contact_person')} /></div>
+            <div className="grid gap-1.5"><Label>Primary contact phone</Label><Input value={form.contact_person_phone || ''} onChange={set('contact_person_phone')} /></div>
+            <div className="grid gap-1.5"><Label>Primary contact email</Label><Input value={form.contact_person_email || ''} onChange={set('contact_person_email')} /></div>
           </div>
         </div>
         <div>
           <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Business address &amp; contact</div>
           <div className="grid gap-2 sm:grid-cols-3">
             <div className="grid gap-1.5 sm:col-span-3"><Label>Street address</Label><Input value={form.address_line} onChange={set('address_line')} /></div>
+            <div className="grid gap-1.5 sm:col-span-3"><Label>Postal address (PO Box, if different)</Label><Input value={form.postal_address || ''} onChange={set('postal_address')} /></div>
             <div className="grid gap-1.5"><Label>Suburb</Label><Input value={form.suburb} onChange={set('suburb')} /></div>
             <div className="grid gap-1.5"><Label>State</Label><Input value={form.state} onChange={set('state')} /></div>
             <div className="grid gap-1.5"><Label>Postcode</Label><Input value={form.postcode} onChange={set('postcode')} /></div>
             <div className="grid gap-1.5"><Label>Phone</Label><Input value={form.phone} onChange={set('phone')} /></div>
+            <div className="grid gap-1.5"><Label>After hours / on-call phone</Label><Input value={form.after_hours_phone || ''} onChange={set('after_hours_phone')} /></div>
             <div className="grid gap-1.5"><Label>Email</Label><Input value={form.email} onChange={set('email')} /></div>
             <div className="grid gap-1.5"><Label>Website</Label><Input value={form.website} onChange={set('website')} /></div>
           </div>
