@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -140,9 +143,14 @@ export default function InvoicingCentre() {
         title="Invoicing Centre"
         subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
         showAlerts={false}
+        showCompliance={false}
+        showAudit={false}
       />
 
       <div className="flex flex-wrap items-center gap-2">
+        <ModuleComplianceStrip path="/invoicing" />
+        <ModuleAuditChecklistButton />
+        <ModuleAuditButton />
         <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
         <Button variant="outline" onClick={() => downloadInvoiceTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Invoice template</Button>
         <label className={`inline-flex h-9 cursor-pointer items-center gap-2 rounded-md border border-input bg-transparent px-4 py-2 text-sm font-semibold shadow-sm hover:bg-accent ${uploadingTemplate ? 'pointer-events-none opacity-60' : ''}`}>
