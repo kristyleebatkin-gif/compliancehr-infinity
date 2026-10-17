@@ -4,6 +4,7 @@ import { HeartHandshake, Library, Phone, Send } from 'lucide-react';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import CrisisInformation from '@/components/referral/CrisisInformation';
 import LocalServices from '@/components/referral/LocalServices';
 import ReferralForm from '@/components/referral/ReferralForm';
@@ -29,6 +30,7 @@ export default function ReferralSupport() {
           </div>
           <div className="flex items-center gap-2">
             <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
+            <ModuleAlertsButton />
             <ModuleComplianceStrip path="/referrals" />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />

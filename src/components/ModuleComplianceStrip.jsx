@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { base44 } from '@/api/base44Client';
 import { AlertTriangle, Clock3, ShieldCheck } from 'lucide-react';
-import { MODULE_TRACKERS, trackerQuery } from '@/lib/moduleTrackers';
-
-// 5-minute cache so navigating between tabs does not re-run every count.
-const cache = new Map(); // path -> { at, counts }
-const TTL = 5 * 60 * 1000;
+import { MODULE_TRACKERS, loadTrackerCounts } from '@/lib/moduleTrackers';
 
 const PILL = {
   overdue: 'relative flex items-center gap-1.5 rounded-full border border-danger/30 bg-gradient-to-r from-danger/15 via-danger/10 to-transparent px-2.5 py-1 text-[10px] font-bold text-danger shadow-sm transition-transform hover:scale-105',
@@ -24,31 +19,13 @@ function LiveDot({ tone }) {
 
 export default function ModuleComplianceStrip({ path }) {
   const items = MODULE_TRACKERS[path];
-  const [counts, setCounts] = useState(() => (cache.get(path)?.counts || null));
+  const [counts, setCounts] = useState(null);
 
   useEffect(() => {
-    const cached = cache.get(path);
-    if (!items || (cached && Date.now() - cached.at < TTL)) {
-      if (cached?.counts) setCounts(cached.counts);
-      return;
-    }
-    if (counts) return;
+    if (!items) return;
     let cancelled = false;
-    (async () => {
-      const results = await Promise.allSettled(
-        items.map((item) => base44.entities[item.entity].count(trackerQuery(item, item.dynamic))),
-      );
-      if (cancelled) return;
-      const next = items.map((item, i) => ({
-        label: item.label,
-        value: results[i].status === 'fulfilled' ? results[i].value : 0,
-        mode: item.dynamic,
-      }));
-      cache.set(path, { at: Date.now(), counts: next });
-      setCounts(next);
-    })();
+    loadTrackerCounts(path).then((c) => { if (!cancelled && c) setCounts(c); });
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
   if (!items) return null;

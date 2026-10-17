@@ -20,6 +20,7 @@ import EventInviteDialog from '@/components/events/EventInviteDialog';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const EMPTY = {
   title: '', type: 'Program', date: '', end_date: '', start_time: '', end_time: '',
@@ -152,6 +153,7 @@ export default function ProgramsEvents() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/programs" />
+            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (

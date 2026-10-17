@@ -16,6 +16,7 @@ import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleDocsButton from '@/components/ModuleDocsButton';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -93,6 +94,7 @@ export default function KeyContacts() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <ModuleAlertsButton />
             <ModuleDocsButton />
             <ModuleComplianceStrip path="/contacts" />
             <ModuleAuditChecklistButton />

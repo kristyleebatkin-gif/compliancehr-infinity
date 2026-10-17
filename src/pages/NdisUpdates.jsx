@@ -11,6 +11,7 @@ import NdisUpdateList from '@/components/ndis/NdisUpdateList';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { Input } from '@/components/ui/input';
 import { Newspaper, RefreshCw, ExternalLink, Mail, Search } from 'lucide-react';
 
@@ -99,6 +100,7 @@ export default function NdisUpdates() {
               <p className="text-sm text-slate-300">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
             </div>
           </div>
+          <ModuleAlertsButton />
           <ModuleComplianceStrip path="/ndis-updates" />
           <ModuleAuditChecklistButton />
           <ModuleAuditButton />

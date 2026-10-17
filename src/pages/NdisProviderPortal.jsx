@@ -5,6 +5,7 @@ import { ExternalLink, Building2, ShieldCheck, Landmark, ReceiptText, Newspaper,
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const PORTALS = [
   { name: 'myplace Provider Portal', url: 'https://www.myplace.ndis.gov.au', icon: Landmark, desc: 'The NDIA provider portal for claims, payment requests, bulk billing and viewing participant plan information. Sign in with your own PRODA / myplace credentials.' },
@@ -24,6 +25,7 @@ export default function NdisProviderPortal() {
             <h1 className="text-2xl font-bold tracking-tight">NDIS Registered Provider Portal</h1>
             <p className="text-sm text-slate-300">Direct access points to the official NDIS portals and provider resources.</p>
           </div>
+          <ModuleAlertsButton />
           <ModuleComplianceStrip path="/ndis-portal" />
           <ModuleAuditChecklistButton />
           <ModuleAuditButton />

@@ -136,6 +136,29 @@ export function trackerQuery(item, mode) {
   return { ...item.base, ...Object.fromEntries(Object.entries(item.base).map(([k, v]) => [k, typeof v === 'object' && v !== null && ('$lt' in v || '$lte' in v) ? { $gte: t, $lte: soon } : v])) };
 }
 
+import { base44 } from '@/api/base44Client';
+
+// Cached live counts per module path (shared by the header strip and alerts bell).
+const countsCache = new Map();
+const COUNTS_TTL = 5 * 60 * 1000;
+
+export async function loadTrackerCounts(path, { force = false } = {}) {
+  const items = MODULE_TRACKERS[path];
+  if (!items) return null;
+  const cached = countsCache.get(path);
+  if (!force && cached && Date.now() - cached.at < COUNTS_TTL) return cached.counts;
+  const results = await Promise.allSettled(
+    items.map((item) => base44.entities[item.entity].count(trackerQuery(item, item.dynamic))),
+  );
+  const counts = items.map((item, i) => ({
+    label: item.label,
+    value: results[i].status === 'fulfilled' ? results[i].value : 0,
+    mode: item.dynamic,
+  }));
+  countsCache.set(path, { at: Date.now(), counts });
+  return counts;
+}
+
 // Route aliases so every URL of a module shares one live tracker.
 MODULE_TRACKERS['/volunteering-placements'] = MODULE_TRACKERS['/volunteers'];
 MODULE_TRACKERS['/key-contacts'] = MODULE_TRACKERS['/contacts'];

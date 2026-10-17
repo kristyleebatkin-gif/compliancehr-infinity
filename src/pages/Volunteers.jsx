@@ -11,6 +11,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 
@@ -69,6 +70,7 @@ export default function Volunteers() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/volunteers" />
+            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
             {[['Total', String(volunteers.length)], ['Active', String(volunteers.filter((v) => v.status === 'Active').length)], ['Onboarding', String(volunteers.filter((v) => v.status === 'Onboarding').length)]].map(([label, value]) => (

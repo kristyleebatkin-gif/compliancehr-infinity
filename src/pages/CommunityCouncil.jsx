@@ -9,6 +9,7 @@ import LocalServices from '@/components/referral/LocalServices';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import ModuleDocsButton from '@/components/ModuleDocsButton';
 
 const safeUrl = (url) => {
@@ -69,6 +70,7 @@ export default function CommunityCouncil() {
           <div className="flex shrink-0 items-center gap-2">
             <ModuleDocsButton />
             <ModuleComplianceStrip path="/community-council" />
+            <ModuleAlertsButton />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
           </div>
