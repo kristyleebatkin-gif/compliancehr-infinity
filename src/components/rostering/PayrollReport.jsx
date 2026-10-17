@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,9 @@ import { parseISO } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { shiftHours, timeToMinutes } from '@/lib/rostering';
 
+const DEFAULT_LOADINGS = { after8: 110, saturday: 150, sunday: 160, ph: 225 };
+const DEFAULT_KM_RATE = 0.99;
+
 const PAYROLL_CSV_COLUMNS = [
   { key: 'employee_name', label: 'Employee' },
   { key: 'week_start', label: 'Week Start' },
@@ -17,20 +20,28 @@ const PAYROLL_CSV_COLUMNS = [
   { key: 'shifts', label: 'Shifts' },
   { key: 'planned_hours', label: 'Planned Hours' },
   { key: 'break_hours', label: 'Unpaid Breaks (hrs)' },
-  { key: 'payable_hours', label: 'Payable Hours' },
-  { key: 'weekday_hours', label: 'Weekday Hours (< 8pm)' },
-  { key: 'after_8pm_hours', label: 'After 8pm Hours' },
-  { key: 'saturday_hours', label: 'Saturday Hours' },
-  { key: 'sunday_hours', label: 'Sunday Hours' },
-  { key: 'public_holiday_hours', label: 'Public Holiday Hours' },
-  { key: 'travel_km', label: 'Travel (km)' },
-  { key: 'allowances', label: 'Allowances ($)' },
-  { key: 'completed', label: 'Completed Shifts' },
-  { key: 'approved', label: 'Approved Shifts' },
+  { key: 'payable_hours', label: 'Payable Hours (all shifts)' },
+  { key: 'approved_hours', label: 'Approved Payable Hours' },
   { key: 'pending_approval', label: 'Awaiting Approval' },
-  { key: 'timesheet_logged', label: 'Clock-ins Logged' },
+  { key: 'weekday_hours', label: 'Approved Weekday Hours (< 8pm)' },
+  { key: 'after_8pm_hours', label: 'Approved After 8pm Hours' },
+  { key: 'saturday_hours', label: 'Approved Saturday Hours' },
+  { key: 'sunday_hours', label: 'Approved Sunday Hours' },
+  { key: 'public_holiday_hours', label: 'Approved Public Holiday Hours' },
+  { key: 'travel_km', label: 'Approved Travel (km)' },
   { key: 'hourly_rate', label: 'Hourly Rate ($)' },
-  { key: 'estimated_pay', label: 'Estimated Pay ($)' },
+  { key: 'after_8pm_loading', label: 'After 8pm Loading (%)' },
+  { key: 'saturday_loading', label: 'Saturday Loading (%)' },
+  { key: 'sunday_loading', label: 'Sunday Loading (%)' },
+  { key: 'ph_loading', label: 'Public Holiday Loading (%)' },
+  { key: 'base_pay', label: 'Base Pay ($)' },
+  { key: 'after_8pm_pay', label: 'After 8pm Pay ($)' },
+  { key: 'saturday_pay', label: 'Saturday Pay ($)' },
+  { key: 'sunday_pay', label: 'Sunday Pay ($)' },
+  { key: 'public_holiday_pay', label: 'Public Holiday Pay ($)' },
+  { key: 'travel_allowance', label: 'Travel Allowance ($)' },
+  { key: 'other_allowances', label: 'Other Allowances ($)' },
+  { key: 'total_allowances', label: 'Total Allowances ($)' },
   { key: 'total_pay', label: 'Total Pay incl. Allowances ($)' },
 ];
 
@@ -67,12 +78,17 @@ function classifyShift(s, holidaySet) {
   return { payable, weekday: dayHrsCapped, after_8pm: payable - dayHrsCapped, saturday: 0, sunday: 0, public_holiday: 0 };
 }
 
+const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);
+const hrs2 = (v) => num(v).toFixed(2);
+const money = (v) => (num(v)).toFixed(2);
+
 export default function PayrollReport() {
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [staffFilter, setStaffFilter] = useState('all');
   const [rows, setRows] = useState([]);
-  const [totals, setTotals] = useState(null);
-  const [allowances, setAllowances] = useState({});
+  const [loadings, setLoadings] = useState(DEFAULT_LOADINGS);
+  const [kmRate, setKmRate] = useState(DEFAULT_KM_RATE);
+  const [otherAllowances, setOtherAllowances] = useState({});
   const [loading, setLoading] = useState(true);
 
   const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
@@ -102,8 +118,10 @@ export default function PayrollReport() {
         const row = byStaff[name] = byStaff[name] || {
           employee_name: name, shifts: 0, planned_hours: 0, break_hours: 0,
           payable_hours: 0, weekday_hours: 0, after_8pm_hours: 0, saturday_hours: 0,
-          sunday_hours: 0, public_holiday_hours: 0, travel_km: 0, completed: 0,
-          approved: 0, pending_approval: 0, timesheet_logged: 0,
+          sunday_hours: 0, public_holiday_hours: 0, travel_km: 0,
+          // Approved-only hours that feed the pay calculation
+          ap_weekday: 0, ap_after_8pm: 0, ap_saturday: 0, ap_sunday: 0, ap_ph: 0,
+          approved_hours: 0, approved_km: 0, approved: 0, pending_approval: 0,
         };
         row.shifts += 1;
         const hrs = shiftHours(s.start_time, s.end_time);
@@ -112,45 +130,24 @@ export default function PayrollReport() {
         row.break_hours += brk;
         row.payable_hours += Math.max(0, hrs - brk);
         const buckets = classifyShift(s, holidaySet);
-        row.weekday_hours += buckets.weekday;
-        row.after_8pm_hours += buckets.after_8pm;
-        row.saturday_hours += buckets.saturday;
-        row.sunday_hours += buckets.sunday;
-        row.public_holiday_hours += buckets.public_holiday;
+        const approved = s.approval_status === 'Approved';
+        if (approved) {
+          row.ap_weekday += buckets.weekday;
+          row.ap_after_8pm += buckets.after_8pm;
+          row.ap_saturday += buckets.saturday;
+          row.ap_sunday += buckets.sunday;
+          row.ap_ph += buckets.public_holiday;
+          row.approved_hours += buckets.payable;
+          row.approved_km += s.travel_km || 0;
+        }
         row.travel_km += s.travel_km || 0;
-        if (s.status === 'Completed') row.completed += 1;
         if (s.approval_status === 'Approved') row.approved += 1;
         if (s.approval_status === 'Pending Approval') row.pending_approval += 1;
-        if (s.clock_in || s.clock_out) row.timesheet_logged += 1;
       }
       const list = Object.values(byStaff)
-        .map((r) => {
-          const rate = rates[r.employee_name];
-          return {
-            ...r,
-            week_start: from,
-            week_end: to,
-            planned_hours: r.planned_hours.toFixed(2),
-            break_hours: r.break_hours.toFixed(2),
-            payable_hours: r.payable_hours.toFixed(2),
-            weekday_hours: r.weekday_hours.toFixed(2),
-            after_8pm_hours: r.after_8pm_hours.toFixed(2),
-            saturday_hours: r.saturday_hours.toFixed(2),
-            sunday_hours: r.sunday_hours.toFixed(2),
-            public_holiday_hours: r.public_holiday_hours.toFixed(2),
-            travel_km: r.travel_km.toFixed(1),
-            hourly_rate: rate != null ? rate : '',
-            estimated_pay: rate != null ? (r.payable_hours * rate).toFixed(2) : '',
-          };
-        })
+        .map((r) => ({ ...r, week_start: from, week_end: to }))
         .sort((a, b) => a.employee_name.localeCompare(b.employee_name));
       setRows(list);
-      setTotals({
-        shifts: shiftPage.items.length,
-        payable: list.reduce((sum, r) => sum + parseFloat(r.payable_hours), 0),
-        travel: list.reduce((sum, r) => sum + parseFloat(r.travel_km), 0),
-        pay: list.reduce((sum, r) => sum + (r.estimated_pay ? parseFloat(r.estimated_pay) : 0), 0),
-      });
     } finally {
       setLoading(false);
     }
@@ -158,13 +155,74 @@ export default function PayrollReport() {
 
   useEffect(() => { load(weekStart, staffFilter); }, [weekStart, staffFilter, load]);
 
-  const allowanceFor = (name) => Number(allowances[name]) || 0;
-  const totalPay = (r) => (r.estimated_pay ? parseFloat(r.estimated_pay) : 0) + allowanceFor(r.employee_name);
+  // Pay calculation — derived from the approved (timesheet-approved) hour buckets.
+  const displayRows = useMemo(() => {
+    const l = {
+      after8: num(loadings.after8) / 100,
+      saturday: num(loadings.saturday) / 100,
+      sunday: num(loadings.sunday) / 100,
+      ph: num(loadings.ph) / 100,
+    };
+    return rows.map((r) => {
+      const rate = r.hourly_rate;
+      const hasRate = rate != null && rate !== '';
+      const R = hasRate ? num(rate) : 0;
+      const basePay = r.ap_weekday * R;
+      const after8Pay = r.ap_after_8pm * R * l.after8;
+      const saturdayPay = r.ap_saturday * R * l.saturday;
+      const sundayPay = r.ap_sunday * R * l.sunday;
+      const phPay = r.ap_ph * R * l.ph;
+      const travelAllowance = r.approved_km * num(kmRate);
+      const other = num(otherAllowances[r.employee_name]);
+      const totalAllowances = travelAllowance + other;
+      return {
+        ...r,
+        hourly_rate: hasRate ? rate : '',
+        planned_hours: hrs2(r.planned_hours),
+        break_hours: hrs2(r.break_hours),
+        payable_hours: hrs2(r.payable_hours),
+        approved_hours: hrs2(r.approved_hours),
+        weekday_hours: hrs2(r.ap_weekday),
+        after_8pm_hours: hrs2(r.ap_after_8pm),
+        saturday_hours: hrs2(r.ap_saturday),
+        sunday_hours: hrs2(r.ap_sunday),
+        public_holiday_hours: hrs2(r.ap_ph),
+        travel_km: r.approved_km.toFixed(1),
+        base_pay: hasRate ? money(basePay) : '',
+        after_8pm_pay: hasRate ? money(after8Pay) : '',
+        saturday_pay: hasRate ? money(saturdayPay) : '',
+        sunday_pay: hasRate ? money(sundayPay) : '',
+        public_holiday_pay: hasRate ? money(phPay) : '',
+        travel_allowance: money(travelAllowance),
+        other_allowances: money(other),
+        total_allowances: money(totalAllowances),
+        approved_pay: hasRate ? money(basePay + after8Pay + saturdayPay + sundayPay + phPay) : '',
+        total_pay: hasRate ? money(basePay + after8Pay + saturdayPay + sundayPay + phPay + totalAllowances) : '',
+      };
+    });
+  }, [rows, loadings, kmRate, otherAllowances]);
+
+  const totals = useMemo(() => ({
+    shifts: rows.reduce((s, r) => s + r.shifts, 0),
+    payable: rows.reduce((s, r) => s + r.payable_hours, 0),
+    approved: rows.reduce((s, r) => s + r.approved_hours, 0),
+    pending: rows.reduce((s, r) => s + r.pending_approval, 0),
+    allowances: displayRows.reduce((s, r) => s + num(r.total_allowances), 0),
+    pay: displayRows.reduce((s, r) => s + num(r.approved_pay), 0),
+    totalPay: displayRows.reduce((s, r) => s + num(r.total_pay), 0),
+  }), [rows, displayRows]);
 
   const exportCsv = () => {
-    downloadCsv(`payroll-week-${fromStr}.csv`, PAYROLL_CSV_COLUMNS,
-      rows.map((r) => ({ ...r, allowances: allowanceFor(r.employee_name).toFixed(2), total_pay: totalPay(r).toFixed(2) })));
+    downloadCsv(`payroll-week-${fromStr}.csv`, PAYROLL_CSV_COLUMNS, displayRows.map((r) => ({
+      ...r,
+      after_8pm_loading: loadings.after8,
+      saturday_loading: loadings.saturday,
+      sunday_loading: loadings.sunday,
+      ph_loading: loadings.ph,
+    })));
   };
+
+  const setOtherAllowance = (name, value) => setOtherAllowances({ ...otherAllowances, [name]: value });
 
   return (
     <Card>
@@ -186,12 +244,46 @@ export default function PayrollReport() {
           </Button>
         </div>
 
-        {totals && rows.length > 0 && (
+        {rows.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-border/60 bg-muted/40 p-3 text-sm">
+            <span className="font-semibold">Pay rate loadings</span>
+            <label className="flex items-center gap-1.5">After 8pm
+              <Input type="number" min="100" step="1" className="h-8 w-20" value={loadings.after8}
+                onChange={(e) => setLoadings({ ...loadings, after8: e.target.value })} />
+              <span className="text-xs text-muted-foreground">%</span>
+            </label>
+            <label className="flex items-center gap-1.5">Saturday
+              <Input type="number" min="100" step="1" className="h-8 w-20" value={loadings.saturday}
+                onChange={(e) => setLoadings({ ...loadings, saturday: e.target.value })} />
+              <span className="text-xs text-muted-foreground">%</span>
+            </label>
+            <label className="flex items-center gap-1.5">Sunday
+              <Input type="number" min="100" step="1" className="h-8 w-20" value={loadings.sunday}
+                onChange={(e) => setLoadings({ ...loadings, sunday: e.target.value })} />
+              <span className="text-xs text-muted-foreground">%</span>
+            </label>
+            <label className="flex items-center gap-1.5">Public holiday
+              <Input type="number" min="100" step="1" className="h-8 w-20" value={loadings.ph}
+                onChange={(e) => setLoadings({ ...loadings, ph: e.target.value })} />
+              <span className="text-xs text-muted-foreground">%</span>
+            </label>
+            <label className="flex items-center gap-1.5">Travel
+              <Input type="number" min="0" step="0.01" className="h-8 w-20" value={kmRate}
+                onChange={(e) => setKmRate(e.target.value)} />
+              <span className="text-xs text-muted-foreground">$/km</span>
+            </label>
+          </div>
+        )}
+
+        {rows.length > 0 && (
           <div className="flex flex-wrap gap-4 text-sm">
             <span className="font-medium">{totals.shifts} shifts</span>
-            <span className="text-muted-foreground">{totals.payable.toFixed(2)} payable hours</span>
-            <span className="text-muted-foreground">{totals.travel.toFixed(1)} km travel</span>
-            {totals.pay > 0 && <span className="text-muted-foreground">${totals.pay.toFixed(2)} estimated pay</span>}
+            <span className="text-muted-foreground">{hrs2(totals.payable)} payable hrs</span>
+            <span className="text-muted-foreground">{hrs2(totals.approved)} approved hrs</span>
+            {totals.pending > 0 && <span className="font-medium text-warning">{totals.pending} shift(s) awaiting approval — excluded from pay</span>}
+            {totals.allowances > 0 && <span className="text-muted-foreground">${money(totals.allowances)} allowances</span>}
+            {totals.pay > 0 && <span className="text-muted-foreground">${money(totals.pay)} approved pay</span>}
+            {totals.totalPay > 0 && <span className="font-semibold">${money(totals.totalPay)} total pay incl. allowances</span>}
           </div>
         )}
 
@@ -201,7 +293,7 @@ export default function PayrollReport() {
           <p className="py-8 text-center text-muted-foreground">No payable shifts in this week.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1100px] text-sm">
+            <table className="w-full min-w-[1700px] text-sm">
               <thead>
                 <tr className="border-b text-left text-xs text-muted-foreground">
                   <th className="py-2 pr-4">Employee</th>
@@ -209,56 +301,70 @@ export default function PayrollReport() {
                   <th className="py-2 pr-4">Planned hrs</th>
                   <th className="py-2 pr-4">Breaks (hrs)</th>
                   <th className="py-2 pr-4">Payable hrs</th>
+                  <th className="py-2 pr-4">Approved hrs</th>
                   <th className="py-2 pr-4">Weekday &lt; 8pm</th>
                   <th className="py-2 pr-4">After 8pm</th>
                   <th className="py-2 pr-4">Saturday</th>
                   <th className="py-2 pr-4">Sunday</th>
                   <th className="py-2 pr-4">Public hol.</th>
                   <th className="py-2 pr-4">Travel (km)</th>
-                  <th className="py-2 pr-4">Allowances ($)</th>
+                  <th className="py-2 pr-4">Travel allow. ($)</th>
+                  <th className="py-2 pr-4">Other allow. ($)</th>
+                  <th className="py-2 pr-4">Total allow. ($)</th>
                   <th className="py-2 pr-4">Approved</th>
                   <th className="py-2 pr-4">Pending approval</th>
-                  <th className="py-2 pr-4">Clock-ins</th>
-                  <th className="py-2 pr-4">Est. pay ($)</th>
+                  <th className="py-2 pr-4">Rate ($)</th>
+                  <th className="py-2 pr-4">Base pay ($)</th>
+                  <th className="py-2 pr-4">After 8pm pay ($)</th>
+                  <th className="py-2 pr-4">Sat pay ($)</th>
+                  <th className="py-2 pr-4">Sun pay ($)</th>
+                  <th className="py-2 pr-4">Public hol. pay ($)</th>
                   <th className="py-2">Total pay ($)</th>
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r) => (
+                {displayRows.map((r) => (
                   <tr key={r.employee_name} className="border-b last:border-0">
                     <td className="py-2 pr-4 font-medium">{r.employee_name}</td>
                     <td className="py-2 pr-4">{r.shifts}</td>
                     <td className="py-2 pr-4">{r.planned_hours}</td>
                     <td className="py-2 pr-4">{r.break_hours}</td>
-                    <td className="py-2 pr-4 font-semibold">{r.payable_hours}</td>
+                    <td className="py-2 pr-4">{r.payable_hours}</td>
+                    <td className="py-2 pr-4 font-semibold">{r.approved_hours}</td>
                     <td className="py-2 pr-4">{r.weekday_hours}</td>
                     <td className="py-2 pr-4">{r.after_8pm_hours}</td>
                     <td className="py-2 pr-4">{r.saturday_hours}</td>
                     <td className="py-2 pr-4">{r.sunday_hours}</td>
                     <td className="py-2 pr-4">{r.public_holiday_hours}</td>
                     <td className="py-2 pr-4">{r.travel_km}</td>
+                    <td className="py-2 pr-4">{r.travel_allowance}</td>
                     <td className="py-2 pr-4">
                       <Input
                         type="number"
                         min="0"
                         step="0.01"
                         className="h-8 w-24"
-                        value={allowances[r.employee_name] ?? ''}
+                        value={otherAllowances[r.employee_name] ?? ''}
                         placeholder="0"
-                        onChange={(e) => setAllowances({ ...allowances, [r.employee_name]: e.target.value })}
+                        onChange={(e) => setOtherAllowance(r.employee_name, e.target.value)}
                       />
                     </td>
+                    <td className="py-2 pr-4 font-semibold">{r.total_allowances}</td>
                     <td className="py-2 pr-4">{r.approved}</td>
                     <td className="py-2 pr-4">{r.pending_approval}</td>
-                    <td className="py-2 pr-4">{r.timesheet_logged}</td>
-                    <td className="py-2 pr-4">{r.estimated_pay}</td>
-                    <td className="py-2 font-semibold">{totalPay(r).toFixed(2)}</td>
+                    <td className="py-2 pr-4">{r.hourly_rate}</td>
+                    <td className="py-2 pr-4">{r.base_pay}</td>
+                    <td className="py-2 pr-4">{r.after_8pm_pay}</td>
+                    <td className="py-2 pr-4">{r.saturday_pay}</td>
+                    <td className="py-2 pr-4">{r.sunday_pay}</td>
+                    <td className="py-2 pr-4">{r.public_holiday_pay}</td>
+                    <td className="py-2 font-semibold">{r.total_pay}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <p className="mt-2 text-xs text-muted-foreground">
-              Allowances are entered per staff member for this week and included in the CSV export and total pay. Rate loading is calculated from the hourly rate — apply weekend, after-8pm and public holiday loadings in your payroll system using the hour breakdown above.
+              Pay is calculated from hours on shifts approved in the timesheet approval workflow — pending shifts are excluded until approved. After 8pm hours pay the hourly rate × the after-8pm loading; Saturday, Sunday and public holiday hours pay the hourly rate × their loading (defaults 110%, 150%, 160% and 225%, editable above). Travel allowance is approved kilometres × the travel rate; enter any other allowances per staff member for the week. Everything above is included in the CSV export.
             </p>
           </div>
         )}
