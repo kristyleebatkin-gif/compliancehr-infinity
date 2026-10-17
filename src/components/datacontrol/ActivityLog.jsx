@@ -82,7 +82,7 @@ export default function ActivityLog() {
       ) : rows.length === 0 ? (
         <p className="py-6 text-center text-sm text-muted-foreground">No access or action records yet. Page views and record actions are logged automatically.</p>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-border/60">
+        <div className="overflow-x-auto rounded-xl border border-border/60">
           <table className="w-full text-xs">
             <thead className="bg-muted/50 text-left">
               <tr>

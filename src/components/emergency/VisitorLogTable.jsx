@@ -115,7 +115,7 @@ export default function VisitorLogTable() {
       ) : visitors.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">No visits recorded yet.</p>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
+        <div className="overflow-x-auto rounded-xl border border-border/60 bg-card">
           <table className="w-full text-sm">
             <thead className="bg-muted/50 text-left text-xs uppercase tracking-wide text-foreground/50">
               <tr>
