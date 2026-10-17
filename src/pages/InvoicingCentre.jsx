@@ -13,9 +13,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
-import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/invoicePdf';
+import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
-import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2 } from 'lucide-react';
+import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, FileUp, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
@@ -49,6 +49,28 @@ export default function InvoicingCentre() {
 
   const outstanding = invoices.filter((i) => i.status !== 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
   const paid = invoices.filter((i) => i.status === 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
+  const [uploadingTemplate, setUploadingTemplate] = useState(false);
+
+  const uploadInvoiceTemplate = async (file) => {
+    if (!file) return;
+    setUploadingTemplate(true);
+    try {
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      await base44.entities.FormsLibraryDocument.create({
+        library: 'company-safe',
+        document_type: 'Invoice Template',
+        title: file.name,
+        file_name: file.name,
+        file_uri,
+        uploaded_date: format(new Date(), 'yyyy-MM-dd'),
+      });
+      toast({ title: 'Invoice template uploaded', description: 'Stored privately in the Company Safe library.' });
+    } catch (error) {
+      toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
+    } finally {
+      setUploadingTemplate(false);
+    }
+  };
 
   const setStatus = async (inv, status) => {
     const patch = { status };
@@ -116,14 +138,18 @@ export default function InvoicingCentre() {
       <PageHeader
         icon={FileSpreadsheet}
         title="Invoicing Centre"
-        subtitle={`Outstanding $${outstanding.toLocaleString('en-AU', { minimumFractionDigits: 2 })} · Paid $${paid.toLocaleString('en-AU', { minimumFractionDigits: 2 })}`}
-        action={
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
-            <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
-          </div>
-        }
+        subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
       />
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
+        <Button variant="outline" onClick={() => downloadInvoiceTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Invoice template</Button>
+        <label className={`inline-flex h-9 cursor-pointer items-center gap-2 rounded-md border border-input bg-transparent px-4 py-2 text-sm font-semibold shadow-sm hover:bg-accent ${uploadingTemplate ? 'pointer-events-none opacity-60' : ''}`}>
+          {uploadingTemplate ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}{uploadingTemplate ? 'Uploading…' : 'Upload template'}
+          <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx" onChange={(e) => { uploadInvoiceTemplate(e.target.files?.[0]); e.target.value = ''; }} />
+        </label>
+        <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
+      </div>
 
       {!business.business_name && !loading && (
         <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
