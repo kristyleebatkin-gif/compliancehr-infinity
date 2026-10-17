@@ -42,13 +42,13 @@ export default function HelpCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-sky-700 via-indigo-700 to-violet-700 p-6 text-white shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-sky-700 via-violet-700 to-violet-700 p-6 text-white shadow-lg">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><LifeBuoy className="h-7 w-7" /></div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Help Centre</h1>
-              <p className="text-sm text-indigo-200">Self-help guides for every module, how-to answers, escalation contacts and a direct line to support.</p>
+              <p className="text-sm text-violet-200">Self-help guides for every module, how-to answers, escalation contacts and a direct line to support.</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -56,9 +56,9 @@ export default function HelpCentre() {
           </div>
         </div>
         <div className="relative mt-4 max-w-xl">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-indigo-200" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-violet-200" />
           <Input
-            className="border-white/20 bg-white/10 pl-9 text-white placeholder:text-indigo-200"
+            className="border-white/20 bg-white/10 pl-9 text-white placeholder:text-violet-200"
             placeholder="Search every guide and how-to article..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}

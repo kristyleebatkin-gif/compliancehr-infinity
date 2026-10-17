@@ -13,7 +13,7 @@ export default async function(req) {
     }
 
     const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `You are a professional communications writer for ComplianceHR Portal, an Australian NDIS disability support provider.
+      prompt: `You are a professional communications writer for ComplianceHR Infinitely, an Australian NDIS disability support provider.
 
 Write a ${body.message_type || 'professional email'} with a ${body.tone || 'professional'} tone.
 

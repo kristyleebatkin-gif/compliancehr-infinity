@@ -54,7 +54,7 @@ export default function LandingHero() {
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            Compliance HR the Smartest, Fastest and Greatest, Super Tool Platform
+            ComplianceHR Infinitely · Complete Control. Greater Confidence. Brighter Success.
           </div>
 
           <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
@@ -63,7 +63,7 @@ export default function LandingHero() {
           </h1>
 
           <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.16em] sm:text-[13px]">
-            <span className="bg-gradient-to-r from-violet-700 via-fuchsia-600 to-orange-500 bg-clip-text text-transparent">The Smartest, Simplest, Easiest and Effortless Business Super Platform</span>
+            <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">Complete Control. Greater Confidence. Brighter Success.</span>
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">

@@ -4,7 +4,7 @@ import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding, getCompan
 export const NAVY = '#1B2A4A';
 export const GOLD = '#C9A227';
 export const TEAL_HEX = '#00A6A6';
-export const SIGNATURE_IMAGE_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3352e3dd7_logo.png';
+export const SIGNATURE_IMAGE_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3cedb4a2f_IMG_1221.jpeg';
 
 function drawCertificatePage(doc, data) {
   const pageW = doc.internal.pageSize.getWidth();

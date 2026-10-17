@@ -22,7 +22,7 @@ export default function ReferralSendDialog({ referral, open, onClose, onSent }) 
     if (referral) {
       setTo(referral.provider_email || '');
       setSubject(`Referral ${referral.referral_id || ''} - ${referral.client_name || ''}`.trim());
-      setBody(`Dear provider,\n\nPlease find ${attach !== undefined ? 'below' : ''} a referral for ${referral.client_name || 'a client'} (referral ${referral.referral_id || ''}).\n\nService requested: ${referral.service_type || '-'}\nUrgency: ${referral.urgency || 'Routine'}\n\nReason for referral:\n${referral.reason || '-'}\n\nPlease contact the referrer${referral.referrer_name ? ` (${referral.referrer_name})` : ''}${referral.referrer_phone ? ` on ${referral.referrer_phone}` : ''} to confirm receipt and next steps.\n\nKind regards,\nComplianceHR Portal`);
+      setBody(`Dear provider,\n\nPlease find ${attach !== undefined ? 'below' : ''} a referral for ${referral.client_name || 'a client'} (referral ${referral.referral_id || ''}).\n\nService requested: ${referral.service_type || '-'}\nUrgency: ${referral.urgency || 'Routine'}\n\nReason for referral:\n${referral.reason || '-'}\n\nPlease contact the referrer${referral.referrer_name ? ` (${referral.referrer_name})` : ''}${referral.referrer_phone ? ` on ${referral.referrer_phone}` : ''} to confirm receipt and next steps.\n\nKind regards,\nComplianceHR Infinitely`);
     }
   }, [referral, open]);
 

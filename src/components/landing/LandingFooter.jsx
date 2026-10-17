@@ -37,7 +37,7 @@ export default function LandingFooter() {
           ))}
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 sm:flex-row">
-          <p className="text-xs text-white/40">© {new Date().getFullYear()} ComplianceHR. All rights reserved.</p>
+          <p className="text-xs text-white/40">© {new Date().getFullYear()} ComplianceHR Infinitely. All rights reserved.</p>
           <p className="text-xs text-white/40">Built for NDIS & community service providers</p>
         </div>
       </div>

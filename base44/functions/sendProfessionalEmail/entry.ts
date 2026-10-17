@@ -52,7 +52,7 @@ export default async function(req: Request) {
     const biz = businessPage.status === 'fulfilled' ? (asList(businessPage.value)[0] || {}) : {};
     const providers = providerPage.status === 'fulfilled' ? asList(providerPage.value) : [];
     const logoUrl = (providers.find((p) => p.logo_url) || {}).logo_url
-      || 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3352e3dd7_logo.png';
+      || 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3cedb4a2f_IMG_1221.jpeg';
     const keyPersonnel = contactsPage.status === 'fulfilled' ? asList(contactsPage.value) : [];
 
     const businessName = biz.business_name || 'ComplianceHR';

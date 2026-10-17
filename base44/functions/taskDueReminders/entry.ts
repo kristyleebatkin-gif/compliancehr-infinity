@@ -31,7 +31,7 @@ export default async function(req) {
           await service.integrations.Core.SendEmail({
             to,
             subject: `Task due: ${String(task.title || '').slice(0, 150)}`,
-            from_name: 'ComplianceHR Portal',
+            from_name: 'ComplianceHR Infinitely',
             body: `Daily task reminder\n\nTask: ${task.title || ''}\nModule: ${task.module || '-'}\nDue date: ${task.due_date || '-'}\nDate: ${task.task_date || '-'}  Time: ${task.task_time || '-'}\n\nHow to complete: ${task.how_to_complete || '-'}\nResources needed: ${task.resources_needed || '-'}\nImportant info: ${task.important_info || '-'}\n\nPlease open the To-Do Board in the Communication Centre and mark the task finalised when it is done.`,
           });
           sent += 1;

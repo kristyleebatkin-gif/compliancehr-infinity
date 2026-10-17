@@ -15,7 +15,7 @@ const HAIRLINES = [
   'from-blue-500 to-cyan-400',
   'from-emerald-500 to-teal-400',
   'from-amber-500 to-orange-400',
-  'from-indigo-500 to-violet-400',
+  'from-fuchsia-500 to-violet-400',
 ];
 const CHIP_STYLES = [
   'from-violet-100 to-fuchsia-100 text-violet-700 dark:from-violet-500/20 dark:to-fuchsia-500/20 dark:text-violet-300',
@@ -23,7 +23,7 @@ const CHIP_STYLES = [
   'from-blue-100 to-cyan-100 text-blue-700 dark:from-blue-500/20 dark:to-cyan-500/20 dark:text-blue-300',
   'from-emerald-100 to-teal-100 text-emerald-700 dark:from-emerald-500/20 dark:to-teal-500/20 dark:text-emerald-300',
   'from-amber-100 to-orange-100 text-amber-700 dark:from-amber-500/20 dark:to-orange-500/20 dark:text-amber-300',
-  'from-indigo-100 to-violet-100 text-indigo-700 dark:from-indigo-500/20 dark:to-violet-500/20 dark:text-indigo-300',
+  'from-violet-100 to-fuchsia-100 text-violet-700 dark:from-violet-500/20 dark:to-fuchsia-500/20 dark:text-violet-300',
 ];
 
 export default function BenefitsSection() {

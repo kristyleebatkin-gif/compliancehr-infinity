@@ -147,7 +147,7 @@ export default function MeetingCentre() {
       />
 
       {nextMeeting && (
-        <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-indigo-600 to-brand text-white shadow-lg">
+        <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
           <CardContent className="flex flex-wrap items-center gap-5 p-5">
             <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-3">
               <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(nextMeeting.date), 'MMM')}</span>
@@ -165,7 +165,7 @@ export default function MeetingCentre() {
               </p>
             </div>
             {nextMeeting.meeting_link && (
-              <a href={nextMeeting.meeting_link} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-indigo-700 hover:bg-indigo-50">
+              <a href={nextMeeting.meeting_link} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-50">
                 <Clock className="h-4 w-4" />Join online
               </a>
             )}

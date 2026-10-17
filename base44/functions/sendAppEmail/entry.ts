@@ -27,7 +27,7 @@ export default async function(req) {
       to,
       subject,
       body: message,
-      from_name: 'ComplianceHR Portal',
+      from_name: 'ComplianceHR Infinitely',
       ...(attachments && attachments.length ? { attachments } : {}),
     });
 

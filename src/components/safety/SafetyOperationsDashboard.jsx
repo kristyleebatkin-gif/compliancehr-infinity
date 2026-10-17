@@ -148,7 +148,7 @@ export default function SafetyOperationsDashboard() {
 
         <div className="grid gap-3 sm:grid-cols-3">
           <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="bg-red-100 text-red-600" />
-          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="bg-indigo-100 text-indigo-600" />
+          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="bg-violet-100 text-violet-600" />
           <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="bg-teal-100 text-teal-600" />
         </div>
 
@@ -177,7 +177,7 @@ export default function SafetyOperationsDashboard() {
                 alert={['In Progress', 'Pending'].includes(inv.status) && Boolean(inv.target_completion && inv.target_completion < format(new Date(), 'yyyy-MM-dd'))}
                 primary={inv.title || 'Untitled'}
                 secondary={`${inv.investigator || 'Unassigned'} · ${inv.status || ''}`}
-                badge={<Badge className="border-transparent bg-indigo-500/10 text-indigo-600">{inv.status || '—'}</Badge>}
+                badge={<Badge className="border-transparent bg-violet-500/10 text-violet-600">{inv.status || '—'}</Badge>}
               />
             ))}
             {investigations.length > 5 && <Link to="/incidents" className="text-xs font-semibold text-brand hover:underline">View all {investigations.length} →</Link>}

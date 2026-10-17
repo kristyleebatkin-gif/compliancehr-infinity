@@ -1,7 +1,7 @@
 import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'compliancehr_company_branding';
-export const COMPLIANCE_HR_FOOTER = 'ComplianceHR | Governance. Assurance. Better Outcomes.';
+export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinitely | Complete Control. Greater Confidence. Brighter Success.';
 const DEFAULTS = {
   companyName: 'ComplianceHR',
   slogan: COMPLIANCE_HR_FOOTER,

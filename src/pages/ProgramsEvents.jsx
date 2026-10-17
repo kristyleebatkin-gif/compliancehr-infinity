@@ -173,7 +173,7 @@ export default function ProgramsEvents() {
       {!loading && grouped.Upcoming[0] && (() => {
         const spotlight = grouped.Upcoming[0];
         return (
-          <Card className="overflow-hidden border-0 bg-gradient-to-br from-fuchsia-600 via-purple-600 to-indigo-700 text-white shadow-lg">
+          <Card className="overflow-hidden border-0 bg-gradient-to-br from-fuchsia-600 via-purple-600 to-violet-700 text-white shadow-lg">
             <CardContent className="flex flex-col gap-5 p-6 md:flex-row md:items-center">
               <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-4 backdrop-blur">
                 <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(spotlight.date), 'MMM')}</span>

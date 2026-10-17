@@ -31,7 +31,7 @@ const APP_MODULE_GROUPS = [
   },
   {
     title: 'Business, finance and growth',
-    colour: 'from-indigo-600 to-blue-500',
+    colour: 'from-violet-600 to-blue-500',
     modules: pick('invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'analytics', 'human-resources', 'crm', 'projects'),
   },
   {
@@ -103,7 +103,7 @@ export default function BlueprintPreviewSection() {
             </div>
           </aside>
 
-          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/70 p-4 sm:p-6">
+          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-violet-950/70 p-4 sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="flex items-center gap-2 font-editorial text-xl font-semibold text-white"><LayoutDashboard className="h-5 w-5 text-cyan-300" />Organisation Dashboard</div>

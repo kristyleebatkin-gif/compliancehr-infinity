@@ -82,7 +82,7 @@ export default async function(req) {
     const lines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//ComplianceHR Portal//Rostering//EN',
+      'PRODID:-//ComplianceHR Infinitely//Rostering//EN',
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
       foldLine('X-WR-CALNAME:Rostering Schedule'),

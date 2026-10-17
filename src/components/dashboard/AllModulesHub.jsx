@@ -25,18 +25,18 @@ export default function AllModulesHub() {
   const modules = MODULE_DIRECTORY.filter((module) => module.key === 'dashboard' || canAccessNav(role, module.key));
 
   return (
-    <section aria-labelledby="all-modules-hub" className="rounded-2xl border bg-card p-4 shadow-lg shadow-indigo-500/5 dark:border-slate-800 sm:p-6">
+    <section aria-labelledby="all-modules-hub" className="rounded-2xl border bg-card p-4 shadow-lg shadow-violet-500/5 dark:border-slate-800 sm:p-6">
       <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 id="all-modules-hub" className="flex items-center gap-2 text-base font-bold font-display text-foreground">
-            <LayoutGrid className="h-4 w-4 text-indigo-600" />
+            <LayoutGrid className="h-4 w-4 text-violet-600" />
             All modules
           </h2>
           <p className="mt-0.5 text-sm text-foreground/60">
             Every module, form, register and live tracker in your workspace, connected and role-filtered.
           </p>
         </div>
-        <span className="self-start rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300">
+        <span className="self-start rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-950/40 dark:text-violet-300">
           {modules.length} modules
         </span>
       </div>

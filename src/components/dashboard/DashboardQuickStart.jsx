@@ -42,7 +42,7 @@ export default function DashboardQuickStart() {
             Quick start guide
           </h2>
           <p className="mt-0.5 text-sm text-foreground/60">
-            The basics for finding your way around Compliance HR.
+            The basics for finding your way around ComplianceHR Infinitely.
           </p>
         </div>
         <Link

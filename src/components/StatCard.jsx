@@ -7,7 +7,7 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
     red: { chip: 'bg-gradient-to-br from-red-500 to-rose-600 text-white', ring: 'hover:ring-red-300' },
     amber: { chip: 'bg-gradient-to-br from-amber-500 to-orange-600 text-white', ring: 'hover:ring-amber-300' },
     emerald: { chip: 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white', ring: 'hover:ring-emerald-300' },
-    blue: { chip: 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white', ring: 'hover:ring-blue-300' },
+    blue: { chip: 'bg-gradient-to-br from-blue-500 to-violet-600 text-white', ring: 'hover:ring-blue-300' },
   };
   const t = tones[tone] || tones.slate;
 

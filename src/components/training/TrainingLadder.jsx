@@ -8,7 +8,7 @@ const LEVELS = [
   { min: 10, name: 'Gold', tone: 'bg-amber-100 text-amber-800 border-amber-200' },
   { min: 6, name: 'Silver', tone: 'bg-slate-100 text-slate-700 border-slate-300' },
   { min: 3, name: 'Bronze', tone: 'bg-orange-100 text-orange-800 border-orange-200' },
-  { min: 1, name: 'New Starter', tone: 'bg-indigo-100 text-indigo-800 border-indigo-200' },
+  { min: 1, name: 'New Starter', tone: 'bg-violet-100 text-violet-800 border-violet-200' },
 ];
 
 const levelFor = (count) => LEVELS.find((l) => count >= l.min) || { name: 'Not started', tone: 'bg-muted text-muted-foreground border-border' };

@@ -188,7 +188,7 @@ function finish(doc, title, code) {
   drawDocumentFooter(doc, {
     title,
     code,
-    companyName: useBranding ? getCompanyBranding().companyName : 'ComplianceHR Portal',
+    companyName: useBranding ? getCompanyBranding().companyName : 'ComplianceHR Infinitely',
     margin: 40,
   });
   return doc;
