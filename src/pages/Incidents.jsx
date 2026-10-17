@@ -198,11 +198,11 @@ export default function Incidents() {
         subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
         action={
           <div className="flex flex-wrap items-center gap-2">
-            {canReview && <Button onClick={() => { setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> Add New Investigation</Button>}
+            {canReview && <Button size="sm" onClick={() => { setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
             <Link to="/incidents/new">
-              <Button className="bg-red-600 text-white hover:bg-red-700 border-red-600"><Plus className="h-4 w-4 mr-1.5" /> New Incident</Button>
+              <Button size="sm" className="bg-red-600 text-white hover:bg-red-700 border-red-600"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
             </Link>
-            {canReview && <Button onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Download All Incident Reports (PDF)</Button>}
+            {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
           </div>
         }
       />

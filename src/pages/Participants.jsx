@@ -10,9 +10,11 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Trash2, Heart, UserRound, Download } from 'lucide-react';
+import { Plus, Search, Trash2, Heart, UserRound, Download, MessageSquarePlus } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { Link } from 'react-router-dom';
+import { SHIFT_TYPES } from '@/lib/commTypes';
+import { logCommunicationRegister } from '@/lib/commRouting';
 
 
 export default function Participants() {
@@ -21,6 +23,11 @@ export default function Participants() {
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showDiary, setShowDiary] = useState(false);
+  const [savingDiary, setSavingDiary] = useState(false);
+  const blankDiary = () => ({ person_name: '', entry_date: new Date().toISOString().slice(0, 10), entry_time: '', shift_type: '', goal: '', travel_location: '', travel_km: '', body: '' });
+  const [diary, setDiary] = useState(blankDiary());
+  const setDiaryField = (key) => (e) => setDiary({ ...diary, [key]: e.target.value });
   const [form, setForm] = useState({ full_name: '', email: '', phone: '', address: '', date_of_birth: '', ndis_number: '', support_coordinator: '', status: 'Active', notes: '' });
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
@@ -55,6 +62,35 @@ export default function Participants() {
     await load(search);
   };
 
+  const saveDiary = async () => {
+    if (!diary.person_name || !diary.body.trim()) return;
+    setSavingDiary(true);
+    try {
+      const user = await base44.auth.me();
+      const record = await base44.entities.CommunicationEntry.create({
+        entry_kind: 'Shift Note',
+        person_type: 'Participant',
+        person_name: diary.person_name,
+        note_type: 'Shift Note',
+        entry_date: diary.entry_date,
+        entry_time: diary.entry_time,
+        shift_type: diary.shift_type,
+        goal: diary.goal,
+        travel_location: diary.travel_location,
+        travel_km: Number(diary.travel_km) || 0,
+        body: diary.body,
+        module: 'Participants',
+        sender_name: user?.full_name || '',
+        sender_email: user?.email || '',
+      });
+      await logCommunicationRegister(record);
+      setDiary(blankDiary());
+      setShowDiary(false);
+    } finally {
+      setSavingDiary(false);
+    }
+  };
+
   const exportRegister = async () => {
     const page = await base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 1000 });
     downloadCsv('Participant-Register.csv', [
@@ -72,6 +108,39 @@ export default function Participants() {
       <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        <Dialog open={showDiary} onOpenChange={setShowDiary}>
+          <DialogTrigger asChild><Button variant="outline"><MessageSquarePlus className="mr-2 h-4 w-4" />Diary entry</Button></DialogTrigger>
+          <DialogContent className="max-h-[85vh] overflow-y-auto">
+            <DialogHeader><DialogTitle>Add diary entry</DialogTitle></DialogHeader>
+            <div className="grid gap-3">
+              <div className="grid gap-1.5"><Label>Participant *</Label>
+                <Select value={diary.person_name || undefined} onValueChange={(v) => setDiary({ ...diary, person_name: v })}>
+                  <SelectTrigger><SelectValue placeholder="Select participant" /></SelectTrigger>
+                  <SelectContent>{people.map((p) => <SelectItem key={p.id} value={p.full_name}>{p.full_name}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={diary.entry_date} onChange={setDiaryField('entry_date')} /></div>
+                <div className="grid gap-1.5"><Label>Time</Label><Input type="time" value={diary.entry_time} onChange={setDiaryField('entry_time')} /></div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5"><Label>Support type</Label>
+                  <Select value={diary.shift_type || undefined} onValueChange={(v) => setDiary({ ...diary, shift_type: v })}>
+                    <SelectTrigger><SelectValue placeholder="Select support type" /></SelectTrigger>
+                    <SelectContent>{SHIFT_TYPES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-1.5"><Label>Relevant goal</Label><Input value={diary.goal} onChange={setDiaryField('goal')} /></div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5"><Label>Travel location</Label><Input value={diary.travel_location} onChange={setDiaryField('travel_location')} /></div>
+                <div className="grid gap-1.5"><Label>Travel (km)</Label><Input type="number" value={diary.travel_km} onChange={setDiaryField('travel_km')} /></div>
+              </div>
+              <div className="grid gap-1.5"><Label>Entry *</Label><Textarea value={diary.body} onChange={setDiaryField('body')} placeholder="Record what you saw, heard and did - facts only." /></div>
+              <Button onClick={saveDiary} disabled={savingDiary || !diary.person_name || !diary.body.trim()}>Save diary entry</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add participant</Button></DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">
