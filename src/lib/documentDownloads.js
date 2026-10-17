@@ -57,19 +57,39 @@ async function writeWithSavePicker(blob, filename, fileHandle = null) {
 
 export async function downloadOriginalDocument(url, label) {
   const filename = safeFilename(label, extensionFromUrl(url));
-  if (typeof window.showSaveFilePicker === 'function') {
-    const fileHandle = await window.showSaveFilePicker({
-      suggestedName: filename,
-      types: pickerTypes(filename),
-    });
+  // Fetch the file first (CORS is allowed on the app's media files); if the
+  // fetch is blocked the browser downloads the URL directly instead.
+  let blob = null;
+  try {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`The form returned ${response.status}.`);
-    const blob = await response.blob();
-    if (!blob.size) throw new Error('The form file is empty.');
-    await writeWithSavePicker(blob, filename, fileHandle);
-  } else {
-    triggerDownload(url, filename, true);
+    if (response.ok) {
+      const candidate = await response.blob();
+      if (candidate.size) blob = candidate;
+    }
+  } catch { blob = null; }
+  if (blob && typeof window.showSaveFilePicker === 'function') {
+    try {
+      const fileHandle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types: pickerTypes(filename),
+      });
+      const writable = await fileHandle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return filename;
+    } catch (error) {
+      if (error?.name === 'AbortError') return filename; // user closed the save dialog
+      // Save picker unavailable (e.g. embedded iframe): fall through to the
+      // standard browser download below.
+    }
   }
+  if (blob) {
+    const objectUrl = URL.createObjectURL(blob);
+    triggerDownload(objectUrl, filename);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 4000);
+    return filename;
+  }
+  triggerDownload(url, filename, true);
   return filename;
 }
 
