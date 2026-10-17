@@ -16,12 +16,16 @@ const OPEN_INC_STATUSES = ['Reported', 'Under Investigation', 'Action Required']
 const ACTIVE_RISK_STATUSES = ['Identified', 'Assessed', 'Treating', 'Monitored'];
 
 const Tile = ({ icon: Icon, label, value, tone }) => (
-  <div className="rounded-xl border border-border/60 bg-card p-4">
-    <div className="mb-2 flex items-center gap-2">
-      <div className={`rounded-lg p-1.5 ${tone}`}><Icon className="h-4 w-4" /></div>
+  <div
+    className="relative overflow-hidden rounded-xl border p-4 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+    style={{ borderColor: `${tone}55`, background: `linear-gradient(135deg, ${tone}26, hsl(var(--card)) 75%)`, boxShadow: `0 8px 24px -14px ${tone}77` }}
+  >
+    <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${tone}, ${tone}99)` }} />
+    <div className="relative mb-2 flex items-center gap-2">
+      <div className="flex items-center justify-center rounded-lg p-1.5 text-white shadow-md" style={{ background: `linear-gradient(135deg, ${tone}, ${tone}bb)` }}><Icon className="h-4 w-4" /></div>
       <span className="text-xs font-semibold text-foreground/60">{label}</span>
     </div>
-    <p className="text-2xl font-bold">{value}</p>
+    <p className="relative text-3xl font-extrabold leading-none" style={{ color: tone }}>{value}</p>
   </div>
 );
 
@@ -96,14 +100,15 @@ export default function SafetyTrendsDashboard() {
       ) : (
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <Tile icon={AlertTriangle} label="Open incidents" value={openIncidents.length} tone="bg-warning/15 text-warning" />
-            <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="bg-brand/10 text-brand" />
-            <Tile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="bg-red-600/15 text-red-600" />
-            <Tile icon={ShieldAlert} label="Active risks" value={activeRisks.length} tone="bg-teal/10 text-teal" />
+            <Tile icon={AlertTriangle} label="Open incidents" value={openIncidents.length} tone="#f59e0b" />
+            <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="#7c3aed" />
+            <Tile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="#dc2626" />
+            <Tile icon={ShieldAlert} label="Active risks" value={activeRisks.length} tone="#0d9488" />
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">
-            <div className="rounded-xl border border-border/60 p-4 lg:col-span-2">
+            <div className="relative overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-rose-50 p-4 shadow-lg shadow-amber-500/5 dark:border-amber-900 dark:from-amber-950/25 dark:via-card dark:to-rose-950/20 lg:col-span-2">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-500 via-rose-500 to-red-500" />
               <h4 className="mb-3 text-sm font-semibold">Incident frequency and severity by month — last 6 months</h4>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={trend} margin={{ top: 4, right: 8, bottom: 0, left: -24 }}>
@@ -124,8 +129,9 @@ export default function SafetyTrendsDashboard() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-border/60 p-4">
-              <h4 className="mb-3 text-sm font-semibold">Pending investigations</h4>
+            <div className="relative overflow-hidden rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500" />
+              <h4 className="relative mb-3 text-sm font-semibold">Pending investigations</h4>
               {pendingInv.length === 0 ? (
                 <p className="text-xs text-muted-foreground">No pending investigations.</p>
               ) : (

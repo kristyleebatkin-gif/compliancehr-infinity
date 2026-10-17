@@ -25,7 +25,8 @@ export default function AllModulesHub() {
   const modules = MODULE_DIRECTORY.filter((module) => module.key === 'dashboard' || canAccessNav(role, module.key));
 
   return (
-    <section aria-labelledby="all-modules-hub" className="rounded-2xl border bg-card p-4 shadow-lg shadow-violet-500/5 dark:border-slate-800 sm:p-6">
+    <section aria-labelledby="all-modules-hub" className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20 sm:p-6">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
       <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 id="all-modules-hub" className="flex items-center gap-2 text-base font-bold font-display text-foreground">

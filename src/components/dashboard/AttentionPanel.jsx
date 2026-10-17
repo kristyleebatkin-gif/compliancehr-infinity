@@ -47,7 +47,7 @@ export default function AttentionPanel() {
         setData({
           groups: [
             { key: 'incidents', label: 'Open incidents', count: openInc.length, urgent: urgentInc.length, to: '/incidents', Icon: AlertTriangle, tone: 'orange' },
-            { key: 'risks', label: 'Open high / critical risks', count: openHighRisks.length, to: '/risks', Icon: ShieldAlert, tone: 'green' },
+            { key: 'risks', label: 'Open high / critical risks', count: openHighRisks.length, to: '/risks', Icon: ShieldAlert, tone: 'red' },
             { key: 'docs', label: 'Expiring documents (30d)', count: expiringDocs.length, to: '/documents', Icon: FileClock, tone: 'warning' },
           ],
           top,
