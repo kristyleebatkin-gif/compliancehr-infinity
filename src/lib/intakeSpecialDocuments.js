@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
-import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
+import { drawDocumentFooter } from '@/lib/companyBranding';
+import { drawFormHeader } from '@/lib/formDocumentStyles';
 
 /**
  * High-quality, professionally styled master templates for the signature
@@ -15,32 +16,7 @@ const INK = [30, 30, 40];
 
 function startDocument(title, subtitle, code) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const pageW = doc.internal.pageSize.getWidth();
-  let y = 54;
-
-  drawCompanyBranding(doc, 40, y);
-  y += 44;
-
-  doc.setFillColor(244, 242, 253);
-  doc.roundedRect(40, y - 16, pageW - 80, 34, 5, 5, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(...VIOLET);
-  doc.text(title, 54, y + 2);
-  if (code) {
-    doc.setFontSize(8);
-    const codeW = doc.getTextWidth(code) + 16;
-    doc.setFillColor(124, 58, 237);
-    doc.roundedRect(pageW - 54 - codeW, y - 9, codeW, 16, 8, 8, 'F');
-    doc.setTextColor(255);
-    doc.text(code, pageW - 54 - codeW + 8, y + 2.5);
-  }
-  y += 12;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.5);
-  doc.setTextColor(...MUTED);
-  doc.text(subtitle, 54, y + 3);
-  y += 28;
+  const y = drawFormHeader(doc, { title, code, subtitle });
   return { doc, y };
 }
 

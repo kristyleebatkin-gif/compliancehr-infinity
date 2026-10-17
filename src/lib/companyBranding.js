@@ -147,13 +147,13 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(Math.max(6.5, fontSize * 0.45));
   doc.setTextColor(71, 85, 105);
-  doc.text(branding.slogan, textX, y + 8, { maxWidth });
+  doc.text(branding.slogan, textX, y + 13, { maxWidth });
   doc.setFillColor(37, 99, 235);
-  doc.rect(textX, y + 14, 18, 2.5, 'F');
+  doc.rect(textX, y + 20, 18, 2.5, 'F');
   doc.setFillColor(124, 58, 237);
-  doc.rect(textX + 18, y + 14, 18, 2.5, 'F');
+  doc.rect(textX + 18, y + 20, 18, 2.5, 'F');
   doc.setFillColor(236, 72, 153);
-  doc.rect(textX + 36, y + 14, 18, 2.5, 'F');
+  doc.rect(textX + 36, y + 20, 18, 2.5, 'F');
   return { ...branding, textX };
 }
 
