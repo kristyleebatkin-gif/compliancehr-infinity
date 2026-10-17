@@ -390,50 +390,8 @@ export default function MasterChecklist() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <Badge className={TONE[statusFor(overallReadiness())]}>Overall readiness {overallReadiness()}%</Badge>
-          <span className="text-xs text-muted-foreground">Live - updates as documents are submitted.</span>
-        </div>
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <Button onClick={exportReport}><Download className="mr-2 h-4 w-4" /> Export compliance audit report</Button>
-      </div>
-
-      <div className="grid gap-3 lg:grid-cols-2">
-        <SectionSummary
-          title="Policies & Legal Requirements"
-          icon={ShieldCheck}
-          status={statusFor(policies.length ? (activePolicies.length / policies.length) * 100 : 100)}
-          readiness={policies.length ? (activePolicies.length / policies.length) * 100 : 100}
-          lines={[`${activePolicies.length} of ${policies.length} policies active.`]}
-          action={<Button variant="outline" size="sm" onClick={exportPolicies}><Download className="h-3.5 w-3.5" /> Export</Button>}
-        />
-        <SectionSummary
-          title="Emergency Kits & Fire Drills"
-          icon={Flame}
-          status={statusFor(kitsOverall)}
-          readiness={kitsOverall}
-          lines={[
-            ...kitStatuses.map((kit) => `${kit.checkType}: ${kit.latest ? `next due ${kit.due ? format(new Date(`${kit.due}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no check recorded yet'}`),
-            `Fire evacuation drill: ${latestFireDrill ? `next due ${fireDrillDue ? format(new Date(`${fireDrillDue}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no drill recorded yet'}`,
-          ]}
-          action={<Button variant="outline" size="sm" onClick={exportKits}><Download className="h-3.5 w-3.5" /> Export</Button>}
-        />
-        <SectionSummary
-          title="Vehicles & Car Safety Checks"
-          icon={Car}
-          status={statusFor(carSafetyDocs.length > 0 ? 100 : 0)}
-          readiness={carSafetyDocs.length > 0 ? 100 : 0}
-          lines={[`${carSafetyDocs.length} car safety check(s) filed in this section.`]}
-          action={<Button variant="outline" size="sm" onClick={exportCarDocs}><Download className="h-3.5 w-3.5" /> Export</Button>}
-        />
-        <SectionSummary
-          title="Asset Register"
-          icon={Boxes}
-          status={statusFor(assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100)}
-          readiness={assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100}
-          lines={[`${assets.length} assets on the register, ${overdueAssets.length} overdue for service.`]}
-          action={<Button variant="outline" size="sm" onClick={exportAssets}><Download className="h-3.5 w-3.5" /> Export</Button>}
-        />
       </div>
 
       <SectionCard
@@ -571,6 +529,49 @@ export default function MasterChecklist() {
           Open the Audits tab above for the audit register, actions, checklists, calendar and status log.
         </div>
       </SectionCard>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge className={TONE[statusFor(overallReadiness())]}>Overall readiness {overallReadiness()}%</Badge>
+        <span className="text-xs text-muted-foreground">Live - updates as documents are submitted.</span>
+      </div>
+
+      <div className="grid gap-3 lg:grid-cols-2">
+        <SectionSummary
+          title="Policies & Legal Requirements"
+          icon={ShieldCheck}
+          status={statusFor(policies.length ? (activePolicies.length / policies.length) * 100 : 100)}
+          readiness={policies.length ? (activePolicies.length / policies.length) * 100 : 100}
+          lines={[`${activePolicies.length} of ${policies.length} policies active.`]}
+          action={<Button variant="outline" size="sm" onClick={exportPolicies}><Download className="h-3.5 w-3.5" /> Export</Button>}
+        />
+        <SectionSummary
+          title="Emergency Kits & Fire Drills"
+          icon={Flame}
+          status={statusFor(kitsOverall)}
+          readiness={kitsOverall}
+          lines={[
+            ...kitStatuses.map((kit) => `${kit.checkType}: ${kit.latest ? `next due ${kit.due ? format(new Date(`${kit.due}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no check recorded yet'}`),
+            `Fire evacuation drill: ${latestFireDrill ? `next due ${fireDrillDue ? format(new Date(`${fireDrillDue}T00:00:00`), 'd MMM yyyy') : 'not set'}` : 'no drill recorded yet'}`,
+          ]}
+          action={<Button variant="outline" size="sm" onClick={exportKits}><Download className="h-3.5 w-3.5" /> Export</Button>}
+        />
+        <SectionSummary
+          title="Vehicles & Car Safety Checks"
+          icon={Car}
+          status={statusFor(carSafetyDocs.length > 0 ? 100 : 0)}
+          readiness={carSafetyDocs.length > 0 ? 100 : 0}
+          lines={[`${carSafetyDocs.length} car safety check(s) filed in this section.`]}
+          action={<Button variant="outline" size="sm" onClick={exportCarDocs}><Download className="h-3.5 w-3.5" /> Export</Button>}
+        />
+        <SectionSummary
+          title="Asset Register"
+          icon={Boxes}
+          status={statusFor(assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100)}
+          readiness={assets.length ? ((assets.length - overdueAssets.length) / assets.length) * 100 : 100}
+          lines={[`${assets.length} assets on the register, ${overdueAssets.length} overdue for service.`]}
+          action={<Button variant="outline" size="sm" onClick={exportAssets}><Download className="h-3.5 w-3.5" /> Export</Button>}
+        />
+      </div>
     </div>
   );
 }
