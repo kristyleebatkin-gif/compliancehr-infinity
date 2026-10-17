@@ -100,10 +100,12 @@ export default function NdisUpdates() {
               <p className="text-sm text-slate-300">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
             </div>
           </div>
-          <ModuleAlertsButton />
-          <ModuleComplianceStrip path="/ndis-updates" />
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
+          <div className="flex flex-wrap items-center gap-2">
+            <ModuleAlertsButton />
+            <ModuleComplianceStrip path="/ndis-updates" />
+            <ModuleAuditChecklistButton />
+            <ModuleAuditButton />
+          </div>
           <Button onClick={refresh} disabled={refreshing} className="bg-white/10 text-white hover:bg-white/20">
             {refreshing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
             {refreshing ? 'Checking NDIS...' : 'Refresh from NDIS'}

@@ -25,10 +25,12 @@ export default function NdisProviderPortal() {
             <h1 className="text-2xl font-bold tracking-tight">NDIS Registered Provider Portal</h1>
             <p className="text-sm text-slate-300">Direct access points to the official NDIS portals and provider resources.</p>
           </div>
-          <ModuleAlertsButton />
-          <ModuleComplianceStrip path="/ndis-portal" />
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
+          <div className="flex flex-wrap items-center gap-2">
+            <ModuleAlertsButton />
+            <ModuleComplianceStrip path="/ndis-portal" />
+            <ModuleAuditChecklistButton />
+            <ModuleAuditButton />
+          </div>
         </div>
       </div>
 

@@ -28,7 +28,7 @@ export default function ReferralSupport() {
               <p className="text-sm text-slate-300">Crisis information, local services by postcode, a national resource library, and a referral form you can log, PDF and email.</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
             <ModuleAlertsButton />
             <ModuleComplianceStrip path="/referrals" />

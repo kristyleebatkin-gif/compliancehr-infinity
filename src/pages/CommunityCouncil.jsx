@@ -10,7 +10,6 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
-import ModuleDocsButton from '@/components/ModuleDocsButton';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;
@@ -67,8 +66,7 @@ export default function CommunityCouncil() {
               <p className="text-sm text-teal-100">Find your local council, its contact details, what's on and community events for your postcode.</p>
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <ModuleDocsButton />
+          <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/community-council" />
             <ModuleAlertsButton />
             <ModuleAuditChecklistButton />

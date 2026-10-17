@@ -3,7 +3,6 @@ import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleDocsButton from '@/components/ModuleDocsButton';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
@@ -41,9 +40,8 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           {subtitle && <p className="mt-1.5 max-w-3xl text-sm font-medium text-foreground/65">{subtitle}</p>}
         </div>
       </div>
-      <div className="relative mt-3 flex w-full items-start justify-start gap-2 sm:mt-0 md:w-auto md:justify-end">
+      <div className="relative mt-3 flex w-full flex-wrap items-center justify-start gap-2 sm:mt-0 md:w-auto md:justify-end">
         <ModuleAlertsButton />
-        <ModuleDocsButton />
         <ModuleComplianceStrip path={seg} />
         <ModuleAuditChecklistButton />
         <ModuleAuditButton />
