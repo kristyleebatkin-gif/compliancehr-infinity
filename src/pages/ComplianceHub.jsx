@@ -107,9 +107,29 @@ export default function ComplianceHub() {
     await load();
   };
 
+  const exportCorrectiveRegister = async () => {
+    const page = await base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 500 });
+    downloadCsv('corrective-action-register.csv', [
+      { key: 'title', label: 'Action' }, { key: 'type', label: 'Type' }, { key: 'source', label: 'Source' },
+      { key: 'status', label: 'Status' }, { key: 'priority', label: 'Priority' }, { key: 'raised_by', label: 'Raised By' },
+      { key: 'raised_date', label: 'Raised Date' }, { key: 'nominated_to', label: 'Nominated To' },
+      { key: 'target_date', label: 'Target Date' }, { key: 'outcome', label: 'Outcome' },
+    ], page.items);
+  };
+
   return (
     <div className="space-y-6">
-      <PageHeader icon={ShieldCheck} title="Compliance & Report Centre" subtitle="Policies, legal obligations and their review cycles." showAlerts={false} />
+      <PageHeader
+        icon={ShieldCheck}
+        title="Compliance & Report Centre"
+        subtitle="Policies, legal obligations and their review cycles."
+        showAlerts={false}
+        action={(
+          <Button variant="outline" onClick={exportCorrectiveRegister}>
+            <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
+          </Button>
+        )}
+      />
 
       <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">

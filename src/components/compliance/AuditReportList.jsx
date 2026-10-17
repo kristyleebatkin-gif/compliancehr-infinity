@@ -17,6 +17,7 @@ import { ClipboardList, Download, FileText, Loader2, RefreshCw, ShieldCheck } fr
 export default function AuditReportList() {
   const { toast } = useToast();
   const [rows, setRows] = useState([]);
+  const [corrective, setCorrective] = useState([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [busyEntity, setBusyEntity] = useState(null);
@@ -34,6 +35,10 @@ export default function AuditReportList() {
         results.forEach((r) => { if (r.status === 'fulfilled') out.push(r.value); });
       }
       setRows(out);
+      const correctivePage = await base44.entities.QualityItem.filter(
+        { status: { $in: ['New', 'In Progress'] } }, { sort: '-created_date', limit: 200 }
+      );
+      setCorrective(correctivePage.items || []);
     } finally {
       setLoading(false);
     }
@@ -70,7 +75,13 @@ export default function AuditReportList() {
     setExporting(true);
     try {
       await loadCompanyBranding();
-      downloadAuditListPdf(rows, { generatedBy: await generatedBy() });
+      const correctiveRows = corrective.map((q) => ({
+        action: q.title,
+        owner: q.nominated_to || q.raised_by || 'Module owner',
+        due: q.target_date || '-',
+        status: q.priority === 'High' ? 'Urgent' : 'Open',
+      }));
+      downloadAuditListPdf(rows, { generatedBy: await generatedBy(), correctiveActions: correctiveRows });
       toast({ title: 'Audit report PDF downloaded' });
     } catch (err) {
       toast({ title: 'PDF export failed', description: err.message, variant: 'destructive' });

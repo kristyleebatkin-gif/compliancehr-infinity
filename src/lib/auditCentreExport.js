@@ -29,7 +29,7 @@ export async function exportModuleRecordsCsv(entity, label) {
 /**
  * Branded PDF of the internal audit report list (module record counts).
  */
-export function downloadAuditListPdf(rows, { generatedBy = '' } = {}) {
+export function downloadAuditListPdf(rows, { generatedBy = '', correctiveActions = [] } = {}) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -85,6 +85,41 @@ export function downloadAuditListPdf(rows, { generatedBy = '' } = {}) {
     doc.setTextColor(30);
     doc.text(String(r.count), pageW - 90, y, { align: 'right' });
     y += 16;
+  }
+
+  // Corrective action register (open actions passed in by the caller).
+  if (correctiveActions.length) {
+    y += 24;
+    if (y > pageH - 130) { doc.addPage(); y = 64; }
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(30);
+    doc.text(`Corrective Action Register (${correctiveActions.length} open)`, 40, y);
+    y += 18;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(60);
+    doc.text('ACTION', 40, y);
+    doc.text('OWNER', pageW * 0.5, y);
+    doc.text('DUE', pageW * 0.72, y, { align: 'right' });
+    doc.text('STATUS', pageW - 40, y, { align: 'right' });
+    y += 12;
+    doc.setDrawColor(210);
+    doc.line(40, y, pageW - 40, y);
+    y += 14;
+    doc.setFont('helvetica', 'normal');
+    for (const a of correctiveActions) {
+      if (y > pageH - 90) { doc.addPage(); y = 64; }
+      doc.setFontSize(9);
+      doc.setTextColor(30);
+      doc.text(doc.splitTextToSize(a.action, pageW * 0.44)[0], 40, y);
+      doc.setTextColor(120);
+      doc.text(a.owner, pageW * 0.5, y);
+      doc.text(a.due, pageW * 0.72, y, { align: 'right' });
+      doc.setTextColor(185, 60, 40);
+      doc.text(a.status, pageW - 40, y, { align: 'right' });
+      y += 16;
+    }
   }
 
   drawDocumentFooter(doc, { title: 'Internal Audit Report List', code: 'IA-REPORT' });
