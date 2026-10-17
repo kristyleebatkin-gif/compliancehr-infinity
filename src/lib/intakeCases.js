@@ -137,10 +137,9 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'Restrictive Practices Record',
 ]);
 
-// Information sheets and audit checklists: download-only, no upload or online completion.
+// Information sheets: download-only, no upload or online completion.
 export const DOWNLOAD_ONLY_DOC_TYPES = new Set([
   'Mandatory Reporting Information',
-  'Staff File Checklist',
 ]);
 
 const INTAKE_DOCUMENT_ALIASES = {

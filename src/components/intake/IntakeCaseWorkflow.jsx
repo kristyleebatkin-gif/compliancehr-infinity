@@ -29,6 +29,7 @@ import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import IntakeCaseForm, { IntakeReadinessPanel, SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
+import { SPECIAL_DOCUMENT_BUILDERS } from '@/lib/intakeSpecialDocuments';
 import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, PARTICIPANT_FORM_META } from '@/lib/participantDocuments';
 import {
@@ -941,6 +942,11 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const downloadTemplate = async (docType) => {
     setDownloadingTemplate(docType);
     try {
+      const specialBuilder = SPECIAL_DOCUMENT_BUILDERS[docType];
+      if (specialBuilder) {
+        specialBuilder(templateCodes[docType] || '');
+        return;
+      }
       const officialUrl = templateFiles[docType];
       if (officialUrl) {
         await downloadOriginalDocument(officialUrl, `${docType} - Official Template`);
