@@ -285,7 +285,7 @@ export default function AppLayout() {
                         <div key={n.id} className={`rounded-lg p-2.5 text-sm ${n.read ? 'bg-muted/40' : 'bg-brand/5'}`}>
                           <div className="font-medium">{n.type}</div>
                           <div className="mt-0.5 text-xs text-foreground/60">{n.message}</div>
-                          {n.action_url && <a href={n.action_url} className="mt-2 inline-flex rounded-md bg-brand px-2.5 py-1 text-[11px] font-semibold text-white">Open required document</a>}
+                          {n.action_url && <Link to={n.action_url} onClick={() => setNotifOpen(false)} className="mt-2 inline-flex rounded-md bg-brand px-2.5 py-1 text-[11px] font-semibold text-white">Open required document</Link>}
                         </div>
                       ))}
                     </div>
@@ -359,7 +359,7 @@ export default function AppLayout() {
                 }`}
               >
                 <Icon className="h-5 w-5" />
-                {item.label}
+                <span className="max-w-full truncate">{item.label}</span>
               </Link>
             );
           })}
