@@ -13,7 +13,23 @@ export default function LandingFooter() {
     if (col.title === 'Get Involved') {
       return link === 'Volunteer With Us' ? '/volunteer-apply' : '/report-complaint';
     }
-    return '#features';
+    const paths = {
+      'Staff Tracking': '/staff',
+      'Participant Records': '/participants',
+      'Incidents': '/incidents',
+      'Risk Management': '/risks',
+      'Training': '/training',
+      'Audit Centre': '/compliance',
+      'Help Centre': '/help',
+      'NDIS Compliance Guide': '/ndis-portal',
+      'Documentation': '/user-guides',
+      'Security': '/compliance',
+      'About': '#quick-start',
+      'Contact': '#pricing',
+      'Privacy Policy': '#benefits',
+      'Terms of Service': '#benefits',
+    };
+    return paths[link] || '#features';
   };
 
   return (
