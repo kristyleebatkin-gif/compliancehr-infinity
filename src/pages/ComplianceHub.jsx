@@ -44,6 +44,7 @@ import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
 import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
+import AuditPackButton from '@/components/compliance/AuditPackButton';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -125,9 +126,12 @@ export default function ComplianceHub() {
         subtitle="Policies, legal obligations and their review cycles."
         showAlerts={false}
         action={(
-          <Button variant="outline" onClick={exportCorrectiveRegister}>
-            <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
-          </Button>
+          <>
+            <AuditPackButton />
+            <Button variant="outline" onClick={exportCorrectiveRegister}>
+              <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
+            </Button>
+          </>
         )}
       />
 
