@@ -32,20 +32,29 @@ const Tile = ({ icon: Icon, label, value, tone }) => (
 export default function SafetyTrendsDashboard() {
   const [incidents, setIncidents] = useState([]);
   const [investigations, setInvestigations] = useState([]);
-  const [risks, setRisks] = useState([]);
+  const [severityRows, setSeverityRows] = useState([]);
+  const [openIncidentsCount, setOpenIncidents] = useState(0);
+  const [activeRisksCount, setActiveRisks] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [incPage, invPage, riskPage] = await Promise.all([
-        base44.entities.Incident.filter({}, { sort: '-date_occurred', limit: 500 }),
-        base44.entities.Investigation.filter({}, { sort: '-start_date', limit: 500 }),
-        base44.entities.Risk.filter({}, { sort: '-identified_date', limit: 500 }),
+      // The trend chart covers the last 6 months only; pending investigations are
+      // a slim filtered page; open/active totals come from server counts.
+      const since = format(subMonths(new Date(), 6), 'yyyy-MM-dd');
+      const [trendPage, pendingPage, severityRows, openIncCount, activeRiskCount] = await Promise.all([
+        base44.entities.Incident.filter({ created_date: { $gte: since } }, { sort: '-date_occurred', limit: 500, fields: ['severity', 'date_occurred', 'status', 'title'] }),
+        base44.entities.Investigation.filter({ status: { $in: PENDING_INV_STATUSES } }, { sort: '-start_date', limit: 100, fields: ['title', 'status', 'investigator', 'target_completion', 'incident_id'] }),
+        base44.entities.Incident.aggregate({ query: { status: { $in: OPEN_INC_STATUSES } }, groupBy: 'severity' }),
+        base44.entities.Incident.count({ status: { $in: OPEN_INC_STATUSES } }),
+        base44.entities.Risk.count({ status: { $in: ACTIVE_RISK_STATUSES } }),
       ]);
-      setIncidents(incPage.items || []);
-      setInvestigations(invPage.items || []);
-      setRisks(riskPage.items || []);
+      setIncidents(trendPage.items || []);
+      setInvestigations(pendingPage.items || []);
+      setSeverityRows(severityRows.rows || []);
+      setOpenIncidents(openIncCount);
+      setActiveRisks(activeRiskCount);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   }, []);
@@ -60,11 +69,9 @@ export default function SafetyTrendsDashboard() {
     return () => subs.forEach((u) => u());
   }, [load]);
 
-  const openIncidents = incidents.filter((i) => OPEN_INC_STATUSES.includes(i.status));
-  const pendingInv = investigations.filter((i) => PENDING_INV_STATUSES.includes(i.status));
+  const pendingInv = investigations;
   const today = format(new Date(), 'yyyy-MM-dd');
   const overdueInv = pendingInv.filter((i) => i.target_completion && isBefore(new Date(i.target_completion + 'T00:00:00'), new Date(today + 'T00:00:00')));
-  const activeRisks = risks.filter((r) => ACTIVE_RISK_STATUSES.includes(r.status));
 
   // Incident trend: incidents per month split by severity, last 6 months
   const months = Array.from({ length: 6 }, (_, idx) => {
@@ -82,7 +89,7 @@ export default function SafetyTrendsDashboard() {
   // Severity breakdown of open incidents
   const severityCounts = ['Low', 'Medium', 'High', 'Critical'].map((s) => ({
     severity: s,
-    count: openIncidents.filter((i) => (i.severity || 'Medium') === s).length,
+    count: severityRows.find((r) => r.severity === s)?.count || 0,
   }));
   const SEVERITY_TONE = { Low: 'bg-safe/15 text-safe', Medium: 'bg-brand/10 text-brand', High: 'bg-warning/15 text-warning', Critical: 'bg-red-600/15 text-red-600 dark:text-red-300' };
 
@@ -100,10 +107,10 @@ export default function SafetyTrendsDashboard() {
       ) : (
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <Tile icon={AlertTriangle} label="Open incidents" value={openIncidents.length} tone="#f59e0b" />
+            <Tile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="#f59e0b" />
             <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="#7c3aed" />
             <Tile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="#dc2626" />
-            <Tile icon={ShieldAlert} label="Active risks" value={activeRisks.length} tone="#0d9488" />
+            <Tile icon={ShieldAlert} label="Active risks" value={activeRisksCount} tone="#0d9488" />
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">
