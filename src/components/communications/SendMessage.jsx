@@ -19,7 +19,7 @@ export default function SendMessage() {
     (async () => {
       const contactsMap = new Map();
       try {
-        const users = await base44.entities.User.list();
+        const users = await base44.entities.User.list({ sort: 'full_name', limit: 200, fields: ['full_name', 'email'] });
         (users || []).forEach((u) => u.email && contactsMap.set(u.email, `${u.full_name || u.email} (app user)`));
       } catch { /* user list may be restricted */ }
       try {

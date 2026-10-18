@@ -110,7 +110,7 @@ const pageItems = (result) => (Array.isArray(result) ? result : (result?.items |
 export async function loadCommContacts() {
   const map = new Map();
   try {
-    const users = await base44.entities.User.list();
+    const users = await base44.entities.User.list({ sort: 'full_name', limit: 200, fields: ['full_name', 'email'] });
     (users || []).forEach((u) => {
       if (u.email) map.set(u.email, { email: u.email, name: u.full_name || u.email, type: 'App User' });
     });
