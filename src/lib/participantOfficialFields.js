@@ -10,7 +10,7 @@ export const PARTICIPANT_OFFICIAL_FORM_ADDITIONS = {
       { label: 'Preferred communication method (Face to face / Phone / Text / Email / Letter / Visual / Contact advocate)' },
       { label: 'Country of birth' },
       { label: 'Aboriginal or Torres Strait Islander status (Aboriginal / Torres Strait Islander / Both / Neither)' },
-      { label: 'Refugee or asylum seeker status (Refugee / Asylum Seeker / Neither)' },
+      { label: 'Refugee or asylum seeker status (Refugee / Asylum Seeker / Neither / Prefer not to say)' },
       { label: 'Religion' },
       { label: 'GP full name, phone and address', multiline: true },
       { label: 'Other current service providers (name, services, contact details)', multiline: true },
