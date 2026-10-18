@@ -109,7 +109,7 @@ export default function DashboardCharts() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4 rounded-2xl bg-gradient-to-r from-rose-50 via-white to-orange-50 p-2 dark:from-rose-950/20 dark:via-background dark:to-orange-950/20">
+      <div className="grid grid-cols-1 gap-4 rounded-2xl bg-gradient-to-r from-rose-50 via-white to-orange-50 p-2 dark:from-rose-950/20 dark:via-background dark:to-orange-950/20 sm:grid-cols-2">
         <StatCard icon={AlertTriangle} label="Open incidents" value={openIncidents} tone="#e11d48" to="/incidents" />
         <StatCard icon={ShieldAlert} label="Open high / critical risks" value={highRisks} tone="#ea580c" to="/risks" />
       </div>
