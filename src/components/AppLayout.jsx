@@ -375,7 +375,7 @@ export default function AppLayout() {
         {moreOpen && (
           <div className="fixed inset-0 z-50 md:hidden">
             <div className="absolute inset-0 bg-foreground/40" onClick={() => setMoreOpen(false)} />
-            <div className="absolute bottom-0 left-0 right-0 rounded-t-2xl bg-background p-4 pb-8">
+            <div className="absolute bottom-0 left-0 right-0 max-h-[70vh] overflow-y-auto rounded-t-2xl bg-background p-4 pb-8">
               <div className="mb-3 flex items-center justify-between">
                 <div className="text-base font-semibold">More</div>
                 <button onClick={() => setMoreOpen(false)} className="rounded-lg p-1 hover:bg-brand/5">
