@@ -45,7 +45,7 @@ function StatCard({ icon: Icon, label, value, tone, to }) {
   return (
     <Link
       to={to}
-      className="relative flex items-center gap-4 overflow-hidden rounded-2xl border p-5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:items-center sm:gap-4"
       style={{ borderColor: `${tone}55`, background: `linear-gradient(135deg, ${tone}2b, hsl(var(--card)) 72%)` }}
     >
       <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${tone}, ${tone}99)` }} />
