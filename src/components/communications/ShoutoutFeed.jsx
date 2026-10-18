@@ -16,6 +16,7 @@ export default function ShoutoutFeed() {
   const { toast } = useToast();
   const [items, setItems] = useState(null);
   const [me, setMe] = useState(null);
+  const [team, setTeam] = useState([]);
   const [to, setTo] = useState('');
   const [text, setText] = useState('');
   const [posting, setPosting] = useState(false);
@@ -30,6 +31,10 @@ export default function ShoutoutFeed() {
     (async () => {
       const user = await base44.auth.me().catch(() => null);
       if (live) setMe(user);
+      const staffPage = await base44.entities.StaffProfile
+        .filter({}, { sort: 'full_name', limit: 200, fields: ['full_name'] })
+        .catch(() => ({ items: [] }));
+      if (live) setTeam((staffPage.items || []).map((s) => s.full_name).filter(Boolean));
       await load();
     })();
     return () => { live = false; };
@@ -78,7 +83,7 @@ export default function ShoutoutFeed() {
           <Select value={to} onValueChange={setTo}>
             <SelectTrigger className="w-full sm:w-52"><SelectValue placeholder="Who are you shouting out?" /></SelectTrigger>
             <SelectContent>
-              {['Priya Patel', 'Sarah Nguyen', 'Tom Reilly', 'Jordan Lee', 'Emma Walker', 'Kate Brown', 'Lucy Chan', 'Mia Rossi'].map((n) => (
+              {(team.length ? team : ['Priya Patel', 'Sarah Nguyen', 'Tom Reilly', 'Jordan Lee', 'Emma Walker', 'Kate Brown', 'Lucy Chan', 'Mia Rossi']).map((n) => (
                 <SelectItem key={n} value={n}>{n}</SelectItem>
               ))}
             </SelectContent>
