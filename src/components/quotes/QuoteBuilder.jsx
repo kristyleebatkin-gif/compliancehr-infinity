@@ -151,7 +151,7 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
                     <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => setLines(lines.filter((_, i) => i !== index))}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                   </div>
                   <Input className="h-8 text-xs" placeholder="Description" value={line.description} onChange={(e) => setLine(index, { description: e.target.value })} />
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                     <Input className="h-8 text-xs" placeholder="Code" value={line.code} onChange={(e) => setLine(index, { code: e.target.value })} />
                     <Input className="h-8 text-xs" placeholder="Unit" value={line.unit} onChange={(e) => setLine(index, { unit: e.target.value })} />
                     <Input className="h-8 text-xs" type="number" step="0.01" placeholder="Qty" value={line.qty} onChange={(e) => setLine(index, { qty: e.target.value })} />

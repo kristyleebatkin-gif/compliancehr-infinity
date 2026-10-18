@@ -382,7 +382,7 @@ export default function AppLayout() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {visibleNav
                   .filter((i) => !BOTTOM_NAV.some((b) => b.path === i.path))
                   .map((item) => {
