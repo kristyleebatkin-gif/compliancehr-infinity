@@ -10,6 +10,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { routeDocument } from '@/lib/documentRouting';
 import { buildFilledFormDoc } from '@/lib/participantFormPdf';
+import { downloadBrandedTemplatePdf, getTemplateMeta } from '@/lib/officialFormTemplates';
 import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
 import {
   buildIntakeAutofilledAnswers,
@@ -963,11 +964,21 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         specialBuilder(templateCodes[docType] || '');
         return;
       }
-      const officialUrl = templateFiles[docType];
-      if (officialUrl) {
-        await downloadOriginalDocument(officialUrl, `${docType} - Official Template`);
+      const definition = templateDefinitions[docType] || templateDefinitions['Participant Handbook'] || {};
+      const meta = getTemplateMeta(docType);
+      if (definition.fields?.length || definition.columns?.length || meta) {
+        await downloadBrandedTemplatePdf({
+          title: docType,
+          code: templateCodes[docType] || templateCodes['Participant Handbook'],
+          subtitle: definition.label || 'ComplianceHR Form',
+          ...meta,
+          fields: definition.fields || [],
+          columns: definition.columns,
+          rows: definition.rows,
+        });
+      } else if (templateFiles[docType]) {
+        await downloadOriginalDocument(templateFiles[docType], `${docType} - Official Template`);
       } else {
-        const definition = templateDefinitions[docType] || templateDefinitions['Participant Handbook'] || {};
         downloadBlankFormPdf({
           title: docType,
           code: templateCodes[docType] || templateCodes['Participant Handbook'],

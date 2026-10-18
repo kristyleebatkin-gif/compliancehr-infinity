@@ -5,6 +5,7 @@ import { ChevronDown, Download, ExternalLink, FileText, Loader2, Search, UploadC
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import { routeDocument } from '@/lib/documentRouting';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
+import { downloadBrandedTemplatePdf, getTemplateMeta } from '@/lib/officialFormTemplates';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 
@@ -36,11 +37,21 @@ export default function AttachedFormsLibrary({
   const download = async (docType) => {
     setDownloading(docType);
     try {
-      const officialUrl = formFiles[docType];
-      if (officialUrl) {
-        await downloadOriginalDocument(officialUrl, `${docType} - Official Template`);
+      const definition = definitions[docType] || {};
+      const meta = getTemplateMeta(docType);
+      if (definition.fields?.length || definition.columns?.length || meta) {
+        await downloadBrandedTemplatePdf({
+          title: docType,
+          code: formCodes[docType],
+          subtitle: definition.label || 'ComplianceHR Form',
+          ...meta,
+          fields: definition.fields || [],
+          columns: definition.columns,
+          rows: definition.rows,
+        });
+      } else if (formFiles[docType]) {
+        await downloadOriginalDocument(formFiles[docType], `${docType} - Official Template`);
       } else {
-        const definition = definitions[docType] || {};
         downloadBlankFormPdf({
           title: docType,
           code: formCodes[docType],
