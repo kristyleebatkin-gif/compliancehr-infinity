@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { getCompanyBranding, COMPLIANCE_HR_FOOTER } from '@/lib/companyBranding';
+import { getCompanyBranding } from '@/lib/companyBranding';
 
 const W = 340;
 const H = 214;
@@ -44,7 +44,7 @@ function buildBadgeDoc({ staffName = '', position = '', employeeNumber = '', col
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(100, 116, 139);
-  const sloganLines = doc.splitTextToSize(branding.slogan || COMPLIANCE_HR_FOOTER, W - textX - 18);
+  const sloganLines = doc.splitTextToSize(branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.', W - textX - 18);
   doc.text(sloganLines.slice(0, 2), textX, 42, { lineHeight: 9 });
 
   // Brand stripe separating header from body

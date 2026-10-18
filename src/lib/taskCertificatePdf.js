@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { getCompanyBranding, COMPLIANCE_HR_FOOTER } from '@/lib/companyBranding';
+import { getCompanyBranding } from '@/lib/companyBranding';
 
 const ordinal = (n) => {
   const s = ['th', 'st', 'nd', 'rd'];
@@ -66,10 +66,10 @@ export function generateTaskCertificate({
     `Awarded on ${new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })}${generatedBy ? ` by ${generatedBy}` : ''}`,
     w / 2, h - 70, { align: 'center' },
   );
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
-  doc.setTextColor(49, 46, 129);
-  doc.text(branding.slogan || COMPLIANCE_HR_FOOTER, w / 2, h - 50, { align: 'center' });
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(9);
+  doc.setTextColor(100, 116, 139);
+  doc.text(branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.', w / 2, h - 50, { align: 'center' });
 
   doc.save(`Task Certificate - ${staffName}.pdf`);
 }
