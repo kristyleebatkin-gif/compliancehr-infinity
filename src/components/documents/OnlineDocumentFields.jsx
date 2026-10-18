@@ -23,8 +23,8 @@ export default function OnlineDocumentFields({ fields = [], answers = {}, onChan
             : <>
               {(field.optional || field.help) && <p className="text-xs leading-relaxed text-muted-foreground">{field.help}{field.optional ? ' Optional / if applicable.' : ''}</p>}
               {field.multiline
-                ? <Textarea id={id} rows={field.lines} maxLength={4000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="document-ruled-answer resize-y rounded-none border-0 border-b border-primary/30 bg-transparent px-1 py-1 leading-7 shadow-none" />
-                : <Input id={id} maxLength={1000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="h-10 rounded-none border-0 border-b border-primary/30 bg-transparent px-1 shadow-none" />}
+                ? <Textarea id={id} rows={field.lines} maxLength={4000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="document-ruled-answer resize-y rounded-none border-0 border-b-2 border-primary/70 bg-transparent px-1 py-1 leading-7 shadow-none" />
+                : <Input id={id} maxLength={1000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="h-10 rounded-none border-0 border-b-2 border-primary/70 bg-transparent px-1 shadow-none" />}
             </>}
         </div>
       </div>;

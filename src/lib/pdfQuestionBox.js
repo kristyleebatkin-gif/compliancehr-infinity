@@ -29,7 +29,7 @@ export function paintQuestionBox(doc, field, value, x, y, width, metrics, addTex
   }
   if (field.options) drawPdfChoices(doc, field, value, x + 12, bodyY, width - 24, interactive);
   else {
-    doc.setDrawColor(196, 181, 219); doc.setLineWidth(0.45);
+    doc.setDrawColor(76, 29, 149); doc.setLineWidth(0.9);
     for (let lineY = bodyY + 15; lineY < y + height - 9; lineY += 19) doc.line(x + 12, lineY, x + width - 12, lineY);
     if (interactive) addTextField(doc, x + 12, bodyY - 2, width - 24, height - labelH - helpH - 18, field.multiline || lines.length > 1, answerText(value));
     else if (lines.length) { doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(30, 30, 45); doc.text(lines, x + 12, bodyY + 10, { lineHeightFactor: 2 }); }

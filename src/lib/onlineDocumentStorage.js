@@ -3,12 +3,12 @@ import { buildBrandedTemplatePdf, getTemplateMeta } from '@/lib/officialFormTemp
 import { routeDocument } from '@/lib/documentRouting';
 
 export const documentFormKey = (library, title, caseId = '') => `online:${library}:${caseId}:${title}`;
-export const blankOnlineDocument = (answers = {}) => ({ answers: { ...answers }, tableRows: [], name: '', confirmed: false });
+export const blankOnlineDocument = (answers = {}) => ({ answers: { ...answers }, tableRows: [], name: '', signature: '', confirmed: false });
 export const readOnlineDocument = (record, answers = {}) => ({ ...blankOnlineDocument(answers), ...JSON.parse(record?.data || '{}') });
 
 export async function saveOnlineDocumentDraft({ record, title, libraryKey, intakeCase, model, user }) {
   const data = JSON.stringify(model);
-  if (data.length > 60000) throw new Error('This document is too large to save. Please shorten long answers or split register entries into another document.');
+  if (data.length > 120000) throw new Error('This document is too large to save. Please shorten long answers or split register entries into another document.');
   const payload = {
     form_template_id: documentFormKey(libraryKey, title, intakeCase?.id),
     form_title: title,
@@ -34,6 +34,7 @@ export async function fileOnlineDocument({ title, code, definition, model, user,
     values: { ...model.answers, 'Declaration confirmed by': model.name },
     columns: definition.columns, rows: model.tableRows.length,
     tableValues: model.tableRows, completedBy: user.full_name || user.email, completedAt,
+    signatureDataUrl: model.signature,
   });
   const file = new File([doc.output('blob')], `${title} (completed online).pdf`, { type: 'application/pdf' });
   const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });

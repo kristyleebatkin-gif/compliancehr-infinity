@@ -14,7 +14,7 @@ import {
  */
 
 import { drawPdfParagraph as paragraph, drawPdfBullets as bulletList } from '@/lib/pdfFlowText';
-import { ensurePdfSpace } from '@/lib/pdfPageLayout';
+import { ensurePdfSpace, PDF_MARGIN } from '@/lib/pdfPageLayout';
 
 function proseSections(doc, y, sections) {
   for (let s = 0; s < sections.length; s++) {
@@ -242,7 +242,7 @@ export async function buildBrandedTemplatePdf({
   rows = 12,
   declaration = true,
   signoff = [['Participant / Representative (Signature)', 'Date']],
-  values = {}, tableValues = [], completedBy = '', completedAt = '',
+  values = {}, tableValues = [], completedBy = '', completedAt = '', signatureDataUrl = '',
 }) {
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
@@ -253,6 +253,13 @@ export async function buildBrandedTemplatePdf({
   if (fields.length) y = drawFieldRows(doc, y, fields, values);
   if (columns?.length) y = drawRegisterTable(doc, y, columns, { rows, values: tableValues });
   if (declaration) y = drawDeclaration(doc, y);
+  if (signatureDataUrl?.startsWith('data:image/')) {
+    y = ensurePdfSpace(doc, y, 120);
+    doc.setDrawColor(124, 58, 237); doc.setLineWidth(0.9);
+    doc.roundedRect(PDF_MARGIN, y, 250, 80, 5, 5, 'S');
+    doc.addImage(signatureDataUrl, signatureDataUrl.startsWith('data:image/png') ? 'PNG' : 'JPEG', PDF_MARGIN + 6, y + 7, 238, 66);
+    y += 94;
+  }
   if (completedBy) {
     y = drawFieldRows(doc, y, [{ label: 'Completed by' }, { label: 'Completed on' }], { 'Completed by': completedBy, 'Completed on': completedAt });
   } else y = signatureRows(doc, y, signoff);

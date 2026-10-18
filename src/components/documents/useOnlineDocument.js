@@ -41,7 +41,7 @@ export default function useOnlineDocument(options) {
     if (saving.current || !user) return;
     saving.current = true; setBusy(true); setError(''); setNotice('');
     try {
-      if (complete && (!model.name.trim() || !model.confirmed)) throw new Error('Enter your name and confirm the declaration before completing this document.');
+      if (complete && (!model.name.trim() || !model.confirmed || !(model.signature || '').startsWith('data:image/'))) throw new Error('Add your name, sign in the signature pad and confirm the declaration before completing this document.');
       const draft = await saveOnlineDocumentDraft({ record, title, libraryKey, intakeCase, model, user });
       setRecord(draft); baseline.current = JSON.stringify(model);
       setRecords((items) => [draft, ...items.filter((item) => item.id !== draft.id)]);

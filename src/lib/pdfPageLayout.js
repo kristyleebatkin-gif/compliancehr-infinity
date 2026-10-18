@@ -1,4 +1,5 @@
 import { drawCompanyBranding, drawBlankBusinessBranding } from '@/lib/companyBranding';
+import { titleCase } from '@/lib/formQuestionModel';
 
 const layouts = new WeakMap();
 export const PDF_MARGIN = 40;
@@ -26,13 +27,17 @@ function paintHeader(doc, options) {
   y += badgeH + 22;
   doc.setFontSize(17);
   doc.setTextColor(49, 27, 105);
-  const titles = doc.splitTextToSize(String(title || ''), width);
+  const titles = doc.splitTextToSize(titleCase(title), width);
   doc.text(titles, PDF_MARGIN, y, { lineHeightFactor: 1.2 });
   y += titles.length * 20.4;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(71, 85, 105);
-  for (const text of [subtitle, completedBy && `Completed in app by ${completedBy}`].filter(Boolean)) {
+  // A subtitle that repeats the document name is dropped so the header reads cleanly.
+  const simplify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+form\b.*$/, '').trim();
+  const subtitleText = String(subtitle || '').trim();
+  const repeatsTitle = subtitleText && simplify(subtitleText) === simplify(title);
+  for (const text of [!repeatsTitle && subtitleText, completedBy && `Completed in app by ${completedBy}`].filter(Boolean)) {
     const lines = doc.splitTextToSize(String(text), width);
     doc.text(lines, PDF_MARGIN, y, { lineHeightFactor: 1.35 });
     y += lines.length * 11.5 + 4;

@@ -1,6 +1,22 @@
 import { FORM_QUESTION_SPLITS } from '@/lib/formQuestionSplits';
 
 const optionalPattern = /optional|if applicable|if relevant|if different|prefer not to say/i;
+const SMALL_WORDS = /^(a|an|and|as|at|but|by|for|in|nor|of|on|or|per|the|to|via|with)$/i;
+
+/** Title Format: capitalises every significant word, keeping acronyms (NDIS, ABN) intact. */
+export function titleCase(text) {
+  let first = true;
+  return String(text || '').split(/(\s+)/).map((token) => {
+    if (!token.trim()) return token;
+    if (!first && SMALL_WORDS.test(token.toLowerCase())) { first = false; return token.toLowerCase(); }
+    first = false;
+    return token.replace(/[A-Za-z][A-Za-z'’]*/g, (word) => (
+      word.length > 1 && /^[A-Z][A-Z0-9&/.-]*$/.test(word)
+        ? word
+        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ));
+  }).join('');
+}
 export const answerText = (value) => Array.isArray(value) ? value.join('; ') : String(value ?? '');
 export function fieldAnswer(field, answers = {}) {
   return answers[field.label] || (field.legacyLabel ? answers[field.legacyLabel] : '') || field.value || '';
@@ -27,6 +43,7 @@ function prepare(field) {
   }
   if (/^Refugee or asylum seeker status/i.test(label)) { f.options = ['Refugee', 'Asylum seeker', 'Neither', 'Prefer not to say']; f.type = 'single'; f.question = 'Refugee or asylum seeker status'; }
   if (f.options) { f.multiline = false; f.help = f.help || (f.type === 'multiple' ? 'Select all that apply.' : 'Select one option.'); }
+  f.question = titleCase(f.question);
   f.lines = f.lines || (f.multiline ? 4 : 1);
   f.size = f.size || (f.options ? (f.options.length > 3 || f.question.length > 85 ? 'long' : 'medium') : f.multiline || f.fullWidth ? 'long' : /date|time|postcode|\bBSB\b|\bABN\b|\bUSI\b|number|phone|mobile|rating|frequency/i.test(label) ? 'short' : /address|email|signature/i.test(label) ? 'medium' : 'medium');
   return f;
