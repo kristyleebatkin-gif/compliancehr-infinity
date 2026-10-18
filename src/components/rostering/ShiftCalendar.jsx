@@ -46,7 +46,7 @@ function DayCell({ day, shifts, onAdd, onEdit, onConfirm, myName, outside, confl
         )}
       </div>
       {shifts.length > 0 && (
-        <div className="flex flex-wrap items-center gap-x-2 px-0.5 text-[9px] font-semibold leading-none">
+        <div className="hidden flex-wrap items-center gap-x-2 px-0.5 text-[9px] font-semibold leading-none sm:flex">
           {confirmedCount > 0 && <span className="text-safe">{confirmedCount} confirmed</span>}
           {pendingCount > 0 && <span className="text-warning">{pendingCount} pending</span>}
           {conflictCount > 0 && <span className="text-destructive">{conflictCount} clash</span>}
