@@ -37,7 +37,7 @@ const APP_MODULE_GROUPS = [
   {
     title: 'Information, providers and access',
     colour: 'from-orange-500 to-rose-500',
-    modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'help', 'user-guides'),
+    modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'help', 'user-guides', 'assistant'),
   },
 ];
 
@@ -79,7 +79,7 @@ export default function BlueprintPreviewSection() {
           <span className="h-3 w-3 rounded-full bg-rose-400" />
           <span className="h-3 w-3 rounded-full bg-amber-400" />
           <span className="h-3 w-3 rounded-full bg-emerald-400" />
-          <div className="ml-3 flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-[11px] text-slate-400">compliancehr.app/dashboard</div>
+          <div className="ml-3 flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-[11px] text-slate-400">compliancehrinfinity.com/dashboard</div>
           <span className="hidden rounded-full bg-emerald-500/15 px-3 py-1 text-[10px] font-bold text-emerald-300 sm:inline">LIVE WORKSPACE</span>
         </div>
 
