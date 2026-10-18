@@ -50,7 +50,7 @@ const VERBS = ['Store', 'Copy', 'Use', 'Audit', 'Share', 'Scan', 'Send', 'Sort',
 
 export default function ExpressAuditSection() {
   return (
-    <section id="express-audit" className="relative overflow-hidden border-y border-border/70 bg-slate-950 text-white">
+    <section id="express-audit" className="relative scroll-mt-16 overflow-hidden border-y border-border/70 bg-slate-950 text-white">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-violet-600/20 blur-3xl" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl" />

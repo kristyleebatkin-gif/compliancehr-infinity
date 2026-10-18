@@ -8,7 +8,7 @@ export default function LandingCTA() {
   useEffect(() => { base44.auth.isAuthenticated().then(setAuthed).catch(() => {}); }, []);
 
   return (
-    <section id="why" className="mx-auto max-w-6xl px-4 py-20 md:px-8">
+    <section id="why" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-20 md:px-8">
       <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-950 px-6 py-16 text-center shadow-2xl shadow-slate-900/30 md:px-16 md:py-20">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-violet-600/25 blur-3xl" />

@@ -50,11 +50,12 @@ export default function LandingHero() {
       </div>
       <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none font-editorial text-[22vw] font-bold leading-none text-slate-900/[0.03] dark:text-white/[0.02]">HR</div>
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-20 md:px-8 md:pt-28">
+      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            ComplianceHR Infinitely · Complete Control. Greater Confidence. Brighter Success.
+            ComplianceHR Infinitely
+            <span className="hidden sm:inline">&nbsp;· Complete Control. Greater Confidence. Brighter Success.</span>
           </div>
 
           <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">

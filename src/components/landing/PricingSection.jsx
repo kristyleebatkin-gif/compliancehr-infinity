@@ -22,7 +22,7 @@ const INCLUDED = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="mx-auto my-10 max-w-6xl rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-50/60 px-4 py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
+    <section id="pricing" className="mx-auto my-10 max-w-6xl scroll-mt-16 rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-50/60 px-4 py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-fuchsia-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-fuchsia-700 dark:border-fuchsia-500/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
           <Sparkles className="h-3.5 w-3.5" />
