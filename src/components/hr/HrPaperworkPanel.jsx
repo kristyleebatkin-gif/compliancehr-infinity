@@ -6,6 +6,7 @@ import { FileSignature, FileText, Download, PenLine } from 'lucide-react';
 import { downloadContractPdf, downloadPositionDescriptionPdf } from '@/lib/hrPaperworkPdf';
 import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkDialog from '@/components/hr/HrPaperworkDialog';
+import ContractSignDialog from '@/components/hr/ContractSignDialog';
 import { toast } from '@/components/ui/use-toast';
 
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -21,6 +22,7 @@ export default function HrPaperworkPanel() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [signTarget, setSignTarget] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -118,8 +120,9 @@ export default function HrPaperworkPanel() {
                         <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${statusTone(c.contract_status)}`}>{c.contract_status}</span>
                         <Button size="sm" variant="outline" onClick={() => downloadContractPdf(c, businessInfo(), user?.full_name)}><Download className="mr-1 h-3.5 w-3.5" />PDF</Button>
                         {c.contract_status !== 'Signed' && (
-                          <Button size="sm" variant="outline" onClick={() => markSigned(c)}><PenLine className="mr-1 h-3.5 w-3.5" />Record signed</Button>
+                          <Button size="sm" onClick={() => setSignTarget(c)}><PenLine className="mr-1 h-3.5 w-3.5" />Sign digitally</Button>
                         )}
+                        {c.signature && <span className="text-xs text-muted-foreground">✓ {c.signature}</span>}
                       </div>
                     </div>
                   ))}
@@ -160,6 +163,15 @@ export default function HrPaperworkPanel() {
           </Card>
         </>
       )}
+
+      <ContractSignDialog
+        contract={signTarget}
+        business={businessInfo()}
+        userName={user?.full_name || ''}
+        open={!!signTarget}
+        onOpenChange={(next) => { if (!next) setSignTarget(null); }}
+        onSigned={load}
+      />
 
       <HrPaperworkDialog
         open={dialogOpen}

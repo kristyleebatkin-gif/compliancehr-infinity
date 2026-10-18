@@ -16,6 +16,8 @@ import VideoCalls from '@/components/communications/VideoCalls';
 import AiCompose from '@/components/communications/AiCompose';
 import TemplateLibrary from '@/components/communications/TemplateLibrary';
 import AutomatedLogs from '@/components/communications/AutomatedLogs';
+import ComplaintsFeed from '@/components/communications/ComplaintsFeed';
+import ShoutoutFeed from '@/components/communications/ShoutoutFeed';
 
 export default function Communications() {
   return (
@@ -38,6 +40,8 @@ export default function Communications() {
           <TabsTrigger value="email"><Mail className="mr-1 inline h-3.5 w-3.5" />Send Email</TabsTrigger>
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
           <TabsTrigger value="banter"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Team Banter</TabsTrigger>
+          <TabsTrigger value="shoutouts"><Sparkles className="mr-1 inline h-3.5 w-3.5" />Shoutouts</TabsTrigger>
+          <TabsTrigger value="complaints"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Complaints</TabsTrigger>
           <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do Board</TabsTrigger>
           <TabsTrigger value="video"><Video className="mr-1 inline h-3.5 w-3.5" />Video Calls</TabsTrigger>
           <TabsTrigger value="ai"><Sparkles className="mr-1 inline h-3.5 w-3.5" />AI Compose</TabsTrigger>
@@ -52,6 +56,8 @@ export default function Communications() {
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="banter"><TeamBanter /></TabsContent>
+        <TabsContent value="shoutouts"><ShoutoutFeed /></TabsContent>
+        <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
           <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>
         </TabsContent>
