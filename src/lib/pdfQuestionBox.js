@@ -6,11 +6,15 @@ export function questionMetrics(doc, field, value, width) {
   const labels = doc.splitTextToSize(field.question || field.label, width - 24);
   const labelH = labels.length * 12 + 16;
   doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
-  const lines = answerText(value) ? doc.splitTextToSize(answerText(value), width - 24) : [];
+  const allLines = answerText(value) ? doc.splitTextToSize(answerText(value), width - 24) : [];
   const helpH = field.optional || field.help ? 16 : 0;
   const choiceH = field.options?.reduce((sum, option) => sum + Math.max(20, doc.splitTextToSize(option, width - 48).length * 13 + 7), 0);
-  const bodyH = choiceH ? choiceH + 22 : Math.max(field.lines || 1, lines.length, 1) * 19 + 24;
-  return { labels, labelH, helpH, lines, height: labelH + helpH + bodyH };
+  // Single-line answers (dates, phone numbers, numbers) never get a second ruled line.
+  const singleLine = field.singleLine && !field.options && !field.multiline;
+  const lines = singleLine ? allLines.slice(0, 1) : allLines;
+  const ruled = singleLine ? 1 : Math.max(field.lines || 1, lines.length, 1);
+  const bodyH = choiceH ? choiceH + 22 : ruled * 19 + 24;
+  return { labels, labelH, helpH, lines, ruled, height: labelH + helpH + bodyH };
 }
 export function paintQuestionBox(doc, field, value, x, y, width, metrics, addTextField, interactive) {
   const { labelH, height, helpH, labels, lines } = metrics;

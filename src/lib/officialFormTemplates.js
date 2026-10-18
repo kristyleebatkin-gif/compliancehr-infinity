@@ -15,6 +15,7 @@ import {
 
 import { drawPdfParagraph as paragraph, drawPdfBullets as bulletList } from '@/lib/pdfFlowText';
 import { ensurePdfSpace, PDF_MARGIN } from '@/lib/pdfPageLayout';
+import { drawFormBreather } from '@/lib/pdfFormBreathers';
 
 function proseSections(doc, y, sections) {
   for (let s = 0; s < sections.length; s++) {
@@ -27,6 +28,7 @@ function proseSections(doc, y, sections) {
       y = drawFieldRows(doc, y, sec.fields.map((label) => ({ label })));
     }
     y += 4;
+    if (s % 2 === 1 && s < sections.length - 1) y = drawFormBreather(doc, y, Math.floor(s / 2));
   }
   return y;
 }

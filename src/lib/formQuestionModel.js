@@ -1,6 +1,7 @@
 import { FORM_QUESTION_SPLITS } from '@/lib/formQuestionSplits';
 
 const optionalPattern = /optional|if applicable|if relevant|if different|prefer not to say/i;
+const SINGLE_LINE = /date|time|postcode|\bBSB\b|\bABN\b|\bUSI\b|number|phone|mobile|rating|frequency/i;
 const SMALL_WORDS = /^(a|an|and|as|at|but|by|for|in|nor|of|on|or|per|the|to|via|with)$/i;
 
 /** Title Format: capitalises every significant word, keeping acronyms (NDIS, ABN) intact. */
@@ -45,7 +46,9 @@ function prepare(field) {
   if (f.options) { f.multiline = false; f.help = f.help || (f.type === 'multiple' ? 'Select all that apply.' : 'Select one option.'); }
   f.question = titleCase(f.question);
   f.lines = f.lines || (f.multiline ? 4 : 1);
-  f.size = f.size || (f.options ? (f.options.length > 3 || f.question.length > 85 ? 'long' : 'medium') : f.multiline || f.fullWidth ? 'long' : /date|time|postcode|\bBSB\b|\bABN\b|\bUSI\b|number|phone|mobile|rating|frequency/i.test(label) ? 'short' : /address|email|signature/i.test(label) ? 'medium' : 'medium');
+  // Dates, numbers, phone numbers and similar short answers only ever need one ruled line.
+  if (!f.options && !f.multiline && SINGLE_LINE.test(label)) { f.singleLine = true; f.lines = 1; }
+  f.size = f.size || (f.options ? (f.options.length > 3 || f.question.length > 85 ? 'long' : 'medium') : f.multiline || f.fullWidth ? 'long' : SINGLE_LINE.test(label) ? 'short' : /address|email|signature/i.test(label) ? 'medium' : 'medium');
   return f;
 }
 export function normaliseFormFields(fields = []) {

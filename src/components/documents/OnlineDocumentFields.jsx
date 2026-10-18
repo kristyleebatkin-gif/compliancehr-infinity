@@ -1,4 +1,5 @@
 import React, { useId } from 'react';
+import { HeartHandshake } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import DocumentChoiceInput from '@/components/documents/DocumentChoiceInput';
@@ -10,6 +11,10 @@ export default function OnlineDocumentFields({ fields = [], answers = {}, onChan
   const prepared = normaliseFormFields(fields);
   const questions = [...prepared, ...legacyFormFields(prepared, answers)];
   return <fieldset disabled={disabled} className="grid min-w-0 grid-cols-12 items-start gap-4">
+    <p className="col-span-12 flex items-start gap-2 rounded-lg border border-primary/40 bg-accent px-4 py-3 text-sm leading-relaxed text-primary">
+      <HeartHandshake className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+      Please take your time to fill in this form and read each question carefully. This information helps us support you better and keeps you safer. There is no rush, and you can ask for help with any question.
+    </p>
     {formQuestionRows(questions).flat().map(({ field, span }, index) => {
       const id = `${prefix}-${index}`, value = fieldAnswer(field, answers);
       const required = !field.optional && Boolean(field.required || requireAll);

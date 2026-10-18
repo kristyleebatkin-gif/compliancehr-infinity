@@ -12,6 +12,8 @@ export const HEADER_CLEARANCE = 56;
 
 /** Standard guidance, privacy and declaration wording carried on every form. */
 export const FORM_NOTICES = {
+  welcome:
+    'Please take your time to fill in this form and read each part carefully. This information helps us support you better and keeps you safer. There is no rush, and you can ask us for help with any question at any time.',
   guidance:
     'How to complete: answer each relevant question, tick the stated options and write clearly on the ruled lines. Complete online if preferred. Use Not applicable where appropriate. Cultural identity and other optional personal questions may be left unanswered. Provide supporting documents only when relevant to the supports or purpose of this form.',
   privacy:
@@ -37,10 +39,11 @@ export function drawFormNotice(doc, y, { purpose = '', guidance = FORM_NOTICES.g
   const textW = pageW - PAGE_MARGIN * 2 - 36;
   const blocks = [
     { text: purpose, size: 9, bold: true },
+    { text: FORM_NOTICES.welcome, size: 8.5, italic: true, accent: true },
     { text: guidance, size: 8.5 },
     { text: privacy, size: 8 },
   ].filter((block) => block.text).map((block) => {
-    doc.setFont('helvetica', block.bold ? 'bold' : 'normal'); doc.setFontSize(block.size);
+    doc.setFont('helvetica', block.bold ? 'bold' : block.italic ? 'italic' : 'normal'); doc.setFontSize(block.size);
     return { ...block, lines: doc.splitTextToSize(block.text, textW) };
   });
   const panelH = 28 + blocks.reduce((height, block) => height + block.lines.length * 12 + 10, 0);
@@ -49,8 +52,8 @@ export function drawFormNotice(doc, y, { purpose = '', guidance = FORM_NOTICES.g
   doc.roundedRect(PAGE_MARGIN, y, pageW - PAGE_MARGIN * 2, panelH, 6, 6, 'FD');
   let ty = y + 21;
   for (const block of blocks) {
-    doc.setFont('helvetica', block.bold ? 'bold' : 'normal'); doc.setFontSize(block.size);
-    doc.setTextColor(...(block.bold ? [76, 29, 149] : [71, 85, 105]));
+    doc.setFont('helvetica', block.bold ? 'bold' : block.italic ? 'italic' : 'normal'); doc.setFontSize(block.size);
+    doc.setTextColor(...(block.accent ? [124, 58, 237] : block.bold ? [76, 29, 149] : [71, 85, 105]));
     doc.text(block.lines, PAGE_MARGIN + 18, ty, { lineHeightFactor: 12 / block.size });
     ty += block.lines.length * 12 + 10;
   }
