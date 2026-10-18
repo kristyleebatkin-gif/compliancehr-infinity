@@ -14,7 +14,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
   return (
     <div className="space-y-3">
     <div
-      className={cn('relative overflow-hidden rounded-2xl border p-6 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 md:flex-row md:items-center md:justify-between md:gap-4', className)}
+      className={cn('relative overflow-hidden rounded-2xl border p-4 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 sm:p-6 md:flex-row md:items-center md:justify-between md:gap-4', className)}
       style={{
         borderColor: `${primary}45`,
         background: `linear-gradient(120deg, ${primary}26 0%, ${secondary}1a 55%, hsl(var(--card)) 100%)`,
@@ -32,10 +32,10 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       <div className="relative flex items-start gap-4">
         {Icon && (
           <div
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white shadow-md transition-transform duration-200 hover:scale-105"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-white shadow-md transition-transform duration-200 hover:scale-105 sm:h-12 sm:w-12"
             style={{ background: `linear-gradient(135deg, ${primary}, ${secondary})`, boxShadow: `0 6px 18px -6px ${primary}80` }}
           >
-            <Icon className="h-6 w-6" />
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
           </div>
         )}
         <div>

@@ -216,8 +216,8 @@ export default function AppLayout() {
         </div>
       )}
 
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex items-center justify-between border-b border-brand/10 bg-background/85 px-4 py-3 shadow-sm backdrop-blur-md md:px-6">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <header className="flex items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-3 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
           <div className="flex items-center gap-3">
             <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
@@ -259,7 +259,7 @@ export default function AppLayout() {
               {notifOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
-                  <div className="absolute right-0 z-50 mt-2 w-80 rounded-xl border border-border/60 bg-card p-3 shadow-xl">
+                  <div className="absolute right-0 z-50 mt-2 w-[min(20rem,calc(100vw-1.5rem))] rounded-xl border border-border/60 bg-card p-3 shadow-xl">
                     <div className="mb-2 flex items-center justify-between">
                       <div className="text-sm font-semibold">Notifications</div>
                       <button onClick={markAllRead} className="text-xs font-medium text-brand hover:underline">
@@ -334,17 +334,19 @@ export default function AppLayout() {
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className="mx-auto max-w-6xl px-4 pt-4 md:px-8 md:pt-6">
+          <div className="mx-auto max-w-6xl px-3 pt-4 md:px-8 md:pt-6">
             <ModuleGuide />
           </div>
-          <ErrorBoundary>
-            <Outlet />
-          </ErrorBoundary>
+          <div className="min-w-0 px-3 md:px-0">
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
+          </div>
           <ModuleDocsFooter />
         </main>
 
         {/* Bottom nav (mobile) */}
-        <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 bg-background px-1 py-1.5 md:hidden">
+        <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 bg-background px-1 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-1.5 md:hidden">
           {visibleBottom.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);

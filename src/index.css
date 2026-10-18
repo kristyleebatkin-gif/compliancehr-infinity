@@ -111,6 +111,21 @@
   }
 }
 
+@layer base {
+  /* App-wide mobile fit: long words and titles wrap instead of overflowing */
+  h1, h2, h3, h4 {
+    overflow-wrap: break-word;
+  }
+  /* Wide data registers scroll sideways on phones instead of stretching the page */
+  @media (max-width: 640px) {
+    main table {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+  }
+}
+
 @layer utilities {
   .gradient-brand {
     background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);

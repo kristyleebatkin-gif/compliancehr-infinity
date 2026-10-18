@@ -17,7 +17,7 @@ export default function SectionCard({ title, description, action, children, clas
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: `linear-gradient(90deg, ${accent}, ${secondary}80, transparent)` }} />
       <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-[0.07] blur-xl" style={{ backgroundColor: secondary }} />
       {(title || action) && (
-        <div className="relative flex items-center justify-between gap-3 border-b border-border/60 px-5 py-4" style={{ background: `linear-gradient(100deg, ${accent}2b, ${secondary}14 55%, transparent 90%)` }}>
+        <div className="relative flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-4 py-4 sm:px-5" style={{ background: `linear-gradient(100deg, ${accent}2b, ${secondary}14 55%, transparent 90%)` }}>
           <div className="absolute inset-y-0 left-0 w-[4px] rounded-r" style={{ background: `linear-gradient(180deg, ${accent}, ${secondary})` }} />
           <div className="pointer-events-none absolute inset-y-0 left-4 w-24 opacity-25" style={{ background: `linear-gradient(90deg, ${secondary}30, transparent)` }} />
           <div className="pl-1.5">
@@ -27,7 +27,7 @@ export default function SectionCard({ title, description, action, children, clas
           {action}
         </div>
       )}
-      <div className="p-5" style={{ background: `linear-gradient(180deg, ${accent}0a, transparent 36%)` }}>{children}</div>
+      <div className="p-4 sm:p-5" style={{ background: `linear-gradient(180deg, ${accent}0a, transparent 36%)` }}>{children}</div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
     <div
       onClick={onClick}
       className={cn(
-        'group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm ring-1 ring-transparent transition-all duration-200',
+        'group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-4 shadow-sm ring-1 ring-transparent transition-all duration-200 sm:p-5',
         onClick ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg' : 'hover:shadow-md',
         t.ring
       )}
@@ -28,7 +28,7 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="truncate text-sm font-semibold text-slate-500">{label}</div>
-          <div className={cn('mt-2 text-3xl font-bold tracking-tight', t.value)}>{value}</div>
+          <div className={cn('mt-2 text-2xl font-bold tracking-tight sm:text-3xl', t.value)}>{value}</div>
           {trend && <div className="mt-1.5 text-xs font-semibold text-slate-500">{trend}</div>}
         </div>
         {Icon && (
