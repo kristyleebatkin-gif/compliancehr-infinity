@@ -142,6 +142,11 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
         }
       ]
     },
