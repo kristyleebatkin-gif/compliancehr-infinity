@@ -58,7 +58,45 @@
     "name"
   ],
   "rls": {
-    "read": {},
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "CRM & Marketing Officer"
+          }
+        }
+      ]
+    },
     "create": {
       "$or": [
         {
