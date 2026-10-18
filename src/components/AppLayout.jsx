@@ -6,7 +6,7 @@ import { useRole } from '@/lib/useRole';
 import { canAccessNav } from '@/lib/roles';
 import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
-import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
+import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
@@ -124,26 +124,34 @@ export default function AppLayout() {
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-2">
-        <div className="mb-1 px-3 pt-1 text-[10px] font-semibold uppercase tracking-wider text-foreground/40">Main Navigation</div>
-        <div className="space-y-0.5">
-          {visiblePrimary.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path);
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all ${
-                  active ? 'bg-brand/10 font-bold text-brand shadow-sm' : 'font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand'
-                }`}
-              >
-                {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
-                <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
-                <span className="truncate">{item.label}</span>
-              </Link>
-            );
-          })}
-        </div>
+        {NAV_GROUPS.map((group) => {
+          const items = visiblePrimary.filter((item) => group.keys.includes(item.key));
+          if (!items.length) return null;
+          return (
+            <div key={group.label} className="mb-2.5">
+              <div className="mb-1 px-3 pt-1 text-[10px] font-semibold uppercase tracking-wider text-foreground/40">{group.label}</div>
+              <div className="space-y-0.5">
+                {items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.path);
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all ${
+                        active ? 'bg-brand/10 font-bold text-brand shadow-sm' : 'font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand'
+                      }`}
+                    >
+                      {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
+                      <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
+                      <span className="truncate">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </nav>
 
       <div className="border-t border-brand/10 px-3 py-3">

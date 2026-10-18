@@ -60,7 +60,7 @@ export default function IncidentFollowUp({ incident }) {
       await base44.entities.Investigation.update(inv.id, { [field]: value });
       await recordSafetyEvent('Investigation', inv.id, { notify: false });
       if (field === 'status' && (value === 'Completed' || value === 'Closed')) {
-        await base44.entities.AuditLog.create({ action: 'Update', entity_type: 'Investigation', record_id: inv.id, record_title: inv.title, performed_by: 'ComplianceNQ', details: `Investigation marked ${value}` }).catch((error) => console.error(error));
+        await base44.entities.AuditLog.create({ action: 'Update', entity_type: 'Investigation', record_id: inv.id, record_title: inv.title, performed_by: 'ComplianceHR Infinity', details: `Investigation marked ${value}` }).catch((error) => console.error(error));
       }
       toast({ title: 'Investigation updated' });
       load();
@@ -81,7 +81,7 @@ export default function IncidentFollowUp({ incident }) {
         linked_entity_id: incident.id,
         notes: actForm.notes || '',
       });
-      await base44.entities.AuditLog.create({ action: 'Create', entity_type: 'Task', record_title: actForm.title, performed_by: 'ComplianceNQ', details: `Follow-up action for incident ${incident.incident_id || incident.id}` }).catch((error) => console.error(error));
+      await base44.entities.AuditLog.create({ action: 'Create', entity_type: 'Task', record_title: actForm.title, performed_by: 'ComplianceHR Infinity', details: `Follow-up action for incident ${incident.incident_id || incident.id}` }).catch((error) => console.error(error));
       toast({ title: 'Follow-up action added' });
       setActForm(null);
       load();

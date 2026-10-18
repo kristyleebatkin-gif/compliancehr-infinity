@@ -52,3 +52,15 @@ export const MODULE_DIRECTORY = [
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, blurb: 'Guides, AI troubleshooter, system health and support desk.' },
   { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, blurb: 'Complete downloadable user guides for every module in the platform.' },
 ];
+
+// Sidebar sections: every module key appears in exactly one group.
+export const NAV_GROUPS = [
+  { label: 'Overview', keys: ['dashboard'] },
+  { label: 'People', keys: ['staff', 'participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
+  { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
+  { label: 'Compliance & Safety', keys: ['compliance', 'incidents', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
+  { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
+  { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback'] },
+  { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'analytics', 'users'] },
+  { label: 'Help & Tools', keys: ['assistant', 'help', 'user-guides'] },
+];
