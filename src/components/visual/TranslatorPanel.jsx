@@ -64,7 +64,7 @@ export default function TranslatorPanel() {
           <textarea className="min-h-[140px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none" placeholder="Type what you want to say..." value={text} onChange={(e) => setText(e.target.value)} />
           <div className="flex items-center gap-2">
             <Select value={language || 'none'} onValueChange={(v) => setLanguage(v === 'none' ? '' : v)}>
-              <SelectTrigger className="h-9 w-[200px]"><SelectValue placeholder="Translate into..." /></SelectTrigger>
+              <SelectTrigger className="h-9 min-w-0 flex-1 sm:w-[200px] sm:flex-none"><SelectValue placeholder="Translate into..." /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="none">Translate into...</SelectItem>
                 {LANGUAGES.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}

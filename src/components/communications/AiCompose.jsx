@@ -124,7 +124,7 @@ export default function AiCompose() {
               <Button size="sm" variant="outline" onClick={copyDraft}><Copy className="mr-2 h-4 w-4" />Copy draft</Button>
               <div className="grid gap-1.5">
                 <Label className="text-xs">Send as email to</Label>
-                <Input className="w-64" value={sendTo} onChange={(e) => setSendTo(e.target.value)} placeholder="recipient@email.com" />
+                <Input className="w-full sm:w-64" value={sendTo} onChange={(e) => setSendTo(e.target.value)} placeholder="recipient@email.com" />
               </div>
               <Button size="sm" onClick={sendDraft} disabled={sending}>
                 {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}

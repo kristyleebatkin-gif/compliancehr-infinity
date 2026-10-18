@@ -224,7 +224,7 @@ export default function VisualRoutine() {
         <div className="mb-4 flex flex-wrap items-end gap-2 rounded-lg border border-border/60 bg-muted/30 p-3">
           <div className="grid gap-1.5">
             <Label>Email routine to</Label>
-            <Input type="email" placeholder="name@example.com" value={emailTo} onChange={(e) => setEmailTo(e.target.value)} className="w-64" />
+            <Input type="email" placeholder="name@example.com" value={emailTo} onChange={(e) => setEmailTo(e.target.value)} className="w-full sm:w-64" />
           </div>
           <Button size="sm" onClick={sendRoutineEmail} disabled={emailSending || !emailTo.trim() || !active}>
             {emailSending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Mail className="h-3.5 w-3.5" />}Send
