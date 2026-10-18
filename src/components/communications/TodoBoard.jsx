@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Download, ListTodo, Loader2, Plus } from 'lucide-react';
+import { Download, ListTodo, Loader2, Plus, PenLine } from 'lucide-react';
 import { APP_MODULES, loadCommContacts, exportCsv } from '@/lib/commTypes';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
@@ -22,6 +22,9 @@ export default function TodoBoard() {
   const [finaliseTarget, setFinaliseTarget] = useState(null);
   const [finaliseForm, setFinaliseForm] = useState({ completed_by: '', time_taken_minutes: '' });
   const [saving, setSaving] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [signTarget, setSignTarget] = useState(null);
+  const [signForm, setSignForm] = useState({ signature: '' });
   const [form, setForm] = useState({
     title: '', module: APP_MODULES[0], task_date: new Date().toISOString().slice(0, 10), task_time: '',
     due_date: '', how_to_complete: '', resources_needed: '', important_info: '', responsible: [],
@@ -30,10 +33,12 @@ export default function TodoBoard() {
   const load = async () => {
     setLoading(true);
     try {
-      const [taskPage, staffPage] = await Promise.all([
+      const [taskPage, staffPage, user] = await Promise.all([
         base44.entities.TodoTask.filter({}, { sort: '-created_date', limit: 500 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 300, fields: ['full_name', 'email'] }).catch(() => ({ items: [] })),
+        base44.auth.me().catch(() => null),
       ]);
+      setCurrentUser(user);
       setItems(taskPage.items || []);
       setStaffList((staffPage.items || []).filter((s) => s.email));
     } finally {
@@ -44,7 +49,9 @@ export default function TodoBoard() {
   useEffect(() => { load(); }, []);
 
   const pending = items.filter((t) => t.status === 'Pending');
+  const awaiting = items.filter((t) => t.status === 'Pending Approval');
   const finalised = items.filter((t) => t.status === 'Finalised');
+  const canSign = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(currentUser?.role);
   const finalisedByModule = APP_MODULES
     .map((m) => ({ module: m, rows: finalised.filter((t) => t.module === m) }))
     .filter((g) => g.rows.length > 0);
@@ -85,12 +92,12 @@ export default function TodoBoard() {
     try {
       const user = await base44.auth.me();
       await base44.entities.TodoTask.update(finaliseTarget.id, {
-        status: 'Finalised',
+        status: 'Pending Approval',
         completed_date: new Date().toISOString().slice(0, 10),
         completed_by: finaliseForm.completed_by || user?.full_name || '',
         time_taken_minutes: Number(finaliseForm.time_taken_minutes) || 0,
       });
-      toast({ title: 'Task finalised', description: 'A point has been added on the employee task leaderboard.' });
+      toast({ title: 'Completed - awaiting manager sign-off', description: 'A manager must review and digitally sign off before the task is marked as finished.' });
       setFinaliseTarget(null);
       await load();
     } finally {
@@ -99,8 +106,39 @@ export default function TodoBoard() {
   };
 
   const reopen = async (task) => {
-    await base44.entities.TodoTask.update(task.id, { status: 'Pending', completed_date: '', completed_by: '', time_taken_minutes: 0 });
+    await base44.entities.TodoTask.update(task.id, { status: 'Pending', completed_date: '', completed_by: '', time_taken_minutes: 0, signed_off_by: '', signed_off_date: '', signature: '' });
     await load();
+  };
+
+  const approve = async () => {
+    if (!signForm.signature.trim()) { toast({ title: 'Signature required', description: 'Type your full name to sign off.', variant: 'destructive' }); return; }
+    setSaving(true);
+    try {
+      const user = await base44.auth.me();
+      await base44.entities.TodoTask.update(signTarget.id, {
+        status: 'Finalised',
+        signed_off_by: user?.full_name || 'Manager',
+        signed_off_date: new Date().toISOString().slice(0, 10),
+        signature: signForm.signature.trim(),
+      });
+      toast({ title: 'Signed off and finalised', description: 'The task is now marked as finished with your recorded signature.' });
+      setSignTarget(null);
+      await load();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const decline = async () => {
+    setSaving(true);
+    try {
+      await base44.entities.TodoTask.update(signTarget.id, { status: 'Pending', completed_date: '', completed_by: '', time_taken_minutes: 0, signed_off_by: '', signed_off_date: '', signature: '' });
+      toast({ title: 'Sent back to pending', description: 'The task was returned so it can be completed again before sign-off.' });
+      setSignTarget(null);
+      await load();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const toggleResponsible = (email) => setForm((f) => ({ ...f, responsible: f.responsible.includes(email) ? f.responsible.filter((e) => e !== email) : [...f.responsible, email] }));
@@ -146,6 +184,31 @@ export default function TodoBoard() {
             ))}
           </div>
 
+          {awaiting.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm font-semibold">Awaiting manager sign-off ({awaiting.length})</p>
+              {awaiting.map((t) => (
+                <div key={t.id} className="rounded-xl border border-amber-300/60 bg-amber-50/60 p-3.5 dark:bg-amber-500/10">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <Badge className="border-transparent bg-amber-200 text-amber-900">Awaiting sign-off</Badge>
+                      <Badge variant="outline">{t.module || 'General'}</Badge>
+                      <span className="text-sm font-semibold">{t.title}</span>
+                    </div>
+                    {canSign && (
+                      <Button size="sm" onClick={() => { setSignTarget(t); setSignForm({ signature: '' }); }}><PenLine className="h-3.5 w-3.5" />Review &amp; sign off</Button>
+                    )}
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-3 text-xs text-muted-foreground">
+                    <span>Completed by {t.completed_by || 'unknown'}</span>
+                    {t.completed_date && <span>on {t.completed_date}</span>}
+                    {t.time_taken_minutes ? <span>Time taken: {t.time_taken_minutes} min</span> : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
           {finalised.length > 0 && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -153,7 +216,8 @@ export default function TodoBoard() {
                 <Button variant="outline" size="sm" onClick={() => exportCsv('finalised-tasks.csv', finalised.map((t) => ({
                   task: t.title, module: t.module, date: t.task_date, time: t.task_time, due_date: t.due_date,
                   responsible: (t.responsible || []).join('; '), completed_by: t.completed_by, completed_date: t.completed_date,
-                  time_taken_minutes: t.time_taken_minutes, shared_by: t.shared_by,
+                  time_taken_minutes: t.time_taken_minutes, signed_off_by: t.signed_off_by, signed_off_date: t.signed_off_date,
+                  signature: t.signature, shared_by: t.shared_by,
                 })))}><Download className="h-4 w-4" />Export</Button>
               </div>
               <div className="overflow-x-auto rounded-xl border border-border/60">
@@ -161,13 +225,13 @@ export default function TodoBoard() {
                   <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <tr>
                       <th className="p-2.5">Task</th><th className="p-2.5">Module</th><th className="p-2.5">Date</th><th className="p-2.5">Time</th>
-                      <th className="p-2.5">Due</th><th className="p-2.5">Responsible</th><th className="p-2.5">Completed by</th><th className="p-2.5">Completed</th><th className="p-2.5">Time taken</th><th className="p-2.5"></th>
+                      <th className="p-2.5">Due</th><th className="p-2.5">Responsible</th><th className="p-2.5">Completed by</th><th className="p-2.5">Completed</th><th className="p-2.5">Time taken</th><th className="p-2.5">Signed off by</th><th className="p-2.5">Signed off</th><th className="p-2.5"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {finalisedByModule.map((group) => (
                       <React.Fragment key={group.module}>
-                        <tr className="bg-accent/40"><td colSpan={10} className="p-2 text-xs font-bold uppercase tracking-wide text-accent-foreground">{group.module} ({group.rows.length})</td></tr>
+                        <tr className="bg-accent/40"><td colSpan={12} className="p-2 text-xs font-bold uppercase tracking-wide text-accent-foreground">{group.module} ({group.rows.length})</td></tr>
                         {group.rows.map((t) => (
                           <tr key={t.id} className="border-t border-border/60">
                             <td className="p-2.5">{t.title}</td>
@@ -179,6 +243,8 @@ export default function TodoBoard() {
                             <td className="p-2.5">{t.completed_by || '-'}</td>
                             <td className="p-2.5">{t.completed_date || '-'}</td>
                             <td className="p-2.5">{t.time_taken_minutes ? `${t.time_taken_minutes} min` : '-'}</td>
+                            <td className="p-2.5">{t.signed_off_by || '-'}</td>
+                            <td className="p-2.5">{t.signed_off_date || '-'}</td>
                             <td className="p-2.5"><Button variant="ghost" size="sm" onClick={() => reopen(t)}>Reopen</Button></td>
                           </tr>
                         ))}
@@ -243,6 +309,32 @@ export default function TodoBoard() {
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setFinaliseTarget(null)}>Cancel</Button>
             <Button onClick={finalise} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <ListTodo className="h-4 w-4" />}Finalise</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={Boolean(signTarget)} onOpenChange={(o) => !o && setSignTarget(null)}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Manager sign-off</DialogTitle></DialogHeader>
+          <p className="text-xs text-muted-foreground">{signTarget?.title}</p>
+          {signTarget && (
+            <p className="text-xs text-muted-foreground">
+              Completed by {signTarget.completed_by || 'unknown'} on {signTarget.completed_date || '-'}
+              {signTarget.time_taken_minutes ? ` (${signTarget.time_taken_minutes} min)` : ''}. Signing off marks this task as finished.
+            </p>
+          )}
+          <div className="grid gap-3">
+            <div className="grid gap-1.5">
+              <Label>Digital signature — type your full name to sign</Label>
+              <Input placeholder="Your full name" value={signForm.signature} onChange={(e) => setSignForm({ ...signForm, signature: e.target.value })} />
+              {signForm.signature.trim() && (
+                <p className="font-editorial-italic text-xl text-brand">{signForm.signature}</p>
+              )}
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={decline} disabled={saving}>Send back to pending</Button>
+            <Button onClick={approve} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <PenLine className="h-4 w-4" />}Sign off &amp; finalise</Button>
           </div>
         </DialogContent>
       </Dialog>
