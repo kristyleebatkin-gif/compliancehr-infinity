@@ -76,11 +76,14 @@ export function cacheCompanyBranding(branding) {
 
 export async function loadCompanyBranding() {
   const [providerPage, businessPage] = await Promise.all([
-    base44.entities.Provider.list({ sort: '-created_date', limit: 500 }),
+    base44.entities.Provider.filter({ document_branding_active: true }, { sort: '-created_date', limit: 1 }),
     base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
   ]);
-  const providers = providerPage.items || [];
-  const provider = providers.find((candidate) => candidate.document_branding_active) || providers[0];
+  let provider = providerPage.items?.[0] || null;
+  if (!provider) {
+    const fallback = await base44.entities.Provider.list({ sort: '-created_date', limit: 1 });
+    provider = fallback.items?.[0] || null;
+  }
   const business = businessPage.items?.[0] || null;
   const businessBranding = businessToBranding(business);
   if (!provider && !business) return { ...getCompanyBranding(), providerId: '' };

@@ -40,8 +40,13 @@ export default function Training() {
     try {
       const all = await base44.entities.TrainingCompletion.list('-completed_date', 200);
       setAllCompletions(all);
-      const mine = all.filter((c) => (c.learner_id || '') === (user?.id || '') || (c.employee_name || '') === (user?.full_name || '') || (c.created_by_id || '') === (user?.id || ''));
-      setCompletions(mine);
+      const identity = user?.id || '';
+      const name = user?.full_name || '';
+      const minePage = await base44.entities.TrainingCompletion.filter(
+        { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] },
+        { sort: '-completed_date', limit: 200 },
+      );
+      setCompletions(minePage.items || []);
     } catch (e) { console.error(e); }
     setLoading(false);
   };

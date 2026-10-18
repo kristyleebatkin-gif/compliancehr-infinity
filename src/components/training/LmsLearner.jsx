@@ -65,8 +65,12 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
           const emailProfiles = await base44.entities.StaffProfile.filter({ email: user.email });
           staffProfile = emailProfiles[0] || null;
           if (!staffProfile) {
-            const profiles = await base44.entities.StaffProfile.list('full_name', 500);
-            staffProfile = profiles.find((profile) => profile.email?.toLowerCase() === user.email.toLowerCase()) || null;
+            const escaped = user.email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const profiles = await base44.entities.StaffProfile.filter(
+              { email: { $regex: `^${escaped}$`, $options: 'i' } },
+              { limit: 1 },
+            );
+            staffProfile = (profiles.items || profiles)[0] || null;
           }
         }
       }
