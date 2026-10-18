@@ -110,12 +110,12 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
             <div className="grid gap-1.5"><Label>Client email (for sending)</Label><Input type="email" value={form.client_email || ''} onChange={(e) => setForm({ ...form, client_email: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Client address</Label><Input value={form.client_address || ''} onChange={(e) => setForm({ ...form, client_address: e.target.value })} /></div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Participant</Label><Input value={form.participant_name || ''} onChange={(e) => setForm({ ...form, participant_name: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>NDIS number</Label><Input value={form.ndis_number || ''} onChange={(e) => setForm({ ...form, ndis_number: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Participant address</Label><Input value={form.participant_address || ''} onChange={(e) => setForm({ ...form, participant_address: e.target.value })} /></div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Quote date</Label><Input type="date" value={form.issue_date || ''} onChange={(e) => setForm({ ...form, issue_date: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Valid until</Label><Input type="date" value={form.expiry_date || ''} onChange={(e) => setForm({ ...form, expiry_date: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Status</Label>

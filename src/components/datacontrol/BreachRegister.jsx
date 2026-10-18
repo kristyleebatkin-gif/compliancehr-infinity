@@ -170,7 +170,7 @@ export default function BreachRegister() {
               <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Breach ID</Label><Input value={form.breach_id} onChange={(e) => setForm({ ...form, breach_id: e.target.value })} placeholder="DB-2026-001" /></div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="grid gap-1.5"><Label>Date detected</Label><Input type="date" value={form.detected_date} onChange={(e) => setForm({ ...form, detected_date: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Detected / reported by</Label><Input value={form.detected_by} onChange={(e) => setForm({ ...form, detected_by: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Individuals affected</Label><Input type="number" min="0" value={form.individuals_affected} onChange={(e) => setForm({ ...form, individuals_affected: e.target.value })} /></div>

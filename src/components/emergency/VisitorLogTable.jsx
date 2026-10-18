@@ -94,7 +94,7 @@ export default function VisitorLogTable() {
                   <div className="grid gap-1.5"><Label>Visitor name *</Label><Input value={form.visitor_name} onChange={(e) => setForm({ ...form, visitor_name: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Organisation</Label><Input value={form.organisation} onChange={(e) => setForm({ ...form, organisation: e.target.value })} /></div>
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div className="grid gap-1.5"><Label>Date *</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Sign in time</Label><Input placeholder="09:00" value={form.time_in} onChange={(e) => setForm({ ...form, time_in: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Sign out time</Label><Input placeholder="17:00" value={form.time_out} onChange={(e) => setForm({ ...form, time_out: e.target.value })} /></div>

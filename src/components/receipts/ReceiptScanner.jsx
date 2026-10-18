@@ -105,7 +105,7 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
           <div className="grid gap-1.5"><Label>Description *</Label><Input value={data.description} onChange={(e) => setData({ ...data, description: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label>Merchant / supplier</Label><Input value={data.merchant} onChange={(e) => setData({ ...data, merchant: e.target.value })} /></div>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="grid gap-1.5"><Label>Amount ($)</Label><Input type="number" step="0.01" value={data.amount} onChange={(e) => setData({ ...data, amount: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label>GST ($)</Label><Input type="number" step="0.01" value={data.gst_amount} onChange={(e) => setData({ ...data, gst_amount: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={data.date} onChange={(e) => setData({ ...data, date: e.target.value })} /></div>
@@ -114,7 +114,7 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
           <div className="grid gap-1.5"><Label>Reimburse to</Label><Input value={data.reimburse_to} onChange={(e) => setData({ ...data, reimburse_to: e.target.value })} placeholder="Who is to be reimbursed" /></div>
           <div className="grid gap-1.5"><Label>Paid by</Label><Input value={data.paid_by} onChange={(e) => setData({ ...data, paid_by: e.target.value })} /></div>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="grid gap-1.5"><Label>Category</Label><Input value={data.category} onChange={(e) => setData({ ...data, category: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label>Payment method</Label><Input value={data.payment_method} onChange={(e) => setData({ ...data, payment_method: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label>Receipt number</Label><Input value={data.receipt_number} onChange={(e) => setData({ ...data, receipt_number: e.target.value })} /></div>

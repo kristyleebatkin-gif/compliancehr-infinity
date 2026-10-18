@@ -94,7 +94,7 @@ export default function StaffPerformanceTab({ staff }) {
                   </div>
                   <div className="grid gap-1.5"><Label>Review date</Label><Input type="date" value={form.review_date} onChange={(e) => setForm({ ...form, review_date: e.target.value })} /></div>
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div className="grid gap-1.5"><Label>Reviewer</Label><Input value={form.reviewer} onChange={(e) => setForm({ ...form, reviewer: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Rating (1-5)</Label><Input type="number" min="1" max="5" value={form.overall_rating} onChange={(e) => setForm({ ...form, overall_rating: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Outcome</Label>
@@ -107,7 +107,7 @@ export default function StaffPerformanceTab({ staff }) {
                 <div className="grid gap-1.5"><Label>Strengths</Label><Textarea rows={2} value={form.strengths} onChange={(e) => setForm({ ...form, strengths: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Areas for improvement</Label><Textarea rows={2} value={form.improvements} onChange={(e) => setForm({ ...form, improvements: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Goals / development plan</Label><Textarea rows={2} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} /></div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div className="grid gap-1.5"><Label>Status</Label>
                     <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
