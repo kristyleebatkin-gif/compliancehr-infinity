@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader2, Gauge, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Loader2, Gauge, ArrowRight, ShieldCheck, FileDown } from 'lucide-react';
+import { downloadComplianceHealthReport } from '@/lib/complianceHealthPdf';
 
 const pct = (done, total) => (total > 0 ? Math.round((done / total) * 100) : 0);
 const barTone = (p) => (p >= 80 ? 'bg-emerald-500' : p >= 50 ? 'bg-amber-500' : 'bg-rose-500');
@@ -34,6 +35,16 @@ function Ring({ percent }) {
 export default function ComplianceHealthDashboard() {
   const [rows, setRows] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false);
+
+  const exportPdf = async () => {
+    setExporting(true);
+    try {
+      await downloadComplianceHealthReport();
+    } finally {
+      setExporting(false);
+    }
+  };
 
   useEffect(() => {
     let alive = true;
@@ -79,10 +90,16 @@ export default function ComplianceHealthDashboard() {
           </div>
           <div className="text-xs text-foreground/50">Completed versus outstanding audit tasks in each department</div>
         </div>
-        {!loading && totals.total > 0 && (
-          <Link to="/tasks" className="hidden shrink-0 items-center gap-1 rounded-full border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-800 transition-all hover:-translate-y-0.5 hover:shadow-sm dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-300 sm:inline-flex">
-            Open tasks <ArrowRight className="h-3 w-3" />
-          </Link>
+        {!loading && rows?.length > 0 && (
+          <div className="flex shrink-0 items-center gap-2">
+            <button onClick={exportPdf} disabled={exporting} className="inline-flex items-center gap-1.5 rounded-full border border-violet-300 bg-white px-3 py-1.5 text-xs font-semibold text-violet-800 transition-all hover:-translate-y-0.5 hover:shadow-sm disabled:opacity-60 dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-300">
+              {exporting ? <Loader2 className="h-3 w-3 animate-spin" /> : <FileDown className="h-3 w-3" />}
+              <span className="hidden sm:inline">Export PDF</span>
+            </button>
+            <Link to="/tasks" className="hidden items-center gap-1 rounded-full border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-800 transition-all hover:-translate-y-0.5 hover:shadow-sm dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-300 sm:inline-flex">
+              Open tasks <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
         )}
       </div>
 
