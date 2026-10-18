@@ -7,7 +7,24 @@ const DEFAULTS = {
   slogan: COMPLIANCE_HR_FOOTER,
   logoUrl: '',
   logoDataUrl: '',
+  addressLine: '',
+  abn: '',
+  phone: '',
+  email: '',
 };
+
+const composeAddress = (business) => [
+  business?.address_line,
+  [business?.suburb, business?.state, business?.postcode].filter(Boolean).join(' '),
+].filter(Boolean).join(', ');
+
+const businessToBranding = (business) => ({
+  companyName: business?.business_name || business?.trading_name || '',
+  addressLine: composeAddress(business) || '',
+  abn: business?.abn || '',
+  phone: business?.phone || '',
+  email: business?.email || '',
+});
 
 const providerToBranding = (provider) => ({
   providerId: provider?.id || '',
@@ -52,12 +69,17 @@ export function cacheCompanyBranding(branding) {
 }
 
 export async function loadCompanyBranding() {
-  const page = await base44.entities.Provider.list({ sort: '-created_date', limit: 500 });
-  const providers = page.items || [];
+  const [providerPage, businessPage] = await Promise.all([
+    base44.entities.Provider.list({ sort: '-created_date', limit: 500 }),
+    base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+  ]);
+  const providers = providerPage.items || [];
   const provider = providers.find((candidate) => candidate.document_branding_active) || providers[0];
-  if (!provider) return { ...getCompanyBranding(), providerId: '' };
-  let logoDataUrl = provider.logo_url ? getCompanyBranding().logoDataUrl : '';
-  if (provider.logo_url && provider.logo_url !== getCompanyBranding().logoUrl) {
+  const business = businessPage.items?.[0] || null;
+  const businessBranding = businessToBranding(business);
+  if (!provider && !business) return { ...getCompanyBranding(), providerId: '' };
+  let logoDataUrl = getCompanyBranding().logoDataUrl;
+  if (provider?.logo_url && provider.logo_url !== getCompanyBranding().logoUrl) {
     try {
       logoDataUrl = await logoUrlToDataUrl(provider.logo_url);
     } catch {
@@ -66,12 +88,16 @@ export async function loadCompanyBranding() {
   }
   return {
     ...cacheCompanyBranding({
-      companyName: provider.provider_name || DEFAULTS.companyName,
-      slogan: provider.document_slogan || DEFAULTS.slogan,
-      logoUrl: provider.logo_url || '',
+      companyName: businessBranding.companyName || provider?.provider_name || DEFAULTS.companyName,
+      slogan: provider?.document_slogan || DEFAULTS.slogan,
+      logoUrl: provider?.logo_url || getCompanyBranding().logoUrl || '',
       logoDataUrl,
+      addressLine: businessBranding.addressLine,
+      abn: businessBranding.abn,
+      phone: businessBranding.phone,
+      email: businessBranding.email,
     }),
-    providerId: provider.id,
+    providerId: provider?.id || '',
   };
 }
 
@@ -148,6 +174,11 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   doc.setFontSize(Math.max(6.5, fontSize * 0.45));
   doc.setTextColor(71, 85, 105);
   doc.text(branding.slogan, textX, y + 13, { maxWidth });
+  if (branding.addressLine) {
+    doc.setFontSize(Math.max(6, fontSize * 0.38));
+    doc.setTextColor(120, 130, 145);
+    doc.text(branding.addressLine, textX, y + 30, { maxWidth });
+  }
   doc.setFillColor(37, 99, 235);
   doc.rect(textX, y + 20, 18, 2.5, 'F');
   doc.setFillColor(124, 58, 237);
@@ -220,20 +251,28 @@ export function drawDocumentFooter(doc, {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8);
     doc.setTextColor(30, 41, 59);
-    doc.text(companyName, footerTextX, pageH - 29, { maxWidth: pageW - footerTextX - margin - 70 });
+    doc.text(companyName, footerTextX, pageH - 32, { maxWidth: pageW - footerTextX - margin - 70 });
+    const addressParts = [branding.addressLine, branding.abn && `ABN ${branding.abn}`, branding.phone].filter(Boolean).join(' · ');
     if (descriptor) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
       doc.setTextColor(100, 116, 139);
-      doc.text(descriptor, footerTextX + doc.getTextWidth(companyName) + 10, pageH - 29, {
-        maxWidth: pageW - footerTextX - margin - 70 - doc.getTextWidth(companyName) - 10,
-      });
+      doc.text(descriptor, pageW - margin, pageH - 32, { align: 'right', maxWidth: pageW - footerTextX - margin - 90 });
     }
-    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 29, { align: 'right' });
+    if (addressParts) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setTextColor(100, 116, 139);
+      doc.text(addressParts, footerTextX, pageH - 22, { maxWidth: pageW - footerTextX - margin - 70 });
+    }
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 22, { align: 'right' });
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7);
     doc.setTextColor(49, 46, 129);
-    doc.text(branding.slogan || COMPLIANCE_HR_FOOTER, footerTextX, pageH - 16, {
+    doc.text(branding.slogan || COMPLIANCE_HR_FOOTER, footerTextX, pageH - 12, {
       maxWidth: pageW - footerTextX - margin,
     });
   }
