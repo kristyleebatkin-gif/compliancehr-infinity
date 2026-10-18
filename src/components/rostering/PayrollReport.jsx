@@ -6,13 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Download, ChevronLeft, ChevronRight, FileDown } from 'lucide-react';
 import { downloadPayslipPdf } from '@/lib/payslipPdf';
-import { format, addDays, startOfWeek, endOfWeek, getDay } from 'date-fns';
-import { parseISO } from 'date-fns';
+import { format, addDays, startOfWeek, endOfWeek } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
-import { shiftHours, timeToMinutes } from '@/lib/rostering';
-
-const DEFAULT_LOADINGS = { after8: 110, saturday: 150, sunday: 160, ph: 225 };
-const DEFAULT_KM_RATE = 0.99;
+import { shiftHours } from '@/lib/rostering';
+import { DEFAULT_LOADINGS, DEFAULT_KM_RATE, classifyPayHours, computePay } from '@/lib/payroll';
 
 const PAYROLL_CSV_COLUMNS = [
   { key: 'employee_name', label: 'Employee' },
@@ -45,39 +42,6 @@ const PAYROLL_CSV_COLUMNS = [
   { key: 'total_allowances', label: 'Total Allowances ($)' },
   { key: 'total_pay', label: 'Total Pay incl. Allowances ($)' },
 ];
-
-// Splits a shift's payable hours across the pay classifications.
-// Returns hours for weekday (<8pm), after-8pm, Saturday, Sunday and public holiday buckets.
-function classifyShift(s, holidaySet) {
-  const hrs = shiftHours(s.start_time, s.end_time);
-  const brk = (s.break_minutes || 0) / 60;
-  const payable = Math.max(0, hrs - brk);
-  if (payable === 0) {
-    return { payable, weekday: 0, after_8pm: 0, saturday: 0, sunday: 0, public_holiday: 0 };
-  }
-  if (!s.date) return { payable, weekday: payable, after_8pm: 0, saturday: 0, sunday: 0, public_holiday: 0 };
-
-  const day = parseISO(s.date);
-  if (holidaySet.has(s.date)) {
-    return { payable, weekday: 0, after_8pm: 0, saturday: 0, sunday: 0, public_holiday: payable };
-  }
-  const dow = getDay(day); // 0 Sunday, 6 Saturday
-  if (dow === 0) return { payable, weekday: 0, after_8pm: 0, saturday: 0, sunday: payable, public_holiday: 0 };
-  if (dow === 6) return { payable, weekday: 0, after_8pm: 0, saturday: payable, sunday: 0, public_holiday: 0 };
-
-  // Weekday: split at 8pm. Shifts running past midnight count fully as after-8pm.
-  const startMin = timeToMinutes(s.start_time);
-  const endMin = timeToMinutes(s.end_time);
-  const crossesMidnight = endMin !== null && startMin !== null && endMin <= startMin;
-  const cutoff = 20 * 60;
-  if (startMin === null || endMin === null || crossesMidnight) {
-    return { payable, weekday: 0, after_8pm: payable, saturday: 0, sunday: 0, public_holiday: 0 };
-  }
-  const effectiveEnd = Math.min(endMin, cutoff);
-  const dayHrs = Math.max(0, ((effectiveEnd - startMin) / 60) - brk);
-  const dayHrsCapped = Math.min(dayHrs, payable);
-  return { payable, weekday: dayHrsCapped, after_8pm: payable - dayHrsCapped, saturday: 0, sunday: 0, public_holiday: 0 };
-}
 
 const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);
 const hrs2 = (v) => num(v).toFixed(2);
@@ -130,7 +94,7 @@ export default function PayrollReport() {
         row.planned_hours += hrs;
         row.break_hours += brk;
         row.payable_hours += Math.max(0, hrs - brk);
-        const buckets = classifyShift(s, holidaySet);
+        const buckets = classifyPayHours(s, holidaySet);
         const approved = s.approval_status === 'Approved';
         if (approved) {
           row.ap_weekday += buckets.weekday;
@@ -158,27 +122,12 @@ export default function PayrollReport() {
 
   // Pay calculation — derived from the approved (timesheet-approved) hour buckets.
   const displayRows = useMemo(() => {
-    const l = {
-      after8: num(loadings.after8) / 100,
-      saturday: num(loadings.saturday) / 100,
-      sunday: num(loadings.sunday) / 100,
-      ph: num(loadings.ph) / 100,
-    };
     return rows.map((r) => {
-      const rate = r.hourly_rate;
-      const hasRate = rate != null && rate !== '';
-      const R = hasRate ? num(rate) : 0;
-      const basePay = r.ap_weekday * R;
-      const after8Pay = r.ap_after_8pm * R * l.after8;
-      const saturdayPay = r.ap_saturday * R * l.saturday;
-      const sundayPay = r.ap_sunday * R * l.sunday;
-      const phPay = r.ap_ph * R * l.ph;
-      const travelAllowance = r.approved_km * num(kmRate);
-      const other = num(otherAllowances[r.employee_name]);
-      const totalAllowances = travelAllowance + other;
+      const pay = computePay(r, { loadings, kmRate, otherAllowance: otherAllowances[r.employee_name] });
+      const payByKey = Object.fromEntries(pay.buckets.map((b) => [b.key, b.pay]));
       return {
         ...r,
-        hourly_rate: hasRate ? rate : '',
+        hourly_rate: pay.hasRate ? r.hourly_rate : '',
         planned_hours: hrs2(r.planned_hours),
         break_hours: hrs2(r.break_hours),
         payable_hours: hrs2(r.payable_hours),
@@ -189,16 +138,16 @@ export default function PayrollReport() {
         sunday_hours: hrs2(r.ap_sunday),
         public_holiday_hours: hrs2(r.ap_ph),
         travel_km: r.approved_km.toFixed(1),
-        base_pay: hasRate ? money(basePay) : '',
-        after_8pm_pay: hasRate ? money(after8Pay) : '',
-        saturday_pay: hasRate ? money(saturdayPay) : '',
-        sunday_pay: hasRate ? money(sundayPay) : '',
-        public_holiday_pay: hasRate ? money(phPay) : '',
-        travel_allowance: money(travelAllowance),
-        other_allowances: money(other),
-        total_allowances: money(totalAllowances),
-        approved_pay: hasRate ? money(basePay + after8Pay + saturdayPay + sundayPay + phPay) : '',
-        total_pay: hasRate ? money(basePay + after8Pay + saturdayPay + sundayPay + phPay + totalAllowances) : '',
+        base_pay: pay.hasRate ? money(payByKey.base) : '',
+        after_8pm_pay: pay.hasRate ? money(payByKey.after_8pm) : '',
+        saturday_pay: pay.hasRate ? money(payByKey.saturday) : '',
+        sunday_pay: pay.hasRate ? money(payByKey.sunday) : '',
+        public_holiday_pay: pay.hasRate ? money(payByKey.public_holiday) : '',
+        travel_allowance: money(pay.travelAllowance),
+        other_allowances: money(pay.other),
+        total_allowances: money(pay.totalAllowances),
+        approved_pay: pay.hasRate ? money(pay.earnings) : '',
+        total_pay: pay.hasRate ? money(pay.totalPay) : '',
       };
     });
   }, [rows, loadings, kmRate, otherAllowances]);

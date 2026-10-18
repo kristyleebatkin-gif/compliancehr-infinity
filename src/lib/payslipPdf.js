@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import { drawCompanyBranding, drawDocumentFooter, getCompanyBranding } from '@/lib/companyBranding';
+import { computePay } from '@/lib/payroll';
 
 const money = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0).toFixed(2);
 const hrs = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0).toFixed(2);
@@ -7,26 +8,21 @@ const hrs = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0).toFixed(2);
 /**
  * Branded payslip PDF for one employee and one pay week, built from the
  * approved-hour buckets and loading settings used by the payroll report.
+ * The pay maths comes from the shared payroll module, so a payslip always
+ * matches the figures shown in the payroll report.
  */
 export function downloadPayslipPdf(row, settings = {}) {
-  const loadings = settings.loadings || { after8: 110, saturday: 150, sunday: 160, ph: 225 };
-  const kmRate = Number(settings.kmRate ?? 0.99) || 0;
-  const R = Number(row.hourly_rate ?? 0) || 0;
+  const pay = computePay(row, settings);
+  const { loadings, kmRate } = pay;
+  const R = pay.hourlyRate;
 
-  const buckets = [
-    { label: 'Weekday (before 8pm)', hours: row.ap_weekday || 0, loading: 100 },
-    { label: 'After 8pm', hours: row.ap_after_8pm || 0, loading: loadings.after8 },
-    { label: 'Saturday', hours: row.ap_saturday || 0, loading: loadings.saturday },
-    { label: 'Sunday', hours: row.ap_sunday || 0, loading: loadings.sunday },
-    { label: 'Public holiday', hours: row.ap_ph || 0, loading: loadings.ph },
-  ].map((b) => ({ ...b, pay: (b.hours || 0) * R * (b.loading / 100) })).filter((b) => b.hours > 0);
-
-  const travelKm = row.approved_km || 0;
-  const travelAllowance = travelKm * kmRate;
-  const otherAllowance = Number(settings.otherAllowance ?? 0) || 0;
-  const earnings = buckets.reduce((sum, b) => sum + b.pay, 0);
-  const totalAllowances = travelAllowance + otherAllowance;
-  const totalPay = earnings + totalAllowances;
+  const buckets = pay.buckets.filter((b) => b.hours > 0);
+  const travelKm = pay.approvedKm;
+  const travelAllowance = pay.travelAllowance;
+  const otherAllowance = pay.other;
+  const earnings = pay.earnings;
+  const totalAllowances = pay.totalAllowances;
+  const totalPay = pay.totalPay;
   const companyName = getCompanyBranding().companyName;
 
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
