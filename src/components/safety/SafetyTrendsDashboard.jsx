@@ -139,12 +139,12 @@ export default function SafetyTrendsDashboard() {
                   {pendingInv.map((inv) => {
                     const overdue = inv.target_completion && inv.target_completion < today;
                     return (
-                      <div key={inv.id} className={`rounded-lg border p-2 ${overdue ? 'border-red-300 bg-red-50' : 'border-border/60'}`}>
+                      <div key={inv.id} className={`rounded-lg border p-2 ${overdue ? 'border-red-300 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10' : 'border-border/60'}`}>
                         <Link to={`/incidents/${inv.incident_id}`} className="block truncate text-xs font-semibold hover:underline">{inv.title || 'Untitled'}</Link>
                         <div className="mt-0.5 flex flex-wrap items-center gap-1 text-[11px] text-muted-foreground">
                           <span className="rounded bg-muted px-1.5 py-0.5 font-semibold text-foreground/60">{inv.status}</span>
                           {inv.investigator && <span>{inv.investigator}</span>}
-                          {inv.target_completion && <span className={overdue ? 'font-semibold text-red-600' : ''}>Due {format(new Date(inv.target_completion + 'T00:00:00'), 'd MMM')}</span>}
+                          {inv.target_completion && <span className={overdue ? 'font-semibold text-red-600 dark:text-red-300' : ''}>Due {format(new Date(inv.target_completion + 'T00:00:00'), 'd MMM')}</span>}
                         </div>
                         <div className="truncate text-[10px] text-foreground/40">{incLabel(inv.incident_id)}</div>
                       </div>

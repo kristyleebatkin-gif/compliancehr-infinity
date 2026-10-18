@@ -103,7 +103,7 @@ export default function HrHub() {
           { label: 'Reviews completed', value: reviews.filter((r) => r.status === 'Completed').length, icon: Check },
         ].map((s) => (
           <Card key={s.label}><CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-blue-50 p-2.5 text-blue-600"><s.icon className="h-5 w-5" /></div>
+            <div className="rounded-lg bg-blue-50 p-2.5 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><s.icon className="h-5 w-5" /></div>
             <div><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></div>
           </CardContent></Card>
         ))}

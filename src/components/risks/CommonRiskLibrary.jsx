@@ -101,9 +101,9 @@ export default function CommonRiskLibrary({ onAdded }) {
   return (
     <div className="space-y-4">
       {/* What to do guidance */}
-      <div className="rounded-2xl border border-red-300 bg-red-50 p-5">
-        <p className="flex items-center gap-2 text-sm font-bold text-red-700"><AlertTriangle className="h-4 w-4" />Risk management - what to do</p>
-        <ul className="mt-2 space-y-1 text-sm text-red-700/90">
+      <div className="rounded-2xl border border-red-300 bg-red-50 p-5 dark:border-red-500/30 dark:bg-red-500/10">
+        <p className="flex items-center gap-2 text-sm font-bold text-red-700 dark:text-red-300"><AlertTriangle className="h-4 w-4" />Risk management - what to do</p>
+        <ul className="mt-2 space-y-1 text-sm text-red-700/90 dark:text-red-300/90">
           <li>Serious or emergency risk: call <a href="tel:000" className="inline-flex items-center gap-1 font-bold underline"><Phone className="inline h-3 w-3" />000</a> immediately, then contact Choices NQ admin or management.</li>
           <li>Every shift, do a quick hazard scan of the environment and the people you support - if a hazard or risk is missing from the register, report it the same day with the Report Hazard button above.</li>
           <li>Common risks for each group are listed below - add any that apply to your work so they are assessed, controlled and reviewed.</li>

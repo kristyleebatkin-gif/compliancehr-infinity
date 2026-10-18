@@ -271,7 +271,7 @@ export default function AppLayout() {
                         <div className="py-6 text-center text-sm text-foreground/40">No notifications</div>
                       )}
                       {notifications.map((n) => n.type === 'Birthday Shout-out' ? (
-                        <div key={n.id} className={`rounded-xl border border-pink-200 p-3 text-sm ${n.read ? 'bg-pink-50/50' : 'bg-pink-50'}`}>
+                        <div key={n.id} className={`rounded-xl border border-pink-200 p-3 text-sm dark:border-pink-500/30 ${n.read ? 'bg-pink-50/50 dark:bg-pink-500/5' : 'bg-pink-50 dark:bg-pink-500/10'}`}>
                           <div className="flex items-start gap-2.5">
                             {n.branding_logo_url ? <img src={n.branding_logo_url} alt="" className="h-9 w-9 rounded-lg bg-white object-contain p-1" /> : <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-pink-600"><PartyPopper className="h-4 w-4" /></div>}
                             <div className="min-w-0">
