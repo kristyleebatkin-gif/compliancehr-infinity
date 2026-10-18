@@ -43,7 +43,7 @@ const Tile = ({ icon: Icon, label, count, urgent, to, tone }) => (
     <CardContent className="p-4">
       <Link to={to} className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${tone}`}><Icon className="h-4.5 w-4.5" /></span>
+          <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${tone}`}><Icon className="h-5 w-5" /></span>
           <div>
             <p className="text-xs font-semibold text-foreground/50">{label}</p>
             <p className="text-2xl font-bold leading-none">{count}</p>
