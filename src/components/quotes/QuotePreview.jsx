@@ -32,7 +32,7 @@ export default function QuotePreview({ quote, business = {} }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 border-b border-slate-200 p-5 text-xs">
+      <div className="grid grid-cols-2 gap-3 border-b border-slate-200 p-5 text-xs sm:grid-cols-4">
         <div><div className="font-semibold text-slate-500">Quote number</div><div className="font-medium">{quote.quote_number || '-'}</div></div>
         <div><div className="font-semibold text-slate-500">Quote date</div><div className="font-medium">{quote.issue_date || '-'}</div></div>
         <div><div className="font-semibold text-slate-500">Valid until</div><div className="font-medium">{quote.expiry_date || '-'}</div></div>
@@ -98,7 +98,7 @@ export default function QuotePreview({ quote, business = {} }) {
         <div><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Notes</div><Multiline text={quote.notes} /></div>
         <div>
           <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Acceptance</div>
-          <div className="mt-2 grid grid-cols-3 gap-6 text-[10px] text-slate-500">
+          <div className="mt-2 grid grid-cols-3 gap-3 text-[10px] text-slate-500 sm:gap-6">
             <div className="border-t border-slate-300 pt-1">Client signature</div>
             <div className="border-t border-slate-300 pt-1">Name</div>
             <div className="border-t border-slate-300 pt-1">Date</div>

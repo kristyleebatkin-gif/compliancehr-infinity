@@ -34,7 +34,7 @@ export default function InvoicePreview({ invoice, business = {} }) {
       </div>
 
       {/* Meta */}
-      <div className="grid grid-cols-4 gap-3 border-b border-slate-200 p-5 text-xs">
+      <div className="grid grid-cols-2 gap-3 border-b border-slate-200 p-5 text-xs sm:grid-cols-4">
         <div><div className="font-semibold text-slate-500">Invoice number</div><div className="font-medium">{invoice.invoice_number || '-'}</div></div>
         <div><div className="font-semibold text-slate-500">Issue date</div><div className="font-medium">{invoice.issue_date || '-'}</div></div>
         <div><div className="font-semibold text-slate-500">Due date</div><div className="font-medium">{invoice.due_date || '-'}</div></div>
