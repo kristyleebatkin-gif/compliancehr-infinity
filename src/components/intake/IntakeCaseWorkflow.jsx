@@ -2,12 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
-import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { format } from 'date-fns';
-import { Download, ExternalLink, Pencil } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { routeDocument } from '@/lib/documentRouting';
@@ -18,16 +16,9 @@ import {
   canCompleteIntakeFormOnline,
   intakeFormDefinition,
 } from '@/lib/intakeOnlineForms';
-import {
-  CheckCircle2,
-  FileWarning,
-  Loader2,
-  Plus,
-  UploadCloud,
-  UserCheck,
-} from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
-import IntakeCaseForm, { IntakeReadinessPanel, SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
+import IntakeCaseForm, { SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
 import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
@@ -40,13 +31,7 @@ import { SPECIAL_DOCUMENT_BUILDERS } from '@/lib/intakeSpecialDocuments';
 import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
 import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, PARTICIPANT_FORM_META } from '@/lib/participantDocuments';
 import {
-  ACK_KEEP_DOWNLOAD_DOC_TYPES,
-  DOWNLOAD_ONLY_DOC_TYPES,
-  INTAKE_FILE_ACCEPT,
-  LEGISLATION_ACK_DOC_TYPES,
-  TRAINING_DOC_LINKS,
   TRAINING_REGISTER_DOC_TYPES,
-  UPLOAD_ONLY_DOC_TYPES,
   businessDateTime,
   canonicalIntakeDocumentType,
   createProfileId,
@@ -1017,232 +1002,38 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         <Card><CardContent className="p-10 text-center text-muted-foreground">No {intakeType} intake cases yet.</CardContent></Card>
       ) : (
         <div className="grid gap-5 lg:grid-cols-[19rem_minmax(0,1fr)]">
-          <div className="space-y-2">
-            {cases.map((record) => {
-              const score = intakeReadiness(record).score;
-              return (
-                <button
-                  key={record.id}
-                  type="button"
-                  onClick={() => setActiveCaseId(record.id)}
-                  className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition-colors ${
-                    record.id === activeCaseId ? 'border-primary bg-primary/5 shadow-panel' : 'border-border hover:bg-muted/50'
-                  }`}
-                >
-                  <span className="gradient-brand flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white">
-                    {initials(record.applicant_name)}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-semibold">{record.applicant_name}</span>
-                    <span className="mt-1 flex items-center gap-2">
-                      <span className="text-xs text-foreground/50">{record.case_number}</span>
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${STATUS_CLASS[record.status] || 'bg-muted text-muted-foreground'}`}>
-                        {record.status}
-                      </span>
-                    </span>
-                  </span>
-                  <span className={`shrink-0 text-xs font-bold ${scoreTone(score)}`}>{score}%</span>
-                </button>
-              );
-            })}
-          </div>
+          <IntakeCaseList cases={cases} activeCaseId={activeCaseId} onSelect={setActiveCaseId} />
 
           {activeCase && (
             <div className="space-y-4">
-              <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-                <div className="gradient-brand relative flex flex-wrap items-center gap-3 px-5 py-4 text-white">
-                  <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 15%, rgba(255,255,255,0.22), transparent 55%)' }} />
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 text-sm font-bold">
-                    {initials(activeCase.applicant_name)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-lg font-bold">{activeCase.applicant_name}</h3>
-                    <div className="mt-1 flex flex-wrap gap-2 text-[11px] font-medium">
-                      <span className="rounded-full bg-white/20 px-2.5 py-0.5">{activeCase.case_number}</span>
-                      {intakeType === 'Employee' && (
-                        <span className="rounded-full bg-white/20 px-2.5 py-0.5">Employee ID: {activeCase.employee_id_number || 'Generated at conversion'}</span>
-                      )}
-                      {activeCase.date_of_birth && (
-                        <span className="rounded-full bg-white/20 px-2.5 py-0.5">DOB {format(new Date(activeCase.date_of_birth), 'd MMM yyyy')}</span>
-                      )}
-                    </div>
-                  </div>
-                  <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-semibold">{activeCase.status}</span>
-                </div>
-              </div>
+              <IntakeCaseDetail
+                activeCase={activeCase}
+                intakeType={intakeType}
+                readiness={readiness}
+                busy={busy}
+                onMoveToReview={moveToReview}
+                onApprove={approve}
+                onConvert={convertToProfile}
+                onUpdateCase={updateCase}
+              />
 
-              <div className="grid gap-3 rounded-xl border border-border/60 bg-card p-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                <div><span className="text-foreground/45">DOB</span><div className="font-medium">{activeCase.date_of_birth ? format(new Date(activeCase.date_of_birth), 'd MMM yyyy') : 'Not provided'}</div></div>
-                <div><span className="text-foreground/45">Email</span><div className="font-medium">{activeCase.email || 'Not provided'}</div></div>
-                <div><span className="text-foreground/45">Phone</span><div className="font-medium">{activeCase.phone || 'Not provided'}</div></div>
-                <div><span className="text-foreground/45">Address</span><div className="font-medium">{activeCase.address || 'Not provided'}</div></div>
-                {intakeType === 'Participant' ? (
-                  <>
-                    <div><span className="text-foreground/45">NDIS number</span><div className="font-medium">{activeCase.ndis_number || 'Not provided'}</div></div>
-                    <div><span className="text-foreground/45">Plan type</span><div className="font-medium">{activeCase.plan_type || 'Not set'}</div></div>
-                  </>
-                ) : (
-                  <>
-                    <div><span className="text-foreground/45">Role</span><div className="font-medium">{activeCase.employee_role || 'Not set'}</div></div>
-                    <div><span className="text-foreground/45">Preferred name</span><div className="font-medium">{activeCase.preferred_name || 'Not provided'}</div></div>
-                    <div><span className="text-foreground/45">Proposed start date</span><div className="font-medium">{activeCase.target_start_date ? format(new Date(activeCase.target_start_date), 'd MMM yyyy') : 'Not set'}</div></div>
-                  </>
-                )}
-                <div><span className="text-foreground/45">Eligibility / service fit</span><div className="font-medium">{activeCase.service_fit || 'Pending'}</div></div>
-                <div><span className="text-foreground/45">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
-                <div><span className="text-foreground/45">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
-                <div><span className="text-foreground/45">Date completed</span><div className="font-medium">{activeCase.date_completed ? format(new Date(activeCase.date_completed), 'd MMM yyyy') : 'Not recorded'}</div></div>
-                <div className="sm:col-span-2 lg:col-span-3">
-                  <span className="text-foreground/45">Consent and acknowledgement log</span>
-                  <div className="font-medium">
-                    Privacy consent: {activeCase.privacy_consent_by
-                      ? `${activeCase.privacy_consent_by}, ${activeCase.privacy_consent_date || ''}${activeCase.privacy_consent_time ? ` ${activeCase.privacy_consent_time}` : ''}`
-                      : 'Not recorded'}
-                  </div>
-                  <div className="font-medium">
-                    NDIS audit: {activeCase.audit_consent || 'Audit declined'}
-                    {activeCase.audit_consent_by ? ` · ${activeCase.audit_consent_by}${activeCase.audit_consent_date ? `, ${activeCase.audit_consent_date}${activeCase.audit_consent_time ? ` ${activeCase.audit_consent_time}` : ''}` : ''}` : ''}
-                  </div>
-                  {(activeCase.acknowledgement_log || '').split('\n').filter(Boolean).map((entry, index) => (
-                    <div key={index} className="text-xs text-foreground/60">{entry}</div>
-                  ))}
-                </div>
-              </div>
 
-              {activeCase.outstanding_actions && (
-                <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200">
-                  {activeCase.outstanding_actions}
-                </div>
-              )}
-
-              <div className="flex flex-wrap gap-2">
-                {!TERMINAL_STATUSES.has(activeCase.status) && activeCase.status !== 'Approved' && (
-                  <Button variant="outline" size="sm" onClick={moveToReview} disabled={busy}>
-                    {readiness.ready ? 'Mark ready for review' : 'Record missing information'}
-                  </Button>
-                )}
-                {activeCase.status === 'Ready for Review' && (
-                  <Button size="sm" onClick={approve} disabled={busy}>Approve intake</Button>
-                )}
-                {activeCase.status === 'Approved' && (
-                  <Button size="sm" onClick={convertToProfile} disabled={busy}>
-                    <UserCheck className="mr-1.5 h-4 w-4" /> Convert to {intakeType} profile
-                  </Button>
-                )}
-                {!TERMINAL_STATUSES.has(activeCase.status) && (
-                  <>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-rose-300 text-rose-700 hover:bg-rose-50 dark:border-rose-900 dark:text-rose-300 dark:hover:bg-rose-950/30"
-                      onClick={() => updateCase({ status: 'Declined', decision_reason: activeCase.outstanding_actions || 'Service fit decision recorded' }, 'Intake declined')}
-                      disabled={busy}
-                    >
-                      Decline
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => updateCase({ status: 'Withdrawn' }, 'Intake withdrawn')} disabled={busy}>
-                      Withdraw
-                    </Button>
-                  </>
-                )}
-              </div>
-
-              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
-                <div className="space-y-2">
-                  <div className="text-xs font-bold uppercase tracking-wide text-foreground/45">Required documents</div>
-                  {readiness.documentChecks.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No document requirements for this case.</p>
-                  ) : (
-                    readiness.documentChecks.map((check) => {
-                      const doc = docForCheck(check.label);
-                      return (
-                        <div key={check.label} className="flex flex-col gap-2 rounded-lg border border-border bg-card p-3 sm:flex-row sm:items-center sm:justify-between">
-                          <div className="flex min-w-0 items-start gap-2">
-                            {check.complete
-                              ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-                              : <FileWarning className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />}
-                            <div className="min-w-0">
-                              <div className={`text-sm ${check.complete ? 'text-foreground/70' : 'font-medium'}`}>{check.label}</div>
-                              {doc && <div className="text-xs text-foreground/45">{doc.file_name}</div>}
-                              {UPLOAD_ONLY_DOC_TYPES.has(check.label) && !check.complete && (
-                                <p className="text-[10px] text-muted-foreground">please upload</p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
-                            {doc && (
-                              <Button variant="outline" size="sm" onClick={() => viewDocument(doc)}>View</Button>
-                            )}
-                            {LEGISLATION_ACK_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
-                              <Button variant="outline" size="sm" onClick={() => startAcknowledgement(check.label)} disabled={busy}>
-                                <CheckCircle2 className="h-3.5 w-3.5" /> Acknowledgement
-                              </Button>
-                            )}
-                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !UPLOAD_ONLY_DOC_TYPES.has(check.label)
-                              && !DOWNLOAD_ONLY_DOC_TYPES.has(check.label)
-                              && canCompleteIntakeFormOnline(intakeType, check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
-                              <Button variant="outline" size="sm" onClick={() => startOnlineForm(check.label)} disabled={busy}>
-                                <Pencil className="h-3.5 w-3.5" /> Complete online
-                              </Button>
-                            )}
-                            {(!LEGISLATION_ACK_DOC_TYPES.has(check.label) || ACK_KEEP_DOWNLOAD_DOC_TYPES.has(check.label)) && !UPLOAD_ONLY_DOC_TYPES.has(check.label) && (
-                              <Button variant="outline" size="sm" onClick={() => downloadTemplate(check.label)} disabled={downloadingTemplate === check.label}>
-                                {downloadingTemplate === check.label
-                                  ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
-                                  : <Download className="h-3.5 w-3.5" />}
-                                Download
-                              </Button>
-                            )}
-                            {TRAINING_DOC_LINKS[check.label] && (
-                              <a
-                                href={TRAINING_DOC_LINKS[check.label].url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent"
-                              >
-                                <ExternalLink className="h-3.5 w-3.5" /> Free training
-                              </a>
-                            )}
-                            {!LEGISLATION_ACK_DOC_TYPES.has(check.label) && !DOWNLOAD_ONLY_DOC_TYPES.has(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
-                              <label className="cursor-pointer">
-                                <input
-                                  type="file"
-                                  accept={INTAKE_FILE_ACCEPT}
-                                  className="hidden"
-                                  onChange={async (event) => {
-                                    await uploadDocument(check.label, event.target.files?.[0]);
-                                    event.target.value = '';
-                                  }}
-                                  disabled={uploadingDoc === check.label || busy}
-                                />
-                                <span className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
-                                  {uploadingDoc === check.label
-                                    ? <span className="block h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
-                                    : <UploadCloud className="h-3.5 w-3.5" />}
-                                  Upload
-                                </span>
-                              </label>
-                            )}
-                            {doc && !TERMINAL_STATUSES.has(activeCase.status) && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-destructive"
-                                onClick={() => removeDocument(doc)}
-                                disabled={busy}
-                              >
-                                Remove
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-
-                <IntakeReadinessPanel readiness={readiness} />
-              </div>
+              <IntakeCaseDocuments
+                activeCase={activeCase}
+                intakeType={intakeType}
+                readiness={readiness}
+                docForCheck={docForCheck}
+                busy={busy}
+                uploadingDoc={uploadingDoc}
+                downloadingTemplate={downloadingTemplate}
+                onView={viewDocument}
+                onAcknowledge={startAcknowledgement}
+                onOnlineForm={startOnlineForm}
+                onDownload={downloadTemplate}
+                onUpload={uploadDocument}
+                onRemove={removeDocument}
+                canCompleteOnline={(label) => canCompleteIntakeFormOnline(intakeType, label)}
+              />
 
               {intakeType === 'Employee' && (
                 <IntakeLogPanels
@@ -1278,89 +1069,23 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={showOnline} onOpenChange={(open) => { setShowOnline(open); if (!open) setOnlineForm(null); }}>
-        <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Complete {onlineForm?.docType} online</DialogTitle>
-          </DialogHeader>
-          {onlineForm && (
-            <form
-              onSubmit={(event) => { event.preventDefault(); submitOnlineForm(); }}
-              className="grid gap-3 sm:grid-cols-2"
-            >
-              <p className="text-xs text-muted-foreground sm:col-span-2">
-                Same questions as the official form, with the company name and logo in the header. Known details are filled in automatically and the finished PDF is attached to this intake case and, after conversion, to the profile.
-              </p>
-              {onlineForm.definition.fields.map((field) => (
-                <Field key={field.label} label={field.label} className={field.multiline ? 'sm:col-span-2' : ''}>
-                  {field.multiline
-                    ? (
-                      <TextArea
-                        rows={3}
-                        value={onlineForm.answers[field.label] || ''}
-                        onChange={(e) => setOnlineForm({ ...onlineForm, answers: { ...onlineForm.answers, [field.label]: e.target.value } })}
-                      />
-                    )
-                    : (
-                      <TextInput
-                        value={onlineForm.answers[field.label] || ''}
-                        onChange={(e) => setOnlineForm({ ...onlineForm, answers: { ...onlineForm.answers, [field.label]: e.target.value } })}
-                      />
-                    )}
-                </Field>
-              ))}
-              <div className="flex items-center justify-end gap-2 sm:col-span-2">
-                <Button type="button" variant="outline" onClick={() => { setShowOnline(false); setOnlineForm(null); }}>Cancel</Button>
-                <Button type="submit" disabled={submittingOnline}>
-                  {submittingOnline && <Loader2 className="h-4 w-4 animate-spin" />} Save &amp; attach to case
-                </Button>
-              </div>
-            </form>
-          )}
-        </DialogContent>
-      </Dialog>
+      <IntakeOnlineFormDialog
+        open={showOnline}
+        onOpenChange={(open) => { setShowOnline(open); if (!open) setOnlineForm(null); }}
+        onlineForm={onlineForm}
+        setOnlineForm={setOnlineForm}
+        submitting={submittingOnline}
+        onSubmit={submitOnlineForm}
+      />
 
-      <Dialog open={showAck} onOpenChange={(open) => { setShowAck(open); if (!open) setAckForm(null); }}>
-        <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Record acknowledgement - {ackForm?.docType}</DialogTitle>
-          </DialogHeader>
-          {ackForm && (
-            <form
-              onSubmit={(event) => { event.preventDefault(); submitAcknowledgement(); }}
-              className="grid gap-3 sm:grid-cols-2"
-            >
-              <p className="text-xs text-muted-foreground sm:col-span-2">
-                The applicant reads and acknowledges this legislation or standard. The acknowledgement PDF is saved to this intake case with the person, date and time recorded, and follows them onto their profile after conversion.
-              </p>
-              {ackForm.definition.fields.map((field) => (
-                <Field key={field.label} label={field.label} className={field.multiline ? 'sm:col-span-2' : ''}>
-                  {field.multiline
-                    ? (
-                      <TextArea
-                        rows={3}
-                        value={ackForm.answers[field.label] || ''}
-                        onChange={(e) => setAckForm({ ...ackForm, answers: { ...ackForm.answers, [field.label]: e.target.value } })}
-                      />
-                    )
-                    : (
-                      <TextInput
-                        value={ackForm.answers[field.label] || ''}
-                        onChange={(e) => setAckForm({ ...ackForm, answers: { ...ackForm.answers, [field.label]: e.target.value } })}
-                      />
-                    )}
-                </Field>
-              ))}
-              <div className="flex items-center justify-end gap-2 sm:col-span-2">
-                <Button type="button" variant="outline" onClick={() => { setShowAck(false); setAckForm(null); }}>Cancel</Button>
-                <Button type="submit" disabled={submittingAck}>
-                  {submittingAck && <Loader2 className="h-4 w-4 animate-spin" />} Record acknowledgement
-                </Button>
-              </div>
-            </form>
-          )}
-        </DialogContent>
-      </Dialog>
+      <IntakeAcknowledgementDialog
+        open={showAck}
+        onOpenChange={(open) => { setShowAck(open); if (!open) setAckForm(null); }}
+        ackForm={ackForm}
+        setAckForm={setAckForm}
+        submitting={submittingAck}
+        onSubmit={submitAcknowledgement}
+      />
     </div>
   );
 }
