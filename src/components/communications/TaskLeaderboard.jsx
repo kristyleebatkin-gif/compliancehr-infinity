@@ -18,7 +18,14 @@ export default function TaskLeaderboard() {
 
   useEffect(() => {
     (async () => {
-      const taskPage = await base44.entities.TodoTask.filter({ status: 'Finalised' }, { limit: 1000 });
+      // Season window is applied on the server so only this season's tasks transfer.
+      const year = new Date().getFullYear();
+      const seasonStart = `${year}-01-01`;
+      const seasonEnd = `${year}-12-01`;
+      const taskPage = await base44.entities.TodoTask.filter(
+        { status: 'Finalised', completed_date: { $gte: seasonStart, $lte: seasonEnd } },
+        { limit: 1000, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title'] }
+      );
       setTasks(taskPage.items || []);
       try {
         const banterPage = await base44.entities.CommunicationEntry.filter({ entry_kind: 'Team Banter' }, { sort: '-created_date', limit: 20 });

@@ -48,7 +48,7 @@ export default function QualityImprovement() {
       const [itemPage, logPage, userPage] = await Promise.all([
         base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 300 }),
         base44.entities.StatusLog.filter({ entity_type: 'QualityItem' }, { sort: '-created_date', limit: 300 }),
-        base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
+        base44.entities.User.list(),
       ]);
       setItems(itemPage.items);
       setLogs(logPage.items);

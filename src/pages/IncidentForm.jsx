@@ -43,8 +43,8 @@ export default function IncidentForm() {
     (async () => {
       try {
         const [participantPage, staffPage] = await Promise.all([
-          base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 1000 }).catch(() => ({ items: [] })),
-          base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 1000 }).catch(() => ({ items: [] })),
+          base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 1000, fields: ['full_name'] }).catch(() => ({ items: [] })),
+          base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 1000, fields: ['full_name'] }).catch(() => ({ items: [] })),
         ]);
         const participantRecords = participantPage.items || [];
         const staffRecords = staffPage.items || [];

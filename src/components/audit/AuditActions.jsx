@@ -32,7 +32,7 @@ export default function AuditActions({ audits }) {
     try {
       const [actionPage, userPage] = await Promise.all([
         base44.entities.AuditAction.filter({}, { sort: '-created_date', limit: 300 }),
-        base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
+        base44.entities.User.list(),
       ]);
       setActions(actionPage.items);
       setUsers(userPage.items);

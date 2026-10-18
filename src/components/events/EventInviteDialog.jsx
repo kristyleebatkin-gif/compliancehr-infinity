@@ -21,7 +21,7 @@ export default function EventInviteDialog({ open, onOpenChange, event, business,
   useEffect(() => {
     if (!open) return;
     setLoading(true);
-    base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 })
+    base44.entities.User.list()
       .then((page) => setUsers((page.items || []).filter((u) => u.email)))
       .catch(() => setUsers([]))
       .finally(() => setLoading(false));

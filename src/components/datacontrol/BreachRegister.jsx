@@ -73,7 +73,7 @@ export default function BreachRegister() {
   const notifyManagers = async (breach) => {
     setNotifying(breach.id);
     try {
-      const page = await base44.entities.User.list({ sort: 'full_name', limit: 200 });
+      const page = await base44.entities.User.list();
       const admins = page.items.filter((u) => u.role === 'admin' && u.email);
       if (admins.length === 0) {
         toast({ title: 'No managers to notify', description: 'No admin users found to email.', variant: 'destructive' });

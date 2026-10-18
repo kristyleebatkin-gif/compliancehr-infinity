@@ -38,7 +38,7 @@ export default function Tasks() {
     try {
       const [page, userPage] = await Promise.all([
         base44.entities.Task.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 }),
-        base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
+        base44.entities.User.list(),
       ]);
       setList(page.items || []);
       setUsers(userPage.items || []);

@@ -28,7 +28,7 @@ export default function UsersTable() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.User.list({ sort: 'full_name', limit: 200 });
+      const page = await base44.entities.User.list();
       setUsers(page.items);
     } catch {
       setDenied(true);
