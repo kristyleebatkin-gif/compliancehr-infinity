@@ -93,8 +93,16 @@ export default async function(req) {
     };
 
     if (body.notify) {
-      const adminRecords = await s.User.list();
-      const admins = { items: (Array.isArray(adminRecords) ? adminRecords : adminRecords.items || [])
+      // User.list() can be briefly unavailable while other scheduled jobs run; retry once.
+      let adminRecords = [];
+      try {
+        adminRecords = await s.User.list();
+      } catch (listError) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        try { adminRecords = await s.User.list(); } catch { adminRecords = []; }
+      }
+      const adminItems = Array.isArray(adminRecords) ? adminRecords : adminRecords.items || [];
+      const admins = { items: adminItems
         .filter((u) => ['admin', 'Provider Administrator'].includes(u.role)).slice(0, 10) };
       const html = briefEmailHtml(brief);
       await Promise.allSettled((admins.items || []).map((admin) =>
