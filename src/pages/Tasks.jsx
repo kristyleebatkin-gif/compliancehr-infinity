@@ -10,7 +10,7 @@ import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TodoBoard from '@/components/communications/TodoBoard';
-import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download } from 'lucide-react';
+import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download, Archive, X } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { format } from 'date-fns';
 
@@ -29,6 +29,7 @@ export default function Tasks() {
   const [form, setForm] = useState(blank);
   const [emailAssignee, setEmailAssignee] = useState(false);
   const [filter, setFilter] = useState('All');
+  const [selected, setSelected] = useState([]);
   const [running, setRunning] = useState(false);
   const [sending, setSending] = useState(null);
 
@@ -36,7 +37,7 @@ export default function Tasks() {
     setLoading(true);
     try {
       const [page, userPage] = await Promise.all([
-        base44.entities.Task.filter({}, { sort: '-due_date', limit: 500 }),
+        base44.entities.Task.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list({ fields: ['id', 'full_name', 'email'], sort: 'full_name', limit: 200 }),
       ]);
       setList(page.items || []);
@@ -139,6 +140,26 @@ export default function Tasks() {
 
   const filtered = filter === 'All' ? list : list.filter((t) => t.status === filter);
 
+  const allChecked = filtered.length > 0 && filtered.every((t) => selected.includes(t.id));
+  const toggleSelect = (id) => setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  const toggleSelectAll = () => setSelected(allChecked ? [] : filtered.map((t) => t.id));
+
+  const bulkArchive = async () => {
+    if (selected.length === 0) return;
+    await base44.entities.Task.bulkUpdate(selected.map((id) => ({ id, archived: true })));
+    toast({ title: `${selected.length} task${selected.length === 1 ? '' : 's'} archived` });
+    setSelected([]);
+    load();
+  };
+
+  const bulkStatus = async (status) => {
+    if (!status || selected.length === 0) return;
+    await base44.entities.Task.bulkUpdate(selected.map((id) => ({ id, status, completed_date: status === 'Completed' ? new Date().toISOString().slice(0, 10) : undefined })));
+    toast({ title: `${selected.length} task${selected.length === 1 ? '' : 's'} moved to ${status}` });
+    setSelected([]);
+    load();
+  };
+
   return (
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
       <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={exportTasks} disabled={loading || list.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-60"><Download className="h-4 w-4" />Export CSV</button><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
@@ -149,10 +170,14 @@ export default function Tasks() {
 
       <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
 
-      <div className="flex gap-1 overflow-x-auto">
+      <div className="flex items-center gap-1 overflow-x-auto">
         {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
           <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
         ))}
+        <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pl-3 text-xs font-medium text-foreground/60">
+          <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} className="h-4 w-4" />
+          Select all
+        </label>
       </div>
 
       {loading ? (
@@ -162,7 +187,8 @@ export default function Tasks() {
       ) : (
         <div className="space-y-2">
           {filtered.map((t) => (
-            <div key={t.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+            <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'}`}>
+              <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
               <button onClick={() => toggle(t)} className="shrink-0">
                 {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}
               </button>
@@ -187,6 +213,18 @@ export default function Tasks() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {selected.length > 0 && (
+        <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">
+          <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{selected.length} selected</span>
+          <button onClick={bulkArchive} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold hover:bg-muted"><Archive className="h-4 w-4" />Archive</button>
+          <select value="" onChange={(e) => bulkStatus(e.target.value)} className="h-9 rounded-lg border border-border bg-card px-2.5 text-sm font-medium">
+            <option value="">Move to status…</option>
+            {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
+          <button onClick={() => setSelected([])} className="ml-auto flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-foreground/60 hover:bg-muted"><X className="h-4 w-4" />Clear</button>
         </div>
       )}
 

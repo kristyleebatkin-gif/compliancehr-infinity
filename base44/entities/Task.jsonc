@@ -76,6 +76,11 @@
       "type": "string",
       "title": "Notes"
     },
+    "archived": {
+      "type": "boolean",
+      "default": false,
+      "title": "Archived"
+    },
     "audit_consent": {
       "type": "string",
       "enum": [
