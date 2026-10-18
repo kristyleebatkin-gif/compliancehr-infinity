@@ -26,7 +26,7 @@ export const MODULE_DIRECTORY = [
   { key: 'certificates', label: 'Certificates', path: '/certificates', icon: BadgeCheck, blurb: 'Branded certificates and professional certification records.' },
   { key: 'assets', label: 'Asset Management', path: '/assets', icon: Boxes, blurb: 'Asset register, maintenance, compliance reviews and disposal records.' },
   { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
-  { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, blurb: 'NDIS invoicing, quotes workflow, Xero exports and timesheets.' },
+  { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, blurb: 'NDIS invoicing, quotes workflow and payroll reports.' },
   { key: 'goals', label: 'Goal Progress', path: '/goals', icon: Target, blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
   { key: 'emergency-response', label: 'Emergency Response', path: '/emergency-response', icon: Siren, blurb: 'Live alerts, quick dial, plans, drills, safety checks and visitor logs.' },
   { key: 'meetings', label: 'Meeting Centre', path: '/meetings', icon: CalendarDays, blurb: 'Meetings, agenda assistant, templates, minutes and overdue tracking.' },

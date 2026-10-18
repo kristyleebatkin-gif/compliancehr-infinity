@@ -19,7 +19,7 @@ const FEATURES = [
   { icon: Heart, title: 'Participant Records', desc: 'Centralise participant profiles, support plans, agreements, and folder compliance checklists.', color: '#8b5cf6' },
   { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, manage shifts, availability, handovers, approvals, vehicle checks and payable hours.', color: '#2563eb' },
   { icon: BriefcaseBusiness, title: 'Employee Performance Reviews', desc: 'Complete online appraisals, manage review schedules and maintain connected employment records.', color: '#7c3aed' },
-  { icon: FileSpreadsheet, title: 'Invoicing & Timesheets', desc: 'Build professional NDIS invoices from rostered shifts, apply price-guide items, export Xero data and generate timesheets.', color: '#0f766e' },
+  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'Build professional NDIS invoices from rostered shifts, apply price-guide items and generate payroll-ready reports.', color: '#0f766e' },
   { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate, and resolve incidents with automatic alerts and full audit trails.', color: '#ef4444' },
   { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess, and treat risks and hazards with a live register and mitigation tracking.', color: '#f97316' },
   { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions, and stay on top of expiring certifications automatically.', color: '#d946ef' },

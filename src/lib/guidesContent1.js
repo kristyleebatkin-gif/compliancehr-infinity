@@ -518,7 +518,7 @@ export const GUIDES_PART_1 = {
 
   invoicing: {
     tagline: 'Approved shifts, NDIS-compliant invoices',
-    purpose: 'The Invoicing Centre turns approved shifts into NDIS-compliant invoices: invoice building from shifts at NDIS price guide rates, branded invoice PDFs, plan-manager billing, payment tracking against terms and Xero-ready exports. It links to rostering for shift data and to the Quote Centre for pre-agreed pricing.',
+    purpose: 'The Invoicing Centre turns approved shifts into NDIS-compliant invoices: invoice building from shifts at NDIS price guide rates, branded invoice PDFs, plan-manager billing, payment tracking against terms. It links to rostering for shift data and to the Quote Centre for pre-agreed pricing.',
     features: [
       { name: 'Invoice builder', detail: 'Build invoices from approved, completed shifts with automatic line items and rates.' },
       { name: 'NDIS price guide', detail: 'Current price guide line items and rate caps built into line item selection.' },
@@ -526,7 +526,7 @@ export const GUIDES_PART_1 = {
       { name: 'Branded invoice PDF', detail: 'Generate the invoice with logo, ABN and payment details from the Company Safe.' },
       { name: 'Biller types', detail: 'Participant, Plan Manager, NDIA and other biller handling with their own details.' },
       { name: 'Payment tracking', detail: 'Track paid, outstanding and overdue against payment terms.' },
-      { name: 'Xero export', detail: 'Export invoices for Xero reconciliation.' },
+      { name: 'Payroll reports', detail: 'Weekly payroll summaries with loadings, allowances and payslip PDFs.' },
       { name: 'Shift linkage', detail: 'Every line item traces back to its shift for claim accuracy.' },
     ],
     steps: [
@@ -540,11 +540,10 @@ export const GUIDES_PART_1 = {
     tools: [
       { name: 'Invoice preview', detail: 'Exact rendered invoice before sending.' },
       { name: 'Price guide reference', detail: 'Line item and rate lookup built into the builder.' },
-      { name: 'Timesheets view', detail: 'Approved hours feeding each invoice.' },
-      { name: 'Xero export', detail: 'Accounting-ready export bundle.' },
+      { name: 'Payroll report', detail: 'Approved hours and weekly pay behind each invoice.' },
     ],
     tips: [
-      'Bill from approved shifts only — rejected timesheets cause claim disputes later.',
+      'Bill from approved shifts only — rejected or unapproved shifts cause claim disputes later.',
       'The payment reference note on the invoice exists so payers quote the invoice number; keep the default note intact.',
     ],
   },
