@@ -22,7 +22,7 @@ export default function LandingFooter() {
                 Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR Infinitely</span>
               </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-white/55">Comprehensive compliance management for disability and community service providers.</p>
+            <p className="mt-4 text-sm leading-relaxed text-white/55">Complete Control. Greater Confidence. Brighter Success.</p>
           </div>
           {cols.map((c) => (
             <div key={c.title}>
