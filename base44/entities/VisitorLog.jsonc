@@ -65,6 +65,16 @@
         },
         {
           "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Volunteer"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Auditor"
           }
         }
@@ -91,6 +101,16 @@
         {
           "user_condition": {
             "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Volunteer"
           }
         }
       ]
