@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
@@ -15,6 +15,7 @@ import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
 import VideoCalls from '@/components/communications/VideoCalls';
 import AiCompose from '@/components/communications/AiCompose';
 import TemplateLibrary from '@/components/communications/TemplateLibrary';
+import AutomatedLogs from '@/components/communications/AutomatedLogs';
 
 export default function Communications() {
   return (
@@ -30,6 +31,7 @@ export default function Communications() {
       <Tabs defaultValue="diary">
         <TabsList className="flex flex-wrap">
           <TabsTrigger value="alerts"><Siren className="mr-1 inline h-3.5 w-3.5" />Alerts</TabsTrigger>
+          <TabsTrigger value="logs"><History className="mr-1 inline h-3.5 w-3.5" />Alert Logs</TabsTrigger>
           <TabsTrigger value="diary"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Diary</TabsTrigger>
           <TabsTrigger value="inbox"><InboxIcon className="mr-1 inline h-3.5 w-3.5" />Inbox</TabsTrigger>
           <TabsTrigger value="templates"><BookMarked className="mr-1 inline h-3.5 w-3.5" />Templates</TabsTrigger>
@@ -43,6 +45,7 @@ export default function Communications() {
           <TabsTrigger value="employee-log"><Briefcase className="mr-1 inline h-3.5 w-3.5" />Employee Log</TabsTrigger>
         </TabsList>
         <TabsContent value="alerts"><AlertsCentre /></TabsContent>
+        <TabsContent value="logs"><AutomatedLogs /></TabsContent>
         <TabsContent value="diary"><CommunicationDiary /></TabsContent>
         <TabsContent value="inbox"><Inbox /></TabsContent>
         <TabsContent value="templates"><TemplateLibrary /></TabsContent>
