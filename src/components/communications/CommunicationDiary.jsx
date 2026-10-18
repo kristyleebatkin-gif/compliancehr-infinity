@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +13,31 @@ const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '
 export default function CommunicationDiary() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({ kind: '', person_type: '', search: '', from: '', to: '' });
+  const [filters, setFilters] = useState({ kind: '', person_type: '', person: '', search: '', from: '', to: '' });
   const [replyTarget, setReplyTarget] = useState(null);
+  const [personLinks, setPersonLinks] = useState({});
+
+  // Resolve diary people to their live participant / staff records.
+  useEffect(() => {
+    (async () => {
+      const [par, staff] = await Promise.allSettled([
+        base44.entities.ParticipantProfile.filter({}, { fields: ['full_name'], limit: 500 }),
+        base44.entities.StaffProfile.filter({}, { fields: ['full_name'], limit: 500 }),
+      ]);
+      const links = {};
+      if (par.status === 'fulfilled') {
+        for (const p of par.value.items || []) {
+          if (p.full_name) links[String(p.full_name).toLowerCase()] = `/participants/${p.id}`;
+        }
+      }
+      if (staff.status === 'fulfilled') {
+        for (const p of staff.value.items || []) {
+          if (p.full_name) links[String(p.full_name).toLowerCase()] = `/staff/${p.id}`;
+        }
+      }
+      setPersonLinks(links);
+    })();
+  }, []);
 
   const load = async () => {
     setLoading(true);
@@ -27,6 +51,9 @@ export default function CommunicationDiary() {
 
   useEffect(() => { load(); }, []);
 
+  const people = useMemo(() => [...new Set(items.map((i) => i.person_name).filter(Boolean))].sort(), [items]);
+  const personLink = (name) => personLinks[String(name || '').toLowerCase()];
+
   const roots = useMemo(() => items.filter((i) => !i.parent_id), [items]);
   const childrenOf = useMemo(() => {
     const map = new Map();
@@ -38,6 +65,7 @@ export default function CommunicationDiary() {
 
   const filtered = roots.filter((n) => (!filters.kind || n.entry_kind === filters.kind)
     && (!filters.person_type || (n.person_type || 'General') === filters.person_type)
+    && (!filters.person || n.person_name === filters.person)
     && (!filters.from || (n.entry_date || '') >= filters.from)
     && (!filters.to || (n.entry_date || '') <= filters.to)
     && (!filters.search || [n.subject, n.body, n.person_name, n.sender_name].join(' ').toLowerCase().includes(filters.search.toLowerCase())));
@@ -54,7 +82,11 @@ export default function CommunicationDiary() {
           <div className="flex flex-wrap items-center gap-1.5">
             <Badge variant={kindTone(entry.entry_kind)}>{entry.entry_kind}</Badge>
             {entry.note_type && entry.note_type !== entry.entry_kind && <Badge variant="outline">{entry.note_type}</Badge>}
-            {entry.person_name && <Badge variant="outline">{entry.person_name}</Badge>}
+            {entry.person_name && (personLink(entry.person_name) ? (
+              <Link to={personLink(entry.person_name)} className="hover:opacity-75">
+                <Badge variant="outline" className="bg-accent/40">{entry.person_name} ↗</Badge>
+              </Link>
+            ) : <Badge variant="outline">{entry.person_name}</Badge>)}
             {entry.shift_type && <Badge variant="outline">{entry.shift_type}</Badge>}
             {entry.goal && <Badge className="bg-safe text-safe-foreground">{entry.goal}</Badge>}
             {entry.log_type && <Badge variant="outline">{entry.log_type}</Badge>}
@@ -101,6 +133,10 @@ export default function CommunicationDiary() {
           <option value="Participant">Participants</option>
           <option value="Employee">Employees</option>
           <option value="General">General</option>
+        </select>
+        <select value={filters.person} onChange={(e) => setFilters({ ...filters, person: e.target.value })} className="h-9 max-w-44 rounded-md border border-input bg-background px-3 text-sm">
+          <option value="">All people</option>
+          {people.map((p) => <option key={p} value={p}>{p}</option>)}
         </select>
         <Input type="date" value={filters.from} onChange={(e) => setFilters({ ...filters, from: e.target.value })} className="w-auto" />
         <Input type="date" value={filters.to} onChange={(e) => setFilters({ ...filters, to: e.target.value })} className="w-auto" />
