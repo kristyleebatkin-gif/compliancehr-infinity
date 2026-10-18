@@ -52,7 +52,40 @@
     "name"
   ],
   "rls": {
-    "read": {},
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    },
     "create": {
       "$or": [
         {
