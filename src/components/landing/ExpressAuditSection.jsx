@@ -57,7 +57,7 @@ export default function ExpressAuditSection() {
       </div>
       <div className="pointer-events-none absolute -bottom-10 right-8 select-none font-editorial text-[15rem] font-bold leading-none text-white/[0.03]">2:00</div>
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-8">
+      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:py-20 md:px-8">
         <div className="relative mx-auto max-w-2xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-200">
             <Timer className="h-3.5 w-3.5" />

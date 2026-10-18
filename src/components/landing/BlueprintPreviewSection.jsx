@@ -60,7 +60,7 @@ export default function BlueprintPreviewSection() {
   const moduleCount = APP_MODULE_GROUPS.reduce((total, group) => total + group.modules.length, 0);
 
   return (
-    <section id="blueprint" className="relative mx-auto my-10 max-w-7xl overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-cyan-50/70 via-white to-violet-50/70 px-4 py-20 shadow-xl shadow-cyan-500/5 dark:border-white/10 dark:from-cyan-950/25 dark:via-background dark:to-violet-950/25 md:px-8">
+    <section id="blueprint" className="relative mx-auto my-10 max-w-7xl overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-cyan-50/70 via-white to-violet-50/70 px-4 py-14 sm:py-20 shadow-xl shadow-cyan-500/5 dark:border-white/10 dark:from-cyan-950/25 dark:via-background dark:to-violet-950/25 md:px-8">
       <div className="absolute -left-20 bottom-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
 
@@ -79,7 +79,7 @@ export default function BlueprintPreviewSection() {
           <span className="h-3 w-3 rounded-full bg-rose-400" />
           <span className="h-3 w-3 rounded-full bg-amber-400" />
           <span className="h-3 w-3 rounded-full bg-emerald-400" />
-          <div className="ml-3 flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-[11px] text-slate-400">compliancehrinfinity.com/dashboard</div>
+          <div className="ml-3 min-w-0 flex-1 truncate rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-[11px] text-slate-400">compliancehrinfinity.com/dashboard</div>
           <span className="hidden rounded-full bg-emerald-500/15 px-3 py-1 text-[10px] font-bold text-emerald-300 sm:inline">LIVE WORKSPACE</span>
         </div>
 

@@ -33,7 +33,7 @@ export default function BenefitsSection() {
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-fuchsia-200/30 blur-3xl dark:bg-fuchsia-500/10" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-cyan-200/30 blur-3xl dark:bg-cyan-500/10" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-8">
+      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:py-20 md:px-8">
         <div className="relative mx-auto max-w-2xl text-center">
           <div className="inline-flex rounded-full border border-violet-200 bg-violet-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-300">Built for better services</div>
           <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
