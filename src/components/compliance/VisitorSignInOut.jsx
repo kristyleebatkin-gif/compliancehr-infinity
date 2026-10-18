@@ -11,6 +11,8 @@ import { downloadCsv } from '@/lib/csvExport';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { format } from 'date-fns';
 import { Plus, LogOut, Download, Pencil, Trash2, Loader2, UserCheck } from 'lucide-react';
+import { useRole } from '@/lib/useRole';
+import { ROLES } from '@/lib/roles';
 
 const BLANK = { visitor_name: '', organisation: '', host: '', purpose: '', date: '', time_in: '', time_out: '' };
 
@@ -18,6 +20,9 @@ const nowTime = () => format(new Date(), 'HH:mm');
 
 export default function VisitorSignInOut() {
   const { toast } = useToast();
+  const { role } = useRole();
+  const canEdit = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER, ROLES.SUPPORT, ROLES.VOLUNTEER].includes(role);
+  const canDelete = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER].includes(role);
   const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -162,11 +167,11 @@ export default function VisitorSignInOut() {
                         <td className="py-2 pr-3 text-muted-foreground">{visitor.time_out || (isOnSite ? <Badge className="bg-safe/10 text-safe">On site</Badge> : '-')}</td>
                         <td className="py-2">
                           <div className="flex gap-1">
-                            {isOnSite && (
+                            {isOnSite && canEdit && (
                               <Button variant="outline" size="sm" onClick={() => signOut(visitor)}><LogOut className="h-3.5 w-3.5" /> Sign out</Button>
                             )}
-                            <Button variant="ghost" size="sm" onClick={() => openEdit(visitor)}><Pencil className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="sm" className="text-destructive" onClick={() => remove(visitor)}><Trash2 className="h-3.5 w-3.5" /></Button>
+                            {canEdit && <Button variant="ghost" size="sm" onClick={() => openEdit(visitor)}><Pencil className="h-3.5 w-3.5" /></Button>}
+                            {canDelete && <Button variant="ghost" size="sm" className="text-destructive" onClick={() => remove(visitor)}><Trash2 className="h-3.5 w-3.5" /></Button>}
                           </div>
                         </td>
                       </tr>

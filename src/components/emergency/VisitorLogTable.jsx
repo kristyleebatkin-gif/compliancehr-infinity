@@ -11,9 +11,14 @@ import { downloadChecklistPdf } from '@/lib/checklistsPdf';
 import { EMERGENCY_TEMPLATES } from '@/lib/emergencyTemplates';
 import { downloadCsv } from '@/lib/csvExport';
 import { format } from 'date-fns';
+import { useRole } from '@/lib/useRole';
+import { ROLES } from '@/lib/roles';
 
 export default function VisitorLogTable() {
   const { toast } = useToast();
+  const { role } = useRole();
+  const canEdit = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER, ROLES.SUPPORT, ROLES.VOLUNTEER].includes(role);
+  const canDelete = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER].includes(role);
   const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -136,8 +141,8 @@ export default function VisitorLogTable() {
                   <td className="px-3 py-2 text-muted-foreground">{v.purpose}</td>
                   <td className="px-3 py-2">
                     <div className="flex items-center justify-end gap-1">
-                      {!v.time_out && <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => signOut(v)}><LogOut className="mr-1 h-3 w-3" />Sign out</Button>}
-                      <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.VisitorLog.delete(v.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+                      {!v.time_out && canEdit && <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => signOut(v)}><LogOut className="mr-1 h-3 w-3" />Sign out</Button>}
+                      {canDelete && <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.VisitorLog.delete(v.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>}
                     </div>
                   </td>
                 </tr>
