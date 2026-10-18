@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Mail, Paperclip, X } from 'lucide-react';
+import { Loader2, Mail, Paperclip, X, BookMarked } from 'lucide-react';
 import { loadCommContacts, loadManagementEmails } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
+import MessageTemplatePicker from './MessageTemplatePicker';
 
 export default function ProfessionalEmail() {
   const { toast } = useToast();
@@ -21,6 +22,12 @@ export default function ProfessionalEmail() {
   const [form, setForm] = useState({
     date: new Date().toISOString().slice(0, 10), subject: '', attention: '', greeting: 'Greetings,', body: '',
   });
+  const [pickerOpen, setPickerOpen] = useState(false);
+
+  const applyTemplate = ({ subject, body }) => {
+    setForm((f) => ({ ...f, subject, body }));
+    toast({ title: 'Template added', description: 'Review the subject and message before sending.' });
+  };
 
   useEffect(() => {
     (async () => {
@@ -100,7 +107,10 @@ export default function ProfessionalEmail() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><Mail className="h-4 w-4 text-brand" />Send a professional email</div>
+      <div className="mb-1 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-sm font-semibold"><Mail className="h-4 w-4 text-brand" />Send a professional email</div>
+        <Button variant="outline" size="sm" onClick={() => setPickerOpen(true)}><BookMarked className="h-3.5 w-3.5" />Use template</Button>
+      </div>
       <p className="mb-4 text-xs text-muted-foreground">Every email is wrapped in the company letterhead: business name and logo header, date, subject, attention line and greeting, then a footer with the administrative team, ABN, contact details, business goal, mission, vision, values, key personnel and a confidentiality disclaimer. Attachments are stored publicly so the mail service can deliver them.</p>
       <div className="grid gap-3 md:grid-cols-2">
         <div className="grid gap-1.5 md:col-span-2">
@@ -137,6 +147,7 @@ export default function ProfessionalEmail() {
       <div className="mt-4 flex justify-end">
         <Button onClick={send} disabled={sending}>{sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}Send email</Button>
       </div>
+      <MessageTemplatePicker open={pickerOpen} onOpenChange={setPickerOpen} onSelect={applyTemplate} />
     </div>
   );
 }

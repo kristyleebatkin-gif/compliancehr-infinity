@@ -6,10 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Loader2, Megaphone } from 'lucide-react';
+import { Loader2, Megaphone, BookMarked } from 'lucide-react';
 import { loadCommContacts, loadManagementEmails } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
+import MessageTemplatePicker from './MessageTemplatePicker';
 
 const GROUPS = ['All Staff', 'Management', 'All Participants', 'All Employees', 'Custom'];
 
@@ -22,6 +23,12 @@ export default function BulkMessage() {
   const [form, setForm] = useState({ subject: '', message: '', date: new Date().toISOString().slice(0, 10), time: '' });
   const [emailCopies, setEmailCopies] = useState(false);
   const [sending, setSending] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+
+  const applyTemplate = ({ subject, message }) => {
+    setForm((f) => ({ ...f, subject, message }));
+    toast({ title: 'Template added', description: 'Review the subject and message before sending.' });
+  };
 
   useEffect(() => {
     (async () => {
@@ -84,7 +91,10 @@ export default function BulkMessage() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><Megaphone className="h-4 w-4 text-brand" />Bulk messages</div>
+      <div className="mb-1 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-sm font-semibold"><Megaphone className="h-4 w-4 text-brand" />Bulk messages</div>
+        <Button variant="outline" size="sm" onClick={() => setPickerOpen(true)}><BookMarked className="h-3.5 w-3.5" />Use template</Button>
+      </div>
       <p className="mb-4 text-xs text-muted-foreground">Send one message to a whole group or a hand-picked list. It lands in the communication diary and each recipient&apos;s profile inbox, with optional professional email copies.</p>
       <div className="grid gap-3">
         <div className="flex flex-wrap gap-2">
@@ -114,6 +124,7 @@ export default function BulkMessage() {
           <Button onClick={send} disabled={sending}>{sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Megaphone className="h-4 w-4" />}Send bulk message</Button>
         </div>
       </div>
+      <MessageTemplatePicker open={pickerOpen} onOpenChange={setPickerOpen} onSelect={({ subject, body }) => applyTemplate({ subject, message: body })} />
     </div>
   );
 }

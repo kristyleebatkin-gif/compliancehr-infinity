@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
@@ -14,6 +14,7 @@ import ShiftNotes from '@/components/communications/ShiftNotes';
 import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
 import VideoCalls from '@/components/communications/VideoCalls';
 import AiCompose from '@/components/communications/AiCompose';
+import TemplateLibrary from '@/components/communications/TemplateLibrary';
 
 export default function Communications() {
   return (
@@ -31,6 +32,7 @@ export default function Communications() {
           <TabsTrigger value="alerts"><Siren className="mr-1 inline h-3.5 w-3.5" />Alerts</TabsTrigger>
           <TabsTrigger value="diary"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Diary</TabsTrigger>
           <TabsTrigger value="inbox"><InboxIcon className="mr-1 inline h-3.5 w-3.5" />Inbox</TabsTrigger>
+          <TabsTrigger value="templates"><BookMarked className="mr-1 inline h-3.5 w-3.5" />Templates</TabsTrigger>
           <TabsTrigger value="email"><Mail className="mr-1 inline h-3.5 w-3.5" />Send Email</TabsTrigger>
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
           <TabsTrigger value="banter"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Team Banter</TabsTrigger>
@@ -43,6 +45,7 @@ export default function Communications() {
         <TabsContent value="alerts"><AlertsCentre /></TabsContent>
         <TabsContent value="diary"><CommunicationDiary /></TabsContent>
         <TabsContent value="inbox"><Inbox /></TabsContent>
+        <TabsContent value="templates"><TemplateLibrary /></TabsContent>
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="banter"><TeamBanter /></TabsContent>
