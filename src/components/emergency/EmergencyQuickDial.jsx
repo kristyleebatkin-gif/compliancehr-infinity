@@ -11,7 +11,7 @@ const QUICK_DIALS = [
 
 export default function EmergencyQuickDial() {
   return (
-    <Card className="border-danger/30 bg-gradient-to-r from-rose-50 to-red-50">
+    <Card className="border-danger/30 bg-gradient-to-r from-rose-50 to-red-50 dark:from-rose-500/10 dark:to-red-500/10">
       <CardContent className="p-4">
         <p className="mb-3 flex items-center gap-2 text-sm font-bold text-danger"><PhoneCall className="h-4 w-4" />Emergency quick dial - call first, then record</p>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

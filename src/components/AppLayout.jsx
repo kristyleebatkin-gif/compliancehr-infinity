@@ -275,9 +275,9 @@ export default function AppLayout() {
                           <div className="flex items-start gap-2.5">
                             {n.branding_logo_url ? <img src={n.branding_logo_url} alt="" className="h-9 w-9 rounded-lg bg-white object-contain p-1" /> : <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-pink-600"><PartyPopper className="h-4 w-4" /></div>}
                             <div className="min-w-0">
-                              <div className="font-semibold text-pink-900">{n.branding_company_name || 'Birthday Shout-out'}</div>
-                              <div className="mt-0.5 text-xs leading-5 text-pink-800">{n.message}</div>
-                              {n.branding_slogan && <div className="mt-1 text-[10px] font-medium text-pink-700/70">{n.branding_slogan}</div>}
+                              <div className="font-semibold text-pink-900 dark:text-pink-300">{n.branding_company_name || 'Birthday Shout-out'}</div>
+                              <div className="mt-0.5 text-xs leading-5 text-pink-800 dark:text-pink-300/80">{n.message}</div>
+                              {n.branding_slogan && <div className="mt-1 text-[10px] font-medium text-pink-700/70 dark:text-pink-300/60">{n.branding_slogan}</div>}
                             </div>
                           </div>
                         </div>

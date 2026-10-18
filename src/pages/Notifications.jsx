@@ -180,12 +180,12 @@ export default function Notifications() {
                   )}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-pink-900">{n.branding_company_name || 'Birthday Shout-out'}</span>
+                      <span className="font-semibold text-pink-900 dark:text-pink-300">{n.branding_company_name || 'Birthday Shout-out'}</span>
                       {!n.read && <span className="h-2 w-2 rounded-full bg-pink-500" />}
                     </div>
-                    <div className="mt-1 text-sm leading-6 text-pink-800">{n.message}</div>
-                    {n.branding_slogan && <div className="mt-1 text-xs font-medium text-pink-700/70">{n.branding_slogan}</div>}
-                    <div className="mt-2 text-[11px] font-medium text-pink-600/60">{moment(n.created_date).format('D MMM YYYY, h:mm a')}</div>
+                    <div className="mt-1 text-sm leading-6 text-pink-800 dark:text-pink-300/80">{n.message}</div>
+                    {n.branding_slogan && <div className="mt-1 text-xs font-medium text-pink-700/70 dark:text-pink-300/60">{n.branding_slogan}</div>}
+                    <div className="mt-2 text-[11px] font-medium text-pink-600/60 dark:text-pink-300/50">{moment(n.created_date).format('D MMM YYYY, h:mm a')}</div>
                   </div>
                 </div>
               </div>
