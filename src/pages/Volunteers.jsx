@@ -11,6 +11,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import VolunteerApplications from '@/components/volunteers/VolunteerApplications';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 
@@ -85,6 +86,8 @@ export default function Volunteers() {
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
         <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
       </div>
+
+      <VolunteerApplications />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

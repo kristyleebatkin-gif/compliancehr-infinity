@@ -68,6 +68,8 @@ import ProjectsHub from '@/pages/ProjectsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import Landing from '@/pages/Landing';
+import PublicComplaint from '@/pages/PublicComplaint';
+import PublicVolunteer from '@/pages/PublicVolunteer';
 import RoleGate from '@/components/RoleGate';
 
 const AuthenticatedApp = () => {
@@ -97,6 +99,8 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/report-complaint" element={<PublicComplaint />} />
+      <Route path="/volunteer-apply" element={<PublicVolunteer />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

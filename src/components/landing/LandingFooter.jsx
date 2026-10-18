@@ -6,7 +6,15 @@ export default function LandingFooter() {
     { title: 'Platform', links: ['Staff Tracking', 'Participant Records', 'Incidents', 'Risk Management', 'Training', 'Audit Centre'] },
     { title: 'Company', links: ['About', 'Contact', 'Privacy Policy', 'Terms of Service'] },
     { title: 'Resources', links: ['Help Centre', 'NDIS Compliance Guide', 'Documentation', 'Security'] },
+    { title: 'Get Involved', links: ['Volunteer With Us', 'Raise a Complaint'] },
   ];
+
+  const linkHref = (col, link) => {
+    if (col.title === 'Get Involved') {
+      return link === 'Volunteer With Us' ? '/volunteer-apply' : '/report-complaint';
+    }
+    return '#features';
+  };
 
   return (
     <footer className="relative overflow-hidden border-t border-slate-900 bg-slate-950 text-white">
@@ -29,7 +37,7 @@ export default function LandingFooter() {
               <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/40">{c.title}</h4>
               <ul className="mt-4 space-y-2.5">
                 {c.links.map((l) => (
-                  <li key={l}><a href="#features" className="text-sm text-white/55 transition-colors hover:text-white">{l}</a></li>
+                  <li key={l}><Link to={linkHref(c, l)} className="text-sm text-white/55 transition-colors hover:text-white">{l}</Link></li>
                 ))}
               </ul>
             </div>
