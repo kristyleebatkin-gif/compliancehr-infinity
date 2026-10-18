@@ -6,6 +6,7 @@ import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Fiel
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
 import TaskProgressChart from '@/components/tasks/TaskProgressChart';
+import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TodoBoard from '@/components/communications/TodoBoard';
@@ -145,6 +146,8 @@ export default function Tasks() {
       <TaskDashboard tasks={list} onOpen={openEdit} />
 
       <TaskProgressChart tasks={list} users={users} />
+
+      <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
 
       <div className="flex gap-1 overflow-x-auto">
         {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
