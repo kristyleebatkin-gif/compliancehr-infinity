@@ -8,7 +8,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ClipboardList, Plus, Trash2 } from 'lucide-react';
+import { ClipboardList, Plus, Trash2, TrendingUp } from 'lucide-react';
 import { format } from 'date-fns';
 
 const STATUSES = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
@@ -21,6 +21,8 @@ export default function MeetingTasks({ meeting }) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ title: '', assigned_to: '', due_date: '', priority: 'Medium', notes: '' });
+  const [improving, setImproving] = useState(null);
+  const [sentIds, setSentIds] = useState([]);
 
   const load = useCallback(async () => {
     if (!meeting?.id) return;
@@ -31,6 +33,15 @@ export default function MeetingTasks({ meeting }) {
         { sort: '-created_date', limit: 50 },
       );
       setTasks(page.items);
+      if (page.items.length) {
+        const linked = await base44.entities.ImprovementAction.filter(
+          { linked_entity_type: 'Task', linked_entity_id: { $in: page.items.map((t) => t.id) } },
+          { limit: 100, fields: ['linked_entity_id'] },
+        );
+        setSentIds(linked.items.map((l) => l.linked_entity_id));
+      } else {
+        setSentIds([]);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -55,6 +66,7 @@ export default function MeetingTasks({ meeting }) {
         status: 'Open',
         linked_entity_type: 'Meeting',
         linked_entity_id: meeting.id,
+        linked_meeting_title: meeting.title || meeting.meeting_title || '',
       });
       setForm({ title: '', assigned_to: '', due_date: '', priority: 'Medium', notes: '' });
       setOpen(false);
@@ -70,6 +82,34 @@ export default function MeetingTasks({ meeting }) {
   const setStatus = async (task, status) => {
     await base44.entities.Task.update(task.id, { status });
     await load();
+  };
+
+  // Push a follow-up task into the continuous improvement register so meeting
+  // outcomes are tracked to closure there as well.
+  const sendToImprovement = async (task) => {
+    setImproving(task.id);
+    try {
+      await base44.entities.ImprovementAction.create({
+        title: task.title,
+        description: `Meeting follow-up action from "${task.linked_meeting_title || 'Meeting'}". ${task.notes || ''}`.trim(),
+        date_identified: new Date().toISOString().slice(0, 10),
+        area_department: 'Meetings & Governance',
+        source: 'Other',
+        priority: task.priority || 'Medium',
+        improvement_action_required: task.title,
+        owner: task.assigned_to || '',
+        target_date: task.due_date || '',
+        status: 'Identified',
+        linked_entity_type: 'Task',
+        linked_entity_id: task.id,
+      });
+      toast({ title: 'Sent to improvement register', description: 'This action is now tracked in the Quality & Improvement module.' });
+      await load();
+    } catch (error) {
+      toast({ title: 'Could not send to improvement register', description: error.message, variant: 'destructive' });
+    } finally {
+      setImproving(null);
+    }
   };
 
   return (
@@ -102,6 +142,13 @@ export default function MeetingTasks({ meeting }) {
                   <SelectTrigger className="h-8 w-[120px] text-xs"><SelectValue /></SelectTrigger>
                   <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
                 </Select>
+                {sentIds.includes(task.id)
+                  ? <Badge variant="outline" className="text-[10px]"><TrendingUp className="mr-1 h-3 w-3" />In improvement register</Badge>
+                  : (
+                    <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => sendToImprovement(task)} disabled={improving === task.id}>
+                      <TrendingUp className="mr-1 h-3 w-3" />{improving === task.id ? 'Sending...' : 'Send to improvement'}
+                    </Button>
+                  )}
                 <Badge className={statusTone(task.status)}>{task.status}</Badge>
                 <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Task.delete(task.id); await load(); }}>
                   <Trash2 className="h-3.5 w-3.5 text-destructive" />
