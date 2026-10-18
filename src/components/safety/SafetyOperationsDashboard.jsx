@@ -147,9 +147,9 @@ export default function SafetyOperationsDashboard() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="bg-red-100 text-red-600" />
-          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="bg-violet-100 text-violet-600" />
-          <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="bg-teal-100 text-teal-600" />
+          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300" />
+          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300" />
+          <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="bg-teal-100 text-teal-600 dark:bg-teal-500/15 dark:text-teal-300" />
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">

@@ -14,9 +14,9 @@ const categoryTone = (c) => {
     case 'Crisis & Mental Health': return 'bg-danger/10 text-danger';
     case 'Disability & NDIS': return 'bg-brand/10 text-brand';
     case 'Health & Medical': return 'bg-teal/10 text-teal';
-    case 'Family & Safety': return 'bg-pink-100 text-pink-700';
+    case 'Family & Safety': return 'bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-300';
     case 'Government & Legal': return 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
-    case 'Housing & Relief': return 'bg-amber-100 text-amber-700';
+    case 'Housing & Relief': return 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300';
     default: return 'bg-muted text-muted-foreground';
   }
 };

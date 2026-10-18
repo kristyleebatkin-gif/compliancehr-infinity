@@ -15,9 +15,9 @@ export default function HealthMedicationResponse() {
   return (
     <div className="space-y-4">
       {/* Emergency banner */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-red-300 bg-red-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-2xl border border-red-300 bg-red-50 p-5 dark:border-red-500/30 dark:bg-red-500/10 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-100"><AlertTriangle className="h-5 w-5 text-red-600" /></div>
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-100 dark:bg-red-500/20"><AlertTriangle className="h-5 w-5 text-red-600" /></div>
           <div>
             <p className="text-base font-bold text-red-700">Urgent or serious concerns - call 000 immediately</p>
             <p className="mt-0.5 text-sm text-red-700/80">Get the patient&apos;s medication list and medical details ready for the ambulance: medications and dosage, allergies, medical conditions and diagnosis, GP, NDIS number, and emergency contact.</p>

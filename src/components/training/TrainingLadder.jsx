@@ -4,11 +4,11 @@ import { downloadCsv } from '@/lib/csvExport';
 import { Trophy, Award, Download, Medal, Sparkles } from 'lucide-react';
 
 const LEVELS = [
-  { min: 15, name: 'Platinum', tone: 'bg-cyan-100 text-cyan-800 border-cyan-200' },
-  { min: 10, name: 'Gold', tone: 'bg-amber-100 text-amber-800 border-amber-200' },
+  { min: 15, name: 'Platinum', tone: 'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-500/15 dark:text-cyan-300 dark:border-cyan-500/30' },
+  { min: 10, name: 'Gold', tone: 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30' },
   { min: 6, name: 'Silver', tone: 'bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600' },
-  { min: 3, name: 'Bronze', tone: 'bg-orange-100 text-orange-800 border-orange-200' },
-  { min: 1, name: 'New Starter', tone: 'bg-violet-100 text-violet-800 border-violet-200' },
+  { min: 3, name: 'Bronze', tone: 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-500/15 dark:text-orange-300 dark:border-orange-500/30' },
+  { min: 1, name: 'New Starter', tone: 'bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-500/30' },
 ];
 
 const levelFor = (count) => LEVELS.find((l) => count >= l.min) || { name: 'Not started', tone: 'bg-muted text-muted-foreground border-border' };
@@ -70,7 +70,7 @@ export default function TrainingLadder({ completions = [], meName = '' }) {
         ) : (
           <div className="space-y-2">
             {board.map((e, i) => (
-              <div key={e.name} className={`flex items-center gap-3 rounded-lg border p-3 ${i === 0 ? 'border-amber-300 bg-amber-50/60' : 'border-border/60 bg-background'}`}>
+              <div key={e.name} className={`flex items-center gap-3 rounded-lg border p-3 ${i === 0 ? 'border-amber-300 bg-amber-50/60 dark:border-amber-500/30 dark:bg-amber-500/10' : 'border-border/60 bg-background'}`}>
                 <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-xs font-bold text-white ${i < 3 ? medalTone[i] : 'from-muted to-muted text-foreground/60'}`}>
                   {i < 3 ? <Medal className="h-4 w-4" /> : i + 1}
                 </div>

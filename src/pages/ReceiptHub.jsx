@@ -165,7 +165,7 @@ export default function ReceiptHub() {
                   <div className="flex flex-wrap items-center gap-2">
                     {r.amount != null && <p className="font-semibold">{money(r.amount)}</p>}
                     <Badge variant={r.status === 'Reconciled' ? 'default' : 'secondary'}>{r.status}</Badge>
-                    {r.reimburse_to && <Badge className={r.reimbursed ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}>{r.reimbursed ? 'Reimbursed' : 'Reimbursement pending'}</Badge>}
+                    {r.reimburse_to && <Badge className={r.reimbursed ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300'}>{r.reimbursed ? 'Reimbursed' : 'Reimbursement pending'}</Badge>}
                     {r.file_uri && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => openReceiptFile(r)}>Open receipt</Button>}
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleReconcile(r)} title="Toggle reconciled"><CheckCircle2 className="h-4 w-4" /></Button>
                     {r.reimburse_to && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toggleReimbursed(r)}>{r.reimbursed ? 'Undo reimbursement' : 'Mark reimbursed'}</Button>}

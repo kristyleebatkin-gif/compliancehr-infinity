@@ -169,7 +169,7 @@ export default function Notifications() {
         {items.map((n) => {
           if (n.type === 'Birthday Shout-out') {
             return (
-              <div key={n.id} className={`rounded-2xl border border-pink-200 p-4 shadow-sm transition-opacity ${n.read ? 'bg-pink-50/40' : 'bg-pink-50'}`}>
+              <div key={n.id} className={`rounded-2xl border border-pink-200 p-4 shadow-sm transition-opacity dark:border-pink-500/30 ${n.read ? 'bg-pink-50/40 dark:bg-pink-500/5' : 'bg-pink-50 dark:bg-pink-500/10'}`}>
                 <div className="flex items-start gap-3">
                   {n.branding_logo_url ? (
                     <img src={n.branding_logo_url} alt="" className="h-10 w-10 rounded-xl bg-white object-contain p-1 shadow-sm" />

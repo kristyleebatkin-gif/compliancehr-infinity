@@ -21,9 +21,9 @@ const hazardTone = (h = '') => {
   const s = h.toLowerCase();
   if (s.includes('toxic')) return 'bg-danger/10 text-danger';
   if (s.includes('corrosive') || s.includes('caustic')) return 'bg-warning/10 text-warning';
-  if (s.includes('flammable')) return 'bg-amber-100 text-amber-700';
-  if (s.includes('sensitis')) return 'bg-orange-100 text-orange-700';
-  if (s.includes('oxidis')) return 'bg-purple-100 text-purple-700';
+  if (s.includes('flammable')) return 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300';
+  if (s.includes('sensitis')) return 'bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300';
+  if (s.includes('oxidis')) return 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300';
   if (s.includes('asphyxiant')) return 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
   if (!s) return 'bg-muted text-muted-foreground';
   return 'bg-success/10 text-success';
