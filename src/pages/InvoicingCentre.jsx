@@ -7,6 +7,7 @@ import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton'
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -17,6 +18,7 @@ import { useToast } from '@/components/ui/use-toast';
 import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import AgedReceivables from '@/components/invoicing/AgedReceivables';
+import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, FileUp, Loader2 } from 'lucide-react';
@@ -165,54 +167,67 @@ export default function InvoicingCentre() {
         <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
       )}
 
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        {[
-          { label: 'Invoices', value: summary.total },
-          { label: 'Sent', value: summary.sent },
-          { label: 'Paid', value: summary.paid },
-          { label: 'Overdue', value: summary.overdue },
-        ].map((s) => (
-          <Card key={s.label}><CardContent className="p-4"><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></CardContent></Card>
-        ))}
-      </div>
+      <Tabs defaultValue="invoices">
+        <TabsList>
+          <TabsTrigger value="invoices">Invoices</TabsTrigger>
+          <TabsTrigger value="finance">Finance Summary</TabsTrigger>
+        </TabsList>
 
-      <AgedReceivables invoices={invoices} onChanged={load} />
+        <TabsContent value="invoices" className="space-y-6">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {[
+              { label: 'Invoices', value: summary.total },
+              { label: 'Sent', value: summary.sent },
+              { label: 'Paid', value: summary.paid },
+              { label: 'Overdue', value: summary.overdue },
+            ].map((s) => (
+              <Card key={s.label}><CardContent className="p-4"><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></CardContent></Card>
+            ))}
+          </div>
 
-      {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
-      ) : invoices.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No invoices yet. Click Generate invoice to create your first NDIS invoice.</CardContent></Card>
-      ) : (
-        <div className="space-y-3">
-          {invoices.map((inv) => (
-            <Card key={inv.id}>
-              <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
-                <div className="min-w-0">
-                  <p className="font-medium">{inv.invoice_number}{inv.client_name ? ` · ${inv.client_name}` : ''}{inv.participant_name ? ` (${inv.participant_name})` : ''}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {inv.issue_date ? `Issued ${format(new Date(inv.issue_date), 'd MMM yyyy')}` : ''}
-                    {inv.due_date ? ` · Due ${format(new Date(inv.due_date), 'd MMM yyyy')}` : ''}
-                    {` · ${(JSON.parse(inv.line_items || '[]').length)} support line${(JSON.parse(inv.line_items || '[]').length) === 1 ? '' : 's'}`}
-                  </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <p className="font-semibold">${(inv.amount || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}</p>
-                  <Badge className={statusTone(inv.status)}>{inv.status}</Badge>
-                  <Select value={inv.status} onValueChange={(v) => setStatus(inv, v)}>
-                    <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
-                    <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                  <Button variant="ghost" size="icon" title="Preview" onClick={() => setPreview(inv)}><FileSpreadsheet className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" title="Download PDF" onClick={() => downloadInvoicePdf(inv, business)}><FileDown className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" title="Print" onClick={() => printInvoicePdf(inv, business)}><Printer className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" title="Send by email" onClick={() => openSend(inv)}><Send className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" title="Delete" onClick={async () => { await base44.entities.Invoice.delete(inv.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+          <AgedReceivables invoices={invoices} onChanged={load} />
+
+          {loading ? (
+            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+          ) : invoices.length === 0 ? (
+            <Card><CardContent className="p-10 text-center text-muted-foreground">No invoices yet. Click Generate invoice to create your first NDIS invoice.</CardContent></Card>
+          ) : (
+            <div className="space-y-3">
+              {invoices.map((inv) => (
+                <Card key={inv.id}>
+                  <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
+                    <div className="min-w-0">
+                      <p className="font-medium">{inv.invoice_number}{inv.client_name ? ` · ${inv.client_name}` : ''}{inv.participant_name ? ` (${inv.participant_name})` : ''}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {inv.issue_date ? `Issued ${format(new Date(inv.issue_date), 'd MMM yyyy')}` : ''}
+                        {inv.due_date ? ` · Due ${format(new Date(inv.due_date), 'd MMM yyyy')}` : ''}
+                        {` · ${(JSON.parse(inv.line_items || '[]').length)} support line${(JSON.parse(inv.line_items || '[]').length) === 1 ? '' : 's'}`}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="font-semibold">${(inv.amount || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}</p>
+                      <Badge className={statusTone(inv.status)}>{inv.status}</Badge>
+                      <Select value={inv.status} onValueChange={(v) => setStatus(inv, v)}>
+                        <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                      </Select>
+                      <Button variant="ghost" size="icon" title="Preview" onClick={() => setPreview(inv)}><FileSpreadsheet className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" title="Download PDF" onClick={() => downloadInvoicePdf(inv, business)}><FileDown className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" title="Print" onClick={() => printInvoicePdf(inv, business)}><Printer className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" title="Send by email" onClick={() => openSend(inv)}><Send className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" title="Delete" onClick={async () => { await base44.entities.Invoice.delete(inv.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="finance">
+          <FinanceSummary />
+        </TabsContent>
+      </Tabs>
 
       <InvoiceBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} onSaved={load} invoiceCount={invoices.length} />
 
