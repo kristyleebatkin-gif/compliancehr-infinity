@@ -1,21 +1,31 @@
 import React, { useId } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import DocumentChoiceInput from '@/components/documents/DocumentChoiceInput';
+import { normaliseFormFields, formQuestionRows, fieldAnswer, answerText, legacyFormFields } from '@/lib/formQuestionModel';
 
-export default function OnlineDocumentFields({ fields = [], answers, onChange, disabled = false, requireAll = false }) {
+const spans = { 4: 'sm:col-span-4', 6: 'sm:col-span-6', 8: 'sm:col-span-8', 12: 'sm:col-span-12' };
+export default function OnlineDocumentFields({ fields = [], answers = {}, onChange, disabled = false, requireAll = false }) {
   const prefix = useId();
-  return <fieldset disabled={disabled} className="grid min-w-0 gap-5 sm:grid-cols-2">
-    {fields.map((field, index) => {
-      const id = `${prefix}-${index}`;
-      const wide = field.multiline || field.fullWidth || field.label.length > 85;
-      return <div key={field.label} className={`${wide ? 'sm:col-span-2' : ''} min-w-0 overflow-hidden rounded-xl border-2 border-primary/70 bg-card shadow-panel`}>
-        <label htmlFor={id} className="block bg-primary px-4 py-3 text-sm font-semibold leading-relaxed text-primary-foreground">
-          {field.label}{(field.required || requireAll) && <span aria-hidden="true"> *</span>}
+  const prepared = normaliseFormFields(fields);
+  const questions = [...prepared, ...legacyFormFields(prepared, answers)];
+  return <fieldset disabled={disabled} className="grid min-w-0 grid-cols-12 items-start gap-4">
+    {formQuestionRows(questions).flat().map(({ field, span }, index) => {
+      const id = `${prefix}-${index}`, value = fieldAnswer(field, answers);
+      const required = !field.optional && Boolean(field.required || requireAll);
+      const change = (next) => { onChange(field.label, next); if (field.legacyLabel) onChange(field.legacyLabel, ''); };
+      return <div key={field.label} className={`col-span-12 ${spans[span]} min-w-0 self-stretch overflow-hidden rounded-lg border border-primary/50 bg-card shadow-panel`}>
+        <label id={`${id}-label`} htmlFor={field.options ? undefined : id} className="block bg-primary px-4 py-3 text-sm font-semibold leading-relaxed text-primary-foreground">
+          {field.question}{required && <span aria-hidden="true"> *</span>}
         </label>
-        <div className="p-3">
-          {field.multiline
-            ? <Textarea id={id} rows={4} maxLength={4000} required={field.required || requireAll} value={answers[field.label] ?? ''} onChange={(e) => onChange(field.label, e.target.value)} className="min-h-28 bg-background leading-relaxed" />
-            : <Input id={id} maxLength={1000} required={field.required || requireAll} value={answers[field.label] ?? ''} onChange={(e) => onChange(field.label, e.target.value)} className="h-11 bg-background" />}
+        <div className="space-y-2 p-4">
+          {field.options ? <DocumentChoiceInput field={field} id={id} value={value} onChange={change} required={required} />
+            : <>
+              {(field.optional || field.help) && <p className="text-xs leading-relaxed text-muted-foreground">{field.help}{field.optional ? ' Optional / if applicable.' : ''}</p>}
+              {field.multiline
+                ? <Textarea id={id} rows={field.lines} maxLength={4000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="document-ruled-answer resize-y rounded-none border-0 border-b border-primary/30 bg-transparent px-1 py-1 leading-7 shadow-none" />
+                : <Input id={id} maxLength={1000} required={required} value={answerText(value)} onChange={(e) => change(e.target.value)} className="h-10 rounded-none border-0 border-b border-primary/30 bg-transparent px-1 shadow-none" />}
+            </>}
         </div>
       </div>;
     })}

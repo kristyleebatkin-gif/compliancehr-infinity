@@ -11,6 +11,7 @@ import { STAFF_FILLABLE_FORMS } from '@/lib/staffFillableForms';
 import { autofillStaffValue, buildStaffAutofilledAnswers } from '@/lib/staffAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
+import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
 
 export default function StaffFillableForms({ staff }) {
   const { toast } = useToast();
@@ -142,21 +143,8 @@ export default function StaffFillableForms({ staff }) {
       {loading ? (
         <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : (
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
-          {definition.fields.map((f) => {
-            const auto = autofillStaffValue(f.label, staff);
-            return (
-              <div key={f.label} className={f.multiline ? 'md:col-span-2 grid gap-1.5' : 'grid gap-1.5'}>
-                <Label className="flex items-center gap-1.5">
-                  {f.label}
-                  {auto && <span className="rounded-full bg-safe/10 px-1.5 py-0.5 text-[9px] font-bold text-safe">Auto-filled</span>}
-                </Label>
-                {f.multiline
-                  ? <Textarea rows={3} value={answers[f.label] || ''} onChange={(e) => setAnswers({ ...answers, [f.label]: e.target.value })} />
-                  : <Input value={answers[f.label] || ''} onChange={(e) => setAnswers({ ...answers, [f.label]: e.target.value })} />}
-              </div>
-            );
-          })}
+        <div className="mt-5">
+          <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />
         </div>
       )}
     </div>

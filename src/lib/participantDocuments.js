@@ -1,5 +1,8 @@
 import { ClipboardList, FileText, Megaphone, DollarSign, Heart, LogOut } from 'lucide-react';
 import { PARTICIPANT_OFFICIAL_FORM_ADDITIONS } from '@/lib/participantOfficialFields';
+import { normaliseFormFields } from '@/lib/formQuestionModel';
+import { PARTICIPANT_SOURCE_FORMS } from '@/lib/participantSourceForms';
+import { NDIS_PARTICIPANT_REVIEW_FIELDS } from '@/lib/ndisFormReview';
 
 /**
  * Compliance HR - Participant Forms & Service Documents Register.
@@ -314,7 +317,10 @@ export const PARTICIPANT_FORM_DEFINITIONS = Object.fromEntries(
       docType,
       {
         ...baseDefinition,
-        fields: [...(baseDefinition.fields || []), ...(official.fields || [])],
+        fields: normaliseFormFields([
+          ...(PARTICIPANT_SOURCE_FORMS[docType] || [...(baseDefinition.fields || []), ...(official.fields || [])]),
+          ...(NDIS_PARTICIPANT_REVIEW_FIELDS[docType] || []),
+        ]),
         columns: official.columns || (appendedColumns.length ? appendedColumns : undefined),
         rows: official.rows || baseDefinition.rows,
       },

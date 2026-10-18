@@ -4,9 +4,10 @@
  * staff profile and download as branded PDFs. Field sets follow current
  * Australian employment, ATO and NDIS screening practice.
  */
+import { normaliseFormFields } from '@/lib/formQuestionModel';
 const field = (label, multiline = false) => ({ label, multiline });
 
-export const STAFF_FILLABLE_FORMS = [
+const BASE_STAFF_FILLABLE_FORMS = [
   {
     key: "Driver's Licence Details", code: 'CM-SF-001',
     fields: [
@@ -148,3 +149,5 @@ export const STAFF_FILLABLE_FORMS = [
     ],
   },
 ];
+
+export const STAFF_FILLABLE_FORMS = BASE_STAFF_FILLABLE_FORMS.map((form) => ({ ...form, fields: normaliseFormFields(form.fields) }));

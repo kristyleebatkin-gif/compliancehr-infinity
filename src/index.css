@@ -186,6 +186,11 @@
     font-family: "Fraunces", Georgia, "Times New Roman", serif;
     font-style: italic;
   }
+  .document-ruled-answer {
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75rem - 1px), hsl(var(--primary) / 0.22) calc(1.75rem - 1px), hsl(var(--primary) / 0.22) 1.75rem);
+    background-origin: content-box;
+    background-attachment: local;
+  }
   .font-elegant {
     font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
   }

@@ -1,4 +1,5 @@
 import { PARTICIPANT_FORM_DEFINITIONS } from '@/lib/participantDocuments';
+import { normaliseFormFields } from '@/lib/formQuestionModel';
 
 /**
  * Participant fillable forms available on the participant profile.
@@ -47,7 +48,7 @@ export const PARTICIPANT_FILLABLE_FORMS = [
   key,
   code: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.code : (PARTICIPANT_FORM_DEFINITIONS[key]?.code || ''),
   label: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.label : (PARTICIPANT_FORM_DEFINITIONS[key]?.label || key),
-  fields: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.fields : (PARTICIPANT_FORM_DEFINITIONS[key]?.fields || []),
+  fields: normaliseFormFields(key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.fields : (PARTICIPANT_FORM_DEFINITIONS[key]?.fields || [])),
   columns: PARTICIPANT_FORM_DEFINITIONS[key]?.columns,
   rows: PARTICIPANT_FORM_DEFINITIONS[key]?.rows,
 }));

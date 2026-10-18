@@ -13,11 +13,11 @@ export const HEADER_CLEARANCE = 56;
 /** Standard guidance, privacy and declaration wording carried on every form. */
 export const FORM_NOTICES = {
   guidance:
-    'How to complete: fill in every section in full. Print clearly, or complete and sign online in the app. Attach certified supporting documents where requested and return the signed form to the Compliance Office for filing in the Document Vault.',
+    'How to complete: answer each relevant question, tick the stated options and write clearly on the ruled lines. Complete online if preferred. Use Not applicable where appropriate. Cultural identity and other optional personal questions may be left unanswered. Provide supporting documents only when relevant to the supports or purpose of this form.',
   privacy:
     'Privacy: personal information collected on this form is handled in line with the Australian Privacy Principles (Privacy Act 1988) and the NDIS Rules, and is used only to deliver safe, quality supports and maintain required records.',
   declaration:
-    'Declaration: I declare the information provided in this form is true, complete and current to the best of my knowledge, and I consent to it being stored and used for the purposes described above.',
+    'Declaration: the information I have provided is accurate and current to the best of my knowledge. My consent choices and any limits are recorded separately. Signing this form does not give blanket authority to share information or replace any required clinical approval.',
 };
 
 const PAGE_MARGIN = 40;
@@ -66,18 +66,18 @@ export function drawDeclaration(doc, y, text = FORM_NOTICES.declaration) {
   const panelH = 44 + lines.length * 12;
   y = pageGuard(doc, y, panelH + 20);
   y += 12;
-  doc.setFillColor(255, 251, 235);
-  doc.setDrawColor(234, 217, 170);
+  doc.setFillColor(248, 247, 254);
+  doc.setDrawColor(196, 181, 219);
   doc.roundedRect(PAGE_MARGIN, y, pageW - PAGE_MARGIN * 2, panelH, 6, 6, 'FD');
-  doc.setFillColor(217, 139, 17);
+  doc.setFillColor(124, 58, 237);
   doc.rect(PAGE_MARGIN, y, 4, panelH, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
-  doc.setTextColor(120, 76, 6);
+  doc.setTextColor(76, 29, 149);
   doc.text('DECLARATION', PAGE_MARGIN + 18, y + 17);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  doc.setTextColor(110, 80, 20);
+  doc.setTextColor(71, 65, 85);
   let ty = y + 32;
   for (const line of lines) { doc.text(line, PAGE_MARGIN + 18, ty); ty += 11; }
   return y + panelH + 12;

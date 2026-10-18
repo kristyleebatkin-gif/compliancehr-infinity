@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown, Download, ExternalLink, FileText, Loader2, Pencil, Search, UploadCloud } from 'lucide-react';
 import OnlineDocumentDialog from '@/components/documents/OnlineDocumentDialog';
+import FormReviewNotes from '@/components/documents/FormReviewNotes';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import { routeDocument } from '@/lib/documentRouting';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
@@ -121,6 +122,7 @@ export default function AttachedFormsLibrary({
       </button>
       {open && (
         <div className="space-y-5 border-t border-border/60 p-5">
+          <FormReviewNotes />
           <div className="relative max-w-sm">
             <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input className="pl-8" placeholder={`Search ${libraryKey.toLowerCase()} forms...`} value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -147,7 +149,7 @@ export default function AttachedFormsLibrary({
                         <div className="flex w-full items-center gap-2 text-sm">
                           <FileText className="h-4 w-4 shrink-0 text-brand" />
                           <span className="flex-1 truncate font-medium">{label}</span>
-                          {formFiles[docType] && <span className="rounded-full bg-safe/10 px-1.5 py-0.5 text-[9px] font-bold text-safe">Official</span>}
+                          {formFiles[docType] && <span className="rounded-full bg-safe/10 px-1.5 py-0.5 text-[9px] font-bold text-safe">Source linked</span>}
                         </div>
                         <div className="mt-2 grid grid-cols-2 gap-1.5">
                           <button onClick={() => download(docType)} disabled={downloading === docType} className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted disabled:opacity-50">

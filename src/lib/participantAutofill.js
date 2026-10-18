@@ -14,7 +14,12 @@ export function autofillParticipantValue(label, participant = {}) {
   if (l.includes('date of birth')) return p.date_of_birth || '';
   if (l === 'address' || l.startsWith('address') || l.includes('assessment address')) return p.address || '';
   if (l.includes('phone and email')) return join(p.phone, p.email);
-  if (l.includes('emergency contact')) return join(p.emergency_contact, p.emergency_contact_phone);
+  if (l === 'phone' || l === 'mobile') return p.phone || '';
+  if (l === 'email') return p.email || '';
+  if (l === 'residential address') return p.address || '';
+  if (/^emergency contact(?: 1)? name$/.test(l)) return p.emergency_contact || '';
+  if (/^emergency contact(?: 1)? phone$/.test(l)) return p.emergency_contact_phone || '';
+  if (l === 'emergency contact') return join(p.emergency_contact, p.emergency_contact_phone);
   if (l.includes('plan manager')) return join(p.plan_manager, p.plan_manager_email);
   if (l.includes('support coordinator')) return p.support_coordinator || '';
   if (l.includes('current medicines') || l.includes('medication name, strength')) return p.medications_dosage || '';

@@ -26,20 +26,19 @@ function autofillIntakeValue(label, intakeCase = {}) {
     .filter((part) => part !== undefined && part !== null && String(part).trim() !== '')
     .join(' | ');
 
-  if (l.includes('full name')) return intakeCase.applicant_name || '';
-  if (l.includes('date of birth')) return intakeCase.date_of_birth || '';
-  if (l.includes('address')) return intakeCase.address || '';
+  if (['participant full name', 'employee full name'].includes(l)) return intakeCase.applicant_name || '';
+  if (l === 'date of birth') return intakeCase.date_of_birth || '';
+  if (['address', 'residential address'].includes(l)) return intakeCase.address || '';
   if (l.includes('phone and email') || l.includes('contact details and preferred contact method')) {
     return join(intakeCase.email, intakeCase.phone);
   }
   if (l === 'email' || l === 'phone') return intakeCase[l] || '';
   if (l.includes('primary contact')) return intakeCase.primary_contact || '';
-  if (l.includes('emergency contact')) {
-    return join(
-      intakeCase.emergency_contact_1_name,
-      intakeCase.emergency_contact_1_relationship,
-      intakeCase.emergency_contact_1_phone,
-    );
+  if (l.startsWith('emergency contact')) {
+    const contact = l.match(/^emergency contact(?: ([12]))? (name|relationship|phone|email)$/);
+    if (contact) return intakeCase[`emergency_contact_${contact[1] || '1'}_${contact[2]}`] || '';
+    if (l === 'emergency contact') return join(intakeCase.emergency_contact_1_name, intakeCase.emergency_contact_1_phone);
+    return '';
   }
   if (l.includes('ndis number')) return intakeCase.ndis_number || '';
   if (l.includes('employee number') || l.includes('employee id')) return intakeCase.employee_id_number || '';

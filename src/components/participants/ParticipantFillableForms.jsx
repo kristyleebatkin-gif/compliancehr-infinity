@@ -11,6 +11,7 @@ import { PARTICIPANT_FILLABLE_FORMS } from '@/lib/participantFillableForms';
 import { buildAutofilledAnswers, autofillParticipantValue } from '@/lib/participantAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
+import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
 
 export default function ParticipantFillableForms({ participant }) {
   const { toast } = useToast();
@@ -144,21 +145,8 @@ export default function ParticipantFillableForms({ participant }) {
       {loading ? (
         <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : (
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
-          {definition.fields.map((field) => {
-            const auto = autofillParticipantValue(field.label, participant);
-            return (
-              <div key={field.label} className={field.multiline ? 'md:col-span-2 grid gap-1.5' : 'grid gap-1.5'}>
-                <Label className="flex items-center gap-1.5">
-                  {field.label}
-                  {auto && <span className="rounded-full bg-safe/10 px-1.5 py-0.5 text-[9px] font-bold text-safe">Auto-filled</span>}
-                </Label>
-                {field.multiline
-                  ? <Textarea rows={3} value={answers[field.label] || ''} onChange={(e) => setAnswers({ ...answers, [field.label]: e.target.value })} />
-                  : <Input value={answers[field.label] || ''} onChange={(e) => setAnswers({ ...answers, [field.label]: e.target.value })} />}
-              </div>
-            );
-          })}
+        <div className="mt-5">
+          <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />
         </div>
       )}
     </div>

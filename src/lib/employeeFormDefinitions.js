@@ -4,6 +4,8 @@
  * be downloaded blank or completed online in the intake workflow. Field sets
  * follow current Australian employment and NDIS provider practice.
  */
+import { normaliseFormFields } from '@/lib/formQuestionModel';
+import { EMPLOYEE_SOURCE_FORMS, NDIS_CODE_ACKNOWLEDGEMENTS } from '@/lib/employeeSourceForms';
 const field = (label, multiline = false) => ({ label, multiline });
 
 const personal = [
@@ -14,7 +16,7 @@ const personal = [
   field('Emergency contact name and phone'),
 ];
 
-export const EMPLOYEE_FORM_DEFINITIONS = {
+const BASE_EMPLOYEE_FORM_DEFINITIONS = {
   'Staff Information Form': {
     fields: [
       ...personal,
@@ -331,3 +333,11 @@ export const EMPLOYEE_FORM_DEFINITIONS = {
     rows: 22,
   },
 };
+
+export const EMPLOYEE_FORM_DEFINITIONS = Object.fromEntries(Object.entries(BASE_EMPLOYEE_FORM_DEFINITIONS).map(([title, definition]) => [title, {
+  ...definition,
+  fields: normaliseFormFields([
+    ...(EMPLOYEE_SOURCE_FORMS[title] || (title === 'NDIS Code of Conduct Acknowledgement' ? [...personal, ...NDIS_CODE_ACKNOWLEDGEMENTS, field('Employee signature'), field('Signature date')] : definition.fields)),
+    ...(title === 'Staff Commitment Declaration Form' ? NDIS_CODE_ACKNOWLEDGEMENTS : []),
+  ]),
+}]));

@@ -21,7 +21,9 @@ export function autofillStaffValue(label, staff = {}) {
   if (l.includes('superannuation details')) return s.superannuation_details || '';
   if (l.includes('rego')) return s.car_rego || '';
   if (l.includes('hourly rate')) return s.hourly_rate ? `$${s.hourly_rate}` : '';
-  if (l.includes('emergency contact')) return join(s.emergency_contact, s.emergency_contact_phone);
+  if (/^emergency contact(?: 1)? name$/.test(l)) return s.emergency_contact || '';
+  if (/^emergency contact(?: 1)? phone$/.test(l)) return s.emergency_contact_phone || '';
+  if (l === 'emergency contact') return join(s.emergency_contact, s.emergency_contact_phone);
   if (l.includes('induction date')) return s.induction_date || '';
   if (l.includes('start date')) return s.start_date || '';
   if (l === 'email') return s.email || '';
