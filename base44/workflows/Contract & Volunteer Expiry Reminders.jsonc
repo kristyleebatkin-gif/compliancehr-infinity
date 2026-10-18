@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "contract_volunteer_expiry_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_expiry_digest": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "contractVolunteerExpiryReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send expiry digest",
+            "description": "Contracts ending and volunteer checks expiring within 30 days"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * 1",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Contract & Volunteer Expiry Reminders",
+  "description": "Mondays at 7am: emails the manager a digest of employment contracts ending and volunteer checks/documents/training expiring within 30 days, and logs it in the Communication Centre."
+}

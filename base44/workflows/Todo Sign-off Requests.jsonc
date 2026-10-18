@@ -1,0 +1,46 @@
+{
+  "name": "Todo Sign-off Requests",
+  "description": "When a task moves to Pending Approval, emails the manager a sign-off request and logs it in the Communication Centre",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "TodoTask",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": "${ .trigger.data.status == \"Pending Approval\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "todo_signoff_requests",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "notify_manager": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "todoSignoffAlert",
+            "args": {
+              "entity_id": "${ .trigger.entity_id }",
+              "title": "${ .trigger.data.title }",
+              "module": "${ .trigger.data.module // \"\" }",
+              "completed_by": "${ .trigger.data.completed_by // \"\" }",
+              "due_date": "${ .trigger.data.due_date // \"\" }",
+              "responsible": "${ .trigger.data.responsible // [] }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email manager and log alert",
+            "description": "Sign-off request for completed task"
+          }
+        }
+      }
+    ]
+  }
+}

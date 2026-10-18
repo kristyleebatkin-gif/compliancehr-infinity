@@ -1,0 +1,42 @@
+{
+  "name": "Offboarding Task Pack",
+  "description": "When a staff profile is set to Inactive, generates the offboarding task pack (exit, property, access, final pay, handover)",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "StaffProfile",
+      "events": [
+        "update"
+      ]
+    },
+    "condition": "${ .trigger.data.status == \"Inactive\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "offboarding_task_pack",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "generate_pack": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffPack",
+            "args": {
+              "kind": "offboarding",
+              "entity_id": "${ .trigger.entity_id }",
+              "staff_name": "${ .trigger.data.full_name // \"\" }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Generate offboarding pack",
+            "description": "Creates exit and handover to-dos"
+          }
+        }
+      }
+    ]
+  }
+}

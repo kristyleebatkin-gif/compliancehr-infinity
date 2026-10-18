@@ -1,0 +1,41 @@
+{
+  "name": "Auto Next Review",
+  "description": "When a performance review is completed, sets the next review date by cadence and creates a follow-up review reminder task",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "PerformanceReview",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": "${ .trigger.data.status == \"Completed\" and not .trigger.data.next_review_date }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_next_review",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "schedule_next_review": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoNextReview",
+            "args": {
+              "entity_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Schedule next review",
+            "description": "Sets next review date and follow-up task"
+          }
+        }
+      }
+    ]
+  }
+}

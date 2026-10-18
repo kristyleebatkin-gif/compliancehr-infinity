@@ -1,0 +1,42 @@
+{
+  "name": "Onboarding Task Pack",
+  "description": "When a staff profile is created, generates the full onboarding task pack (contract, checks, training, induction, IT, rostering)",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "StaffProfile",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": null
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "onboarding_task_pack",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "generate_pack": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffPack",
+            "args": {
+              "kind": "onboarding",
+              "entity_id": "${ .trigger.entity_id }",
+              "staff_name": "${ .trigger.data.full_name // \"\" }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Generate onboarding pack",
+            "description": "Creates onboarding to-dos for the new staff member"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "appraisal_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_appraisal_reminders": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "appraisalReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send appraisal reminders",
+            "description": "Reminds reviewers of scheduled performance reviews due within 7 days"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Appraisal Reminders",
+  "description": "Daily at 7am: emails the reviewer of every scheduled performance review that falls due within 7 days, and logs each reminder in the Communication Centre."
+}
