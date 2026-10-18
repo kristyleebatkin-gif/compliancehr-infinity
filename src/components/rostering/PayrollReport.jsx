@@ -4,7 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Download, ChevronLeft, ChevronRight, FileDown } from 'lucide-react';
+import { downloadPayslipPdf } from '@/lib/payslipPdf';
 import { format, addDays, startOfWeek, endOfWeek, getDay } from 'date-fns';
 import { parseISO } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
@@ -297,6 +298,7 @@ export default function PayrollReport() {
               <thead>
                 <tr className="border-b text-left text-xs text-muted-foreground">
                   <th className="py-2 pr-4">Employee</th>
+                  <th className="py-2 pr-4">Payslip</th>
                   <th className="py-2 pr-4">Shifts</th>
                   <th className="py-2 pr-4">Planned hrs</th>
                   <th className="py-2 pr-4">Breaks (hrs)</th>
@@ -326,6 +328,11 @@ export default function PayrollReport() {
                 {displayRows.map((r) => (
                   <tr key={r.employee_name} className="border-b last:border-0">
                     <td className="py-2 pr-4 font-medium">{r.employee_name}</td>
+                    <td className="py-2 pr-4">
+                      <Button variant="outline" size="sm" title="Download payslip PDF" onClick={() => downloadPayslipPdf(r, { weekStart: fromStr, weekEnd: toStr, loadings, kmRate, otherAllowance: otherAllowances[r.employee_name] })}>
+                        <FileDown className="h-3.5 w-3.5" /> Payslip
+                      </Button>
+                    </td>
                     <td className="py-2 pr-4">{r.shifts}</td>
                     <td className="py-2 pr-4">{r.planned_hours}</td>
                     <td className="py-2 pr-4">{r.break_hours}</td>
