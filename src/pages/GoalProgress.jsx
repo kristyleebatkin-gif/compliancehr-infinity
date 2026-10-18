@@ -10,7 +10,8 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Target, Users } from 'lucide-react';
+import { Plus, Trash2, Target, Users, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
 import GoalInsights from '@/components/goals/GoalInsights';
@@ -32,6 +33,16 @@ export default function GoalProgress() {
       setLoading(false);
     }
   }, []);
+
+  const exportGoals = async () => {
+    const page = await base44.entities.Goal.filter({}, { sort: '-created_date', limit: 1000 });
+    downloadCsv('Goal-Progress-Register.csv', [
+      { key: 'participant_name', label: 'Participant' }, { key: 'goal', label: 'Goal' },
+      { key: 'category', label: 'Category' }, { key: 'progress', label: 'Progress (%)' },
+      { key: 'status', label: 'Status' }, { key: 'target_date', label: 'Target Date' },
+      { key: 'support_needed', label: 'Support Needed' },
+    ], page.items);
+  };
 
   useEffect(() => { load(); }, [load]);
 
@@ -103,6 +114,7 @@ export default function GoalProgress() {
     <div className="space-y-6">
       <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />
       <div className="flex flex-wrap items-center gap-2">
+        <Button variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
           <DialogContent>

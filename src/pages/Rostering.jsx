@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame } from 'lucide-react';
+import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
 import ShiftForm from '@/components/rostering/ShiftForm';
@@ -36,6 +37,20 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
 );
 
 export default function Rostering() {
+  const exportShiftRegister = async () => {
+    const page = await base44.entities.Shift.filter({}, { sort: '-date', limit: 1000 });
+    downloadCsv('Shift-Register.csv', [
+      { key: 'date', label: 'Date' }, { key: 'employee_name', label: 'Employee' },
+      { key: 'participant_name', label: 'Participant' }, { key: 'start_time', label: 'Start Time' },
+      { key: 'end_time', label: 'End Time' }, { key: 'status', label: 'Status' },
+      { key: 'service_type', label: 'Service Type' }, { key: 'funding_source', label: 'Funding Source' },
+      { key: 'location', label: 'Location' }, { key: 'break_minutes', label: 'Unpaid Break (min)' },
+      { key: 'travel_km', label: 'Travel (km)' }, { key: 'billable_rate', label: 'Billable Rate' },
+      { key: 'approval_status', label: 'Approval Status' }, { key: 'invoiced', label: 'Invoiced' },
+      { key: 'notes', label: 'Notes' },
+    ], page.items);
+  };
+
   const [tab, setTab] = useState('roster');
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [calFrom, setCalFrom] = useState(format(new Date(), 'yyyy-MM-dd'));
@@ -235,6 +250,7 @@ export default function Rostering() {
         title="Rostering"
         subtitle="Roster board, shift register, timesheet approvals and staff availability."
         showAlerts={false}
+        action={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
       />
 
       <div className="grid gap-4 md:grid-cols-3">

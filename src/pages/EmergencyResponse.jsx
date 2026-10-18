@@ -11,7 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Siren, Flame, ClipboardCheck, FileText, Users, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, Siren, Flame, ClipboardCheck, FileText, Users, AlertTriangle, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 import { format, addMonths, isBefore, addDays } from 'date-fns';
 import SafetyChecksLog from '@/components/emergency/SafetyChecksLog';
 import EmergencyDocumentsLibrary from '@/components/emergency/EmergencyDocumentsLibrary';
@@ -71,9 +72,25 @@ export default function EmergencyResponse() {
     [checks],
   );
 
+  const exportSafetyChecks = async () => {
+    const page = await base44.entities.SafetyCheck.filter({}, { sort: '-date_completed', limit: 1000 });
+    downloadCsv('Safety-Check-Register.csv', [
+      { key: 'name', label: 'Check Name' }, { key: 'check_type', label: 'Check Type' },
+      { key: 'location', label: 'Location' }, { key: 'date_completed', label: 'Date Completed' },
+      { key: 'result', label: 'Result' }, { key: 'issues_found', label: 'Issues Found' },
+      { key: 'action_taken', label: 'Action Taken' }, { key: 'completed_by', label: 'Completed By' },
+      { key: 'next_due_date', label: 'Next Due Date' }, { key: 'notes', label: 'Notes' },
+    ], page.items);
+  };
+
   return (
     <div className="space-y-6">
-      <PageHeader icon={Siren} title="Emergency Response" subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources." />
+      <PageHeader
+        icon={Siren}
+        title="Emergency Response"
+        subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources."
+        action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
+      />
 
       <EmergencyQuickDial />
 

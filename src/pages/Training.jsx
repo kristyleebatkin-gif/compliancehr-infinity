@@ -11,7 +11,9 @@ import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
 import TrainingInsights from '@/components/training/TrainingInsights';
 import AiQuizDrill from '@/components/training/AiQuizDrill';
-import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play } from 'lucide-react';
+import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { downloadCsv } from '@/lib/csvExport';
 
 function statusFor(title, completions) {
   const recs = completions.filter((c) => c.module_title === title && c.status === 'Completed');
@@ -45,6 +47,17 @@ export default function Training() {
   };
   useEffect(() => { load(); }, [user?.id]);
 
+  const exportTrainingRegister = async () => {
+    const all = await base44.entities.TrainingCompletion.list('-completed_date', 1000);
+    downloadCsv('Training-Register.csv', [
+      { key: 'learner_name', label: 'Learner' }, { key: 'learner_type', label: 'Learner Type' },
+      { key: 'module_title', label: 'Module' }, { key: 'completed_date', label: 'Completed Date' },
+      { key: 'expiry_date', label: 'Expiry Date' }, { key: 'score', label: 'Score' },
+      { key: 'status', label: 'Status' }, { key: 'certificate_number', label: 'Certificate Number' },
+      { key: 'training_notes', label: 'Notes' },
+    ], all);
+  };
+
   const stats = useMemo(() => {
     let completed = 0, current = 0, expiring = 0, expired = 0;
     LMS_MODULES.forEach((m) => {
@@ -71,6 +84,7 @@ export default function Training() {
       <PageHeader
         title="Training Hub"
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
+        action={<Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
       />
 
       <SectionCard title="Your progress" description={`${stats.completed} of ${stats.total} modules completed`}>
