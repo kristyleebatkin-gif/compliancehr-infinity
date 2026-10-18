@@ -69,7 +69,7 @@ export default function QualityItemDialog({ open, onOpenChange, editing, users, 
             </div>
           </div>
           <div className="grid gap-1.5"><Label>Description (all details)</Label><Textarea rows={4} value={form.description} onChange={(e) => set('description', e.target.value)} /></div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Source</Label><Input value={form.source} onChange={(e) => set('source', e.target.value)} /></div>
             <div className="grid gap-1.5"><Label>Raised by</Label><Input value={form.raised_by} onChange={(e) => set('raised_by', e.target.value)} /></div>
             <div className="grid gap-1.5"><Label>Raised date</Label><Input type="date" value={form.raised_date} onChange={(e) => set('raised_date', e.target.value)} /></div>
@@ -88,7 +88,7 @@ export default function QualityItemDialog({ open, onOpenChange, editing, users, 
             <div className="grid gap-1.5"><Label>Nominated person email</Label><Input type="email" value={form.nominated_email} onChange={(e) => set('nominated_email', e.target.value)} /></div>
             <div className="grid gap-1.5"><Label>Nominated date</Label><Input type="date" value={form.nominated_date} onChange={(e) => set('nominated_date', e.target.value)} /></div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Owner</Label><Input value={form.owner} onChange={(e) => set('owner', e.target.value)} /></div>
             <div className="grid gap-1.5"><Label>Target date</Label><Input type="date" value={form.target_date} onChange={(e) => set('target_date', e.target.value)} /></div>
             <div className="grid gap-1.5"><Label>Status</Label>

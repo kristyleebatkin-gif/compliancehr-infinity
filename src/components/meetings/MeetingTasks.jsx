@@ -117,7 +117,7 @@ export default function MeetingTasks({ meeting }) {
           <DialogHeader><DialogTitle>Assign follow-up task</DialogTitle></DialogHeader>
           <div className="grid gap-3">
             <div className="grid gap-1.5"><Label>Task *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="grid gap-1.5"><Label>Assign to staff</Label>
                 <Select value={form.assigned_to} onValueChange={(v) => setForm({ ...form, assigned_to: v })}>
                   <SelectTrigger><SelectValue placeholder="Select staff" /></SelectTrigger>

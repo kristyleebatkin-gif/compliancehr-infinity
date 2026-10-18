@@ -113,7 +113,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
               </Select>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Date *</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Start</Label><Input type="time" value={form.start_time} onChange={(e) => setForm({ ...form, start_time: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>End</Label><Input type="time" value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} /></div>
@@ -141,7 +141,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
               </Select>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Break (min)</Label><Input type="number" min="0" value={form.break_minutes} onChange={(e) => setForm({ ...form, break_minutes: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Travel (km)</Label><Input type="number" min="0" value={form.travel_km} onChange={(e) => setForm({ ...form, travel_km: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Rate ($/hr)</Label><Input type="number" min="0" step="0.01" value={form.billable_rate} onChange={(e) => setForm({ ...form, billable_rate: e.target.value })} /></div>

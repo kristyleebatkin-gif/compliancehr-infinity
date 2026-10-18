@@ -281,7 +281,7 @@ export default function MeetingCentre() {
                 </Select>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Start time</Label><Input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Expected duration</Label><Input placeholder="1 hour" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} /></div>

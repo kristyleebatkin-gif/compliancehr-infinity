@@ -147,7 +147,7 @@ export default function EmergencyResponse() {
                     </div>
                     <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
                   </div>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                     <div className="grid gap-1.5"><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
                     <div className="grid gap-1.5"><Label>Participants</Label><Input type="number" value={form.attendees_count} onChange={(e) => setForm({ ...form, attendees_count: e.target.value })} /></div>
                     <div className="grid gap-1.5"><Label>Outcome</Label>

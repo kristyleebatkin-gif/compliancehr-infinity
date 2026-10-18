@@ -122,7 +122,7 @@ export function AvailabilityFormDialog({ open, onOpenChange, form, setForm, onSa
               </Select>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Date *</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
             {!form.all_day && (
               <>

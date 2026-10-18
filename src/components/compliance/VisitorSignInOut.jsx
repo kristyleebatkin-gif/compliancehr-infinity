@@ -189,7 +189,7 @@ export default function VisitorSignInOut() {
               <div className="grid gap-1.5"><Label>Host / visiting</Label><Input value={form.host} onChange={(e) => setForm({ ...form, host: e.target.value })} /></div>
             </div>
             <div className="grid gap-1.5"><Label>Purpose of visit</Label><Input value={form.purpose} onChange={(e) => setForm({ ...form, purpose: e.target.value })} /></div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Time in</Label><Input type="time" value={form.time_in} onChange={(e) => setForm({ ...form, time_in: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Time out</Label><Input type="time" value={form.time_out} onChange={(e) => setForm({ ...form, time_out: e.target.value })} /></div>

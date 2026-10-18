@@ -125,7 +125,7 @@ export default function GoalProgress() {
                 <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
               </div>
               <div className="grid gap-1.5"><Label>Goal *</Label><Input value={form.goal} onChange={(e) => setForm({ ...form, goal: e.target.value })} /></div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="grid gap-1.5"><Label>Progress (%)</Label><Input type="number" min="0" max="100" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Status</Label>
                   <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>

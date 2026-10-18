@@ -204,7 +204,7 @@ export default function Tasks() {
                   {form.assigned_to && !users.some((u) => u.full_name === form.assigned_to) && <option value={form.assigned_to}>{form.assigned_to}</option>}
                 </Select>
               </Field>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <Field label="Due Date"><DateInput value={form.due_date || ''} onChange={(e) => set('due_date', e.target.value)} /></Field>
                 <Field label="Estimated hours"><TextInput type="number" value={form.estimated_hours ?? ''} onChange={(e) => set('estimated_hours', e.target.value)} /></Field>
                 <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>

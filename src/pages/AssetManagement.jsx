@@ -78,7 +78,7 @@ export default function AssetManagement() {
                 </div>
                 <div className="grid gap-1.5"><Label>Serial number</Label><Input value={form.serial_number} onChange={(e) => setForm({ ...form, serial_number: e.target.value })} /></div>
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="grid gap-1.5"><Label>Purchase date</Label><Input type="date" value={form.purchase_date} onChange={(e) => setForm({ ...form, purchase_date: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Condition</Label>
                   <Select value={form.condition} onValueChange={(v) => setForm({ ...form, condition: v })}>

@@ -245,7 +245,7 @@ export default function ProgramsEvents() {
               <div className="grid gap-1.5"><Label>Start date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>End date (multi-day)</Label><Input type="date" value={form.end_date} onChange={(e) => setForm({ ...form, end_date: e.target.value })} /></div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="grid gap-1.5"><Label>Start time</Label><Input placeholder="9:00 am" value={form.start_time} onChange={(e) => setForm({ ...form, start_time: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>End time</Label><Input placeholder="3:00 pm" value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Status</Label>
