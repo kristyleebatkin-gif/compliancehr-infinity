@@ -42,7 +42,7 @@ export default function TeamSection({ title, description, values = [], kind, onU
       {remaining.length > 0 && (
         <div className="mt-3">
           <Select value="none" onValueChange={(v) => { if (v !== 'none') onUpdate([...values, v]); }}>
-            <SelectTrigger className="h-9 w-[250px]"><SelectValue placeholder="Add a team member..." /></SelectTrigger>
+            <SelectTrigger className="h-9 w-full sm:w-[250px]"><SelectValue placeholder="Add a team member..." /></SelectTrigger>
             <SelectContent>
               <SelectItem value="none">Select to add...</SelectItem>
               {remaining.map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}
