@@ -22,6 +22,11 @@
       "type": "string",
       "title": "Draft Owner User ID"
     },
+    "online_document": {
+      "type": "boolean",
+      "default": false,
+      "title": "Online Library Document"
+    },
     "submitted_date": {
       "type": "string",
       "title": "Submitted Date",
@@ -144,6 +149,38 @@
           "user_condition": {
             "role": "Participant"
           }
+        },
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.saved_by_user_id": "{{user.id}}"
+            },
+            {
+              "data.online_document": true
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "Human Resources Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Team Leader"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Intake Officer"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -166,6 +203,16 @@
             },
             {
               "data.saved_by_user_id": "{{user.id}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.online_document": true
             }
           ]
         },
@@ -290,6 +337,16 @@
           "user_condition": {
             "role": "Participant"
           }
+        },
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.online_document": true
+            }
+          ]
         }
       ]
     },
