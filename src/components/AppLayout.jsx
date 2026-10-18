@@ -13,6 +13,7 @@ import {
   Search, Sun, Moon,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
+import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 const BOTTOM_NAV = [
@@ -221,6 +222,12 @@ export default function AppLayout() {
             <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
             </button>
+            <Image
+              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/ce2c32d94_generated_image.png"
+              alt="ComplianceHR Infinitely"
+              fittingType="fit"
+              className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
+            />
             <div className="hidden sm:block">
               <div className="text-sm font-bold tracking-tight font-display text-foreground">{currentLabel}</div>
               <div className="text-[11px] font-medium text-foreground/40">ComplianceHR Infinitely</div>
