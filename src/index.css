@@ -130,6 +130,11 @@
       max-width: 100%;
       overflow-x: auto;
     }
+    /* Dialog form fields stack on phones instead of squeezing side by side */
+    [role="dialog"] .grid-cols-2,
+    [role="dialog"] .grid-cols-3 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
   }
 }
 
