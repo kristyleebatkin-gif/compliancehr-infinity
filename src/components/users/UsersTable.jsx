@@ -11,7 +11,7 @@ import { Loader2, UserPlus, Users } from 'lucide-react';
 import { format } from 'date-fns';
 import { ALL_ROLES } from '@/lib/roles';
 
-const ROLE_TONES = { admin: 'bg-purple-100 text-purple-800', user: 'bg-slate-100 text-slate-700' };
+const ROLE_TONES = { admin: 'bg-purple-100 text-purple-800 dark:bg-purple-500/15 dark:text-purple-300', user: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' };
 
 export default function UsersTable() {
   const { toast } = useToast();
@@ -95,7 +95,7 @@ export default function UsersTable() {
                   <p className="text-xs text-muted-foreground">{user.email} · joined {user.created_date ? format(new Date(user.created_date), 'd MMM yyyy') : ''}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge className={ROLE_TONES[user.role] || 'bg-slate-100 text-slate-700'}>{user.role}</Badge>
+                  <Badge className={ROLE_TONES[user.role] || 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}>{user.role}</Badge>
                   <select
                     value={user.role}
                     disabled={savingId === user.id}

@@ -24,7 +24,7 @@ const hazardTone = (h = '') => {
   if (s.includes('flammable')) return 'bg-amber-100 text-amber-700';
   if (s.includes('sensitis')) return 'bg-orange-100 text-orange-700';
   if (s.includes('oxidis')) return 'bg-purple-100 text-purple-700';
-  if (s.includes('asphyxiant')) return 'bg-slate-200 text-slate-700';
+  if (s.includes('asphyxiant')) return 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
   if (!s) return 'bg-muted text-muted-foreground';
   return 'bg-success/10 text-success';
 };

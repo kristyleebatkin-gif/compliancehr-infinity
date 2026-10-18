@@ -95,7 +95,7 @@ export default function SafetyTrendsDashboard() {
     >
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <div className="h-7 w-7 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" />
+          <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
         </div>
       ) : (
         <div className="space-y-5">

@@ -6,7 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Loader2, ShieldCheck, Users } from 'lucide-react';
 import { format } from 'date-fns';
 
-const ROLE_TONES = { admin: 'bg-purple-100 text-purple-800', user: 'bg-slate-100 text-slate-700' };
+const ROLE_TONES = { admin: 'bg-purple-100 text-purple-800 dark:bg-purple-500/15 dark:text-purple-300', user: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' };
 
 const PERMISSION_MATRIX = [
   ['admin / Provider Administrator', 'Full access to all modules, users and settings; manages roles and permissions.'],
@@ -70,7 +70,7 @@ export default function UsersPermissions() {
                   <p className="text-xs text-muted-foreground">{user.email} · joined {user.created_date ? format(new Date(user.created_date), 'd MMM yyyy') : ''}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge className={ROLE_TONES[user.role] || 'bg-slate-100 text-slate-700'}>{user.role}</Badge>
+                  <Badge className={ROLE_TONES[user.role] || 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}>{user.role}</Badge>
                   <select
                     value={user.role}
                     disabled={savingId === user.id}

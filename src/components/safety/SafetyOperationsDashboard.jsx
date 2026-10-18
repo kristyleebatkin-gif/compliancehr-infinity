@@ -99,7 +99,7 @@ export default function SafetyOperationsDashboard() {
 
   if (loading) {
     return (
-      <Card><CardContent className="p-8 text-center"><div className="mx-auto h-7 w-7 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" /></CardContent></Card>
+      <Card><CardContent className="p-8 text-center"><div className="mx-auto h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" /></CardContent></Card>
     );
   }
 

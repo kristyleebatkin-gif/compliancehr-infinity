@@ -92,7 +92,7 @@ export default function IncidentLog() {
 
       {loading ? (
         <div className="flex items-center justify-center py-10">
-          <div className="h-7 w-7 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" />
+          <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
         </div>
       ) : entries.length === 0 ? (
         <EmptyState icon={CalendarDays} title="No incidents in this period" subtitle="Adjust the date range or severity filter." />

@@ -94,7 +94,7 @@ export default function ScanToPdf({ open, onOpenChange }) {
             <Input value={fileName} onChange={(e) => setFileName(e.target.value)} placeholder="Scanned Document" />
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button className="bg-white text-slate-900 hover:bg-slate-200 border border-input" onClick={() => document.getElementById('scan-pdf-camera')?.click()}>
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-input" onClick={() => document.getElementById('scan-pdf-camera')?.click()}>
               <Camera className="h-4 w-4" />Camera
             </Button>
             <Button variant="outline" onClick={() => document.getElementById('scan-pdf-files')?.click()}>

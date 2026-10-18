@@ -80,7 +80,7 @@ export default function SafetyHeatmap() {
       </div>
       {loading ? (
         <div className="flex items-center justify-center py-10">
-          <div className="h-7 w-7 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" />
+          <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
         </div>
       ) : areas.length === 0 ? (
         <p className="py-6 text-center text-xs text-muted-foreground">No incidents recorded yet — the heatmap appears once incidents have a location and time.</p>

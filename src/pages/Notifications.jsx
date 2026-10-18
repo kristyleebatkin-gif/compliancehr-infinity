@@ -8,17 +8,17 @@ import { Bell, PartyPopper, Check, CheckCheck, ExternalLink, Inbox } from 'lucid
 import moment from 'moment';
 
 const TYPE_TONES = {
-  'Expiry Alert': 'bg-amber-50 text-amber-800 border-amber-200',
-  'Training Expiry': 'bg-amber-50 text-amber-800 border-amber-200',
-  'Incident Escalation': 'bg-red-50 text-red-800 border-red-200',
-  'Overdue Escalation': 'bg-red-50 text-red-800 border-red-200',
-  'Review Reminder': 'bg-indigo-50 text-indigo-800 border-indigo-200',
-  'Policy Review': 'bg-indigo-50 text-indigo-800 border-indigo-200',
-  'Task Assigned': 'bg-blue-50 text-blue-800 border-blue-200',
-  'Weekly Compliance Summary': 'bg-teal-50 text-teal-800 border-teal-200',
-  'NDIS Audit Due': 'bg-purple-50 text-purple-800 border-purple-200',
-  'Birthday Shout-out': 'bg-pink-50 text-pink-800 border-pink-200',
-  'General': 'bg-slate-100 text-slate-700 border-slate-200',
+  'Expiry Alert': 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30',
+  'Training Expiry': 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30',
+  'Incident Escalation': 'bg-red-50 text-red-800 border-red-200 dark:bg-red-500/15 dark:text-red-300 dark:border-red-500/30',
+  'Overdue Escalation': 'bg-red-50 text-red-800 border-red-200 dark:bg-red-500/15 dark:text-red-300 dark:border-red-500/30',
+  'Review Reminder': 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30',
+  'Policy Review': 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30',
+  'Task Assigned': 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30',
+  'Weekly Compliance Summary': 'bg-teal-50 text-teal-800 border-teal-200 dark:bg-teal-500/15 dark:text-teal-300 dark:border-teal-500/30',
+  'NDIS Audit Due': 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-purple-500/15 dark:text-purple-300 dark:border-purple-500/30',
+  'Birthday Shout-out': 'bg-pink-50 text-pink-800 border-pink-200 dark:bg-pink-500/15 dark:text-pink-300 dark:border-pink-500/30',
+  'General': 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
 };
 
 const NOTIF_TYPES = [
