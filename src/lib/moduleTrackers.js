@@ -126,6 +126,10 @@ export const MODULE_TRACKERS = {
   '/help': [
     { label: 'Help tickets open', entity: 'HelpDeskTicket', base: { status: { $in: ['Open', 'In Progress'] } }, dynamic: 'overdue' },
   ],
+  '/referrals': [
+    { label: 'Referrals without client consent', entity: 'Referral', base: { consent: 'Consent not given' }, dynamic: 'overdue' },
+    { label: 'Urgent or crisis referrals open', entity: 'Referral', base: { urgency: { $in: ['Urgent (48 hours)', 'Immediate - Crisis'] } }, dynamic: 'overdue' },
+  ],
 };
 
 // Build concrete Mongo filters with real dates for one entry.

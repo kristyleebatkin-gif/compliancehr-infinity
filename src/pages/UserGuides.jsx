@@ -79,6 +79,7 @@ export default function UserGuides() {
             subtitle="The complete operating manual for every module in the platform."
             icon={BookOpen}
             accent={ACCENTS.overview}
+            showAudit={false}
           />
           <GuideReader
             moduleKey={selectedKey}
@@ -100,6 +101,7 @@ export default function UserGuides() {
         icon={BookOpen}
         accent={ACCENTS.overview}
         showAlerts={false}
+        showAudit={false}
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

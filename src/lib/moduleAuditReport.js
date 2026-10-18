@@ -57,6 +57,7 @@ export const MODULE_AUDIT_ENTITIES = {
   '/hr': [['LeaveRequest', 'Leave requests'], ['PerformanceReview', 'Performance reviews']],
   '/community-council': [['CommunityProgram', 'Community programs'], ['CommunityEvent', 'Community events'], ['CommunityReferralService', 'Community referral services']],
   '/analytics': [['KPI', 'Business KPIs']],
+  '/users': [['StaffProfile', 'Staff role assignments'], ['ArchivedUser', 'Archived user accounts']],
 };
 
 // Route aliases so every URL of a module gets the same audit scope.
