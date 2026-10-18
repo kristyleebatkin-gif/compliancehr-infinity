@@ -73,8 +73,8 @@ export default function AttentionPanel() {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-violet-50 p-5 shadow-lg shadow-orange-500/5 dark:border-orange-900 dark:from-orange-950/20 dark:via-card dark:to-violet-950/20">
       <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-orange-500 via-rose-500 to-violet-600" />
-      <div className="mb-4 flex items-center justify-between">
-        <div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 text-sm font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-rose-500 text-white shadow-md">
               <AlertTriangle className="h-4 w-4" />
