@@ -182,7 +182,7 @@ export default function AttachedFormsLibrary({
           })}
         </div>
       )}
-      {onlineType && <OnlineDocumentDialog key={`${libraryKey}:${onlineType}`} open title={onlineType} code={formCodes[onlineType]} definition={definitions[onlineType]} libraryKey={libraryKey}
+      {onlineType && <OnlineDocumentDialog key={`${libraryKey}:${onlineType}`} open={true} title={onlineType} code={formCodes[onlineType]} definition={definitions[onlineType]} libraryKey={libraryKey}
         onOpenChange={(isOpen) => { if (!isOpen) setOnlineType(''); }}
         onSaved={async () => { await load(); toast({ title: `${onlineType} completed and filed` }); }} />}
     </div>

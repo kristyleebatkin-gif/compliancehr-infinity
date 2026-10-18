@@ -48,12 +48,7 @@ export function registerDocumentHeader(doc, options) {
   layouts.set(doc, layout);
   layout.top = paintHeader(doc, options);
   doc.internal.events.subscribe('addPage', () => {
-    const font = doc.getFont(), size = doc.getFontSize(), color = doc.getTextColor();
-    const fill = doc.getFillColor(), stroke = doc.getDrawColor(), lineWidth = doc.getLineWidth();
     layout.top = paintHeader(doc, options);
-    doc.setFont(font.fontName, font.fontStyle);
-    doc.setFontSize(size); doc.setTextColor(color);
-    doc.setFillColor(fill); doc.setDrawColor(stroke); doc.setLineWidth(lineWidth);
   });
   return layout.top;
 }
