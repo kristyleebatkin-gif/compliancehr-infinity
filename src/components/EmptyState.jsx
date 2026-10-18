@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EmptyState({ icon: Icon, title, message, action }) {
+export default function EmptyState({ icon: Icon, title, message, subtitle, action }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       {Icon && (
@@ -9,7 +9,7 @@ export default function EmptyState({ icon: Icon, title, message, action }) {
         </div>
       )}
       <div className="text-sm font-semibold">{title}</div>
-      {message && <div className="mt-1 max-w-sm text-sm text-foreground/50">{message}</div>}
+      {(message || subtitle) && <div className="mt-1 max-w-sm text-sm text-foreground/50">{message || subtitle}</div>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
