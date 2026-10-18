@@ -26,15 +26,6 @@ const businessToBranding = (business) => ({
   email: business?.email || '',
 });
 
-const providerToBranding = (provider) => ({
-  providerId: provider?.id || '',
-  companyName: provider?.provider_name || DEFAULTS.companyName,
-  slogan: provider?.document_slogan || DEFAULTS.slogan,
-  logoUrl: provider?.logo_url || '',
-  logoDataUrl: '',
-  active: Boolean(provider?.document_branding_active),
-});
-
 async function logoUrlToDataUrl(url) {
   if (!url) return '';
   const blob = await fetch(url).then((response) => {
@@ -108,11 +99,6 @@ export async function loadCompanyBranding() {
     }),
     providerId: provider?.id || '',
   };
-}
-
-export async function listCompanyBrandingProfiles() {
-  const page = await base44.entities.Provider.list({ sort: '-created_date', limit: 500 });
-  return (page.items || []).map(providerToBranding);
 }
 
 export async function saveCompanyBranding({

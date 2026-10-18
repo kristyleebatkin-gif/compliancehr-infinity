@@ -38,8 +38,11 @@ export default function Training() {
   const load = async () => {
     setLoading(true);
     try {
-      const all = await base44.entities.TrainingCompletion.list('-completed_date', 200);
-      setAllCompletions(all);
+      const allPage = await base44.entities.TrainingCompletion.filter(
+        {},
+        { sort: '-completed_date', limit: 200, fields: ['learner_name', 'learner_type', 'module_title', 'completed_date', 'expiry_date', 'score', 'status'] },
+      );
+      setAllCompletions(allPage.items || []);
       const identity = user?.id || '';
       const name = user?.full_name || '';
       const minePage = await base44.entities.TrainingCompletion.filter(
