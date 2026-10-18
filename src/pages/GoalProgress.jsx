@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Target, Users, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
 import GoalInsights from '@/components/goals/GoalInsights';
@@ -35,13 +35,13 @@ export default function GoalProgress() {
   }, []);
 
   const exportGoals = async () => {
-    const page = await base44.entities.Goal.filter({}, { sort: '-created_date', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Goal, {}, '-created_date');
     downloadCsv('Goal-Progress-Register.csv', [
       { key: 'participant_name', label: 'Participant' }, { key: 'goal', label: 'Goal' },
       { key: 'category', label: 'Category' }, { key: 'progress', label: 'Progress (%)' },
       { key: 'status', label: 'Status' }, { key: 'target_date', label: 'Target Date' },
       { key: 'support_needed', label: 'Support Needed' },
-    ], page.items);
+    ], rows);
   };
 
   useEffect(() => { load(); }, [load]);

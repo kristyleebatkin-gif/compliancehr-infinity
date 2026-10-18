@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ClipboardList, Check, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
@@ -71,11 +71,11 @@ export default function Checklists() {
   };
 
   const exportRegister = async () => {
-    const page = await base44.entities.Checklist.filter({}, { sort: 'title', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Checklist, {}, 'title');
     downloadCsv('Compliance-Checklist-Register.csv', [
       { key: 'title', label: 'Checklist Title' }, { key: 'category', label: 'Category' },
       { key: 'due_date', label: 'Due Date' }, { key: 'created_date', label: 'Created' },
-    ], page.items);
+    ], rows);
   };
 
   return (

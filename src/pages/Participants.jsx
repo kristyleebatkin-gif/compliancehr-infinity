@@ -11,7 +11,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Trash2, Heart, UserRound, Download, MessageSquarePlus } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { Link } from 'react-router-dom';
 import { SHIFT_TYPES } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
@@ -92,7 +92,7 @@ export default function Participants() {
   };
 
   const exportRegister = async () => {
-    const page = await base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.ParticipantProfile, {}, 'full_name');
     downloadCsv('Participant-Register.csv', [
       { key: 'full_name', label: 'Full Name' }, { key: 'ndis_number', label: 'NDIS Number' },
       { key: 'ndis_reference_number', label: 'NDIS Reference Number' }, { key: 'email', label: 'Email' },
@@ -100,7 +100,7 @@ export default function Participants() {
       { key: 'date_of_birth', label: 'Date of Birth' }, { key: 'support_coordinator', label: 'Support Coordinator' },
       { key: 'plan_manager', label: 'Plan Manager' }, { key: 'status', label: 'Status' },
       { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   return (

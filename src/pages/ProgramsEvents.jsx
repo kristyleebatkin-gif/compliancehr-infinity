@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
 import EventAdBuilder from '@/components/events/EventAdBuilder';
@@ -57,7 +57,7 @@ export default function ProgramsEvents() {
   useEffect(() => { load(); }, [load]);
 
   const exportRegister = async () => {
-    const page = await base44.entities.Event.filter({}, { sort: 'date', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Event, {}, 'date');
     downloadCsv('Programs-Events-Register.csv', [
       { key: 'title', label: 'Title' }, { key: 'type', label: 'Type' },
       { key: 'date', label: 'Date' }, { key: 'end_date', label: 'End Date' },
@@ -66,7 +66,7 @@ export default function ProgramsEvents() {
       { key: 'organiser', label: 'Organiser' }, { key: 'contact_email', label: 'Contact Email' },
       { key: 'cost_text', label: 'Cost' }, { key: 'attendees', label: 'Attendees' },
       { key: 'description', label: 'Description' },
-    ], page.items);
+    ], rows);
   };
 
   const today = format(new Date(), 'yyyy-MM-dd');

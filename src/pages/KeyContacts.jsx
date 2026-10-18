@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
@@ -58,7 +58,7 @@ export default function KeyContacts() {
   };
 
   const exportContacts = async () => {
-    const page = await base44.entities.Contact.filter({}, { sort: 'name', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Contact, {}, 'name');
     downloadCsv('Key-Contacts-Register.csv', [
       { key: 'name', label: 'Name' }, { key: 'organisation', label: 'Organisation' },
       { key: 'role', label: 'Role' }, { key: 'phone', label: 'Phone' },
@@ -66,7 +66,7 @@ export default function KeyContacts() {
       { key: 'email', label: 'Email' }, { key: 'hours_available', label: 'Hours Available' },
       { key: 'address', label: 'Address' }, { key: 'category', label: 'Category' },
       { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   const ContactButtons = ({ c }) => (

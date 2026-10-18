@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
 const exportPoliciesCsv = (policies) => downloadCsv('compliance-policy-register.csv', [
   { key: 'document_name', label: 'Document Name' },
@@ -110,13 +110,13 @@ export default function ComplianceHub() {
   };
 
   const exportCorrectiveRegister = async () => {
-    const page = await base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 500 });
+    const rows = await fetchAllRecords(base44.entities.QualityItem, {}, '-created_date');
     downloadCsv('corrective-action-register.csv', [
       { key: 'title', label: 'Action' }, { key: 'type', label: 'Type' }, { key: 'source', label: 'Source' },
       { key: 'status', label: 'Status' }, { key: 'priority', label: 'Priority' }, { key: 'raised_by', label: 'Raised By' },
       { key: 'raised_date', label: 'Raised Date' }, { key: 'nominated_to', label: 'Nominated To' },
       { key: 'target_date', label: 'Target Date' }, { key: 'outcome', label: 'Outcome' },
-    ], page.items);
+    ], rows);
   };
 
   return (

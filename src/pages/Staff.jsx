@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Plus, Search, Trash2, UserRound, Users, ShieldCheck, Trophy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import CertificationOverview from '@/components/staff/CertificationOverview';
 import StaffRecognition from '@/components/staff/StaffRecognition';
 
@@ -64,7 +64,7 @@ export default function Staff() {
   };
 
   const exportRegister = async () => {
-    const page = await base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.StaffProfile, {}, 'full_name');
     downloadCsv('Staff-Register.csv', [
       { key: 'full_name', label: 'Full Name' }, { key: 'employee_number', label: 'Employee Number' },
       { key: 'email', label: 'Email' }, { key: 'phone', label: 'Phone' },
@@ -73,7 +73,7 @@ export default function Staff() {
       { key: 'start_date', label: 'Start Date' }, { key: 'supervisor', label: 'Supervisor' },
       { key: 'emergency_contact', label: 'Emergency Contact' }, { key: 'emergency_contact_phone', label: 'Emergency Contact Phone' },
       { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   return (

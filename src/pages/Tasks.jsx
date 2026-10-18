@@ -11,7 +11,7 @@ import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TodoBoard from '@/components/communications/TodoBoard';
 import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download, Archive, X } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 
 const TYPES = ['Review Reminder', 'Training Renewal', 'Policy Review', 'Incident Action', 'Audit Action', 'General'];
@@ -117,14 +117,14 @@ export default function Tasks() {
   const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.Task.delete(t.id); load(); } };
 
   const exportTasks = async () => {
-    const page = await base44.entities.Task.filter({}, { sort: '-due_date', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Task, {}, '-due_date');
     downloadCsv('Task-Register.csv', [
       { key: 'title', label: 'Task' }, { key: 'task_type', label: 'Type' },
       { key: 'assigned_to', label: 'Assigned To' }, { key: 'assigned_email', label: 'Assigned Email' },
       { key: 'due_date', label: 'Due Date' }, { key: 'status', label: 'Status' },
       { key: 'priority', label: 'Priority' }, { key: 'estimated_hours', label: 'Estimated Hours' },
       { key: 'completed_date', label: 'Completed Date' }, { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   const runAutomations = async () => {
