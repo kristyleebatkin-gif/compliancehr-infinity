@@ -45,12 +45,30 @@ export default async function(req) {
           ? `expires in ${days} day${days === 1 ? '' : 's'}`
           : `is OVERDUE by ${Math.abs(days)} day${Math.abs(days) === 1 ? '' : 's'}`;
       try {
-        await service.integrations.Core.SendEmail({
-          to,
-          from_name: 'ComplianceHR Portal',
-          subject: `[Action needed] ${task.task_type || 'Compliance'} task ${when}: ${String(task.title || '').slice(0, 100)}`,
-          body: `Compliance task alert\n\nTask: ${task.title || ''}\nType: ${task.task_type || '-'}\nPriority: ${task.priority || '-'}\nStatus: ${task.status || '-'}\nDue date: ${task.due_date} (this task ${when})\n\n${task.notes ? `Notes: ${task.notes}\n\n` : ''}Open your tasks here: ${APP_URL}/tasks\n\nPlease complete the task or update its status in the app so the register stays audit-ready.`,
-        });
+        const subject = `[Action needed] ${task.task_type || 'Compliance'} task ${when}: ${String(task.title || '').slice(0, 100)}`;
+        const body = `Compliance task alert\n\nTask: ${task.title || ''}\nType: ${task.task_type || '-'}\nPriority: ${task.priority || '-'}\nStatus: ${task.status || '-'}\nDue date: ${task.due_date} (this task ${when})\n\n${task.notes ? `Notes: ${task.notes}\n\n` : ''}Open your tasks here: ${APP_URL}/tasks\n\nPlease complete the task or update its status in the app so the register stays audit-ready.`;
+
+        await service.integrations.Core.SendEmail({ to, from_name: 'ComplianceHR Portal', subject, body });
+
+        // Track the reminder in the Communication Centre (once per task per day).
+        const alreadyLogged = await service.entities.CommunicationEntry.filter(
+          { subject, entry_date: today }, { limit: 1 },
+        );
+        if (!(alreadyLogged.items || []).length) {
+          await service.entities.CommunicationEntry.create({
+            entry_kind: 'Message',
+            person_type: 'Employee',
+            attention: task.assigned_to || '',
+            subject,
+            body,
+            entry_date: today,
+            entry_time: new Date().toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane', hour12: false }).slice(0, 5),
+            recipients_json: JSON.stringify([{ name: task.assigned_to || '', email: to }]),
+            sender_name: 'Automated Compliance Reminder',
+            sender_email: 'system@compliancehr-portal',
+            module: 'Tasks',
+          });
+        }
         sent += 1;
       } catch (error) {
         failures.push(String(error?.message || error));
