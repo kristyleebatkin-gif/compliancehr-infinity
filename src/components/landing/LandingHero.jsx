@@ -54,8 +54,7 @@ export default function LandingHero() {
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            ComplianceHR Infinitely
-            <span className="hidden sm:inline">&nbsp;· Complete Control. Greater Confidence. Brighter Success.</span>
+            ComplianceHR Infinity
           </div>
 
           <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
@@ -68,7 +67,7 @@ export default function LandingHero() {
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
-            ComplianceHR empowers you to achieve an impossible quality and impossible standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
+            ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -76,7 +75,7 @@ export default function LandingHero() {
               {authed ? 'Go to Dashboard' : 'Get started free'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-            <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View all quick start guide</a>
+            <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View the quick start guide</a>
           </div>
           <p className="mt-5 text-[13px] font-medium tracking-wide text-foreground/45">No credit card required · 14-day free trial · Set up in minutes</p>
 

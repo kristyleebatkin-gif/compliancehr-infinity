@@ -23,11 +23,9 @@ export default function LandingFooter() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 shadow-md">
-                <span className="text-sm font-bold tracking-tight text-white">CH</span>
-              </div>
+              <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-9 w-9 rounded-xl bg-white object-contain shadow-md ring-1 ring-white/20" />
               <span className="font-editorial text-xl font-semibold tracking-tight text-white">
-                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR Infinitely</span>
+                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR Infinity</span>
               </span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/55">Complete Control. Greater Confidence. Brighter Success.</p>
@@ -44,7 +42,7 @@ export default function LandingFooter() {
           ))}
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 sm:flex-row">
-          <p className="text-xs text-white/40">© {new Date().getFullYear()} ComplianceHR Infinitely. All rights reserved.</p>
+          <p className="text-xs text-white/40">© {new Date().getFullYear()} ComplianceHR Infinity. All rights reserved.</p>
           <p className="text-xs text-white/40">Built for NDIS & community service providers</p>
         </div>
       </div>
