@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays } from 'lucide-react';
+import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame } from 'lucide-react';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
 import ShiftForm from '@/components/rostering/ShiftForm';
@@ -18,6 +18,7 @@ import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
+import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
 import CalendarSyncDialog from '@/components/rostering/CalendarSyncDialog';
 import { RefreshCw } from 'lucide-react';
 import { expandRecurrence } from '@/lib/rostering';
@@ -248,6 +249,7 @@ export default function Rostering() {
           <TabsTrigger value="calendar"><CalendarDays className="mr-1.5 h-4 w-4" /> Calendar</TabsTrigger>
           <TabsTrigger value="shifts"><CalendarClock className="mr-1.5 h-4 w-4" /> Shift register</TabsTrigger>
           <TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
+          <TabsTrigger value="coverage"><Flame className="mr-1.5 h-4 w-4" /> Coverage map</TabsTrigger>
           <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>
           <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
           <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
@@ -330,6 +332,10 @@ export default function Rostering() {
 
         <TabsContent value="approvals" className="mt-4">
           {loading ? <Loading /> : <ApprovalsPanel shifts={approvalShifts} onChanged={refresh} />}
+        </TabsContent>
+
+        <TabsContent value="coverage" className="mt-4">
+          <CoverageHeatMap />
         </TabsContent>
 
         <TabsContent value="availability" className="mt-4">

@@ -16,6 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
+import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, FileUp, Loader2 } from 'lucide-react';
@@ -174,6 +175,8 @@ export default function InvoicingCentre() {
           <Card key={s.label}><CardContent className="p-4"><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></CardContent></Card>
         ))}
       </div>
+
+      <AgedReceivables invoices={invoices} onChanged={load} />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

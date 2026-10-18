@@ -1,0 +1,47 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "daily_brief",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "build_brief": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "dailyBrief",
+            "args": {
+              "notify": true
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Build and email the morning brief",
+            "description": "Org-wide snapshot for administrators"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Weekday 7am morning brief of expiries, overdue tasks and unfilled shifts, emailed to administrators",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * 1-5",
+      "one_time_date": null,
+      "timezone": "Australia/Brisbane",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Daily Brief"
+}
