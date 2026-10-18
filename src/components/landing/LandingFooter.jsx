@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function LandingFooter() {
   const cols = [
     { title: 'Platform', links: ['Staff Tracking', 'Participant Records', 'Incidents', 'Risk Management', 'Training', 'Audit Centre'] },
-    { title: 'Company', links: ['About', 'Contact', 'Privacy Policy', 'Terms of Service'] },
+    { title: 'Company', links: ['About', 'Contact'] },
     { title: 'Resources', links: ['Help Centre', 'NDIS Compliance Guide', 'Documentation', 'Security'] },
     { title: 'Get Involved', links: ['Volunteer With Us', 'Raise a Complaint'] },
   ];
@@ -24,10 +24,8 @@ export default function LandingFooter() {
       'NDIS Compliance Guide': '/ndis-portal',
       'Documentation': '/user-guides',
       'Security': '/compliance',
-      'About': '#quick-start',
-      'Contact': '#pricing',
-      'Privacy Policy': '#benefits',
-      'Terms of Service': '#benefits',
+      'About': '#why',
+      'Contact': '/help',
     };
     return paths[link] || '#features';
   };

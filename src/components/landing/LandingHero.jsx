@@ -23,7 +23,7 @@ export default function LandingHero() {
       icon: BarChart3,
       title: 'Operations connected',
       reasons: [
-        'Rosters, shift notes, invoices and timesheets in one flow',
+        'Rosters, shift notes, invoices and payroll in one flow',
         'Registers, alerts and reminders run themselves',
         'Every action and conversation documented as it happens',
         'Quotes, receipts, assets and purchase orders reconciled',
