@@ -1,6 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter } from '@/lib/companyBranding';
-import { drawFormHeader } from '@/lib/formDocumentStyles';
+import { drawFormHeader, drawFieldRows, drawSectionHeading } from '@/lib/formDocumentStyles';
+import { ensurePdfSpace } from '@/lib/pdfPageLayout';
+import { drawPdfParagraph as paragraph, drawPdfBullets as bullets } from '@/lib/pdfFlowText';
 
 /**
  * High-quality, professionally styled master templates for the signature
@@ -21,95 +23,20 @@ function startDocument(title, subtitle, code, docType = 'Form') {
 }
 
 function guard(doc, y, needed) {
-  if (y > doc.internal.pageSize.getHeight() - needed) {
-    doc.addPage();
-    return 54;
-  }
-  return y;
-}
-
-function paragraph(doc, y, text, indent = 40) {
-  y = guard(doc, y, 46);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(...INK);
-  const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - indent - 45);
-  for (const line of lines) {
-    y = guard(doc, y, 40);
-    doc.text(line, indent, y);
-    y += 13.5;
-  }
-  return y + 5;
-}
-
-function bullets(doc, y, items, indent = 40) {
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(...INK);
-  for (const item of items) {
-    const lines = doc.splitTextToSize(item, doc.internal.pageSize.getWidth() - indent - 60);
-    for (let i = 0; i < lines.length; i++) {
-      y = guard(doc, y, 40);
-      if (i === 0) {
-        doc.setFillColor(124, 58, 237);
-        doc.circle(indent + 5, y - 3, 1.8, 'F');
-      }
-      doc.text(lines[i], indent + 14, y);
-      y += 13.5;
-    }
-  }
-  return y + 5;
+  return ensurePdfSpace(doc, y, needed);
 }
 
 function section(doc, y, number, heading, body = {}) {
-  y = guard(doc, y, 70);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10.5);
-  doc.setTextColor(...VIOLET);
-  doc.text(`${number}. ${heading}`, 40, y);
-  y += 6;
-  doc.setDrawColor(124, 58, 237);
-  doc.setLineWidth(0.8);
-  doc.line(40, y, 150, y);
-  doc.setLineWidth(0.5);
-  y += 13;
+  y = drawSectionHeading(doc, y, `${number}. ${heading}`);
   for (const text of body.paragraphs || []) y = paragraph(doc, y, text);
   if (body.bullets) y = bullets(doc, y, body.bullets);
-  if (body.fields) {
-    for (const field of body.fields) {
-      y = guard(doc, y, 36);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9);
-      doc.setTextColor(...INK);
-      doc.text(`${field}:`, 40, y);
-      doc.setDrawColor(190);
-      doc.line(40 + Math.min(doc.getTextWidth(`${field}:`) + 8, 220), y, doc.internal.pageSize.getWidth() - 45, y);
-      y += 22;
-    }
-    y += 4;
-  }
+  if (body.fields) y = drawFieldRows(doc, y, body.fields.map((label) => ({ label, multiline: /duties|supports|terms|requirements/i.test(label) })));
   return y;
 }
 
 function signatures(doc, y, pairs) {
-  y = guard(doc, y, 40 + pairs.length * 66);
-  y += 10;
-  doc.setDrawColor(203, 213, 225);
-  doc.line(40, y, doc.internal.pageSize.getWidth() - 40, y);
-  y += 18;
-  for (const pair of pairs) {
-    const half = (doc.internal.pageSize.getWidth() - 90) / 2;
-    for (let i = 0; i < pair.length; i++) {
-      const x = 40 + i * (half + 10);
-      doc.setDrawColor(120);
-      doc.line(x, y, x + half, y);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.setTextColor(...INK);
-      doc.text(pair[i], x, y + 12);
-    }
-    y += 52;
-  }
+  y = drawSectionHeading(doc, y, 'Authorisation');
+  for (const pair of pairs) y = drawFieldRows(doc, y, pair.map((label) => ({ label })));
   return y;
 }
 
@@ -424,28 +351,7 @@ function buildPositionDescription(code) {
   );
   let y = startY;
 
-  // Position summary grid
-  y = guard(doc, y, 130);
-  doc.setFillColor(249, 247, 255);
-  doc.roundedRect(40, y - 8, doc.internal.pageSize.getWidth() - 80, 84, 5, 5, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
-  doc.setTextColor(...VIOLET);
-  const gridLabels = [
-    ['Position title', 'Department / service'],
-    ['Reports to', 'Award and classification'],
-    ['Employment type', 'Date approved'],
-  ];
-  let gy = y + 8;
-  for (const row of gridLabels) {
-    doc.text(`${row[0]}:`, 56, gy);
-    doc.text(`${row[1]}:`, 310, gy);
-    doc.setDrawColor(180);
-    doc.line(56 + doc.getTextWidth(`${row[0]}:`) + 4, gy, 290, gy);
-    doc.line(310 + doc.getTextWidth(`${row[1]}:`) + 4, gy, doc.internal.pageSize.getWidth() - 56, gy);
-    gy += 24;
-  }
-  y += 92;
+  y = drawFieldRows(doc, y, ['Position title', 'Department / service', 'Reports to', 'Award and classification', 'Employment type', 'Date approved'].map((label) => ({ label })));
 
   y = section(doc, y, 1, 'Purpose of the position', {
     paragraphs: [

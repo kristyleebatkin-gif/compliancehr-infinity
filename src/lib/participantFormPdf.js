@@ -19,6 +19,7 @@ export async function buildFilledFormDoc({
   completedBy = '',
   completedAt = '',
   purpose = '',
+  tableValues = [],
   declaration = true,
 }) {
   await loadCompanyBranding().catch(() => {});
@@ -27,7 +28,7 @@ export async function buildFilledFormDoc({
   let y = drawFormHeader(doc, { title, code, subtitle, completedBy, docType: 'Form' });
   y = drawFormNotice(doc, y, { purpose });
   y = drawFieldRows(doc, y, fields, values);
-  if (columns) y = drawRegisterTable(doc, y, columns, { rows });
+  if (columns?.length) y = drawRegisterTable(doc, y, columns, { rows, values: tableValues });
   if (declaration) y = drawDeclaration(doc, y);
   y = drawSignatures(doc, y, { completedBy, completedAt });
 

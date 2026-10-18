@@ -2,45 +2,10 @@ import { jsPDF } from 'jspdf';
 import { drawFormHeader, drawSectionHeading, drawFieldRows, drawSignatures } from '@/lib/formDocumentStyles';
 import { drawDocumentFooter } from '@/lib/companyBranding';
 
-const MARGIN = 40;
+import { drawPdfParagraph, drawPdfBullets } from '@/lib/pdfFlowText';
 
-function drawParagraph(doc, y, text) {
-  const pageH = doc.internal.pageSize.getHeight();
-  const pageW = doc.internal.pageSize.getWidth();
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(30, 30, 45);
-  const lines = doc.splitTextToSize(String(text || ''), pageW - MARGIN * 2);
-  for (const line of lines) {
-    if (y > pageH - 64) { doc.addPage(); y = 54; }
-    doc.text(line, MARGIN, y);
-    y += 13;
-  }
-  return y + 8;
-}
-
-function drawBullets(doc, y, text) {
-  const pageH = doc.internal.pageSize.getHeight();
-  const pageW = doc.internal.pageSize.getWidth();
-  const lines = String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(30, 30, 45);
-  for (const line of lines) {
-    const wrapped = doc.splitTextToSize(line, pageW - MARGIN * 2 - 14);
-    for (let i = 0; i < wrapped.length; i++) {
-      if (y > pageH - 64) { doc.addPage(); y = 54; }
-      if (i === 0) {
-        doc.setFillColor(124, 58, 237);
-        doc.circle(MARGIN + 3, y - 3, 1.6, 'F');
-      }
-      doc.text(wrapped[i], MARGIN + 12, y);
-      y += 13;
-    }
-    y += 2;
-  }
-  return y + 6;
-}
+function drawParagraph(doc, y, text) { return drawPdfParagraph(doc, y, text); }
+function drawBullets(doc, y, text) { return drawPdfBullets(doc, y, String(text || '').split('\n').map((line) => line.trim()).filter(Boolean)); }
 
 const fmt = (d) => (d ? String(d).slice(0, 10) : 'Not set');
 

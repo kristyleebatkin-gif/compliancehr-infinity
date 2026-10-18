@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 const STORAGE_KEY = 'compliancehr_company_branding';
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 const DEFAULTS = {
-  companyName: 'ComplianceHR',
+  companyName: 'ComplianceHR Infinity',
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
   logoUrl: '',
   logoDataUrl: '',
@@ -175,26 +175,25 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(fontSize);
   doc.setTextColor(15, 23, 42);
-  doc.text(branding.companyName, textX, y, { maxWidth });
-  // Slogan sits clearly below the name with even, generous line spacing.
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(Math.max(7, fontSize * 0.48));
-  doc.setTextColor(71, 85, 105);
-  doc.text(branding.slogan, textX, y + fontSize * 0.95, { maxWidth });
-  // Brand accent rule, centred between the slogan and the address line.
-  const barY = y + fontSize * 1.55;
-  doc.setFillColor(37, 99, 235);
-  doc.rect(textX, barY, 18, 2.5, 'F');
-  doc.setFillColor(124, 58, 237);
-  doc.rect(textX + 18, barY, 18, 2.5, 'F');
-  doc.setFillColor(236, 72, 153);
-  doc.rect(textX + 36, barY, 18, 2.5, 'F');
+  const availableWidth = Math.min(maxWidth, doc.internal.pageSize.getWidth() - textX - 40);
+  const nameLines = doc.splitTextToSize(branding.companyName, availableWidth);
+  doc.text(nameLines, textX, y, { lineHeightFactor: 1.2 });
+  let bottomY = y + (nameLines.length - 1) * fontSize * 1.2 + 15;
+  const sloganSize = Math.max(7.5, fontSize * 0.5);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(sloganSize); doc.setTextColor(71, 85, 105);
+  const sloganLines = doc.splitTextToSize(branding.slogan, availableWidth);
+  doc.text(sloganLines, textX, bottomY, { lineHeightFactor: 1.35 });
+  bottomY += sloganLines.length * sloganSize * 1.35 + 4;
   if (branding.addressLine) {
-    doc.setFontSize(Math.max(6, fontSize * 0.4));
-    doc.setTextColor(120, 130, 145);
-    doc.text(branding.addressLine, textX, barY + fontSize * 1.25, { maxWidth });
+    doc.setFontSize(7); doc.setTextColor(100, 116, 139);
+    const addressLines = doc.splitTextToSize(branding.addressLine, availableWidth);
+    doc.text(addressLines, textX, bottomY, { lineHeightFactor: 1.35 });
+    bottomY += addressLines.length * 9.5 + 5;
   }
-  return { ...branding, textX };
+  for (const [offset, color] of [[0, [37, 99, 235]], [18, [124, 58, 237]], [36, [236, 72, 153]]]) {
+    doc.setFillColor(...color); doc.rect(textX + offset, bottomY, 18, 2.5, 'F');
+  }
+  return { ...branding, textX, bottomY: bottomY + 3 };
 }
 
 export function drawBlankBusinessBranding(doc, x, y) {
@@ -256,26 +255,15 @@ export function drawDocumentFooter(doc, {
         // Preserve the text footer if the cached logo format is unsupported.
       }
     }
-    // Three evenly spaced rows: name, contact details, then the slogan.
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
-    doc.setTextColor(30, 41, 59);
-    doc.text('ComplianceHR Infinity', footerTextX, pageH - 30, { maxWidth: pageW - footerTextX - margin - 70 });
-    const addressParts = [branding.addressLine, branding.abn && `ABN ${branding.abn}`, branding.phone].filter(Boolean).join('  ·  ');
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
-    doc.setTextColor(100, 116, 139);
-    if (addressParts) {
-      doc.text(addressParts, footerTextX, pageH - 21, { maxWidth: pageW - footerTextX - margin - 70 });
-    }
-    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 21, { align: 'right' });
-    if (descriptor) {
-      doc.setFontSize(7.5);
-      doc.text(descriptor, pageW - margin, pageH - 30, { align: 'right', maxWidth: pageW - footerTextX - margin - 90 });
-    }
+    // Separate columns keep the brand, document identifier and page number apart.
+    const available = pageW - footerTextX - margin;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(30, 41, 59);
+    doc.text('ComplianceHR Infinity', footerTextX, pageH - 30);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(100, 116, 139);
+    if (descriptor) doc.text(descriptor, pageW - margin, pageH - 30, { align: 'right', maxWidth: Math.max(70, available - 150) });
     doc.setFont('helvetica', 'italic');
-    doc.setFontSize(7.5);
-    doc.setTextColor(100, 116, 139);
-    doc.text(slogan, footerTextX, pageH - 12, { maxWidth: pageW - footerTextX - margin });
+    doc.text(slogan, footerTextX, pageH - 17, { maxWidth: available - 75 });
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 17, { align: 'right' });
   }
 }

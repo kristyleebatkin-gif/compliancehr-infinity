@@ -13,45 +13,13 @@ import {
  * tables) plus per-document template structure in TEMPLATE_META below.
  */
 
-const M = 40;
-
-function paragraph(doc, y, text) {
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(51, 51, 71);
-  const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - M * 2);
-  for (const line of lines) {
-    if (y > doc.internal.pageSize.getHeight() - 80) { doc.addPage(); y = 54; }
-    doc.text(line, M, y);
-    y += 13;
-  }
-  return y + 5;
-}
-
-function bulletList(doc, y, items) {
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(51, 51, 71);
-  for (const item of items) {
-    const lines = doc.splitTextToSize(item, doc.internal.pageSize.getWidth() - M * 2 - 14);
-    for (let i = 0; i < lines.length; i++) {
-      if (y > doc.internal.pageSize.getHeight() - 80) { doc.addPage(); y = 54; }
-      if (i === 0) {
-        doc.setFillColor(124, 58, 237);
-        doc.circle(M + 4, y - 3, 1.6, 'F');
-      }
-      doc.text(lines[i], M + 14, y);
-      y += 13;
-    }
-    y += 3;
-  }
-  return y + 4;
-}
+import { drawPdfParagraph as paragraph, drawPdfBullets as bulletList } from '@/lib/pdfFlowText';
+import { ensurePdfSpace } from '@/lib/pdfPageLayout';
 
 function proseSections(doc, y, sections) {
   for (let s = 0; s < sections.length; s++) {
     const sec = sections[s];
-    if (y > doc.internal.pageSize.getHeight() - 140) { doc.addPage(); y = 54; }
+    y = ensurePdfSpace(doc, y, 100);
     y = drawSectionHeading(doc, y, `${s + 1}. ${sec.heading}`);
     for (const text of sec.paragraphs || []) y = paragraph(doc, y, text);
     if (sec.bullets) y = bulletList(doc, y, sec.bullets);
@@ -64,22 +32,7 @@ function proseSections(doc, y, sections) {
 }
 
 function signatureRows(doc, y, rows) {
-  for (const [left, right] of rows) {
-    if (y > doc.internal.pageSize.getHeight() - 90) { doc.addPage(); y = 54; }
-    y += 16;
-    const half = (doc.internal.pageSize.getWidth() - M * 2 - 20) / 2;
-    doc.setDrawColor(120);
-    doc.setLineWidth(0.75);
-    doc.line(M, y, M + half, y);
-    doc.line(M + half + 20, y, M + half + 20 + half, y);
-    doc.setLineWidth(0.5);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
-    doc.setTextColor(51, 51, 71);
-    doc.text(left, M, y + 12);
-    doc.text(right, M + half + 20, y + 12);
-    y += 36;
-  }
+  for (const pair of rows) y = drawFieldRows(doc, y, pair.map((label) => ({ label })));
   return y;
 }
 
@@ -289,17 +242,20 @@ export async function buildBrandedTemplatePdf({
   rows = 12,
   declaration = true,
   signoff = [['Participant / Representative (Signature)', 'Date']],
+  values = {}, tableValues = [], completedBy = '', completedAt = '',
 }) {
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, docType, subtitle });
+  let y = drawFormHeader(doc, { title, code, docType, subtitle, completedBy });
   y = drawFormNotice(doc, y, { purpose });
   if (sections.length) y = proseSections(doc, y, sections);
-  if (fields.length) y = drawFieldRows(doc, y, fields);
-  if (columns && columns.length) y = drawRegisterTable(doc, y, columns, { rows });
+  if (fields.length) y = drawFieldRows(doc, y, fields, values);
+  if (columns?.length) y = drawRegisterTable(doc, y, columns, { rows, values: tableValues });
   if (declaration) y = drawDeclaration(doc, y);
-  y = signatureRows(doc, y, signoff);
+  if (completedBy) {
+    y = drawFieldRows(doc, y, [{ label: 'Completed by' }, { label: 'Completed on' }], { 'Completed by': completedBy, 'Completed on': completedAt });
+  } else y = signatureRows(doc, y, signoff);
 
   drawDocumentFooter(doc, { title, code });
   return doc;

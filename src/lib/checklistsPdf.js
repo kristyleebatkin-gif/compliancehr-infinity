@@ -8,6 +8,8 @@ import {
   loadCompanyBranding,
 } from '@/lib/companyBranding';
 import { downloadPdfDocument } from '@/lib/documentDownloads';
+import { drawFormHeader, drawFieldRows, drawRegisterTable } from '@/lib/formDocumentStyles';
+import { ensurePdfSpace } from '@/lib/pdfPageLayout';
 
 const BRAND = [49, 46, 129];
 const ACCENT = [37, 99, 235];
@@ -82,28 +84,10 @@ export function buildChecklistPdf({
     doc.addField(field);
   };
 
-  const drawContinuationHeader = () => {
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.setTextColor(...INK);
-    doc.text(title, margin, 40, { maxWidth: contentW - 100 });
-    if (code) {
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(...ACCENT);
-      doc.text(code, pageW - margin, 40, { align: 'right' });
-    }
-    doc.setDrawColor(...BORDER);
-    doc.line(margin, 48, pageW - margin, 48);
-    y = 64;
-  };
-
   const ensure = (need) => {
-    if (y > pageH - 72 - need) {
-      doc.addPage();
-      drawContinuationHeader();
-      return true;
-    }
-    return false;
+    const previousPage = doc.internal.getCurrentPageInfo().pageNumber;
+    y = ensurePdfSpace(doc, y, need);
+    return previousPage !== doc.internal.getCurrentPageInfo().pageNumber;
   };
 
   const drawSectionHeading = (label, followingHeight = 0) => {
@@ -205,39 +189,9 @@ export function buildChecklistPdf({
     y += rowH;
   };
 
-  if (columns && columns.length) {
-    if (fields?.length) y += 2;
-    drawSectionHeading('Register entries', 60);
-    const cols = columns;
-    const colCount = cols.length;
-    const colW = contentW / colCount;
-    const rowH = columns.length > 8 ? 32 : 28;
-    drawTableHeader(cols, colW, rowH);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
-    doc.setTextColor(...INK);
-    const rowCount = Math.max(rows, tableRows.length);
-    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
-      if (ensure(rowH)) drawTableHeader(cols, colW, rowH);
-      if (rowIndex % 2 === 1) {
-        doc.setFillColor(...SURFACE);
-        doc.rect(margin, y, contentW, rowH, 'F');
-      }
-      doc.setDrawColor(...BORDER);
-      doc.rect(margin, y, contentW, rowH, 'S');
-      for (let columnIndex = 0; columnIndex < colCount; columnIndex += 1) {
-        doc.line(margin + columnIndex * colW, y, margin + columnIndex * colW, y + rowH);
-        addTextField(
-          margin + columnIndex * colW + 2,
-          y + 2,
-          colW - 4,
-          rowH - 4,
-          false,
-          tableRows[rowIndex]?.[columnIndex] || '',
-        );
-      }
-      y += rowH;
-    }
+  if (columns?.length) {
+    drawSectionHeading('Register entries', 90);
+    y = drawRegisterTable(doc, y, columns, { rows, values: tableRows, interactive: true });
   } else if (!fields?.length && items && items.length) {
     drawSectionHeading('Checklist', 42);
     doc.setFontSize(9.5);
@@ -259,21 +213,9 @@ export function buildChecklistPdf({
     }
   }
 
-  // Sign-off
-  const signoffGap = 12;
-  const signoffWidth = (contentW - signoffGap * (signoffFields.length - 1)) / signoffFields.length;
-  const signoffLabelLines = signoffFields.map((label) => doc.splitTextToSize(label, signoffWidth));
-  const signoffLabelH = Math.max(...signoffLabelLines.map((lines) => lines.length)) * 9;
-  y += 8;
-  drawSectionHeading('Completion and authorisation', signoffLabelH + 36);
-  signoffFields.forEach((label, index) => {
-    const x = margin + index * (signoffWidth + signoffGap);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
-    doc.setTextColor(...MUTED);
-    doc.text(signoffLabelLines[index], x, y);
-    addTextField(x, y + signoffLabelH + 4, signoffWidth, 28, false, signoffValues[index] || '');
-  });
+  // Sign-off uses the same solid-outlined answer boxes.
+  drawSectionHeading('Completion and authorisation', 90);
+  y = drawFieldRows(doc, y, signoffFields.map((label, index) => ({ label, value: String(signoffValues[index] ?? '') })), {}, { interactive: true });
 
   // Footer
   drawDocumentFooter(doc, {
