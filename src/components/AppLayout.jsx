@@ -110,7 +110,7 @@ export default function AppLayout() {
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-5 py-5">
-        <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/ce2c32d94_generated_image.png" alt="ComplianceHR Infinitely" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
+        <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
         <div className="min-w-0">
           <div className="text-[15px] font-bold tracking-tight font-display">ComplianceHR Infinitely</div>
           <div className="mt-0.5 text-[10px] font-medium leading-snug text-brand/60 line-clamp-2">Complete Control. Greater Confidence. Brighter Success.</div>
@@ -223,8 +223,8 @@ export default function AppLayout() {
               <Menu className="h-5 w-5" />
             </button>
             <Image
-              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/ce2c32d94_generated_image.png"
-              alt="ComplianceHR Infinitely"
+              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png"
+              alt="ComplianceHR"
               fittingType="fit"
               className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
             />
