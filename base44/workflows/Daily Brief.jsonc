@@ -34,7 +34,7 @@
       "schedule_mode": "recurring",
       "cron_expression": "0 7 * * 1-5",
       "one_time_date": null,
-      "timezone": "Australia/Brisbane",
+      "timezone": "Australia/Sydney",
       "interval_value": null,
       "interval_unit": null,
       "interval_anchor": null,
