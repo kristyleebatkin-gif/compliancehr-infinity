@@ -1,10 +1,10 @@
 import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'compliancehr_company_branding';
-export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinitely | Complete Control. Greater Confidence. Brighter Success.';
+export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 const DEFAULTS = {
   companyName: 'ComplianceHR',
-  slogan: COMPLIANCE_HR_FOOTER,
+  slogan: 'Complete Control. Greater Confidence. Brighter Success.',
   logoUrl: '',
   logoDataUrl: '',
   addressLine: '',
@@ -51,7 +51,13 @@ async function logoUrlToDataUrl(url) {
 
 export function getCompanyBranding() {
   try {
-    return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    // Older caches stored the slogan with the brand name prefixed; drop it so
+    // documents never print the name twice.
+    branding.slogan = String(branding.slogan || '')
+      .replace(/^ComplianceHR (Infinity|Infinitely)\s*[|·]\s*/i, '')
+      .trim() || DEFAULTS.slogan;
+    return branding;
   } catch {
     return DEFAULTS;
   }
@@ -170,21 +176,24 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   doc.setFontSize(fontSize);
   doc.setTextColor(15, 23, 42);
   doc.text(branding.companyName, textX, y, { maxWidth });
+  // Slogan sits clearly below the name with even, generous line spacing.
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(Math.max(6.5, fontSize * 0.45));
+  doc.setFontSize(Math.max(7, fontSize * 0.48));
   doc.setTextColor(71, 85, 105);
-  doc.text(branding.slogan, textX, y + 13, { maxWidth });
-  if (branding.addressLine) {
-    doc.setFontSize(Math.max(6, fontSize * 0.38));
-    doc.setTextColor(120, 130, 145);
-    doc.text(branding.addressLine, textX, y + 30, { maxWidth });
-  }
+  doc.text(branding.slogan, textX, y + fontSize * 0.95, { maxWidth });
+  // Brand accent rule, centred between the slogan and the address line.
+  const barY = y + fontSize * 1.55;
   doc.setFillColor(37, 99, 235);
-  doc.rect(textX, y + 20, 18, 2.5, 'F');
+  doc.rect(textX, barY, 18, 2.5, 'F');
   doc.setFillColor(124, 58, 237);
-  doc.rect(textX + 18, y + 20, 18, 2.5, 'F');
+  doc.rect(textX + 18, barY, 18, 2.5, 'F');
   doc.setFillColor(236, 72, 153);
-  doc.rect(textX + 36, y + 20, 18, 2.5, 'F');
+  doc.rect(textX + 36, barY, 18, 2.5, 'F');
+  if (branding.addressLine) {
+    doc.setFontSize(Math.max(6, fontSize * 0.4));
+    doc.setTextColor(120, 130, 145);
+    doc.text(branding.addressLine, textX, barY + fontSize * 1.25, { maxWidth });
+  }
   return { ...branding, textX };
 }
 
@@ -218,29 +227,28 @@ export function drawDocumentFooter(doc, {
   const pages = doc.internal.getNumberOfPages();
   const descriptor = [confidential, title, code && `(${code})`].filter(Boolean).join(' | ');
   const branding = getCompanyBranding();
-  const footerTextX = branding.logoDataUrl ? margin + 22 : margin;
+  const footerTextX = branding.logoDataUrl ? margin + 24 : margin;
+  const slogan = branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.';
 
   for (let page = 1; page <= pages; page += 1) {
     doc.setPage(page);
-    doc.setDrawColor(203, 213, 225);
-    doc.line(margin, pageH - 42, pageW - margin, pageH - 42);
+    // Brand accent rule and a clean divider line to open the footer.
     doc.setFillColor(37, 99, 235);
-    doc.rect(margin, pageH - 46, 18, 2.5, 'F');
+    doc.rect(margin, pageH - 48, 18, 2.5, 'F');
     doc.setFillColor(124, 58, 237);
-    doc.rect(margin + 18, pageH - 46, 18, 2.5, 'F');
+    doc.rect(margin + 18, pageH - 48, 18, 2.5, 'F');
     doc.setFillColor(236, 72, 153);
-    doc.rect(margin + 36, pageH - 46, 18, 2.5, 'F');
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(100, 116, 139);
+    doc.rect(margin + 36, pageH - 48, 18, 2.5, 'F');
+    doc.setDrawColor(226, 232, 240);
+    doc.line(margin, pageH - 42, pageW - margin, pageH - 42);
     if (branding.logoDataUrl) {
       try {
         const properties = doc.getImageProperties(branding.logoDataUrl);
-        const ratio = Math.min(16 / properties.width, 16 / properties.height);
+        const ratio = Math.min(14 / properties.width, 14 / properties.height);
         doc.addImage(
           branding.logoDataUrl,
           margin,
-          pageH - 36,
+          pageH - 33,
           properties.width * ratio,
           properties.height * ratio,
         );
@@ -248,32 +256,26 @@ export function drawDocumentFooter(doc, {
         // Preserve the text footer if the cached logo format is unsupported.
       }
     }
+    // Three evenly spaced rows: name, contact details, then the slogan.
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
+    doc.setFontSize(8.5);
     doc.setTextColor(30, 41, 59);
-    doc.text(companyName, footerTextX, pageH - 32, { maxWidth: pageW - footerTextX - margin - 70 });
-    const addressParts = [branding.addressLine, branding.abn && `ABN ${branding.abn}`, branding.phone].filter(Boolean).join(' · ');
-    if (descriptor) {
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.setTextColor(100, 116, 139);
-      doc.text(descriptor, pageW - margin, pageH - 32, { align: 'right', maxWidth: pageW - footerTextX - margin - 90 });
-    }
-    if (addressParts) {
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7);
-      doc.setTextColor(100, 116, 139);
-      doc.text(addressParts, footerTextX, pageH - 22, { maxWidth: pageW - footerTextX - margin - 70 });
-    }
+    doc.text(companyName, footerTextX, pageH - 30, { maxWidth: pageW - footerTextX - margin - 70 });
+    const addressParts = [branding.addressLine, branding.abn && `ABN ${branding.abn}`, branding.phone].filter(Boolean).join('  ·  ');
     doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(100, 116, 139);
+    if (addressParts) {
+      doc.text(addressParts, footerTextX, pageH - 21, { maxWidth: pageW - footerTextX - margin - 70 });
+    }
+    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 21, { align: 'right' });
+    if (descriptor) {
+      doc.setFontSize(7.5);
+      doc.text(descriptor, pageW - margin, pageH - 30, { align: 'right', maxWidth: pageW - footerTextX - margin - 90 });
+    }
+    doc.setFont('helvetica', 'italic');
     doc.setFontSize(7.5);
     doc.setTextColor(100, 116, 139);
-    doc.text(`Page ${page} of ${pages}`, pageW - margin, pageH - 22, { align: 'right' });
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
-    doc.setTextColor(49, 46, 129);
-    doc.text(branding.slogan || COMPLIANCE_HR_FOOTER, footerTextX, pageH - 12, {
-      maxWidth: pageW - footerTextX - margin,
-    });
+    doc.text(slogan, footerTextX, pageH - 12, { maxWidth: pageW - footerTextX - margin });
   }
 }
