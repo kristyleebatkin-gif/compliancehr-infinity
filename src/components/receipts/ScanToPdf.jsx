@@ -107,7 +107,7 @@ export default function ScanToPdf({ open, onOpenChange }) {
           {pages.length > 0 && (
             <div>
               <p className="mb-2 text-xs font-semibold text-muted-foreground">{pages.length} page{pages.length === 1 ? '' : 's'} in the PDF</p>
-              <div className="grid max-h-44 grid-cols-4 gap-2 overflow-y-auto">
+              <div className="grid max-h-44 grid-cols-2 gap-2 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
                 {pages.map((p, i) => (
                   <div key={i} className="group relative overflow-hidden rounded-lg border border-border">
                     <img src={p.dataUrl} alt={`Page ${i + 1}`} className="h-20 w-full object-cover" />
