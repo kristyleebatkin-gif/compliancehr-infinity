@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
+import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -113,6 +114,7 @@ export default function HrHub() {
         <TabsList>
           <TabsTrigger value="leave">Leave requests</TabsTrigger>
           <TabsTrigger value="reviews">Performance reviews</TabsTrigger>
+          <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>
           <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>
         </TabsList>
 
@@ -219,6 +221,10 @@ export default function HrHub() {
               ))}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="performance" className="mt-4">
+          <AppraisalComplianceDashboard />
         </TabsContent>
 
         <TabsContent value="paperwork" className="mt-4">
