@@ -37,12 +37,18 @@ export default function EquipmentManuals() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.EquipmentManual.filter({}, { sort: 'title', limit: 300 });
+      const query = {};
+      if (category !== 'All') query.category = category;
+      const term = search.trim();
+      if (term) {
+        query.$or = ['title', 'equipment_name', 'manufacturer', 'model'].map((f) => ({ [f]: { $regex: term, $options: 'i' } }));
+      }
+      const page = await base44.entities.EquipmentManual.filter(query, { sort: 'title', limit: 300 });
       setManuals(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [search, category]);
 
   useEffect(() => { load(); }, [load]);
 

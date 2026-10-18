@@ -20,26 +20,26 @@ export default function AttentionPanel() {
     let alive = true;
     (async () => {
       try {
-        const [incidents, risks, eDocs] = await Promise.all([
-          base44.entities.Incident.filter({}, { sort: '-incident_date', limit: 500 }),
-          base44.entities.Risk.filter({}, { sort: '-created_date', limit: 500 }),
-          base44.entities.EmployeeDocument.filter({}, { sort: '-created_date', limit: 500 }),
+        const openStatus = { $nin: ['Resolved', 'Closed'] };
+        const in30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+        const [openIncCount, urgentIncCount, riskCount, expiringCount, urgentIncPage, highRiskPage] = await Promise.all([
+          base44.entities.Incident.count({ status: openStatus }),
+          base44.entities.Incident.count({ status: openStatus, severity: { $in: ['High', 'Critical'] } }),
+          base44.entities.Risk.count({ impact: 'High', likelihood: { $ne: 'Low' } }),
+          base44.entities.EmployeeDocument.count({ expiry_date: { $ne: '', $lte: in30 } }),
+          base44.entities.Incident.filter({ status: openStatus, severity: { $in: ['High', 'Critical'] } }, { sort: 'incident_date', limit: 6, fields: ['title', 'incident_date'] }),
+          base44.entities.Risk.filter({ impact: 'High', likelihood: { $ne: 'Low' } }, { sort: 'created_date', limit: 6, fields: ['title', 'review_date', 'created_date'] }),
         ]);
         if (!alive) return;
-        const incidentsList = incidents.items || [];
-        const risksList = risks.items || [];
-        const eDocsList = eDocs.items || [];
-
-        const openInc = incidentsList.filter(isOpenIncident);
-        const urgentInc = openInc.filter((i) => ['High', 'Critical'].includes(i.severity));
-        const openHighRisks = risksList.filter(isHighCriticalRisk);
-
-        const expiringDocs = eDocsList.filter((d) => d.expiry_date && withinDays(d.expiry_date, 30));
+        const openInc = { length: openIncCount };
+        const urgentInc = { length: urgentIncCount };
+        const openHighRisks = { length: riskCount };
+        const expiringDocs = { length: expiringCount };
 
         // Top urgent items (oldest first)
         const top = [
-          ...urgentInc.map((i) => ({ label: i.title || 'Untitled incident', to: '/incidents', tone: 'danger', date: i.incident_date })),
-          ...openHighRisks.map((r) => ({ label: r.title || 'High risk', to: '/risks', tone: 'danger', date: r.review_date || r.created_date })),
+          ...(urgentIncPage.items || []).map((i) => ({ label: i.title || 'Untitled incident', to: '/incidents', tone: 'danger', date: i.incident_date })),
+          ...(highRiskPage.items || []).map((r) => ({ label: r.title || 'High risk', to: '/risks', tone: 'danger', date: r.review_date || r.created_date })),
         ]
           .sort((a, b) => new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime())
           .slice(0, 6);
