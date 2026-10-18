@@ -29,6 +29,12 @@ import {
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import IntakeCaseForm, { IntakeReadinessPanel, SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
+import IntakeCaseList from '@/components/intake/IntakeCaseList';
+import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
+import IntakeCaseDocuments from '@/components/intake/IntakeCaseDocuments';
+import IntakeOnlineFormDialog from '@/components/intake/IntakeOnlineFormDialog';
+import IntakeAcknowledgementDialog from '@/components/intake/IntakeAcknowledgementDialog';
+import { TERMINAL_STATUSES } from '@/components/intake/intakeDisplay';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { SPECIAL_DOCUMENT_BUILDERS } from '@/lib/intakeSpecialDocuments';
 import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
@@ -199,21 +205,6 @@ const EMPLOYEE_BLANK = {
 };
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
-
-const TERMINAL_STATUSES = new Set(['Converted to Profile', 'Declined', 'Withdrawn']);
-
-const initials = (name) => String(name || '?').trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
-const scoreTone = (score) => (score >= 90 ? 'text-emerald-600' : score >= 50 ? 'text-amber-500' : 'text-rose-500');
-
-const STATUS_CLASS = {
-  Draft: 'bg-primary/10 text-primary',
-  'Information Required': 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300',
-  'Ready for Review': 'bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300',
-  Approved: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300',
-  'Converted to Profile': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300',
-  Declined: 'bg-rose-100 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300',
-  Withdrawn: 'bg-muted text-muted-foreground',
-};
 
 function mapStaffRole(employeeRole) {
   const value = String(employeeRole || '');
