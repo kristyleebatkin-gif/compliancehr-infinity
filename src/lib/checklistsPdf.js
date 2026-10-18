@@ -5,6 +5,7 @@ import {
   drawDocumentFooter,
   getCompanyBranding,
   hasConfiguredCompanyBranding,
+  loadCompanyBranding,
 } from '@/lib/companyBranding';
 import { downloadPdfDocument } from '@/lib/documentDownloads';
 
@@ -279,12 +280,14 @@ export function buildChecklistPdf({
   return doc;
 }
 
-export function downloadChecklistPdf(config) {
+export async function downloadChecklistPdf(config) {
+  await loadCompanyBranding().catch(() => {});
   const doc = buildChecklistPdf(config);
   downloadPdfDocument(doc, `${config.title}.pdf`);
 }
 
-export function openChecklistPdf(config) {
+export async function openChecklistPdf(config) {
+  await loadCompanyBranding().catch(() => {});
   const doc = buildChecklistPdf(config);
   downloadPdfDocument(doc, `${config.title}.pdf`);
 }

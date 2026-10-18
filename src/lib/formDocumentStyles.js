@@ -8,6 +8,16 @@ import { drawCompanyBranding } from '@/lib/companyBranding';
 
 export const HEADER_CLEARANCE = 56;
 
+/** Standard guidance, privacy and declaration wording carried on every form. */
+export const FORM_NOTICES = {
+  guidance:
+    'How to complete: fill in every section in full. Print clearly, or complete and sign online in the app. Attach certified supporting documents where requested and return the signed form to the Compliance Office for filing in the Document Vault.',
+  privacy:
+    'Privacy: personal information collected on this form is handled in line with the Australian Privacy Principles (Privacy Act 1988) and the NDIS Rules, and is used only to deliver safe, quality supports and maintain required records.',
+  declaration:
+    'Declaration: I declare the information provided in this form is true, complete and current to the best of my knowledge, and I consent to it being stored and used for the purposes described above.',
+};
+
 const PAGE_MARGIN = 40;
 
 function pageGuard(doc, y, needed) {
@@ -54,6 +64,61 @@ export function drawFormHeader(doc, { title, code = '', subtitle = 'ComplianceHR
   }
   y += 36;
   return y;
+}
+
+/** Tinted guidance panel: purpose line, completion instructions and privacy note. */
+export function drawFormNotice(doc, y, { purpose = '', guidance = FORM_NOTICES.guidance, privacy = FORM_NOTICES.privacy } = {}) {
+  const pageW = doc.internal.pageSize.getWidth();
+  const textW = pageW - PAGE_MARGIN * 2 - 28;
+  const purposeLines = purpose ? doc.splitTextToSize(purpose, textW) : [];
+  const guidanceLines = doc.splitTextToSize(guidance, textW);
+  const privacyLines = doc.splitTextToSize(privacy, textW);
+  const panelH = 26 + (purposeLines.length + guidanceLines.length + privacyLines.length) * 11 + 20;
+  y = pageGuard(doc, y, panelH + 20);
+  y += 12;
+  doc.setFillColor(248, 247, 254);
+  doc.setDrawColor(214, 205, 240);
+  doc.roundedRect(PAGE_MARGIN, y, pageW - PAGE_MARGIN * 2, panelH, 6, 6, 'FD');
+  doc.setFillColor(124, 58, 237);
+  doc.rect(PAGE_MARGIN, y, 4, panelH, 'F');
+  let ty = y + 20;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.setTextColor(76, 29, 149);
+  for (const line of purposeLines) { doc.text(line, PAGE_MARGIN + 18, ty); ty += 11; }
+  ty += 4;
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(71, 85, 105);
+  for (const line of guidanceLines) { doc.text(line, PAGE_MARGIN + 18, ty); ty += 11; }
+  ty += 4;
+  doc.setFontSize(7.5);
+  doc.setTextColor(110, 110, 130);
+  for (const line of privacyLines) { doc.text(line, PAGE_MARGIN + 18, ty); ty += 11; }
+  return y + panelH + 14;
+}
+
+/** Declaration statement panel shown above the authorisation signatures. */
+export function drawDeclaration(doc, y, text = FORM_NOTICES.declaration) {
+  const pageW = doc.internal.pageSize.getWidth();
+  const lines = doc.splitTextToSize(text, pageW - PAGE_MARGIN * 2 - 28);
+  const panelH = 24 + lines.length * 11 + 10;
+  y = pageGuard(doc, y, panelH + 20);
+  y += 12;
+  doc.setFillColor(255, 251, 235);
+  doc.setDrawColor(234, 217, 170);
+  doc.roundedRect(PAGE_MARGIN, y, pageW - PAGE_MARGIN * 2, panelH, 6, 6, 'FD');
+  doc.setFillColor(217, 139, 17);
+  doc.rect(PAGE_MARGIN, y, 4, panelH, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.setTextColor(120, 76, 6);
+  doc.text('DECLARATION', PAGE_MARGIN + 18, y + 17);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(110, 80, 20);
+  let ty = y + 32;
+  for (const line of lines) { doc.text(line, PAGE_MARGIN + 18, ty); ty += 11; }
+  return y + panelH + 12;
 }
 
 /** Violet section heading with accent rule. */

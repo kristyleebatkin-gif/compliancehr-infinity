@@ -736,7 +736,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     setSubmittingOnline(true);
     try {
       const { date, time } = businessDateTime();
-      const doc = buildFilledFormDoc({
+      const doc = await buildFilledFormDoc({
         title: onlineForm.docType,
         code: templateCodes[onlineForm.docType],
         subtitle: `${onlineForm.docType} - ${activeCase.applicant_name}`,
@@ -812,7 +812,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     try {
       const { date, time } = businessDateTime();
       const acknowledgedBy = user?.full_name || user?.email || 'Intake team';
-      const doc = buildFilledFormDoc({
+      const doc = await buildFilledFormDoc({
         title: ackForm.docType,
         code: templateCodes[ackForm.docType],
         subtitle: `${ackForm.docType} - ${activeCase.applicant_name}`,
