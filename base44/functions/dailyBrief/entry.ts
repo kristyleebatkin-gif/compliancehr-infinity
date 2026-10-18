@@ -93,7 +93,8 @@ export default async function(req) {
     };
 
     if (body.notify) {
-      const admins = await s.User.filter({ role: { $in: ['admin', 'Provider Administrator'] } }, { limit: 10, fields: ['email'] });
+      const adminsPage = await s.User.list({ limit: 500, fields: ['role', 'email'] });
+      const admins = { items: (adminsPage.items || []).filter((u) => ['admin', 'Provider Administrator'].includes(u.role)).slice(0, 10) };
       const html = briefEmailHtml(brief);
       await Promise.allSettled((admins.items || []).map((admin) =>
         base44.asServiceRole.integrations.Core.SendEmail({

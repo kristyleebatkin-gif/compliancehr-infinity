@@ -64,8 +64,8 @@ export default async function(req) {
     // Admin recipients: registered admin users plus staff flagged with admin app access.
     const adminMap = new Map();
     try {
-      const userPage = await service.entities.User.filter({ role: 'admin' }, { limit: 1000 });
-      for (const u of pageItems(userPage)) if (u.email) adminMap.set(String(u.email).toLowerCase(), u.email);
+      const userPage = await service.entities.User.list({ limit: 1000, fields: ['role', 'email'] });
+      for (const u of (userPage.items || []).filter((x) => x.role === 'admin')) if (u.email) adminMap.set(String(u.email).toLowerCase(), u.email);
     } catch (error) { /* fall through to staff admins */ }
     try {
       const staffAdminPage = await service.entities.StaffProfile.filter({ app_role: 'admin' }, { limit: 1000 });
