@@ -3,6 +3,7 @@ import DashboardCharts from './DashboardCharts';
 import AttentionPanel from './AttentionPanel';
 import ComplianceCompletionSummary from './ComplianceCompletionSummary';
 import ComplianceHealthDashboard from './ComplianceHealthDashboard';
+import ProviderKpiWidget from '@/components/ndis/ProviderKpiWidget';
 
 export default function AdminDashboard() {
   return (
@@ -12,6 +13,8 @@ export default function AdminDashboard() {
       <ComplianceCompletionSummary />
 
       <ComplianceHealthDashboard />
+
+      <ProviderKpiWidget />
 
       <DashboardCharts />
     </>
