@@ -11,6 +11,7 @@ import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck } fro
 import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
+import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -116,6 +117,7 @@ export default function HrHub() {
           <TabsTrigger value="reviews">Performance reviews</TabsTrigger>
           <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>
           <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>
+          <TabsTrigger value="file-completeness">File completeness</TabsTrigger>
         </TabsList>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
@@ -229,6 +231,10 @@ export default function HrHub() {
 
         <TabsContent value="paperwork" className="mt-4">
           <HrPaperworkPanel />
+        </TabsContent>
+
+        <TabsContent value="file-completeness" className="mt-4">
+          <StaffFileCompletenessWidget />
         </TabsContent>
       </Tabs>
     </div>
