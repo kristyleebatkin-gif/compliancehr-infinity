@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck } from 'lucide-react';
 
 export default function LandingFooter() {
   const cols = [
@@ -16,11 +15,11 @@ export default function LandingFooter() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10">
-                <ShieldCheck className="h-5 w-5 text-white" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 shadow-md">
+                <span className="text-sm font-bold tracking-tight text-white">CH</span>
               </div>
               <span className="font-editorial text-xl font-semibold tracking-tight text-white">
-                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
+                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR Infinitely</span>
               </span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/55">Comprehensive compliance management for disability and community service providers.</p>
