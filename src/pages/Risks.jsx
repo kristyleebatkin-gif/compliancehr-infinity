@@ -497,7 +497,7 @@ export default function Risks() {
             <h3 className="mb-4 text-lg font-semibold">{editing === 'new' ? 'Add Risk' : 'Edit Risk'}</h3>
             <form onSubmit={save} className="space-y-3">
               <Field label="Risk Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Report Type"><Select value={form.report_type || 'Risk'} onChange={(e) => set('report_type', e.target.value)}><option value="Risk">Risk Report</option><option value="Hazard">Hazard</option><option value="Near Miss">Near Miss</option></Select></Field>
                 <Field label="Risk ID"><TextInput value={form.risk_id || ''} onChange={(e) => set('risk_id', e.target.value)} /></Field>
               </div>
@@ -505,11 +505,11 @@ export default function Risks() {
               <Field label="Risks / Hazards Identified"><TextArea value={form.hazards_identified || ''} onChange={(e) => set('hazards_identified', e.target.value)} /></Field>
               <Field label="Risk Assessment"><TextArea value={form.risk_assessment || ''} onChange={(e) => set('risk_assessment', e.target.value)} placeholder="Who may be harmed, existing controls, likelihood, consequence and rating" /></Field>
               <Field label="Control Measures"><TextArea value={form.control_measures || ''} onChange={(e) => set('control_measures', e.target.value)} placeholder="Controls, responsible person, due date and monitoring arrangements" /></Field>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Category"><Select value={form.category} onChange={(e) => set('category', e.target.value)}>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
                 <Field label="Owner"><TextInput value={form.owner || ''} onChange={(e) => set('owner', e.target.value)} /></Field>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Likelihood"><Select value={form.likelihood} onChange={(e) => set('likelihood', e.target.value)}>{LIKELIHOODS.map((l) => <option key={l}>{l}</option>)}</Select></Field>
                 <Field label="Consequence"><Select value={form.consequence} onChange={(e) => set('consequence', e.target.value)}>{CONSEQUENCES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
               </div>
@@ -517,7 +517,7 @@ export default function Risks() {
               <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
               <Field label="Mitigation Plan"><TextArea value={form.mitigation_plan || ''} onChange={(e) => set('mitigation_plan', e.target.value)} /></Field>
               <Field label="Control Measure Category"><Select value={form.control_measure_category || 'Preventative'} onChange={(e) => set('control_measure_category', e.target.value)}>{CONTROL_CATEGORIES.map((c) => <option key={c}>{c}</option>)}</Select></Field>
-              <div className="flex items-center justify-between pt-1">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
                 <div className="text-[11px] font-semibold text-foreground/60">Common risk mitigation actions</div>
                 <TemplatePicker label="Load template" templates={MITIGATION_TEMPLATES} onApply={applyMitigationTemplate} />
               </div>
@@ -526,11 +526,11 @@ export default function Risks() {
               <Field label="Isolate Actions (separate from hazard)"><TextArea value={form.isolate_actions || ''} onChange={(e) => set('isolate_actions', e.target.value)} placeholder="Actions to isolate the risk - barriers, separation, restricted access, relocation..." /></Field>
               <Field label="Staff Training Controls (training & capability)"><TextArea value={form.staff_training_controls || ''} onChange={(e) => set('staff_training_controls', e.target.value)} placeholder="Mandatory training, competency assessment, refresher schedule, supervisor sign-off..." /></Field>
               <Field label="Compliance Controls (policy & standards)"><TextArea value={form.compliance_controls || ''} onChange={(e) => set('compliance_controls', e.target.value)} placeholder="NDIS Practice Standards, Code of Conduct, policy alignment, audit & record-keeping..." /></Field>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Date Identified"><DateInput value={form.identified_date || ''} onChange={(e) => set('identified_date', e.target.value)} /></Field>
                 <Field label="Review Date"><DateInput value={form.review_date || ''} onChange={(e) => set('review_date', e.target.value)} /></Field>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Assessment Schedule"><Select value={form.assessment_type || 'Not scheduled'} onChange={(e) => set('assessment_type', e.target.value)}><option value="Not scheduled">Not scheduled</option><option value="Individual">Individual (every 3 months)</option><option value="Home">Home (every month)</option></Select></Field>
                 <Field label="Last Assessed"><DateInput value={form.last_assessed_date || ''} onChange={(e) => set('last_assessed_date', e.target.value)} /></Field>
               </div>
