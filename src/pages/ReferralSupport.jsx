@@ -19,7 +19,7 @@ export default function ReferralSupport() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-4 text-white shadow-lg sm:p-6">
         <div className="flex items-center gap-4">
           <div className="rounded-xl bg-white/10 p-3"><HeartHandshake className="h-7 w-7" /></div>
           <div>
