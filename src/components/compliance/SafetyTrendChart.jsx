@@ -31,18 +31,31 @@ export default function SafetyTrendChart() {
   const [incidents, setIncidents] = useState([]);
   const [risks, setRisks] = useState([]);
   const [takeFives, setTakeFives] = useState([]);
+  const [totals, setTotals] = useState({ allIncidents: 0, openIncidents: 0, openRisks: 0, totalTakeFives: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const [incPage, riskPage, tfPage] = await Promise.all([
-          base44.entities.Incident.filter({}, { sort: '-created_date', limit: 500 }),
-          base44.entities.Risk.filter({}, { sort: '-created_date', limit: 500 }),
-          base44.entities.TakeFive.filter({}, { sort: '-created_date', limit: 500 }),
+        // Charts only cover the last 6 months, so fetch one slim page per entity
+        // for that window and take the all-time / open totals from server counts.
+        const since = format(subMonths(new Date(), 6), 'yyyy-MM-dd');
+        const [incPage, riskPage, tfPage, allIncidents, openIncidents, openRisks, totalTakeFives] = await Promise.all([
+          base44.entities.Incident.filter({ created_date: { $gte: since } }, { sort: '-created_date', limit: 500, fields: ['severity', 'date_occurred', 'date_reported', 'created_date'] }),
+          base44.entities.Risk.filter({ created_date: { $gte: since } }, { sort: '-created_date', limit: 500, fields: ['report_type', 'identified_date', 'created_date'] }),
+          base44.entities.TakeFive.filter({ created_date: { $gte: since } }, { sort: '-created_date', limit: 500, fields: ['assessment_date', 'created_date'] }),
+          base44.entities.Incident.count({}),
+          base44.entities.Incident.count({ status: { $nin: ['Resolved', 'Closed'] } }),
+          base44.entities.Risk.count({ status: { $nin: ['Closed', 'closed'] } }),
+          base44.entities.TakeFive.count({}),
         ]);
-        if (alive) { setIncidents(incPage.items || []); setRisks(riskPage.items || []); setTakeFives(tfPage.items || []); }
+        if (alive) {
+          setIncidents(incPage.items || []);
+          setRisks(riskPage.items || []);
+          setTakeFives(tfPage.items || []);
+          setTotals({ allIncidents, openIncidents, openRisks, totalTakeFives });
+        }
       } catch (e) { console.error(e); }
       finally { if (alive) setLoading(false); }
     })();
@@ -92,17 +105,13 @@ export default function SafetyTrendChart() {
   const delta = lastMonthIncidents - prevMonthIncidents;
   const trendNote = delta > 0 ? `up ${delta} on the previous month` : delta < 0 ? `down ${Math.abs(delta)} on the previous month` : 'unchanged on the previous month';
 
-  const openIncidents = incidents.filter((i) => !['Resolved', 'Closed'].includes(String(i.status || '').trim())).length;
-  const openRisks = risks.filter((r) => String(r.status || '').trim().toLowerCase() !== 'closed').length;
-  const totalTakeFives = takeFives.length;
-
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <SummaryCard icon={AlertTriangle} label="Incidents logged (all time)" value={incidents.length} tone="#e11d48" />
-        <SummaryCard icon={FileCheck2} label="Open incidents" value={openIncidents} tone="#f59e0b" />
-        <SummaryCard icon={ShieldAlert} label="Open safety reports" value={openRisks} tone="#7c3aed" />
-        <SummaryCard icon={FileCheck2} label="Take 5 assessments" value={totalTakeFives} tone="#0d9488" />
+        <SummaryCard icon={AlertTriangle} label="Incidents logged (all time)" value={totals.allIncidents} tone="#e11d48" />
+        <SummaryCard icon={FileCheck2} label="Open incidents" value={totals.openIncidents} tone="#f59e0b" />
+        <SummaryCard icon={ShieldAlert} label="Open safety reports" value={totals.openRisks} tone="#7c3aed" />
+        <SummaryCard icon={FileCheck2} label="Take 5 assessments" value={totals.totalTakeFives} tone="#0d9488" />
       </div>
 
       <div className="relative overflow-hidden rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-orange-50 p-5 shadow-lg shadow-rose-500/5 dark:border-rose-900 dark:from-rose-950/25 dark:via-card dark:to-orange-950/20">
