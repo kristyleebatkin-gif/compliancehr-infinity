@@ -165,7 +165,7 @@ export default function InvoicingCentre() {
         <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
       )}
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {[
           { label: 'Invoices', value: summary.total },
           { label: 'Sent', value: summary.sent },

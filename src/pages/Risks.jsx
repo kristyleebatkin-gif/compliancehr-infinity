@@ -203,7 +203,7 @@ export default function Risks() {
       <SafetyRegisterExports risks={risks} />
 
       {/* Summary */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {RATINGS.map((r) => (
           <div key={r} className={`rounded-xl border border-border/60 p-4 ${ratingColor[r]}`}>
             <div className="text-2xl font-bold font-display">{counts[r]}</div>
