@@ -97,7 +97,7 @@ export default function ComplianceUploads() {
                       <button onClick={() => view(d)} className="flex min-w-0 flex-1 items-center gap-1 truncate text-teal hover:underline">
                         <ExternalLink className="h-3 w-3 shrink-0" />{d.title}
                       </button>
-                      <button onClick={async () => { await base44.entities.FormsLibraryDocument.delete(d.id); await load(); }}>
+                      <button onClick={async () => { await base44.entities.FormsLibraryDocument.delete(d.id); await load(); }} aria-label={`Delete ${d.title}`}>
                         <Trash2 className="h-3 w-3 text-destructive/60 hover:text-destructive" />
                       </button>
                     </div>

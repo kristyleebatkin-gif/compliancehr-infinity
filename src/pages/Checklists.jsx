@@ -132,7 +132,7 @@ export default function Checklists() {
                       <div key={idx} className="flex items-center gap-2 text-sm">
                         <Checkbox checked={item.done} onCheckedChange={() => toggleItem(list, idx)} />
                         <span className={item.done ? 'flex-1 text-muted-foreground line-through' : 'flex-1'}>{item.text}</span>
-                        <button onClick={() => removeItem(list, idx)} className="text-muted-foreground hover:text-destructive">
+                        <button onClick={() => removeItem(list, idx)} aria-label="Remove item" className="text-muted-foreground hover:text-destructive">
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
                       </div>

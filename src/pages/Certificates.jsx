@@ -138,8 +138,8 @@ export default function Certificates() {
                     <td className="px-5 py-3.5 text-sm text-muted-foreground">{c.score ? `${c.score}%` : '—'}</td>
                     <td className="px-5 py-3.5"><StatusBadge value={c.status} /></td>
                     <td className="px-5 py-3.5 text-right">
-                      <button onClick={() => openEdit(c)} className="p-1.5 rounded-lg hover:bg-muted"><Pencil className="h-4 w-4 text-slate-500" /></button>
-                      <button onClick={() => del(c)} className="p-1.5 rounded-lg hover:bg-muted"><Trash2 className="h-4 w-4 text-red-400" /></button>
+                      <button onClick={() => openEdit(c)} aria-label="Edit certificate" className="p-1.5 rounded-lg hover:bg-muted"><Pencil className="h-4 w-4 text-muted-foreground" /></button>
+                      <button onClick={() => del(c)} aria-label="Delete certificate" className="p-1.5 rounded-lg hover:bg-muted"><Trash2 className="h-4 w-4 text-danger" /></button>
                     </td>
                   </tr>
                 ))}

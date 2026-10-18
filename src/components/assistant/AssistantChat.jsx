@@ -162,6 +162,7 @@ export default function AssistantChat({ agent, onBack }) {
         />
         <button
           onClick={send}
+          aria-label="Send message"
           disabled={!input.trim() || sending || !activeConv}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm transition-opacity disabled:opacity-40"
           style={{ background: `linear-gradient(135deg, ${agent.from}, ${agent.to})` }}

@@ -279,8 +279,8 @@ export default function Risks() {
                       {can('risks') && (
                         <td className="px-3 py-2.5 text-right">
                           <div className="flex justify-end gap-1">
-                            <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
-                            <button onClick={() => remove(r)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                            <button onClick={() => openEdit(r)} aria-label="Edit risk" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                            <button onClick={() => remove(r)} aria-label="Delete risk" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
                           </div>
                         </td>
                       )}
@@ -395,8 +395,8 @@ export default function Risks() {
                     {can('risks') && (
                       <td className="px-3 py-2.5 text-right">
                         <div className="flex justify-end gap-1">
-                          <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
-                          <button onClick={() => remove(r)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                          <button onClick={() => openEdit(r)} aria-label="Edit risk" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                          <button onClick={() => remove(r)} aria-label="Delete risk" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
                         </div>
                       </td>
                     )}
@@ -480,7 +480,7 @@ export default function Risks() {
                     <td className="px-3 py-2.5 text-foreground/70 text-xs max-w-xs"><div className="whitespace-pre-wrap">{r.compliance_controls || '—'}</div></td>
                     {can('risks') && (
                       <td className="px-3 py-2.5 text-right">
-                        <button onClick={() => openEdit(r)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                        <button onClick={() => openEdit(r)} aria-label="Edit risk" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
                       </td>
                     )}
                   </tr>

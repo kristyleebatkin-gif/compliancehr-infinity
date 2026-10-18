@@ -265,7 +265,7 @@ export default function IncidentFollowUp({ incident }) {
                     {a.notes && <div className="mt-1 text-xs text-foreground/50">{a.notes}</div>}
                   </div>
                   {!closed && (
-                    <button onClick={() => deleteAction(a)} className="shrink-0 rounded p-1 text-foreground/30 hover:bg-danger/5 hover:text-danger">
+                    <button onClick={() => deleteAction(a)} aria-label="Delete action" className="shrink-0 rounded p-1 text-foreground/30 hover:bg-danger/5 hover:text-danger">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   )}

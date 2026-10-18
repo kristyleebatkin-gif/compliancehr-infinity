@@ -219,7 +219,7 @@ export default function AppLayout() {
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="flex items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-3 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
           <div className="flex items-center gap-3">
-            <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
+            <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
             </button>
             <Image

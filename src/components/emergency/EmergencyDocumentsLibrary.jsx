@@ -141,7 +141,7 @@ export default function EmergencyDocumentsLibrary() {
                               <span className="truncate">{doc.participant_name ? `${doc.participant_name} - ` : ''}{doc.file_name || doc.title}</span>
                             </button>
                             {doc.issue_date && <span className="shrink-0 text-[10px] text-muted-foreground">{format(new Date(doc.issue_date), 'd MMM yyyy')}</span>}
-                            <button onClick={() => remove(doc)} className="shrink-0 text-muted-foreground hover:text-destructive"><Trash2 className="h-3 w-3" /></button>
+                            <button onClick={() => remove(doc)} aria-label="Remove document" className="shrink-0 text-muted-foreground hover:text-destructive"><Trash2 className="h-3 w-3" /></button>
                           </div>
                         ))}
                       </div>

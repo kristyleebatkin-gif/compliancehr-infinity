@@ -58,9 +58,9 @@ export default function CoverageHeatMap() {
             <div className="font-bold font-display">Coverage heat map</div>
             <div className="text-[11px] text-foreground/45">Filled vs unassigned shifts for the week</div>
           </div>
-          <button onClick={() => setWeekStart(addDays(weekStart, -7))} className="rounded-lg border border-border bg-card p-2 hover:bg-brand/5"><ChevronLeft className="h-4 w-4" /></button>
+          <button onClick={() => setWeekStart(addDays(weekStart, -7))} aria-label="Previous week" className="rounded-lg border border-border bg-card p-2 hover:bg-brand/5"><ChevronLeft className="h-4 w-4" /></button>
           <span className="text-sm font-semibold">{format(weekStart, 'd MMM')} – {format(addDays(weekStart, 6), 'd MMM yyyy')}</span>
-          <button onClick={() => setWeekStart(addDays(weekStart, 7))} className="rounded-lg border border-border bg-card p-2 hover:bg-brand/5"><ChevronRight className="h-4 w-4" /></button>
+          <button onClick={() => setWeekStart(addDays(weekStart, 7))} aria-label="Next week" className="rounded-lg border border-border bg-card p-2 hover:bg-brand/5"><ChevronRight className="h-4 w-4" /></button>
         </div>
 
         {loading ? (

@@ -82,9 +82,9 @@ export default function TrainingCalendar({ completions }) {
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => setCursor((c) => new Date(c.getFullYear(), c.getMonth() - 1, 1))} className="rounded-lg p-1.5 hover:bg-muted"><ChevronLeft className="h-4 w-4" /></button>
+          <button onClick={() => setCursor((c) => new Date(c.getFullYear(), c.getMonth() - 1, 1))} aria-label="Previous month" className="rounded-lg p-1.5 hover:bg-muted"><ChevronLeft className="h-4 w-4" /></button>
           <div className="min-w-[140px] text-center text-sm font-semibold">{MONTHS[cursor.getMonth()]} {cursor.getFullYear()}</div>
-          <button onClick={() => setCursor((c) => new Date(c.getFullYear(), c.getMonth() + 1, 1))} className="rounded-lg p-1.5 hover:bg-muted"><ChevronRight className="h-4 w-4" /></button>
+          <button onClick={() => setCursor((c) => new Date(c.getFullYear(), c.getMonth() + 1, 1))} aria-label="Next month" className="rounded-lg p-1.5 hover:bg-muted"><ChevronRight className="h-4 w-4" /></button>
           <button onClick={() => { const d = new Date(); d.setDate(1); setCursor(d); setSelected(ymd(new Date())); }} className="ml-1 rounded-lg border border-border/60 px-2.5 py-1.5 text-xs font-medium hover:bg-muted">Today</button>
         </div>
       </div>

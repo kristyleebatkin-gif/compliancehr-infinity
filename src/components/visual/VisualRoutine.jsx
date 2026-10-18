@@ -279,9 +279,9 @@ export default function VisualRoutine() {
                   </SelectContent>
                 </Select>
                 <button onClick={() => { setUploadFor(step.id); fileRef.current?.click(); }} title="Add a picture to this step" className="rounded p-1 hover:bg-muted"><ImagePlus className="h-3.5 w-3.5 text-muted-foreground" /></button>
-                <button onClick={() => move(index, -1)} className="rounded p-1 hover:bg-muted"><ChevronUp className="h-3.5 w-3.5 text-muted-foreground" /></button>
-                <button onClick={() => move(index, 1)} className="rounded p-1 hover:bg-muted"><ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /></button>
-                <button onClick={() => remove(step.id)} className="rounded p-1 hover:bg-muted"><Trash2 className="h-3.5 w-3.5 text-destructive/60" /></button>
+                <button onClick={() => move(index, -1)} aria-label="Move step up" className="rounded p-1 hover:bg-muted"><ChevronUp className="h-3.5 w-3.5 text-muted-foreground" /></button>
+                <button onClick={() => move(index, 1)} aria-label="Move step down" className="rounded p-1 hover:bg-muted"><ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /></button>
+                <button onClick={() => remove(step.id)} aria-label="Remove step" className="rounded p-1 hover:bg-muted"><Trash2 className="h-3.5 w-3.5 text-destructive/60" /></button>
                 {step.sign && (
                   <p className="w-full pl-10 text-xs text-muted-foreground">{findSign(step.sign)?.emoji} {step.sign_description || findSign(step.sign)?.description}</p>
                 )}

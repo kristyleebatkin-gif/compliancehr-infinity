@@ -60,7 +60,7 @@ export default function TreatmentSection({ type, title, description, field, risk
                   </div>
                   {r.risk_id && <div className="text-xs text-foreground/40 mt-0.5">{r.risk_id}</div>}
                 </div>
-                {canEdit && <button onClick={() => onEdit(r)} className="shrink-0 rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>}
+                {canEdit && <button onClick={() => onEdit(r)} aria-label="Edit treatment" className="shrink-0 rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>}
               </div>
               <div className="mt-2.5 rounded-lg p-3 bg-muted/30">
                 <div className={`mb-1 inline-block rounded-md px-2 py-0.5 text-[11px] font-semibold ${accent.chip}`}>{accent.label} Strategy</div>

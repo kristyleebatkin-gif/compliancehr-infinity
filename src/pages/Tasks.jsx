@@ -179,8 +179,8 @@ export default function Tasks() {
               <div className="flex gap-1">
                 <button onClick={() => setSending(t)} title="Send / alert assignee" className="rounded p-1.5 hover:bg-brand/10"><Mail className="h-4 w-4 text-foreground/50" /></button>
                 <button onClick={() => alertAssignee(t)} title="Send in-app alert" className="rounded p-1.5 hover:bg-brand/10"><Bell className="h-4 w-4 text-foreground/50" /></button>
-                <button onClick={() => openEdit(t)} className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
-                <button onClick={() => remove(t)} className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                <button onClick={() => openEdit(t)} aria-label="Edit task" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                <button onClick={() => remove(t)} aria-label="Delete task" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
               </div>
             </div>
           ))}
