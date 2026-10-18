@@ -90,7 +90,7 @@ export default function ComplianceReadiness() {
                 <Tile icon={Users} label="Active staff" value={staffCount} tone="bg-brand/10 text-brand" />
                 <Tile icon={BadgeCheck} label="Current certifications" value={currentPairs.length} tone="bg-safe/15 text-safe" />
                 <Tile icon={Clock} label="Expiring in 60 days" value={expiring.length} tone="bg-warning/15 text-warning" />
-                <Tile icon={AlertTriangle} label="Expired certifications" value={expiredPairs.length} tone="bg-red-600/15 text-red-600" />
+                <Tile icon={AlertTriangle} label="Expired certifications" value={expiredPairs.length} tone="bg-red-600/15 text-red-600 dark:text-red-300" />
               </div>
             </div>
           </SectionCard>
@@ -133,7 +133,7 @@ export default function ComplianceReadiness() {
                         <div className="truncate text-[11px] text-foreground/50">{p.moduleTitle}</div>
                       </div>
                       <div className="shrink-0 text-right">
-                        <div className={`rounded-full px-2 py-0.5 text-xs font-semibold ${urgent ? 'bg-red-600/15 text-red-600' : 'bg-warning/15 text-warning'}`}>
+                        <div className={`rounded-full px-2 py-0.5 text-xs font-semibold ${urgent ? 'bg-red-600/15 text-red-600 dark:text-red-300' : 'bg-warning/15 text-warning'}`}>
                           {days <= 0 ? 'Today' : `${days} day${days === 1 ? '' : 's'}`}
                         </div>
                         <div className="mt-0.5 text-[11px] text-foreground/40">{format(new Date(p.expiry_date + 'T00:00:00'), 'd MMM yyyy')}</div>

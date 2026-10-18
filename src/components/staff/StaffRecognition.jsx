@@ -9,9 +9,9 @@ import LeaderboardSettingsDialog from '@/components/staff/LeaderboardSettingsDia
 import { Trophy, Award, Download, ShieldCheck, Users, BadgeCheck, Star, Loader2 } from 'lucide-react';
 
 const PODIUM = [
-  { icon: Trophy, label: 'Champion', chip: 'from-amber-100 to-yellow-50 text-amber-800 border-amber-300' },
+  { icon: Trophy, label: 'Champion', chip: 'from-amber-100 to-yellow-50 text-amber-800 border-amber-300 dark:from-amber-500/20 dark:to-yellow-500/10 dark:text-amber-300 dark:border-amber-500/30' },
   { icon: Award, label: 'Runner-up', chip: 'from-slate-100 to-slate-50 text-slate-700 border-slate-300 dark:from-slate-800 dark:to-slate-900 dark:text-slate-300 dark:border-slate-600' },
-  { icon: Award, label: 'Third place', chip: 'from-orange-100 to-amber-50 text-orange-800 border-orange-800' },
+  { icon: Award, label: 'Third place', chip: 'from-orange-100 to-amber-50 text-orange-800 border-orange-800 dark:from-orange-500/20 dark:to-amber-500/10 dark:text-orange-300 dark:border-orange-500/30' },
 ];
 
 export const DEFAULT_WEIGHTS = {

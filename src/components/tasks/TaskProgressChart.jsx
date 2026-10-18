@@ -79,7 +79,7 @@ export default function TaskProgressChart({ tasks, users }) {
               <div className="space-y-3">
                 <RateBar label="Completion rate" done={staff.completed} total={staff.total} colour="#4f46e5" />
                 <div className="flex gap-2 text-xs">
-                  <span className="rounded-full bg-teal-600/10 px-2.5 py-1 font-medium text-teal-700">{staff.onTrack} on track</span>
+                  <span className="rounded-full bg-teal-600/10 px-2.5 py-1 font-medium text-teal-700 dark:text-teal-300">{staff.onTrack} on track</span>
                   <span className="rounded-full bg-danger/10 px-2.5 py-1 font-medium text-danger">{staff.overdue} overdue</span>
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function TaskProgressChart({ tasks, users }) {
               <div className="space-y-3">
                 <RateBar label="Completion rate" done={participant.completed} total={participant.total} colour="#0ea5e9" />
                 <div className="flex gap-2 text-xs">
-                  <span className="rounded-full bg-teal-600/10 px-2.5 py-1 font-medium text-teal-700">{participant.onTrack} on track</span>
+                  <span className="rounded-full bg-teal-600/10 px-2.5 py-1 font-medium text-teal-700 dark:text-teal-300">{participant.onTrack} on track</span>
                   <span className="rounded-full bg-danger/10 px-2.5 py-1 font-medium text-danger">{participant.overdue} overdue</span>
                 </div>
               </div>

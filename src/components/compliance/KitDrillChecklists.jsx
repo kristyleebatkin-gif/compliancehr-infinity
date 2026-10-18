@@ -67,7 +67,7 @@ export default function KitDrillChecklists() {
     if (!entry) return { label: 'Not completed yet', tone: 'bg-muted text-muted-foreground' };
     if (!entry.next_due_date) return { label: 'Current', tone: 'bg-safe/10 text-safe' };
     const days = differenceInCalendarDays(new Date(`${entry.next_due_date}T00:00:00`), new Date());
-    if (days < 0) return { label: 'Overdue', tone: 'bg-red-600/10 text-red-600' };
+    if (days < 0) return { label: 'Overdue', tone: 'bg-red-600/10 text-red-600 dark:text-red-300' };
     if (days <= 30) return { label: 'Due soon', tone: 'bg-warning/10 text-warning' };
     return { label: 'Current', tone: 'bg-safe/10 text-safe' };
   };

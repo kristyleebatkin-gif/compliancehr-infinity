@@ -4,7 +4,7 @@ import EmptyState from '@/components/EmptyState';
 import { ShieldAlert, Pencil, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 
-const ratingColor = { Low: 'bg-safe/15 text-safe', Medium: 'bg-warning/15 text-warning', High: 'bg-orange-500/15 text-orange-600', Critical: 'bg-danger/15 text-danger' };
+const ratingColor = { Low: 'bg-safe/15 text-safe', Medium: 'bg-warning/15 text-warning', High: 'bg-orange-500/15 text-orange-600 dark:text-orange-300', Critical: 'bg-danger/15 text-danger' };
 
 // Accent styles per treatment type
 const ACCENTS = {

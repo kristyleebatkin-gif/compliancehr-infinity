@@ -112,6 +112,13 @@
 }
 
 @layer base {
+  /* Visible keyboard focus ring for every interactive control */
+  button:focus-visible, a:focus-visible, [role="button"]:focus-visible,
+  input:focus-visible, select:focus-visible, textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
   /* App-wide mobile fit: long words and titles wrap instead of overflowing */
   h1, h2, h3, h4 {
     overflow-wrap: break-word;

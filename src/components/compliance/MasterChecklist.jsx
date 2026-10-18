@@ -26,7 +26,7 @@ const PARTICIPANT_COLUMNS = [
 ];
 
 const statusFor = (pct) => (pct >= 90 ? 'Compliant' : pct >= 70 ? 'Needs Attention' : 'At Risk');
-const TONE = { Compliant: 'bg-safe/10 text-safe', 'Needs Attention': 'bg-warning/10 text-warning', 'At Risk': 'bg-red-600/10 text-red-600' };
+const TONE = { Compliant: 'bg-safe/10 text-safe', 'Needs Attention': 'bg-warning/10 text-warning', 'At Risk': 'bg-red-600/10 text-red-600 dark:text-red-300' };
 
 const SectionSummary = ({ title, icon: Icon, status, readiness, lines, action }) => (
   <div className="rounded-xl border border-border bg-card p-4">

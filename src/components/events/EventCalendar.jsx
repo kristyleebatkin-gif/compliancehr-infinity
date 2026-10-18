@@ -61,7 +61,7 @@ export default function EventCalendar({ events, onSelect }) {
                     <button
                       key={e.id}
                       onClick={() => onSelect?.(e)}
-                      className="block w-full truncate rounded bg-gradient-to-r from-fuchsia-500/15 to-purple-500/15 px-1 py-0.5 text-left text-[9px] font-semibold text-purple-700 hover:from-fuchsia-500/25 hover:to-purple-500/25 sm:text-[10px]"
+                      className="block w-full truncate rounded bg-gradient-to-r from-fuchsia-500/15 to-purple-500/15 px-1 py-0.5 text-left text-[9px] font-semibold text-purple-700 dark:text-purple-300 hover:from-fuchsia-500/25 hover:to-purple-500/25 sm:text-[10px]"
                     >
                       {e.title}
                     </button>

@@ -73,7 +73,7 @@ export default function SafetyHeatmap() {
       <div className="mb-3 flex items-center justify-between gap-2">
         <h4 className="text-sm font-semibold flex items-center gap-2"><MapPin className="h-4 w-4" /> Incident heatmap — area by shift time</h4>
         {hottest && hottest.count > 0 && (
-          <span className="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-600">
+          <span className="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-600 dark:bg-red-500/15 dark:text-red-300">
             Hotspot: {hottest.area} ({TIME_BUCKETS.findIndex((b, i) => areas.find(([a]) => a === hottest.area)?.buckets[i] === hottest.count) >= 0 ? TIME_BUCKETS[TIME_BUCKETS.findIndex((b, i) => areas.find(([a]) => a === hottest.area)?.buckets[i] === hottest.count)].label.replace('\n', ' ') : ''})
           </span>
         )}

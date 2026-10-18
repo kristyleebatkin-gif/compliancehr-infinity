@@ -34,7 +34,7 @@ const shiftValue = (timeOccurred) => {
 const severityTone = {
   Low: 'border-transparent bg-safe/10 text-safe',
   Medium: 'border-transparent bg-warning/10 text-warning',
-  High: 'border-transparent bg-orange-500/10 text-orange-600',
+  High: 'border-transparent bg-orange-500/10 text-orange-600 dark:text-orange-300',
   Critical: 'border-transparent bg-destructive/10 text-destructive',
 };
 
@@ -177,7 +177,7 @@ export default function SafetyOperationsDashboard() {
                 alert={['In Progress', 'Pending'].includes(inv.status) && Boolean(inv.target_completion && inv.target_completion < format(new Date(), 'yyyy-MM-dd'))}
                 primary={inv.title || 'Untitled'}
                 secondary={`${inv.investigator || 'Unassigned'} · ${inv.status || ''}`}
-                badge={<Badge className="border-transparent bg-violet-500/10 text-violet-600">{inv.status || '—'}</Badge>}
+                badge={<Badge className="border-transparent bg-violet-500/10 text-violet-600 dark:text-violet-300">{inv.status || '—'}</Badge>}
               />
             ))}
             {investigations.length > 5 && <Link to="/incidents" className="text-xs font-semibold text-brand hover:underline">View all {investigations.length} →</Link>}

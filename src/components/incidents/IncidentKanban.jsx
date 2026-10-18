@@ -14,7 +14,7 @@ const COLUMNS = [
 const sevColor = {
   Low: 'bg-safe/15 text-safe',
   Medium: 'bg-warning/15 text-warning',
-  High: 'bg-orange-500/15 text-orange-600',
+  High: 'bg-orange-500/15 text-orange-600 dark:text-orange-300',
   Critical: 'bg-danger/15 text-danger',
 };
 

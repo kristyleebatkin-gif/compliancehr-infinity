@@ -84,7 +84,7 @@ export default function SafetyTrendsDashboard() {
     severity: s,
     count: openIncidents.filter((i) => (i.severity || 'Medium') === s).length,
   }));
-  const SEVERITY_TONE = { Low: 'bg-safe/15 text-safe', Medium: 'bg-brand/10 text-brand', High: 'bg-warning/15 text-warning', Critical: 'bg-red-600/15 text-red-600' };
+  const SEVERITY_TONE = { Low: 'bg-safe/15 text-safe', Medium: 'bg-brand/10 text-brand', High: 'bg-warning/15 text-warning', Critical: 'bg-red-600/15 text-red-600 dark:text-red-300' };
 
   const incLabel = (id) => incidents.find((x) => x.id === id)?.title || 'Unlinked';
 

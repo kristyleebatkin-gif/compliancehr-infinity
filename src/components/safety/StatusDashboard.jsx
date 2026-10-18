@@ -6,10 +6,10 @@ import { Download } from 'lucide-react';
 const TONE = {
   'Reported': 'bg-brand/10 text-brand',
   'Under Investigation': 'bg-warning/15 text-warning',
-  'Action Required': 'bg-orange-500/15 text-orange-600',
+  'Action Required': 'bg-orange-500/15 text-orange-600 dark:text-orange-300',
   'Resolved': 'bg-safe/15 text-safe',
   'Identified': 'bg-brand/10 text-brand',
-  'Assessed': 'bg-purple-100 text-purple-700',
+  'Assessed': 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300',
   'Treating': 'bg-warning/15 text-warning',
   'Monitored': 'bg-teal/10 text-teal',
 };

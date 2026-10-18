@@ -13,7 +13,7 @@ const SEVERITIES = ['All', 'Low', 'Medium', 'High', 'Critical'];
 const severityTone = {
   Low: 'border-transparent bg-safe/10 text-safe',
   Medium: 'border-transparent bg-warning/10 text-warning',
-  High: 'border-transparent bg-orange-500/10 text-orange-600',
+  High: 'border-transparent bg-orange-500/10 text-orange-600 dark:text-orange-300',
   Critical: 'border-transparent bg-destructive/10 text-destructive',
 };
 const LOG_CSV_COLUMNS = [

@@ -77,7 +77,7 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
   const overall = rows.length
     ? Math.round(rows.reduce((sum, row) => sum + row.pct, 0) / rows.length)
     : 0;
-  const tone = overall >= 90 ? 'bg-safe/10 text-safe' : overall >= 70 ? 'bg-warning/10 text-warning' : 'bg-red-600/10 text-red-600';
+  const tone = overall >= 90 ? 'bg-safe/10 text-safe' : overall >= 70 ? 'bg-warning/10 text-warning' : 'bg-red-600/10 text-red-600 dark:text-red-300';
 
   return (
     <div>
