@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
@@ -18,6 +18,7 @@ import TemplateLibrary from '@/components/communications/TemplateLibrary';
 import AutomatedLogs from '@/components/communications/AutomatedLogs';
 import ComplaintsFeed from '@/components/communications/ComplaintsFeed';
 import ShoutoutFeed from '@/components/communications/ShoutoutFeed';
+import TeamFeed from '@/components/communications/TeamFeed';
 
 export default function Communications() {
   return (
@@ -41,6 +42,7 @@ export default function Communications() {
           <TabsTrigger value="bulk"><Megaphone className="mr-1 inline h-3.5 w-3.5" />Bulk Messages</TabsTrigger>
           <TabsTrigger value="banter"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Team Banter</TabsTrigger>
           <TabsTrigger value="shoutouts"><Sparkles className="mr-1 inline h-3.5 w-3.5" />Shoutouts</TabsTrigger>
+          <TabsTrigger value="feed"><Radio className="mr-1 inline h-3.5 w-3.5" />Team Feed</TabsTrigger>
           <TabsTrigger value="complaints"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Complaints</TabsTrigger>
           <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do Board</TabsTrigger>
           <TabsTrigger value="video"><Video className="mr-1 inline h-3.5 w-3.5" />Video Calls</TabsTrigger>
@@ -57,6 +59,7 @@ export default function Communications() {
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="banter"><TeamBanter /></TabsContent>
         <TabsContent value="shoutouts"><ShoutoutFeed /></TabsContent>
+        <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
           <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>
