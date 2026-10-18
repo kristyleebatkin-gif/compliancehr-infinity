@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
 import ShiftForm from '@/components/rostering/ShiftForm';
@@ -38,7 +38,7 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
 
 export default function Rostering() {
   const exportShiftRegister = async () => {
-    const page = await base44.entities.Shift.filter({}, { sort: '-date', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Shift, {}, '-date');
     downloadCsv('Shift-Register.csv', [
       { key: 'date', label: 'Date' }, { key: 'employee_name', label: 'Employee' },
       { key: 'participant_name', label: 'Participant' }, { key: 'start_time', label: 'Start Time' },
@@ -48,7 +48,7 @@ export default function Rostering() {
       { key: 'travel_km', label: 'Travel (km)' }, { key: 'billable_rate', label: 'Billable Rate' },
       { key: 'approval_status', label: 'Approval Status' }, { key: 'invoiced', label: 'Invoiced' },
       { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   const [tab, setTab] = useState('roster');

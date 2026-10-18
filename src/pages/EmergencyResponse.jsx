@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Siren, Flame, ClipboardCheck, FileText, Users, AlertTriangle, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format, addMonths, isBefore, addDays } from 'date-fns';
 import SafetyChecksLog from '@/components/emergency/SafetyChecksLog';
 import EmergencyDocumentsLibrary from '@/components/emergency/EmergencyDocumentsLibrary';
@@ -73,14 +73,14 @@ export default function EmergencyResponse() {
   );
 
   const exportSafetyChecks = async () => {
-    const page = await base44.entities.SafetyCheck.filter({}, { sort: '-date_completed', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.SafetyCheck, {}, '-date_completed');
     downloadCsv('Safety-Check-Register.csv', [
       { key: 'name', label: 'Check Name' }, { key: 'check_type', label: 'Check Type' },
       { key: 'location', label: 'Location' }, { key: 'date_completed', label: 'Date Completed' },
       { key: 'result', label: 'Result' }, { key: 'issues_found', label: 'Issues Found' },
       { key: 'action_taken', label: 'Action Taken' }, { key: 'completed_by', label: 'Completed By' },
       { key: 'next_due_date', label: 'Next Due Date' }, { key: 'notes', label: 'Notes' },
-    ], page.items);
+    ], rows);
   };
 
   return (

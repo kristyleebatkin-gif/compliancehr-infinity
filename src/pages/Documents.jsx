@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye, Database, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
 import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
@@ -115,12 +115,12 @@ export default function Documents() {
   };
 
   const exportAll = async () => {
-    const page = await base44.entities.EmployeeDocument.filter({}, { sort: '-created_date', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.EmployeeDocument, {}, '-created_date');
     downloadCsv('document-vault-full-register.csv', [
       { key: 'title', label: 'Title' }, { key: 'employee_name', label: 'Employee' }, { key: 'document_type', label: 'Type' },
       { key: 'issue_date', label: 'Issue Date' }, { key: 'expiry_date', label: 'Expiry Date' },
       { key: 'status', label: 'Status' }, { key: 'notes', label: 'Notes' },
-    ], page.items.map((d) => ({ ...d, notes: d.notes || '' })));
+    ], rows.map((d) => ({ ...d, notes: d.notes || '' })));
   };
 
   const runScan = async () => {

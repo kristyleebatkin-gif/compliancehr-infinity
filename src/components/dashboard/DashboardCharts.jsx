@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { isOpenIncident } from '@/lib/safetyFilters';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   PieChart, Pie, Cell, Legend,
@@ -62,32 +61,34 @@ function StatCard({ icon: Icon, label, value, tone, to }) {
 }
 
 export default function DashboardCharts() {
-  const [incidents, setIncidents] = useState([]);
   const [risks, setRisks] = useState([]);
+  const [incidentByStatus, setIncidentByStatus] = useState(STATUSES.map((s) => ({ status: s, count: 0 })));
+  const [openIncidents, setOpenIncidents] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const [incs, rsk] = await Promise.all([
-          base44.entities.Incident.filter({}, { sort: '-created_date', limit: 500 }),
-          base44.entities.Risk.filter({}, { sort: '-created_date', limit: 500 }),
+        const [statusRows, openCount, rsk] = await Promise.all([
+          base44.entities.Incident.aggregate({ groupBy: 'status' }),
+          base44.entities.Incident.count({ status: { $nin: ['Resolved', 'Closed'] } }),
+          // Ratings can be derived from the likelihood/impact matrix, so the risk
+          // page is loaded with only the fields the charts need (slim payload).
+          base44.entities.Risk.filter({}, { sort: '-created_date', limit: 500, fields: ['status', 'rating', 'impact', 'likelihood', 'category'] }),
         ]);
-        if (alive) { setIncidents(incs.items || []); setRisks(rsk.items || []); }
+        if (alive) {
+          setIncidentByStatus(STATUSES.map((s) => ({ status: s, count: (statusRows.rows || []).find((r) => r.status === s)?.count || 0 })));
+          setOpenIncidents(openCount);
+          setRisks(rsk.items || []);
+        }
       } catch (e) { console.error(e); }
       if (alive) setLoading(false);
     })();
     return () => { alive = false; };
   }, []);
 
-  const openIncidents = incidents.filter(isOpenIncident).length;
   const highRisks = risks.filter(isOpenHighCriticalRisk).length;
-
-  const incidentByStatus = STATUSES.map((s) => ({
-    status: s,
-    count: incidents.filter((i) => i.status === s).length,
-  }));
 
   const riskByRating = RATINGS.map((r) => ({
     rating: r,

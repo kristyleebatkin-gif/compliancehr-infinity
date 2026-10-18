@@ -10,7 +10,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Boxes, Wrench, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 
 const CATEGORIES = ['Vehicle', 'Equipment', 'IT', 'Furniture', 'Safety', 'Other'];
@@ -49,13 +49,13 @@ export default function AssetManagement() {
   };
 
   const exportAssets = async () => {
-    const page = await base44.entities.Asset.filter({}, { sort: 'name', limit: 1000 });
+    const rows = await fetchAllRecords(base44.entities.Asset, {}, 'name');
     downloadCsv('Asset-Register.csv', [
       { key: 'name', label: 'Asset Name' }, { key: 'category', label: 'Category' },
       { key: 'serial_number', label: 'Serial Number' }, { key: 'purchase_date', label: 'Purchase Date' },
       { key: 'condition', label: 'Condition' }, { key: 'next_service_date', label: 'Next Service Date' },
       { key: 'status', label: 'Status' }, { key: 'location', label: 'Location' },
-    ], page.items);
+    ], rows);
   };
 
   return (
