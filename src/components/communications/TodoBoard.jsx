@@ -121,6 +121,19 @@ export default function TodoBoard() {
         signed_off_date: new Date().toISOString().slice(0, 10),
         signature: signForm.signature.trim(),
       });
+      await base44.entities.CommunicationEntry.create({
+        entry_kind: 'Employee Log',
+        person_type: 'General',
+        log_type: 'Task Sign-off',
+        subject: `Signed off: ${signTarget.title}`,
+        body: `Compliance task "${signTarget.title}" (module: ${signTarget.module || 'General'}) was completed by ${signTarget.completed_by || 'unknown'} on ${signTarget.completed_date || '-'} and has been digitally signed off by ${user?.full_name || 'a manager'} on ${new Date().toISOString().slice(0, 10)}. Signature recorded, task finalised.`,
+        module: signTarget.module || 'General',
+        entry_date: new Date().toISOString().slice(0, 10),
+        entry_time: new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' }),
+        sender_name: user?.full_name || 'Manager',
+        sender_email: user?.email || '',
+        email_sent: false,
+      });
       toast({ title: 'Signed off and finalised', description: 'The task is now marked as finished with your recorded signature.' });
       setSignTarget(null);
       await load();
@@ -132,7 +145,21 @@ export default function TodoBoard() {
   const decline = async () => {
     setSaving(true);
     try {
+      const user = await base44.auth.me();
       await base44.entities.TodoTask.update(signTarget.id, { status: 'Pending', completed_date: '', completed_by: '', time_taken_minutes: 0, signed_off_by: '', signed_off_date: '', signature: '' });
+      await base44.entities.CommunicationEntry.create({
+        entry_kind: 'Employee Log',
+        person_type: 'General',
+        log_type: 'Task Sign-off',
+        subject: `Sign-off declined: ${signTarget.title}`,
+        body: `Manager ${user?.full_name || 'a manager'} declined sign-off on the completed compliance task "${signTarget.title}" (module: ${signTarget.module || 'General'}). It has been returned to pending so it can be completed again before sign-off.`,
+        module: signTarget.module || 'General',
+        entry_date: new Date().toISOString().slice(0, 10),
+        entry_time: new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' }),
+        sender_name: user?.full_name || 'Manager',
+        sender_email: user?.email || '',
+        email_sent: false,
+      });
       toast({ title: 'Sent back to pending', description: 'The task was returned so it can be completed again before sign-off.' });
       setSignTarget(null);
       await load();
