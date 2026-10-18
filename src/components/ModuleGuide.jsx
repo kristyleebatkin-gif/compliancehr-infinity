@@ -24,7 +24,7 @@ export default function ModuleGuide() {
           <p className="text-xs text-muted-foreground">Order of documents and process steps for this module.</p>
         </div>
         <ModuleComplianceStrip path={seg} />
-        <span className="hidden rounded-md border border-brand/20 bg-white px-2 py-1 text-[10px] font-semibold text-brand sm:block">{open ? 'Hide steps' : 'Show steps'}</span>
+        <span className="hidden rounded-md border border-brand/20 bg-card px-2 py-1 text-[10px] font-semibold text-brand sm:block">{open ? 'Hide steps' : 'Show steps'}</span>
         <ChevronDown className={`h-4 w-4 shrink-0 text-brand transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (

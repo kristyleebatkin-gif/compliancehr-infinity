@@ -244,12 +244,12 @@ export default function Incidents() {
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
           <div className="relative max-w-sm flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search incidents..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+              className="w-full rounded-lg border border-input bg-card pl-9 pr-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40"
             />
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -263,7 +263,7 @@ export default function Incidents() {
                   key={s}
                   onClick={() => setStatusFilter(s)}
                   className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                    statusFilter === s ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                    statusFilter === s ? 'bg-foreground text-background' : 'bg-card border border-border text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   {s === 'All' ? 'All' : s}
@@ -275,7 +275,7 @@ export default function Incidents() {
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="w-7 h-7 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin" />
+            <div className="w-7 h-7 border-4 border-border border-t-foreground rounded-full animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState icon={AlertTriangle} title="No incidents found" />
@@ -351,19 +351,19 @@ export default function Incidents() {
       >
         <div className="mb-4 max-w-sm">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               value={invSearch}
               onChange={(e) => setInvSearch(e.target.value)}
               placeholder="Search investigations..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+              className="w-full rounded-lg border border-input bg-card pl-9 pr-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40"
             />
           </div>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="w-7 h-7 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin" />
+            <div className="w-7 h-7 border-4 border-border border-t-foreground rounded-full animate-spin" />
           </div>
         ) : invFiltered.length === 0 ? (
           <EmptyState icon={FileSearch} title="No investigations" subtitle="Click 'Add New Investigation' to open a new investigation." />

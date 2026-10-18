@@ -86,7 +86,7 @@ export default function ModuleAuditChecklistButton() {
 
   return (
     <>
-      <Button variant="outline" size="sm" onClick={run} className="shrink-0 rounded-lg border-border/60 bg-white/75 text-[13px] font-semibold shadow-sm hover:bg-white">
+      <Button variant="outline" size="sm" onClick={run} className="shrink-0 rounded-lg border-border/60 bg-card/75 text-[13px] font-semibold shadow-sm hover:bg-muted">
         <ClipboardCheck className="mr-1.5 h-3.5 w-3.5" />
         Audit checklist
       </Button>
@@ -100,7 +100,7 @@ export default function ModuleAuditChecklistButton() {
               </DialogTitle>
               {checklist && !loading && (
                 <div className="flex shrink-0 items-center gap-2">
-                  <Button variant="outline" size="sm" onClick={printNow} className="rounded-lg border-border/60 bg-white/75 text-[13px] font-semibold shadow-sm hover:bg-white">
+                  <Button variant="outline" size="sm" onClick={printNow} className="rounded-lg border-border/60 bg-card/75 text-[13px] font-semibold shadow-sm hover:bg-muted">
                     <Printer className="mr-1.5 h-3.5 w-3.5" />
                     Print
                   </Button>
