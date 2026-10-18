@@ -14,9 +14,9 @@ const VIOLET = [76, 29, 149];
 const MUTED = [100, 116, 139];
 const INK = [30, 30, 40];
 
-function startDocument(title, subtitle, code) {
+function startDocument(title, subtitle, code, docType = 'Form') {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const y = drawFormHeader(doc, { title, code, subtitle });
+  const y = drawFormHeader(doc, { title, code, subtitle, docType });
   return { doc, y };
 }
 
@@ -119,6 +119,7 @@ function buildParticipantHandbook(code) {
     'Participant Handbook',
     'Your rights, our commitments and how we work together',
     code,
+    'Handbook',
   );
   let y = startY;
 
@@ -223,6 +224,7 @@ function buildServiceAgreement(code) {
     'Service Agreement',
     'NDIS service agreement between the provider and the participant',
     code,
+    'Agreement',
   );
   let y = startY;
 
@@ -327,6 +329,7 @@ function buildEmploymentContract(code) {
     'Employment Contract',
     'Employment agreement between the employer and the employee',
     code,
+    'Contract',
   );
   let y = startY;
 
@@ -417,6 +420,7 @@ function buildPositionDescription(code) {
     'Position Description',
     'Duties, responsibilities and selection criteria for the position',
     code,
+    'Position Description',
   );
   let y = startY;
 

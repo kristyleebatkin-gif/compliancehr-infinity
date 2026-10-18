@@ -13,6 +13,7 @@ export function downloadBreachResponsePlan() {
   downloadChecklistPdf({
     title: 'Data Breach Response Plan',
     code: 'DC-001',
+    docType: 'Policy and Procedure',
     subtitle: 'Notifiable Data Breaches (NDB) scheme response procedure',
     fields: PLAN_SECTIONS.map(([label, value]) => ({ label, value, multiline: true })),
     signoffFields: ['Prepared by', 'Approved by', 'Review date'],
@@ -39,6 +40,7 @@ export function downloadBreachRecordPdf(breach) {
   downloadChecklistPdf({
     title: `Data Breach Record - ${breach.title}`,
     code: breach.breach_id || 'DC-002',
+    docType: 'Record',
     subtitle: 'Data breach notification and response log',
     fields: breachFields(breach),
     signoffFields: ['Privacy Officer signature', 'Date', 'Approved by'],

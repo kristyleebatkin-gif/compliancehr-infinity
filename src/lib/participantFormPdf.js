@@ -24,7 +24,7 @@ export async function buildFilledFormDoc({
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, subtitle, completedBy });
+  let y = drawFormHeader(doc, { title, code, subtitle, completedBy, docType: 'Form' });
   y = drawFormNotice(doc, y, { purpose });
   y = drawFieldRows(doc, y, fields, values);
   if (columns) y = drawRegisterTable(doc, y, columns, { rows });

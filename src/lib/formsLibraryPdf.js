@@ -20,7 +20,7 @@ export async function downloadBlankFormPdf({
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, subtitle });
+  let y = drawFormHeader(doc, { title, code, subtitle, docType: 'Form' });
   y = drawFormNotice(doc, y, { purpose });
   y = drawFieldRows(doc, y, fields);
   if (columns) y = drawRegisterTable(doc, y, columns, { rows });

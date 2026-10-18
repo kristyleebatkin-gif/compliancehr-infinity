@@ -4,6 +4,7 @@ export function downloadMinutesTemplate() {
   downloadChecklistPdf({
     title: 'Meeting Minutes',
     code: 'MTG-001',
+    docType: 'Minutes',
     subtitle: 'Meeting minutes and action record',
     fields: [
       { label: 'Meeting title' },
@@ -44,6 +45,7 @@ export function buildMeetingMinutesPdf(meeting) {
   return buildChecklistPdf({
     title: `Meeting Minutes - ${meeting.title}`,
     code: 'MTG-002',
+    docType: 'Minutes',
     subtitle: 'Recorded minutes of meeting',
     fields: meetingFields(meeting),
     signoffFields: ['Chairperson signature', 'Date', 'Minute taker'],
@@ -54,6 +56,7 @@ export function downloadMeetingMinutesPdf(meeting) {
   downloadChecklistPdf({
     title: `Meeting Minutes - ${meeting.title}`,
     code: 'MTG-002',
+    docType: 'Minutes',
     subtitle: 'Recorded minutes of meeting',
     fields: meetingFields(meeting),
     signoffFields: ['Chairperson signature', 'Date', 'Minute taker'],

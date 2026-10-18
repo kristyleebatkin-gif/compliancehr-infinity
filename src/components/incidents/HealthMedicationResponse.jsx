@@ -4,7 +4,7 @@ import { Phone, AlertTriangle, HeartPulse, ClipboardList, FileText, PhoneCall, S
 
 const POLICY_STEPS = [
   'Ensure everyone is safe first. Give first aid if trained, and call 000 immediately for any urgent or serious concern.',
-  'Contact Choices NQ admin or management straight away by phone and update them on the incident. While on the phone, ask Choices NQ if you need to contact anyone else, such as family, a guardian or an advocate.',
+  'Contact provider admin or management straight away by phone and update them on the incident. While on the phone, ask the provider if you need to contact anyone else, such as family, a guardian or an advocate.',
   'Complete an incident report note in ShiftCare in the participant profile. After you have submitted the incident report, write it down in Shift Notes in ShiftCare and add it to the participant diary: record who gave the information (for example the treating nurse), exactly what information was received, and follow their instructions.',
   'Log the incident in the Incident Log in the Incident Clinic (New Incident button). It is added to the Incident Register automatically, and you can download and keep a copy of the incident report from the register.',
   'Staff referral: the employee involved completes an incident report and gives it to their supervisor. The supervisor reviews it and refers it to management for support, further training, workers compensation or HR follow-up where there is injury, stress or misconduct. Staff are supported through the referral - it is about learning, not blame.',
@@ -39,8 +39,8 @@ export default function HealthMedicationResponse() {
           <a href="tel:131126" className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-warning/15 px-3 py-1.5 text-xs font-bold text-warning hover:bg-warning/25"><PhoneCall className="h-3.5 w-3.5" />Poisons Info - 13 11 26</a>
         </div>
         <div className="rounded-2xl border border-border/60 bg-card p-4">
-          <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><Phone className="h-4 w-4 text-safe" />Then contact Choices NQ</div>
-          <p className="text-xs text-muted-foreground">Contact Choices NQ admin or management and update us on the incident. While on the phone, ask Choices NQ if you need to contact anyone else, like family, a guardian or an advocate.</p>
+          <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><Phone className="h-4 w-4 text-safe" />Then contact management</div>
+          <p className="text-xs text-muted-foreground">Contact provider admin or management and update them on the incident. While on the phone, ask if you need to contact anyone else, like family, a guardian or an advocate.</p>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export default function HealthMedicationResponse() {
           {[
             'Urgent or serious concerns: call 000 immediately. Get the patient medication list and medical details for the ambulance.',
             'Mild concerns: call 13HEALTH (13 43 25 84) or the regular GP. For medication you can call 13HEALTH or the Poisons Information Line 13 11 26.',
-            'Contact Choices NQ admin or management and update us on the incident. Ask Choices NQ while on the phone if you need to contact anyone else like family.',
+            'Contact provider admin or management and update them on the incident. Ask while on the phone if you need to contact anyone else like family.',
             'Complete an incident report note in ShiftCare in the participant profile.',
             'After you have submitted the incident report, write it down in Shift Notes in ShiftCare and add it to the participant diary: the treating nurse or who gave the information, what information was received, and follow their instructions.',
             'Log the incident in the Incident Log in the Incident Clinic - it is added to the register automatically, and keep a copy of the incident report.',

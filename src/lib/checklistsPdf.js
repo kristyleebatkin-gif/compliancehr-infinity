@@ -27,6 +27,7 @@ const SURFACE = [248, 250, 252];
 export function buildChecklistPdf({
   title,
   code,
+  docType = 'Form',
   subtitle,
   fields,
   items,
@@ -126,15 +127,20 @@ export function buildChecklistPdf({
   doc.setFontSize(8.5);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(...MUTED);
-  doc.text('COMPLIANCE MANAGEMENT PLATFORM', margin, y + 15);
+  doc.text(String(docType || 'Form').toUpperCase(), margin, y + 15);
   if (code) {
-    doc.setFillColor(239, 246, 255);
-    doc.setDrawColor(147, 197, 253);
-    doc.roundedRect(pageW - margin - 72, y - 17, 72, 24, 3, 3, 'FD');
+    const badge = `${String(docType || 'Form').toUpperCase()} · ${code}`;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
+    doc.setFontSize(7.5);
+    const badgeW = doc.getTextWidth(badge) + 18;
+    const badgeX = pageW - margin - badgeW;
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(...ACCENT);
+    doc.setLineWidth(1);
+    doc.roundedRect(badgeX, y - 17, badgeW, 24, 5, 5, 'FD');
     doc.setTextColor(...ACCENT);
-    doc.text(code, pageW - margin - 36, y - 2, { align: 'center' });
+    doc.text(badge, badgeX + 9, y - 2);
+    doc.setLineWidth(0.5);
   }
   y += 44;
 

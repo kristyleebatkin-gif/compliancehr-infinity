@@ -51,7 +51,7 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
   const abn = business.abn ? ` (ABN ${business.abn})` : '';
   const address = [business.address_line, business.suburb, business.state, business.postcode].filter(Boolean).join(', ') || 'the registered address of the Employer';
   const award = data.industrial_instrument || 'the applicable industrial instrument';
-  let y = drawFormHeader(doc, { title: 'Employment Contract', code: 'HR-CON', subtitle: company, completedBy });
+  let y = drawFormHeader(doc, { title: 'Employment Contract', code: 'HR-CON', subtitle: company, completedBy, docType: 'Form' });
 
   y = drawSectionHeading(doc, y, 'Parties');
   y = drawParagraph(doc, y, `This employment agreement ("Agreement") is made between ${company}${abn}, of ${address} ("the Employer"), and ${data.employee_name || 'the Employee'} ("the Employee"). The Employer operates a National Disability Insurance Scheme (NDIS) registered provider business and the Employee agrees to work for the Employer on the terms set out in this Agreement.`);
@@ -127,7 +127,7 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
 export function downloadPositionDescriptionPdf(data, business = {}, completedBy = '') {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const company = business.business_name || 'ComplianceHR';
-  let y = drawFormHeader(doc, { title: 'Position Description', code: 'HR-PD', subtitle: company, completedBy });
+  let y = drawFormHeader(doc, { title: 'Position Description', code: 'HR-PD', subtitle: company, completedBy, docType: 'Form' });
 
   y = drawSectionHeading(doc, y, 'Position Details');
   y = drawFieldRows(doc, y, [

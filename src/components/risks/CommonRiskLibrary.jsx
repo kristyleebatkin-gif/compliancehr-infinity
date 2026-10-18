@@ -44,7 +44,7 @@ export const COMMON_RISK_GROUPS = [
     risks: [
       { title: 'Falls at home or in the community', category: 'Participant', likelihood: 'Possible', consequence: 'Major', description: 'Falls causing fractures or head injury.\nWhat to do: keep falls plans current, clear trip hazards, use mobility aids, supervise transfers. Serious falls - call 000.' },
       { title: 'Choking or mealtime difficulty', category: 'Clinical', likelihood: 'Possible', consequence: 'Severe', description: 'Airway obstruction during eating or drinking.\nWhat to do: follow mealtime support plans, texture-modified diets, supervised meals, current first aid. Call 000 for choking.' },
-      { title: 'Medication misadventure or missed dose', category: 'Clinical', likelihood: 'Possible', consequence: 'Major', description: 'Harm from wrong, missed or doubled medication.\nWhat to do: call 13HEALTH or Poisons Info 13 11 26, and contact Choices NQ admin or management.' },
+      { title: 'Medication misadventure or missed dose', category: 'Clinical', likelihood: 'Possible', consequence: 'Major', description: 'Harm from wrong, missed or doubled medication.\nWhat to do: call 13HEALTH or Poisons Info 13 11 26, and contact provider admin or management.' },
       { title: 'Wandering or absconding', category: 'Participant', likelihood: 'Possible', consequence: 'Major', description: 'Leaving a supported environment unnoticed.\nWhat to do: follow the absconding plan, maintain supervision levels, alert police and management early.' },
       { title: 'Seizure or sudden medical episode', category: 'Clinical', likelihood: 'Possible', consequence: 'Major', description: 'Seizures or acute illness requiring emergency response.\nWhat to do: follow the seizure/health plan, protect from injury, time the seizure, call 000 for serious or prolonged events.' },
       { title: 'Skin breakdown and pressure injuries', category: 'Clinical', likelihood: 'Possible', consequence: 'Moderate', description: 'Pressure damage for participants with limited mobility.\nWhat to do: repositioning schedules, pressure care equipment, skin checks each shift.' },
@@ -104,7 +104,7 @@ export default function CommonRiskLibrary({ onAdded }) {
       <div className="rounded-2xl border border-red-300 bg-red-50 p-5 dark:border-red-500/30 dark:bg-red-500/10">
         <p className="flex items-center gap-2 text-sm font-bold text-red-700 dark:text-red-300"><AlertTriangle className="h-4 w-4" />Risk management - what to do</p>
         <ul className="mt-2 space-y-1 text-sm text-red-700/90 dark:text-red-300/90">
-          <li>Serious or emergency risk: call <a href="tel:000" className="inline-flex items-center gap-1 font-bold underline"><Phone className="inline h-3 w-3" />000</a> immediately, then contact Choices NQ admin or management.</li>
+          <li>Serious or emergency risk: call <a href="tel:000" className="inline-flex items-center gap-1 font-bold underline"><Phone className="inline h-3 w-3" />000</a> immediately, then contact provider admin or management.</li>
           <li>Every shift, do a quick hazard scan of the environment and the people you support - if a hazard or risk is missing from the register, report it the same day with the Report Hazard button above.</li>
           <li>Common risks for each group are listed below - add any that apply to your work so they are assessed, controlled and reviewed.</li>
           <li>Controlled risks are reviewed on their review date; anything High or Critical is escalated to management straight away.</li>

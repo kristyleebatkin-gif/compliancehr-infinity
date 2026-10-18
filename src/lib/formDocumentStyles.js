@@ -29,7 +29,7 @@ function pageGuard(doc, y, needed) {
 }
 
 /** Header: company branding block, tinted title band with code pill, subtitle. */
-export function drawFormHeader(doc, { title, code = '', subtitle = 'ComplianceHR Form', completedBy = '' }) {
+export function drawFormHeader(doc, { title, code = '', docType = 'Form', subtitle = 'ComplianceHR Form', completedBy = '' }) {
   const pageW = doc.internal.pageSize.getWidth();
   let y = 54;
 
@@ -45,12 +45,18 @@ export function drawFormHeader(doc, { title, code = '', subtitle = 'ComplianceHR
   doc.setTextColor(49, 27, 105);
   doc.text(title, 58, y + 3);
   if (code) {
+    const typeLabel = String(docType || '').toUpperCase();
+    const badge = typeLabel && code ? `${typeLabel} · ${code}` : (code || typeLabel);
     doc.setFontSize(8);
-    const codeW = doc.getTextWidth(code) + 16;
-    doc.setFillColor(124, 58, 237);
-    doc.roundedRect(pageW - PAGE_MARGIN - 14 - codeW, y - 9, codeW, 16, 8, 8, 'F');
-    doc.setTextColor(255);
-    doc.text(code, pageW - PAGE_MARGIN - 14 - codeW + 8, y + 2.5);
+    doc.setFont('helvetica', 'bold');
+    const badgeW = doc.getTextWidth(badge) + 18;
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(124, 58, 237);
+    doc.setLineWidth(1);
+    doc.roundedRect(pageW - PAGE_MARGIN - 14 - badgeW, y - 9, badgeW, 16, 8, 8, 'FD');
+    doc.setTextColor(124, 58, 237);
+    doc.text(badge, pageW - PAGE_MARGIN - 14 - badgeW + 9, y + 2.5);
+    doc.setLineWidth(0.5);
   }
   y += 16;
   doc.setFont('helvetica', 'normal');

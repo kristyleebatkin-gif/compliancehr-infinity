@@ -111,6 +111,7 @@ export async function downloadComplianceTemplatePdf(docType) {
   let y = drawFormHeader(doc, {
     title: docType,
     code,
+    docType: 'Form',
     subtitle: 'Company Safe Record Sheet - complete, attach and file in the Document Vault',
   });
 

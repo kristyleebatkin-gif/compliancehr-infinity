@@ -65,7 +65,7 @@ export function getCompanyBranding() {
 
 export function hasConfiguredCompanyBranding() {
   const companyName = String(getCompanyBranding().companyName || '').trim().toLowerCase();
-  return Boolean(companyName && companyName !== 'compliancehr' && companyName !== 'choices nq');
+  return Boolean(companyName && companyName !== 'compliancehr');
 }
 
 export function cacheCompanyBranding(branding) {
@@ -218,14 +218,14 @@ export function drawBlankBusinessBranding(doc, x, y) {
 export function drawDocumentFooter(doc, {
   title = '',
   code = '',
-  companyName = getCompanyBranding().companyName,
+  docType = '',
   confidential = '',
   margin = 40,
 } = {}) {
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
   const pages = doc.internal.getNumberOfPages();
-  const descriptor = [confidential, title, code && `(${code})`].filter(Boolean).join(' | ');
+  const descriptor = [confidential, docType && docType !== title && docType, title, code && `(${code})`].filter(Boolean).join(' | ');
   const branding = getCompanyBranding();
   const footerTextX = branding.logoDataUrl ? margin + 24 : margin;
   const slogan = branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.';
@@ -260,7 +260,7 @@ export function drawDocumentFooter(doc, {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.5);
     doc.setTextColor(30, 41, 59);
-    doc.text(companyName, footerTextX, pageH - 30, { maxWidth: pageW - footerTextX - margin - 70 });
+    doc.text('ComplianceHR Infinity', footerTextX, pageH - 30, { maxWidth: pageW - footerTextX - margin - 70 });
     const addressParts = [branding.addressLine, branding.abn && `ABN ${branding.abn}`, branding.phone].filter(Boolean).join('  ·  ');
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);

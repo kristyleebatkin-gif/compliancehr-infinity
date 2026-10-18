@@ -17,6 +17,7 @@ export function downloadManualRecordPdf(manual) {
   downloadChecklistPdf({
     title: manual.title,
     code: 'EM-001',
+    docType: 'Manual',
     subtitle: 'Equipment operating, maintenance and safety manual',
     fields: manualFields(manual),
     signoffFields: ['Reviewed by', 'Date', 'Next review'],
