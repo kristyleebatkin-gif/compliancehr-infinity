@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, MessageCircleWarning, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Loader2, MessageCircleWarning, ArrowRight, Plus, Settings2 } from 'lucide-react';
 import { statusTone } from '@/lib/statusStyles';
+import ComplaintLogDialog from '@/components/communications/ComplaintLogDialog';
+import ComplaintResolveDialog from '@/components/communications/ComplaintResolveDialog';
 
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 
@@ -12,13 +15,23 @@ const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 // with routing to the full register in the Feedback module.
 export default function ComplaintsFeed() {
   const [items, setItems] = useState(null);
+  const [logOpen, setLogOpen] = useState(false);
+  const [editing, setEditing] = useState(null);
+
+  const load = () => base44.entities.Complaint.filter({}, { sort: '-date_received', limit: 50 })
+    .then((page) => setItems(page.items || []))
+    .catch(() => setItems([]));
 
   useEffect(() => {
     let live = true;
-    base44.entities.Complaint.filter({}, { sort: '-date_received', limit: 50 })
-      .then((page) => { if (live) setItems(page.items || []); })
-      .catch(() => { if (live) setItems([]); });
-    return () => { live = false; };
+    const wrappedLoad = () => {
+      base44.entities.Complaint.filter({}, { sort: '-date_received', limit: 50 })
+        .then((page) => { if (live) setItems(page.items || []); })
+        .catch(() => { if (live) setItems([]); });
+    };
+    wrappedLoad();
+    const unsub = base44.entities.Complaint.subscribe(() => wrappedLoad());
+    return () => { live = false; unsub(); };
   }, []);
 
   if (!items) {
@@ -45,6 +58,7 @@ export default function ComplaintsFeed() {
           <div className="flex items-center gap-2 text-xs font-semibold">
             <span className="rounded-full bg-rose-500/10 px-2 py-0.5 text-rose-600">{open.length} open</span>
             <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-emerald-600">{items.length - open.length} resolved</span>
+            <Button size="sm" onClick={() => setLogOpen(true)}><Plus className="h-3.5 w-3.5" />Log Complaint</Button>
             <Link to="/feedback" className="inline-flex items-center gap-1 text-brand hover:underline">Full register <ArrowRight className="h-3.5 w-3.5" /></Link>
           </div>
         </div>
@@ -60,13 +74,28 @@ export default function ComplaintsFeed() {
                 {c.description && <p className="mt-0.5 text-xs text-muted-foreground">{String(c.description).slice(0, 160)}</p>}
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
+                <Badge variant="outline" className={`text-[10px] ${c.complainant_relationship === 'Staff' ? 'text-violet-600' : 'text-sky-600'}`}>
+                  {c.complainant_relationship === 'Staff' ? 'Internal' : 'External'}
+                </Badge>
                 <Badge variant="outline" className={`text-[10px] ${statusTone(c.status)}`}>{c.status}</Badge>
                 {c.priority && <Badge variant="outline" className="text-[10px] text-muted-foreground">{c.priority}</Badge>}
+                {c.resolution && <Badge variant="outline" className="max-w-[14rem] truncate text-[10px] text-muted-foreground" title={c.resolution}>Resolution: {c.resolution}</Badge>}
+                <Button size="sm" variant="outline" className="h-7 px-2" onClick={() => setEditing(c)}><Settings2 className="h-3.5 w-3.5" /></Button>
               </div>
             </div>
           ))}
           {items.length === 0 && <p className="py-6 text-center text-sm text-muted-foreground">No complaints logged.</p>}
         </div>
+
+        <ComplaintLogDialog open={logOpen} onOpenChange={setLogOpen} onLogged={load} />
+        {editing && (
+          <ComplaintResolveDialog
+            complaint={editing}
+            open={Boolean(editing)}
+            onOpenChange={(o) => { if (!o) setEditing(null); }}
+            onSaved={load}
+          />
+        )}
       </CardContent>
     </Card>
   );
