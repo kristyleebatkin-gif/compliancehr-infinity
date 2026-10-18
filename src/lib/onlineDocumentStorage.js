@@ -18,7 +18,7 @@ export async function saveOnlineDocumentDraft({ record, title, libraryKey, intak
     ...(libraryKey.startsWith('staff-') ? { employee_id: libraryKey.slice(6) } : {}),
     submitted_by: user.full_name || user.email,
     saved_by_user_id: user.id,
-    submission_method: 'Online', data, status: 'Draft',
+    submission_method: 'Online', online_document: true, data, status: 'Draft',
   };
   return record?.status === 'Draft'
     ? base44.entities.FormSubmission.update(record.id, payload)

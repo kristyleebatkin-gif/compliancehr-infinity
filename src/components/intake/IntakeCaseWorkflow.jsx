@@ -254,7 +254,6 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const [downloadingTemplate, setDownloadingTemplate] = useState('');
   const [onlineForm, setOnlineForm] = useState(null);
   const [showOnline, setShowOnline] = useState(false);
-  const [submittingOnline, setSubmittingOnline] = useState(false);
   const [answersBank, setAnswersBank] = useState({});
   const [ackForm, setAckForm] = useState(null);
   const [showAck, setShowAck] = useState(false);
@@ -698,64 +697,26 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     setShowOnline(true);
   };
 
-  const submitOnlineForm = async () => {
-    if (!onlineForm || !activeCase) return;
-    const fields = onlineForm.definition.fields || [];
-    const missing = fields.filter((f) => !String(onlineForm.answers[f.label] || '').trim());
-    if (missing.length) {
-      toast({
-        title: 'Please answer every question before submitting',
-        description: `Still needed: ${missing.slice(0, 3).map((f) => f.label).join(', ')}${missing.length > 3 ? ' and more' : ''}`,
-        variant: 'destructive',
-      });
-      return;
-    }
-    setSubmittingOnline(true);
-    try {
-      const { date, time } = businessDateTime();
-      const doc = await buildFilledFormDoc({
-        title: onlineForm.docType,
-        code: templateCodes[onlineForm.docType],
-        subtitle: `${onlineForm.docType} - ${activeCase.applicant_name}`,
-        fields,
-        values: onlineForm.answers,
-        columns: onlineForm.definition.columns,
-        rows: onlineForm.definition.rows,
-        completedBy: user?.full_name || user?.email || '',
-        completedAt: `${date} at ${time}`,
-      });
-      const blob = doc.output('blob');
-      const file = new File([blob], `${onlineForm.docType} (completed online).pdf`, { type: 'application/pdf' });
-      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      const canonical = canonicalIntakeDocumentType(onlineForm.docType);
-      const onlineDoc = await base44.entities.IntakeDocument.create({
-        intake_case_id: activeCase.id,
-        intake_case_number: activeCase.case_number,
-        intake_type: intakeType,
-        document_type: canonical,
-        file_name: file.name,
-        file_uri,
-        ...(activeCase.related_profile_id ? { profile_id: activeCase.related_profile_id } : {}),
-        uploaded_by: `${user?.full_name || user?.email || 'Intake team'} (completed online)`,
-        uploaded_date: businessDateTime().date,
-      });
-      routeDocument(onlineDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
-      const completed = Array.from(new Set([
-        ...(activeCase.completed_document_types || []),
-        canonical,
-      ]));
-      await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
-      setAnswersBank((bank) => ({ ...bank, ...onlineForm.answers }));
-      await load(activeCase.id);
-      setShowOnline(false);
-      setOnlineForm(null);
-      toast({ title: `${canonical} completed online and attached` });
-    } catch (error) {
-      console.error(error);
-      toast({ title: 'Unable to save the completed form', description: error.message, variant: 'destructive' });
-    } finally {
-      setSubmittingOnline(false);
-    }
+  const submitOnlineForm = async ({ file_uri, file_name, answers }) => {
+    if (!onlineForm || !activeCase) throw new Error('Please reopen the intake case before saving.');
+    const canonical = canonicalIntakeDocumentType(onlineForm.docType);
+    const onlineDoc = await base44.entities.IntakeDocument.create({
+      intake_case_id: activeCase.id,
+      intake_case_number: activeCase.case_number,
+      intake_type: intakeType,
+      document_type: canonical,
+      file_name,
+      file_uri,
+      ...(activeCase.related_profile_id ? { profile_id: activeCase.related_profile_id } : {}),
+      uploaded_by: `${user?.full_name || user?.email || 'Intake team'} (completed online)`,
+      uploaded_date: businessDateTime().date,
+    });
+    await routeDocument(onlineDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
+    const completed = Array.from(new Set([...(activeCase.completed_document_types || []), canonical]));
+    await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
+    setAnswersBank((bank) => ({ ...bank, ...answers }));
+    await load(activeCase.id);
+    toast({ title: `${canonical} completed online and attached` });
   };
 
   const startAcknowledgement = (docType) => {
@@ -1084,8 +1045,9 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         open={showOnline}
         onOpenChange={(open) => { setShowOnline(open); if (!open) setOnlineForm(null); }}
         onlineForm={onlineForm}
-        setOnlineForm={setOnlineForm}
-        submitting={submittingOnline}
+        activeCase={activeCase}
+        intakeType={intakeType}
+        code={templateCodes[onlineForm?.docType]}
         onSubmit={submitOnlineForm}
       />
 

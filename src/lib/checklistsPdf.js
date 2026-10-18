@@ -103,91 +103,11 @@ export function buildChecklistPdf({
     y += 34;
   };
 
-  // Brand header
-  doc.setFillColor(...BRAND);
-  doc.rect(margin, 28, contentW, 3, 'F');
-  if (useConfiguredBranding) drawCompanyBranding(doc, margin, y);
-  else drawBlankBusinessBranding(doc, margin, y);
-  doc.setFontSize(8.5);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(...MUTED);
-  doc.text(String(docType || 'Form').toUpperCase(), margin, y + 15);
-  if (code) {
-    const badge = `${String(docType || 'Form').toUpperCase()} · ${code}`;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7.5);
-    const badgeW = doc.getTextWidth(badge) + 18;
-    const badgeX = pageW - margin - badgeW;
-    doc.setFillColor(255, 255, 255);
-    doc.setDrawColor(...ACCENT);
-    doc.setLineWidth(1);
-    doc.roundedRect(badgeX, y - 17, badgeW, 24, 5, 5, 'FD');
-    doc.setTextColor(...ACCENT);
-    doc.text(badge, badgeX + 9, y - 2);
-    doc.setLineWidth(0.5);
+  y = drawFormHeader(doc, { title, code, docType, subtitle, neutralBranding: !useConfiguredBranding });
+  if (fields?.length) {
+    drawSectionHeading('Form information', 90);
+    y = drawFieldRows(doc, y, fields, {}, { interactive: true });
   }
-  y += 44;
-
-  // Title
-  doc.setFontSize(20);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(...INK);
-  const titleLines = doc.splitTextToSize(title, contentW);
-  doc.text(titleLines, margin, y);
-  y += titleLines.length * 22;
-  if (subtitle) {
-    doc.setFontSize(9.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(...MUTED);
-    doc.text(subtitle, margin, y);
-    y += 15;
-  }
-  doc.setDrawColor(...BORDER);
-  doc.line(margin, y, pageW - margin, y);
-  y += 24;
-
-  if (fields && fields.length) {
-    drawSectionHeading('Form information', 58);
-    const gap = 16;
-    const columnW = (contentW - gap) / 2;
-    for (let index = 0; index < fields.length;) {
-      const field = fields[index];
-      const nextField = fields[index + 1];
-      const pair = !field.multiline && nextField && !nextField.multiline;
-      const rowFields = pair ? [field, nextField] : [field];
-      const widths = pair ? [columnW, columnW] : [contentW];
-      const labelLines = rowFields.map((item, rowIndex) => doc.splitTextToSize(item.label, widths[rowIndex]));
-      const labelH = Math.max(...labelLines.map((lines) => lines.length)) * 10;
-      const fieldH = field.multiline ? 64 : 28;
-      ensure(labelH + fieldH + 20);
-
-      rowFields.forEach((item, rowIndex) => {
-        const x = margin + rowIndex * (columnW + gap);
-        const width = widths[rowIndex];
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(8.5);
-        doc.setTextColor(...INK);
-        doc.text(labelLines[rowIndex], x, y);
-        const fieldY = y + labelH + 3;
-        addTextField(x, fieldY, width, item.multiline ? 64 : 28, Boolean(item.multiline), item.value || '');
-      });
-      y += labelH + fieldH + 20;
-      index += rowFields.length;
-    }
-  }
-
-  const drawTableHeader = (cols, colW, rowH) => {
-    doc.setFillColor(...BRAND);
-    doc.rect(margin, y, contentW, rowH, 'F');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7.5);
-    doc.setTextColor(255);
-    cols.forEach((column, index) => {
-      const lines = doc.splitTextToSize(column, colW - 8);
-      doc.text(lines, margin + index * colW + 4, y + 10);
-    });
-    y += rowH;
-  };
 
   if (columns?.length) {
     drawSectionHeading('Register entries', 90);

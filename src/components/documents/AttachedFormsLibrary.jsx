@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import { ChevronDown, Download, ExternalLink, FileText, Loader2, Search, UploadCloud } from 'lucide-react';
+import { ChevronDown, Download, ExternalLink, FileText, Loader2, Pencil, Search, UploadCloud } from 'lucide-react';
+import OnlineDocumentDialog from '@/components/documents/OnlineDocumentDialog';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import { routeDocument } from '@/lib/documentRouting';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
@@ -25,6 +26,7 @@ export default function AttachedFormsLibrary({
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
   const [downloading, setDownloading] = useState('');
+  const [onlineType, setOnlineType] = useState('');
 
   const load = async () => {
     try {
@@ -157,6 +159,11 @@ export default function AttachedFormsLibrary({
                             <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" onChange={(event) => upload(docType, event.target.files?.[0])} />
                           </label>
                         </div>
+                        {!!(definitions[docType]?.fields?.length || definitions[docType]?.columns?.length) && (
+                          <button onClick={() => setOnlineType(docType)} className="mt-2 inline-flex min-h-9 w-full items-center justify-center gap-2 rounded-md border border-primary/40 bg-accent px-3 py-2 text-xs font-semibold text-accent-foreground hover:bg-accent/80">
+                            <Pencil className="h-3.5 w-3.5" />Fill out online / Saved drafts
+                          </button>
+                        )}
                         {uploaded.length > 0 && (
                           <div className="mt-1.5 space-y-0.5">
                             {uploaded.slice(0, 3).map((d) => (
@@ -175,6 +182,9 @@ export default function AttachedFormsLibrary({
           })}
         </div>
       )}
+      {onlineType && <OnlineDocumentDialog key={`${libraryKey}:${onlineType}`} open title={onlineType} code={formCodes[onlineType]} definition={definitions[onlineType]} libraryKey={libraryKey}
+        onOpenChange={(isOpen) => { if (!isOpen) setOnlineType(''); }}
+        onSaved={async () => { await load(); toast({ title: `${onlineType} completed and filed` }); }} />}
     </div>
   );
 }
