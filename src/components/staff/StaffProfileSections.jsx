@@ -17,6 +17,7 @@ import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import StaffCertificatesTab from '@/components/staff/StaffCertificatesTab';
 import StaffShiftsTab from '@/components/staff/StaffShiftsTab';
 import StaffHrTab from '@/components/staff/StaffHrTab';
+import StaffIntakeLogs from '@/components/staff/StaffIntakeLogs';
 import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
@@ -55,6 +56,7 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     { key: 'certificates', label: 'Certificates', Icon: BadgeCheck, content: <StaffCertificatesTab staff={staff} /> },
     { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <StaffShiftsTab staff={staff} /> },
     { key: 'hr', label: 'Leave & Appraisals', Icon: CalendarDays, content: <StaffHrTab staff={staff} /> },
+    { key: 'intakelogs', label: 'Intake Logs', Icon: ClipboardCheck, content: <StaffIntakeLogs staff={staff} /> },
     ...businessModules,
   ];
   return (
