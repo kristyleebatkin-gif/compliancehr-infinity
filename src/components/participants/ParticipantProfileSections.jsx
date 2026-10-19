@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2, CalendarClock, ClipboardCheck, FileSignature, Files, Heart, ListTodo, MessagesSquare, ScrollText, ShieldAlert } from 'lucide-react';
+import { Loader2, CalendarClock, ClipboardCheck, FileSignature, Files, Heart, ListTodo, MessagesSquare, ScrollText, ShieldAlert, Target } from 'lucide-react';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
@@ -16,6 +16,7 @@ import ParticipantShiftsTab from '@/components/participants/ParticipantShiftsTab
 import ParticipantSafetyTab from '@/components/participants/ParticipantSafetyTab';
 import ParticipantReviewsTab from '@/components/participants/ParticipantReviewsTab';
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
+import GoalProgress from '@/pages/GoalProgress';
 import { useRole } from '@/lib/useRole';
 
 export default function ParticipantProfileSections({ participant, onUpdated, header, ourView = false }) {
@@ -40,6 +41,8 @@ export default function ParticipantProfileSections({ participant, onUpdated, hea
     { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <ParticipantShiftsTab participant={participant} /> },
     { key: 'safety', label: 'Risks & Safeguarding', Icon: ShieldAlert, content: <ParticipantSafetyTab participant={participant} /> },
     { key: 'reviews', label: 'Reviews, Surveys & Complaints', Icon: ClipboardCheck, content: <ParticipantReviewsTab participant={participant} /> },
+    // Goal Progress lives on the normal participant profile (not the 'Our' workspace).
+    { key: 'progress', label: 'Goal Progress', Icon: Target, content: <GoalProgress embedded profile={participant} profileKind="participant" /> },
     ...businessModules,
   ];
   return (

@@ -35,7 +35,7 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: <IntakeCentre {...props} /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
-    { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
+    ...(employee ? [{ key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> }] : []),
     { key: 'roster', label: 'Rostering', Icon: CalendarClock, content: <Rostering {...ourProps} /> },
     { key: 'community', label: 'Community', Icon: MapPin, content: <CommunityCouncil {...props} /> },
     { key: 'programs', label: 'Programs', Icon: CalendarDays, content: <ProgramsEvents {...props} /> },
