@@ -102,6 +102,12 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
+        },
+        {
+          "data.employee_name": "{{user.full_name}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -126,6 +132,14 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -150,6 +164,12 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "data.employee_name": "{{user.full_name}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -169,6 +189,12 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
+        },
+        {
+          "data.employee_name": "{{user.full_name}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     }
