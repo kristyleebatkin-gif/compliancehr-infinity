@@ -7,11 +7,17 @@ import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import StaffProfileSections from '@/components/staff/StaffProfileSections';
 import useProfileRecord from '@/hooks/useProfileRecord';
+import { useRole, ROLES } from '@/lib/useRole';
 
 export default function OurEmployeeDetail() {
   const { id } = useParams();
   const { profile: employee, loading, error, refresh } = useProfileRecord('StaffProfile', id);
-  if (loading || error || !employee) return <ProfileLoadState loading={loading} error={error} backTo="/our-employees" label="Our employee profiles" />;
+  const { role, user } = useRole();
+  const notPermitted = !loading && !error && employee && role === ROLES.SUPPORT && employee.email !== (user?.email || '');
+  if (loading || error || !employee || notPermitted) {
+    if (notPermitted) return <ProfileLoadState backTo="/our-employees" label="Our employee profiles" error message="You can only view your own employee profile." />;
+    return <ProfileLoadState loading={loading} error={error} backTo="/our-employees" label="Our employee profiles" />;
+  }
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-2">

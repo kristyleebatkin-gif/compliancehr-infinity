@@ -8,11 +8,17 @@ import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import ParticipantApprovalToggle from '@/components/participants/ParticipantApprovalToggle';
 import ParticipantProfileSections from '@/components/participants/ParticipantProfileSections';
 import useProfileRecord from '@/hooks/useProfileRecord';
+import { useRole, ROLES } from '@/lib/useRole';
 
 export default function OurParticipantDetail() {
   const { id } = useParams();
   const { profile: participant, loading, error, refresh } = useProfileRecord('ParticipantProfile', id);
-  if (loading || error || !participant) return <ProfileLoadState loading={loading} error={error} backTo="/our-participants" label="Our participant profiles" />;
+  const { role, user } = useRole();
+  const notPermitted = !loading && !error && participant && role === ROLES.PARTICIPANT && participant.email !== (user?.email || '');
+  if (loading || error || !participant || notPermitted) {
+    if (notPermitted) return <ProfileLoadState backTo="/our-participants" label="Our participant profiles" error message="You can only view your own participant profile." />;
+    return <ProfileLoadState loading={loading} error={error} backTo="/our-participants" label="Our participant profiles" />;
+  }
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
