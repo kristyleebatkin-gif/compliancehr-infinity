@@ -112,6 +112,9 @@
           "user_condition": {
             "role": "Team Leader"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
