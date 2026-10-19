@@ -15,10 +15,14 @@ import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
 import { useRole } from '@/lib/useRole';
 
-export default function StaffProfileSections({ staff, onUpdated }) {
+export default function StaffProfileSections({ staff, onUpdated, header }) {
   const { isAdmin } = useRole();
+  const teamSection = (
+    <TeamSection title={`${staff.full_name}'s participant team`} description="The participants this staff member supports, shown on their profile and used for rostering." values={staff.participant_team || []} kind="participants" editable={isAdmin}
+      onUpdate={async (next) => { await base44.entities.StaffProfile.update(staff.id, { participant_team: next }); await onUpdated(); }} />
+  );
   const tabs = [
-    { key: 'details', label: 'Details', Icon: ClipboardCheck, content: <StaffDetailsPanel staff={staff} onUpdated={onUpdated} /> },
+    { key: 'details', label: 'Details', Icon: ClipboardCheck, content: <div className="space-y-6">{header}{teamSection}<ExportRow kind="staff" person={staff} section="details" /><StaffDetailsPanel staff={staff} onUpdated={onUpdated} /></div> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <StaffFillableForms staff={staff} /> },
     { key: 'filechecklist', label: 'File Checklist', Icon: FileCheck2, content: <StaffFileChecklist staff={staff} /> },
     { key: 'records', label: 'Buddy Shifts & Training', Icon: GraduationCap, content: <StaffRecordsTab staff={staff} /> },
@@ -29,15 +33,15 @@ export default function StaffProfileSections({ staff, onUpdated }) {
     { key: 'todo', label: 'To-Do', Icon: ListTodo, content: <ProfileTodoList staff={staff} /> },
   ];
   return (
-    <>
-      <TeamSection title={`${staff.full_name}'s participant team`} description="The participants this staff member supports, shown on their profile and used for rostering." values={staff.participant_team || []} kind="participants" editable={isAdmin}
-        onUpdate={async (next) => { await base44.entities.StaffProfile.update(staff.id, { participant_team: next }); await onUpdated(); }} />
-      <Tabs defaultValue="details">
-        <TabsList className="h-auto flex-wrap justify-start gap-1">
-          {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
-        </TabsList>
-        {tabs.map(({ key, content }) => <TabsContent key={key} value={key}><ExportRow kind="staff" person={staff} section={key} />{content}</TabsContent>)}
-      </Tabs>
-    </>
+    <Tabs defaultValue="details">
+      <TabsList className="h-auto flex-wrap justify-start gap-1">
+        {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
+      </TabsList>
+      {tabs.map(({ key, content }) => (
+        <TabsContent key={key} value={key}>
+          {key === 'details' ? content : <><ExportRow kind="staff" person={staff} section={key} />{content}</>}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }
