@@ -4,6 +4,7 @@ import { useRole } from '@/lib/useRole';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Loader2, ShieldCheck, ShieldOff } from 'lucide-react';
+import { logUserAction } from '@/lib/actionLog';
 
 export default function ParticipantApprovalToggle({ participant, onUpdate }) {
   const { isAdmin } = useRole();
@@ -18,7 +19,8 @@ export default function ParticipantApprovalToggle({ participant, onUpdate }) {
     try {
       await base44.entities.ParticipantProfile.update(participant.id, { admin_approved: !approved });
       // Keep the participant's documents in step so staff can see docs for
-      // approved participants only.
+      // approved participants only. Log the bulk document change for the audit trail.
+      logUserAction('Documents Bulk Updated', 'Participant Document', { details: `All of ${participant.full_name}'s documents set to ${approved ? 'hidden from' : 'visible to'} staff (approval change)`, person: { profile_type: 'participant', profile_id: participant.id, profile_name: participant.full_name } });
       await base44.entities.ParticipantDocument.updateMany(
         { participant_id: participant.id },
         { $set: { admin_approved: !approved } },

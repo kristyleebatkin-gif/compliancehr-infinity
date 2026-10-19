@@ -8,6 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import ParticipantDocumentDialog from '@/components/documents/ParticipantDocumentDialog';
 import { format } from 'date-fns';
 import { safeUrl } from '@/lib/safeUrl';
+import { logUserAction } from '@/lib/actionLog';
 
 export default function ParticipantVault({ docs, loading, viewDoc, me, profile, onDone }) {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function ParticipantVault({ docs, loading, viewDoc, me, profile, 
 
   const removeDoc = async (doc) => {
     if (!confirm('Delete this document?')) return;
+    await logUserAction('Document Deleted', 'Participant Document', { record_id: doc.id, record_title: doc.title || doc.document_type || 'Document', person: { profile_type: 'participant', profile_id: doc.participant_id, profile_name: doc.participant_name } });
     await base44.entities.ParticipantDocument.delete(doc.id);
     onDone?.();
   };

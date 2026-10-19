@@ -8,6 +8,7 @@ import { profilePalette, hexToRgb } from '@/lib/profileColours';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { businessDateTime } from '@/lib/intakeCases';
+import { logUserAction } from '@/lib/actionLog';
 import { BadgeCheck, Camera, Download, Loader2, Save, UserRound } from 'lucide-react';
 
 /**
@@ -97,7 +98,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
         file: new File([blob], `Staff Badge - ${profile.full_name}.pdf`, { type: 'application/pdf' }),
       });
-      await base44.entities.EmployeeDocument.create({
+      const saved = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${profile.full_name}`,
         employee_name: profile.full_name,
         document_type: 'Staff Badge',
@@ -105,6 +106,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
         file_uri,
         notes: 'Made by the employee from My Profile.',
       });
+      logUserAction('Document Uploaded', 'Employee Document', { record_id: saved?.id, record_title: `Staff Badge - ${profile.full_name}`, details: 'Name tag saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id, profile_name: profile.full_name } });
       toast({ title: 'Name tag saved to your documents' });
     } catch (error) {
       toast({ title: 'Could not make name tag', description: error.message, variant: 'destructive' });

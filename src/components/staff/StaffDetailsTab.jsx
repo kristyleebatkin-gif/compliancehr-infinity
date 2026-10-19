@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
+import ProfileAuditTrail from '@/components/profile/ProfileAuditTrail';
 import { STAFF_PROFILE_SECTIONS as SECTIONS } from '@/lib/staffProfileFields';
 import { Loader2, Save } from 'lucide-react';
 
@@ -37,6 +38,8 @@ export default function StaffDetailsTab({ staff, onUpdated }) {
   return (
     <div className="space-y-6">
       {SECTIONS.map((section) => <ProfileFieldsSection key={section.title} section={section} form={form} onChange={set} prefix={`staff-${staff.id}`} />)}
+
+      <ProfileAuditTrail changeLog={staff.change_log} />
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving}>
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save profile

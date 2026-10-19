@@ -8,6 +8,7 @@ import { Loader2, Save } from 'lucide-react';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { staffBadgeBlob } from '@/lib/staffBadgePdf';
 import { routeDocument } from '@/lib/documentRouting';
+import { logUserAction } from '@/lib/actionLog';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 
 export default function StaffBadgeCreator() {
@@ -50,7 +51,7 @@ export default function StaffBadgeCreator() {
         uploaded_by: user?.full_name || user?.email || '',
       });
       // Link the badge to the staff member so it shows on their profile.
-      await base44.entities.EmployeeDocument.create({
+      const saved = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${selected.full_name}`,
         employee_name: selected.full_name,
         document_type: 'Staff Badge',
@@ -58,6 +59,7 @@ export default function StaffBadgeCreator() {
         file_uri,
         notes: 'Generated in Company Safe - Staff Badge Creator.',
       });
+      logUserAction('Document Uploaded', 'Employee Document', { record_id: saved?.id, record_title: `Staff Badge - ${selected.full_name}`, details: 'Generated in Company Safe - Staff Badge Creator.', person: { profile_type: 'employee', profile_id: selected.id, profile_name: selected.full_name } });
       routeDocument(record, { person_name: selected.full_name, person_type: 'Employee' });
       toast({ title: 'Badge stored in the company safe', description: `Linked to ${selected.full_name} and shown on their profile.` });
     } catch (error) {

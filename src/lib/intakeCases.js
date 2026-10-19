@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 
 export const INTAKE_REQUIREMENTS = {
   Participant: [
@@ -362,7 +363,7 @@ export async function mirrorIntakeDocumentsToProfile(intakeCase, profile) {
       const fromNote = `Imported from intake case ${intakeCase.case_number}. File: ${doc.file_name || type}.`;
       try {
         if (intakeCase.intake_type === 'Participant') {
-          await base44.entities.ParticipantDocument.create({
+          const saved = await base44.entities.ParticipantDocument.create({
             participant_id: profile.id,
             participant_name: profile.full_name,
             participant_user_id: participantUserId,
@@ -377,8 +378,9 @@ export async function mirrorIntakeDocumentsToProfile(intakeCase, profile) {
             review_outcome: 'Approved',
             notes: fromNote,
           });
+          logUserAction('Document Uploaded', 'Participant Document', { record_id: saved?.id, record_title: type, details: `Imported from intake case ${intakeCase.case_number}`, person: { profile_type: 'participant', profile_id: profile.id, profile_name: profile.full_name } });
         } else {
-          await base44.entities.EmployeeDocument.create({
+          const saved = await base44.entities.EmployeeDocument.create({
             title: type,
             employee_id: profile.id,
             employee_name: profile.full_name,
@@ -387,6 +389,7 @@ export async function mirrorIntakeDocumentsToProfile(intakeCase, profile) {
             status: 'Current',
             notes: `${fromNote} Original type: ${type}.`,
           });
+          logUserAction('Document Uploaded', 'Employee Document', { record_id: saved?.id, record_title: type, details: `Imported from intake case ${intakeCase.case_number}`, person: { profile_type: 'employee', profile_id: profile.id, profile_name: profile.full_name } });
         }
         mirrored += 1;
       } catch (error) {

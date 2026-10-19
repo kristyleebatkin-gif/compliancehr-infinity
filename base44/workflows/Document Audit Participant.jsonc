@@ -1,0 +1,47 @@
+{
+  "description": "Automatically records who changed, created or deleted a participant profile document and when, into the central audit log and the participant's profile audit trail.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update",
+        "delete"
+      ],
+      "entity_name": "ParticipantDocument"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "document_audit_participant",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "write_audit_entry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "documentAudit",
+            "args": {
+              "entity_name": "${ .trigger.entity_name }",
+              "event_type": "${ .trigger.event_type }",
+              "record_id": "${ .trigger.entity_id }",
+              "data": "${ .trigger.data }",
+              "old_data": "${ .trigger.old_data }",
+              "changed_fields": "${ .trigger.changed_fields }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Record document audit",
+            "description": "Logs who changed the document and when"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Document Audit: Participant"
+}

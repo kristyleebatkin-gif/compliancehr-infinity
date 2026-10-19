@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
+import { logUserAction } from '@/lib/actionLog';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
@@ -129,6 +130,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   const remove = async (doc) => {
     if (!canEditDoc(doc)) return;
     if (!confirm('Delete this document?')) return;
+    await logUserAction('Document Deleted', 'Employee Document', { record_id: doc.id, record_title: doc.title || doc.document_type || 'Document', person: { profile_type: 'employee', profile_name: doc.employee_name } });
     await base44.entities.EmployeeDocument.delete(doc.id);
     await load();
   };
@@ -143,6 +145,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
     if (!targets.length) return;
     setApplying(true);
     try {
+      await Promise.all(targets.map((t) => logUserAction('Document Updated', 'Employee Document', { record_id: t.id, record_title: t.title || t.document_type || 'Document', details: `Status set to ${status} (bulk update)`, person: { profile_type: 'employee', profile_name: t.employee_name } })));
       await base44.entities.EmployeeDocument.bulkUpdate(targets.map((t) => ({ id: t.id, status })));
       setSelected([]);
       await load();

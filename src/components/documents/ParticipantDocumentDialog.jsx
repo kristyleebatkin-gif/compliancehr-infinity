@@ -50,10 +50,11 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
   const save = async () => {
     setSaving(true);
     try {
+      let savedId = initial?.id || '';
       if (editing) {
         await base44.entities.ParticipantDocument.update(initial.id, form);
       } else {
-        await base44.entities.ParticipantDocument.create({
+        const saved = await base44.entities.ParticipantDocument.create({
           participant_id: profile?.id || '',
           participant_name: profile?.full_name || me?.full_name || '',
           participant_user_id: me?.id || '',
@@ -69,8 +70,9 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
           status: 'Received',
           review_outcome: 'Pending Review',
         });
+        savedId = saved?.id || savedId;
       }
-      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: initial?.id, person: { profile_type: 'participant', profile_id: profile?.id || initial?.participant_id, profile_name: profile?.full_name || me?.full_name } });
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: savedId, person: { profile_type: 'participant', profile_id: profile?.id || initial?.participant_id, profile_name: profile?.full_name || me?.full_name } });
       onOpenChange(false);
       onDone?.();
     } finally {

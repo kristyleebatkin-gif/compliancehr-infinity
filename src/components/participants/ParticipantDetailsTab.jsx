@@ -4,6 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
+import ProfileAuditTrail from '@/components/profile/ProfileAuditTrail';
 import { PARTICIPANT_PROFILE_SECTIONS as SECTIONS } from '@/lib/participantProfileFields';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
@@ -96,6 +97,8 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
       </div>
 
       {SECTIONS.map((section) => <ProfileFieldsSection key={section.title} section={section} form={form} onChange={set} prefix={`participant-${participant.id}`} />)}
+
+      <ProfileAuditTrail changeLog={participant.change_log} />
 
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving}>

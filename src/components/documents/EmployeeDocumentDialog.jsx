@@ -49,9 +49,13 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
     if (!form.title.trim()) return;
     setSaving(true);
     try {
+      let savedId = initial?.id || '';
       if (editing) await base44.entities.EmployeeDocument.update(initial.id, form);
-      else await base44.entities.EmployeeDocument.create(form);
-      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim(), person: { profile_type: 'employee', profile_id: form.employee_id, profile_name: form.employee_name } });
+      else {
+        const saved = await base44.entities.EmployeeDocument.create(form);
+        savedId = saved?.id || savedId;
+      }
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim(), record_id: savedId, person: { profile_type: 'employee', profile_id: form.employee_id, profile_name: form.employee_name } });
       onOpenChange(false);
       onDone?.();
     } finally {

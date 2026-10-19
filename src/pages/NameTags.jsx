@@ -61,7 +61,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
         file: new File([blob], `Staff Badge - ${profile.full_name}.pdf`, { type: 'application/pdf' }),
       });
-      await base44.entities.EmployeeDocument.create({
+      const saved = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${profile.full_name}`,
         employee_name: profile.full_name,
         document_type: 'Staff Badge',
@@ -69,7 +69,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
         file_uri,
         notes: 'Made by the employee in the Name Tags module.',
       });
-      logUserAction('Name Tag Created', 'Document', { record_title: `Staff Badge - ${profile.full_name}`, details: 'Saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id } });
+      logUserAction('Document Uploaded', 'Employee Document', { record_id: saved?.id, record_title: `Staff Badge - ${profile.full_name}`, details: 'Name tag saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id, profile_name: profile.full_name } });
       toast({ title: 'Name tag saved to My Documents' });
       load();
     } catch (error) {

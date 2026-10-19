@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Loader2, Trash2, UploadCloud } from 'lucide-react';
 import { routeDocumentBatch } from '@/lib/documentRouting';
+import { logUserAction } from '@/lib/actionLog';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 
@@ -66,7 +67,9 @@ export default function BulkUploadDocuments({ staff, onDone }) {
           file_uri,
         });
       }
-      await base44.entities.EmployeeDocument.bulkCreate(records);
+      const savedRecords = await base44.entities.EmployeeDocument.bulkCreate(records);
+      const savedList = Array.isArray(savedRecords) && savedRecords.length ? savedRecords : records;
+      await Promise.all(savedList.map((r) => logUserAction('Document Uploaded', 'Employee Document', { record_id: r?.id, record_title: r.title || r.document_type || 'Document', details: 'Bulk upload', person: { profile_type: 'employee', profile_name: r.employee_name || employee } })));
       await routeDocumentBatch(records.map((r) => ({ ...r, id: `emp-${r.title}-${r.document_type}` })), { source: 'EmployeeDocument', person_name: employee, person_type: 'Employee' });
       toast({ title: `${records.length} documents added to ${employee}` });
       setRows([]);
