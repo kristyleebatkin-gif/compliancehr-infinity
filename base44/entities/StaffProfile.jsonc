@@ -111,6 +111,10 @@
       "type": "string",
       "title": "About Me"
     },
+    "skills": {
+      "type": "string",
+      "title": "Skills & Qualifications"
+    },
     "change_log": {
       "type": "string",
       "title": "Details Check & Change Log"

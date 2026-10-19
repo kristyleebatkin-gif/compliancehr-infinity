@@ -66,8 +66,8 @@ function progressBar(doc, x, y, width, height, percent, color) {
 export async function downloadComplianceHealthReport() {
   const branding = await loadCompanyBranding();
   const [all, done] = await Promise.all([
-    base44.entities.Task.aggregate({ query: { status: { $ne: 'Cancelled' } }, groupBy: 'task_type' }),
-    base44.entities.Task.aggregate({ query: { status: 'Completed' }, groupBy: 'task_type' }),
+    base44.entities.TodoTask.aggregate({ query: { status: { $ne: 'Cancelled' } }, groupBy: 'task_type' }),
+    base44.entities.TodoTask.aggregate({ query: { status: 'Completed' }, groupBy: 'task_type' }),
   ]);
   const doneBy = Object.fromEntries((done.rows || []).map((r) => [r.task_type || 'General', r.count]));
   const groups = (all.rows || [])

@@ -48,7 +48,7 @@ export default function TaskSendDialog({ open, onOpenChange, task, onSaved }) {
             linked_entity_id: task.id,
           });
         }
-        await base44.entities.Task.update(task.id, { assigned_email: email });
+        await base44.entities.TodoTask.update(task.id, { assigned_email: email });
         onSaved();
         onOpenChange(false);
         toast({ title: 'Task sent', description: `Emailed to ${email}${alertInApp ? ' with an in-app alert' : ''}.` });

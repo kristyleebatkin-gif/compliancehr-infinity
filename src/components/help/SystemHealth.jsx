@@ -35,7 +35,7 @@ export default function SystemHealth() {
 
     // 3. Database read
     try {
-      const count = await base44.entities.Task.count({});
+      const count = await base44.entities.TodoTask.count({});
       results.push({ name: 'Database connection', status: 'ok', detail: `Read test passed (tasks on file: ${count})` });
     } catch (e) {
       results.push({ name: 'Database connection', status: 'fail', detail: e?.response?.data?.error || e.message || 'Could not read records' });

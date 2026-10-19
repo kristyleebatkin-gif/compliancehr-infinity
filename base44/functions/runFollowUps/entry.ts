@@ -130,12 +130,12 @@ export default async function(req) {
       const entry = `${today} ${time} | ${risk.assessment_type} assessment checked: last assessed ${risk.last_assessed_date || 'never'}, next due ${due} (every ${gapMonths === 1 ? 'month' : '3 months'})`;
 
       if (due <= today) {
-        const openTask = await service.entities.Task.filter(
+        const openTask = await service.entities.TodoTask.filter(
           { linked_entity_type: 'Risk', linked_entity_id: risk.id, task_type: 'Review Reminder', status: { $in: ['Open', 'In Progress'] } },
           { limit: 1, fields: ['id'] },
         );
         if ((openTask.items || openTask).length === 0) {
-          await service.entities.Task.create({
+          await service.entities.TodoTask.create({
             title: `${risk.assessment_type} risk assessment overdue: ${risk.title}`,
             task_type: 'Review Reminder',
             priority: 'High',

@@ -44,12 +44,12 @@ export default async function(req) {
     // Create the follow-up review task for the reviewer / manager.
     const dueDate = nextDate;
     const taskTitle = `${review.review_type || 'Performance'} review follow-up - ${staffName}`;
-    const existing = await service.entities.Task.filter(
+    const existing = await service.entities.TodoTask.filter(
       { title: taskTitle, task_type: 'Review Reminder', archived: { $ne: true } }, { limit: 1 },
     );
     let created = false;
     if (!(existing.items || []).length) {
-      await service.entities.Task.create({
+      await service.entities.TodoTask.create({
         title: taskTitle,
         task_type: 'Review Reminder',
         assigned_to: review.reviewer || 'Kristy Batkin',

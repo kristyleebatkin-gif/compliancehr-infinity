@@ -50,6 +50,7 @@ import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
 import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
 import AuditPackButton from '@/components/compliance/AuditPackButton';
+import BoardReportButton from '@/components/compliance/BoardReportButton';
 import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
 import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
@@ -143,6 +144,7 @@ export default function ComplianceHub() {
         action={(
           <>
             <AuditPackButton />
+            <BoardReportButton />
             <AuditArchiveButton />
             <Button variant="outline" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)

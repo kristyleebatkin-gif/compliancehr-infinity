@@ -58,7 +58,7 @@ export default async function(req) {
       service.entities.User.list(),
       service.entities.CommunicationEntry.filter({ note_type: { $in: NOTE_TYPES } }, { limit: 1000 }),
       service.entities.Notification.filter({}, { limit: 1000 }),
-      service.entities.Task.filter({ task_type: 'Register Reminder', status: { $in: ['Open', 'In Progress'] } }, { limit: 1000 }),
+      service.entities.TodoTask.filter({ task_type: 'Register Reminder', status: { $in: ['Open', 'In Progress'] } }, { limit: 1000 }),
     ]);
 
     const entryKeys = new Set(pageItems(entriesP).map((e) => String(e.subject || '')));
@@ -291,7 +291,7 @@ export default async function(req) {
           });
         }
         for (const task of group.tasks) {
-          await service.entities.Task.create({
+          await service.entities.TodoTask.create({
             title: task.subject,
             task_type: 'Register Reminder',
             assigned_to: group.attention,

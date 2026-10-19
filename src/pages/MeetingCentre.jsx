@@ -48,7 +48,7 @@ export default function MeetingCentre() {
     try {
       const page = await base44.entities.Meeting.filter({}, { sort: '-date', limit: 200 });
       setMeetings(page.items);
-      const actions = await base44.entities.Task.count({ linked_entity_type: 'Meeting', status: { $in: ['Open', 'In Progress', 'Overdue'] } });
+      const actions = await base44.entities.TodoTask.count({ linked_entity_type: 'Meeting', status: { $in: ['Open', 'In Progress', 'Overdue'] } });
       setOpenActions(actions);
     } finally {
       setLoading(false);

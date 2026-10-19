@@ -23,7 +23,7 @@ export default function IncidentFollowUp({ incident }) {
     try {
       const [invs, tasks] = await Promise.all([
         base44.entities.Investigation.filter({ incident_id: incident.id }, { limit: 200 }).then((p) => p.items || []).catch(() => []),
-        base44.entities.Task.filter({ linked_entity_type: 'Incident', linked_entity_id: incident.id }, { limit: 500 }).then((p) => p.items || []).catch(() => []),
+        base44.entities.TodoTask.filter({ linked_entity_type: 'Incident', linked_entity_id: incident.id }, { limit: 500 }).then((p) => p.items || []).catch(() => []),
       ]);
       setInvestigations(invs);
       setActions(tasks);
@@ -70,7 +70,7 @@ export default function IncidentFollowUp({ incident }) {
   const addAction = async (e) => {
     e.preventDefault();
     try {
-      await base44.entities.Task.create({
+      await base44.entities.TodoTask.create({
         title: actForm.title,
         task_type: 'Incident Action',
         assigned_to: actForm.assigned_to || '',
@@ -91,7 +91,7 @@ export default function IncidentFollowUp({ incident }) {
   const toggleAction = async (a) => {
     const next = a.status === 'Completed' ? 'Open' : 'Completed';
     try {
-      await base44.entities.Task.update(a.id, { status: next });
+      await base44.entities.TodoTask.update(a.id, { status: next });
       load();
     } catch (err) { toast({ title: 'Failed', description: err.message, variant: 'destructive' }); }
   };
@@ -99,7 +99,7 @@ export default function IncidentFollowUp({ incident }) {
   const deleteAction = async (a) => {
     if (!confirm('Delete this follow-up action?')) return;
     try {
-      await base44.entities.Task.delete(a.id);
+      await base44.entities.TodoTask.delete(a.id);
       load();
     } catch (err) { toast({ title: 'Failed', description: err.message, variant: 'destructive' }); }
   };

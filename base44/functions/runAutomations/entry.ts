@@ -14,7 +14,7 @@ export default async function(req) {
       base44.entities.TrainingCompletion.filter({}, { limit: 2000 }).catch(() => []),
       base44.entities.Policy.filter({}, { limit: 2000 }).catch(() => []),
       base44.entities.Incident.filter({}, { limit: 2000 }).catch(() => []),
-      base44.entities.Task.filter({}, { limit: 2000 }).catch(() => []),
+      base44.entities.TodoTask.filter({}, { limit: 2000 }).catch(() => []),
       base44.asServiceRole.entities.Notification.filter({}, { limit: 2000 }).catch(() => []),
       base44.asServiceRole.entities.User.list().catch(() => []),
     ]);
@@ -63,7 +63,7 @@ export default async function(req) {
       if (overdue) {
         const title = `Conduct participant review for ${p.full_name}`;
         if (!taskExists(title)) {
-          await base44.entities.Task.create({ title, task_type: 'Review Reminder', assigned_to: p.support_coordinator || 'Team Leader', due_date: new Date(today.getTime() + 14 * 86400000).toISOString().slice(0, 10), status: 'Open', priority: 'High', linked_entity_type: 'ParticipantProfile', linked_entity_id: p.id });
+          await base44.entities.TodoTask.create({ title, task_type: 'Review Reminder', assigned_to: p.support_coordinator || 'Team Leader', due_date: new Date(today.getTime() + 14 * 86400000).toISOString().slice(0, 10), status: 'Open', priority: 'High', linked_entity_type: 'ParticipantProfile', linked_entity_id: p.id });
           created.tasks++;
         }
       }

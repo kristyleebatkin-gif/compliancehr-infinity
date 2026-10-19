@@ -137,7 +137,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
         linked_entity_type: 'TrainingCompletion',
         linked_entity_id: completion.id,
       });
-      await base44.entities.Task.create({
+      await base44.entities.TodoTask.create({
         title: `${module.title} — 12 month renewal`,
         task_type: 'Training Renewal',
         assigned_to: finalLearnerName,

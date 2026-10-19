@@ -28,7 +28,7 @@ export default function MeetingTasks({ meeting }) {
     if (!meeting?.id) return;
     setLoading(true);
     try {
-      const page = await base44.entities.Task.filter(
+      const page = await base44.entities.TodoTask.filter(
         { linked_entity_type: 'Meeting', linked_entity_id: meeting.id },
         { sort: '-created_date', limit: 50 },
       );
@@ -60,7 +60,7 @@ export default function MeetingTasks({ meeting }) {
     if (!form.title.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.Task.create({
+      await base44.entities.TodoTask.create({
         ...form,
         task_type: 'General',
         status: 'Open',
@@ -80,7 +80,7 @@ export default function MeetingTasks({ meeting }) {
   };
 
   const setStatus = async (task, status) => {
-    await base44.entities.Task.update(task.id, { status });
+    await base44.entities.TodoTask.update(task.id, { status });
     await load();
   };
 
@@ -150,7 +150,7 @@ export default function MeetingTasks({ meeting }) {
                     </Button>
                   )}
                 <Badge className={statusTone(task.status)}>{task.status}</Badge>
-                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Task.delete(task.id); await load(); }}>
+                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.TodoTask.delete(task.id); await load(); }}>
                   <Trash2 className="h-3.5 w-3.5 text-destructive" />
                 </Button>
               </div>

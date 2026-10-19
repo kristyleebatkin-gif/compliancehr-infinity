@@ -39,7 +39,7 @@ export default function Tasks() {
     setLoading(true);
     try {
       const [page, userPage] = await Promise.all([
-        base44.entities.Task.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 }),
+        base44.entities.TodoTask.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list(),
       ]);
       setList(page.items || []);
@@ -82,8 +82,8 @@ export default function Tasks() {
       completed_date: form.status === 'Completed' ? (form.completed_date || new Date().toISOString().slice(0, 10)) : form.completed_date,
     };
     const previous = editing === 'new' ? null : list.find((t) => t.id === editing);
-    if (editing === 'new') await base44.entities.Task.create(payload);
-    else await base44.entities.Task.update(editing, payload);
+    if (editing === 'new') await base44.entities.TodoTask.create(payload);
+    else await base44.entities.TodoTask.update(editing, payload);
     if (payload.assigned_to && (!previous || previous.assigned_to !== payload.assigned_to)) await alertAssignee(payload);
     if (payload.assigned_to && emailAssignee && payload.assigned_email && (!previous || previous.assigned_to !== payload.assigned_to)) {
       try {
@@ -101,7 +101,7 @@ export default function Tasks() {
 
   const toggle = async (t) => {
     const completed = t.status !== 'Completed';
-    await base44.entities.Task.update(t.id, {
+    await base44.entities.TodoTask.update(t.id, {
       status: completed ? 'Completed' : 'Open',
       completed_date: completed ? new Date().toISOString().slice(0, 10) : undefined,
     });
@@ -109,17 +109,17 @@ export default function Tasks() {
   };
 
   const setStatus = async (t, status) => {
-    await base44.entities.Task.update(t.id, {
+    await base44.entities.TodoTask.update(t.id, {
       status,
       completed_date: status === 'Completed' ? new Date().toISOString().slice(0, 10) : undefined,
     });
     load();
   };
 
-  const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.Task.delete(t.id); load(); } };
+  const remove = async (t) => { if (confirm('Delete this task?')) { await base44.entities.TodoTask.delete(t.id); load(); } };
 
   const exportTasks = async () => {
-    const rows = await fetchAllRecords(base44.entities.Task, {}, '-due_date');
+    const rows = await fetchAllRecords(base44.entities.TodoTask, {}, '-due_date');
     downloadCsv('Task-Register.csv', [
       { key: 'title', label: 'Task' }, { key: 'task_type', label: 'Type' },
       { key: 'assigned_to', label: 'Assigned To' }, { key: 'assigned_email', label: 'Assigned Email' },
@@ -164,7 +164,7 @@ export default function Tasks() {
 
   const bulkArchive = async () => {
     if (selected.length === 0) return;
-    await base44.entities.Task.bulkUpdate(selected.map((id) => ({ id, archived: true })));
+    await base44.entities.TodoTask.bulkUpdate(selected.map((id) => ({ id, archived: true })));
     toast({ title: `${selected.length} task${selected.length === 1 ? '' : 's'} archived` });
     setSelected([]);
     load();
@@ -172,7 +172,7 @@ export default function Tasks() {
 
   const bulkStatus = async (status) => {
     if (!status || selected.length === 0) return;
-    await base44.entities.Task.bulkUpdate(selected.map((id) => ({ id, status, completed_date: status === 'Completed' ? new Date().toISOString().slice(0, 10) : undefined })));
+    await base44.entities.TodoTask.bulkUpdate(selected.map((id) => ({ id, status, completed_date: status === 'Completed' ? new Date().toISOString().slice(0, 10) : undefined })));
     toast({ title: `${selected.length} task${selected.length === 1 ? '' : 's'} moved to ${status}` });
     setSelected([]);
     load();

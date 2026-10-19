@@ -23,7 +23,7 @@ export default async function(req) {
     const active = [];
     let cursor = null;
     do {
-      const page = await service.entities.Task.filter(
+      const page = await service.entities.TodoTask.filter(
         { archived: { $ne: true }, status: { $in: ['Open', 'In Progress'] } },
         { limit: 200, ...(cursor ? { cursor } : {}) },
       );

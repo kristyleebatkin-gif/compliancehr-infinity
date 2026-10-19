@@ -120,6 +120,14 @@ const ROUTES = {
     ownerFields: ['staff_name', 'recorded_by'],
     notify: false,
   },
+  InternalAudit: {
+    register: () => 'Internal Audit Register',
+    titleFields: ['register_audited', 'audit_category'],
+    descFields: ['findings_identified', 'audit_scope'],
+    personFields: ['auditor'],
+    ownerFields: ['auditor'],
+    notify: false,
+  },
 };
 
 export default async function(req) {
@@ -189,7 +197,68 @@ export default async function(req) {
       } catch (e) { console.error('Notification failed', e.message); }
     }
 
-    return Response.json({ ok: true, register_id: registerEntry.id, register_type: registerType, notified });
+    // Risk register workflow: keep rating, owner, review cadence and dates current.
+    let riskAutoUpdates = 0;
+    if (entity === 'Risk') {
+      const L = ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost Certain'];
+      const C = ['Insignificant', 'Minor', 'Moderate', 'Major', 'Severe'];
+      const li = L.indexOf(rec.likelihood);
+      const ci = C.indexOf(rec.consequence);
+      if (li >= 0 && ci >= 0) {
+        const score = (li + 1) * (ci + 1);
+        const rating = score >= 15 ? 'Critical' : score >= 9 ? 'High' : score >= 4 ? 'Medium' : 'Low';
+        const updates = {};
+        if (rec.rating !== rating) updates.rating = rating;
+        if (!rec.owner) updates.owner = ['Compliance', 'Financial'].includes(rec.category) ? 'Compliance Manager' : 'Team Leader';
+        if (!rec.identified_date) updates.identified_date = recordedDate;
+        if (!rec.review_date) {
+          const d = new Date();
+          d.setDate(d.getDate() + (['High', 'Critical'].includes(rating) ? 30 : rating === 'Medium' ? 90 : 180));
+          updates.review_date = d.toISOString().slice(0, 10);
+        }
+        if (Object.keys(updates).length > 0) {
+          await base44.asServiceRole.entities.Risk.update(recordId, updates);
+          riskAutoUpdates = Object.keys(updates).length;
+        }
+      }
+    }
+
+    // Auto-create a compliance issue from serious incidents and audit findings.
+    let issueCreated = false;
+    if (event === 'create') {
+      if (entity === 'Incident' && ['High', 'Critical'].includes(rec.severity)) {
+        try {
+          await base44.asServiceRole.entities.ComplianceIssue.create({
+            title: `Incident: ${title}`,
+            description: (pick(rec, ['description', 'immediate_actions']) || '').slice(0, 900),
+            category: 'Incident',
+            source: 'Incident Review',
+            priority: rec.severity === 'Critical' ? 'Urgent' : 'High',
+            status: 'Open',
+            date_logged: recordedDate,
+            logged_by: owner,
+          });
+          issueCreated = true;
+        } catch (e) { console.error('Issue auto-create failed', e.message); }
+      }
+      if (entity === 'InternalAudit' && pick(rec, ['findings_identified', 'finding_reference'])) {
+        try {
+          await base44.asServiceRole.entities.ComplianceIssue.create({
+            title: `Audit finding: ${title}`,
+            description: (pick(rec, ['findings_identified', 'audit_scope']) || '').slice(0, 900),
+            category: 'Governance',
+            source: 'Internal Audit',
+            priority: 'Medium',
+            status: 'Open',
+            date_logged: recordedDate,
+            logged_by: pick(rec, ['auditor']) || 'Auditor',
+          });
+          issueCreated = true;
+        } catch (e) { console.error('Issue auto-create failed', e.message); }
+      }
+    }
+
+    return Response.json({ ok: true, register_id: registerEntry.id, register_type: registerType, notified, riskAutoUpdates, issueCreated });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

@@ -51,8 +51,8 @@ export default function ComplianceHealthDashboard() {
     (async () => {
       try {
         const [all, done] = await Promise.all([
-          base44.entities.Task.aggregate({ query: { status: { $ne: 'Cancelled' } }, groupBy: 'task_type' }),
-          base44.entities.Task.aggregate({ query: { status: 'Completed' }, groupBy: 'task_type' }),
+          base44.entities.TodoTask.aggregate({ query: { status: { $ne: 'Cancelled' } }, groupBy: 'task_type' }),
+          base44.entities.TodoTask.aggregate({ query: { status: 'Completed' }, groupBy: 'task_type' }),
         ]);
         if (!alive) return;
         const doneBy = Object.fromEntries((done.rows || []).map((r) => [r.task_type || 'General', r.count]));
