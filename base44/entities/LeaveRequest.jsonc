@@ -101,6 +101,9 @@
           "user_condition": {
             "role": "Rostering Coordinator"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
