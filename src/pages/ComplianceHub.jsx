@@ -64,6 +64,7 @@ import ParticipantReviewRegister from '@/components/compliance/ParticipantReview
 import ConsentRegister from '@/components/compliance/ConsentRegister';
 import CertificationCalendar from '@/components/compliance/CertificationCalendar';
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
+import StaffComplianceChart from '@/components/compliance/StaffComplianceChart';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
@@ -205,6 +206,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="consents">Consent Register</TabsTrigger>
           <TabsTrigger value="form-templates">Form Templates</TabsTrigger>
           <TabsTrigger value="cert-renewals">Certification Renewals</TabsTrigger>
+          <TabsTrigger value="staff-compliance">Staff Compliance</TabsTrigger>
           <TabsTrigger value="risk-heatmap">Risk Heatmap</TabsTrigger>
           <TabsTrigger value="onboarding-progress">Onboarding Progress</TabsTrigger>
           <TabsTrigger value="staff-bulk-actions">Staff Bulk Actions</TabsTrigger>
@@ -434,6 +436,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="cert-renewals" className="mt-4">
           <CertificationCalendar />
+        </TabsContent>
+
+        <TabsContent value="staff-compliance" className="mt-4">
+          <StaffComplianceChart />
         </TabsContent>
 
         <TabsContent value="risk-heatmap" className="mt-4">
