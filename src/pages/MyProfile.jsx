@@ -39,6 +39,9 @@ const PARTICIPANT_FIELDS = [
   ['dislikes', 'Dislikes', 'textarea'],
 ];
 
+// Admin/management roles who can see the organisation-wide profile directories.
+const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'];
+
 export default function MyProfile() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(null);
@@ -86,6 +89,7 @@ export default function MyProfile() {
 
   useEffect(() => { load(); }, [load]);
 
+  const isAdmin = ADMIN_ROLES.includes(me?.role);
   const isParticipant = me?.role === 'Participant';
   const fields = isParticipant ? PARTICIPANT_FIELDS : STAFF_FIELDS;
   const canEditParticipant = isParticipant || ['admin', 'Provider Administrator', 'Administration', 'Team Leader'].includes(me?.role);
@@ -147,8 +151,8 @@ export default function MyProfile() {
           <TabsTrigger value="work">My Work</TabsTrigger>
           <TabsTrigger value="documents">My Documents</TabsTrigger>
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
-          {me?.role === 'admin' && <TabsTrigger value="our-staff">Our employee profiles</TabsTrigger>}
-          {me?.role === 'admin' && <TabsTrigger value="our-participants">Our participant profiles</TabsTrigger>}
+          {isAdmin && <TabsTrigger value="our-staff">Our employee profiles</TabsTrigger>}
+          {isAdmin && <TabsTrigger value="our-participants">Our participant profiles</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="details" className="mt-4 space-y-6">
@@ -270,13 +274,13 @@ export default function MyProfile() {
           </TabsContent>
         )}
 
-        {me?.role === 'admin' && (
+        {isAdmin && (
           <TabsContent value="our-staff" className="mt-4">
             <OurProfilesTab kind="staff" />
           </TabsContent>
         )}
 
-        {me?.role === 'admin' && (
+        {isAdmin && (
           <TabsContent value="our-participants" className="mt-4">
             <OurProfilesTab kind="participant" />
           </TabsContent>
