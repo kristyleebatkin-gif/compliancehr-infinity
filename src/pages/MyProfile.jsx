@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { format } from 'date-fns';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import { Card, CardContent } from '@/components/ui/card';
@@ -90,11 +91,20 @@ export default function MyProfile() {
   const setField = (key, value) => { setForm((f) => ({ ...f, [key]: value })); setSaved(false); };
   const setParticipantField = (key, value) => { setParticipantForm((f) => ({ ...f, [key]: value })); setSaved(false); };
 
-  const saveParticipant = async () => {
-    if (!participantProfile) return;
+  // Self-service save: writes the edited fields straight to the profile record
+  // and appends a timestamped change-log line so managers' records stay in sync.
+  const saveProfile = async (entityName, record, formData) => {
     setSaving(true);
     try {
-      await base44.entities.ParticipantProfile.update(participantProfile.id, participantForm);
+      const labels = entityName === 'ParticipantProfile' ? PARTICIPANT_FIELDS : STAFF_FIELDS;
+      const changed = labels
+        .filter(([key]) => (formData[key] || '') !== (record[key] || ''))
+        .map(([, label]) => label);
+      const entry = changed.length
+        ? `${format(new Date(), 'd MMM yyyy HH:mm')} - ${(me?.full_name || me?.email || 'Self-service')} (self-service) updated: ${changed.join(', ')}`
+        : null;
+      const change_log = entry ? [record.change_log, entry].filter(Boolean).join('\n') : record.change_log;
+      await base44.entities[entityName].update(record.id, { ...formData, change_log });
       setSaved(true);
       await load();
     } finally {
@@ -102,17 +112,14 @@ export default function MyProfile() {
     }
   };
 
-  const save = async () => {
+  const save = () => {
     if (!profile) return;
-    setSaving(true);
-    try {
-      const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-      await entity.update(profile.id, form);
-      setSaved(true);
-      await load();
-    } finally {
-      setSaving(false);
-    }
+    return saveProfile(isParticipant ? 'ParticipantProfile' : 'StaffProfile', profile, form);
+  };
+
+  const saveParticipant = () => {
+    if (!participantProfile) return;
+    return saveProfile('ParticipantProfile', participantProfile, participantForm);
   };
 
   if (loading) {
