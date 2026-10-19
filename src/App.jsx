@@ -15,7 +15,6 @@ import ResetPassword from '@/pages/ResetPassword';
 
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
-import StaffHome from '@/pages/StaffHome';
 import Staff from '@/pages/Staff';
 import StaffDetail from '@/pages/StaffDetail';
 import ComplianceHub from '@/pages/ComplianceHub';
@@ -76,8 +75,6 @@ import SuggestionsHub from '@/pages/SuggestionsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import MyProfile from '@/pages/MyProfile';
-import MyDocuments from '@/pages/MyDocuments';
-import NameTags from '@/pages/NameTags';
 import Landing from '@/pages/Landing';
 import PublicComplaint from '@/pages/PublicComplaint';
 import PublicVolunteer from '@/pages/PublicVolunteer';

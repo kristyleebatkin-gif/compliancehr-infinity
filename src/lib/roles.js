@@ -44,10 +44,7 @@ const EVERYONE = [...ALL_ROLES];
 // navKey -> roles allowed to see/use it. Each business role has independent,
 // role-appropriate access across every module in the app.
 export const NAV_PERMISSIONS = {
-  'my-work': EVERYONE,
   'my-profile': EVERYONE,
-  'my-documents': EVERYONE,
-  'name-tags': [...STAFF_ROLES, ROLES.HR],
   dashboard: EVERYONE,
   notifications: EVERYONE,
   assistant: EVERYONE,
