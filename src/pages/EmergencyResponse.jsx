@@ -20,6 +20,7 @@ import VisitorLogTable from '@/components/emergency/VisitorLogTable';
 import EmergencyResources from '@/components/emergency/EmergencyResources';
 import LiveAlerts from '@/components/emergency/LiveAlerts';
 import EmergencyQuickDial from '@/components/emergency/EmergencyQuickDial';
+import OfflineFieldCapture from '@/components/safety/OfflineFieldCapture';
 
 const TYPES = ['Fire Evacuation', 'Fire Drill', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
 
@@ -128,6 +129,7 @@ export default function EmergencyResponse() {
           <TabsTrigger value="visitors">Visitor log</TabsTrigger>
           <TabsTrigger value="resources">Resources &amp; links</TabsTrigger>
           <TabsTrigger value="alerts">Live alerts &amp; warnings</TabsTrigger>
+          <TabsTrigger value="capture">Field capture</TabsTrigger>
         </TabsList>
 
         <TabsContent value="drills" className="mt-4 space-y-4">
@@ -199,6 +201,7 @@ export default function EmergencyResponse() {
         <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>
         <TabsContent value="resources" className="mt-4"><EmergencyResources /></TabsContent>
         <TabsContent value="alerts" className="mt-4"><LiveAlerts /></TabsContent>
+        <TabsContent value="capture" className="mt-4"><OfflineFieldCapture /></TabsContent>
       </Tabs>
     </div>
   );
