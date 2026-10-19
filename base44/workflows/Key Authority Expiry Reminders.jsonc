@@ -1,0 +1,45 @@
+{
+  "name": "Key Authority Expiry Reminders",
+  "description": "Daily scan of delegated authorities on key personnel that have expired or expire within 30 days. Posts an alert into the Communication Centre diary and notifies administrators once per state change.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "35 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "key_authority_expiry_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_key_authority_expiry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "keyAuthorityReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan key personnel authorities and raise alerts",
+            "description": "Posts Communication Centre alerts and admin notifications for expired or expiring delegated authorities"
+          }
+        }
+      }
+    ]
+  }
+}
