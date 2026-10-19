@@ -1,8 +1,15 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { STAFF_SEND_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 // Logs one staff/participant action: always in the admin audit trail (AuditLog),
 // and when the action belongs to a person, also on that person's profile change
 // log so their profile stays up to date with the correct attribution.
+//
+// Trust boundaries: any authenticated non-archived user may log their own action
+// to the central AuditLog (every entry carries the real caller's id/email/role).
+// Writing to a person's profile change log is restricted to trusted staff roles,
+// and the target profile is resolved AND updated through the caller-scoped
+// client, so profile RLS decides who may touch which profile.
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -40,12 +47,18 @@ export default async function(req) {
       timestamp: new Date().toISOString(),
     });
 
-    // Append to the correct person's profile only, resolved by id, then email, then name.
+    // Append to the correct person's profile only, resolved by id, then email, then
+    // name — through the caller-scoped client so profile RLS authorizes the target.
     let profileUpdated = false;
     const person = body.person || {};
     const isParticipant = person.profile_type === 'participant';
-    const entity = base44.asServiceRole.entities[isParticipant ? 'ParticipantProfile' : 'StaffProfile'];
+    // Low-trust roles (Participant, Auditor, Volunteer, etc.) must never write into
+    // anyone's profile change log — forged audit history is the exact attack this guards.
+    const entity = hasAnyRole(user, STAFF_SEND_ROLES)
+      ? base44.entities[isParticipant ? 'ParticipantProfile' : 'StaffProfile']
+      : null;
     try {
+      if (!entity) throw new Error('Role not permitted to update profile change logs');
       let target = null;
       const profileId = clean(person.profile_id, 120);
       const profileEmail = clean(person.profile_email, 200);
