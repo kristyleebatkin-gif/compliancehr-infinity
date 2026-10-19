@@ -57,10 +57,11 @@ export default function ReceiptHub({ profile } = {}) {
     try {
       const record = await base44.entities.Receipt.create({
         ...form,
+        ...(profile ? { paid_by: profile.full_name } : {}),
         amount: form.amount === '' ? undefined : Number(form.amount),
         gst_amount: form.gst_amount === '' ? undefined : Number(form.gst_amount),
       });
-      await fileReceiptToAssetRegister(record, form.paid_by);
+      await fileReceiptToAssetRegister(record, record.paid_by);
       setForm({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', ndis_category: '', ndis_support_item_number: '', status: 'Unreconciled', receipt_url: '', notes: '' });
       setOpen(false);
       await load();

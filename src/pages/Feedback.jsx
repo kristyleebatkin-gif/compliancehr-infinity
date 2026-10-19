@@ -52,6 +52,7 @@ export default function Feedback({ profile } = {}) {
     try {
       const payload = {
         ...form,
+        ...(profile ? { submitted_by: profile.full_name } : {}),
         rating: Number(form.rating) || undefined,
         received_date: new Date().toISOString(),
         status_log: `${format(new Date(), 'd MMM yyyy HH:mm')} - Recorded as Received`,

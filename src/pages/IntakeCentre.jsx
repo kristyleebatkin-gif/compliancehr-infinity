@@ -1,4 +1,6 @@
 import React from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import { Heart, Users, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
@@ -26,7 +28,16 @@ const OPTIONS = [
   },
 ];
 
-export default function IntakeCentre() {
+export default function IntakeCentre({ embedded = false, profile, profileKind } = {}) {
+  if (embedded) return (
+    <div className="space-y-6">
+      <PageHeader title="Intake Centre" subtitle="Intake details, evidence and forms for this profile." showAudit={false} showCompliance={false} />
+      <Tabs defaultValue={profileKind === 'participant' ? 'Participant' : 'Employee'}>
+        <TabsList><TabsTrigger value={profileKind === 'participant' ? 'Participant' : 'Employee'}>{profileKind === 'participant' ? 'Participant Intake' : 'Employee Intake'}</TabsTrigger></TabsList>
+        <TabsContent value={profileKind === 'participant' ? 'Participant' : 'Employee'}><IntakeCaseWorkflow intakeType={profileKind === 'participant' ? 'Participant' : 'Employee'} profile={profile} /></TabsContent>
+      </Tabs>
+    </div>
+  );
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-8">
       <PageHeader title="Intake Centre" subtitle="Choose an intake stream to open cases, collect evidence, review readiness and create approved profiles." />

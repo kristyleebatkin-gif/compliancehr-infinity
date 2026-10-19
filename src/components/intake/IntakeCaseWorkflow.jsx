@@ -202,17 +202,18 @@ function mapStaffRole(employeeRole) {
   return 'Support Worker';
 }
 
-export default function IntakeCaseWorkflow({ intakeType }) {
+export default function IntakeCaseWorkflow({ intakeType, profile }) {
   const { user } = useRole();
   const { toast } = useToast();
   const [cases, setCases] = useState([]);
   const [exporting, setExporting] = useState(false);
+  const caseQuery = { intake_type: intakeType, ...(profile ? { $or: [{ related_profile_id: profile.id }, ...(profile.email ? [{ email: profile.email }] : [])] } : {}) };
 
   const exportRegister = async () => {
     setExporting(true);
     try {
       const page = await base44.entities.IntakeCase.filter(
-        { intake_type: intakeType }, { sort: '-created_date', limit: 500 },
+        caseQuery, { sort: '-created_date', limit: 500 },
       );
       const columns = [
         { key: 'case_number', label: 'Case Number' },
@@ -267,12 +268,12 @@ export default function IntakeCaseWorkflow({ intakeType }) {
   const activeDocs = documents.filter((doc) => doc.intake_case_id === activeCaseId);
 
   const load = useCallback(async (preferredId = '') => {
-    const [casePage, profilePage, docPage] = await Promise.all([
-      base44.entities.IntakeCase.filter({ intake_type: intakeType }, { sort: '-created_date', limit: 200 }),
-      intakeType === 'Participant'
+    const casePage = await base44.entities.IntakeCase.filter(caseQuery, { sort: '-created_date', limit: 200 });
+    const [profilePage, docPage] = await Promise.all([
+      profile ? Promise.resolve({ items: [profile] }) : intakeType === 'Participant'
         ? base44.entities.ParticipantProfile.filter({}, { sort: '-created_date', limit: 200 })
         : base44.entities.StaffProfile.filter({}, { sort: '-created_date', limit: 200 }),
-      base44.entities.IntakeDocument.filter({ intake_type: intakeType }, { sort: '-created_date', limit: 500 }),
+      base44.entities.IntakeDocument.filter({ intake_type: intakeType, ...(profile ? { intake_case_id: { $in: casePage.items.map((record) => record.id) } } : {}) }, { sort: '-created_date', limit: 500 }),
     ]);
     const docsByCase = new Map();
     docPage.items.forEach((doc) => {
@@ -293,11 +294,12 @@ export default function IntakeCaseWorkflow({ intakeType }) {
     const nextId = preferredId
       || (hydrated.some((record) => record.id === activeCaseId) ? activeCaseId : '')
       || hydrated.find((record) => !TERMINAL_STATUSES.has(record.status))?.id
+      || (profile ? hydrated[0]?.id : '')
       || '';
     setActiveCaseId(nextId);
-  }, [intakeType, activeCaseId]);
+  }, [intakeType, activeCaseId, profile?.id, profile?.email]);
 
-  useEffect(() => { load(); }, [intakeType]);
+  useEffect(() => { load(); }, [intakeType, profile?.id]);
 
   // Load the company name and logo from Company Safe so generated
   // intake forms are branded in the header.
@@ -968,7 +970,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
           <Button variant="outline" onClick={exportRegister} disabled={exporting}>
             <Download className="mr-2 h-4 w-4" /> {exporting ? 'Exporting...' : 'Export Register (CSV)'}
           </Button>
-          <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>
+          {!profile && <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>}
         </div>
       </div>
 

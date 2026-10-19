@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -43,9 +43,10 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
   </Card>
 );
 
-export default function Rostering() {
+export default function Rostering({ profile, profileKind } = {}) {
+  const scope = useMemo(() => profile ? { [profileKind === 'participant' ? 'participant_name' : 'employee_name']: profile.full_name } : {}, [profile?.full_name, profileKind]);
   const exportShiftRegister = async () => {
-    const rows = await fetchAllRecords(base44.entities.Shift, {}, '-date');
+    const rows = await fetchAllRecords(base44.entities.Shift, scope, '-date');
     downloadCsv('Shift-Register.csv', [
       { key: 'date', label: 'Date' }, { key: 'employee_name', label: 'Employee' },
       { key: 'participant_name', label: 'Participant' }, { key: 'start_time', label: 'Start Time' },
@@ -90,62 +91,63 @@ export default function Rostering() {
     const sun = format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const in14 = format(addDays(new Date(), 14), 'yyyy-MM-dd');
     const [week, unfilled, pending] = await Promise.all([
-      base44.entities.Shift.count({ date: { $gte: mon, $lte: sun } }),
-      base44.entities.Shift.count({ date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 }, employee_name: null }),
-      base44.entities.Shift.count({ approval_status: 'Pending Approval' }),
+      base44.entities.Shift.count({ ...scope, date: { $gte: mon, $lte: sun } }),
+      profileKind === 'staff' ? Promise.resolve(0) : base44.entities.Shift.count({ ...scope, date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 }, employee_name: null }),
+      base44.entities.Shift.count({ ...scope, approval_status: 'Pending Approval' }),
     ]);
     setStats({ week, unfilled, pending });
-  }, []);
+  }, [scope, profileKind]);
 
   const loadBoard = useCallback(async (start) => {
     setLoading(true);
     try {
       const page = await base44.entities.Shift.filter({
+        ...scope,
         date: { $gte: format(start, 'yyyy-MM-dd'), $lte: format(endOfWeek(start, { weekStartsOn: 1 }), 'yyyy-MM-dd') },
       }, { sort: 'date', limit: 200 });
       setBoardShifts(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope]);
 
   const loadList = useCallback(async (range) => {
     setLoading(true);
     try {
-      const page = await base44.entities.Shift.filter({ date: { $gte: range.from, $lte: range.to } }, { sort: '-date', limit: 200 });
+      const page = await base44.entities.Shift.filter({ ...scope, date: { $gte: range.from, $lte: range.to } }, { sort: '-date', limit: 200 });
       setListShifts(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope]);
 
   const loadCalendar = useCallback(async (from, to, staffName) => {
     setLoading(true);
     try {
-      const query = { date: { $gte: from, $lte: to } };
-      if (staffName) query.employee_name = staffName;
+      const query = { ...scope, date: { $gte: from, $lte: to } };
+      if (staffName && profileKind !== 'staff') query.employee_name = staffName;
       const page = await base44.entities.Shift.filter(query, { sort: 'date', limit: 300 });
       setBoardShifts(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope]);
 
   const loadApprovals = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Shift.filter({ approval_status: 'Pending Approval' }, { sort: '-date', limit: 100 });
+      const page = await base44.entities.Shift.filter({ ...scope, approval_status: 'Pending Approval' }, { sort: '-date', limit: 100 });
       setApprovalShifts(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope]);
 
   useEffect(() => {
     Promise.all([
       base44.auth.me(),
-      base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
-      base44.entities.ParticipantProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
+      base44.entities.StaffProfile.filter({ status: 'Active', ...(profileKind === 'staff' ? { id: profile.id } : {}) }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
+      base44.entities.ParticipantProfile.filter({ status: 'Active', ...(profileKind === 'participant' ? { id: profile.id } : {}) }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
       loadStats(),
     ]).then(([me, s, p]) => {
       setMyName(me?.full_name || '');
@@ -186,12 +188,13 @@ export default function Rostering() {
   const saveShift = async (data) => {
     setSaving(true);
     try {
+      const scopedData = { ...data, ...scope };
       if (editingShift) {
-        const { repeat_rule, repeat_until, ...fields } = data;
+        const { repeat_rule, repeat_until, ...fields } = scopedData;
         await base44.entities.Shift.update(editingShift.id, fields);
       } else {
-        const dates = expandRecurrence(data, data.repeat_rule, data.repeat_until);
-        const base = { ...data, repeat_rule: data.repeat_rule, repeat_until: data.repeat_rule !== 'none' ? data.repeat_until : undefined };
+        const dates = expandRecurrence(scopedData, scopedData.repeat_rule, scopedData.repeat_until);
+        const base = { ...scopedData, repeat_rule: scopedData.repeat_rule, repeat_until: scopedData.repeat_rule !== 'none' ? scopedData.repeat_until : undefined };
         await base44.entities.Shift.bulkCreate(dates.map((d) => ({ ...base, date: d })));
       }
       setFormOpen(false);
@@ -272,12 +275,12 @@ export default function Rostering() {
           <TabsTrigger value="roster"><CalendarRange className="mr-1.5 h-4 w-4" /> Roster board</TabsTrigger>
           <TabsTrigger value="calendar"><CalendarDays className="mr-1.5 h-4 w-4" /> Calendar</TabsTrigger>
           <TabsTrigger value="shifts"><CalendarClock className="mr-1.5 h-4 w-4" /> Shift register</TabsTrigger>
-          <TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
+          {!profile && <><TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
           <TabsTrigger value="coverage"><Flame className="mr-1.5 h-4 w-4" /> Coverage map</TabsTrigger>
-          <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>
           <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
           <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
-          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger>
+          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger></>}
+          {profileKind !== 'participant' && <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="roster" className="mt-4 space-y-4">
@@ -295,11 +298,11 @@ export default function Rostering() {
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
-          <RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
+          {!profile && <><RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
           <RosterScreeningAlerts shifts={boardShifts} />
           <RosterLabourForecast shifts={boardShifts} />
-          <RosterSuggestions onChanged={refresh} />
+          <RosterSuggestions onChanged={refresh} /></>}
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
@@ -370,7 +373,7 @@ export default function Rostering() {
         </TabsContent>
 
         <TabsContent value="availability" className="mt-4">
-          <AvailabilityPanel staff={staff} />
+          <AvailabilityPanel staff={staff} staffName={profileKind === 'staff' ? profile.full_name : undefined} />
         </TabsContent>
 
         <TabsContent value="payroll" className="mt-4">

@@ -14,24 +14,24 @@ import { statusTone } from '@/lib/statusStyles';
 
 const BLANK = { staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' };
 
-export default function AvailabilityPanel({ staff }) {
+export default function AvailabilityPanel({ staff, staffName }) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState(BLANK);
+  const [form, setForm] = useState({ ...BLANK, staff_name: staffName || '' });
 
   const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.StaffAvailability.filter({}, { sort: '-date', limit: 100 });
+      const page = await base44.entities.StaffAvailability.filter(staffName ? { staff_name: staffName } : {}, { sort: '-date', limit: 100 });
       setEntries(page.items);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [staffName]);
 
   const save = async () => {
     if (!form.staff_name || !form.date) return;
@@ -46,7 +46,7 @@ export default function AvailabilityPanel({ staff }) {
         all_day: form.all_day,
         notes: form.notes || undefined,
       });
-      setForm(BLANK);
+      setForm({ ...BLANK, staff_name: staffName || '' });
       setOpen(false);
       await load();
     } finally {
@@ -98,6 +98,7 @@ export default function AvailabilityPanel({ staff }) {
           </div>
         )}
       </CardContent>
+      <AvailabilityFormDialog open={open} onOpenChange={setOpen} form={form} setForm={setForm} onSave={save} saving={saving} staff={staff} />
     </Card>
   );
 }
