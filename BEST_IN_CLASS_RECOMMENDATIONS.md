@@ -60,6 +60,63 @@ category, with the specific changes needed to reach the same standard.
 - **Benchmark:** Intercom/Zendesk (AI-first support), Vanta (trust centre).
 - **Do:** AI troubleshooter that acts (opens tickets, drafts fixes) not just advises; in-context help on every module (docs appear beside the form, not in a separate library).
 
+## Module data specifications (the data each module needs)
+
+Each module needs three data layers to match the benchmarks: **(A)** its core records
+(entities that already exist in the app), **(B)** reference/content data packs, and
+**(C)** benchmark rule values. Missing data is filled by loading the packs listed below.
+
+### Overview — Dashboard
+- **A:** all entity counts via server-side count/aggregate (never load lists).
+- **B:** per-role tile definitions (admin, team leader, support worker, participant).
+- **C:** attention thresholds — 7 days before certificate/doc expiry = warning, 0 days = critical; roster coverage < 90% = warning; overdue tasks > 5 = red.
+
+### People — Staff Profiles, Participant Profiles, Key Contacts, HR
+- **A:** StaffProfile, ParticipantProfile, EmployeeDocument, EmployeeEmploymentContract, EmployeePerformanceAppraisal, EmployeePositionDescription, LeaveRequest, KeyBusinessContact, StaffMedicalProfile.
+- **B:** role framework (the 12 roles in the access config), mandatory-document checklist per role (see rule values below).
+- **C (benchmark expiry rules, Australian practice):** NDIS Worker Screening 5 yrs · WWCC 5 yrs · Police Check 3 yrs · First Aid (HLTAID011) 3 yrs · CPR refresher 12 months · working-rights check 3 yrs · contract review 12 months · appraisal 12 months.
+- **Data packs:** NDIS support-worker role competency set; HR contract templates per role.
+
+### Care & Support — Intake, Goals, Visual Boards, Rostering, Referrals, Programs
+- **A:** Intake, IntakeCase, Goal, ParticipantGoalProgress, GoalProgressNote, Shift, ShiftPatternTemplate, StaffAvailability, RosterTeam, RosterPublicHoliday, BuddyShift, ParticipantShiftDetail, VisualRoutine, VisualBoard, CommunityEvent, CommunityProgram, CommunityReferralService, Referral, SupportLetter, Event, Lead.
+- **B:** SCHADS award template (levels 2.1–3.4, casual loadings, penalty rates); NDIS plan funding categories (Core, Capacity Building, Capital) with per-category budgets; shift pattern templates; standard goal domains (daily living, social, health, education, employment).
+- **C:** shift must be filled by T-48h → escalation; roster coverage target ≥ 95%; continuity-of-support ≥ 60% same-worker rule; SCHADS penalty multipliers (Sat 1.25, Sun 1.5, PH 2.25, evening 1.25) and casual loading 25% — these live in the payroll module and must stay the single source of truth.
+
+### Compliance & Safety — Compliance Centre, Incident Clinic, Risks, Emergency, Equipment/MSDS, Certificates, NDIS Portal, NDIS News, Assets
+- **A:** ComplianceChecklistEntry, Audit, InternalAudit, AuditAction, AuditChecklistFile, AuditReport, NDISComplianceDeadline, NDISRegistrationProfile, NDISRegistrationGroup, NDISAuditRecord, NDISAuditReminderLog, GovernanceControlRecord, Incident, Investigation, Risk, TakeFive, SafetyCheck, SafetyDocument, EmergencyDocument, EmergencyDrill, EmergencyResource, VisitorLog, Chemical, MSDSRecord, EquipmentManual, Asset, AssetMaintenance, AssetDisposal, AssetComplianceReview, Certificate, DataBreach, InsurancePolicy, LegalRequirement, VehicleSafetyCheck.
+- **B:** NDIS Practice Standards checklist (Core + Supplementary modules) mapped control-to-evidence; incident taxonomy (NDIS Commission categories + severity ladder); risk matrix 5×5 likelihood × consequence; emergency drill schedule; common-hazard library; SDS reference library per chemical category.
+- **C:** NDIS mandatory incident report to Commission within **24 hours** (serious) / **5 business days**; complaint decision within **21 days**; fire evacuation drill every **6 months**; fire extinguisher/service checks **6 months**; vehicle safety checks **6 months**; asset calibration per manufacturer schedule; data-breach OAIC assessment **30 days**; quality-control audit cycle **annually**, internal audit **quarterly**.
+
+### Money — Invoicing, Quotes, Receipts, Procurement
+- **A:** Invoice, InvoiceTemplateSettings, ProviderInvoice, Quote, Receipt, ReceiptRecord, PurchaseOrder, Supplier, FinanceRecord, NDISPriceGuideItem, NDISPriceGuideRelease, BusinessDetails (bank fields, terms).
+- **B:** current NDIS Price Guide line items (per hour, per km, non-labour-cost travel, ETF items) loaded as records; standard invoice/quote term templates (already defaults in BusinessDetails); supplier category list.
+- **C:** payment terms 14 days; quote validity 30 days (both settable); aged-receivable bands 0/7/14/30+ days; GST-free rule for NDIS supports; price-guide sync from the NDIS release feed (existing news-sync automation).
+
+### Work — Tasks, Meetings, Projects, Training, Communications, Feedback
+- **A:** Task, TodoTask, Meeting, MeetingRecord, MeetingAttendanceRecord, MeetingActionRecord, BusinessProject, TrainingModule, TrainingTemplate, TrainingCompletion, StaffTrainingAudit, Certificate, LMS quiz packages (training libraries), CommunicationEntry, CommunicationLog, SatisfactionSurvey, Survey, Feedback, Complaint, IssueConcernBarrier, QualityItem, ImprovementAction, ImprovementReview, ImprovementSource, KPI, Announcement, Notification.
+- **B:** training curriculum per role (existing modules in the LMS library); competency checklists; complaint-handling SLA ladder; meeting agenda templates; message template library.
+- **C:** mandatory-training cycle 12 months (annual refreshers) / 3 years (full certificates); training expiry warning at 60 days; complaint SLA 21 days with escalation at day 14; meeting actions due 14 days from the meeting; task reminders at due date, +3 days, +7 days.
+
+### Company — Documents, Company Safe, Quality, Analytics, Users
+- **A:** CompanyDocument, BusinessDocument, HRDocumentTemplate, FormsLibraryDocument, FormTemplate, FormSubmission, AuditLog, activity/page-view records, Notification, ArchivedUser, User entity.
+- **B:** policy template library with version history; document control register categories (Policies, Templates, Certificates, Registrations, Licences, Financial); permission matrix per role × module.
+- **C:** policy review cycle **12 months**; document version retention — never overwrite, supersede; every status change written to the status/audit log (immutable trail).
+
+### Help & Tools — Assistant, Help Centre, User Guides
+- **A:** HelpDeskTicket, support resource library, guide content libraries.
+- **B:** module guide content per module; troubleshooting decision tree per module.
+- **C:** ticket first-response target 4 business hours; resolution target 2 business days; AI answers must cite the module guide they came from.
+
+## Data packs to load (one-time)
+
+1. **NDIS Price Guide pack** → price-guide items (synced by the existing news-sync automation).
+2. **SCHADS award template** → structured data inside the payroll module.
+3. **NDIS Practice Standards checklist pack** → compliance checklist templates, mapped to evidence.
+4. **Incident taxonomy + risk matrix** → incident/risk template libraries.
+5. **Mandatory-document matrix per role** → employee document definitions (rule values above).
+6. **Training curriculum + quiz packages** → already present in the LMS libraries; keep versioned.
+7. **Sample seed records** for demos: 1 provider profile, 5 staff, 3 participants, 10 shifts, 3 invoices, 2 quotes, 5 training completions, 2 incidents, 1 audit — enough for every dashboard tile to show a real value.
+
 ## Suggested build order
 
 1. Closed-loop corrective actions + immutable audit trails (highest audit value).
