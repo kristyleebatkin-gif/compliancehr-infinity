@@ -1,0 +1,39 @@
+{
+  "name": "Staff Risk Alert Task Change",
+  "description": "The moment a compliance task is created or changed, scores every staff member's compliance risk and instantly notifies admins in-app for anyone whose risk score exceeds the threshold.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "TodoTask",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": null
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "staff_risk_alert_task_change",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_risk_alert": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffRiskThresholdAlert",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Check risk thresholds",
+            "description": "Alerts admins when a staff risk score exceeds the threshold"
+          }
+        }
+      }
+    ]
+  }
+}

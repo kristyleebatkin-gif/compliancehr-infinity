@@ -8,6 +8,7 @@ import ScoreRing from '@/components/ScoreRing';
 import { Loader2, ShieldAlert, CalendarX, FileWarning, BadgeCheck } from 'lucide-react';
 
 const PENDING = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Overdue'];
+const RISK_ALERT_THRESHOLD = 40; // matches the automated risk alert trigger
 const TEAL_BADGE = 'bg-teal-100 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300 border-transparent';
 
 // High-visibility per-staff risk summary: an at-a-glance risk score plus every
@@ -68,6 +69,8 @@ export default function StaffRiskSummary({ staff }) {
     </CardContent></Card>;
   }
 
+  const riskPoints = 100 - data.score;
+
   const counts = [
     { label: 'Overdue tasks', value: data.overdueTasks.length, Icon: CalendarX },
     { label: 'Expired documents', value: data.expiredDocs.length, Icon: FileWarning },
@@ -89,6 +92,12 @@ export default function StaffRiskSummary({ staff }) {
 
   return (
     <div className="space-y-4">
+      {riskPoints > RISK_ALERT_THRESHOLD && (
+        <div className="flex items-center gap-2 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800 dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">
+          <ShieldAlert className="h-4 w-4 shrink-0" />
+          Compliance risk score {riskPoints} exceeds the alert threshold of {RISK_ALERT_THRESHOLD} — admins are notified automatically.
+        </div>
+      )}
       <div className="grid gap-4 lg:grid-cols-[auto_1fr]">
         <Card className="shadow-panel">
           <CardContent className="flex flex-col items-center gap-2 p-6">
