@@ -205,6 +205,11 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
