@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame, Download } from 'lucide-react';
+import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, ClipboardCheck, CalendarPlus, CalendarDays, Flame, Download, ClipboardList } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
@@ -23,6 +23,7 @@ import RosterScreeningAlerts from '@/components/rostering/RosterScreeningAlerts'
 import BulkShiftEditor from '@/components/rostering/BulkShiftEditor';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
+import ParticipantShiftDetails from '@/components/rostering/ParticipantShiftDetails';
 import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
 import RosterSuggestions from '@/components/rostering/RosterSuggestions';
 import RosterLabourForecast from '@/components/rostering/RosterLabourForecast';
@@ -276,6 +277,7 @@ export default function Rostering() {
           <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>
           <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
           <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
+          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger>
         </TabsList>
 
         <TabsContent value="roster" className="mt-4 space-y-4">
@@ -377,6 +379,10 @@ export default function Rostering() {
 
         <TabsContent value="patterns" className="mt-4">
           <ShiftPatterns />
+        </TabsContent>
+
+        <TabsContent value="shift-details" className="mt-4">
+          <ParticipantShiftDetails />
         </TabsContent>
       </Tabs>
 
