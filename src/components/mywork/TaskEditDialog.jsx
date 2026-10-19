@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 
 const STATUSES = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Completed', 'Overdue', 'Cancelled'];
 const PRIORITIES = ['Low', 'Medium', 'High', 'Urgent'];
@@ -27,6 +28,7 @@ export default function TaskEditDialog({ task, open, onClose, onSaved }) {
       notes: form.notes,
       completed_date: form.status === 'Completed' ? (task.completed_date || new Date().toISOString().slice(0, 10)) : undefined,
     });
+    logUserAction('Task Updated', 'Task', { record_id: task.id, record_title: form.title, details: `Status: ${form.status}` });
     setSaving(false);
     onSaved();
     onClose();

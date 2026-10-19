@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
@@ -94,6 +95,7 @@ export default function StaffHome({ embedded = false } = {}) {
       status: completing ? 'Completed' : 'Open',
       completed_date: completing ? today() : undefined,
     });
+    logUserAction(completing ? 'Task Completed' : 'Task Reopened', 'Task', { record_id: t.id, record_title: t.title });
     if (me) load(me);
   };
 

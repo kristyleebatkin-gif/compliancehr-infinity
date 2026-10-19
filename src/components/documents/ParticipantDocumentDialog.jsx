@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -68,6 +69,7 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
           review_outcome: 'Pending Review',
         });
       }
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: initial?.id });
       onOpenChange(false);
       onDone?.();
     } finally {

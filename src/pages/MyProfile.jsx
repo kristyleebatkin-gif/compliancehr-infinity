@@ -15,6 +15,7 @@ import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
 import OurProfilesTab from '@/components/profile/OurProfilesTab';
+import { logUserAction } from '@/lib/actionLog';
 import { UserRound, Save, CheckCircle2 } from 'lucide-react';
 
 const STAFF_FIELDS = [
@@ -110,6 +111,13 @@ export default function MyProfile() {
         : null;
       const change_log = entry ? [record.change_log, entry].filter(Boolean).join('\n') : record.change_log;
       await base44.entities[entityName].update(record.id, { ...formData, change_log });
+      if (entry) {
+        await logUserAction('Profile Updated', entityName, {
+          record_id: record.id,
+          record_title: record.full_name,
+          details: `Self-service edit: ${changed.join(', ')}`,
+        });
+      }
       setSaved(true);
       await load();
     } finally {

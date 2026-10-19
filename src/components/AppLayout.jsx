@@ -69,7 +69,7 @@ export default function AppLayout() {
     setMoreOpen(false);
     setUserMenuOpen(false);
     if (user?.id && accountStatus === 'Active' && role !== 'Archived') {
-      base44.entities.AuditLog.create({
+      base44.functions.invoke('logUserAction', {
         action: 'View',
         entity_type: 'App Page',
         record_title: location.pathname,

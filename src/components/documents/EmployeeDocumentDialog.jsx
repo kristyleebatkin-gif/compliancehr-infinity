@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -50,6 +51,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
     try {
       if (editing) await base44.entities.EmployeeDocument.update(initial.id, form);
       else await base44.entities.EmployeeDocument.create(form);
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim() });
       onOpenChange(false);
       onDone?.();
     } finally {

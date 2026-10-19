@@ -10,6 +10,7 @@ import AllModulesHub from '@/components/dashboard/AllModulesHub';
 import MorningBrief from '@/components/dashboard/MorningBrief';
 import IssuesDashboardWidget from '@/components/compliance/IssuesDashboardWidget';
 import ProfilesOverview, { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
+import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
 const HEADINGS = {
@@ -78,6 +79,8 @@ export default function Dashboard() {
           <ProfilesOverview />
         </div>
       )}
+
+      {OVERVIEW_ROLES.includes(role) && <RecentActionsPanel />}
 
       {canAccessNav(role, 'safety-insights') && <SafetyTrendsDashboard />}
     </div>

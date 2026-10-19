@@ -35,6 +35,7 @@ export default function MyProfileDialog({ profile, open, onClose, onSaved }) {
     setSaving(true);
     try {
       await base44.entities.StaffProfile.update(profile.id, form);
+      logUserAction('Profile Updated', 'StaffProfile', { record_id: profile.id, record_title: profile.full_name, details: 'Self-service edit' });
       onSaved?.();
       onClose();
     } finally {

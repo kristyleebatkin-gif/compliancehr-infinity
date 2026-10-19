@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
@@ -68,6 +69,7 @@ export default function NameTags({ embedded = false } = {}) {
         file_uri,
         notes: 'Made by the employee in the Name Tags module.',
       });
+      logUserAction('Name Tag Created', 'Document', { record_title: `Staff Badge - ${profile.full_name}`, details: 'Saved to My Documents' });
       toast({ title: 'Name tag saved to My Documents' });
       load();
     } catch (error) {
