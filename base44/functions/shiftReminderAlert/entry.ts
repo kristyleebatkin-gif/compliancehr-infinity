@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 const SYDNEY = 'Australia/Sydney';
 const prettyDate = (iso) => new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
@@ -23,6 +24,10 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 403 });
+    // Roster data and the reminder safety net: rostering-trusted roles only.
+    if (!hasAnyRole(user, [...MANAGEMENT_ROLES, 'Rostering Coordinator', 'Team Leader'])) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
 
     const body = await req.json().catch(() => ({}));
     const dryRun = !!body.dry_run;
@@ -59,8 +64,9 @@ export default async function(req) {
         dry_run: true,
         window_from: new Date(from).toISOString(),
         window_to: new Date(to).toISOString(),
-        would_notify: due.map((d) => ({ to: d.email, shift: `${d.shift.date} ${d.shift.start_time} - ${d.shift.employee_name}`, participant: d.shift.participant_name || '' })),
-        unmatched,
+        // Counts only: never expose staff emails or participant details.
+        would_notify_count: due.length,
+        unmatched_count: unmatched.length,
       });
     }
 
@@ -86,12 +92,12 @@ export default async function(req) {
       await service.entities.Shift.bulkUpdate(succeeded.slice(i, i + 500).map((d) => ({ id: d.shift.id, reminder_sent: true })));
     }
 
-    const failed = due.filter((_, i) => results[i].status === 'rejected').map((d) => d.email);
+    const failed = due.filter((_, i) => results[i].status === 'rejected').length;
+    // Counts only; recipient addresses stay server-side.
     return Response.json({
       checked: shifts.length,
-      sent_to: succeeded.map((d) => d.email),
-      failed,
-      unmatched,
+      sent_count: succeeded.length,
+      failed_count: failed,
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

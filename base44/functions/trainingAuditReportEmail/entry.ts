@@ -213,19 +213,17 @@ export default async function(req) {
     const user = await base44.auth.me().catch(() => null);
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    // Management may choose the recipient; workflow (system) sends default to
-    // the first administrator; every other caller may only email themselves.
-    let recipient = '';
-    if (hasAnyRole(user, MANAGEMENT_ROLES)) {
-      recipient = String(body.recipient_email || '').trim().toLowerCase();
-      if (!recipient) {
-        const users = await service.entities.User.list();
-        const admin = (Array.isArray(users) ? users : users.items || [])
-          .find((u) => MANAGEMENT_ROLES.includes(u.role) && u.email);
-        recipient = admin ? String(admin.email).toLowerCase() : '';
-      }
-    } else {
-      recipient = String(user.email || '').trim().toLowerCase();
+    // Confidential org-wide staff report: management roles only. The
+    // scheduled workflow authenticates as the app admin, so it still runs.
+    if (!hasAnyRole(user, MANAGEMENT_ROLES)) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+    let recipient = String(body.recipient_email || '').trim().toLowerCase();
+    if (!recipient) {
+      const users = await service.entities.User.list();
+      const admin = (Array.isArray(users) ? users : users.items || [])
+        .find((u) => MANAGEMENT_ROLES.includes(u.role) && u.email);
+      recipient = admin ? String(admin.email).toLowerCase() : '';
     }
     if (!recipient) return Response.json({ error: 'No recipient email available' }, { status: 400 });
     const staff = await service.entities.StaffProfile.list({ limit: 500 });

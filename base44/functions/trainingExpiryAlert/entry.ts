@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 const SYDNEY = 'Australia/Sydney';
 const auDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
@@ -9,6 +10,8 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    // Confidential staff training data and org-identity sends: management only.
+    if (!hasAnyRole(user, MANAGEMENT_ROLES)) return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
     const dryRun = !!body.dry_run;
@@ -63,7 +66,8 @@ export default async function(req) {
       if (g.supEmail) recipients.push({ email: g.supEmail, name: g.supName || 'Supervisor', staff: g.staffName, modules: g.modules });
     }
     if (dryRun) {
-      return Response.json({ dry_run: true, target_date: targetStr, due_text: dueText, would_notify: recipients, unmatched });
+      // Counts only: never expose staff names, emails or certification details.
+      return Response.json({ dry_run: true, target_date: targetStr, due_text: dueText, recipient_count: recipients.length, unmatched_count: unmatched.length });
     }
 
     const results = await Promise.allSettled(recipients.map((r) =>
@@ -80,10 +84,11 @@ export default async function(req) {
         },
       })
     ));
-    const sentTo = recipients.filter((_, i) => results[i].status === 'fulfilled').map((r) => r.email);
-    const failed = recipients.filter((_, i) => results[i].status === 'rejected').map((r) => r.email);
+    const sentCount = recipients.filter((_, i) => results[i].status === 'fulfilled').length;
+    const failedCount = recipients.length - sentCount;
 
-    return Response.json({ target_date: targetStr, due_text: dueText, records_found: expiring.length, sent_to: sentTo, failed, unmatched });
+    // Return counts only; recipient addresses stay server-side.
+    return Response.json({ target_date: targetStr, due_text: dueText, records_found: expiring.length, sent_count: sentCount, failed_count: failedCount });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
