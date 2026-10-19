@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, UserPlus, FolderOpen, Vault, Users, Heart, LayoutPanelTop,
+  LayoutDashboard, UserPlus, FolderOpen, Vault, Users, Heart, LayoutPanelTop, Sparkles,
   Megaphone, AlertTriangle, ShieldAlert, ShieldCheck, GraduationCap, BadgeCheck,
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
@@ -50,6 +50,7 @@ export const MODULE_DIRECTORY = [
   { key: 'tasks', label: 'Task Dashboard', path: '/tasks', icon: ClipboardList, blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
   { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, blurb: 'Feedback register, complaint routing and branded surveys.' },
   { key: 'quality', label: 'Quality & Improvement', path: '/quality', icon: Lightbulb, blurb: 'Continuous improvement register, actions and quality reviews.' },
+  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, blurb: 'AI review of every module: what to visualise, automate and refine.' },
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, blurb: 'Guides, AI troubleshooter, system health and support desk.' },
   { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, blurb: 'Complete downloadable user guides for every module in the platform.' },
 ];
@@ -62,6 +63,6 @@ export const NAV_GROUPS = [
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
   { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
   { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback'] },
-  { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'analytics', 'users'] },
+  { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
   { label: 'Help & Tools', keys: ['assistant', 'help', 'user-guides'] },
 ];

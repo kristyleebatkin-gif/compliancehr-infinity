@@ -66,6 +66,7 @@ import HrHub from '@/pages/HrHub';
 import CrmHub from '@/pages/CrmHub';
 import ProcurementHub from '@/pages/ProcurementHub';
 import ProjectsHub from '@/pages/ProjectsHub';
+import SuggestionsHub from '@/pages/SuggestionsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import Landing from '@/pages/Landing';
@@ -165,6 +166,7 @@ const AuthenticatedApp = () => {
           <Route path="/crm" element={<RoleGate navKey="crm"><CrmHub /></RoleGate>} />
           <Route path="/procurement" element={<RoleGate navKey="procurement"><ProcurementHub /></RoleGate>} />
           <Route path="/projects" element={<RoleGate navKey="projects"><ProjectsHub /></RoleGate>} />
+          <Route path="/suggestions" element={<RoleGate navKey="suggestions-hub"><SuggestionsHub /></RoleGate>} />
           {/* Original app paths — aliases kept so original links keep working */}
           <Route path="/key-contacts" element={<RoleGate navKey="key-contacts"><KeyContacts /></RoleGate>} />
           <Route path="/insurance" element={<RoleGate navKey="quotes"><QuoteCentre /></RoleGate>} />
