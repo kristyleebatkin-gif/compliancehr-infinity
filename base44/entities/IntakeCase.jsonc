@@ -772,6 +772,16 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
@@ -785,6 +795,16 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
           }
         },
         {
@@ -802,6 +822,16 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
           }
         }
       ]
