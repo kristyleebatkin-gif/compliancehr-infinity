@@ -70,6 +70,7 @@ import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions
 import TaskKanban from '@/components/compliance/TaskKanban';
 import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';
 import ExecutiveSummary from '@/components/compliance/ExecutiveSummary';
+import ComplianceHealthExportButton from '@/components/compliance/ComplianceHealthExportButton';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
@@ -179,6 +180,7 @@ export default function ComplianceHub() {
           <>
             <AuditPackButton />
             <BoardReportButton />
+            <ComplianceHealthExportButton />
             <AuditArchiveButton />
             <Button variant="outline" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
