@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import { useToast } from '@/components/ui/use-toast';
 import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud } from 'lucide-react';
 import { routeDocument } from '@/lib/documentRouting';
@@ -32,8 +33,8 @@ export default function ComplianceUploads() {
       if (doc.file_uri) {
         const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
         window.open(signed_url, '_blank');
-      } else if (doc.file_url) {
-        window.open(doc.file_url, '_blank');
+      } else if (safeUrl(doc.file_url)) {
+        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
       }
     } catch (error) {
       toast({ title: 'Unable to open document', description: error.message, variant: 'destructive' });

@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Eye, ExternalLink, FileText, FolderOpen, Loader2 } from 'lucide-react';
 import { differenceInCalendarDays, format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { safeUrl } from '@/lib/safeUrl';
 
 // Module documents footer: shows the documents that belong to the module the
 // user is in, neatly at the bottom of the page. Modules without their own
@@ -136,8 +137,8 @@ export default function ModuleDocsFooter() {
       if (doc.file_uri) {
         const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
         window.open(signed_url, '_blank');
-      } else if (doc.file_url) {
-        window.open(doc.file_url, '_blank');
+      } else if (safeUrl(doc.file_url)) {
+        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
       }
     } catch (e) {
       console.error(e);

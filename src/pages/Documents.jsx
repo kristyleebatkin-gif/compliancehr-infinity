@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
@@ -108,8 +109,8 @@ export default function Documents() {
       if (doc.file_uri) {
         const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
         window.open(signed_url, '_blank');
-      } else if (doc.file_url) {
-        window.open(doc.file_url, '_blank');
+      } else if (safeUrl(doc.file_url)) {
+        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
       }
     } catch (e) {
       console.error(e);
