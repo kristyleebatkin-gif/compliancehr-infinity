@@ -67,6 +67,7 @@ import RiskHeatmap from '@/components/compliance/RiskHeatmap';
 import StaffComplianceChart from '@/components/compliance/StaffComplianceChart';
 import ComplianceGlobalSearch from '@/components/compliance/ComplianceGlobalSearch';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
+import TaskKanban from '@/components/compliance/TaskKanban';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
@@ -191,6 +192,7 @@ export default function ComplianceHub() {
       <Tabs defaultValue="quick-tasks">
         <TabsList className="flex-wrap">
           <TabsTrigger value="quick-tasks">Quick Tasks</TabsTrigger>
+          <TabsTrigger value="task-kanban">Task Kanban</TabsTrigger>
           <TabsTrigger value="issues">Compliance Issues</TabsTrigger>
           <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
           <TabsTrigger value="trend-charts">Trend Charts</TabsTrigger>
@@ -231,6 +233,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="quick-tasks" className="mt-4">
           <ComplianceTaskActions />
+        </TabsContent>
+
+        <TabsContent value="task-kanban" className="mt-4">
+          <TaskKanban />
         </TabsContent>
 
         <TabsContent value="risk-status" className="mt-4">
