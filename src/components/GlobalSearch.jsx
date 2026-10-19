@@ -21,7 +21,6 @@ export default function GlobalSearch() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(EMPTY);
   const [searching, setSearching] = useState(false);
-  const [value, setValue] = useState('');
   const navigate = useNavigate();
 
   // Ctrl/Cmd + K opens, Escape closes
@@ -40,7 +39,6 @@ export default function GlobalSearch() {
   useEffect(() => {
     if (!open) {
       setQuery('');
-      setValue('');
       setResults(EMPTY);
       setSearching(false);
     }
@@ -111,7 +109,7 @@ export default function GlobalSearch() {
         <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-16 sm:pt-24">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setOpen(false)} />
           <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
-            <Command shouldFilter={false} value={value} onValueChange={setValue} loop>
+            <Command shouldFilter={false} loop>
               <CommandInput
                 value={query}
                 onValueChange={setQuery}
