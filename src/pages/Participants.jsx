@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Trash2, Heart, UserRound, Download, MessageSquarePlus } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { Link } from 'react-router-dom';
 import { SHIFT_TYPES } from '@/lib/commTypes';
@@ -109,6 +111,17 @@ export default function Participants() {
     <div className="space-y-6">
       <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
 
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview"><UserRound className="mr-1.5 h-4 w-4" />Overview</TabsTrigger>
+          <TabsTrigger value="register"><Heart className="mr-1.5 h-4 w-4" />Profiles &amp; register</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="mt-4">
+          <OurProfilesTab kind="participant" />
+        </TabsContent>
+
+        <TabsContent value="register" className="mt-4 space-y-6">
       <RegisterInsights module="participants" />
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
@@ -215,6 +228,8 @@ export default function Participants() {
           ))}
         </div>
       )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
