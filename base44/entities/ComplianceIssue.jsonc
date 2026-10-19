@@ -1,0 +1,247 @@
+{
+  "name": "ComplianceIssue",
+  "type": "object",
+  "properties": {
+    "issue_id": {
+      "type": "string",
+      "title": "Issue ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "Issue Title"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Governance",
+        "Policy",
+        "Documentation",
+        "Training",
+        "Safety",
+        "Incident",
+        "Privacy & Records",
+        "Finance",
+        "Workforce",
+        "Environment",
+        "Other"
+      ],
+      "default": "Other"
+    },
+    "source": {
+      "type": "string",
+      "title": "Source",
+      "enum": [
+        "Internal Audit",
+        "NDIS Audit",
+        "Incident Review",
+        "Feedback & Complaints",
+        "Checklist Review",
+        "Management Observation",
+        "Staff Report",
+        "Other"
+      ],
+      "default": "Management Observation"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Resolved",
+        "Closed"
+      ],
+      "default": "Open"
+    },
+    "date_logged": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Logged"
+    },
+    "logged_by": {
+      "type": "string",
+      "title": "Logged By"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Resolution Date"
+    },
+    "resolution_action": {
+      "type": "string",
+      "title": "Resolution Action"
+    },
+    "resolution_notes": {
+      "type": "string",
+      "title": "Resolution Notes"
+    },
+    "resolved_by": {
+      "type": "string",
+      "title": "Resolved By"
+    },
+    "resolved_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Resolved On"
+    },
+    "verified_by": {
+      "type": "string",
+      "title": "Verified By"
+    },
+    "verified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Verified On"
+    },
+    "actions_log": {
+      "type": "string",
+      "title": "Action Log"
+    },
+    "status_log": {
+      "type": "string",
+      "title": "Status History"
+    }
+  },
+  "required": [
+    "title",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}
