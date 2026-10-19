@@ -33,13 +33,11 @@ export default function ParticipantProfileSections({ participant, onUpdated, hea
     { key: 'records', label: 'Safety Records', Icon: Heart, content: <ParticipantRecordsTab participant={participant} /> },
     { key: 'comm', label: 'Communication Log', Icon: MessagesSquare, content: <ProfileCommDiary participant={participant} /> },
     { key: 'todo', label: 'To-Do', Icon: ListTodo, content: <ProfileTodoList person={participant} /> },
-    // Remaining person-level data (shifts, safety, reviews) lives only in the
-    // admin Participant profiles module — never in 'Our' participant views.
-    ...(ourView ? [] : [
-      { key: 'shifts', label: 'Shifts', Icon: CalendarClock, content: <ParticipantShiftsTab participant={participant} /> },
-      { key: 'safety', label: 'Risks & Safeguarding', Icon: ShieldAlert, content: <ParticipantSafetyTab participant={participant} /> },
-      { key: 'reviews', label: 'Reviews, Surveys & Complaints', Icon: ClipboardCheck, content: <ParticipantReviewsTab participant={participant} /> },
-    ]),
+    // Same modulars as 'Our' employee views, except as outlined: no HR,
+    // receipts or training content. All read-only here.
+    { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <ParticipantShiftsTab participant={participant} /> },
+    { key: 'safety', label: 'Risks & Safeguarding', Icon: ShieldAlert, content: <ParticipantSafetyTab participant={participant} /> },
+    { key: 'reviews', label: 'Reviews, Surveys & Complaints', Icon: ClipboardCheck, content: <ParticipantReviewsTab participant={participant} /> },
   ];
   return (
     <Tabs defaultValue="details">
