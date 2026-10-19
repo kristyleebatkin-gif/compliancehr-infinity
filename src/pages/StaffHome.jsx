@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
 import MyProfileDialog from '@/components/mywork/MyProfileDialog';
-import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap, Users } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -27,6 +27,7 @@ export default function StaffHome() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [trainings, setTrainings] = useState([]);
   const [goals, setGoals] = useState([]);
+  const [myParticipants, setMyParticipants] = useState([]);
   const [profile, setProfile] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -34,7 +35,7 @@ export default function StaffHome() {
 
   const load = useCallback(async (user) => {
     try {
-      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, trainingPage, profilePage] = await Promise.allSettled([
+      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, trainingPage, participantPage, profilePage] = await Promise.allSettled([
         base44.entities.TodoTask.filter(
           { archived: { $ne: true }, $or: [{ assigned_to: user.full_name }, { assigned_email: user.email }] },
           { sort: 'due_date', limit: 200 }
@@ -47,6 +48,7 @@ export default function StaffHome() {
           { $or: [{ employee_name: user.full_name }, { learner_name: user.full_name }] },
           { sort: '-completed_date', limit: 20 }
         ),
+        base44.entities.ParticipantProfile.filter({ support_team: user.full_name }, { sort: 'full_name', limit: 20 }),
         base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
       ]);
       if (taskPage.status === 'fulfilled') setTasks(taskPage.value.items || []);
@@ -55,6 +57,7 @@ export default function StaffHome() {
       if (issuePage.status === 'fulfilled') setIssues(issuePage.value.items || []);
       if (feedbackPage.status === 'fulfilled') setFeedbacks(feedbackPage.value.items || []);
       if (trainingPage.status === 'fulfilled') setTrainings(trainingPage.value.items || []);
+      if (participantPage.status === 'fulfilled') setMyParticipants(participantPage.value.items || []);
       const prof = profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null;
       setProfile(prof);
       // Participant goals for the participants this staff member supports
@@ -263,6 +266,29 @@ export default function StaffHome() {
                 </div>
               );
             })}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My participants</h2>
+          <Link to="/participants" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Participants module<ArrowRight className="h-3 w-3" /></Link>
+        </div>
+        {myParticipants.length === 0 ? (
+          <EmptyState icon={Users} title="No participants yet" message="Participants you support will appear here with links to their profiles." />
+        ) : (
+          <div className="space-y-2">
+            {myParticipants.map((p) => (
+              <Link key={p.id} to={`/participants/${p.id}`} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5 hover:bg-muted/30">
+                <Users className="h-5 w-5 shrink-0 text-brand" />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{p.full_name}</div>
+                  <div className="truncate text-xs text-foreground/50">{p.support_type || ''}{p.status ? ` · ${p.status}` : ''}</div>
+                </div>
+                <ArrowRight className="h-4 w-4 shrink-0 text-foreground/30" />
+              </Link>
+            ))}
           </div>
         )}
       </section>
