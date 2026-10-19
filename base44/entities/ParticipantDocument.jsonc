@@ -219,6 +219,9 @@
               "{{user.id}}"
             ]
           }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
         }
       ]
     },
@@ -292,6 +295,9 @@
               "{{user.id}}"
             ]
           }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
         }
       ]
     },
@@ -323,6 +329,9 @@
               "{{user.id}}"
             ]
           }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
         }
       ]
     }
