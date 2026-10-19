@@ -9,12 +9,13 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Lock, IdCard, Building2, FolderLock } from 'lucide-react';
+import { Plus, Trash2, Lock, IdCard, Building2, FolderLock, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
 import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
+import SecurityPosture from '@/components/safe/SecurityPosture';
 
 const CATEGORIES = ['Policies', 'Templates', 'Certificates', 'Registrations', 'Licences', 'Financial', 'Other'];
 
@@ -69,6 +70,8 @@ export default function CompanySafe() {
           <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
           <SectionLabel icon={FolderLock} tint="bg-brand">Business Documents</SectionLabel>
           <ComplianceUploads />
+          <SectionLabel icon={ShieldCheck} tint="bg-safe">Security &amp; Trust</SectionLabel>
+          <SecurityPosture />
           <SectionLabel icon={IdCard} tint="bg-[#ec4899]">Staff Badge Creator</SectionLabel>
           <StaffBadgeCreator />
           <SectionLabel icon={Building2} tint="bg-[#2563eb]">Important Business Information</SectionLabel>
