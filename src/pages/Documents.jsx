@@ -47,6 +47,7 @@ export default function Documents() {
   const isParticipant = me?.role === 'Participant';
   const [myProfile, setMyProfile] = useState(null);
   const [staff, setStaff] = useState([]);
+  const [certs, setCerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -83,9 +84,11 @@ export default function Documents() {
       const results = await Promise.allSettled([
         base44.entities.EmployeeDocument.filter({ status: { $ne: 'Archived' } }, { sort: 'expiry_date', limit: 50 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
+        base44.entities.Certificate.filter({ status: { $ne: 'Revoked' } }, { sort: 'expiry_date', limit: 100, fields: ['module_title', 'staff_name', 'expiry_date', 'status'] }),
       ]);
       setDocs(results[0].status === 'fulfilled' ? results[0].value.items : []);
       setStaff(results[1].status === 'fulfilled' ? results[1].value.items.map((i) => i.full_name) : []);
+      setCerts(results[2].status === 'fulfilled' ? results[2].value.items : []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -307,7 +310,7 @@ export default function Documents() {
         </TabsContent>
 
         <TabsContent value="expiry-calendar" className="mt-4">
-          <ExpiryCalendar docs={docs} viewDoc={viewDoc} />
+          <ExpiryCalendar docs={docs} certs={certs} viewDoc={viewDoc} />
         </TabsContent>
 
         <TabsContent value="data-control" className="mt-4">
