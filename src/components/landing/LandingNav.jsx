@@ -7,6 +7,14 @@ import { Image } from '@/components/ui/image';
 export default function LandingNav() {
   const [open, setOpen] = useState(false);
   const [authed, setAuthed] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     base44.auth.isAuthenticated().then(setAuthed).catch(() => setAuthed(false));
@@ -22,7 +30,7 @@ export default function LandingNav() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 shadow-sm backdrop-blur-2xl dark:border-white/10 dark:bg-background/80">
+    <header className={`sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur-2xl transition-shadow duration-300 dark:border-white/10 dark:bg-background/80 ${scrolled ? 'shadow-lg shadow-slate-900/5' : 'shadow-sm'}`}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 md:px-6">
         <Link to="/" className="group flex shrink-0 items-center gap-2">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-10 w-10 rounded-xl bg-white shadow-md shadow-slate-900/10 ring-1 ring-slate-200 transition-transform group-hover:scale-105 dark:ring-white/10" fittingType="fill" focalPointX={0.5} focalPointY={0.33} />
@@ -61,7 +69,7 @@ export default function LandingNav() {
         <div className="border-t border-slate-200/70 bg-white/95 px-4 py-4 backdrop-blur-xl dark:border-white/10 dark:bg-background/95">
           <div className="flex flex-col gap-3">
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm font-semibold text-foreground/70">{l.label}</a>
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-lg px-2 py-2 text-sm font-semibold text-foreground/70 transition-colors hover:bg-brand/5 hover:text-brand">{l.label}</a>
             ))}
             <div className="mt-2 flex flex-col gap-2">
               {authed ? (

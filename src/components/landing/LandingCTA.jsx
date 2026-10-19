@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import Reveal from '@/components/landing/Reveal';
 
 export default function LandingCTA() {
   const [authed, setAuthed] = useState(false);
@@ -16,7 +17,7 @@ export default function LandingCTA() {
           <div className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         </div>
         <div className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none font-editorial text-[16rem] font-bold leading-none text-white/[0.03]">HR</div>
-        <div className="relative">
+        <Reveal className="relative">
           <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-200">Why ComplianceHR</div>
           <h2 className="mt-6 font-editorial text-3xl font-medium tracking-tight text-white md:text-5xl md:leading-tight">
             Ready to simplify your <span className="font-editorial-italic bg-gradient-to-r from-violet-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">compliance?</span>
@@ -26,7 +27,7 @@ export default function LandingCTA() {
             {authed ? 'Go to Dashboard' : 'Get started free'}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
+import Reveal from '@/components/landing/Reveal';
 
 const PRICING_TIERS = [
   { users: 'Up to 20 users', monthly: '500', yearly: '6,000', featured: true },
@@ -23,7 +24,7 @@ const INCLUDED = [
 export default function PricingSection() {
   return (
     <section id="pricing" className="mx-auto my-10 max-w-6xl scroll-mt-16 rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-50/60 px-4 py-14 sm:py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
-      <div className="mx-auto max-w-2xl text-center">
+      <Reveal className="mx-auto max-w-2xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-fuchsia-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-fuchsia-700 dark:border-fuchsia-500/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
           <Sparkles className="h-3.5 w-3.5" />
           Start with a 14-day free trial
@@ -34,9 +35,9 @@ export default function PricingSection() {
         <p className="mt-4 text-lg text-foreground/60">
           Choose monthly repayments on a 24-month lock-in agreement or pay yearly upfront. Every plan starts with a 14-day free trial.
         </p>
-      </div>
+      </Reveal>
 
-      <div className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-card shadow-xl shadow-slate-900/5 dark:border-white/10">
+      <Reveal className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-card shadow-xl shadow-slate-900/5 dark:border-white/10">
         <div className="hidden grid-cols-[1.2fr_1fr_1fr] bg-slate-950 px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white sm:grid dark:bg-slate-900">
           <div>Access users</div>
           <div>Monthly repayment</div>
@@ -77,7 +78,7 @@ export default function PricingSection() {
             </div>
           ))}
         </div>
-      </div>
+      </Reveal>
 
       <div className="mt-8 grid gap-6 rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-lg backdrop-blur dark:border-white/10 dark:bg-card/80 md:grid-cols-[1fr_auto] md:items-center md:p-8">
         <div>

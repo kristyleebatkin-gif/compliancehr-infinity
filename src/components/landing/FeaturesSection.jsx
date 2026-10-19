@@ -13,6 +13,7 @@ import {
   Sparkles,
   Users,
 } from 'lucide-react';
+import Reveal from '@/components/landing/Reveal';
 
 const FEATURES = [
   { icon: Users, title: 'Workforce Records', desc: 'Maintain staff profiles, employment documents, certificates, teams and consent-aware audit access.', color: '#16a34a' },
@@ -42,15 +43,15 @@ export default function FeaturesSection() {
         <p className="mt-4 text-lg font-medium text-foreground/65">One super platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker that shows you are audit prepared, every day.</p>
       </div>
       <div className="relative mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURES.map((f) => (
-          <div key={f.title} className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-white/5" style={{ borderColor: `${f.color}30`, borderWidth: 1, borderStyle: 'solid' }}>
+        {FEATURES.map((f, index) => (
+          <Reveal key={f.title} delay={(index % 3) * 0.07} className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-white/5" style={{ borderColor: `${f.color}30`, borderWidth: 1, borderStyle: 'solid' }}>
             <span className="absolute inset-x-0 top-0 h-1 opacity-80" style={{ backgroundColor: f.color }} />
             <div className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: `${f.color}16`, color: f.color }}>
               <f.icon className="h-5 w-5" />
             </div>
             <h3 className="mt-5 font-editorial text-lg font-semibold text-foreground">{f.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-foreground/60">{f.desc}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

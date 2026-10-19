@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, ShieldAlert, TrendingUp, ClipboardCheck, RefreshCw, Lock } from 'lucide-react';
+import Reveal from '@/components/landing/Reveal';
 
 const BENEFITS = [
   { icon: ShieldCheck, title: 'Stay Compliant', desc: 'Live compliance trackers show every document in every area is fully compliant, every day.' },
@@ -43,14 +44,14 @@ export default function BenefitsSection() {
         </div>
         <div className="relative mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b, index) => (
-            <div key={b.title} className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
+            <Reveal key={b.title} delay={(index % 3) * 0.07} className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
               <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${HAIRLINES[index]}`} />
               <div className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${CHIP_STYLES[index]} shadow-sm transition-transform group-hover:scale-105`}>
                 <b.icon className="h-5 w-5" />
               </div>
               <h3 className="mt-5 font-editorial text-lg font-semibold text-foreground">{b.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-foreground/60">{b.desc}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

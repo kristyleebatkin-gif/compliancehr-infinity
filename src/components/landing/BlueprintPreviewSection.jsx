@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import Reveal from '@/components/landing/Reveal';
 
 // The map is generated from the live module directory, so it always matches the app exactly.
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
@@ -64,7 +65,7 @@ export default function BlueprintPreviewSection() {
       <div className="absolute -left-20 bottom-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
 
-      <div className="relative mx-auto max-w-3xl text-center">
+      <Reveal className="relative mx-auto max-w-3xl text-center">
         <div className="mx-auto inline-flex rounded-full border border-cyan-200 bg-cyan-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-300">Current platform blueprint</div>
         <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
           An accurate map of the <span className="font-editorial-italic bg-gradient-to-r from-cyan-700 via-blue-600 to-violet-700 bg-clip-text text-transparent">ComplianceHR app</span>
@@ -72,7 +73,7 @@ export default function BlueprintPreviewSection() {
         <p className="mt-4 text-lg font-medium text-foreground/65">
           All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
         </p>
-      </div>
+      </Reveal>
 
       <div className="relative mt-12 overflow-hidden rounded-3xl border border-slate-700 bg-slate-950 shadow-2xl shadow-brand/20">
         <div className="flex items-center gap-2 border-b border-slate-700 bg-slate-900 px-4 py-3">

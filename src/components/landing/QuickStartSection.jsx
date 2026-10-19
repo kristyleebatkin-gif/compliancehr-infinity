@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Bell, LayoutDashboard, ShieldCheck, Workflow } from 'lucide-react';
+import Reveal from '@/components/landing/Reveal';
 
 const STEPS = [
   {
@@ -51,7 +52,7 @@ export default function QuickStartSection() {
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             return (
-              <li key={step.title} className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/85 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/75">
+              <Reveal key={step.title} as="li" delay={index * 0.07} className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/85 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/75">
                 <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${ACCENTS[index].rule}`} />
                 <span className={`pointer-events-none absolute -right-2 -top-3 select-none font-editorial text-7xl font-bold ${ACCENTS[index].ghost}`}>{String(index + 1).padStart(2, '0')}</span>
                 <div className={`relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${ACCENTS[index].chip} shadow-sm transition-transform group-hover:scale-105`}>
@@ -59,7 +60,7 @@ export default function QuickStartSection() {
                 </div>
                 <h3 className="relative mt-5 font-editorial text-lg font-semibold text-foreground">{step.title}</h3>
                 <p className="relative mt-2 text-sm leading-relaxed text-foreground/60">{step.text}</p>
-              </li>
+              </Reveal>
             );
           })}
         </ol>

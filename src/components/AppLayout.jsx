@@ -364,8 +364,8 @@ export default function AppLayout() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] font-medium transition-colors ${
-                  active ? 'text-brand' : 'text-foreground/50'
+                className={`flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[10px] font-semibold transition-colors ${
+                  active ? 'bg-brand/10 text-brand' : 'text-foreground/50'
                 }`}
               >
                 <Icon className="h-5 w-5" />

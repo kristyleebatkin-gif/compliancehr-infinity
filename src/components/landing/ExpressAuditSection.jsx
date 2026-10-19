@@ -11,6 +11,7 @@ import {
   Timer,
   Upload,
 } from 'lucide-react';
+import Reveal from '@/components/landing/Reveal';
 
 const FLOW = [
   {
@@ -72,17 +73,17 @@ export default function ExpressAuditSection() {
         </div>
 
         <ol className="relative mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FLOW.map((item) => {
+          {FLOW.map((item, index) => {
             const Icon = item.icon;
             return (
-              <li key={item.step} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-violet-400/40 hover:bg-white/[0.07]">
+              <Reveal key={item.step} as="li" delay={(index % 4) * 0.07} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-violet-400/40 hover:bg-white/[0.07]">
                 <span className="pointer-events-none absolute -right-2 -top-3 select-none font-editorial text-6xl font-bold text-white/[0.06]">{item.step}</span>
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-violet-200 shadow-sm transition-transform group-hover:scale-105">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 font-editorial text-lg font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{item.text}</p>
-              </li>
+              </Reveal>
             );
           })}
         </ol>

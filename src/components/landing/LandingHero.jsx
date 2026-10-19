@@ -3,7 +3,16 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
+import Reveal from '@/components/landing/Reveal';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { Image } from '@/components/ui/image';
+
+const STATS = [
+  { value: `${MODULE_DIRECTORY.length}`, label: 'connected modules' },
+  { value: '2 min', label: 'express internal audits' },
+  { value: 'Live', label: 'compliance & expiry trackers' },
+  { value: '24/7', label: 'automated reminders & alerts' },
+];
 
 export default function LandingHero() {
   const [authed, setAuthed] = useState(false);
@@ -86,9 +95,18 @@ export default function LandingHero() {
 
           <ModuleChipStrip />
 
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {STATS.map((stat, index) => (
+              <Reveal key={stat.label} delay={index * 0.06} className="rounded-2xl border border-slate-200/80 bg-white/75 px-4 py-3.5 text-center shadow-sm backdrop-blur dark:border-white/10 dark:bg-card/70">
+                <div className="font-editorial text-2xl font-semibold text-foreground">{stat.value}</div>
+                <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/50">{stat.label}</div>
+              </Reveal>
+            ))}
+          </div>
+
           <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
-            {highlights.map(({ icon: Icon, title, reasons }) => (
-              <div key={title} className="group rounded-2xl border border-slate-200/80 bg-white/75 p-5 shadow-lg shadow-slate-900/5 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
+            {highlights.map(({ icon: Icon, title, reasons }, index) => (
+              <Reveal key={title} delay={index * 0.08} className="group rounded-2xl border border-slate-200/80 bg-white/75 p-5 shadow-lg shadow-slate-900/5 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-cyan-100 text-violet-700 shadow-sm transition-transform group-hover:scale-105 dark:from-violet-500/20 dark:to-cyan-500/20 dark:text-violet-300">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -101,8 +119,8 @@ export default function LandingHero() {
                     </li>
                   ))}
                 </ul>
-              </div>
-            ))}
+                </Reveal>
+                ))}
           </div>
         </div>
       </div>
