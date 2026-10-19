@@ -21,6 +21,7 @@ import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import StaffBadgeCard from '@/components/staff/StaffBadgeCard';
 import EmploymentTimeline from '@/components/staff/EmploymentTimeline';
 import ExportRow from '@/components/profile/ExportRow';
+import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import { useRole } from '@/lib/useRole';
 
 export default function StaffDetail() {
@@ -59,8 +60,9 @@ export default function StaffDetail() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/staff"><ArrowLeft className="h-4 w-4" />Staff</Link></Button>
+        <PortalInviteButton kind="staff" profile={staff} />
       </div>
 
       <ProfileHeader profile={staff} kind="staff" onUpdated={load} />

@@ -16,6 +16,7 @@ import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsT
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import FundingUtilisation from '@/components/participants/FundingUtilisation';
 import ExportRow from '@/components/profile/ExportRow';
+import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import { useRole } from '@/lib/useRole';
 
 export default function ParticipantDetail() {
@@ -54,8 +55,9 @@ export default function ParticipantDetail() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/participants"><ArrowLeft className="h-4 w-4" />Participants</Link></Button>
+        <PortalInviteButton kind="participant" profile={participant} />
       </div>
 
       <ProfileHeader profile={participant} kind="participant" onUpdated={load} />
