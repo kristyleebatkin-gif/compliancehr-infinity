@@ -19,7 +19,7 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
   let y = drawFormHeader(doc, { title: 'Employment Contract', code: 'HR-CON', subtitle: company, completedBy, docType: 'Form' });
 
   y = drawSectionHeading(doc, y, 'Parties');
-  y = drawParagraph(doc, y, `This employment agreement ("Agreement") is made between ${company}${abn}, of ${address} ("the Employer"), and ${data.employee_name || 'the Employee'} ("the Employee"). The Employer operates a National Disability Insurance Scheme (NDIS) registered provider business and the Employee agrees to work for the Employer on the terms set out in this Agreement.`);
+  y = drawParagraph(doc, y, `This employment agreement ("Agreement") is made between ${company}${abn}, of ${address} ("the Employer"), and ${data.employee_name || 'the Employee'} ("the Employee"). The Employer delivers disability and community support services and the Employee agrees to work for the Employer on the completed terms set out in this Agreement. This Agreement cannot exclude or reduce entitlements under the National Employment Standards or an applicable award or enterprise agreement.`);
 
   y = drawSectionHeading(doc, y, 'Employment Details');
   y = drawFieldRows(doc, y, [
@@ -58,8 +58,8 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
 
   y = drawSectionHeading(doc, y, '5. Probationary Period');
   y = drawParagraph(doc, y, data.probation_end_date
-    ? `The Employee's employment is subject to a probationary period ending ${fmt(data.probation_end_date)}. During or at the end of this period the Employer may confirm the appointment, extend probation or end employment in accordance with the National Employment Standards.`
-    : `The Employee's employment is subject to a probationary period of up to six (6) months. During or at the end of this period the Employer may confirm the appointment, extend probation or end employment in accordance with the National Employment Standards.`);
+    ? `Any agreed probation period ends ${fmt(data.probation_end_date)}. The Employer will provide induction, feedback and review. Probation does not remove statutory entitlements or change the statutory minimum employment period. Any extension must be lawful, agreed where required, and recorded in writing.`
+    : `Any probation period must be agreed and recorded before issue. The Employer will provide induction, feedback and review. Probation does not remove statutory entitlements or change the statutory minimum employment period.`);
 
   y = drawSectionHeading(doc, y, '6. NDIS and Worker Compliance Requirements');
   y = drawParagraph(doc, y, `As a condition of employment, the Employee must at all times hold and maintain a current NDIS Worker Screening Check, a current Working With Children Check where required, and current First Aid and CPR certifications as applicable to their role. The Employee must comply with the NDIS Code of Conduct, the NDIS Practice Standards, and all company policies, procedures and training requirements. The Employee must immediately notify the Employer if any of these clearances or certifications expires, is suspended or is cancelled.`);
@@ -73,9 +73,23 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
   y = drawSectionHeading(doc, y, '9. Termination');
   y = drawParagraph(doc, y, `Employment may be terminated by either party by giving notice in accordance with the Award and the National Employment Standards. The Employer may terminate employment without notice in cases of serious misconduct. The Employee must return all company property, records and participant information upon termination.`);
 
-  y = drawSectionHeading(doc, y, '10. Agreement');
+  y = drawSectionHeading(doc, y, '10. Superannuation');
+  y = drawParagraph(doc, y, 'The Employer will make superannuation guarantee contributions at the statutory rate, on the required earnings and by the required dates. The Employee may provide a valid fund choice; otherwise the applicable stapled-fund or default-fund process will be followed. Minimum superannuation obligations are not absorbed into a stated hourly wage.');
+
+  y = drawSectionHeading(doc, y, '11. Leave and Minimum Entitlements');
+  y = drawParagraph(doc, y, 'Leave, public-holiday entitlements and other minimum conditions apply in accordance with the National Employment Standards and the applicable industrial instrument. Permanent employees receive the paid leave applicable to their employment. Casual employees receive the entitlements applicable to casual employment, including applicable unpaid leave and paid family and domestic violence leave. Casual loading does not remove statutory rights.');
+
+  y = drawSectionHeading(doc, y, '12. Rostering, Travel and Safe Work');
+  y = drawParagraph(doc, y, 'Rosters, breaks, minimum engagements, overtime, penalty rates, broken shifts, sleepovers and allowances must comply with the industrial instrument that applies to the actual work. Record agreed part-time hours and work patterns in writing where required. Record and reimburse authorised work-related travel and expenses as required. Follow participant plans, fatigue controls, infection-control procedures and safe manual-handling practices, and promptly report incidents, hazards and safeguarding concerns. Do not perform specialist or medication tasks outside assessed competence and authorisation.');
+
+  y = drawSectionHeading(doc, y, '13. Agreement and Review');
+  y = drawParagraph(doc, y, 'Before issue, the Employer must confirm the employment basis, award coverage, classification, pay, hours and any fixed-term restrictions, provide required information statements and obtain appropriate HR/legal review. The Employee must have an opportunity to ask questions and seek independent advice. An acknowledgement or signature does not waive minimum statutory rights.');
   y = drawParagraph(doc, y, `The parties agree that this Agreement records the entire terms of the employment relationship as at the commencement date, and that it may be varied in writing by mutual agreement.`);
 
+  if (data.signature) {
+    y = drawSectionHeading(doc, y, 'Recorded Electronic Signature');
+    y = drawParagraph(doc, y, `${data.signature}. Employee signed: ${fmt(data.employee_signed_date)}.`);
+  }
   y = drawSignatures(doc, y, {
     heading: 'Execution',
     left: `Employee: ${data.employee_name || ''} (Signature / Date)`,

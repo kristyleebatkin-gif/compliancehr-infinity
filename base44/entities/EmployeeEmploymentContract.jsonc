@@ -91,6 +91,11 @@
       "title": "Employer Signed Date",
       "format": "date"
     },
+    "signature": {
+      "type": "string",
+      "title": "Recorded Employee Signature",
+      "maxLength": 500
+    },
     "completed_date": {
       "type": "string",
       "title": "Contract Completed Date",

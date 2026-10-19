@@ -96,7 +96,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const upcomingLeave = leaves.filter((l) => l.status === 'Approved' && l.end_date >= today());
 
   return (
-    <div className="space-y-6">
+    <div className={embedded ? 'min-w-0 space-y-6' : 'mx-auto min-w-0 max-w-6xl space-y-6 p-3 sm:p-4 md:p-8'}>
       {!embedded && <PageHeader
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."
@@ -119,7 +119,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList>
+        <TabsList className="h-auto w-full flex-wrap justify-start gap-1">
           <TabsTrigger value="leave">Leave requests</TabsTrigger>
           <TabsTrigger value="reviews">Performance reviews</TabsTrigger>
           {isManager && <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>}

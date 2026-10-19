@@ -7,11 +7,11 @@ const ALLOWED_FIELDS = {
     'employment_type', 'classification', 'industrial_instrument', 'manager_name', 'commencement_date', 'end_date',
     'probation_end_date', 'ordinary_weekly_hours', 'hourly_rate', 'position_duties', 'contract_status',
     'employee_signed_date', 'employer_signed_date', 'completed_date', 'completed_by', 'document_url',
-    'source_employee_document_id', 'notes', 'archived']),
+    'source_employee_document_id', 'signature', 'notes', 'archived']),
   position: new Set(['staff_profile_id', 'employee_id', 'employee_user_id', 'employee_name', 'position_title',
     'reports_to', 'employment_type', 'position_purpose', 'key_responsibilities', 'essential_requirements',
     'qualifications_experience', 'performance_measures', 'status', 'document_url', 'source_employee_document_id',
-    'notes', 'archived']),
+    'acknowledged_date', 'notes', 'archived']),
 };
 
 /**
@@ -48,6 +48,13 @@ export default async function(req) {
     );
 
     if (action === 'create') {
+      if (!cleanData.staff_profile_id || !String(cleanData.position_title || '').trim() || (kind === 'contract' && !cleanData.commencement_date)) {
+        return Response.json({ error: 'Employee profile, position and contract commencement date are required' }, { status: 400 });
+      }
+      const staff = await base44.asServiceRole.entities.StaffProfile.get(cleanData.staff_profile_id);
+      if (!staff) return Response.json({ error: 'Employee profile not found' }, { status: 404 });
+      cleanData.employee_name = staff.full_name;
+      cleanData.employee_id = staff.employee_number || staff.id;
       const record = await entity.create(cleanData);
       return Response.json({ record });
     }
