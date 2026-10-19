@@ -61,9 +61,9 @@ export default function BlueprintPreviewSection() {
   const moduleCount = APP_MODULE_GROUPS.reduce((total, group) => total + group.modules.length, 0);
 
   return (
-    <section id="blueprint" className="relative mx-auto my-10 max-w-7xl overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-cyan-50/70 via-white to-violet-50/70 px-4 py-14 sm:py-20 shadow-xl shadow-cyan-500/5 dark:border-white/10 dark:from-cyan-950/25 dark:via-background dark:to-violet-950/25 md:px-8">
-      <div className="absolute -left-20 bottom-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
-      <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
+    <section id="blueprint" className="relative mx-auto my-10 max-w-7xl overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-cyan-100/80 via-white to-violet-100/80 px-4 py-14 sm:py-20 shadow-xl shadow-cyan-500/5 dark:border-white/10 dark:from-cyan-950/25 dark:via-background dark:to-violet-950/25 md:px-8">
+      <div className="absolute -left-20 bottom-20 h-72 w-72 rounded-full bg-cyan-400/40 blur-3xl" />
+      <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-violet-400/40 blur-3xl" />
 
       <Reveal className="relative mx-auto max-w-3xl text-center">
         <div className="mx-auto inline-flex rounded-full border border-cyan-200 bg-cyan-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-300">Current platform blueprint</div>

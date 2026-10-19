@@ -34,10 +34,10 @@ const ACCENTS = [
 
 export default function QuickStartSection() {
   return (
-    <section id="quick-start" className="relative scroll-mt-16 overflow-hidden border-y border-border/70 bg-gradient-to-b from-white via-violet-50/60 to-white dark:from-background dark:via-violet-950/20 dark:to-background">
+    <section id="quick-start" className="relative scroll-mt-16 overflow-hidden border-y border-border/70 bg-gradient-to-b from-white via-violet-100/80 to-white dark:from-background dark:via-violet-950/20 dark:to-background">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-8 h-64 w-64 rounded-full bg-violet-300/25 blur-3xl dark:bg-violet-500/10" />
-        <div className="absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan-300/25 blur-3xl dark:bg-cyan-500/10" />
+        <div className="absolute -left-24 top-8 h-64 w-64 rounded-full bg-violet-400/45 blur-3xl dark:bg-violet-500/10" />
+        <div className="absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan-400/45 blur-3xl dark:bg-cyan-500/10" />
       </div>
       <div className="relative mx-auto max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <div className="relative mx-auto max-w-2xl text-center">

@@ -54,9 +54,9 @@ export default function LandingHero() {
   return (
     <section className="relative overflow-hidden border-b border-border/70 bg-background">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-48 left-1/2 h-[30rem] w-[72rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-300/40 via-fuchsia-200/30 to-cyan-300/40 blur-3xl dark:from-violet-800/30 dark:via-fuchsia-900/20 dark:to-cyan-800/25" />
-        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-amber-200/25 blur-3xl dark:bg-amber-500/10" />
-        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-cyan-200/30 blur-3xl dark:bg-cyan-500/10" />
+        <div className="absolute -top-48 left-1/2 h-[30rem] w-[72rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400/60 via-fuchsia-300/55 to-cyan-300/60 blur-3xl dark:from-violet-800/30 dark:via-fuchsia-900/20 dark:to-cyan-800/25" />
+        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-amber-300/45 blur-3xl dark:bg-amber-500/10" />
+        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-cyan-300/55 blur-3xl dark:bg-cyan-500/10" />
       </div>
       <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none font-editorial text-[22vw] font-bold leading-none text-slate-900/[0.03] dark:text-white/[0.02]">HR</div>
 
@@ -64,14 +64,14 @@ export default function LandingHero() {
         <div className="mx-auto max-w-3xl text-center">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
 
-          <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+          <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
             The all-in-one NDIS compliance platform
           </div>
 
           <h1 className="mt-6 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
             Compliance management,
-            <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">simplified end to end.</span>
+            <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">simplified end to end.</span>
           </h1>
 
           <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.16em] sm:text-[13px]">
@@ -96,7 +96,7 @@ export default function LandingHero() {
           <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {STATS.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 0.06} className="rounded-2xl border border-slate-200/80 bg-white/75 px-4 py-3.5 text-center shadow-sm backdrop-blur dark:border-white/10 dark:bg-card/70">
-                <div className="font-editorial text-2xl font-semibold text-foreground">{stat.value}</div>
+                <div className="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text font-editorial text-2xl font-semibold text-transparent">{stat.value}</div>
                 <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/50">{stat.label}</div>
               </Reveal>
             ))}
@@ -105,7 +105,7 @@ export default function LandingHero() {
           <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
             {highlights.map(({ icon: Icon, title, reasons }, index) => (
               <Reveal key={title} delay={index * 0.08} className="group rounded-2xl border border-slate-200/80 bg-white/75 p-5 shadow-lg shadow-slate-900/5 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-card/70">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-cyan-100 text-violet-700 shadow-sm transition-transform group-hover:scale-105 dark:from-violet-500/20 dark:to-cyan-500/20 dark:text-violet-300">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-200 to-cyan-200 text-violet-800 shadow-sm transition-transform group-hover:scale-105 dark:from-violet-500/20 dark:to-cyan-500/20 dark:text-violet-300">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="mt-4 font-editorial text-lg font-semibold text-foreground">{title}</div>

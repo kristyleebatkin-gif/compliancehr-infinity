@@ -12,9 +12,9 @@ export default function LandingCTA() {
     <section id="why" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-14 sm:py-20 md:px-8">
       <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-950 px-6 py-16 text-center shadow-2xl shadow-slate-900/30 md:px-16 md:py-20">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-violet-600/25 blur-3xl" />
-          <div className="absolute left-1/2 top-0 h-44 w-44 -translate-x-1/2 rounded-full bg-fuchsia-500/20 blur-3xl" />
-          <div className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-violet-500/50 blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-44 w-44 -translate-x-1/2 rounded-full bg-fuchsia-500/40 blur-3xl" />
+          <div className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-cyan-400/40 blur-3xl" />
         </div>
         <div className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none font-editorial text-[16rem] font-bold leading-none text-white/[0.03]">HR</div>
         <Reveal className="relative">

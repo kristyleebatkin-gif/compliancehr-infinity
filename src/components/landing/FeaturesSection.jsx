@@ -33,10 +33,10 @@ const FEATURES = [
 export default function FeaturesSection() {
   return (
     <section id="features" className="relative mx-auto my-10 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white px-4 py-14 sm:py-20 shadow-xl shadow-slate-900/5 dark:border-white/10 dark:bg-card md:px-8">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-300/20 blur-3xl dark:bg-pink-500/10" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl dark:bg-blue-500/10" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-300/40 blur-3xl dark:bg-pink-500/10" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/40 blur-3xl dark:bg-blue-500/10" />
       <div className="relative mx-auto max-w-2xl text-center">
-        <div className="inline-flex rounded-full border border-pink-200 bg-pink-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-pink-700 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-300">Latest platform capabilities</div>
+        <div className="inline-flex rounded-full border border-pink-300 bg-pink-100/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-pink-700 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-300">Latest platform capabilities</div>
         <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
           An impossible standard, <span className="font-editorial-italic bg-gradient-to-r from-pink-700 via-violet-600 to-blue-600 bg-clip-text text-transparent">achieved effortlessly</span>
         </h2>
