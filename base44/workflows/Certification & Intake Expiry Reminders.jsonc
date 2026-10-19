@@ -1,0 +1,45 @@
+{
+  "name": "Certification & Intake Expiry Reminders",
+  "description": "Daily scan of staff compliance certifications (Certificate register) and intake onboarding/offboarding tasks that are expired, overdue or expiring within their reminder window. Emails each affected staff member one consolidated branded reminder and records the alert so each item state only reminds once.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "15 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "certification_intake_expiry_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_certification_intake_reminders": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "certificationIntakeReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan certifications and intake tasks, email reminders",
+            "description": "Emails each staff member about expiring certifications and due intake tasks"
+          }
+        }
+      }
+    ]
+  }
+}
