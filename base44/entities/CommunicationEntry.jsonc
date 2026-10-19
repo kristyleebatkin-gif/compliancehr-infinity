@@ -179,11 +179,6 @@
         },
         {
           "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
             "role": "Human Resources Manager"
           }
         },
@@ -194,6 +189,20 @@
         },
         {
           "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        },
+        {
+          "data.staff_involved": "{{user.full_name}}"
+        },
+        {
+          "data.entry_kind": {
+            "$in": [
+              "Team Banter",
+              "Video Call"
+            ]
+          }
         }
       ]
     },
@@ -247,6 +256,11 @@
         {
           "user_condition": {
             "role": "Intake Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
           }
         }
       ]
