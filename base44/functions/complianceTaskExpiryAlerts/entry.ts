@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
-const WARN_DAYS = 3;
+const WARN_DAYS = 7;
 
 function daysBetween(fromStr, toStr) {
   return Math.round((new Date(toStr + 'T00:00:00Z') - new Date(fromStr + 'T00:00:00Z')) / 86400000);

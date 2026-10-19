@@ -9,7 +9,7 @@ import { authorizeSystemCall, MANAGEMENT_ROLES } from '../../shared/systemAuth.t
 // Idempotent: each deadline alerts again only when its state changes.
 const SCREENING_TYPES = ['Worker Screening', 'Worker Screening Audit'];
 const SKIP_STATUSES = ['Completed', 'Submitted'];
-const HORIZON_DAYS = 30;
+const HORIZON_DAYS = 7;
 const ADMIN_ROLES = MANAGEMENT_ROLES;
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
 const ENTRY_NOTE_TYPE = 'Screening Expiry Alert';
