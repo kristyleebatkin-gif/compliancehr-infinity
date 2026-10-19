@@ -55,6 +55,9 @@ import ComplianceScore from '@/components/compliance/ComplianceScore';
 import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
 import ComplianceIssuesTab from '@/components/compliance/ComplianceIssuesTab';
 import PolicyAcknowledgements from '@/components/compliance/PolicyAcknowledgements';
+import InternalAuditRegister from '@/components/compliance/InternalAuditRegister';
+import ParticipantReviewRegister from '@/components/compliance/ParticipantReviewRegister';
+import ConsentRegister from '@/components/compliance/ConsentRegister';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -164,6 +167,9 @@ export default function ComplianceHub() {
           <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
           <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
           <TabsTrigger value="standards-map">NDIS Standards Map</TabsTrigger>
+          <TabsTrigger value="internal-audits">Internal Audit Register</TabsTrigger>
+          <TabsTrigger value="participant-reviews">Participant Reviews</TabsTrigger>
+          <TabsTrigger value="consents">Consent Register</TabsTrigger>
         </TabsList>
 
         <TabsContent value="issues" className="mt-4">
@@ -339,6 +345,18 @@ export default function ComplianceHub() {
 
         <TabsContent value="audit-report-list" className="mt-4">
           <AuditReportList />
+        </TabsContent>
+
+        <TabsContent value="internal-audits" className="mt-4">
+          <InternalAuditRegister />
+        </TabsContent>
+
+        <TabsContent value="participant-reviews" className="mt-4">
+          <ParticipantReviewRegister />
+        </TabsContent>
+
+        <TabsContent value="consents" className="mt-4">
+          <ConsentRegister />
         </TabsContent>
 
         <TabsContent value="checklists" className="mt-4">
