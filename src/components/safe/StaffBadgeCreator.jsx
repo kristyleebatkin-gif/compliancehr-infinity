@@ -4,9 +4,9 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download, Loader2, Save } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
-import { downloadStaffBadgePdf, staffBadgeBlob } from '@/lib/staffBadgePdf';
+import { staffBadgeBlob } from '@/lib/staffBadgePdf';
 import { routeDocument } from '@/lib/documentRouting';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 
@@ -83,11 +83,8 @@ export default function StaffBadgeCreator() {
             </Select>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button size="sm" variant="outline" disabled={!selected} onClick={() => downloadStaffBadgePdf({ staffName: selected.full_name, position: selected.position, employeeNumber: selected.employee_number })}>
-              <Download className="h-3.5 w-3.5" />Download badge PDF
-            </Button>
             <Button size="sm" disabled={!selected || saving} onClick={saveToSafe}>
-              {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Store in company safe
+              {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save
             </Button>
           </div>
         </div>
