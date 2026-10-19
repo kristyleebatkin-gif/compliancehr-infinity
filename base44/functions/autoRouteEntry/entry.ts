@@ -125,9 +125,6 @@ const ROUTES = {
 export default async function(req) {
   try {
     const body = await req.json().catch(() => ({}));
-    if (!(await authorizeSystemCall(base44, body))) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
     const entity = body.entity;
     const recordId = body.record_id;
     const event = body.event || 'create';
@@ -136,6 +133,9 @@ export default async function(req) {
     }
 
     const base44 = createClientFromRequest(req);
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const rec = await base44.asServiceRole.entities[entity].get(recordId);
     if (!rec) return Response.json({ error: 'Record not found' }, { status: 404 });
 
