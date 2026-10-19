@@ -22,6 +22,7 @@ import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import IntakeCaseForm, { SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
+import IntakeBulkImport from '@/components/intake/IntakeBulkImport';
 import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
 import IntakeCaseDocuments from '@/components/intake/IntakeCaseDocuments';
 import IntakeOnlineFormDialog from '@/components/intake/IntakeOnlineFormDialog';
@@ -970,6 +971,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
           <Button variant="outline" onClick={exportRegister} disabled={exporting}>
             <Download className="mr-2 h-4 w-4" /> {exporting ? 'Exporting...' : 'Export Register (CSV)'}
           </Button>
+          {!profile && <IntakeBulkImport intakeType={intakeType} onImported={() => load()} />}
           {!profile && <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>}
         </div>
       </div>
