@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2, Trash2 } from 'lucide-react';
+import { Loader2, Trash2, Eye } from 'lucide-react';
 import { HR_TEMPLATE_PLACEHOLDERS, mergeHrTemplate, hasUnresolvedTokens } from '@/lib/hrTemplateMerge';
+import HrTemplatePreview from '@/components/hr/HrTemplatePreview';
 
 const CATEGORIES = ['Letter', 'Form', 'Contract', 'Notice', 'Other'];
 
@@ -21,6 +22,7 @@ export default function HrTemplateEditor({ open, template, staff, me, branding, 
   const [description, setDescription] = useState(template?.description || '');
   const [content, setContent] = useState(template?.content || '');
   const [previewId, setPreviewId] = useState('');
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const textareaRef = useRef(null);
@@ -131,6 +133,7 @@ export default function HrTemplateEditor({ open, template, staff, me, branding, 
         </div>
         <div className="flex flex-wrap gap-2">
           <Button onClick={save} disabled={busy}>{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}Save template</Button>
+          <Button variant="outline" disabled={!preview.trim()} onClick={() => setPreviewOpen(true)}><Eye className="h-4 w-4" />Preview PDF</Button>
           <Button variant="outline" onClick={onClose} disabled={busy}>Cancel</Button>
           {!isNew && (
             <Button variant="ghost" className="ml-auto text-danger hover:bg-danger/10" onClick={remove} disabled={busy}>
@@ -139,6 +142,14 @@ export default function HrTemplateEditor({ open, template, staff, me, branding, 
           )}
         </div>
       </DialogContent>
+
+      <HrTemplatePreview
+        open={previewOpen}
+        title={title || 'Untitled template'}
+        body={preview}
+        completedBy={me ? (me.full_name || me.email) : ''}
+        onClose={() => setPreviewOpen(false)}
+      />
     </Dialog>
   );
 }

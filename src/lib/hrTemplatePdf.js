@@ -7,7 +7,7 @@ import { drawDocumentFooter } from '@/lib/companyBranding';
  * Branded PDF for an HR document template: the merged template text flows as
  * paragraphs with the standard document header and footer.
  */
-export function downloadTemplatePdf({ title, code = 'HR-TPL', body, completedBy = '' }) {
+export function buildTemplatePdf({ title, code = 'HR-TPL', body, completedBy = '' }) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   let y = drawFormHeader(doc, { title, code, subtitle: 'Human Resources', completedBy, docType: 'HR Document' });
 
@@ -26,5 +26,16 @@ export function downloadTemplatePdf({ title, code = 'HR-TPL', body, completedBy 
   }
 
   drawDocumentFooter(doc, { title, code, docType: 'HR Document' });
+  return doc;
+}
+
+export function downloadTemplatePdf({ title, code = 'HR-TPL', body, completedBy = '' }) {
+  const doc = buildTemplatePdf({ title, code, body, completedBy });
   doc.save(`${String(title || 'HR document').replace(/[^a-z0-9 ]/gi, '').trim()}.pdf`);
+}
+
+// In-browser preview: the exact PDF that would download, as a blob URL.
+export function previewTemplatePdf({ title, code = 'HR-TPL', body, completedBy = '' }) {
+  const doc = buildTemplatePdf({ title, code, body, completedBy });
+  return doc.output('bloburl');
 }

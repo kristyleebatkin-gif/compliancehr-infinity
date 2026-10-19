@@ -11,7 +11,8 @@ import { downloadTemplatePdf } from '@/lib/hrTemplatePdf';
 import { mergeHrTemplate, hasUnresolvedTokens } from '@/lib/hrTemplateMerge';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import HrTemplateEditor from '@/components/hr/HrTemplateEditor';
-import { Loader2, FileText, Download, Copy, Wand2, Pencil, Plus } from 'lucide-react';
+import HrTemplatePreview from '@/components/hr/HrTemplatePreview';
+import { Loader2, FileText, Download, Copy, Wand2, Pencil, Plus, Eye } from 'lucide-react';
 
 const CATEGORY_TONES = {
   Letter: 'bg-brand/10 text-brand',
@@ -31,6 +32,7 @@ export default function HrTemplatesLibrary() {
   const [selected, setSelected] = useState(null); // template being used
   const [staffId, setStaffId] = useState('');
   const [busy, setBusy] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
   const [editing, setEditing] = useState(null); // null = new template
   const { toast } = useToast();
@@ -169,11 +171,20 @@ export default function HrTemplatesLibrary() {
             </div>
             <div className="flex flex-wrap gap-2">
               <Button onClick={download} disabled={busy || !merged}><Download className="h-4 w-4" />Download PDF</Button>
+              <Button variant="outline" disabled={!merged} onClick={() => setPreviewOpen(true)}><Eye className="h-4 w-4" />Preview PDF</Button>
               <Button variant="outline" onClick={copyText} disabled={!merged}><Copy className="h-4 w-4" />Copy text</Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
+
+      <HrTemplatePreview
+        open={previewOpen}
+        title={selected?.title}
+        body={merged}
+        completedBy={me ? (me.full_name || me.email) : ''}
+        onClose={() => setPreviewOpen(false)}
+      />
 
       <HrTemplateEditor
         open={editorOpen}
