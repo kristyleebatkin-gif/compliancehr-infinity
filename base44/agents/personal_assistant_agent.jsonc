@@ -13,6 +13,54 @@
       "allowed_operations": [
         "read"
       ]
+    },
+    {
+      "entity_name": "ComplianceIssue",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "NDISComplianceDeadline",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "EmployeeEmploymentContract",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Policy",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Risk",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "TrainingCompletion",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "InformationSharingConsent",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "TodoTask",
+      "allowed_operations": [
+        "read"
+      ]
     }
   ],
   "context_files": [],
