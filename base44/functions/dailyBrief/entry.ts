@@ -93,26 +93,30 @@ export default async function(req) {
     };
 
     if (body.notify) {
-      // User.list() can be briefly unavailable while other scheduled jobs run; retry once.
-      let adminRecords = [];
+      // Notifications must never fail the brief: user listing and sends are isolated here.
       try {
-        adminRecords = await s.User.list();
-      } catch (listError) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        try { adminRecords = await s.User.list(); } catch { adminRecords = []; }
+        let adminRecords = [];
+        try {
+          adminRecords = await s.User.list();
+        } catch (listError) {
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          try { adminRecords = await s.User.list(); } catch { adminRecords = []; }
+        }
+        const adminItems = Array.isArray(adminRecords) ? adminRecords : adminRecords.items || [];
+        const admins = adminItems
+          .filter((u) => ['admin', 'Provider Administrator'].includes(u.role)).slice(0, 10);
+        const html = briefEmailHtml(brief);
+        await Promise.allSettled(admins.map((admin) =>
+          base44.asServiceRole.integrations.Core.SendEmail({
+            to: admin.email,
+            subject: `Morning brief — ${brief.date_label}`,
+            html,
+            from_name: 'ComplianceHR Infinity',
+          }),
+        ));
+      } catch (notifyError) {
+        console.error('Morning brief notify failed:', notifyError && notifyError.message);
       }
-      const adminItems = Array.isArray(adminRecords) ? adminRecords : adminRecords.items || [];
-      const admins = { items: adminItems
-        .filter((u) => ['admin', 'Provider Administrator'].includes(u.role)).slice(0, 10) };
-      const html = briefEmailHtml(brief);
-      await Promise.allSettled((admins.items || []).map((admin) =>
-        base44.asServiceRole.integrations.Core.SendEmail({
-          to: admin.email,
-          subject: `Morning brief — ${brief.date_label}`,
-          html,
-          from_name: 'ComplianceHR Infinity',
-        }),
-      ));
     }
 
     return Response.json({ brief });
