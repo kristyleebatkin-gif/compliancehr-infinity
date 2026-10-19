@@ -1,6 +1,6 @@
 {
   "name": "Compliance Task Expiry Alerts",
-  "description": "Daily at 7am (Brisbane): emails each staff member whose assigned compliance task is due within 3 days, due today, or overdue.",
+  "description": "Daily at 7am (Sydney): alerts staff immediately when their compliance tasks or worker screenings are due or overdue, by email plus in-app notification.",
   "trigger": {
     "condition": null,
     "config": {
@@ -33,10 +33,24 @@
             "function_name": "complianceTaskExpiryAlerts",
             "args": {}
           },
-          "then": "end",
+          "then": "screening_alerts",
           "x-base44": {
             "title": "Send task expiry alerts",
-            "description": "Emails assignees of active compliance tasks that are nearing or past their due date"
+            "description": "Emails and in-app alerts assignees of active compliance tasks that are nearing or past their due date"
+          }
+        }
+      },
+      {
+        "screening_alerts": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "screeningExpiryAlerts",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send worker screening alerts",
+            "description": "Emails and in-app alerts staff whose NDIS worker screening is expired or due within 30 days"
           }
         }
       }

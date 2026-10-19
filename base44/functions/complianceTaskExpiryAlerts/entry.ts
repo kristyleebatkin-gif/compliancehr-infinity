@@ -33,6 +33,17 @@ export default async function(req) {
 
     const due = active.filter((t) => t.due_date && t.due_date <= horizon && t.assigned_email);
 
+    // In-app alert targets (web): registered users matching each assignee's email,
+    // plus existing expiry notifications so each alert is only created once.
+    const [usersPage, notifPage] = await Promise.all([
+      service.entities.User.list(),
+      service.entities.Notification.filter({ type: 'Expiry Alert' }, { limit: 1000 }),
+    ]);
+    const users = Array.isArray(usersPage) ? usersPage : usersPage.items || [];
+    const notifs = Array.isArray(notifPage) ? notifPage : notifPage.items || [];
+    const userByEmail = new Map(users.filter((u) => u.email).map((u) => [String(u.email).trim().toLowerCase(), u]));
+    const seenNotifKeys = new Set(notifs.map((n) => String(n.message || '')));
+
     let sent = 0;
     const failures = [];
     for (const task of due) {
@@ -68,6 +79,21 @@ export default async function(req) {
             sender_email: 'system@compliancehr-portal',
             module: 'Tasks',
           });
+        }
+        // In-app notification for the assignee (once per alert message).
+        const staffUser = userByEmail.get(to.toLowerCase());
+        if (staffUser && !seenNotifKeys.has(subject)) {
+          await service.entities.Notification.create({
+            type: 'Expiry Alert',
+            recipient: to,
+            recipient_id: staffUser.id,
+            message: subject,
+            read: false,
+            linked_entity_type: 'TodoTask',
+            linked_entity_id: task.id,
+            action_url: '/tasks',
+          });
+          seenNotifKeys.add(subject);
         }
         sent += 1;
       } catch (error) {
