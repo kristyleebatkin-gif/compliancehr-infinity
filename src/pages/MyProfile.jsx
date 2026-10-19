@@ -16,7 +16,7 @@ import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
 import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import { logUserAction } from '@/lib/actionLog';
-import { UserRound, Save, CheckCircle2 } from 'lucide-react';
+import { UserRound, Save, CheckCircle2, History } from 'lucide-react';
 
 const STAFF_FIELDS = [
   ['phone', 'Phone', 'input'],
@@ -116,6 +116,7 @@ export default function MyProfile() {
           record_id: record.id,
           record_title: record.full_name,
           details: `Self-service edit: ${changed.join(', ')}`,
+          person: { profile_type: entityName === 'ParticipantProfile' ? 'participant' : 'employee', profile_id: record.id },
         });
       }
       setSaved(true);
@@ -218,6 +219,20 @@ export default function MyProfile() {
                   </div>
                 </CardContent>
               </Card>
+
+              {profile.change_log && (
+                <Card className="border-border/60">
+                  <CardContent className="p-5 space-y-2">
+                    <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Activity log</div>
+                    <p className="text-xs text-foreground/50">Actions recorded on this profile, latest first.</p>
+                    <div className="space-y-1">
+                      {profile.change_log.split('\n').filter(Boolean).slice(-12).reverse().map((line, i) => (
+                        <div key={i} className="rounded-lg bg-muted/30 px-3 py-2 text-xs text-foreground/70">{line}</div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </>
           )}
         </TabsContent>

@@ -51,7 +51,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
     try {
       if (editing) await base44.entities.EmployeeDocument.update(initial.id, form);
       else await base44.entities.EmployeeDocument.create(form);
-      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim() });
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim(), person: { profile_type: 'employee', profile_id: form.employee_id, profile_name: form.employee_name } });
       onOpenChange(false);
       onDone?.();
     } finally {

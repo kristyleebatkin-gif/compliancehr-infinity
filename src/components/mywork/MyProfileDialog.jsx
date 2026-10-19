@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
+import { logUserAction } from '@/lib/actionLog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Field, TextInput, TextArea } from '@/components/Field';
 import { Loader2 } from 'lucide-react';
@@ -35,7 +36,7 @@ export default function MyProfileDialog({ profile, open, onClose, onSaved }) {
     setSaving(true);
     try {
       await base44.entities.StaffProfile.update(profile.id, form);
-      logUserAction('Profile Updated', 'StaffProfile', { record_id: profile.id, record_title: profile.full_name, details: 'Self-service edit' });
+      logUserAction('Profile Updated', 'StaffProfile', { record_id: profile.id, record_title: profile.full_name, details: 'Self-service edit', person: { profile_type: 'employee', profile_id: profile.id } });
       onSaved?.();
       onClose();
     } finally {

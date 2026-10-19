@@ -95,7 +95,7 @@ export default function StaffHome({ embedded = false } = {}) {
       status: completing ? 'Completed' : 'Open',
       completed_date: completing ? today() : undefined,
     });
-    logUserAction(completing ? 'Task Completed' : 'Task Reopened', 'Task', { record_id: t.id, record_title: t.title });
+    logUserAction(completing ? 'Task Completed' : 'Task Reopened', 'Task', { record_id: t.id, record_title: t.title, person: { profile_type: 'employee', profile_email: t.assigned_email, profile_name: t.assigned_to } });
     if (me) load(me);
   };
 

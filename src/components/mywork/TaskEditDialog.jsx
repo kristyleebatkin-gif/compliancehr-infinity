@@ -28,7 +28,7 @@ export default function TaskEditDialog({ task, open, onClose, onSaved }) {
       notes: form.notes,
       completed_date: form.status === 'Completed' ? (task.completed_date || new Date().toISOString().slice(0, 10)) : undefined,
     });
-    logUserAction('Task Updated', 'Task', { record_id: task.id, record_title: form.title, details: `Status: ${form.status}` });
+    logUserAction('Task Updated', 'Task', { record_id: task.id, record_title: form.title, details: `Status: ${form.status}`, person: { profile_type: 'employee', profile_email: task.assigned_email, profile_name: task.assigned_to } });
     setSaving(false);
     onSaved();
     onClose();

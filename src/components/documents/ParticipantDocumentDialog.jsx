@@ -69,7 +69,7 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
           review_outcome: 'Pending Review',
         });
       }
-      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: initial?.id });
+      logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: initial?.id, person: { profile_type: 'participant', profile_id: profile?.id || initial?.participant_id, profile_name: profile?.full_name || me?.full_name } });
       onOpenChange(false);
       onDone?.();
     } finally {

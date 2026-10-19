@@ -1,7 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
-// Records one staff/participant action in the admin audit trail (AuditLog).
-// The caller's identity comes from their session, never from the payload.
+// Logs one staff/participant action: always in the admin audit trail (AuditLog),
+// and when the action belongs to a person, also on that person's profile change
+// log so their profile stays up to date with the correct attribution.
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -20,12 +21,17 @@ export default async function(req) {
       return Response.json({ error: 'action and entity_type are required' }, { status: 400 });
     }
 
+    const stamp = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Sydney', dateStyle: 'medium', timeStyle: 'short', hour12: false,
+    }).format(new Date());
+    const performedBy = clean(user.full_name, 200) || clean(user.email, 200) || 'Authenticated user';
+
     const record = await base44.asServiceRole.entities.AuditLog.create({
       action,
       entity_type: entityType,
       record_id: clean(body.record_id, 120),
       record_title: clean(body.record_title, 200),
-      performed_by: clean(user.full_name, 200) || clean(user.email, 200) || 'Authenticated user',
+      performed_by: performedBy,
       performed_by_user_id: user.id,
       performed_by_email: clean(user.email, 200),
       performed_by_role: clean(user.role, 120),
@@ -33,7 +39,38 @@ export default async function(req) {
       details: clean(body.details, 1000),
       timestamp: new Date().toISOString(),
     });
-    return Response.json({ success: true, id: record.id });
+
+    // Append to the correct person's profile only, resolved by id, then email, then name.
+    let profileUpdated = false;
+    const person = body.person || {};
+    const isParticipant = person.profile_type === 'participant';
+    const entity = base44.asServiceRole.entities[isParticipant ? 'ParticipantProfile' : 'StaffProfile'];
+    try {
+      let target = null;
+      const profileId = clean(person.profile_id, 120);
+      const profileEmail = clean(person.profile_email, 200);
+      const profileName = clean(person.profile_name, 200);
+      if (profileId) target = await entity.get(profileId);
+      if (!target && profileEmail) {
+        const page = await entity.filter({ email: profileEmail }, { limit: 1 });
+        target = (page.items || [])[0] || null;
+      }
+      if (!target && profileName) {
+        const page = await entity.filter({ full_name: profileName }, { limit: 1 });
+        target = (page.items || [])[0] || null;
+      }
+      if (target) {
+        const recordTitle = clean(body.record_title, 200);
+        const line = `${stamp} | ${action}${recordTitle ? `: ${recordTitle}` : ''} | by ${performedBy}${user.role ? ` (${user.role})` : ''}`;
+        const change_log = [target.change_log, line].filter(Boolean).join('\n').slice(-4000);
+        await entity.update(target.id, { change_log });
+        profileUpdated = true;
+      }
+    } catch (e) {
+      console.error('Profile activity append failed:', e);
+    }
+
+    return Response.json({ success: true, id: record.id, profile_updated: profileUpdated });
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Log action failed' }, { status: 500 });
   }

@@ -69,7 +69,7 @@ export default function NameTags({ embedded = false } = {}) {
         file_uri,
         notes: 'Made by the employee in the Name Tags module.',
       });
-      logUserAction('Name Tag Created', 'Document', { record_title: `Staff Badge - ${profile.full_name}`, details: 'Saved to My Documents' });
+      logUserAction('Name Tag Created', 'Document', { record_title: `Staff Badge - ${profile.full_name}`, details: 'Saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id } });
       toast({ title: 'Name tag saved to My Documents' });
       load();
     } catch (error) {
