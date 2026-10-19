@@ -14,6 +14,11 @@
       "type": "string",
       "title": "Linked Participant User ID"
     },
+    "admin_approved": {
+      "type": "boolean",
+      "title": "Approved by Admin",
+      "default": false
+    },
     "intake_case_id": {
       "type": "string",
       "title": "Related Intake Case"
@@ -252,6 +257,18 @@
         },
         {
           "data.participant_user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "data.admin_approved": true
+            }
+          ]
         },
         {
           "$and": [
