@@ -17,6 +17,12 @@ export default function ParticipantApprovalToggle({ participant, onUpdate }) {
     setBusy(true);
     try {
       await base44.entities.ParticipantProfile.update(participant.id, { admin_approved: !approved });
+      // Keep the participant's documents in step so staff can see docs for
+      // approved participants only.
+      await base44.entities.ParticipantDocument.updateMany(
+        { participant_id: participant.id },
+        { $set: { admin_approved: !approved } },
+      ).catch(() => {});
       toast({
         title: approved ? 'Removed from staff view' : 'Approved for staff view',
         description: approved

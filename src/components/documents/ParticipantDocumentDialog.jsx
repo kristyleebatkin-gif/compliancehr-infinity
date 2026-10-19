@@ -57,6 +57,7 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
           participant_id: profile?.id || '',
           participant_name: profile?.full_name || me?.full_name || '',
           participant_user_id: me?.id || '',
+          admin_approved: profile?.admin_approved === true,
           document_type: form.document_type,
           title: form.title.trim() || form.document_type,
           expiry_date: form.expiry_date,

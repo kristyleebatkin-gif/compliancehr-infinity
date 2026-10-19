@@ -45,10 +45,11 @@ const EVERYONE = [...ALL_ROLES];
 // role-appropriate access across every module in the app.
 export const NAV_PERMISSIONS = {
   'my-profile': EVERYONE,
-  // Employees see 'our-staff' (own profile); participants see 'our-participants'
-  // (own profile). Kept strictly separate so the two modules never mix.
+  // Employees see 'our-staff' (own profile) and approved participant data in
+  // 'our-participants'; participants see 'our-participants' (own profile).
+  // Kept strictly separate so the two modules never mix.
   'our-staff': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT],
-  'our-participants': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.PARTICIPANT],
+  'our-participants': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT, ROLES.PARTICIPANT],
   dashboard: EVERYONE,
   notifications: EVERYONE,
   assistant: EVERYONE,
