@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
 import MyProfileDialog from '@/components/mywork/MyProfileDialog';
-import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -25,6 +25,8 @@ export default function StaffHome() {
   const [risks, setRisks] = useState([]);
   const [issues, setIssues] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
+  const [trainings, setTrainings] = useState([]);
+  const [goals, setGoals] = useState([]);
   const [profile, setProfile] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ export default function StaffHome() {
 
   const load = useCallback(async (user) => {
     try {
-      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, profilePage] = await Promise.allSettled([
+      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, trainingPage, profilePage] = await Promise.allSettled([
         base44.entities.TodoTask.filter(
           { archived: { $ne: true }, $or: [{ assigned_to: user.full_name }, { assigned_email: user.email }] },
           { sort: 'due_date', limit: 200 }
@@ -41,6 +43,10 @@ export default function StaffHome() {
         base44.entities.Risk.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
         base44.entities.IssueConcernBarrier.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
         base44.entities.Feedback.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
+        base44.entities.TrainingCompletion.filter(
+          { $or: [{ employee_name: user.full_name }, { learner_name: user.full_name }] },
+          { sort: '-completed_date', limit: 20 }
+        ),
         base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
       ]);
       if (taskPage.status === 'fulfilled') setTasks(taskPage.value.items || []);
@@ -48,7 +54,17 @@ export default function StaffHome() {
       if (riskPage.status === 'fulfilled') setRisks(riskPage.value.items || []);
       if (issuePage.status === 'fulfilled') setIssues(issuePage.value.items || []);
       if (feedbackPage.status === 'fulfilled') setFeedbacks(feedbackPage.value.items || []);
-      if (profilePage.status === 'fulfilled') setProfile((profilePage.value.items || [])[0] || null);
+      if (trainingPage.status === 'fulfilled') setTrainings(trainingPage.value.items || []);
+      const prof = profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null;
+      setProfile(prof);
+      // Participant goals for the participants this staff member supports
+      if (prof && (prof.participant_team || []).length > 0) {
+        const goalPage = await base44.entities.Goal.filter(
+          { participant_name: { $in: prof.participant_team } },
+          { sort: '-created_date', limit: 20 }
+        );
+        setGoals(goalPage.items || []);
+      }
     } catch (e) { console.error(e); }
     setLoading(false);
   }, []);
@@ -212,6 +228,70 @@ export default function StaffHome() {
                   <div className="text-xs text-foreground/50">{f.type}{f.received_date ? ` · ${fmt(f.received_date.slice(0, 10))}` : ''}</div>
                 </div>
                 <StatusPill status={f.status} />
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My training</h2>
+          <Link to="/training" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Training centre<ArrowRight className="h-3 w-3" /></Link>
+        </div>
+        {trainings.length === 0 ? (
+          <EmptyState icon={GraduationCap} title="No training completed yet" message="Modules you complete will appear here with scores and expiry dates." />
+        ) : (
+          <div className="space-y-2">
+            {trainings.map((t) => {
+              const expired = t.expiry_date && t.expiry_date < today();
+              const expiring = !expired && t.expiry_date && t.expiry_date <= new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+              return (
+                <div key={t.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+                  <GraduationCap className="h-5 w-5 shrink-0 text-teal" />
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium">{t.module_title}</div>
+                    <div className="text-xs text-foreground/50">
+                      {t.completed_date ? `Completed ${fmt(t.completed_date)}` : ''}
+                      {t.score != null ? ` · Score ${t.score}%` : ''}
+                      {t.expiry_date ? ` · ${expired ? 'Expired ' : 'Expires '}${fmt(t.expiry_date)}` : ''}
+                    </div>
+                  </div>
+                  {expired ? <span className="rounded-full bg-danger/10 px-2 py-0.5 text-xs font-medium text-danger">Expired</span>
+                    : expiring ? <span className="rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">Expiring soon</span>
+                    : <span className="rounded-full bg-safe/10 px-2 py-0.5 text-xs font-medium text-safe">Current</span>}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My participant goals</h2>
+          <Link to="/goals" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Goals module<ArrowRight className="h-3 w-3" /></Link>
+        </div>
+        {goals.length === 0 ? (
+          <EmptyState icon={Target} title="No goals yet" message="Goals for the participants you support will appear here with progress." />
+        ) : (
+          <div className="space-y-2">
+            {goals.map((g) => (
+              <div key={g.id} className="rounded-xl border border-border/60 bg-card p-3.5">
+                <div className="flex items-start gap-3">
+                  <Target className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium">{g.goal}</div>
+                    <div className="text-xs text-foreground/50">{g.participant_name}{g.category ? ` · ${g.category}` : ''}{g.target_date ? ` · Target ${fmt(g.target_date)}` : ''}</div>
+                  </div>
+                  <StatusPill status={g.status} />
+                </div>
+                <div className="mt-2 flex items-center gap-2 pl-8">
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                    <div className="h-full rounded-full bg-brand" style={{ width: `${Math.min(100, Math.max(0, g.progress || 0))}%` }} />
+                  </div>
+                  <span className="text-xs font-semibold text-foreground/60 tabular-nums">{g.progress || 0}%</span>
+                </div>
               </div>
             ))}
           </div>
