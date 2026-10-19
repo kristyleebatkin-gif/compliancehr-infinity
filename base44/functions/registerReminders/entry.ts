@@ -80,6 +80,7 @@ export default async function(req) {
         .map((q) => ({ q, state: q.target_date < today ? 'Overdue' : (q.target_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.q.target_date,
           subject: `Quality item ${r.state.toLowerCase()}: ${r.q.title} (target ${pretty(r.q.target_date)})`,
           body: `Quality ${r.q.type || 'item'} "${r.q.title}" is ${r.state.toLowerCase()} with a target date of ${pretty(r.q.target_date)}.`
             + `${r.q.nominated_to ? ` Nominated to ${r.q.nominated_to}.` : ''} Please progress or reschedule it.`,
@@ -92,6 +93,7 @@ export default async function(req) {
         .map((inv) => ({ inv, state: inv.due_date < today ? 'Overdue' : (inv.due_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.inv.due_date,
           subject: `Invoice ${r.state.toLowerCase()}: ${r.inv.invoice_number || r.inv.client_name} (due ${pretty(r.inv.due_date)})`,
           body: `Invoice ${r.inv.invoice_number || ''} for ${r.inv.client_name} ($${Number(r.inv.amount || 0).toFixed(2)}) is ${r.state.toLowerCase()} (due ${pretty(r.inv.due_date)}). Please follow up payment.`,
         })));
@@ -103,6 +105,7 @@ export default async function(req) {
         .map((qt) => ({ qt, state: qt.expiry_date < today ? 'Expired' : (qt.expiry_date <= soon ? 'Expiring Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.qt.expiry_date,
           subject: `Quote ${r.state.toLowerCase()}: ${r.qt.quote_number || r.qt.client_name} (${pretty(r.qt.expiry_date)})`,
           body: `Quote ${r.qt.quote_number || ''} for ${r.qt.client_name} ($${Number(r.qt.total || 0).toFixed(2)}) has ${r.state === 'Expired' ? 'expired' : 'expiring'} ${pretty(r.qt.expiry_date)}. Please follow up with the client.`,
         })));
@@ -114,6 +117,7 @@ export default async function(req) {
         .map((c) => ({ c, state: c.expiry_date < today ? 'Expired' : (c.expiry_date <= horizon ? 'Expiring Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.c.expiry_date,
           subject: `Certificate ${r.state.toLowerCase()}: ${r.c.module_title || 'Certificate'} for ${r.c.staff_name || 'staff'} (${pretty(r.c.expiry_date)})`,
           body: `${r.c.staff_name ? `${r.c.staff_name}'s certificate` : 'Certificate'} "${r.c.module_title || 'Certificate'}" ${r.state === 'Expired' ? 'expired' : 'expires'} ${pretty(r.c.expiry_date)}. Please arrange renewal training.`,
         })));
@@ -125,6 +129,7 @@ export default async function(req) {
         .map((d) => ({ d, state: d.review_date < today ? 'Overdue' : (d.review_date <= horizon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.d.review_date,
           subject: `Document review ${r.state.toLowerCase()}: ${r.d.name} (${pretty(r.d.review_date)})`,
           body: `Document "${r.d.name}" (version ${r.d.version || 'n/a'}) is ${r.state === 'Overdue' ? 'overdue for' : 'due for'} review on ${pretty(r.d.review_date)}. Please review or update the review date.`,
         })));
@@ -136,6 +141,7 @@ export default async function(req) {
         .map((m) => ({ m, state: m.next_maintenance_date < today ? 'Overdue' : (m.next_maintenance_date <= horizon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.m.next_maintenance_date,
           subject: `Asset maintenance ${r.state.toLowerCase()}: ${r.m.asset_name} (${pretty(r.m.next_maintenance_date)})`,
           body: `Maintenance for "${r.m.asset_name}" is ${r.state === 'Overdue' ? 'overdue (was due' : 'due'} ${pretty(r.m.next_maintenance_date)}). Please schedule the maintenance.`,
         })));
@@ -147,6 +153,7 @@ export default async function(req) {
         .map((e) => ({ e, state: e.review_date < today ? 'Overdue' : (e.review_date <= horizon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.e.review_date,
           subject: `Equipment manual review ${r.state.toLowerCase()}: ${r.e.title} (${pretty(r.e.review_date)})`,
           body: `Manual "${r.e.title}" (${r.e.equipment_name || 'equipment'}) is ${r.state === 'Overdue' ? 'overdue for' : 'due for'} review on ${pretty(r.e.review_date)}. Please review or update the review date.`,
         })));
@@ -158,6 +165,7 @@ export default async function(req) {
         .map((ev) => ({ ev, state: ev.event_date >= today && ev.event_date <= soon ? 'Upcoming' : null }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.ev.event_date,
           subject: `Event upcoming: ${r.ev.title} on ${pretty(r.ev.event_date)}`,
           body: `"${r.ev.title}" is scheduled for ${pretty(r.ev.event_date)}${r.ev.start_time ? ` at ${r.ev.start_time}` : ''}${r.ev.location ? `, ${r.ev.location}` : ''}. Please confirm preparations and attendees.`,
         })));
@@ -169,6 +177,7 @@ export default async function(req) {
         .map((a) => ({ a, state: a.due_date < today ? 'Overdue' : (a.due_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.a.due_date,
           subject: `Meeting action ${r.state.toLowerCase()}: ${r.a.action_required || r.a.action_id} (due ${pretty(r.a.due_date)})`,
           body: `Action "${r.a.action_required || r.a.action_id}" from ${r.a.meeting_title || 'a meeting'} is ${r.state.toLowerCase()} (due ${pretty(r.a.due_date)}).${r.a.responsible_person ? ` Responsible: ${r.a.responsible_person}.` : ''} Please progress or close it out.`,
         })));
@@ -180,6 +189,7 @@ export default async function(req) {
         .map((l) => ({ l, state: l.follow_up_date < today ? 'Overdue' : (l.follow_up_date <= today ? 'Due Today' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.l.follow_up_date,
           subject: `Lead follow-up ${r.state.toLowerCase()}: ${r.l.business_name} (due ${pretty(r.l.follow_up_date)})`,
           body: `Lead "${r.l.business_name}" (${r.l.contact_name || 'contact'} on ${r.l.phone || r.l.email || 'file'}) has a follow-up ${r.state.toLowerCase()} for ${pretty(r.l.follow_up_date)}. Please make contact and update the lead stage.`,
         })));
@@ -191,6 +201,7 @@ export default async function(req) {
         .map((n) => ({ n, state: n.due_date < today ? 'Overdue' : (n.due_date <= horizon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.n.due_date,
           subject: `NDIS deadline ${r.state.toLowerCase()}: ${r.n.title} (due ${pretty(r.n.due_date)})`,
           body: `NDIS requirement "${r.n.title}" is ${r.state === 'Overdue' ? 'overdue (was due' : 'due'} ${pretty(r.n.due_date)}).${r.n.owner ? ` Owner: ${r.n.owner}.` : ''} Please action or sign off.`,
         })));
@@ -213,6 +224,7 @@ export default async function(req) {
         .map((c) => ({ c, state: c.next_due_date < today ? 'Overdue' : (c.next_due_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
+          date: r.c.next_due_date,
           subject: `Compliance task ${r.state.toLowerCase()}: ${r.c.title} (due ${pretty(r.c.next_due_date)})`,
           body: `Compliance checklist task "${r.c.title}" (${r.c.section || 'checklist'}) is ${r.state.toLowerCase()} (due ${pretty(r.c.next_due_date)}). Please complete or reschedule it.`,
         })));
@@ -272,7 +284,7 @@ export default async function(req) {
             assigned_to: group.attention,
             priority: /overdue|expired/i.test(task.subject) ? 'High' : 'Medium',
             status: 'Open',
-            due_date: /overdue|expired/i.test(task.subject) ? today : soon,
+            due_date: task.date || (/overdue|expired/i.test(task.subject) ? today : soon),
             linked_entity_type: group.module,
             notes: `${task.body} Resolve this follow-up, then mark this task completed so the resolution is recorded.`,
           });
