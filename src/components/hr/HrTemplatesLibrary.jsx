@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { format } from 'date-fns';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,8 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { downloadTemplatePdf } from '@/lib/hrTemplatePdf';
+import { mergeHrTemplate, hasUnresolvedTokens } from '@/lib/hrTemplateMerge';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
-import { Loader2, FileText, Download, Copy, Wand2 } from 'lucide-react';
+import HrTemplateEditor from '@/components/hr/HrTemplateEditor';
+import { Loader2, FileText, Download, Copy, Wand2, Pencil, Plus } from 'lucide-react';
 
 const CATEGORY_TONES = {
   Letter: 'bg-brand/10 text-brand',
@@ -18,12 +19,6 @@ const CATEGORY_TONES = {
   Contract: 'bg-safe/10 text-safe',
   Notice: 'bg-warning/10 text-warning',
   Other: 'bg-muted text-foreground/60',
-};
-
-const prettyDate = (iso) => {
-  if (!iso) return '';
-  const d = new Date(`${String(iso).slice(0, 10)}T00:00:00`);
-  return Number.isNaN(d.getTime()) ? '' : format(d, 'd MMMM yyyy');
 };
 
 // HR document templates library: pick a standard letter or form, pick a staff
@@ -36,7 +31,10 @@ export default function HrTemplatesLibrary() {
   const [selected, setSelected] = useState(null); // template being used
   const [staffId, setStaffId] = useState('');
   const [busy, setBusy] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editing, setEditing] = useState(null); // null = new template
   const { toast } = useToast();
+  const canEdit = me?.role === 'admin' || me?.role === 'Provider Administrator';
 
   useEffect(() => {
     let cancelled = false;
@@ -62,30 +60,11 @@ export default function HrTemplatesLibrary() {
 
   const chosen = useMemo(() => staff.find((s) => s.id === staffId) || null, [staff, staffId]);
 
-  const merged = useMemo(() => {
-    if (!selected) return '';
-    const company = branding.companyName || 'ComplianceHR Infinity';
-    const values = {
-      staff_name: chosen?.full_name || '',
-      position: chosen?.position || '',
-      position_level: chosen?.position_level || '',
-      start_date: prettyDate(chosen?.start_date),
-      employee_number: chosen?.employee_number || '',
-      supervisor: chosen?.supervisor || '',
-      staff_email: chosen?.email || '',
-      staff_phone: chosen?.phone || '',
-      hourly_rate: chosen?.hourly_rate != null ? `$${chosen.hourly_rate}` : '',
-      date: format(new Date(), 'd MMMM yyyy'),
-      company_name: company,
-      sender_name: me ? (me.full_name || me.email) : '',
-    };
-    return String(selected.content || '').replace(/\{\{\s*([a-z_]+)\s*\}\}/gi, (m, key) => {
-      const v = values[key.toLowerCase()];
-      return v !== undefined && v !== '' ? v : m; // keep unresolved tokens visible
-    });
-  }, [selected, chosen, branding, me]);
-
-  const hasUnresolved = /\{\{[a-z_]+\}\}/i.test(merged);
+  const merged = useMemo(
+    () => (selected ? mergeHrTemplate(selected.content, chosen, branding, me) : ''),
+    [selected, chosen, branding, me],
+  );
+  const hasUnresolved = hasUnresolvedTokens(merged);
 
   const openTemplate = (tpl) => {
     setSelected(tpl);
@@ -128,6 +107,11 @@ export default function HrTemplatesLibrary() {
         <CardContent className="p-5">
           <div className="mb-1 flex items-center gap-2 font-display text-base font-bold"><Wand2 className="h-4 w-4 text-brand" />HR templates library</div>
           <p className="text-xs font-medium text-muted-foreground">Standard letters and forms, ready to go. Pick a template, choose a staff member and it is instantly populated with their details — then download the PDF or copy the text.</p>
+          {canEdit && (
+            <Button size="sm" className="mt-3" onClick={() => { setEditing(null); setEditorOpen(true); }}>
+              <Plus className="h-4 w-4" />New template
+            </Button>
+          )}
         </CardContent>
       </Card>
 
@@ -144,7 +128,14 @@ export default function HrTemplatesLibrary() {
                 </div>
                 <h3 className="font-display text-sm font-bold">{tpl.title}</h3>
                 <p className="mt-1 flex-1 text-xs text-muted-foreground">{tpl.description}</p>
-                <Button size="sm" className="mt-3 self-start" onClick={() => openTemplate(tpl)}>Use template</Button>
+                <div className="mt-3 flex gap-2">
+                  <Button size="sm" onClick={() => openTemplate(tpl)}>Use template</Button>
+                  {canEdit && (
+                    <Button size="sm" variant="outline" onClick={() => { setEditing(tpl); setEditorOpen(true); }}>
+                      <Pencil className="h-4 w-4" />Edit
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -183,6 +174,19 @@ export default function HrTemplatesLibrary() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <HrTemplateEditor
+        open={editorOpen}
+        template={editing}
+        staff={staff}
+        me={me}
+        branding={branding}
+        onSaved={async () => {
+          const tplPage = await base44.entities.HrTemplate.filter({ active: true }, { sort: '-created_date', limit: 100 });
+          setTemplates((tplPage.items || []).sort((a, b) => (a.category || '').localeCompare(b.category || '') || a.title.localeCompare(b.title)));
+        }}
+        onClose={() => setEditorOpen(false)}
+      />
     </div>
   );
 }
