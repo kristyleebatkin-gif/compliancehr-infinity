@@ -8,7 +8,7 @@ import { profilePalette, hexToRgb } from '@/lib/profileColours';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { businessDateTime } from '@/lib/intakeCases';
-import { BadgeCheck, Camera, Download, Loader2, Mail, Save, UserRound } from 'lucide-react';
+import { BadgeCheck, Camera, Download, Loader2, Save, UserRound } from 'lucide-react';
 
 /**
  * Colour-coded profile front page shared by staff and participants:
@@ -22,7 +22,6 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
   const [branding, setBranding] = useState(getCompanyBranding());
   const [aboutMe, setAboutMe] = useState(profile.about_me || '');
   const [savingAbout, setSavingAbout] = useState(false);
-  const [emailingTag, setEmailingTag] = useState(false);
   const [makingTag, setMakingTag] = useState(false);
 
   const { primary, accent } = profilePalette(profile.full_name);
@@ -114,23 +113,6 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
     }
   };
 
-  const emailNameTag = async () => {
-    if (!profile.email) {
-      toast({ title: 'No email on this profile', variant: 'destructive' });
-      return;
-    }
-    setEmailingTag(true);
-    try {
-      const res = await base44.functions.invoke('sendNameTagEmail', { staff_id: profile.id });
-      if (res.data?.success) toast({ title: `Name tag emailed to ${res.data.sent_to}` });
-      else toast({ title: 'Could not email name tag', description: res.data?.error, variant: 'destructive' });
-    } catch (error) {
-      toast({ title: 'Could not email name tag', description: error.message, variant: 'destructive' });
-    } finally {
-      setEmailingTag(false);
-    }
-  };
-
   const changeLogLines = String(profile.change_log || '').split('\n').filter(Boolean);
   const title = profile.position || profile.role || 'Team member';
 
@@ -192,9 +174,6 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
             </Button>
             <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" disabled={makingTag} onClick={makeNameTag}>
               {makingTag ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Make name tag
-            </Button>
-            <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" disabled={emailingTag} onClick={emailNameTag}>
-              {emailingTag ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Mail className="h-3.5 w-3.5" />}Email name tag to employee
             </Button>
           </div>
         )}
