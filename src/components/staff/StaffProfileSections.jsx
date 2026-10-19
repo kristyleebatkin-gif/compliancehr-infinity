@@ -1,7 +1,7 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ClipboardCheck, FileCheck2, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
+import { BadgeCheck, CalendarClock, CalendarDays, ClipboardCheck, FileCheck2, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
 import StaffDetailsPanel from '@/components/staff/StaffDetailsPanel';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
@@ -11,6 +11,9 @@ import StaffPerformanceTab from '@/components/staff/StaffPerformanceTab';
 import StaffSafetyTab from '@/components/staff/StaffSafetyTab';
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
+import StaffCertificatesTab from '@/components/staff/StaffCertificatesTab';
+import StaffShiftsTab from '@/components/staff/StaffShiftsTab';
+import StaffHrTab from '@/components/staff/StaffHrTab';
 import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
 import { useRole } from '@/lib/useRole';
@@ -33,6 +36,13 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     { key: 'safety', label: 'Safety Records', Icon: ShieldAlert, content: <StaffSafetyTab staff={staff} /> },
     { key: 'comm', label: 'Communication Log', Icon: MessagesSquare, content: <StaffCommPanel staff={staff} /> },
     { key: 'todo', label: 'To-Do', Icon: ListTodo, content: <ProfileTodoList staff={staff} /> },
+    // Remaining person-level data (certificates, rostering, HR) lives only in
+    // the admin Staff profiles module — never in 'Our' employee views.
+    ...(ourView ? [] : [
+      { key: 'certificates', label: 'Certificates', Icon: BadgeCheck, content: <StaffCertificatesTab staff={staff} /> },
+      { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <StaffShiftsTab staff={staff} /> },
+      { key: 'hr', label: 'Leave & Appraisals', Icon: CalendarDays, content: <StaffHrTab staff={staff} /> },
+    ]),
   ];
   return (
     <Tabs defaultValue="details">
