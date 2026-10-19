@@ -14,7 +14,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
-import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import { logUserAction } from '@/lib/actionLog';
 import { UserRound, Save, CheckCircle2, History } from 'lucide-react';
 
@@ -39,9 +38,6 @@ const PARTICIPANT_FIELDS = [
   ['likes', 'Likes', 'textarea'],
   ['dislikes', 'Dislikes', 'textarea'],
 ];
-
-// Admin/management roles who can see the organisation-wide profile directories.
-const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'];
 
 export default function MyProfile() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -90,7 +86,6 @@ export default function MyProfile() {
 
   useEffect(() => { load(); }, [load]);
 
-  const isAdmin = ADMIN_ROLES.includes(me?.role);
   const isParticipant = me?.role === 'Participant';
   const fields = isParticipant ? PARTICIPANT_FIELDS : STAFF_FIELDS;
   const canEditParticipant = isParticipant || ['admin', 'Provider Administrator', 'Administration', 'Team Leader'].includes(me?.role);
@@ -148,8 +143,8 @@ export default function MyProfile() {
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
       <PageHeader
         icon={UserRound}
-        title={tab === 'our-staff' ? 'Our employee profiles' : tab === 'our-participants' ? 'Our participant profiles' : tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
-        subtitle={tab === 'our-staff' ? 'Every employee profile in the organisation, in one place.' : tab === 'our-participants' ? 'Every participant profile in the organisation, in one place.' : tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
+        title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
+        subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
         showAlerts={false} showCompliance={false} showAudit={false}
       />
 
@@ -160,8 +155,6 @@ export default function MyProfile() {
           <TabsTrigger value="work">My Work</TabsTrigger>
           <TabsTrigger value="documents">My Documents</TabsTrigger>
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
-          {isAdmin && <TabsTrigger value="our-staff">Our employee profiles</TabsTrigger>}
-          {isAdmin && <TabsTrigger value="our-participants">Our participant profiles</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="details" className="mt-4 space-y-6">
@@ -294,18 +287,6 @@ export default function MyProfile() {
         {!isParticipant && (
           <TabsContent value="name-tags" className="mt-4">
             <NameTags embedded />
-          </TabsContent>
-        )}
-
-        {isAdmin && (
-          <TabsContent value="our-staff" className="mt-4">
-            <OurProfilesTab kind="staff" />
-          </TabsContent>
-        )}
-
-        {isAdmin && (
-          <TabsContent value="our-participants" className="mt-4">
-            <OurProfilesTab kind="participant" />
           </TabsContent>
         )}
       </Tabs>
