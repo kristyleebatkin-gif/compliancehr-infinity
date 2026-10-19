@@ -65,6 +65,7 @@ import ConsentRegister from '@/components/compliance/ConsentRegister';
 import CertificationCalendar from '@/components/compliance/CertificationCalendar';
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
 import StaffComplianceChart from '@/components/compliance/StaffComplianceChart';
+import ComplianceGlobalSearch from '@/components/compliance/ComplianceGlobalSearch';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
@@ -182,6 +183,8 @@ export default function ComplianceHub() {
           </>
         )}
       />
+
+      <ComplianceGlobalSearch />
 
       <RegisterInsights module="compliance" />
 
