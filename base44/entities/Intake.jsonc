@@ -75,6 +75,11 @@
           "user_condition": {
             "role": "Compliance Manager"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
         }
       ]
     },
