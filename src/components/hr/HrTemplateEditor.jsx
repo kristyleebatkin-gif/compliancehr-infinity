@@ -10,6 +10,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Loader2, Trash2, Eye } from 'lucide-react';
 import { HR_TEMPLATE_PLACEHOLDERS, mergeHrTemplate, hasUnresolvedTokens } from '@/lib/hrTemplateMerge';
 import HrTemplatePreview from '@/components/hr/HrTemplatePreview';
+import { logUserAction } from '@/lib/actionLog';
 
 const CATEGORIES = ['Letter', 'Form', 'Contract', 'Notice', 'Other'];
 
@@ -53,6 +54,7 @@ export default function HrTemplateEditor({ open, template, staff, me, branding, 
       } else {
         await base44.entities.HrTemplate.update(template.id, { title: title.trim(), category, description: description.trim(), content });
       }
+      logUserAction(isNew ? 'HR Template Created' : 'HR Template Updated', 'HR Template', { record_title: title.trim() });
       toast({ title: isNew ? 'Template created' : 'Template updated' });
       onSaved();
       onClose();
@@ -66,6 +68,7 @@ export default function HrTemplateEditor({ open, template, staff, me, branding, 
     setBusy(true);
     try {
       await base44.entities.HrTemplate.update(template.id, { active: false });
+      logUserAction('HR Template Removed', 'HR Template', { record_title: template.title });
       toast({ title: 'Template removed from the library' });
       onSaved();
       onClose();

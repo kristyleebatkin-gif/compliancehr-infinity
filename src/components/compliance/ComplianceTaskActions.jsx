@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { statusTone } from '@/lib/statusStyles';
 import { useToast } from '@/components/ui/use-toast';
+import { logUserAction } from '@/lib/actionLog';
 import { Loader2, Check, Flag, Zap, CheckSquare } from 'lucide-react';
 
 const PENDING_STATUSES = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Overdue'];
@@ -74,6 +75,7 @@ export default function ComplianceTaskActions() {
         selectedIds.map((id) => ({ id, status: 'Completed', completed_date: today(), completed_by: me ? (me.full_name || me.email) : undefined })),
       );
       toast({ title: `${selectedIds.length} task${selectedIds.length === 1 ? '' : 's'} marked completed` });
+      logUserAction('Bulk Tasks Completed', 'Compliance Task', { details: `${selectedIds.length} task(s) marked completed in bulk` });
       setSelectedIds([]);
       await load();
     } finally {
@@ -89,6 +91,7 @@ export default function ComplianceTaskActions() {
         selectedIds.map((id) => ({ id, priority: 'Urgent' })),
       );
       toast({ title: `${selectedIds.length} task${selectedIds.length === 1 ? '' : 's'} flagged as urgent` });
+      logUserAction('Bulk Tasks Flagged Urgent', 'Compliance Task', { details: `${selectedIds.length} task(s) flagged urgent in bulk` });
       setSelectedIds([]);
       await load();
     } finally {

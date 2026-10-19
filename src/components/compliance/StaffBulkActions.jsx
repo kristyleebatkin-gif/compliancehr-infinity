@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
+import { logUserAction } from '@/lib/actionLog';
 import { Loader2, Users, RefreshCcw, ListPlus } from 'lucide-react';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -80,6 +81,10 @@ export default function StaffBulkActions() {
       if (newExpiry) set.expiry_date = newExpiry;
       await base44.entities.EmployeeDocument.updateMany(query, { $set: set });
       toast({ title: `${chosenStaff.length} staff member${chosenStaff.length === 1 ? '' : 's'} updated`, description: `${docType === 'All documents' ? 'All documents' : docType} set to ${newStatus}` });
+      logUserAction('Bulk Document Status Update', 'Employee Document', {
+        record_title: `${docType} → ${newStatus}`,
+        details: `Updated documents for ${chosenStaff.length} staff member(s): ${chosenStaff.map((s) => s.full_name).join(', ').slice(0, 800)}`,
+      });
       const docPage = await base44.entities.EmployeeDocument.filter(
         { status: { $ne: 'Archived' } },
         { limit: 1000, fields: ['employee_id', 'employee_name', 'document_type', 'status', 'expiry_date'] },
@@ -112,6 +117,10 @@ export default function StaffBulkActions() {
         })),
       );
       toast({ title: 'Tasks assigned', description: `${taskTitle.trim()} sent to ${chosenStaff.length} staff member${chosenStaff.length === 1 ? '' : 's'}` });
+      logUserAction('Bulk Task Assigned', 'Compliance Task', {
+        record_title: taskTitle.trim(),
+        details: `Assigned to ${chosenStaff.length} staff member(s): ${chosenStaff.map((s) => s.full_name).join(', ').slice(0, 800)}`,
+      });
       setTaskTitle(''); setTaskDue(''); setTaskPriority('Medium'); setTaskNotes('');
     } finally {
       setBusy(false);
