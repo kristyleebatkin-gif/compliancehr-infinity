@@ -1,0 +1,125 @@
+{
+  "type": "object",
+  "name": "AuditorObservation",
+  "properties": {
+    "observation": {
+      "type": "string",
+      "title": "Observation"
+    },
+    "related_audit": {
+      "type": "string",
+      "title": "Related Audit"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Positive Practice",
+        "Improvement Suggested",
+        "Non-Compliance",
+        "General Note"
+      ],
+      "default": "General Note",
+      "title": "Category"
+    },
+    "auditor": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "observation"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

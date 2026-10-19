@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Users, Plus, GraduationCap, Loader2 } from 'lucide-react';
+import { Users, Plus, GraduationCap, Loader2, Sparkles } from 'lucide-react';
 import { format, addMonths } from 'date-fns';
 import { LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 
@@ -21,6 +21,33 @@ export default function TrainingTemplates() {
   const [createOpen, setCreateOpen] = useState(false);
   const [form, setForm] = useState({ name: '', role: 'Support Worker', description: '', selected: [] });
   const [saving, setSaving] = useState(false);
+
+  const [suggesting, setSuggesting] = useState(false);
+  const [aiNote, setAiNote] = useState('');
+
+  const suggestWithAi = async () => {
+    setSuggesting(true);
+    setAiNote('');
+    try {
+      const res = await base44.functions.invoke('aiCourseAuthor', {
+        role: form.role,
+        name: form.name,
+        description: form.description,
+        catalog: LMS_MODULES.map((m) => ({ title: m.title, group: m.group })),
+      });
+      const data = res.data || {};
+      setForm((f) => ({ ...f, selected: data.selected || [] }));
+      const proposed = (data.new_modules || []).map((m) => m.title).filter(Boolean);
+      setAiNote(
+        (data.summary || 'Selection updated.') +
+        (proposed.length ? ` Consider adding new modules: ${proposed.join(', ')}.` : ''),
+      );
+    } catch (e) {
+      setAiNote('Could not generate suggestions — try again.');
+    } finally {
+      setSuggesting(false);
+    }
+  };
 
   const [assignTemplate, setAssignTemplate] = useState(null);
   const [assignStaff, setAssignStaff] = useState('');
@@ -179,7 +206,14 @@ export default function TrainingTemplates() {
               </SelectContent>
             </Select>
             <Input placeholder="Description (optional)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-            <p className="text-xs font-semibold text-foreground/60">Select modules ({form.selected.length} chosen)</p>
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold text-foreground/60">Select modules ({form.selected.length} chosen)</p>
+              <Button size="sm" variant="outline" onClick={suggestWithAi} disabled={suggesting}>
+                {suggesting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+                Suggest with AI
+              </Button>
+            </div>
+            {aiNote && <p className="rounded-lg bg-brand/10 p-2 text-xs text-brand">{aiNote}</p>}
             <div className="max-h-64 space-y-3 overflow-y-auto rounded-lg border border-border/60 p-3">
               {LMS_GROUPS.map((g) => {
                 const mods = LMS_MODULES.filter((m) => m.group === g.name);

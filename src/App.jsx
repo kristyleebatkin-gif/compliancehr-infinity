@@ -18,6 +18,7 @@ import Dashboard from '@/pages/Dashboard';
 import Staff from '@/pages/Staff';
 import StaffDetail from '@/pages/StaffDetail';
 import ComplianceHub from '@/pages/ComplianceHub';
+import AuditorsPortal from '@/pages/AuditorsPortal';
 import DailyBriefing from '@/pages/DailyBriefing';
 import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
@@ -111,6 +112,7 @@ const AuthenticatedApp = () => {
           <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
           <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
+          <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
