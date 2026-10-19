@@ -359,6 +359,14 @@ const PARTICIPANT_INTAKE_CASE_QUESTIONS = [
   { label: 'Referral source' },
   { label: 'Proposed start date' },
   { label: 'Names of persons for consent to share information' },
+  { label: 'NDIS reference number' },
+  { label: 'Support coordinator' },
+  { label: 'Plan manager' },
+  { label: 'Reason for referral / application', multiline: true },
+  { label: 'Current supports and living arrangements', multiline: true },
+  { label: 'Strengths, preferences and goals', multiline: true },
+  { label: 'Mealtime support required', type: 'single', options: ['Yes', 'No', 'Not applicable'] },
+  { label: 'Notes / additional information', multiline: true },
 ];
 
 export const PARTICIPANT_FORM_DEFINITIONS = Object.fromEntries(

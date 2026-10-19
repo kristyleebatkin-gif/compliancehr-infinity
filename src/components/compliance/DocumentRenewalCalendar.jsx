@@ -17,6 +17,7 @@ const SOURCES = [
   { kind: 'Policy Review', label: 'Policy reviews', entity: 'Policy', dateField: 'review_date', fields: ['document_name', 'review_date', 'status'], person: () => '', title: (r) => r.document_name, chip: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300 border-indigo-300 dark:border-indigo-800', dot: 'bg-indigo-500' },
   { kind: 'Legal Requirement', label: 'Legal requirements', entity: 'LegalRequirement', dateField: 'next_review', fields: ['title', 'next_review', 'status'], person: () => '', title: (r) => r.title, chip: 'bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300 border-blue-300 dark:border-blue-800', dot: 'bg-blue-500' },
   { kind: 'NDIS Deadline', label: 'NDIS deadlines', entity: 'NDISComplianceDeadline', dateField: 'due_date', fields: ['title', 'due_date', 'status', 'deadline_type'], person: () => '', title: (r) => r.deadline_type || r.title, chip: 'bg-rose-100 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300 border-rose-300 dark:border-rose-800', dot: 'bg-rose-500' },
+  { kind: 'Task Due', label: 'Task due dates', entity: 'TodoTask', dateField: 'due_date', fields: ['title', 'due_date', 'status', 'priority'], person: () => '', title: (r) => r.title, chip: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800', dot: 'bg-emerald-500', extraFilter: { archived: { $ne: true }, status: { $nin: ['Completed', 'Cancelled'] } } },
 ];
 
 const endOfMonthSafe = (d) => new Date(d.getFullYear(), d.getMonth() + 1, 0);
@@ -38,7 +39,7 @@ export default function DocumentRenewalCalendar() {
       const pages = await Promise.all(
         SOURCES.map((s) =>
           base44.entities[s.entity]
-            .filter({ [s.dateField]: { $ne: null } }, { sort: s.dateField, limit: 500, fields: s.fields })
+            .filter({ [s.dateField]: { $ne: null }, ...(s.extraFilter || {}) }, { sort: s.dateField, limit: 500, fields: s.fields })
             .catch(() => ({ items: [] })),
         ),
       );

@@ -137,7 +137,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
             </div>
           )}
         </div>
-        {!compact && !ourView && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} /></div>}
+        {!compact && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} readOnly={ourView} /></div>}
       </CardContent>
     </Card>
   );

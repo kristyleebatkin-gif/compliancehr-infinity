@@ -12,7 +12,7 @@ import { format } from 'date-fns';
 
 const TYPES = ['Progress Note', 'Progress Report'];
 
-export default function GoalNotes({ goal, participantName }) {
+export default function GoalNotes({ goal, participantName, readOnly = false }) {
   const { toast } = useToast();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,20 @@ export default function GoalNotes({ goal, participantName }) {
 
   useEffect(() => { load(); }, [load]);
 
+  // Participants see their own note history read-only; staff record the notes.
+  const resolveParticipantUserId = async (name) => {
+    if (!name) return '';
+    try {
+      const page = await base44.entities.ParticipantProfile.filter({ full_name: name }, { limit: 1, fields: ['email'] });
+      const email = page.items?.[0]?.email;
+      if (!email) return '';
+      const users = await base44.entities.User.list();
+      return users.find((u) => String(u.email || '').toLowerCase() === String(email).toLowerCase())?.id || '';
+    } catch {
+      return '';
+    }
+  };
+
   const save = async () => {
     if (!form.notes.trim() && !file) return;
     setSaving(true);
@@ -48,9 +62,11 @@ export default function GoalNotes({ goal, participantName }) {
         file_name = file.name;
       }
       const me = await base44.auth.me().catch(() => null);
+      const participant_user_id = await resolveParticipantUserId(participantName);
       await base44.entities.GoalProgressNote.create({
         goal_id: goal.id,
         participant_name: participantName,
+        participant_user_id,
         entry_type: form.entry_type,
         notes: form.notes,
         file_uri,
@@ -85,9 +101,11 @@ export default function GoalNotes({ goal, participantName }) {
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">
           <FileText className="h-3.5 w-3.5" /> Progress notes &amp; reports ({entries.length})
         </div>
-        <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setOpen(true)}>
-          <Plus className="mr-1 h-3 w-3" />Add
-        </Button>
+        {!readOnly && (
+          <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setOpen(true)}>
+            <Plus className="mr-1 h-3 w-3" />Add
+          </Button>
+        )}
       </div>
 
       {loading ? (
@@ -112,9 +130,11 @@ export default function GoalNotes({ goal, participantName }) {
                       <Download className="h-3.5 w-3.5" />
                     </Button>
                   )}
-                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.GoalProgressNote.delete(entry.id); await load(); }}>
-                    <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                  </Button>
+                  {!readOnly && (
+                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.GoalProgressNote.delete(entry.id); await load(); }}>
+                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                    </Button>
+                  )}
                 </div>
               </div>
               {entry.file_name && <p className="mt-1 flex items-center gap-1 text-xs text-teal"><FileText className="h-3 w-3" />{entry.file_name}</p>}
