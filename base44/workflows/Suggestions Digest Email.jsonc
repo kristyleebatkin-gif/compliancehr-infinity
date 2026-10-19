@@ -1,0 +1,44 @@
+{
+  "description": "Every Monday at 8:00am, compiles AI suggestions across every register and emails the full list to the manager",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "suggestions_digest_email",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "compile_digest": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "suggestionsDigest"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Compile & email suggestions",
+            "description": "Full list emailed to the manager"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Suggestions Digest Email",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 8 * * 1",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}
