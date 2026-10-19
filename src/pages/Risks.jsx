@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { recordStatusLog, currentUserName } from '@/lib/statusLog';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader, { HeaderUnderRow } from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
@@ -144,6 +145,7 @@ export default function Risks() {
     try {
       await base44.entities.Risk.update(r.id, { status });
       await recordSafetyEvent('Risk', r.id, { notify: false });
+      recordStatusLog('Risk', { id: r.id, title: r.title || r.hazard || '', status: r.status }, status, await currentUserName().catch(() => ''), 'Immutable status trail').catch(() => {});
       setRisks((prev) => prev.map((x) => (x.id === r.id ? { ...x, status } : x)));
       toast({ title: `Risk moved to ${status}` });
     } catch (err) { toast({ title: 'Status change failed', description: err.message, variant: 'destructive' }); }

@@ -16,6 +16,7 @@ import TemplatePicker from '@/components/TemplatePicker';
 import { INVESTIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import { logCommunicationRegister } from '@/lib/commRouting';
+import { recordStatusLog, currentUserName } from '@/lib/statusLog';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
 import SafetyRegisterExports, { INCIDENT_CSV_COLUMNS, INVESTIGATION_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 import { downloadCsv } from '@/lib/csvExport';
@@ -107,9 +108,11 @@ export default function Incidents() {
   };
 
   const moveIncidentStatus = async (id, status) => {
+    const inc = items.find((i) => i.id === id) || null;
     try {
       await base44.entities.Incident.update(id, { status });
       await recordSafetyEvent('Incident', id, { notify: false });
+      recordStatusLog('Incident', { id, title: inc?.title || '', status: inc?.status || '' }, status, await currentUserName().catch(() => ''), 'Immutable status trail').catch(() => {});
       setItems((prev) => prev.map((i) => (i.id === id ? { ...i, status } : i)));
       toast({ title: `Moved to ${status}` });
     } catch (e) { console.error(e); toast({ title: 'Move failed', variant: 'destructive' }); }

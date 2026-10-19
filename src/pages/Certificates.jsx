@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { recordStatusLog, currentUserName } from '@/lib/statusLog';
 import PageHeader from '@/components/PageHeader';
 import StatusBadge from '@/components/StatusBadge';
 import { Button } from '@/components/ui/button';
@@ -51,6 +52,7 @@ export default function Certificates() {
     try {
       if (editing) {
         await base44.entities.Certificate.update(editing.id, form);
+        await recordStatusLog('Certificate', { id: editing.id, title: form.certificate_number || form.module_title || '', status: editing.status }, form.status, await currentUserName().catch(() => ''), 'Immutable status trail').catch((error) => console.error(error));
         await base44.entities.AuditLog.create({ action: 'Updated', entity_type: 'Certificate', record_id: editing.id, record_title: form.certificate_number || form.module_title }).catch((error) => console.error(error));
       } else {
         const rec = await base44.entities.Certificate.create(form);
