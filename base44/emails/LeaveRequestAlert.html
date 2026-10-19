@@ -1,0 +1,49 @@
+<mjml>
+  <mj-head>
+    <mj-title>New leave request: {{staff_name}}</mj-title>
+    <mj-preview>{{staff_name}} has entered a {{leave_type}} leave request for {{leave_dates}}.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, Helvetica, Arial, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0f1729" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#7c3bed" border-radius="24px" font-weight="700" inner-padding="14px 28px" align="left" />
+      <mj-class name="h" font-family="Fraunces, Georgia, serif" font-weight="700" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f8fafc">
+    <mj-section background-color="#7c3bed" padding="20px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="ComplianceHR Infinity" width="140px" align="left" />
+        <mj-text color="#ffffff" font-size="12px" letter-spacing="2px">COMPLIANCEHR INFINITY</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="36px 36px 8px">
+      <mj-column>
+        <mj-text mj-class="h" font-size="30px" line-height="1.15">New leave request logged</mj-text>
+        <mj-text font-size="14px" color="#64748b">A leave request has been entered in the HR Hub and needs manager review.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="8px 36px">
+      <mj-column background-color="#ffffff" border="1px solid #e5e7eb" border-radius="24px" padding="24px">
+        <mj-table padding="0">
+          <tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Staff member</td><td style="padding:6px 0;font-size:13px;font-weight:700;text-align:right;color:#0f1729;">{{staff_name}}</td></tr>
+          <tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Leave type</td><td style="padding:6px 0;font-size:13px;font-weight:700;text-align:right;color:#0f1729;">{{leave_type}}</td></tr>
+          <tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Dates</td><td style="padding:6px 0;font-size:13px;font-weight:700;text-align:right;color:#0f1729;">{{leave_dates}}</td></tr>
+          <tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Reason</td><td style="padding:6px 0;font-size:13px;font-weight:700;text-align:right;color:#0f1729;">{{reason}}</td></tr>
+        </mj-table>
+        <mj-spacer height="12px" />
+        <mj-text font-size="14px">Please review and approve or decline this request in the HR Hub leave register.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="16px 36px">
+      <mj-column>
+        <mj-button href="https://compliancehrinfinity.com/hr">Open HR Hub</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#7c3bed" padding="16px 36px">
+      <mj-column>
+        <mj-text color="#ffffff" font-size="11px" align="center">ComplianceHR Infinity. ComplianceHR Portal: employee compliance, documentation and organisational legal requirements in one place.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

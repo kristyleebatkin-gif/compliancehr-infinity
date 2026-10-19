@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { useToast } from '@/components/ui/use-toast';
-import { Plus, Trash2, HeartHandshake, Pencil, Eye, Mail, MessageSquare, Download, FileCheck2, UserPlus } from 'lucide-react';
+import { Plus, Trash2, HeartHandshake, Pencil, Eye, Mail, MessageSquare, Download, FileCheck2, UserPlus, Loader2 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import { useRole } from '@/lib/useRole';
 import { Input } from '@/components/ui/input';
@@ -89,37 +89,24 @@ export default function Volunteers() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-teal-700 via-cyan-700 to-sky-700 p-6 text-white shadow-lg">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><HeartHandshake className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Volunteering &amp; Student Placement</h1>
-              <p className="text-sm text-cyan-100">Volunteer register with full staff intake requirements, training records and compliance documents.</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <ModuleComplianceStrip path="/volunteers" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
-            {[['Total', String(volunteers.length)], ['Active', String(volunteers.filter((v) => v.status === 'Active').length)], ['Onboarding', String(volunteers.filter((v) => v.status === 'Onboarding').length)]].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-cyan-100">{label}</p>
-                <p className="text-sm font-bold">{value}</p>
-              </div>
-            ))}
-          </div>
+      <PageHeader
+        title="Volunteering & Student Placement"
+        subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
+        icon={HeartHandshake}
+        accent={['#0891b2', '#0d9488']}
+      />
+
+      {!isVolunteer && <AutoRegisterInsights placement="header" />}
+
+      {canManage && (
+        <div className="flex flex-wrap items-center gap-2">
+          <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
+          <Button variant="outline" onClick={() => setInviteOpen(true)}><UserPlus className="mr-2 h-4 w-4" />Invite volunteer</Button>
+          <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         </div>
-      </div>
+      )}
 
-      <AutoRegisterInsights placement="header" />
-
-      <div className="flex flex-wrap items-center gap-2">
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
-        <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-      </div>
-
-      <VolunteerApplications />
+      {canManage && <VolunteerApplications />}
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
@@ -163,8 +150,8 @@ export default function Volunteers() {
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-1">
                         <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setViewing(v)}><Eye className="h-3 w-3" />Details</Button>
-                        <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => { setEditing(v); setFormOpen(true); }}><Pencil className="h-3 w-3" />Edit</Button>
-                        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Volunteer.delete(v.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+                        {canManage && <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => { setEditing(v); setFormOpen(true); }}><Pencil className="h-3 w-3" />Edit</Button>}
+                        {canManage && <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Volunteer.delete(v.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>}
                       </div>
                     </td>
                   </tr>
@@ -177,6 +164,35 @@ export default function Volunteers() {
 
       <VolunteerForm open={formOpen} onOpenChange={setFormOpen} editing={editing} onSaved={load} />
       <VolunteerDetail open={Boolean(viewing)} onOpenChange={(v) => !v && setViewing(null)} volunteer={viewing} onSaved={load} />
+
+      <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Invite a volunteer</DialogTitle>
+            <DialogDescription>
+              They get an email with a link to set a password. After signing in, they will only see their own volunteering records and non-private information.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="volunteer-invite-email">Email address</Label>
+            <Input
+              id="volunteer-invite-email"
+              type="email"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+              placeholder="name@example.com"
+              disabled={inviting}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setInviteOpen(false)} disabled={inviting}>Cancel</Button>
+            <Button onClick={sendInvite} disabled={inviting}>
+              {inviting && <Loader2 className="h-4 w-4 animate-spin" />}
+              Send invite
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

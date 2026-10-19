@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button';
 const LOG_ROW = 'rounded-md border border-border/60 bg-gradient-to-r from-blue-50/70 to-pink-50/70 px-2.5 py-1.5 font-medium dark:from-blue-950/20 dark:to-pink-950/20';
 
 /**
- * Referee check and buddy shift logs for an employee intake case. Entries are
- * also written to the employee's training record and buddy shift register so
- * they follow the person onto their profile at conversion.
+ * Referee check (and, for employee intake, buddy shift) logs for an intake
+ * case. Entries are also written to the person's training record and buddy
+ * shift register so they follow them onto their profile at conversion.
  */
-export default function IntakeLogPanels({ activeCase, refereeCheck, setRefereeCheck, buddyShift, setBuddyShift, busy, addRefereeCheck, addBuddyShift }) {
+export default function IntakeLogPanels({ intakeType, activeCase, refereeCheck, setRefereeCheck, buddyShift, setBuddyShift, busy, addRefereeCheck, addBuddyShift }) {
   return (
     <>
       <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
@@ -19,7 +19,7 @@ export default function IntakeLogPanels({ activeCase, refereeCheck, setRefereeCh
           <h4 className="text-sm font-bold">Referee checks (office personnel)</h4>
         </div>
         <p className="mt-3 px-4 text-xs text-muted-foreground">
-          Every referee check completed by office staff is logged here with the date, time and person who completed it, and follows the employee onto their profile.
+          Every referee check completed by office staff is logged here with the date, time and person who completed it, and follows the person onto their profile.
         </p>
         <div className="p-4">
           {(activeCase.referee_check_log || '').trim() ? (
@@ -48,7 +48,7 @@ export default function IntakeLogPanels({ activeCase, refereeCheck, setRefereeCh
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
+      {intakeType !== 'Participant' && (<div className="overflow-hidden rounded-xl border border-border/60 bg-card">
         <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-pink-50 via-violet-50 to-blue-50 px-4 py-3 dark:from-pink-950/30 dark:via-violet-950/30 dark:to-blue-950/30">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><CalendarCheck className="h-4 w-4" /></span>
           <h4 className="text-sm font-bold">Buddy shift log</h4>
@@ -79,7 +79,7 @@ export default function IntakeLogPanels({ activeCase, refereeCheck, setRefereeCh
             </div>
           </form>
         </div>
-      </div>
+      </div>)}
     </>
   );
 }

@@ -21,6 +21,7 @@ import { Plus } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import IntakeCaseForm, { SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
+import ParticipantJourneyPanel from '@/components/intake/ParticipantJourneyPanel';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
 import IntakeBulkImport from '@/components/intake/IntakeBulkImport';
 import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
@@ -865,7 +866,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         referee_check_log: [activeCase.referee_check_log || '', entry].filter(Boolean).join('\n'),
       });
       await base44.entities.TrainingCompletion.create({
-        learner_type: 'Employee',
+        learner_type: intakeType,
         learner_name: activeCase.applicant_name,
         employee_name: activeCase.applicant_name,
         module_title: 'Referee Check',
@@ -1013,18 +1014,19 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
                 canCompleteOnline={(label) => canCompleteIntakeFormOnline(intakeType, label)}
               />
 
-              {intakeType === 'Employee' && (
-                <IntakeLogPanels
-                  activeCase={activeCase}
-                  refereeCheck={refereeCheck}
-                  setRefereeCheck={setRefereeCheck}
-                  buddyShift={buddyShift}
-                  setBuddyShift={setBuddyShift}
-                  busy={busy}
-                  addRefereeCheck={addRefereeCheck}
-                  addBuddyShift={addBuddyShift}
-                />
-              )}
+              {intakeType === 'Participant' && <ParticipantJourneyPanel activeCase={activeCase} docs={activeDocs} />}
+
+              <IntakeLogPanels
+                intakeType={intakeType}
+                activeCase={activeCase}
+                refereeCheck={refereeCheck}
+                setRefereeCheck={setRefereeCheck}
+                buddyShift={buddyShift}
+                setBuddyShift={setBuddyShift}
+                busy={busy}
+                addRefereeCheck={addRefereeCheck}
+                addBuddyShift={addBuddyShift}
+              />
             </div>
           )}
         </div>

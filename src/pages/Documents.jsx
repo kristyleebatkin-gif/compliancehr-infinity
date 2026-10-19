@@ -26,6 +26,7 @@ import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
+import ReviewSchedulesPanel from '@/components/documents/ReviewSchedulesPanel';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -360,6 +361,9 @@ export default function Documents({ profile, profileKind, embedded = false } = {
       </div>
       {!profile && <><div id="vault-business" className="scroll-mt-24">
       <BusinessDocumentsLibrary />
+      </div>
+      <div id="vault-review-schedules" className="scroll-mt-24">
+      <ReviewSchedulesPanel />
       </div>
       <div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
