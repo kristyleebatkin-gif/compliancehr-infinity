@@ -18,7 +18,7 @@ const MANAGEMENT = ['admin', 'Provider Administrator', 'Compliance Manager', 'Ad
 
 // Name Tags module: staff make, download and email their own branded name tag;
 // management roles get the full badge creator for any staff member.
-export default function NameTags() {
+export default function NameTags({ embedded = false } = {}) {
   const { toast } = useToast();
   const [me, setMe] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -104,7 +104,7 @@ export default function NameTags() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={IdCard} title="Name Tags" subtitle="Make, download and email your branded staff name tag." showAlerts={false} />
+      {!embedded && <PageHeader icon={IdCard} title="Name Tags" subtitle="Make, download and email your branded staff name tag." showAlerts={false} />}
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

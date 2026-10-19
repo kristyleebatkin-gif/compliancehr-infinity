@@ -41,7 +41,9 @@ export default function MyProfile() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [participantProfile, setParticipantProfile] = useState(null);
   const [form, setForm] = useState({});
+  const [participantForm, setParticipantForm] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -54,6 +56,18 @@ export default function MyProfile() {
       const user = await base44.auth.me();
       setMe(user);
       const isParticipant = user.role === 'Participant';
+      if (!isParticipant) {
+        try {
+          const pPage = await base44.entities.ParticipantProfile.filter({ email: user.email }, { limit: 1 });
+          const pProf = (pPage.items || [])[0] || null;
+          setParticipantProfile(pProf);
+          if (pProf) {
+            const pInitial = {};
+            PARTICIPANT_FIELDS.forEach(([key]) => { pInitial[key] = pProf[key] || ''; });
+            setParticipantForm(pInitial);
+          }
+        } catch (e) { console.error(e); }
+      }
       const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
       const page = await entity.filter({ email: user.email }, { limit: 1 });
       const prof = (page.items || [])[0] || null;
@@ -72,7 +86,21 @@ export default function MyProfile() {
 
   const isParticipant = me?.role === 'Participant';
   const fields = isParticipant ? PARTICIPANT_FIELDS : STAFF_FIELDS;
+  const canEditParticipant = isParticipant || ['admin', 'Provider Administrator', 'Administration', 'Team Leader'].includes(me?.role);
   const setField = (key, value) => { setForm((f) => ({ ...f, [key]: value })); setSaved(false); };
+  const setParticipantField = (key, value) => { setParticipantForm((f) => ({ ...f, [key]: value })); setSaved(false); };
+
+  const saveParticipant = async () => {
+    if (!participantProfile) return;
+    setSaving(true);
+    try {
+      await base44.entities.ParticipantProfile.update(participantProfile.id, participantForm);
+      setSaved(true);
+      await load();
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const save = async () => {
     if (!profile) return;
@@ -97,11 +125,17 @@ export default function MyProfile() {
 
   return (
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
-      <PageHeader icon={UserRound} title={isParticipant ? 'My participant profile' : 'My employee profile'} subtitle={isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'} showAlerts={false} showCompliance={false} showAudit={false} />
+      <PageHeader
+        icon={UserRound}
+        title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
+        subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
+        showAlerts={false} showCompliance={false} showAudit={false}
+      />
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>
-          <TabsTrigger value="details">Details</TabsTrigger>
+          <TabsTrigger value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
+          {!isParticipant && participantProfile && <TabsTrigger value="participant-details">My participant profile</TabsTrigger>}
           <TabsTrigger value="work">My Work</TabsTrigger>
           <TabsTrigger value="documents">My Documents</TabsTrigger>
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
@@ -166,17 +200,63 @@ export default function MyProfile() {
           )}
         </TabsContent>
 
+        {!isParticipant && participantProfile && (
+          <TabsContent value="participant-details" className="mt-4 space-y-6">
+            <Card className="border-border/60">
+              <CardContent className="p-5 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="text-lg font-semibold font-editorial">{participantProfile.full_name}</div>
+                    <div className="text-sm text-foreground/60">{participantProfile.email}</div>
+                  </div>
+                  <Badge variant="outline">{participantProfile.status || 'Active'}</Badge>
+                </div>
+                <div className="grid gap-2 rounded-xl bg-muted/40 p-3 text-sm text-foreground/70">
+                  {participantProfile.ndis_number && <div>NDIS number: <span className="font-medium">{participantProfile.ndis_number}</span></div>}
+                  {participantProfile.support_type && <div>Support provided: <span className="font-medium">{participantProfile.support_type}</span></div>}
+                  {participantProfile.support_coordinator && <div>Support coordination: <span className="font-medium">{participantProfile.support_coordinator}</span></div>}
+                </div>
+                {!canEditParticipant && <p className="text-xs text-foreground/50">Read-only view. Support team and management can make updates.</p>}
+              </CardContent>
+            </Card>
+            {canEditParticipant && (
+              <Card className="border-border/60">
+                <CardContent className="p-5 space-y-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {PARTICIPANT_FIELDS.map(([key, label, kind]) => (
+                      <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
+                        <Label>{label}</Label>
+                        {kind === 'textarea' ? (
+                          <Textarea rows={3} value={participantForm[key] || ''} onChange={(e) => setParticipantField(key, e.target.value)} />
+                        ) : (
+                          <Input value={participantForm[key] || ''} onChange={(e) => setParticipantField(key, e.target.value)} />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button onClick={saveParticipant} disabled={saving} className="gap-2">
+                      <Save className="h-4 w-4" />{saving ? 'Saving...' : 'Save changes'}
+                    </Button>
+                    {saved && <span className="flex items-center gap-1.5 text-sm font-medium text-safe"><CheckCircle2 className="h-4 w-4" />Saved</span>}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+        )}
+
         <TabsContent value="work" className="mt-4">
-          <StaffHome />
+          <StaffHome embedded />
         </TabsContent>
 
         <TabsContent value="documents" className="mt-4">
-          <MyDocuments />
+          <MyDocuments embedded />
         </TabsContent>
 
         {!isParticipant && (
           <TabsContent value="name-tags" className="mt-4">
-            <NameTags />
+            <NameTags embedded />
           </TabsContent>
         )}
       </Tabs>

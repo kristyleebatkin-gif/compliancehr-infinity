@@ -22,7 +22,7 @@ const tone = (expiry) => {
 
 // My Documents module: a staff member's or participant's own documents plus
 // private documents others hold that contain their information.
-export default function MyDocuments() {
+export default function MyDocuments({ embedded = false } = {}) {
   const [me, setMe] = useState(null);
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,15 +55,23 @@ export default function MyDocuments() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        icon={FolderOpen}
-        title="My Documents"
-        subtitle="Your own documents, and private documents held about you — view or download anytime."
-        showAlerts={false}
-        action={!isParticipant ? (
-          <Link to="/documents" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted">Full document vault<ArrowRight className="h-4 w-4" /></Link>
-        ) : null}
-      />
+      {embedded ? (
+        !isParticipant && (
+          <div className="flex flex-wrap gap-2">
+            <Link to="/documents" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted">Full document vault<ArrowRight className="h-4 w-4" /></Link>
+          </div>
+        )
+      ) : (
+        <PageHeader
+          icon={FolderOpen}
+          title="My Documents"
+          subtitle="Your own documents, and private documents held about you — view or download anytime."
+          showAlerts={false}
+          action={!isParticipant ? (
+            <Link to="/documents" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted">Full document vault<ArrowRight className="h-4 w-4" /></Link>
+          ) : null}
+        />
+      )}
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

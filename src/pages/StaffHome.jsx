@@ -18,7 +18,7 @@ function StatusPill({ status }) {
   return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}>{status}</span>;
 }
 
-export default function StaffHome() {
+export default function StaffHome({ embedded = false } = {}) {
   const [me, setMe] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [incidents, setIncidents] = useState([]);
@@ -102,17 +102,25 @@ export default function StaffHome() {
 
   return (
     <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
-      <PageHeader
-        title={firstName ? `Hi ${firstName}` : 'My Work'}
-        subtitle="Your personal view: your tasks, your incident, risk and issue reports, and your profile."
-        action={
-          <div className="flex flex-wrap gap-2">
-            <Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>
-            <Link to="/risks/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><ShieldAlert className="h-4 w-4" />Report a Risk</Link>
-            <Link to="/issues/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><MessageSquareWarning className="h-4 w-4" />Report an Issue</Link>
-          </div>
-        }
-      />
+      {embedded ? (
+        <div className="flex flex-wrap gap-2">
+          <Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>
+          <Link to="/risks/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><ShieldAlert className="h-4 w-4" />Report a Risk</Link>
+          <Link to="/issues/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><MessageSquareWarning className="h-4 w-4" />Report an Issue</Link>
+        </div>
+      ) : (
+        <PageHeader
+          title={firstName ? `Hi ${firstName}` : 'My Work'}
+          subtitle="Your personal view: your tasks, your incident, risk and issue reports, and your profile."
+          action={
+            <div className="flex flex-wrap gap-2">
+              <Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>
+              <Link to="/risks/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><ShieldAlert className="h-4 w-4" />Report a Risk</Link>
+              <Link to="/issues/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><MessageSquareWarning className="h-4 w-4" />Report an Issue</Link>
+            </div>
+          }
+        />
+      )}
 
       <div className="grid grid-cols-3 gap-3">
         <div className="rounded-xl border border-border bg-card p-4 text-center"><div className="text-2xl font-bold text-brand tabular-nums">{openTasks.length}</div><div className="text-xs font-medium text-foreground/50">Open tasks</div></div>
