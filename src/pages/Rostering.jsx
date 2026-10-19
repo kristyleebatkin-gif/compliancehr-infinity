@@ -43,7 +43,7 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
   </Card>
 );
 
-export default function Rostering({ profile, profileKind } = {}) {
+export default function Rostering({ profile, profileKind, ourView = false } = {}) {
   const scope = useMemo(() => profile ? { [profileKind === 'participant' ? 'participant_name' : 'employee_name']: profile.full_name } : {}, [profile?.full_name, profileKind]);
   const exportShiftRegister = async () => {
     const rows = await fetchAllRecords(base44.entities.Shift, scope, '-date');
@@ -147,14 +147,14 @@ export default function Rostering({ profile, profileKind } = {}) {
     Promise.all([
       base44.auth.me(),
       base44.entities.StaffProfile.filter({ status: 'Active', ...(profileKind === 'staff' ? { id: profile.id } : {}) }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
-      base44.entities.ParticipantProfile.filter({ status: 'Active', ...(profileKind === 'participant' ? { id: profile.id } : {}) }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
+      base44.entities.ParticipantProfile.filter({ status: 'Active', ...(profileKind === 'participant' ? { id: profile.id } : {}), ...(ourView ? { admin_approved: true } : {}) }, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
       loadStats(),
     ]).then(([me, s, p]) => {
       setMyName(me?.full_name || '');
       setStaff(s.items.map((i) => i.full_name));
       setParticipants(p.items.map((i) => i.full_name));
     }).catch((e) => console.error(e));
-  }, [loadStats]);
+  }, [loadStats, ourView]);
 
   useEffect(() => {
     if (tab === 'roster') loadBoard(weekStart);
