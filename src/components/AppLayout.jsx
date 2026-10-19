@@ -10,7 +10,7 @@ import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirecto
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
-  Search, Sun, Moon,
+  Search, Sun, Moon, User,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
@@ -325,14 +325,22 @@ export default function AppLayout() {
               {userMenuOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                  <div className="absolute right-0 z-50 mt-2 w-56 rounded-xl border border-border/60 bg-card p-2 shadow-xl">
+                  <div className="absolute right-0 z-50 mt-2 w-60 rounded-xl border border-border/60 bg-card p-2 shadow-xl">
                     <div className="px-3 py-2">
-                      <div className="text-sm font-semibold">{role}</div>
-                      <div className="text-xs text-foreground/50">ComplianceHR Infinity</div>
+                      <div className="truncate text-sm font-semibold">{user?.full_name || 'User'}</div>
+                      <div className="truncate text-xs text-foreground/50">{user?.email || ''}</div>
+                      <div className="mt-1.5 inline-flex rounded-md bg-brand/10 px-2 py-0.5 text-[11px] font-semibold text-brand">{role}</div>
                     </div>
+                    <Link
+                      to="/my-profile"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground/70 hover:bg-brand/5 hover:text-brand"
+                    >
+                      <User className="h-4 w-4" /> My profile
+                    </Link>
                     <button
                       onClick={handleLogout}
-                      className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-danger hover:bg-danger/5"
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-danger hover:bg-danger/5"
                     >
                       <LogOut className="h-4 w-4" /> Sign out
                     </button>
