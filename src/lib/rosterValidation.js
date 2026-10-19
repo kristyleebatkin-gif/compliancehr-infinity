@@ -13,6 +13,9 @@ const overlaps = (a, b) => {
   return aS < bE && bS < aE;
 };
 
+// Rule keys match RosterValidationRule.rule_key records (configurable in-app).
+export const RULE_KEYS = ['unassigned', 'double_booking', 'missing_instructions', 'skill_mismatch'];
+
 export const findUnassigned = (shifts) =>
   (shifts || []).filter((s) => !s.employee_name && s.status !== 'Cancelled');
 
@@ -36,3 +39,26 @@ export const findDoubleBookings = (shifts) => {
 
 export const findMissingInstructions = (shifts) =>
   (shifts || []).filter((s) => s.status !== 'Cancelled' && s.participant_name && !s.notes);
+
+// Skill mismatch: flags shifts where the participant's documented support needs
+// (e.g. medication support) require a skill the assigned staff member has not recorded.
+export const findSkillMismatches = (shifts, staff = [], participants = []) => {
+  const staffSkills = {};
+  (staff || []).forEach((s) => {
+    const key = (s.full_name || '').toLowerCase();
+    if (key) staffSkills[key] = String(s.skills || '').toLowerCase();
+  });
+  const partBy = {};
+  (participants || []).forEach((p) => {
+    const key = (p.full_name || '').toLowerCase();
+    if (key) partBy[key] = p;
+  });
+  return (shifts || []).filter((s) => {
+    if (s.status === 'Cancelled' || !s.employee_name || !s.participant_name) return false;
+    const p = partBy[String(s.participant_name).toLowerCase()];
+    if (!p) return false;
+    const needsMedication = String(p.medications_dosage || '').trim() !== '';
+    const skills = staffSkills[String(s.employee_name).toLowerCase()] || '';
+    return needsMedication && !skills.includes('medication');
+  });
+};
