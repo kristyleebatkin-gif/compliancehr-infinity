@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, TrendingUp, UserRound } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import StaffHome from '@/pages/StaffHome';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
 import StaffComplianceFlags from '@/components/dashboard/StaffComplianceFlags';
 
@@ -96,10 +98,16 @@ export default function StaffProgressDashboard() {
   return (
     <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
       <PageHeader
-        title="Staff Progress"
-        subtitle="How many intake forms and compliance tasks each staff member has completed versus pending."
+        title="Staff Profile"
+        subtitle="Your staff profile, plus how many intake forms and compliance tasks each staff member has completed versus pending."
       />
 
+      <Tabs defaultValue="progress">
+        <TabsList>
+          <TabsTrigger value="progress"><TrendingUp className="mr-1.5 h-4 w-4" />Staff progress</TabsTrigger>
+          <TabsTrigger value="profile"><UserRound className="mr-1.5 h-4 w-4" />My profile</TabsTrigger>
+        </TabsList>
+        <TabsContent value="progress" className="space-y-6">
       {loading ? (
         <div className="flex items-center justify-center gap-2 py-16 text-sm text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" /> Loading staff progress…
@@ -143,6 +151,11 @@ export default function StaffProgressDashboard() {
           )}
         </>
       )}
+        </TabsContent>
+        <TabsContent value="profile">
+          <StaffHome embedded />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

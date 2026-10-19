@@ -3,6 +3,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Heart, Users, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 const OPTIONS = [
@@ -40,6 +41,7 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-8">
       <PageHeader title="Intake Centre" subtitle="Choose an intake stream to open cases, collect evidence, review readiness and create approved profiles." />
+      <RegisterInsights module="intake" />
 
       <div className="relative overflow-hidden rounded-3xl border border-cyan-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-6 shadow-lg shadow-violet-500/5 dark:border-cyan-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/25">
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-fuchsia-400/15 blur-2xl" />

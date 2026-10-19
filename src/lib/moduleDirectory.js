@@ -24,7 +24,7 @@ export const MODULE_DIRECTORY = [
   { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
   { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
   { key: 'incident-analytics', label: 'Incident Analytics', path: '/incident-analytics', icon: Activity, blurb: 'Charts of incident trends by category and by staff, to target support where it is needed.' },
-  { key: 'staff-progress', label: 'Staff Progress', path: '/staff-progress', icon: TrendingUp, blurb: 'Completed versus pending intake forms and compliance tasks for each staff member.' },
+  { key: 'staff-progress', label: 'Staff Profile', path: '/staff-progress', icon: TrendingUp, blurb: 'Your staff profile, plus completed versus pending intake forms and compliance tasks for each staff member.' },
   { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
   { key: 'compliance', label: 'Compliance & Report Centre', path: '/compliance', icon: ShieldCheck, blurb: 'Checklists, audits, file matrices, expiry scans and full business audit exports.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },

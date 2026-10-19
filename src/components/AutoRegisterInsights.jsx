@@ -14,7 +14,6 @@ const PATH_MODULES = [
   ['/hr', 'hr'],
   ['/projects', 'projects'],
   ['/feedback', 'feedback'],
-  ['/intake', 'intake'],
   ['/ndis-portal', 'ndis'],
   ['/referrals', 'referrals'],
   ['/equipment-manuals', 'equipment'],
