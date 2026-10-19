@@ -18,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
+import InvoiceShiftDrill from '@/components/invoicing/InvoiceShiftDrill';
 import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
@@ -238,7 +239,12 @@ export default function InvoicingCentre() {
       <Dialog open={!!preview} onOpenChange={(next) => { if (!next) setPreview(null); }}>
         <DialogContent className="max-h-[92vh] max-w-3xl overflow-y-auto">
           <DialogHeader><DialogTitle>Invoice preview - {preview?.invoice_number}</DialogTitle></DialogHeader>
-          {preview && <InvoicePreview invoice={preview} business={business} />}
+          {preview && (
+            <div className="space-y-4">
+              <InvoicePreview invoice={preview} business={business} />
+              <InvoiceShiftDrill invoice={preview} />
+            </div>
+          )}
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => printInvoicePdf(preview, business)}><Printer className="h-4 w-4" />Print</Button>
             <Button onClick={() => downloadInvoicePdf(preview, business)}><FileDown className="h-4 w-4" />Download PDF</Button>

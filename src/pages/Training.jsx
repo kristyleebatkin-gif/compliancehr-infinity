@@ -11,6 +11,7 @@ import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
 import TrainingInsights from '@/components/training/TrainingInsights';
+import TrainingStreaks from '@/components/training/TrainingStreaks';
 import AiQuizDrill from '@/components/training/AiQuizDrill';
 import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -97,6 +98,8 @@ export default function Training() {
       />
 
       <RegisterInsights module="training" />
+
+      <TrainingStreaks completions={completions} meName={user?.full_name || ''} />
 
       <SectionCard title="Your progress" description={`${stats.completed} of ${stats.total} modules completed`}>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">

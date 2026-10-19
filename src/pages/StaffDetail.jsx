@@ -19,6 +19,7 @@ import StaffAccessTab from '@/components/staff/StaffAccessTab';
 import StaffPerformanceTab from '@/components/staff/StaffPerformanceTab';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import StaffBadgeCard from '@/components/staff/StaffBadgeCard';
+import EmploymentTimeline from '@/components/staff/EmploymentTimeline';
 
 export default function StaffDetail() {
   const { id } = useParams();
@@ -84,6 +85,7 @@ export default function StaffDetail() {
         <TabsContent value="details">
           <div className="space-y-6">
             <StaffBadgeCard staff={staff} />
+            <EmploymentTimeline staff={staff} />
             <StaffDetailsTab staff={staff} onUpdated={load} />
             <ProfileIntakeDocuments profileId={staff.id} />
           </div>

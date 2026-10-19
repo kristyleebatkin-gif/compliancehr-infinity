@@ -8,6 +8,7 @@ import { Loader2, MessageCircleWarning, ArrowRight, Plus, Settings2 } from 'luci
 import { statusTone } from '@/lib/statusStyles';
 import ComplaintLogDialog from '@/components/communications/ComplaintLogDialog';
 import ComplaintResolveDialog from '@/components/communications/ComplaintResolveDialog';
+import ComplaintSlaPill from '@/components/communications/ComplaintSla';
 
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 
@@ -74,6 +75,7 @@ export default function ComplaintsFeed() {
                 {c.description && <p className="mt-0.5 text-xs text-muted-foreground">{String(c.description).slice(0, 160)}</p>}
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
+                <ComplaintSlaPill complaint={c} />
                 <Badge variant="outline" className={`text-[10px] ${c.complainant_relationship === 'Staff' ? 'text-violet-600' : 'text-sky-600'}`}>
                   {c.complainant_relationship === 'Staff' ? 'Internal' : 'External'}
                 </Badge>
