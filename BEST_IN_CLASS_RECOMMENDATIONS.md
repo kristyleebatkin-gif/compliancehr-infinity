@@ -117,6 +117,68 @@ Each module needs three data layers to match the benchmarks: **(A)** its core re
 6. **Training curriculum + quiz packages** → already present in the LMS libraries; keep versioned.
 7. **Sample seed records** for demos: 1 provider profile, 5 staff, 3 participants, 10 shifts, 3 invoices, 2 quotes, 5 training completions, 2 incidents, 1 audit — enough for every dashboard tile to show a real value.
 
+## The every-module standard (design + features + functions)
+
+Every module must pass the same seven tests. These are acceptance criteria, not aspirations —
+a module is not finished until all seven are verified.
+
+1. **Design — extremely visually appealing.** The module's fixed accent colour carries the
+   header, icon chips, status badges and charts (centralised statusTone colours only — never
+   hash-random); one hero metric per screen with the largest type; tables-first registers with
+   right-aligned tabular numerals and muted gridlines; staggered, shadow-boxed form questions
+   with breather panels between dense groups; designed empty state that teaches and offers one
+   clear action; verified in dark mode and stacked correctly at 390 px mobile width.
+2. **Features — everything needed to run the module.** Full CRUD on every register, filters
+   and search executed on the server, sort and saved views, bulk actions where work repeats,
+   attachments/links where evidence belongs, status flows with dated transitions, and an
+   export for every list (CSV + branded PDF).
+3. **Functions — automation that does the work.** Expiry/due-date scans, reminders and
+   escalations run by workflow (never by someone remembering); AI summaries and next-action
+   suggestions on every register; auto-routing of submissions into the right module with the
+   right owner notified.
+4. **Fast, easy and simple to complete every task.** The three-interaction rule: any record
+   can be created in three taps or fewer; smart defaults and autofill from existing profiles;
+   choices as checkboxes/radios, not free text where a choice exists; single-line ruled fields
+   for dates, times, numbers and IDs; one-thumb mobile forms that queue offline and sync;
+   ⌘K palette on every register (`N` new, arrow navigation, Enter open).
+5. **Review every item — nothing hides.** Every record opens into a review view showing all
+   stored fields, its full status history, who changed what and when, attached evidence, and
+   an AI one-line "what needs attention"; list views show progress at a glance (status +
+   age + owner), with "reviewed/approved" sign-off captured per item.
+6. **Achieve all business standards, requirements and compliance.** Every checklist item maps
+   to its NDIS Practice Standard control and its evidence automatically; expiry rules from the
+   benchmark rule values below are enforced by automation; corrective actions cannot close
+   without owner + evidence + notification; all compliance-grade edits write an immutable
+   audit-trail entry.
+7. **Saving, storing, reporting and display.** Drafts autosave; superseded versions are
+   retained, never overwritten; every register exports (CSV via the cursor helper so nothing
+   is capped at 1,000, plus branded PDF); every module has one live display surface (dashboard
+   tile + module page) driven by server-side count/aggregate only.
+
+### Module-specific application
+
+| Module group | Design | Features | Functions | Completion | Review | Compliance | Save / store / report / display |
+|---|---|---|---|---|---|---|---|
+| Overview — Dashboard | One hero metric per role, accent-coloured tiles, no decorative charts | Role-tailored tiles, drill-down to source module | Morning brief workflow; live "needs attention" feed | One-tile = one destination | Attention feed is fully actionable, zero stale items | Coverage % across all mandatory registers | Tile numbers from count/aggregate; CSV of attention list |
+| People — Staff, Participants, Contacts, HR | Timeline view per person, funding bars on participants | Full profile CRUD, document checklists per role, leave, appraisals, position descriptions | Expiry alerts at benchmark intervals; appraisal & contract reminders | Autofill new documents from the profile; 3-tap intake | Per-person compliance view: every doc, expiry, status, history | Mandatory-document matrix per role enforced | Branded HR PDFs; CSV staff register; profile header display |
+| Care & Support — Intake, Goals, Rostering, Boards, Referrals, Programs | Roster board with coverage heat map; goal progress charts | AI-suggested roster, budget-utilisation bars, shift patterns, buddy shifts, visual boards | T-48h unfilled-shift escalation; continuity-of-support checks; goal reminders | Pattern templates fill rosters in one action | Per-shift and per-goal drill-down with notes history | SCHADS rules single-sourced in payroll module | Payroll report, ICS feed, goal progress PDFs; CSV roster export |
+| Compliance & Safety — Compliance Centre, Incidents, Risks, Emergency, Equipment/MSDS, Certificates, NDIS Portal, Assets | Live compliance score ring, severity-laddered badges | Continuous monitoring, control-to-evidence mapping, audits, corrective actions, photo-annotated incidents | 24-hour/5-day incident escalation; drill & asset-check schedules; expiry scans | Template library pre-fills any inspection in one tap | Every item reviewable with full trail and evidence attached | NDIS Practice Standards + Commission deadlines enforced | Branded audit packs & reports; CSV register exports; live score display |
+| Money — Invoicing, Quotes, Receipts, Procurement | Aged-receivables table with sparklines, one hero cash chart | Invoices, quotes, receipts with scan, POs, suppliers, price-guide sync | Budget-utilisation check before invoicing; overdue payment reminders | Quote-to-invoice conversion in one click | Invoice-to-shift drill-down that never loses your place | GST-free rule, 14-day terms, 30-day quote validity by default | Branded invoice/quote PDFs; CSV export; finance summary display |
+| Work — Tasks, Meetings, Projects, Training, Communications, Feedback | Kanban boards, streaks for training, SLA timers on complaints | Tasks with sign-off, meeting actions, projects with milestones, LMS with quizzes, complaints with SLA | Task reminders at due/+3/+7 days; meeting action follow-ups; training expiry alerts | Meeting actions auto-created as tasks with owners | Every task/meeting/training item shows status, history, sign-off | 12-month training cycle; 21-day complaint SLA with escalation | Task certificates, minutes PDFs, training audit reports; CSV exports |
+| Company — Documents, Company Safe, Quality, Analytics, Users | Document control register with version chips, tables-first analytics | Version history with supersede, quality register, permission matrix, KPIs | Auto next-review scheduling; expiry-driven review prompts | New document from template with owner + review date in one flow | Version diff and full change history per document | 12-month policy review cycle; immutable status log | Branded document PDFs; CSV export; analytics hero chart |
+| Help & Tools — Assistant, Help Centre, User Guides | In-context help beside the form, searchable guides | Tickets, AI troubleshooter, guide libraries, module docs | AI answers cite their source guide; ticket SLA timers | Raise a ticket in three fields | Ticket thread with full response history | First response 4 business hours, resolution 2 business days | Ticket export; system-health display |
+
+### Module acceptance checklist (run before signing off any module)
+
+- [ ] Header, badges and charts use the module's fixed accent colour; dark mode verified
+- [ ] Mobile 390 px verified — forms stack, tables scroll, buttons reachable
+- [ ] Every register: server-side filter/sort, CSV + branded PDF export, designed empty state
+- [ ] Any record creatable in ≤ 3 interactions, with smart defaults and autofill
+- [ ] Every record reviewable in full — all fields, history, evidence, sign-off
+- [ ] Automated reminders/escalations wired for every date the module tracks
+- [ ] Compliance mapping + immutable audit trail present for compliance-grade records
+- [ ] Dashboard tile live from count/aggregate; AI summary on the register
+
 ## Suggested build order
 
 1. Closed-loop corrective actions + immutable audit trails (highest audit value).
