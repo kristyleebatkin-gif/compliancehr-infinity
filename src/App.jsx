@@ -119,10 +119,10 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/my-work" element={<StaffHome />} />
+          <Route path="/my-work" element={<Navigate to="/my-profile?tab=work" replace />} />
           <Route path="/my-profile" element={<MyProfile />} />
-          <Route path="/my-documents" element={<MyDocuments />} />
-          <Route path="/name-tags" element={<RoleGate navKey="name-tags"><NameTags /></RoleGate>} />
+          <Route path="/my-documents" element={<Navigate to="/my-profile?tab=documents" replace />} />
+          <Route path="/name-tags" element={<Navigate to="/my-profile?tab=name-tags" replace />} />
           <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
           <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
