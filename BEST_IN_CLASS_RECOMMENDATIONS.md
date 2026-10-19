@@ -179,6 +179,46 @@ a module is not finished until all seven are verified.
 - [ ] Compliance mapping + immutable audit trail present for compliance-grade records
 - [ ] Dashboard tile live from count/aggregate; AI summary on the register
 
+## Visual design blueprint — every section amazing, stylish, professional
+
+Brand foundations every module builds on (never reinvented per module):
+
+- **Typography:** Fraunces (editorial serif) for page titles and hero numbers, Manrope for all
+  UI/body text; tabular figures everywhere money, dates or counts appear; page titles never
+  below 1.75rem with the accent-tinted PageHeader card.
+- **Colour discipline:** the module's fixed semantic accent from `moduleColours.js` (safety
+  red, finance green, training teal, compliance indigo, people blue, participant pink,
+  roster indigo, NDIS purple) drives header tint, icon chips, active states and chart series;
+  accent washes at 8–12% opacity for section backgrounds; brand gradient reserved for one
+  hero moment per page; dark text on light action buttons — no white-on-saturated.
+- **Surfaces:** rounded-2xl cards with `shadow-panel` layering and hairline rings; gradient
+  wash behind the hero row only; generous 24/32px section rhythm inside a max-w-6xl column.
+- **Micro-polish:** staggered question cards with solid ruled answer lines; statusTone badges
+  with dot + label; hover lift on interactive cards; skeleton loaders on every data surface;
+  empty states with a tinted icon chip, one teaching line, one action.
+
+### Per-section design specification
+
+| Section | Signature visual | Styling direction | Data display |
+|---|---|---|---|
+| Overview — Dashboard | One hero metric card per role with oversized Fraunces number on a brand-gradient wash | Role-coloured tiles, restrained chrome, whitespace-first | Numeric tables with sparkline accents; single hero chart |
+| People — Staff, Participants, Contacts, HR | Profile header with accent-tinted identity band and compliance ring | Timeline styling on employment history; tinted doc-checklist chips | Funding/plan utilisation bars; expiry countdown pills |
+| Care & Support — Intake, Goals, Rostering, Boards, Referrals, Programs | Roster board with coverage heat map and indigo shift cards | Card-based goals with progress rings; calm, playful visual-board surfaces | Coverage %, budget bars, goal-outcome charts |
+| Compliance & Safety — Compliance Centre, Incidents, Risks, Emergency, Equipment/MSDS, Certificates, NDIS Portal, Assets | Live compliance score ring in indigo, severity-laddered red/amber badges | Confident, alert-toned styling; heat cells for the 5×5 risk matrix | Score ring, trend table, evidence-linked checklist rows |
+| Money — Invoicing, Quotes, Receipts, Procurement | Aged-receivables table with inline sparklines on a green accent header | Stripe-style financial tables; receipt scan cards with clean thumbnails | Sparkline money columns, one hero cash chart |
+| Work — Tasks, Meetings, Projects, Training, Communications, Feedback | Kanban columns with teal task cards; streak badges for training | Meeting agenda cards with tinted type chips; SLA timer pills on complaints | Progress bars, streaks, SLA countdowns |
+| Company — Documents, Company Safe, Quality, Analytics, Users | Document control register with purple version chips and review-status pills | Vault-style card grid for the safe; tables-first analytics | Version history, KPI tiles, hero analytics chart |
+| Help & Tools — Assistant, Help Centre, User Guides | Floating assistant panel with gradient orb avatar | Calm reading layout for guides; tinted category chips | Search-first display, article cards |
+
+**Motion rules:** entrance fade-and-rise 200 ms on page load, staggered 60 ms on card grids;
+no animation inside tables or forms beyond focus rings; hover lift only where the card is
+clickable; everything must stay smooth at 390 px mobile width.
+
+**Professional finish checklist per section:** the same accent family runs from header →
+badges → charts → export PDFs (PDFs use the same module accent and Fraunces/Manrope); icons
+from one set (lucide) at one stroke weight; one radius family; one shadow elevation scale;
+no more than two font sizes per card.
+
 ## Suggested build order
 
 1. Closed-loop corrective actions + immutable audit trails (highest audit value).
