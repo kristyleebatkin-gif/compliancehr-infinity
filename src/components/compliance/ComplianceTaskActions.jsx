@@ -81,6 +81,21 @@ export default function ComplianceTaskActions() {
     }
   };
 
+  const bulkFlag = async () => {
+    if (selectedIds.length === 0) return;
+    setBulkBusy(true);
+    try {
+      await base44.entities.TodoTask.bulkUpdate(
+        selectedIds.map((id) => ({ id, priority: 'Urgent' })),
+      );
+      toast({ title: `${selectedIds.length} task${selectedIds.length === 1 ? '' : 's'} flagged as urgent` });
+      setSelectedIds([]);
+      await load();
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   if (!tasks) {
     return <Card><CardContent className="flex items-center justify-center gap-2 p-10 text-sm text-foreground/60">
       <Loader2 className="h-4 w-4 animate-spin" />Loading pending tasks...
@@ -91,7 +106,7 @@ export default function ComplianceTaskActions() {
     <Card className="shadow-panel">
       <CardContent className="p-5">
         <div className="mb-1 flex items-center gap-2 font-display text-base font-bold"><Zap className="h-4 w-4 text-amber-500" />Quick task actions</div>
-        <p className="mb-4 text-xs font-medium text-muted-foreground">Mark a pending task as completed or flag it as urgent straight from this list — no need to open the detail view. Tick several and mark them completed in one go.</p>
+        <p className="mb-4 text-xs font-medium text-muted-foreground">Mark a pending task as completed or flag it as urgent straight from this list — no need to open the detail view. Tick several and mark them completed, or flag them urgent, in one go.</p>
         {tasks.length === 0 ? (
           <p className="py-8 text-center text-sm text-foreground/60">No pending tasks right now.</p>
         ) : (
@@ -107,6 +122,14 @@ export default function ComplianceTaskActions() {
             >
               {bulkBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckSquare className="h-3.5 w-3.5" />}
               Mark {selectedIds.length || ''} completed
+            </Button>
+            <Button
+              size="sm"
+              disabled={selectedIds.length === 0 || bulkBusy}
+              onClick={bulkFlag}
+              className="border-amber-300 text-amber-800 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/40"
+            >
+              <Flag className="h-3.5 w-3.5" />Flag {selectedIds.length || ''} urgent
             </Button>
           </div>
           <div className="max-h-[32rem] space-y-2 overflow-y-auto pr-1">
