@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
+import { Image } from '@/components/ui/image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,7 +13,7 @@ import { downloadEventAdPdf } from '@/lib/eventAdPdf';
 export function AdPreview({ event }) {
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-white text-slate-900 shadow-sm">
-      {event.ad_image_url && <img src={event.ad_image_url} alt="" className="h-40 w-full object-cover" />}
+      {event.ad_image_url && <Image src={event.ad_image_url} alt="" fittingType="fill" className="h-40 w-full object-cover" />}
       <div className="p-5">
         <p className="text-[10px] font-bold uppercase tracking-widest text-primary">{event.type} Advertisement</p>
         <h3 className="mt-1 text-xl font-bold leading-tight">{event.ad_headline || event.title}</h3>
@@ -82,7 +83,7 @@ export default function EventAdBuilder({ open, onOpenChange, event, business, on
             </Button>
             {imageUrl && (
               <div className="flex items-center gap-2">
-                <img src={imageUrl} alt="" className="h-16 w-24 rounded-lg object-cover" />
+                <Image src={imageUrl} alt="" fittingType="fill" className="h-16 w-24 rounded-lg object-cover" />
                 <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => setImageUrl('')}><RefreshCw className="h-3 w-3" />Remove</Button>
               </div>
             )}

@@ -28,7 +28,7 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="truncate text-sm font-semibold text-muted-foreground">{label}</div>
-          <div className={cn('mt-2 text-2xl font-bold tracking-tight sm:text-3xl', t.value)}>{value}</div>
+          <div className={cn('mt-2 text-2xl font-bold tabular-nums tracking-tight sm:text-3xl', t.value)}>{value}</div>
           {trend && <div className="mt-1.5 text-xs font-semibold text-muted-foreground">{trend}</div>}
         </div>
         {Icon && (

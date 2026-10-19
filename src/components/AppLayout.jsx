@@ -111,7 +111,7 @@ export default function AppLayout() {
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-5 py-5">
-        <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
+        <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
         <div className="min-w-0">
           <div className="text-[15px] font-bold tracking-tight font-editorial">Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span> <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand">Infinity</span></div>
           <div className="mt-0.5 text-[10px] font-medium leading-snug text-brand/60 line-clamp-2">Complete Control. Greater Confidence. Brighter Success.</div>
@@ -282,7 +282,7 @@ export default function AppLayout() {
                       {notifications.map((n) => n.type === 'Birthday Shout-out' ? (
                         <div key={n.id} className={`rounded-xl border border-pink-200 p-3 text-sm dark:border-pink-500/30 ${n.read ? 'bg-pink-50/50 dark:bg-pink-500/5' : 'bg-pink-50 dark:bg-pink-500/10'}`}>
                           <div className="flex items-start gap-2.5">
-                            {n.branding_logo_url ? <img src={n.branding_logo_url} alt="" className="h-9 w-9 rounded-lg bg-white object-contain p-1" /> : <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-pink-600"><PartyPopper className="h-4 w-4" /></div>}
+                            {n.branding_logo_url ? <Image src={n.branding_logo_url} alt="" className="h-9 w-9 rounded-lg bg-white object-contain p-1" /> : <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-pink-600"><PartyPopper className="h-4 w-4" /></div>}
                             <div className="min-w-0">
                               <div className="font-semibold text-pink-900 dark:text-pink-300">{n.branding_company_name || 'Birthday Shout-out'}</div>
                               <div className="mt-0.5 text-xs leading-5 text-pink-800 dark:text-pink-300/80">{n.message}</div>

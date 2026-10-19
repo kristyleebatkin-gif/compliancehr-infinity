@@ -4,6 +4,7 @@ import { useRole } from '@/lib/useRole';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
+import { Image } from '@/components/ui/image';
 import { Bell, PartyPopper, Check, CheckCheck, ExternalLink, Inbox } from 'lucide-react';
 import moment from 'moment';
 
@@ -172,7 +173,7 @@ export default function Notifications() {
               <div key={n.id} className={`rounded-2xl border border-pink-200 p-4 shadow-sm transition-opacity dark:border-pink-500/30 ${n.read ? 'bg-pink-50/40 dark:bg-pink-500/5' : 'bg-pink-50 dark:bg-pink-500/10'}`}>
                 <div className="flex items-start gap-3">
                   {n.branding_logo_url ? (
-                    <img src={n.branding_logo_url} alt="" className="h-10 w-10 rounded-xl bg-white object-contain p-1 shadow-sm" />
+                    <Image src={n.branding_logo_url} alt="" className="h-10 w-10 rounded-xl bg-white object-contain p-1 shadow-sm" />
                   ) : (
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-pink-600 shadow-sm">
                       <PartyPopper className="h-5 w-5" />
