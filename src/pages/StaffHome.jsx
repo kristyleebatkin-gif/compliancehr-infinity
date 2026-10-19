@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
+import TaskEditDialog from '@/components/mywork/TaskEditDialog';
 import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -21,6 +22,7 @@ export default function StaffHome() {
   const [tasks, setTasks] = useState([]);
   const [incidents, setIncidents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingTask, setEditingTask] = useState(null);
 
   const load = useCallback(async (user) => {
     try {
@@ -89,8 +91,8 @@ export default function StaffHome() {
                   <button onClick={() => toggle(t)} title="Mark complete" className="shrink-0">
                     <Circle className="h-5 w-5 text-foreground/30 hover:text-safe" />
                   </button>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-sm font-medium">{t.title}</div>
+                  <div className="min-w-0 flex-1 cursor-pointer" onClick={() => setEditingTask(t)} title="Click to edit">
+                    <div className="text-sm font-medium hover:text-brand">{t.title}</div>
                     <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/50">
                       {t.priority === 'Urgent' || t.priority === 'High' ? <span className="rounded-full bg-danger/10 px-2 py-0.5 font-medium text-danger">{t.priority}</span> : null}
                       {t.due_date && <span className={`flex items-center gap-1 ${late ? 'font-semibold text-danger' : ''}`}><Clock className="h-3 w-3" />{late ? 'Overdue: ' : ''}{fmt(t.due_date)}</span>}
@@ -126,6 +128,8 @@ export default function StaffHome() {
           </div>
         )}
       </section>
+
+      <TaskEditDialog task={editingTask} open={!!editingTask} onClose={() => setEditingTask(null)} onSaved={() => me && load(me)} />
     </div>
   );
 }
