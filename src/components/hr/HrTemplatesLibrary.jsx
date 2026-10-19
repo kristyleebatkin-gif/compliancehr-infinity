@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { downloadTemplatePdf } from '@/lib/hrTemplatePdf';
@@ -31,6 +32,7 @@ export default function HrTemplatesLibrary() {
   const [me, setMe] = useState(null);
   const [selected, setSelected] = useState(null); // template being used
   const [staffId, setStaffId] = useState('');
+  const [documentText, setDocumentText] = useState('');
   const [busy, setBusy] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
@@ -66,7 +68,8 @@ export default function HrTemplatesLibrary() {
     () => (selected ? mergeHrTemplate(selected.content, chosen, branding, me) : ''),
     [selected, chosen, branding, me],
   );
-  const hasUnresolved = hasUnresolvedTokens(merged);
+  useEffect(() => { setDocumentText(merged); }, [merged]);
+  const hasUnresolved = hasUnresolvedTokens(documentText);
 
   const openTemplate = (tpl) => {
     setSelected(tpl);
@@ -79,7 +82,7 @@ export default function HrTemplatesLibrary() {
       downloadTemplatePdf({
         title: selected.title,
         code: 'HR-TPL',
-        body: merged,
+        body: documentText,
         completedBy: me ? (me.full_name || me.email) : '',
       });
       toast({ title: 'Document downloaded', description: selected.title });
@@ -90,7 +93,7 @@ export default function HrTemplatesLibrary() {
 
   const copyText = async () => {
     try {
-      await navigator.clipboard.writeText(merged);
+      await navigator.clipboard.writeText(documentText);
       toast({ title: 'Copied to clipboard' });
     } catch {
       toast({ title: 'Could not copy', variant: 'destructive' });
@@ -166,13 +169,15 @@ export default function HrTemplatesLibrary() {
                 Some placeholders could not be filled for this selection and are shown as-is — edit the text before sending.
               </p>
             )}
-            <div className="max-h-80 overflow-y-auto whitespace-pre-wrap rounded-lg border border-border bg-muted/30 p-4 font-elegant text-sm leading-relaxed">
-              {merged}
+            <div className="grid gap-1.5">
+              <Label htmlFor="hr-document-text">Complete and review this document</Label>
+              <Textarea id="hr-document-text" rows={14} value={documentText} onChange={(event) => setDocumentText(event.target.value)} className="font-body text-sm leading-relaxed" />
+              <p className="text-xs text-muted-foreground">Changes here apply to this copy only. Use Edit on the library card to update the saved template.</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button onClick={download} disabled={busy || !merged}><Download className="h-4 w-4" />Download PDF</Button>
-              <Button variant="outline" disabled={!merged} onClick={() => setPreviewOpen(true)}><Eye className="h-4 w-4" />Preview PDF</Button>
-              <Button variant="outline" onClick={copyText} disabled={!merged}><Copy className="h-4 w-4" />Copy text</Button>
+              <Button onClick={download} disabled={busy || !documentText.trim()}><Download className="h-4 w-4" />Download PDF</Button>
+              <Button variant="outline" disabled={!documentText.trim()} onClick={() => setPreviewOpen(true)}><Eye className="h-4 w-4" />Preview PDF</Button>
+              <Button variant="outline" onClick={copyText} disabled={!documentText.trim()}><Copy className="h-4 w-4" />Copy text</Button>
             </div>
           </div>
         </DialogContent>
@@ -181,12 +186,13 @@ export default function HrTemplatesLibrary() {
       <HrTemplatePreview
         open={previewOpen}
         title={selected?.title}
-        body={merged}
+        body={documentText}
         completedBy={me ? (me.full_name || me.email) : ''}
         onClose={() => setPreviewOpen(false)}
       />
 
       <HrTemplateEditor
+        key={`${editing?.id || 'new'}-${editorOpen}`}
         open={editorOpen}
         template={editing}
         staff={staff}

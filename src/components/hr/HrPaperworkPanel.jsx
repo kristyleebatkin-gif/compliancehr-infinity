@@ -8,6 +8,8 @@ import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkDialog from '@/components/hr/HrPaperworkDialog';
 import ContractSignDialog from '@/components/hr/ContractSignDialog';
 import { toast } from '@/components/ui/use-toast';
+import HrStarterTemplates from '@/components/hr/HrStarterTemplates';
+import { loadCompanyBranding } from '@/lib/companyBranding';
 
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -22,6 +24,7 @@ export default function HrPaperworkPanel() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [documentKind, setDocumentKind] = useState('contract');
   const [signTarget, setSignTarget] = useState(null);
 
   const load = useCallback(async () => {
@@ -38,6 +41,7 @@ export default function HrPaperworkPanel() {
     setStaff(s.items || []);
     setBusiness((b.items || [])[0] || {});
     setUser(me);
+    await loadCompanyBranding();
     setLoading(false);
   }, []);
 
@@ -80,6 +84,7 @@ export default function HrPaperworkPanel() {
 
   return (
     <div className="space-y-4">
+      <HrStarterTemplates onPrepare={(kind) => { setDocumentKind(kind); setDialogOpen(true); }} />
       <div className="flex flex-wrap gap-2">
         <Button size="sm" onClick={() => setDialogOpen(true)}><FileSignature className="mr-2 h-4 w-4" />Prepare new document</Button>
         <Button size="sm" variant="outline" onClick={() => {
@@ -174,6 +179,7 @@ export default function HrPaperworkPanel() {
       />
 
       <HrPaperworkDialog
+        initialKind={documentKind}
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         staff={staff}

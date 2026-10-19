@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -21,8 +21,9 @@ const empty = {
   key_responsibilities: '', essential_requirements: '', qualifications_experience: '', performance_measures: '',
 };
 
-export default function HrPaperworkDialog({ open, onOpenChange, staff, business, userName, onSaved }) {
-  const [kind, setKind] = useState('contract');
+export default function HrPaperworkDialog({ open, onOpenChange, staff, business, userName, onSaved, initialKind = 'contract' }) {
+  const [kind, setKind] = useState(initialKind);
+  useEffect(() => { if (open) { setKind(initialKind); setForm(empty); } }, [open, initialKind]);
   const [form, setForm] = useState(empty);
   const [saving, setSaving] = useState(false);
   const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
@@ -36,7 +37,7 @@ export default function HrPaperworkDialog({ open, onOpenChange, staff, business,
       staff_profile_id: s.id,
       employee_id: s.employee_number || '',
       employee_name: s.full_name,
-      position_title: s.position || '',
+      position_title: s.position || s.role || 'Support Worker',
       employment_type: s.role === 'Support Worker' ? 'Casual' : 'Part Time',
       classification: s.position_level || '',
       manager_name: s.supervisor || '',
@@ -53,8 +54,8 @@ export default function HrPaperworkDialog({ open, onOpenChange, staff, business,
   };
 
   const save = async () => {
-    if (!form.employee_name || !form.position_title) {
-      toast({ title: 'Employee name and position title are required', variant: 'destructive' });
+    if (!form.staff_profile_id || !form.employee_name.trim() || !form.position_title.trim() || (kind === 'contract' && !form.commencement_date)) {
+      toast({ title: 'Select an employee and enter their position and contract commencement date', variant: 'destructive' });
       return;
     }
     setSaving(true);
