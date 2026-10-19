@@ -1,0 +1,41 @@
+{
+  "name": "Overdue Task Instant Alert",
+  "description": "The moment a compliance task is created or changed while already past its due date, instantly alerts the assignee, everyone responsible and all admins.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "TodoTask",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": "${ ((.trigger.data.due_date // \"\") != \"\") and ((.trigger.data.status // \"\") != \"Completed\") and ((.trigger.data.status // \"\") != \"Cancelled\") and ((.trigger.data.status // \"\") != \"Finalised\") }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "overdue_task_instant_alert",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_overdue_alert": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "overdueTaskAlerts",
+            "args": {
+              "task_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Alert overdue task",
+            "description": "Notifies the assignee and admins the moment a task is overdue"
+          }
+        }
+      }
+    ]
+  }
+}

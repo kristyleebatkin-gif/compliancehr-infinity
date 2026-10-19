@@ -1,0 +1,45 @@
+{
+  "name": "Overdue Task Sweep",
+  "description": "Every hour: catches compliance tasks that quietly crossed their due date and alerts the assignee, everyone responsible and all admins once per task.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "overdue_task_sweep",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sweep_overdue_tasks": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "overdueTaskAlerts",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sweep overdue tasks",
+            "description": "Hourly check for tasks that just became overdue"
+          }
+        }
+      }
+    ]
+  }
+}
