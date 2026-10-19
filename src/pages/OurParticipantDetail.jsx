@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProfileHeader from '@/components/profile/ProfileHeader';
+import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import useProfileRecord from '@/hooks/useProfileRecord';
@@ -21,7 +22,9 @@ export default function OurParticipantDetail() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/our-participants"><ArrowLeft className="h-4 w-4" />Our participant profiles</Link></Button>
-        <div className="flex flex-wrap items-center gap-2" />
+        <div className="flex flex-wrap items-center gap-2">
+          <PortalInviteButton kind="participant" profile={participant} />
+        </div>
       </div>
       <OurProfileWorkspace key={participant.id} profile={participant} kind="participant" onUpdated={refresh} header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
     </div>
