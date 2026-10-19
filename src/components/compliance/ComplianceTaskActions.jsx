@@ -27,7 +27,7 @@ export default function ComplianceTaskActions() {
   const load = async () => {
     const page = await base44.entities.TodoTask.filter(
       { status: { $in: PENDING_STATUSES } },
-      { sort: 'due_date', limit: 100, fields: ['title', 'status', 'priority', 'module', 'due_date', 'assigned_to'] }
+      { sort: 'due_date', limit: 100, fields: ['title', 'status', 'priority', 'module', 'due_date', 'assigned_to', 'assigned_email'] }
     );
     setTasks(page.items || []);
   };
@@ -45,6 +45,11 @@ export default function ComplianceTaskActions() {
           completed_by: me ? (me.full_name || me.email) : undefined,
         });
         toast({ title: 'Task completed', description: task.title });
+        logUserAction('Task Completed', 'Compliance Task', {
+          record_id: task.id, record_title: task.title,
+          details: 'Completed from the compliance dashboard quick actions',
+          person: { profile_type: 'employee', profile_name: task.assigned_to, profile_email: task.assigned_email },
+        });
       } else {
         if (task.priority === 'Urgent') {
           toast({ title: 'Already flagged', description: `${task.title} is already flagged as urgent.` });
@@ -75,7 +80,13 @@ export default function ComplianceTaskActions() {
         selectedIds.map((id) => ({ id, status: 'Completed', completed_date: today(), completed_by: me ? (me.full_name || me.email) : undefined })),
       );
       toast({ title: `${selectedIds.length} task${selectedIds.length === 1 ? '' : 's'} marked completed` });
-      logUserAction('Bulk Tasks Completed', 'Compliance Task', { details: `${selectedIds.length} task(s) marked completed in bulk` });
+      const owners = [...new Set(tasks.filter((t) => selectedIds.includes(t.id)).map((t) => t.assigned_to).filter(Boolean))];
+      if (owners.length === 1) {
+        const owner = tasks.find((t) => t.assigned_to === owners[0]);
+        logUserAction('Bulk Tasks Completed', 'Compliance Task', { details: `${selectedIds.length} task(s) marked completed in bulk`, person: { profile_type: 'employee', profile_name: owners[0], profile_email: owner?.assigned_email } });
+      } else {
+        logUserAction('Bulk Tasks Completed', 'Compliance Task', { details: `${selectedIds.length} task(s) marked completed in bulk` });
+      }
       setSelectedIds([]);
       await load();
     } finally {

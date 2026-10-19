@@ -102,6 +102,18 @@
           }
         }
       }
+    },
+    "person_profile_id": {
+      "type": "string",
+      "title": "Person Profile ID"
+    },
+    "person_profile_name": {
+      "type": "string",
+      "title": "Person Profile Name"
+    },
+    "person_profile_email": {
+      "type": "string",
+      "title": "Person Profile Email"
     }
   },
   "required": [

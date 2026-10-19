@@ -33,6 +33,10 @@ export default async function(req) {
     }).format(new Date());
     const performedBy = clean(user.full_name, 200) || clean(user.email, 200) || 'Authenticated user';
 
+    // The person fields are stored on the central log too, so each staff
+    // profile's activity log can query everything logged against that person.
+    const person = body.person || {};
+
     const record = await base44.asServiceRole.entities.AuditLog.create({
       action,
       entity_type: entityType,
@@ -45,12 +49,14 @@ export default async function(req) {
       route: clean(body.route, 200),
       details: clean(body.details, 1000),
       timestamp: new Date().toISOString(),
+      person_profile_id: clean(person.profile_id, 120),
+      person_profile_name: clean(person.profile_name, 200),
+      person_profile_email: clean(person.profile_email, 200),
     });
 
     // Append to the correct person's profile only, resolved by id, then email, then
     // name — through the caller-scoped client so profile RLS authorizes the target.
     let profileUpdated = false;
-    const person = body.person || {};
     const isParticipant = person.profile_type === 'participant';
     // Low-trust roles (Participant, Auditor, Volunteer, etc.) must never write into
     // anyone's profile change log — forged audit history is the exact attack this guards.

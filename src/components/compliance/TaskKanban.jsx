@@ -67,7 +67,7 @@ export default function TaskKanban() {
       }
       await base44.entities.TodoTask.update(task.id, patch);
       toast({ title: `Moved to ${nextStatus}`, description: task.title });
-      logUserAction('Task Status Changed', 'Compliance Task', { record_id: task.id, record_title: task.title, details: `Moved from ${task.status} to ${nextStatus} on the task kanban` });
+      logUserAction('Task Status Changed', 'Compliance Task', { record_id: task.id, record_title: task.title, details: `Moved from ${task.status} to ${nextStatus} on the task kanban`, person: { profile_type: 'employee', profile_name: task.assigned_to, profile_email: task.assigned_email } });
       load();
     } catch (e) {
       setTasks(snapshot.map((t) => (t.id === task.id ? { ...t, status: task.status } : t)));

@@ -11,6 +11,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { statusTone } from '@/lib/statusStyles';
 import { EMPLOYEE_FILE_SECTIONS } from '@/lib/employeeDocuments';
 import { cn } from '@/lib/utils';
+import { logUserAction } from '@/lib/actionLog';
 import { FileCheck2, Loader2, Paperclip, Save, Search, Upload } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 
@@ -108,6 +109,8 @@ export default function StaffFileChecklist({ staff }) {
     try {
       const today = format(new Date(), 'yyyy-MM-dd');
       const time = format(new Date(), 'HH:mm');
+      const prev = entry ? (entry.answers ? JSON.parse(entry.answers) : {}) : {};
+      const person = { profile_type: 'employee', profile_id: staff.id, profile_name: staff.full_name };
       const payload = {
         title: `Staff File Checklist – ${staff.full_name}`,
         checklist_key: `${CHECKLIST_PREFIX}${staff.id}`,
@@ -123,6 +126,18 @@ export default function StaffFileChecklist({ staff }) {
         const created = await base44.entities.ComplianceChecklistEntry.create(payload);
         setEntry(created);
       }
+      // Detailed per-profile log: record each compliance item newly marked
+      // complete (or outstanding) and each newly attached document.
+      docTypes.filter((d) => !!(prev[d]?.on_file) !== !!(answers[d]?.on_file)).forEach((docType) => {
+        logUserAction(answers[docType]?.on_file ? 'Compliance Item Marked Complete' : 'Compliance Item Marked Outstanding', 'Staff File Checklist', {
+          record_title: docType, details: `Staff file checklist - ${staff.full_name}`, person,
+        });
+      });
+      docTypes.filter((d) => answers[d]?.file_uri && answers[d]?.file_uri !== prev[d]?.file_uri).forEach((docType) => {
+        logUserAction('Document Uploaded', 'Employee Document', {
+          record_title: `${docType} - ${staff.full_name}`, details: 'Attached via the staff file checklist', person,
+        });
+      });
       toast({ title: 'Checklist saved' });
     } catch (error) {
       toast({ title: 'Could not save checklist', description: 'Please try again.', variant: 'destructive' });
