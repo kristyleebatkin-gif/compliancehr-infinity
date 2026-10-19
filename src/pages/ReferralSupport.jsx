@@ -11,6 +11,7 @@ import ReferralForm from '@/components/referral/ReferralForm';
 import ReferralLog from '@/components/referral/ReferralLog';
 import ReferralSendDialog from '@/components/referral/ReferralSendDialog';
 import ResourceLibrary from '@/components/referral/ResourceLibrary';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 export default function ReferralSupport() {
   const [tab, setTab] = useState('crisis');
@@ -36,6 +37,7 @@ export default function ReferralSupport() {
         </div>
       </div>
 
+      <AutoRegisterInsights placement="header" />
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex flex-wrap">
           <TabsTrigger value="crisis">Crisis Information</TabsTrigger>

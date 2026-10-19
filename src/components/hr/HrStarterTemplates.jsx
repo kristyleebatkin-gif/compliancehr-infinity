@@ -26,7 +26,7 @@ export default function HrStarterTemplates({ onPrepare }) {
       <div className="grid gap-3 lg:grid-cols-2">{data?.items.map((template) => (
         <Card key={template.id}><CardContent className="space-y-3 p-4">
           <h3 className="font-heading font-semibold">{template.title}</h3><p className="text-sm text-muted-foreground">{template.description}</p>
-          <div className="flex flex-wrap gap-2"><Button size="sm" variant="outline" disabled={!!busy} onClick={() => download(template)}>{busy === template.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}Download template</Button><Button size="sm" onClick={() => onPrepare(template.category === 'Contract' ? 'contract' : 'position')}>Prepare for employee</Button></div>
+          <div className="flex flex-wrap gap-2"><Button size="sm" variant="outline" disabled={!!busy} onClick={() => download(template)}>{busy === template.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}Download template</Button><Button size="sm" className="border border-primary/30 bg-primary/10 text-primary hover:bg-primary/15" onClick={() => onPrepare(template.category === 'Contract' ? 'contract' : 'position')}>Prepare for employee</Button></div>
         </CardContent></Card>
       ))}</div>
     </section>

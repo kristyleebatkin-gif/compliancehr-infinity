@@ -232,5 +232,13 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 168. Help Centre live, accurate and helpful.
 169. All user guides accurate to their matching module.
 
+## Completion log — latest implementation
+- Item 18: Support Worker employment contract and position description drafts saved in the HR templates library and available in Contracts & PDs. Both support branded PDF downloads; employee-specific preparation remains connected to the HR register. Templates require completed terms and appropriate HR/legal review before issue.
+- Item 19: File completeness now matches profile IDs, employee numbers and unambiguous legacy names; includes registered documents, issued certificates, signed contracts, acknowledged position descriptions and latest saved checklists. Server-calculated summaries are labelled for the current page, pagination is available, and changes refresh the report.
+- Item 20: Added 31 editable HR templates, including onboarding, induction, screening, declarations, training, performance reviews, exit, safety checks and role paperwork. Existing templates were preserved. Document copies can be edited before preview/download.
+- Insight placement completed for items 84, 93, 129, 133, 137 and 139. The insight-placement portions of items 124, 125 and 153 are completed; their other requirements remain pending.
+- Contract signing now persists the recorded signature; position-description acknowledgement dates are retained. HR document headings paginate safely.
+- This log does not mark the remaining master-list items complete. Intake validation, intake/profile/document syncing, rostering and the remaining module work still need implementation or substantive verification.
+
 ## Build order suggestion
 1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30.

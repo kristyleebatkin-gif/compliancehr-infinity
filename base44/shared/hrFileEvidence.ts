@@ -26,7 +26,7 @@ export function evidenceTypes(label) {
   const prefix = normalise(raw.split(/\s[-–—|]\s/)[0]);
   return byLabel.has(prefix) ? [byLabel.get(prefix)] : ALIASES[prefix] || [];
 }
-export function compileFileRows(staff, documentGroups, checklistEntries) {
+export function compileFileRows(staff, documentGroups, checklistEntries, ambiguousNames = []) {
   const evidence = new Map(staff.map((person) => [person.id, new Set()]));
   const byId = new Map(staff.map((person) => [person.id, person]));
   const byNumber = new Map(staff.filter((person) => person.employee_number).map((person) => [person.employee_number, person]));
@@ -37,7 +37,7 @@ export function compileFileRows(staff, documentGroups, checklistEntries) {
   }
   for (const group of documentGroups) {
     const named = byName.get(group.employee_name) || [];
-    const person = byId.get(group.employee_id) || byNumber.get(group.employee_id) || (!group.employee_id && named.length === 1 ? named[0] : null);
+    const person = byId.get(group.employee_id) || byNumber.get(group.employee_id) || (!group.employee_id && named.length === 1 && !ambiguousNames.includes(group.employee_name) ? named[0] : null);
     if (!person) continue;
     const labels = group.document_type === 'Other' ? evidenceTypes(group.title) : evidenceTypes(group.document_type);
     for (const type of labels) evidence.get(person.id).add(type);

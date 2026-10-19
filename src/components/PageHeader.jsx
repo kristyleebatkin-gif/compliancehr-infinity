@@ -5,6 +5,7 @@ import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under }) {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
         </div>
       )}
+      {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
     </div>
   );
 }

@@ -14,6 +14,7 @@ import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton'
 import VolunteerApplications from '@/components/volunteers/VolunteerApplications';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 export default function Volunteers() {
   const { toast } = useToast();
@@ -81,6 +82,8 @@ export default function Volunteers() {
           </div>
         </div>
       </div>
+
+      <AutoRegisterInsights placement="header" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { MapPin, ExternalLink, Phone, Mail, CalendarDays, Search, Loader2, Building2, Heart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LocalServices from '@/components/referral/LocalServices';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
@@ -75,6 +76,7 @@ export default function CommunityCouncil() {
         </div>
       </div>
 
+      <AutoRegisterInsights placement="header" />
       <Tabs defaultValue="council">
         <TabsList className="flex-wrap">
           <TabsTrigger value="council"><Building2 className="mr-1.5 inline h-3.5 w-3.5" />Council &amp; events</TabsTrigger>

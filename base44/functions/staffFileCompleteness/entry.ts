@@ -24,12 +24,13 @@ export default async function(req) {
     const documentLink = { $or: [{ employee_id: { $in: [...ids, ...numbers] } }, { employee_name: { $in: names } }] };
     const paperworkLink = { $or: [{ staff_profile_id: { $in: ids } }, { employee_id: { $in: numbers } }, { employee_name: { $in: names } }] };
     const grouped = (entity, query, groupBy, extra = {}) => entity.aggregate({ query, groupBy, limit: 1000, ...extra });
-    const [documents, contracts, descriptions, certificates, checklists] = await Promise.all([
+    const [documents, contracts, descriptions, certificates, checklists, nameCounts] = await Promise.all([
       grouped(entities.EmployeeDocument, { ...documentLink, status: { $ne: 'Archived' } }, ['employee_id', 'employee_name', 'document_type', 'title']),
       grouped(entities.EmployeeEmploymentContract, { ...paperworkLink, archived: { $ne: true }, contract_status: { $in: ['Signed', 'Active'] } }, ['staff_profile_id', 'employee_id', 'employee_name']),
       grouped(entities.EmployeePositionDescription, { ...paperworkLink, archived: { $ne: true }, status: 'Acknowledged' }, ['staff_profile_id', 'employee_id', 'employee_name']),
       grouped(entities.Certificate, { $or: [{ staff_id: { $in: [...ids, ...numbers] } }, { staff_name: { $in: names } }], status: { $ne: 'Revoked' } }, ['staff_id', 'staff_name', 'module_title']),
       grouped(entities.ComplianceChecklistEntry, { checklist_key: { $in: ids.map((id) => `staff-file-checklist-${id}`) } }, 'checklist_key', { max: 'updated_date' }),
+      grouped(entities.StaffProfile, { full_name: { $in: names } }, 'full_name'),
     ]);
     if ([documents, contracts, descriptions, certificates, checklists].some((group) => group.truncated)) return Response.json({ error: 'This page has too many evidence groups to calculate accurately.' }, { status: 422 });
     const latest = checklists.rows?.length ? await entities.ComplianceChecklistEntry.filter({ $or: checklists.rows.map((row) => ({ checklist_key: row.checklist_key, updated_date: row.max_updated_date })) }, { sort: '-updated_date', limit: 100, fields: ['checklist_key', 'answers'] }) : { items: [] };
@@ -40,7 +41,10 @@ export default async function(req) {
       ...descriptions.rows.map((row) => ({ ...row, employee_id: row.staff_profile_id || row.employee_id, document_type: 'Position Description' })),
       ...certificates.rows.map((row) => ({ employee_id: row.staff_id, employee_name: row.staff_name, document_type: row.module_title })),
     ];
-    return Response.json({ rows: compileFileRows(staff, evidence, latest.items), total, next_cursor: page.next_cursor, has_more: page.has_more });
+    const ambiguousNames = nameCounts.rows.filter((row) => row.count > 1).map((row) => row.full_name);
+    const rows = compileFileRows(staff, evidence, latest.items, ambiguousNames);
+    const summary = { average: Math.round(rows.reduce((sum, row) => sum + row.pct, 0) / rows.length), complete: rows.filter((row) => row.onFile === row.total).length };
+    return Response.json({ rows, summary, total, ambiguous_names: ambiguousNames, next_cursor: page.next_cursor, has_more: page.has_more });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

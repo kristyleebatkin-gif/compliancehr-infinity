@@ -20,13 +20,16 @@ const PATH_MODULES = [
   ['/community-council', 'community'],
 ];
 
-export default function AutoRegisterInsights() {
+const INLINE_ROUTES = new Set(['/certificates', '/equipment-manuals', '/crm', '/projects', '/feedback', '/programs', '/community-council', '/referrals', '/volunteers', '/volunteering-placements']);
+
+export default function AutoRegisterInsights({ placement = 'layout' }) {
   const { pathname } = useLocation();
   const mod = useMemo(() => {
     const hit = PATH_MODULES.find(([p]) => pathname === p || pathname.startsWith(p + '/'));
     return hit ? hit[1] : null;
   }, [pathname]);
-  if (!mod) return null;
+  if (!mod || (placement === 'header') !== INLINE_ROUTES.has(pathname)) return null;
+  if (placement === 'header') return <RegisterInsights module={mod} />;
   return (
     <div className="mx-auto max-w-6xl px-3 pt-3 md:px-8">
       <RegisterInsights module={mod} />

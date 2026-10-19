@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
@@ -164,6 +165,8 @@ export default function ProgramsEvents() {
           </div>
         </div>
       </div>
+
+      <AutoRegisterInsights placement="header" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
