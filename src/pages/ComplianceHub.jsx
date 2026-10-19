@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History } from 'lucide-react';
 import { NewVersionDialog, PolicyHistoryDialog } from '@/components/compliance/PolicyVersions';
+import ReviewFormTemplates from '@/components/compliance/ReviewFormTemplates';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
@@ -193,6 +194,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="internal-audits">Internal Audit Register</TabsTrigger>
           <TabsTrigger value="participant-reviews">Participant Reviews</TabsTrigger>
           <TabsTrigger value="consents">Consent Register</TabsTrigger>
+          <TabsTrigger value="form-templates">Form Templates</TabsTrigger>
         </TabsList>
 
         <TabsContent value="issues" className="mt-4">
@@ -398,6 +400,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="consents" className="mt-4">
           <ConsentRegister />
+        </TabsContent>
+
+        <TabsContent value="form-templates" className="mt-4">
+          <ReviewFormTemplates />
         </TabsContent>
 
         <TabsContent value="checklists" className="mt-4">
