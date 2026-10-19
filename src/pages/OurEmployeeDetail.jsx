@@ -24,7 +24,7 @@ export default function OurEmployeeDetail() {
         <Button variant="ghost" size="sm" asChild><Link to="/our-employees"><ArrowLeft className="h-4 w-4" />Our employee profiles</Link></Button>
         <PortalInviteButton kind="staff" profile={employee} />
       </div>
-      <StaffProfileSections staff={employee} onUpdated={refresh} header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
+      <StaffProfileSections staff={employee} onUpdated={refresh} showTeam={false} header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
     </div>
   );
 }

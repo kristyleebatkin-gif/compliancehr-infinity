@@ -15,14 +15,14 @@ import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
 import { useRole } from '@/lib/useRole';
 
-export default function StaffProfileSections({ staff, onUpdated, header }) {
+export default function StaffProfileSections({ staff, onUpdated, header, showTeam = true }) {
   const { isAdmin } = useRole();
   const teamSection = (
     <TeamSection title={`${staff.full_name}'s participant team`} description="The participants this staff member supports, shown on their profile and used for rostering." values={staff.participant_team || []} kind="participants" editable={isAdmin}
       onUpdate={async (next) => { await base44.entities.StaffProfile.update(staff.id, { participant_team: next }); await onUpdated(); }} />
   );
   const tabs = [
-    { key: 'details', label: 'Details', Icon: ClipboardCheck, content: <div className="space-y-6">{header}{teamSection}<ExportRow kind="staff" person={staff} section="details" /><StaffDetailsPanel staff={staff} onUpdated={onUpdated} /></div> },
+    { key: 'details', label: 'Details', Icon: ClipboardCheck, content: <div className="space-y-6">{header}{showTeam ? teamSection : null}<ExportRow kind="staff" person={staff} section="details" /><StaffDetailsPanel staff={staff} onUpdated={onUpdated} /></div> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <StaffFillableForms staff={staff} /> },
     { key: 'filechecklist', label: 'File Checklist', Icon: FileCheck2, content: <StaffFileChecklist staff={staff} /> },
     { key: 'records', label: 'Buddy Shifts & Training', Icon: GraduationCap, content: <StaffRecordsTab staff={staff} /> },
