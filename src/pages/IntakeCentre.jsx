@@ -31,7 +31,6 @@ const OPTIONS = [
 export default function IntakeCentre({ embedded = false, profile, profileKind } = {}) {
   if (embedded) return (
     <div className="space-y-6">
-      <PageHeader title="Intake Centre" subtitle="Intake details, evidence and forms for this profile." showAudit={false} showCompliance={false} />
       <Tabs defaultValue={profileKind === 'participant' ? 'Participant' : 'Employee'}>
         <TabsList><TabsTrigger value={profileKind === 'participant' ? 'Participant' : 'Employee'}>{profileKind === 'participant' ? 'Participant Intake' : 'Employee Intake'}</TabsTrigger></TabsList>
         <TabsContent value={profileKind === 'participant' ? 'Participant' : 'Employee'}><IntakeCaseWorkflow intakeType={profileKind === 'participant' ? 'Participant' : 'Employee'} profile={profile} /></TabsContent>

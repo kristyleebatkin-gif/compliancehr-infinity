@@ -25,8 +25,9 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
   const props = { embedded: true, profile, profileKind: kind };
   // In 'Our' profiles Key Personnel contacts are view only.
   const contactProps = ourView ? { ...props, readOnly: true } : props;
-  // In 'Our' profiles rostering is limited to the person's own shifts and approved participants.
-  const rosterProps = ourView ? { ...props, ourView: true } : props;
+  // In 'Our' profiles rostering is limited to the person's own shifts and
+  // approved participants, and progress notes/reports live in normal profiles.
+  const ourProps = ourView ? { ...props, ourView: true } : props;
   return [
     ...(details ? [{ key: 'details', label: 'Profile & Data', Icon: UserRound, content: details }] : []),
     ...(employee && approvedParticipants ? [{ key: 'participants', label: 'Approved Participant Profiles', Icon: Heart, content: approvedParticipants }] : []),
@@ -34,8 +35,8 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: <IntakeCentre {...props} /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
-    { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...props} /> },
-    { key: 'roster', label: 'Rostering', Icon: CalendarClock, content: <Rostering {...rosterProps} /> },
+    { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
+    { key: 'roster', label: 'Rostering', Icon: CalendarClock, content: <Rostering {...ourProps} /> },
     { key: 'community', label: 'Community', Icon: MapPin, content: <CommunityCouncil {...props} /> },
     { key: 'programs', label: 'Programs', Icon: CalendarDays, content: <ProgramsEvents {...props} /> },
     { key: 'incidents', label: 'Incidents', Icon: AlertTriangle, content: <Incidents {...props} /> },

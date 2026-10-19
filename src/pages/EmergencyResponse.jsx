@@ -25,7 +25,7 @@ import OfflineFieldCapture from '@/components/safety/OfflineFieldCapture';
 
 const TYPES = ['Fire Evacuation', 'Fire Drill', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
 
-export default function EmergencyResponse() {
+export default function EmergencyResponse({ embedded = false } = {}) {
   const [drills, setDrills] = useState([]);
   const [checks, setChecks] = useState([]);
   const [docCount, setDocCount] = useState(0);
@@ -87,12 +87,12 @@ export default function EmergencyResponse() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         icon={Siren}
         title="Emergency Response"
         subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources."
         action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
-      />
+      />}
 
       <RegisterInsights module="emergency" />
 

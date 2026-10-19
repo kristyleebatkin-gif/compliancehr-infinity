@@ -38,7 +38,7 @@ const expiryTone = (expiry) => {
   return 'bg-safe/10 text-safe';
 };
 
-export default function Documents({ profile, profileKind } = {}) {
+export default function Documents({ profile, profileKind, embedded = false } = {}) {
   const { search } = useLocation();
   const focus = new URLSearchParams(search).get('focus');
   const [docs, setDocs] = useState([]);
@@ -188,7 +188,7 @@ export default function Documents({ profile, profileKind } = {}) {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />
+      {!embedded && <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />}
 
       {isParticipant ? (
         <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />

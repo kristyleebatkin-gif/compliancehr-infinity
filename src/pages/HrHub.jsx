@@ -17,7 +17,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
-export default function HrHub({ profile } = {}) {
+export default function HrHub({ profile, embedded = false } = {}) {
   const [tab, setTab] = useState('leave');
   const [leaves, setLeaves] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -96,12 +96,12 @@ export default function HrHub({ profile } = {}) {
 
   return (
     <div className="space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."
         icon={UsersRound}
         accent={['#2563eb', '#0891b2']}
-      />
+      />}
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[

@@ -11,12 +11,12 @@ import WeatherBoard from '@/components/visual/WeatherBoard';
 import DayDateBoard from '@/components/visual/DayDateBoard';
 import TranslatorPanel from '@/components/visual/TranslatorPanel';
 
-export default function VisualBoards() {
+export default function VisualBoards({ embedded = false } = {}) {
   const [tab, setTab] = useState('clock');
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Visual Boards" subtitle="Communication supports: clock, visual routine, speech, signs, a full communication board, weather, day and date, and a translator." />
+      {!embedded && <PageHeader title="Visual Boards" subtitle="Communication supports: clock, visual routine, speech, signs, a full communication board, weather, day and date, and a translator." />}
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>
           <TabsTrigger value="clock"><ClockIcon className="mr-1 inline h-3.5 w-3.5" />Clock</TabsTrigger>

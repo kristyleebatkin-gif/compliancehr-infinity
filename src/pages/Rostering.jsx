@@ -43,7 +43,7 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
   </Card>
 );
 
-export default function Rostering({ profile, profileKind, ourView = false } = {}) {
+export default function Rostering({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const scope = useMemo(() => profile ? { [profileKind === 'participant' ? 'participant_name' : 'employee_name']: profile.full_name } : {}, [profile?.full_name, profileKind]);
   const exportShiftRegister = async () => {
     const rows = await fetchAllRecords(base44.entities.Shift, scope, '-date');
@@ -256,13 +256,13 @@ export default function Rostering({ profile, profileKind, ourView = false } = {}
 
   return (
     <div className="space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         icon={CalendarRange}
         title="Rostering"
         subtitle="Roster board, shift register, timesheet approvals and staff availability."
         showAlerts={false}
         action={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
-      />
+      />}
 
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard icon={CalendarClock} label="Shifts this week" value={stats.week} tone="bg-brand/10 text-brand" />

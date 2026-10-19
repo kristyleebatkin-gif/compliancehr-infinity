@@ -54,7 +54,7 @@ const matrixCell = {
   Critical: 'bg-red-500 text-red-950',
 };
 
-export default function Risks({ profile, profileKind } = {}) {
+export default function Risks({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { can } = useRole();
   const { toast } = useToast();
@@ -188,7 +188,7 @@ export default function Risks({ profile, profileKind } = {}) {
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />
+      {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
 
       <RegisterInsights module="risks" />
       {can('risks') && (

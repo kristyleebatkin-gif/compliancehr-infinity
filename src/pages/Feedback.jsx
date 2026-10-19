@@ -23,7 +23,7 @@ const STATUSES = ['Received', 'Viewed', 'Pending Further Action', 'Finalised'];
 const STATUS_DATE = { Viewed: 'viewed_date', 'Pending Further Action': 'pending_date', Finalised: 'finalised_date' };
 const blank = { type: 'Feedback', subject: '', message: '', submitted_by: '', contact_details: '', received_via: '', rating: '', assigned_to: '', outcome: '', status: 'Received' };
 
-export default function Feedback({ profile } = {}) {
+export default function Feedback({ profile, embedded = false } = {}) {
   const { toast } = useToast();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -165,7 +165,7 @@ export default function Feedback({ profile } = {}) {
 
   return (
     <div className="space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         showAlerts={false}
@@ -203,7 +203,7 @@ export default function Feedback({ profile } = {}) {
             </Dialog>
           </div>
         }
-      />
+      />}
 
       <Tabs defaultValue="Feedback">
         <TabsList>

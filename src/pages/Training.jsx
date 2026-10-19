@@ -29,7 +29,7 @@ function statusFor(title, completions) {
   return { status: 'Current', completion: latest };
 }
 
-export default function Training({ profile } = {}) {
+export default function Training({ profile, embedded = false } = {}) {
   const { user } = useAuth();
   const completionQuery = profile ? { $or: [{ employee_id: profile.id }, { learner_id: profile.id }, { employee_name: profile.full_name }, { learner_name: profile.full_name }] } : {};
   const ownLearning = !profile || profile.email === user?.email;
@@ -94,11 +94,11 @@ export default function Training({ profile } = {}) {
 
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         title="Training Hub"
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
         action={<Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
-      />
+      />}
 
       <RegisterInsights module="training" />
 

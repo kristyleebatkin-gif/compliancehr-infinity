@@ -22,7 +22,7 @@ import GoalInsights from '@/components/goals/GoalInsights';
 import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 
-export default function GoalProgress({ profile, profileKind } = {}) {
+export default function GoalProgress({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -126,14 +126,14 @@ export default function GoalProgress({ profile, profileKind } = {}) {
             </div>
           )}
         </div>
-        {!compact && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} /></div>}
+        {!compact && !ourView && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} /></div>}
       </CardContent>
     </Card>
   );
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />
+      {!embedded && <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />}
 
       <RegisterInsights module="goals" />
       <div className="flex flex-wrap items-center gap-2">

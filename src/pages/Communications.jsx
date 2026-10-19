@@ -23,16 +23,16 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 
-export default function Communications({ profile, profileKind } = {}) {
+export default function Communications({ profile, profileKind, embedded = false } = {}) {
   return (
     <div className="space-y-6">
-      <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
+      {!embedded && <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
         <PageHeader
           title="Communication Centre"
           subtitle="Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person's participant or staff record, and note types route to their matching module."
           accent={['#4f46e5', '#22d3ee']}
         />
-      </div>
+      </div>}
 
       <Tabs defaultValue="diary">
         <TabsList className="flex flex-wrap">

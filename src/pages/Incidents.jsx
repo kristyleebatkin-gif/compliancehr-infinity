@@ -36,7 +36,7 @@ const fieldBase = 'w-full rounded-lg border border-input bg-background px-2.5 py
 const labelCls = 'text-[11px] font-semibold text-foreground/60 mb-1';
 const blankInv = { title: '', investigation_id: '', incident_id: '', investigator: '', received_by: '', start_date: '', target_completion: '', status: 'Pending', incident_summary: '', evidence_reviewed: '', persons_interviewed: '', hazards_identified: '', risk_assessment: '', control_measures: '', findings: '', recommendations: '', root_cause: '', corrective_actions: '' };
 
-export default function Incidents({ profile, profileKind } = {}) {
+export default function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const { role } = useRole();
@@ -197,7 +197,7 @@ export default function Incidents({ profile, profileKind } = {}) {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
-      <PageHeader
+      {!embedded && <PageHeader
         title="Incident Clinic"
         subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
         action={
@@ -209,7 +209,7 @@ export default function Incidents({ profile, profileKind } = {}) {
             {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
           </div>
         }
-      />
+      />}
 
       <RegisterInsights module="incidents" />
 
