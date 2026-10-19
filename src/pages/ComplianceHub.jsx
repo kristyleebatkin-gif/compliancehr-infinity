@@ -69,6 +69,7 @@ import ComplianceGlobalSearch from '@/components/compliance/ComplianceGlobalSear
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import TaskKanban from '@/components/compliance/TaskKanban';
 import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';
+import ExecutiveSummary from '@/components/compliance/ExecutiveSummary';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
@@ -192,6 +193,7 @@ export default function ComplianceHub() {
 
       <Tabs defaultValue="quick-tasks">
         <TabsList className="flex-wrap">
+          <TabsTrigger value="executive-summary">Executive Summary</TabsTrigger>
           <TabsTrigger value="quick-tasks">Quick Tasks</TabsTrigger>
           <TabsTrigger value="task-kanban">Task Kanban</TabsTrigger>
           <TabsTrigger value="issues">Compliance Issues</TabsTrigger>
@@ -219,6 +221,10 @@ export default function ComplianceHub() {
           <TabsTrigger value="staff-bulk-actions">Staff Bulk Actions</TabsTrigger>
           <TabsTrigger value="activity-feed">Activity Feed</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="executive-summary" className="mt-4">
+          <ExecutiveSummary />
+        </TabsContent>
 
         <TabsContent value="issues" className="mt-4">
           <ComplianceIssuesTab />
