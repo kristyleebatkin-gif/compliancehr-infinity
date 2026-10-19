@@ -16,6 +16,9 @@ export default async function (req) {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!ALLOWED_ROLES.includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
+    const body = await req.json().catch(() => ({}));
+    const offset = Number(body?.offset) || 0;
+    const limit = Math.min(Number(body?.limit) || 12, 30);
 
     const moduleKeys = Object.keys(REGISTRY);
     const today = new Date().toISOString().slice(0, 10);
@@ -132,7 +135,13 @@ export default async function (req) {
       console.error('suggestionsDigest email failed:', e.message);
     }
 
-    return Response.json({ emailed, recipient: user.email, suggestionCount, modules, generated_at: new Date().toISOString() });
+    return Response.json({
+      emailed,
+      recipient: user.email,
+      suggestionCount,
+      modules: modules.slice(offset, offset + limit).map((m) => ({ label: m.label, suggestions: m.suggestions })),
+      generated_at: new Date().toISOString(),
+    });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
