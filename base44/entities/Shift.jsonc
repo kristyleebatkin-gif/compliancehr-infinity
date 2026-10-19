@@ -193,11 +193,6 @@
         },
         {
           "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
             "role": "Compliance Manager"
           }
         },
@@ -207,9 +202,28 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "data.employee_name": "{{user.full_name}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.participant_name": "{{user.full_name}}"
+            }
+          ]
         },
         {
           "data.participant_name": "{{user.full_name}}"
@@ -273,9 +287,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "data.employee_name": "{{user.full_name}}"
+            }
+          ]
         }
       ]
     },
