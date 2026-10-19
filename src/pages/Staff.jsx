@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import CertificationOverview from '@/components/staff/CertificationOverview';
 import StaffRecognition from '@/components/staff/StaffRecognition';
+import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
+import { getCompanyBranding } from '@/lib/companyBranding';
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -28,6 +30,7 @@ export default function Staff() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
+  const branding = getCompanyBranding();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ full_name: '', email: '', phone: '', position: '', role: 'Support Worker', status: 'Active', start_date: '', supervisor: '', emergency_contact: '' });
 
@@ -150,6 +153,7 @@ export default function Staff() {
                       </div>
                       <Badge className={statusTone(s.status)}>{s.status}</Badge>
                     </div>
+                    <div className="mt-3"><StaffBadgePreview branding={branding} staff={s} /></div>
                     <div className="mt-3 space-y-1 text-sm text-muted-foreground">
                       {s.email && <p>{s.email}</p>}
                       {s.phone && <p>{s.phone}</p>}
