@@ -57,6 +57,7 @@ import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
 import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
 import ComplianceIssuesTab from '@/components/compliance/ComplianceIssuesTab';
+import RiskStatusDashboard from '@/components/compliance/RiskStatusDashboard';
 import PolicyAcknowledgements from '@/components/compliance/PolicyAcknowledgements';
 import InternalAuditRegister from '@/components/compliance/InternalAuditRegister';
 import ParticipantReviewRegister from '@/components/compliance/ParticipantReviewRegister';
@@ -182,6 +183,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="issues">Compliance Issues</TabsTrigger>
           <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
           <TabsTrigger value="trend-charts">Trend Charts</TabsTrigger>
+          <TabsTrigger value="risk-status">Risk &amp; Status Dashboard</TabsTrigger>
           <TabsTrigger value="master-checklist">Master Checklist</TabsTrigger>
           <TabsTrigger value="kits-drills">Kits &amp; Drills Checklists</TabsTrigger>
           <TabsTrigger value="audits">Audits</TabsTrigger>
@@ -208,6 +210,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="trend-charts" className="mt-4">
           <SafetyTrendChart />
+        </TabsContent>
+
+        <TabsContent value="risk-status" className="mt-4">
+          <RiskStatusDashboard />
         </TabsContent>
 
         <TabsContent value="master-checklist" className="mt-4">
