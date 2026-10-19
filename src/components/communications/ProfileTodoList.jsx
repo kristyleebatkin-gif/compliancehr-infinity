@@ -17,9 +17,17 @@ export default function ProfileTodoList({ staff }) {
   const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.TodoTask.filter({}, { sort: '-created_date', limit: 500 });
-      setTasks((page.items || []).filter((t) => (t.responsible || []).includes(staff.full_name)
-        || (t.responsible_emails || []).some((e) => String(e).toLowerCase() === String(staff.email || '').toLowerCase())));
+      const page = await base44.entities.TodoTask.filter({
+        $or: [
+          { responsible: staff.full_name },
+          { assigned_to: staff.full_name },
+          { responsible_emails: staff.email },
+          { assigned_email: staff.email },
+          { responsible_emails: String(staff.email || '').toLowerCase() },
+          { assigned_email: String(staff.email || '').toLowerCase() },
+        ],
+      }, { sort: '-created_date', limit: 500 });
+      setTasks(page.items || []);
     } finally {
       setLoading(false);
     }
