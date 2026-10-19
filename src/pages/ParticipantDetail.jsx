@@ -15,6 +15,7 @@ import ParticipantDocumentsTab from '@/components/participants/ParticipantDocume
 import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsTab';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import FundingUtilisation from '@/components/participants/FundingUtilisation';
+import ExportRow from '@/components/profile/ExportRow';
 
 export default function ParticipantDetail() {
   const { id } = useParams();
@@ -78,16 +79,17 @@ export default function ParticipantDetail() {
           <TabsTrigger value="comm"><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Communication Diary</TabsTrigger>
           <TabsTrigger value="forms"><FileSignature className="mr-1 inline h-3.5 w-3.5" />Fillable Forms</TabsTrigger>
         </TabsList>
-        <TabsContent value="details"><ParticipantDetailsTab participant={participant} onUpdated={load} /></TabsContent>
+        <TabsContent value="details"><ExportRow kind="participant" person={participant} section="details" /><ParticipantDetailsTab participant={participant} onUpdated={load} /></TabsContent>
         <TabsContent value="documents">
+          <ExportRow kind="participant" person={participant} section="documents" />
           <div className="space-y-6">
             <ParticipantDocumentsTab participant={participant} />
             <ProfileIntakeDocuments profileId={participant.id} />
           </div>
         </TabsContent>
-        <TabsContent value="records"><ParticipantRecordsTab participant={participant} /></TabsContent>
-        <TabsContent value="comm"><ProfileCommDiary participant={participant} /></TabsContent>
-        <TabsContent value="forms"><ParticipantFillableForms participant={participant} /></TabsContent>
+        <TabsContent value="records"><ExportRow kind="participant" person={participant} section="records" /><ParticipantRecordsTab participant={participant} /></TabsContent>
+        <TabsContent value="comm"><ExportRow kind="participant" person={participant} section="comm" /><ProfileCommDiary participant={participant} /></TabsContent>
+        <TabsContent value="forms"><ExportRow kind="participant" person={participant} section="forms" /><ParticipantFillableForms participant={participant} /></TabsContent>
       </Tabs>
     </div>
   );

@@ -20,6 +20,7 @@ import StaffPerformanceTab from '@/components/staff/StaffPerformanceTab';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import StaffBadgeCard from '@/components/staff/StaffBadgeCard';
 import EmploymentTimeline from '@/components/staff/EmploymentTimeline';
+import ExportRow from '@/components/profile/ExportRow';
 
 export default function StaffDetail() {
   const { id } = useParams();
@@ -83,6 +84,7 @@ export default function StaffDetail() {
           <TabsTrigger value="todo"><ListTodo className="mr-1 inline h-3.5 w-3.5" />To-Do</TabsTrigger>
         </TabsList>
         <TabsContent value="details">
+          <ExportRow kind="staff" person={staff} section="details" />
           <div className="space-y-6">
             <StaffBadgeCard staff={staff} />
             <EmploymentTimeline staff={staff} />
@@ -90,14 +92,14 @@ export default function StaffDetail() {
             <ProfileIntakeDocuments profileId={staff.id} />
           </div>
         </TabsContent>
-        <TabsContent value="forms"><StaffFillableForms staff={staff} /></TabsContent>
-        <TabsContent value="filechecklist"><StaffFileChecklist staff={staff} /></TabsContent>
-        <TabsContent value="records"><StaffRecordsTab staff={staff} /></TabsContent>
-        <TabsContent value="access"><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>
-        <TabsContent value="performance"><StaffPerformanceTab staff={staff} /></TabsContent>
-        <TabsContent value="safety"><StaffSafetyTab staff={staff} /></TabsContent>
-        <TabsContent value="comm"><StaffCommPanel staff={staff} /></TabsContent>
-        <TabsContent value="todo"><ProfileTodoList staff={staff} /></TabsContent>
+        <TabsContent value="forms"><ExportRow kind="staff" person={staff} section="forms" /><StaffFillableForms staff={staff} /></TabsContent>
+        <TabsContent value="filechecklist"><ExportRow kind="staff" person={staff} section="filechecklist" /><StaffFileChecklist staff={staff} /></TabsContent>
+        <TabsContent value="records"><ExportRow kind="staff" person={staff} section="records" /><StaffRecordsTab staff={staff} /></TabsContent>
+        <TabsContent value="access"><ExportRow kind="staff" person={staff} section="access" /><StaffAccessTab staff={staff} onUpdated={load} /></TabsContent>
+        <TabsContent value="performance"><ExportRow kind="staff" person={staff} section="performance" /><StaffPerformanceTab staff={staff} /></TabsContent>
+        <TabsContent value="safety"><ExportRow kind="staff" person={staff} section="safety" /><StaffSafetyTab staff={staff} /></TabsContent>
+        <TabsContent value="comm"><ExportRow kind="staff" person={staff} section="comm" /><StaffCommPanel staff={staff} /></TabsContent>
+        <TabsContent value="todo"><ExportRow kind="staff" person={staff} section="todo" /><ProfileTodoList staff={staff} /></TabsContent>
       </Tabs>
     </div>
   );
