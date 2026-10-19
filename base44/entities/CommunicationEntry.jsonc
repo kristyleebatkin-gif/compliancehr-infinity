@@ -197,8 +197,12 @@
           "data.staff_involved": "{{user.full_name}}"
         },
         {
+          "data.person_name": "{{user.full_name}}"
+        },
+        {
           "data.entry_kind": {
             "$in": [
+              "Broadcast",
               "Team Banter",
               "Video Call"
             ]

@@ -230,13 +230,14 @@
         },
         {
           "user_condition": {
-            "role": "Support Worker"
+            "role": "Auditor"
           }
         },
         {
-          "user_condition": {
-            "role": "Auditor"
-          }
+          "data.support_staff": "{{user.full_name}}"
+        },
+        {
+          "data.support_team": "{{user.full_name}}"
         },
         {
           "data.email": "{{user.email}}"
@@ -295,9 +296,10 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
+          "data.support_staff": "{{user.full_name}}"
+        },
+        {
+          "data.support_team": "{{user.full_name}}"
         },
         {
           "data.email": "{{user.email}}"
