@@ -24,7 +24,9 @@ import ExportRow from '@/components/profile/ExportRow';
 import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import { useRole } from '@/lib/useRole';
 
-export default function StaffDetail() {
+export default function StaffDetail({ variant = 'staff' }) {
+  const backTo = variant === 'our' ? '/our-employees' : '/staff';
+  const backLabel = variant === 'our' ? 'Our employee profiles' : 'Staff';
   const { id } = useParams();
   const [staff, setStaff] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -53,7 +55,7 @@ export default function StaffDetail() {
     return (
       <div className="space-y-4 text-center py-16">
         <p className="text-muted-foreground">Staff member not found.</p>
-        <Button variant="outline" asChild><Link to="/staff"><ArrowLeft className="h-4 w-4" />Back to staff</Link></Button>
+        <Button variant="outline" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel.toLowerCase()}</Link></Button>
       </div>
     );
   }
@@ -61,7 +63,7 @@ export default function StaffDetail() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-2">
-        <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/staff"><ArrowLeft className="h-4 w-4" />Staff</Link></Button>
+        <Button variant="ghost" size="sm" asChild className="mb-2"><Link to={backTo}><ArrowLeft className="h-4 w-4" />{backLabel}</Link></Button>
         <PortalInviteButton kind="staff" profile={staff} />
       </div>
 

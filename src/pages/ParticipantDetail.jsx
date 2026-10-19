@@ -20,7 +20,9 @@ import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ParticipantApprovalToggle from '@/components/participants/ParticipantApprovalToggle';
 import { useRole } from '@/lib/useRole';
 
-export default function ParticipantDetail() {
+export default function ParticipantDetail({ variant = 'participants' }) {
+  const backTo = variant === 'our' ? '/our-participants' : '/participants';
+  const backLabel = variant === 'our' ? 'Our participant profiles' : 'Participants';
   const { id } = useParams();
   const [participant, setParticipant] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ export default function ParticipantDetail() {
     return (
       <div className="space-y-4 text-center py-16">
         <p className="text-muted-foreground">Participant not found.</p>
-        <Button variant="outline" asChild><Link to="/participants"><ArrowLeft className="h-4 w-4" />Back to participants</Link></Button>
+        <Button variant="outline" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel.toLowerCase()}</Link></Button>
       </div>
     );
   }
@@ -57,7 +59,7 @@ export default function ParticipantDetail() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-2">
-        <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/participants"><ArrowLeft className="h-4 w-4" />Participants</Link></Button>
+        <Button variant="ghost" size="sm" asChild className="mb-2"><Link to={backTo}><ArrowLeft className="h-4 w-4" />{backLabel}</Link></Button>
         <div className="flex flex-wrap items-center gap-2">
           <ParticipantApprovalToggle participant={participant} onUpdate={load} />
           <PortalInviteButton kind="participant" profile={participant} />

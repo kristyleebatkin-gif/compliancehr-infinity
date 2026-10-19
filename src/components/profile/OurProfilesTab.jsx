@@ -116,7 +116,7 @@ export default function OurProfilesTab({ kind }) {
                   {list.map((r) => {
                     const { primary } = profilePalette(r.full_name);
                     return (
-                      <Link key={r.id} to={isParticipant ? `/participants/${r.id}` : `/staff/${r.id}`} className="group">
+                      <Link key={r.id} to={isParticipant ? `/our-participants/${r.id}` : `/our-employees/${r.id}`} className="group">
                         <div className="flex h-full items-start gap-3 rounded-2xl border border-border/60 bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                           <div
                             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
