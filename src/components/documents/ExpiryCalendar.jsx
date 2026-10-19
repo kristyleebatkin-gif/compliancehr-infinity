@@ -14,7 +14,7 @@ const isSameDaySafe = (a, b) => format(a, 'yyyy-MM-dd') === format(b, 'yyyy-MM-d
 // employee document expiries plus training certificate expiries.
 // Drag a deadline chip onto another day to change its expiry date.
 // Colour per urgency: red = expired, amber = due within 30 days, green = further out.
-export default function ExpiryCalendar({ docs, certs, viewDoc, editable = false, onReschedule }) {
+export default function ExpiryCalendar({ docs, pdocs = [], certs, viewDoc, editable = false, onReschedule }) {
   const [selected, setSelected] = useState(null);
   const [month, setMonth] = useState(new Date());
   const [dragId, setDragId] = useState(null);
@@ -32,6 +32,15 @@ export default function ExpiryCalendar({ docs, certs, viewDoc, editable = false,
       expiry_date: d.expiry_date,
       raw: d,
     }));
+    const fromParticipants = (pdocs || []).filter((d) => d.expiry_date).map((d) => ({
+      id: `pdoc-${d.id}`,
+      title: d.title || d.document_type,
+      person: d.participant_name || 'Unassigned',
+      type: d.document_type || 'Participant Document',
+      kind: 'Participant',
+      expiry_date: d.expiry_date,
+      raw: d,
+    }));
     const fromCerts = (certs || []).filter((c) => c.expiry_date).map((c) => ({
       id: `cert-${c.id}`,
       title: c.module_title,
@@ -41,8 +50,8 @@ export default function ExpiryCalendar({ docs, certs, viewDoc, editable = false,
       expiry_date: c.expiry_date,
       raw: c,
     }));
-    return [...fromDocs, ...fromCerts];
-  }, [docs, certs]);
+    return [...fromDocs, ...fromParticipants, ...fromCerts];
+  }, [docs, pdocs, certs]);
 
   const byDay = useMemo(() => {
     const m = new Map();
@@ -100,7 +109,7 @@ export default function ExpiryCalendar({ docs, certs, viewDoc, editable = false,
     if (!item || busyId) return;
     const newDate = format(date, 'yyyy-MM-dd');
     if (format(new Date(item.expiry_date), 'yyyy-MM-dd') === newDate) return;
-    const entity = item.kind === 'Certificate' ? base44.entities.Certificate : base44.entities.EmployeeDocument;
+    const entity = item.kind === 'Certificate' ? base44.entities.Certificate : item.kind === 'Participant' ? base44.entities.ParticipantDocument : base44.entities.EmployeeDocument;
     setBusyId(item.id);
     try {
       await entity.update(item.raw.id, { expiry_date: newDate });

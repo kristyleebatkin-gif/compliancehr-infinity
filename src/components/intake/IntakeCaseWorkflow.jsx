@@ -38,6 +38,7 @@ import {
   createProfileId,
   findIntakeDuplicate,
   intakeReadiness,
+  mirrorIntakeDocumentsToProfile,
   validateIntakeFile,
 } from '@/lib/intakeCases';
 
@@ -595,6 +596,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         { intake_case_id: activeCase.id },
         { $set: { profile_id: profile.id } },
       );
+      const mirrored = await mirrorIntakeDocumentsToProfile(activeCase, profile);
       if (intakeType === 'Employee') {
         await base44.entities.TrainingCompletion.updateMany(
           { learner_name: activeCase.applicant_name, learner_type: 'Employee' },
@@ -624,7 +626,7 @@ export default function IntakeCaseWorkflow({ intakeType }) {
         console.error('Conversion audit logging failed', auditError);
       }
       await load(activeCase.id);
-      toast({ title: `${activeCase.applicant_name} converted to a profile` });
+      toast({ title: `${activeCase.applicant_name} converted to a profile${mirrored ? `, ${mirrored} document(s) filed to their vault` : ''}` });
     } catch (error) {
       console.error(error);
       toast({ title: 'Unable to convert intake case', description: error.message, variant: 'destructive' });

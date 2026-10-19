@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { base44 } from '@/api/base44Client';
 
 export const INTAKE_REQUIREMENTS = {
   Participant: [
@@ -323,6 +324,87 @@ export function createProfileId(records, key, prefix) {
     return match ? Math.max(acc, parseInt(match[1], 10)) : acc;
   }, 0);
   return `${prefix}-${String(max + 1).padStart(4, '0')}`;
+}
+
+// Intake uploads live on the intake case only. When a case converts to a
+// profile, mirror every uploaded file into that person's document register so
+// it also appears in the Document Vault, My Documents and their profile tabs.
+const PARTICIPANT_MIRROR_ALIASES = { 'Fire Drill Form': 'Fire Drill' };
+const EMPLOYEE_MIRROR_MAP = {
+  Contract: 'Contract',
+  'Employment Contract': 'Contract',
+  'NDIS Worker Screening Clearance': 'NDIS Worker Screening',
+  'Blue Card and/or Police Check': 'Police Check',
+  'Police Check': 'Police Check',
+  'Blue Card': 'Blue Card',
+  Resume: 'Resume',
+  Qualifications: 'Qualifications',
+  "Driver's License": "Driver's License",
+  'First Aid Certificate': 'First Aid Certificate',
+  'CPR Certificate': 'CPR Certificate',
+  'Referee Checks Form': 'Reference Check',
+  'Reference Check': 'Reference Check',
+  'Staff Badge': 'Staff Badge',
+};
+
+export async function mirrorIntakeDocumentsToProfile(intakeCase, profile) {
+  try {
+    const page = await base44.entities.IntakeDocument.filter(
+      { intake_case_id: intakeCase.id },
+      { limit: 200 },
+    );
+    const withFile = (page.items || []).filter((doc) => doc.file_uri);
+    if (!withFile.length) return 0;
+    const today = new Date().toISOString().slice(0, 10);
+    let participantUserId = '';
+    if (intakeCase.intake_type === 'Participant' && profile.email) {
+      try {
+        const users = await base44.entities.User.list();
+        participantUserId = users.find((u) => String(u.email || '').toLowerCase() === String(profile.email).toLowerCase())?.id || '';
+      } catch { /* user lookup is optional */ }
+    }
+    let mirrored = 0;
+    await Promise.allSettled(withFile.map(async (doc) => {
+      const type = canonicalIntakeDocumentType(doc.document_type || '');
+      const fromNote = `Imported from intake case ${intakeCase.case_number}. File: ${doc.file_name || type}.`;
+      try {
+        if (intakeCase.intake_type === 'Participant') {
+          await base44.entities.ParticipantDocument.create({
+            participant_id: profile.id,
+            participant_name: profile.full_name,
+            participant_user_id: participantUserId,
+            intake_case_id: intakeCase.id,
+            document_type: PARTICIPANT_MIRROR_ALIASES[type] || type,
+            title: type,
+            file_uri: doc.file_uri,
+            uploaded_date: doc.uploaded_date || today,
+            submitted_date: doc.uploaded_date || today,
+            submission_method: 'Imported',
+            status: 'Completed',
+            review_outcome: 'Approved',
+            notes: fromNote,
+          });
+        } else {
+          await base44.entities.EmployeeDocument.create({
+            title: type,
+            employee_id: profile.id,
+            employee_name: profile.full_name,
+            document_type: EMPLOYEE_MIRROR_MAP[type] || 'Other',
+            file_uri: doc.file_uri,
+            status: 'Current',
+            notes: `${fromNote} Original type: ${type}.`,
+          });
+        }
+        mirrored += 1;
+      } catch (error) {
+        console.error('Intake document mirror failed', type, error);
+      }
+    }));
+    return mirrored;
+  } catch (error) {
+    console.error('Intake document mirroring failed', error);
+    return 0;
+  }
 }
 
 export function businessDateTime() {

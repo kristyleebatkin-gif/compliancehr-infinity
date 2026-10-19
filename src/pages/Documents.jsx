@@ -48,6 +48,7 @@ export default function Documents() {
   const [myProfile, setMyProfile] = useState(null);
   const [staff, setStaff] = useState([]);
   const [certs, setCerts] = useState([]);
+  const [pdocs, setPdocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -85,10 +86,12 @@ export default function Documents() {
         base44.entities.EmployeeDocument.filter({ status: { $ne: 'Archived' } }, { sort: 'expiry_date', limit: 50 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
         base44.entities.Certificate.filter({ status: { $ne: 'Revoked' } }, { sort: 'expiry_date', limit: 100, fields: ['module_title', 'staff_name', 'expiry_date', 'status'] }),
+        base44.entities.ParticipantDocument.filter({}, { sort: '-created_date', limit: 100 }),
       ]);
       setDocs(results[0].status === 'fulfilled' ? results[0].value.items : []);
       setStaff(results[1].status === 'fulfilled' ? results[1].value.items.map((i) => i.full_name) : []);
       setCerts(results[2].status === 'fulfilled' ? results[2].value.items : []);
+      setPdocs(results[3].status === 'fulfilled' ? results[3].value.items || [] : []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -285,6 +288,41 @@ export default function Documents() {
         </>
       )}
 
+      {pdocs.length > 0 && (
+        <div className="pt-2">
+          <div className="mb-3 flex items-center gap-2.5">
+            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
+            <span className="text-sm font-bold font-editorial text-foreground/80">Participant documents</span>
+            <Badge variant="outline" className="tabular-nums">{pdocs.length}</Badge>
+            <span className="text-xs text-muted-foreground">Also managed in each participant profile.</span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {pdocs.map((d) => {
+              const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
+              return (
+                <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold">{d.title || d.document_type}</p>
+                        <p className="text-sm text-muted-foreground">{d.participant_name || 'Unassigned'} · {d.document_type}</p>
+                      </div>
+                      <Badge className={expiryTone(d.expiry_date)}>{d.review_outcome || d.status || 'Received'}</Badge>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                      <span className={expired ? 'font-semibold text-destructive' : ''}>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
+                      {(d.file_uri || d.file_url) && (
+                        <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-2.5 pt-2">
         <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
         <span className="text-sm font-bold font-editorial text-foreground/80">Forms &amp; document libraries</span>
@@ -310,7 +348,7 @@ export default function Documents() {
         </TabsContent>
 
         <TabsContent value="expiry-calendar" className="mt-4">
-          <ExpiryCalendar docs={docs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
+          <ExpiryCalendar docs={docs} pdocs={pdocs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
         </TabsContent>
 
         <TabsContent value="data-control" className="mt-4">
