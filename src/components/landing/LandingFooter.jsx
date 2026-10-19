@@ -33,7 +33,9 @@ export default function LandingFooter() {
 
   return (
     <footer className="relative overflow-hidden border-t border-slate-900 bg-slate-950 text-white">
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-violet-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-violet-500/40 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-56 w-56 rounded-full bg-cyan-400/25 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 right-10 h-56 w-56 rounded-full bg-fuchsia-500/25 blur-3xl" />
       <div className="relative mx-auto max-w-6xl px-4 py-14 md:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">

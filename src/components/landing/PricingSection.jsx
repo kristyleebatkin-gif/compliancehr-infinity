@@ -23,9 +23,11 @@ const INCLUDED = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="mx-auto my-10 max-w-6xl scroll-mt-16 rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-50/60 px-4 py-14 sm:py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
-      <Reveal className="mx-auto max-w-2xl text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-fuchsia-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-fuchsia-700 dark:border-fuchsia-500/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
+    <section id="pricing" className="relative mx-auto my-10 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-b from-white via-white to-violet-100/80 px-4 py-14 sm:py-20 shadow-xl shadow-violet-500/10 dark:border-white/10 dark:from-card dark:via-card dark:to-violet-950/25 md:px-8">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-fuchsia-300/40 blur-3xl dark:bg-fuchsia-500/10" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-violet-300/45 blur-3xl dark:bg-violet-500/10" />
+      <Reveal className="relative mx-auto max-w-2xl text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-300 bg-fuchsia-100/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-fuchsia-700 dark:border-fuchsia-500/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
           <Sparkles className="h-3.5 w-3.5" />
           Start with a 14-day free trial
         </div>
@@ -80,7 +82,7 @@ export default function PricingSection() {
         </div>
       </Reveal>
 
-      <div className="mt-8 grid gap-6 rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-lg backdrop-blur dark:border-white/10 dark:bg-card/80 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+      <div className="relative mt-8 grid gap-6 rounded-3xl border border-violet-200 bg-white/85 p-6 shadow-lg backdrop-blur dark:border-white/10 dark:bg-card/80 md:grid-cols-[1fr_auto] md:items-center md:p-8">
         <div>
           <h3 className="font-editorial text-xl font-semibold text-foreground">Every plan includes</h3>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2">
