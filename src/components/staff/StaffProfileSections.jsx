@@ -15,7 +15,7 @@ import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
 import { useRole } from '@/lib/useRole';
 
-export default function StaffProfileSections({ staff, onUpdated, header, showTeam = true }) {
+export default function StaffProfileSections({ staff, onUpdated, header, showTeam = true, ourView = false }) {
   const { isAdmin } = useRole();
   const teamSection = (
     <TeamSection title={`${staff.full_name}'s participant team`} description="The participants this staff member supports, shown on their profile and used for rostering." values={staff.participant_team || []} kind="participants" editable={isAdmin}
@@ -26,7 +26,9 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <StaffFillableForms staff={staff} /> },
     { key: 'filechecklist', label: 'File Checklist', Icon: FileCheck2, content: <StaffFileChecklist staff={staff} /> },
     { key: 'records', label: 'Buddy Shifts & Training', Icon: GraduationCap, content: <StaffRecordsTab staff={staff} /> },
-    { key: 'access', label: 'Access & Permissions', Icon: KeyRound, content: <StaffAccessTab staff={staff} onUpdated={onUpdated} /> },
+    // Access & permissions is an admin/HR management feature and stays in the
+    // admin Staff profiles module only — not in 'Our' employee views.
+    ...(ourView ? [] : [{ key: 'access', label: 'Access & Permissions', Icon: KeyRound, content: <StaffAccessTab staff={staff} onUpdated={onUpdated} /> }]),
     { key: 'performance', label: 'Performance Reviews', Icon: TrendingUp, content: <StaffPerformanceTab staff={staff} /> },
     { key: 'safety', label: 'Safety Records', Icon: ShieldAlert, content: <StaffSafetyTab staff={staff} /> },
     { key: 'comm', label: 'Communication Log', Icon: MessagesSquare, content: <StaffCommPanel staff={staff} /> },

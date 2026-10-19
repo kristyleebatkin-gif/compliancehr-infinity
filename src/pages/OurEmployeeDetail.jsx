@@ -22,7 +22,7 @@ export default function OurEmployeeDetail() {
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/our-employees"><ArrowLeft className="h-4 w-4" />Our employee profiles</Link></Button>
       </div>
-      <StaffProfileSections staff={employee} onUpdated={refresh} showTeam={false} header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
+      <StaffProfileSections staff={employee} onUpdated={refresh} showTeam={false} ourView header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
     </div>
   );
 }

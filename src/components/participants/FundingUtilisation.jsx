@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
+import { useRole } from '@/lib/useRole';
 import { Pencil, PiggyBank } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -13,6 +14,7 @@ const money = (v) => (Number(v) || 0).toLocaleString('en-AU', { minimumFractionD
 
 // NDIS plan budget utilisation bar for a participant profile (FlowLogic parity).
 export default function FundingUtilisation({ participant, onUpdated }) {
+  const { isAdmin } = useRole();
   const { toast } = useToast();
   const [spent, setSpent] = useState(null);
   const [calculating, setCalculating] = useState(true);
@@ -85,7 +87,7 @@ export default function FundingUtilisation({ participant, onUpdated }) {
               <div className="text-[11px] text-muted-foreground">Funding utilisation across this participant's plan</div>
             </div>
           </div>
-          <Button variant="outline" size="sm" onClick={openEdit}><Pencil className="mr-2 h-3.5 w-3.5" />{budget ? 'Edit budget' : 'Add budget'}</Button>
+          {isAdmin ? <Button variant="outline" size="sm" onClick={openEdit}><Pencil className="mr-2 h-3.5 w-3.5" />{budget ? 'Edit budget' : 'Add budget'}</Button> : null}
         </div>
 
         {budget === 0 ? (
