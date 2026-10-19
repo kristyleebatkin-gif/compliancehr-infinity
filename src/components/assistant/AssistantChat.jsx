@@ -5,7 +5,7 @@ import MessageBubble from './MessageBubble';
 import { ArrowLeft, Plus, SendHorizontal, Loader2, MessagesSquare } from 'lucide-react';
 import moment from 'moment';
 
-const SUGGESTIONS = ['What needs my attention today?', 'Summarise recent activity', 'What is due this week?'];
+const FALLBACK_SUGGESTIONS = ['What needs my attention today?', 'Summarise recent activity', 'What is due this week?'];
 
 export default function AssistantChat({ agent, onBack }) {
   const [conversations, setConversations] = useState([]);
@@ -14,9 +14,22 @@ export default function AssistantChat({ agent, onBack }) {
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [loadingList, setLoadingList] = useState(true);
+  const [suggestions, setSuggestions] = useState(FALLBACK_SUGGESTIONS);
   const scrollRef = useRef(null);
   const { toast } = useToast();
   const Icon = agent.icon;
+
+  // Generate the full suggestion list for this assistant and show all of it
+  useEffect(() => {
+    let cancelled = false;
+    base44.functions.invoke('assistantSuggestions', { agent_name: agent.name })
+      .then((res) => {
+        const questions = res?.data?.questions;
+        if (!cancelled && Array.isArray(questions) && questions.length > 0) setSuggestions(questions);
+      })
+      .catch((error) => console.error(error));
+    return () => { cancelled = true; };
+  }, [agent.name]);
 
   useEffect(() => {
     let cancelled = false;
@@ -131,7 +144,7 @@ export default function AssistantChat({ agent, onBack }) {
             <div className="mt-3 text-lg font-bold font-display">{agent.label}</div>
             <div className="mt-1 max-w-sm text-sm text-foreground/50">{agent.tagline}. Ask anything to get started.</div>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
-              {SUGGESTIONS.map((s) => (
+              {suggestions.map((s) => (
                 <button key={s} onClick={() => setInput(s)} className="rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand">
                   {s}
                 </button>
