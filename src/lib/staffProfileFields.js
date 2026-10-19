@@ -20,6 +20,7 @@ export const STAFF_PROFILE_SECTIONS = [
     { key: 'date_of_birth', label: 'Date of birth', type: 'date' },
     { key: 'emergency_contact', label: 'Emergency contact' },
     { key: 'emergency_contact_phone', label: 'Emergency contact phone', type: 'tel' },
+    { key: 'last_details_check_date', label: 'Last details check requested', type: 'date' },
   ] },
   { title: 'Payroll, tax & vehicle', fields: [
     { key: 'banking_details', label: 'Banking details (account name, BSB, account number, bank)', multiline: true },

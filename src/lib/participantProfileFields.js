@@ -18,6 +18,9 @@ export const PARTICIPANT_PROFILE_SECTIONS = [
     { key: 'support_coordinator', label: 'Support coordination' },
     { key: 'plan_manager', label: 'Plan manager' },
     { key: 'plan_manager_email', label: 'Plan manager email', type: 'email' },
+    { key: 'plan_budget_total', label: 'Plan budget total ($)', type: 'number' },
+    { key: 'plan_start_date', label: 'Plan start date', type: 'date' },
+    { key: 'plan_end_date', label: 'Plan end date', type: 'date' },
     { key: 'support_type', label: 'Type of support being provided', multiline: true },
   ] },
   { title: 'Health & support', fields: [

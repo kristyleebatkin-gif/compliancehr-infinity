@@ -8,7 +8,7 @@ import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipan
 
 export default function OurProfileWorkspace({ profile, kind, header, onUpdated }) {
   const [params, setParams] = useSearchParams();
-  const modules = OurProfileModuleList({ kind, profile,
+  const modules = OurProfileModuleList({ kind, profile, ourView: true,
     details: <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
   });

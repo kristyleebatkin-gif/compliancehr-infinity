@@ -21,7 +21,7 @@ const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier'
 
 const BLANK = { name: '', organisation: '', role: '', phone: '', mobile: '', after_hours_phone: '', email: '', hours_available: '', address: '', category: 'Other', notes: '' };
 
-export default function KeyContacts() {
+export default function KeyContacts({ readOnly = false } = {}) {
   const { toast } = useToast();
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -76,8 +76,8 @@ export default function KeyContacts() {
       {c.mobile && <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => { window.location.href = `sms:${c.mobile}`; }}><MessageSquare className="h-3 w-3" />Text</Button>}
       {c.phone && <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => { window.location.href = `tel:${c.phone}`; }}><Phone className="h-3 w-3" />Call</Button>}
       {c.after_hours_phone && <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => { window.location.href = `tel:${c.after_hours_phone}`; }}><Phone className="h-3 w-3" />After hours</Button>}
-      <Button variant="outline" size="sm" className="ml-auto h-7 text-xs" onClick={() => openEdit(c)}><Pencil className="h-3 w-3" />Edit</Button>
-      <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Contact.delete(c.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+      {!readOnly && <Button variant="outline" size="sm" className="ml-auto h-7 text-xs" onClick={() => openEdit(c)}><Pencil className="h-3 w-3" />Edit</Button>}
+      {!readOnly && <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Contact.delete(c.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>}
     </div>
   );
 
@@ -107,8 +107,9 @@ export default function KeyContacts() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>
+        {!readOnly && <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>}
         <Button variant="outline" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        {readOnly && <p className="text-xs text-muted-foreground">View only — key personnel contacts are managed in Staff and Participant profiles.</p>}
       </div>
 
       {loading ? (

@@ -20,13 +20,15 @@ const Feedback = lazy(() => import('@/pages/Feedback'));
 const NameTags = lazy(() => import('@/pages/NameTags'));
 const Documents = lazy(() => import('@/pages/Documents'));
 
-export default function OurProfileModuleList({ kind, profile, details, approvedParticipants }) {
+export default function OurProfileModuleList({ kind, profile, details, approvedParticipants, ourView = false }) {
   const employee = kind === 'staff';
   const props = { embedded: true, profile, profileKind: kind };
+  // In 'Our' profiles Key Personnel contacts are view only.
+  const contactProps = ourView ? { ...props, readOnly: true } : props;
   return [
     ...(details ? [{ key: 'details', label: 'Profile & Data', Icon: UserRound, content: details }] : []),
     ...(employee && approvedParticipants ? [{ key: 'participants', label: 'Approved Participant Profiles', Icon: Heart, content: approvedParticipants }] : []),
-    { key: 'personnel', label: 'Key Personnel', Icon: Contact, content: <KeyContacts {...props} /> },
+    { key: 'personnel', label: 'Key Personnel', Icon: Contact, content: <KeyContacts {...contactProps} /> },
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: <IntakeCentre {...props} /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },

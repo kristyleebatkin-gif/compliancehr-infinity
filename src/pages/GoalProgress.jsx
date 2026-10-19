@@ -30,20 +30,27 @@ export default function GoalProgress({ profile, profileKind } = {}) {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ participant_name: profileKind === 'participant' ? profile.full_name : '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
 
+  // In 'Our' profiles participants see their own goals only; employees see
+  // goals only for the approved participants they support.
+  const goalScope = useCallback(() => {
+    const approved = role === ROLES.SUPPORT ? { admin_approved: true } : {};
+    if (profileKind === 'participant') return { ...approved, participant_name: profile.full_name };
+    if (profileKind === 'staff' && profile) return { ...approved, participant_name: { $in: profile.participant_team || [] } };
+    return approved;
+  }, [role, profileKind, profile?.full_name, profile?.participant_team]);
+
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      // Support Workers only see participant goals approved by an admin.
-      const query = { ...(role === ROLES.SUPPORT ? { admin_approved: true } : {}), ...(profileKind === 'participant' ? { participant_name: profile.full_name } : {}) };
-      const page = await base44.entities.Goal.filter(query, { sort: '-created_date', limit: 200 });
+      const page = await base44.entities.Goal.filter(goalScope(), { sort: '-created_date', limit: 200 });
       setGoals(page.items);
     } finally {
       setLoading(false);
     }
-  }, [role, profileKind, profile?.full_name]);
+  }, [goalScope]);
 
   const exportGoals = async () => {
-    const rows = await fetchAllRecords(base44.entities.Goal, { ...(role === ROLES.SUPPORT ? { admin_approved: true } : {}), ...(profileKind === 'participant' ? { participant_name: profile.full_name } : {}) }, '-created_date');
+    const rows = await fetchAllRecords(base44.entities.Goal, goalScope(), '-created_date');
     downloadCsv('Goal-Progress-Register.csv', [
       { key: 'participant_name', label: 'Participant' }, { key: 'goal', label: 'Goal' },
       { key: 'category', label: 'Category' }, { key: 'progress', label: 'Progress (%)' },
