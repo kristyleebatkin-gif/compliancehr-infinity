@@ -6,6 +6,7 @@ import DepartmentComplianceSummary from './DepartmentComplianceSummary';
 import ComplianceHealthDashboard from './ComplianceHealthDashboard';
 import ComplianceStatusBoard from './ComplianceStatusBoard';
 import ExpiryReviewFeed from './ExpiryReviewFeed';
+import DeadlineCalendar from './DeadlineCalendar';
 import ProviderKpiWidget from '@/components/ndis/ProviderKpiWidget';
 
 export default function AdminDashboard() {
@@ -16,6 +17,8 @@ export default function AdminDashboard() {
       <ComplianceStatusBoard />
 
       <ExpiryReviewFeed />
+
+      <DeadlineCalendar />
 
       <ComplianceCompletionSummary />
 
