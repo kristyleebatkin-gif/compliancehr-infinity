@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { Field, TextInput, TextArea, Select, DateInput } from '@/components/Field';
@@ -206,6 +207,8 @@ export default function Incidents() {
           </div>
         }
       />
+
+      <RegisterInsights module="incidents" />
 
       <HealthMedicationResponse />
 

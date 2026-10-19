@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -62,6 +63,8 @@ export default function AssetManagement() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules." />
+
+      <RegisterInsights module="assets" />
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>

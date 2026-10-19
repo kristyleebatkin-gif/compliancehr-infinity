@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import ScoreRing from '@/components/ScoreRing';
 import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
@@ -94,6 +95,8 @@ export default function Training() {
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
         action={<Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
       />
+
+      <RegisterInsights module="training" />
 
       <SectionCard title="Your progress" description={`${stats.completed} of ${stats.total} modules completed`}>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader, { HeaderUnderRow } from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
@@ -185,6 +186,8 @@ export default function Risks() {
   return (
     <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
       <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />
+
+      <RegisterInsights module="risks" />
       {can('risks') && (
         <HeaderUnderRow>
           <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk Report</button>

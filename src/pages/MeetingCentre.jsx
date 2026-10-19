@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -140,6 +141,8 @@ export default function MeetingCentre() {
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
       />
+
+      <RegisterInsights module="meetings" />
 
       {nextMeeting && (
         <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">

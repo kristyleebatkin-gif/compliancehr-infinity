@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
@@ -149,6 +150,8 @@ export default function InvoicingCentre() {
         showCompliance={false}
         showAudit={false}
       />
+
+      <RegisterInsights module="invoicing" />
 
       <div className="flex flex-wrap items-center gap-2">
         <ModuleComplianceStrip path="/invoicing" />

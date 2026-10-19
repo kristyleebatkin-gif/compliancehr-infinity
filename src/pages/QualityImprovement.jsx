@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -153,6 +154,8 @@ export default function QualityImprovement() {
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
         showAlerts={false}
       />
+
+      <RegisterInsights module="quality" />
 
       <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
         {[
