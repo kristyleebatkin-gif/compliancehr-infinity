@@ -5,7 +5,6 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
 import ParticipantHome from '@/pages/ParticipantHome';
-import MyProfileDialog from '@/components/mywork/MyProfileDialog';
 import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap, Users, Megaphone, ReceiptText, Phone } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -32,7 +31,6 @@ export default function StaffHome() {
   const [contacts, setContacts] = useState([]);
   const [receipts, setReceipts] = useState([]);
   const [profile, setProfile] = useState(null);
-  const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState(null);
 
@@ -395,12 +393,12 @@ export default function StaffHome() {
       <section className="space-y-2">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">My profile</h2>
-          <button onClick={() => setShowProfile(true)} className="flex items-center gap-1 text-xs font-medium text-brand hover:underline"><Pencil className="h-3 w-3" />View &amp; edit</button>
+          <Link to="/my-profile" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline"><Pencil className="h-3 w-3" />View &amp; edit</Link>
         </div>
-        <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+        <Link to="/my-profile" className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5 hover:bg-muted/30">
           <UserRound className="h-5 w-5 shrink-0 text-brand" />
           {profile ? (
-            <div className="min-w-0 flex-1 cursor-pointer" onClick={() => setShowProfile(true)} title="Click to view & edit">
+            <div className="min-w-0 flex-1">
               <div className="text-sm font-medium">{profile.full_name}</div>
               <div className="truncate text-xs text-foreground/50">{profile.email}{profile.phone ? ` · ${profile.phone}` : ''}{profile.position ? ` · ${profile.position}` : ''}</div>
             </div>
@@ -410,10 +408,9 @@ export default function StaffHome() {
               <div className="text-xs text-foreground/50">Ask HR to create your staff profile, then you can update it here.</div>
             </div>
           )}
-        </div>
+        </Link>
       </section>
 
-      <MyProfileDialog profile={profile} open={showProfile} onClose={() => setShowProfile(false)} onSaved={() => me && load(me)} />
       <TaskEditDialog task={editingTask} open={!!editingTask} onClose={() => setEditingTask(null)} onSaved={() => me && load(me)} />
     </div>
   );
