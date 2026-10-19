@@ -13,6 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Target, Users, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
+import { useRole } from '@/lib/useRole';
+import { ROLES } from '@/lib/roles';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
@@ -21,6 +23,7 @@ import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 
 export default function GoalProgress() {
+  const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -30,12 +33,14 @@ export default function GoalProgress() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Goal.filter({}, { sort: '-created_date', limit: 200 });
+      // Support Workers only see participant goals approved by an admin.
+      const query = role === ROLES.SUPPORT ? { admin_approved: true } : {};
+      const page = await base44.entities.Goal.filter(query, { sort: '-created_date', limit: 200 });
       setGoals(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [role]);
 
   const exportGoals = async () => {
     const rows = await fetchAllRecords(base44.entities.Goal, {}, '-created_date');
@@ -53,7 +58,7 @@ export default function GoalProgress() {
     if (!form.participant_name.trim() || !form.goal.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.Goal.create({ ...form, progress: Number(form.progress) || undefined });
+      await base44.entities.Goal.create({ ...form, progress: Number(form.progress) || undefined, admin_approved: isAdmin });
       setForm({ participant_name: '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
       setOpen(false);
       await load();
@@ -89,6 +94,7 @@ export default function GoalProgress() {
             <p className="font-semibold">{g.goal}</p>
             <p className="text-sm text-muted-foreground">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
           </div>
+          {!g.admin_approved && <Badge variant="outline">Awaiting approval</Badge>}
           <Badge className={statusTone(g.status)}>{g.status}</Badge>
         </div>
         <div className="mt-3 flex items-center gap-3">
@@ -103,9 +109,14 @@ export default function GoalProgress() {
         <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
           <span>{g.target_date ? `Target ${format(new Date(g.target_date), 'd MMM yyyy')}` : ''}{g.support_needed ? ` · Support: ${g.support_needed}` : ''}</span>
           {!compact && (
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Goal.delete(g.id); await load(); }}>
-              <Trash2 className="h-4 w-4 text-destructive" />
-            </Button>
+            <div className="flex items-center gap-1">
+              {isAdmin && !g.admin_approved && (
+                <Button variant="outline" size="sm" className="h-7" onClick={async () => { await base44.entities.Goal.update(g.id, { admin_approved: true }); await load(); }}>Approve</Button>
+              )}
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.Goal.delete(g.id); await load(); }}>
+                <Trash2 className="h-4 w-4 text-destructive" />
+              </Button>
+            </div>
           )}
         </div>
         {!compact && <div className="mt-3"><GoalNotes goal={g} participantName={g.participant_name} /></div>}
@@ -121,7 +132,7 @@ export default function GoalProgress() {
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
+          <DialogTrigger asChild><Button disabled={role === ROLES.PARTICIPANT}><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>New goal</DialogTitle></DialogHeader>
             <div className="grid gap-3">

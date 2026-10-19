@@ -36,6 +36,11 @@
     "support_needed": {
       "type": "string",
       "title": "Support Needed"
+    },
+    "admin_approved": {
+      "type": "boolean",
+      "default": false,
+      "title": "Approved by Admin"
     }
   },
   "required": [
