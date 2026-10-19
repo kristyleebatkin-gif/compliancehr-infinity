@@ -210,6 +210,9 @@
           "user_condition": {
             "role": "Participant"
           }
+        },
+        {
+          "data.participant_name": "{{user.full_name}}"
         }
       ]
     },
