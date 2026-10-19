@@ -1,0 +1,45 @@
+{
+  "name": "Staff Doc Two-Week Alerts",
+  "description": "Daily scan of staff compliance documents expiring within two weeks. Creates an in-app notification for each affected staff member so they see the renewal deadline in their notification bell (once per document and expiry date).",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "45 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "staff_doc_two_week_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_two_week_expiry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffDocTwoWeekAlerts",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Notify staff of two-week document renewals",
+            "description": "Creates an in-app notification for each staff member holding a document that expires within two weeks"
+          }
+        }
+      }
+    ]
+  }
+}
