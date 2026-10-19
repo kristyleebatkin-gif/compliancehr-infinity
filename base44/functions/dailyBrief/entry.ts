@@ -38,7 +38,7 @@ function briefEmailHtml(brief) {
   <div style="font-family:Arial, Helvetica, sans-serif; background:#f4f4f5; padding:24px;">
     <div style="max-width:600px; margin:0 auto;">
       <div style="background:#7c3bed; color:#ffffff; padding:16px 20px; border-radius:6px 6px 0 0;">
-        <div style="font-size:18px; font-weight:700;">ComplianceHR Infinitely — Morning Brief</div>
+        <div style="font-size:18px; font-weight:700;">ComplianceHR Infinity — Morning Brief</div>
         <div style="font-size:12px; opacity:0.85; margin-top:4px;">${esc(b.date_label)}</div>
       </div>
       <div style="background:#ffffff; border:1px solid #e5e7eb; border-top:none; padding:16px; border-radius:0 0 6px 6px;">
@@ -110,7 +110,7 @@ export default async function(req) {
           to: admin.email,
           subject: `Morning brief — ${brief.date_label}`,
           html,
-          from_name: 'ComplianceHR Infinitely',
+          from_name: 'ComplianceHR Infinity',
         }),
       ));
     }

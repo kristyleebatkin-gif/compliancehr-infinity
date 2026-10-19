@@ -1,5 +1,5 @@
 /**
- * Compliance HR - Staff fillable forms library.
+ * ComplianceHR Infinity - Staff fillable forms library.
  * Identity, payroll, screening and audit forms that pre-fill from the
  * staff profile and download as branded PDFs. Field sets follow current
  * Australian employment, ATO and NDIS screening practice.

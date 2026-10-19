@@ -17,21 +17,21 @@ export default function LandingNav() {
     { label: 'Features', href: '#features' },
     { label: 'Benefits', href: '#benefits' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Why ComplianceHR', href: '#why' },
+    { label: 'Why us', href: '#why' },
   ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 shadow-sm backdrop-blur-2xl dark:border-white/10 dark:bg-background/80">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-3 md:px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 md:px-6">
         <Link to="/" className="group flex shrink-0 items-center gap-2">
-          <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-8 w-8 rounded-xl bg-white object-contain shadow-md shadow-slate-900/10 ring-1 ring-slate-200 transition-transform group-hover:scale-105 dark:bg-white dark:ring-white/10" />
+          <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-9 w-9 rounded-xl bg-white object-contain shadow-md shadow-slate-900/10 ring-1 ring-slate-200 transition-transform group-hover:scale-105 dark:bg-white dark:ring-white/10" />
           <span className="font-editorial text-lg font-semibold tracking-tight text-foreground">
             Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span>
             <span className="ml-1.5 hidden align-middle text-[11px] font-bold uppercase tracking-[0.2em] text-violet-600 sm:inline dark:text-violet-400">Infinity</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex lg:gap-5">
+        <nav className="hidden items-center gap-3.5 md:flex lg:gap-6">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="group relative text-[13px] font-semibold tracking-wide text-foreground/60 transition-colors hover:text-foreground">
               {l.label}

@@ -5,7 +5,7 @@ import { PARTICIPANT_SOURCE_FORMS } from '@/lib/participantSourceForms';
 import { NDIS_PARTICIPANT_REVIEW_FIELDS } from '@/lib/ndisFormReview';
 
 /**
- * Compliance HR - Participant Forms & Service Documents Register.
+ * ComplianceHR Infinity - Participant Forms & Service Documents Register.
  * PARTICIPANT_FORM_DEFINITIONS is the source of truth for intake topics,
  * display codes, fillable fields, and downloadable official templates.
  */

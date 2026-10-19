@@ -27,7 +27,7 @@ export default async function(req) {
       to,
       subject,
       body: message,
-      from_name: 'ComplianceHR Infinitely',
+      from_name: 'ComplianceHR Infinity',
       ...(attachments && attachments.length ? { attachments } : {}),
     });
 

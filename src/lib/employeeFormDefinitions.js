@@ -1,5 +1,5 @@
 /**
- * Compliance HR - fillable definitions for the employee intake document set.
+ * ComplianceHR Infinity - fillable definitions for the employee intake document set.
  * Each entry mirrors the questions on the official form so the same form can
  * be downloaded blank or completed online in the intake workflow. Field sets
  * follow current Australian employment and NDIS provider practice.

@@ -84,7 +84,7 @@ export default function ProfessionalCertificate({ learnerName, companyName, modu
             <div className="h-px w-56" style={{ background: GOLD }} />
             <div className="mt-1.5 text-sm font-bold tracking-wide" style={{ color: NAVY }}>KRISTY WHELAN</div>
             <div className="text-[11px] font-medium text-foreground/60">FOUNDER &amp; DIRECTOR</div>
-            <div className="text-[10px] text-foreground/45">COMPLIANCE HR</div>
+            <div className="text-[10px] text-foreground/45">ComplianceHR Infinity</div>
           </div>
 
           <div className="mt-4 text-[10px] text-foreground/40">Certificate No: {certificateNumber}</div>

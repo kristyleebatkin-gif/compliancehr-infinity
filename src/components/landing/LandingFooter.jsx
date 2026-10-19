@@ -39,7 +39,8 @@ export default function LandingFooter() {
             <Link to="/" className="flex items-center gap-2.5">
               <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-9 w-9 rounded-xl bg-white object-contain shadow-md ring-1 ring-white/20" />
               <span className="font-editorial text-xl font-semibold tracking-tight text-white">
-                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR Infinity</span>
+                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
+                <span className="ml-1.5 align-middle text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">Infinity</span>
               </span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/55">Complete Control. Greater Confidence. Brighter Success.</p>

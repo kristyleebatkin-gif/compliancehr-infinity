@@ -112,7 +112,7 @@ export default function AppLayout() {
       <div className="flex items-center gap-2.5 px-5 py-5">
         <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
         <div className="min-w-0">
-          <div className="text-[15px] font-bold tracking-tight font-display">ComplianceHR Infinitely</div>
+          <div className="text-[15px] font-bold tracking-tight font-editorial">Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span> <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand">Infinity</span></div>
           <div className="mt-0.5 text-[10px] font-medium leading-snug text-brand/60 line-clamp-2">Complete Control. Greater Confidence. Brighter Success.</div>
         </div>
       </div>
@@ -238,7 +238,7 @@ export default function AppLayout() {
             />
             <div className="hidden sm:block">
               <div className="text-sm font-bold tracking-tight font-display text-foreground">{currentLabel}</div>
-              <div className="text-[11px] font-medium text-foreground/40">ComplianceHR Infinitely</div>
+              <div className="text-[11px] font-medium text-foreground/40">ComplianceHR Infinity</div>
             </div>
           </div>
 
@@ -326,7 +326,7 @@ export default function AppLayout() {
                   <div className="absolute right-0 z-50 mt-2 w-56 rounded-xl border border-border/60 bg-card p-2 shadow-xl">
                     <div className="px-3 py-2">
                       <div className="text-sm font-semibold">{role}</div>
-                      <div className="text-xs text-foreground/50">ComplianceHR Infinitely</div>
+                      <div className="text-xs text-foreground/50">ComplianceHR Infinity</div>
                     </div>
                     <button
                       onClick={handleLogout}

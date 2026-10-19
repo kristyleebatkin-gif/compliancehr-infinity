@@ -63,7 +63,7 @@ export default function AiCompose() {
     try {
       const res = await base44.functions.invoke('sendAppEmail', {
         to: sendTo.trim(),
-        subject: draft.subject || 'Message from ComplianceHR Infinitely',
+        subject: draft.subject || 'Message from ComplianceHR Infinity',
         body: draft.message,
       });
       if (res.data?.error) throw new Error(res.data.error);

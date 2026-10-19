@@ -16,7 +16,7 @@ export default async function(req) {
     }
 
     const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `You are a senior support engineer for ComplianceHR Infinitely, a web app for Australian NDIS providers built on the Base44 platform. A user reports a problem and needs a diagnosis with step-by-step fixes.
+      prompt: `You are a senior support engineer for ComplianceHR Infinity, a web app for Australian NDIS providers built on the Base44 platform. A user reports a problem and needs a diagnosis with step-by-step fixes.
 
 Problem: ${problem}
 Module: ${body.module || 'not specified'}
