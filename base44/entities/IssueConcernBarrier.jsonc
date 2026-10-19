@@ -96,6 +96,9 @@
               "{{user.id}}"
             ]
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -135,6 +138,9 @@
               "data.audit_consent": "Audit consent received"
             }
           ]
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
