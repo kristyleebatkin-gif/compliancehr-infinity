@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Image } from '@/components/ui/image';
 
 export default function LandingFooter() {
   const cols = [
@@ -37,7 +38,7 @@ export default function LandingFooter() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5">
-              <img src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-9 w-9 rounded-xl bg-white object-contain shadow-md ring-1 ring-white/20" />
+              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-10 w-10 rounded-xl bg-white shadow-md ring-1 ring-white/20" fittingType="fill" focalPointX={0.5} focalPointY={0.33} />
               <span className="font-editorial text-xl font-semibold tracking-tight text-white">
                 Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
                 <span className="ml-1.5 align-middle text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">Infinity</span>

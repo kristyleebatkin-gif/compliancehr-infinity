@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
+import { Image } from '@/components/ui/image';
 
 export default function LandingHero() {
   const [authed, setAuthed] = useState(false);
@@ -52,12 +53,16 @@ export default function LandingHero() {
 
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            ComplianceHR Infinity
+          <div className="mx-auto w-fit rounded-3xl bg-white px-4 py-3 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200/80 dark:ring-white/10">
+            <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-24 w-auto sm:h-32" fittingType="fit" />
           </div>
 
-          <h1 className="mt-8 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
+          <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
+            The all-in-one NDIS compliance platform
+          </div>
+
+          <h1 className="mt-6 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">
             Compliance management,
             <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">simplified end to end.</span>
           </h1>
