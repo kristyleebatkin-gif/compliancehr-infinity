@@ -80,6 +80,14 @@
           "user_condition": {
             "role": "Compliance Manager"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
