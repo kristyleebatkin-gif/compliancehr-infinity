@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { profilePalette, hexToRgb } from '@/lib/profileColours';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
-import { downloadStaffBadgePdf, staffBadgeBlob } from '@/lib/staffBadgePdf';
+import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { businessDateTime } from '@/lib/intakeCases';
 import { BadgeCheck, Camera, Download, Loader2, Mail, Save, UserRound } from 'lucide-react';
 
@@ -94,16 +94,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
     }
     setEmailingTag(true);
     try {
-      const blob = staffBadgeBlob({
-        staffName: profile.full_name,
-        position: profile.position,
-        employeeNumber: profile.employee_number,
-        colour: hexToRgb(primary),
-      });
-      const { file_url } = await base44.integrations.Core.UploadPublicFile({
-        file: new File([blob], `Name Tag - ${profile.full_name}.pdf`, { type: 'application/pdf' }),
-      });
-      const res = await base44.functions.invoke('sendNameTagEmail', { staff_id: profile.id, file_url });
+      const res = await base44.functions.invoke('sendNameTagEmail', { staff_id: profile.id });
       if (res.data?.success) toast({ title: `Name tag emailed to ${res.data.sent_to}` });
       else toast({ title: 'Could not email name tag', description: res.data?.error, variant: 'destructive' });
     } catch (error) {

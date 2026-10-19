@@ -1,11 +1,17 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { fetchNdisItems, cleanNdisItems } from '../../shared/ndisNews.ts';
 
 // Fetches the latest NDIS news and upserts it into the NdisUpdate library.
-// Called daily by the "NDIS News Updates" scheduled workflow.
+// Called daily by the "NDIS News Updates" scheduled workflow, which runs as
+// the app's admin. Only management users may also trigger it manually.
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 403 });
+    }
     const service = base44.asServiceRole;
     const core = service.integrations.Core;
 

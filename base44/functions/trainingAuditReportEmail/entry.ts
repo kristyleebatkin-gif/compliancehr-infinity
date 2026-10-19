@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { jsPDF } from 'npm:jspdf@4.2.1';
-import { SYSTEM_TOKEN, MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 const SYDNEY = 'Australia/Sydney';
 const DARK = '#1f1438';
@@ -211,13 +211,12 @@ export default async function(req) {
     const dryRun = !!body.dry_run;
     const service = base44.asServiceRole;
     const user = await base44.auth.me().catch(() => null);
-    const systemCall = body.token === SYSTEM_TOKEN;
-    if (!user && !systemCall) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     // Management may choose the recipient; workflow (system) sends default to
     // the first administrator; every other caller may only email themselves.
     let recipient = '';
-    if (systemCall || hasAnyRole(user, MANAGEMENT_ROLES)) {
+    if (hasAnyRole(user, MANAGEMENT_ROLES)) {
       recipient = String(body.recipient_email || '').trim().toLowerCase();
       if (!recipient) {
         const users = await service.entities.User.list();

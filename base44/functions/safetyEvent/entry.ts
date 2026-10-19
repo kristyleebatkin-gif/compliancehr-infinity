@@ -65,7 +65,7 @@ export default async function(req) {
       if (participantId) {
         try {
           const participant = await base44.asServiceRole.entities.ParticipantProfile.get(participantId);
-          participantConsent = participant.audit_consent || 'Audit consent received';
+          participantConsent = participant.audit_consent || 'Audit declined';
         } catch {
           participantConsent = 'Audit declined';
         }
@@ -73,7 +73,7 @@ export default async function(req) {
       if (staffId) {
         try {
           const staff = await base44.asServiceRole.entities.StaffProfile.get(staffId);
-          staffConsent = staff.audit_consent || 'Audit consent received';
+          staffConsent = staff.audit_consent || 'Audit declined';
         } catch {
           staffConsent = 'Audit declined';
         }

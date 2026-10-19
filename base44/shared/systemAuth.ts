@@ -1,10 +1,5 @@
 // Shared authorization helpers for backend functions.
 
-// Internal token passed by this app's own workflow definitions in their invoke
-// payloads. Function code and workflow files are not publicly readable, so
-// anonymous callers of the published function URL cannot supply it.
-export const SYSTEM_TOKEN = 'a7f3d9c2e8b14f6a0d5c9e2b7f4a1c8e3d6b9f2a5c8e1d4b7a9f3c6e2d5b8a1f';
-
 export const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
 
 // Roles trusted to send email from the organisation's identity.
@@ -31,10 +26,10 @@ export function hasAnyRole(user: any, roles: string[]): boolean {
   return !!user && roles.includes(user.role);
 }
 
-// Accepts either a workflow invocation carrying the system token, or an
-// authenticated user holding one of the allowed roles.
-export async function authorizeSystemCall(base44: any, body: any, roles: string[] = MANAGEMENT_ROLES): Promise<boolean> {
-  if (body && body.token === SYSTEM_TOKEN) return true;
+// Authorizes a privileged automation function: only an authenticated user
+// holding one of the allowed roles may call it. Workflow steps run as the
+// app's admin, so scheduled invocations also authenticate through auth.me().
+export async function authorizeSystemCall(base44: any, _body?: any, roles: string[] = MANAGEMENT_ROLES): Promise<boolean> {
   try {
     return hasAnyRole(await base44.auth.me(), roles);
   } catch {
