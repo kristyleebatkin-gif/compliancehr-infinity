@@ -316,6 +316,9 @@
               "data.staff_audit_consent": "Audit consent received"
             }
           ]
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
