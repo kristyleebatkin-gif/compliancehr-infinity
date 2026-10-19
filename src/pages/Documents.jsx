@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Database, Download } from 'lucide-react';
+import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Database, Download, CalendarDays } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
@@ -24,6 +24,7 @@ import VaultUploads from '@/components/documents/VaultUploads';
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import BulkEditBar from '@/components/documents/BulkEditBar';
+import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -177,6 +178,7 @@ export default function Documents() {
       <Tabs defaultValue="documents">
         <TabsList className="flex-wrap">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
+          <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
           <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>
         </TabsList>
 
@@ -302,6 +304,10 @@ export default function Documents() {
       <div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
       </div>
+        </TabsContent>
+
+        <TabsContent value="expiry-calendar" className="mt-4">
+          <ExpiryCalendar docs={docs} viewDoc={viewDoc} />
         </TabsContent>
 
         <TabsContent value="data-control" className="mt-4">

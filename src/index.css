@@ -222,4 +222,19 @@
   .font-elegant {
     font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
   }
+  /* Expiry calendar day tones (Document Vault) */
+  .expiry-day-expired {
+    background: hsl(var(--danger) / 0.14) !important;
+    color: hsl(var(--danger)) !important;
+    font-weight: 700;
+  }
+  .expiry-day-soon {
+    background: hsl(var(--warning) / 0.16) !important;
+    color: hsl(var(--warning)) !important;
+    font-weight: 700;
+  }
+  .expiry-day-later {
+    background: hsl(var(--safe) / 0.10) !important;
+    color: hsl(var(--safe)) !important;
+  }
 }
