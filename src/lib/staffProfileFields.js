@@ -1,0 +1,39 @@
+export const STAFF_PROFILE_SECTIONS = [
+  { title: 'Staff identity & employment', fields: [
+    { key: 'full_name', label: 'Staff full name', readOnly: true },
+    { key: 'employee_number', label: 'Employee number' },
+    { key: 'position', label: 'Position' },
+    { key: 'position_level', label: 'Position level' },
+    { key: 'role', label: 'Employment role', options: ['Support Worker', 'Team Leader', 'Compliance Manager', 'Administration', 'Management'] },
+    { key: 'status', label: 'Employment status', options: ['Active', 'On Leave', 'Inactive'] },
+    { key: 'hourly_rate', label: 'Hourly rate ($)', type: 'number' },
+    { key: 'start_date', label: 'Start date', type: 'date' },
+    { key: 'end_date', label: 'End date', type: 'date' },
+    { key: 'exit_reason', label: 'Exit reason' },
+    { key: 'induction_date', label: 'Induction date', type: 'date' },
+    { key: 'supervisor', label: 'Supervisor' },
+  ] },
+  { title: 'Staff personal details & contacts', fields: [
+    { key: 'email', label: 'Email', type: 'email' },
+    { key: 'phone', label: 'Phone', type: 'tel' },
+    { key: 'address', label: 'Address' },
+    { key: 'date_of_birth', label: 'Date of birth', type: 'date' },
+    { key: 'emergency_contact', label: 'Emergency contact' },
+    { key: 'emergency_contact_phone', label: 'Emergency contact phone', type: 'tel' },
+  ] },
+  { title: 'Payroll, tax & vehicle', fields: [
+    { key: 'banking_details', label: 'Banking details (account name, BSB, account number, bank)', multiline: true },
+    { key: 'superannuation_details', label: 'Superannuation details (fund, USI, member number)', multiline: true },
+    { key: 'tax_file_number', label: 'Tax file number' },
+    { key: 'car_rego', label: 'Car registration (rego)' },
+  ] },
+  { title: 'Skills & staff notes', fields: [
+    { key: 'skills', label: 'Skills & qualifications', multiline: true },
+    { key: 'notes', label: 'Staff notes', multiline: true },
+  ] },
+  { title: 'Staff consent & survey history', fields: [
+    { key: 'consents_received', label: 'Consents received (log)', multiline: true, readOnly: true },
+    { key: 'last_survey_sent_date', label: 'Last staff survey sent', type: 'date', readOnly: true },
+    { key: 'survey_log', label: 'Staff survey log', multiline: true, readOnly: true },
+  ] },
+];

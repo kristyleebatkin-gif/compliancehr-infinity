@@ -114,7 +114,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
   };
 
   const changeLogLines = String(profile.change_log || '').split('\n').filter(Boolean);
-  const title = profile.position || profile.role || 'Team member';
+  const title = isStaff ? (profile.position || profile.role || 'Staff member') : (profile.support_type || 'Participant');
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">

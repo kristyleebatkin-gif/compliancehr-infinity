@@ -3,59 +3,15 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
+import { PARTICIPANT_PROFILE_SECTIONS as SECTIONS } from '@/lib/participantProfileFields';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { useRole } from '@/lib/useRole';
 import { businessDateTime } from '@/lib/intakeCases';
 import { Loader2, ShieldCheck, ShieldOff } from 'lucide-react';
 
-const SECTIONS = [
-  {
-    title: 'Contacts & Emergency',
-    fields: [
-      { key: 'email', label: 'Email' },
-      { key: 'phone', label: 'Phone' },
-      { key: 'emergency_contact', label: 'Emergency contact name' },
-      { key: 'emergency_contact_phone', label: 'Emergency contact phone' },
-      { key: 'advocate_representative', label: 'Advocate / representative' },
-    ],
-  },
-  {
-    title: 'NDIS & Coordination',
-    fields: [
-      { key: 'ndis_number', label: 'NDIS number' },
-      { key: 'ndis_reference_number', label: 'NDIS reference number' },
-      { key: 'support_coordinator', label: 'Support coordination' },
-      { key: 'plan_manager', label: 'Plan manager' },
-      { key: 'plan_manager_email', label: 'Plan manager email' },
-      { key: 'support_type', label: 'Type of support being provided', multiline: true },
-    ],
-  },
-  {
-    title: 'Health & Support Team',
-    fields: [
-      { key: 'medical_diagnosis', label: 'Medical diagnosis', multiline: true },
-      { key: 'occupational_therapist', label: 'Occupational therapist' },
-      { key: 'medications_dosage', label: 'Medications and dosage', multiline: true },
-      { key: 'support_shifts', label: 'Support shifts', multiline: true },
-      { key: 'support_staff', label: 'Support staff', multiline: true },
-    ],
-  },
-  {
-    title: 'About Me',
-    fields: [
-      { key: 'likes', label: 'Likes', multiline: true },
-      { key: 'dislikes', label: 'Dislikes', multiline: true },
-      { key: 'routine', label: 'Routine', multiline: true },
-      { key: 'triggers', label: 'Triggers', multiline: true },
-      { key: 'risks', label: 'Risks', multiline: true },
-      { key: 'control_measures', label: 'Control measures', multiline: true },
-      { key: 'fire_drill', label: 'Fire drill', multiline: true },
-    ],
-  },
-];
+
 
 export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const { toast } = useToast();
@@ -72,9 +28,11 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const save = async () => {
     setSaving(true);
     try {
-      const payload = Object.fromEntries(SECTIONS.flatMap((s) => s.fields.map((f) => [f.key, form[f.key] || ''])));
-      payload.notes = form.notes || '';
-      await base44.entities.ParticipantProfile.update(participant.id, payload);
+      const fields = SECTIONS.flatMap((section) => section.fields).filter((field) => !field.readOnly);
+      const payload = Object.fromEntries(fields
+        .filter((field) => (form[field.key] ?? '') !== (participant[field.key] ?? ''))
+        .map((field) => [field.key, form[field.key] ?? '']));
+      if (Object.keys(payload).length) await base44.entities.ParticipantProfile.update(participant.id, payload);
       toast({ title: 'Profile saved' });
       onUpdated();
     } catch (error) {
@@ -137,21 +95,7 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
         <p className="mt-2 text-xs text-muted-foreground">Consent changes are logged to the audit trail with who changed them, when and why.</p>
       </div>
 
-      {SECTIONS.map((section) => (
-        <div key={section.title} className="rounded-2xl border border-border/60 bg-card p-5">
-          <div className="mb-3 text-sm font-semibold">{section.title}</div>
-          <div className="grid gap-3 md:grid-cols-2">
-            {section.fields.map((field) => (
-              <div key={field.key} className={field.multiline ? 'md:col-span-2 grid gap-1.5' : 'grid gap-1.5'}>
-                <Label>{field.label}</Label>
-                {field.multiline
-                  ? <Textarea rows={3} value={form[field.key] || ''} onChange={(e) => set(field.key, e.target.value)} />
-                  : <Input value={form[field.key] || ''} onChange={(e) => set(field.key, e.target.value)} />}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      {SECTIONS.map((section) => <ProfileFieldsSection key={section.title} section={section} form={form} onChange={set} prefix={`participant-${participant.id}`} />)}
 
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving}>
