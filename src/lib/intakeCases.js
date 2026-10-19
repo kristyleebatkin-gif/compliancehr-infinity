@@ -118,10 +118,6 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'Tax File Number',
   'Qualifications',
   'Resume',
-  'NDIS Worker Screening Clearance',
-  'Blue Card and/or Police Check',
-  'Car Registration',
-  'Immunisation Record',
   'NDIS Worker Orientation Module Certificate',
   'NDIS Worker Induction Module Certificate',
   'NDIS Supporting Safe and Enjoyable Meals Certificate',
@@ -133,9 +129,6 @@ export const UPLOAD_ONLY_DOC_TYPES = new Set([
   'Australian Commission on Safety and Quality in Health Care Medication Safety Certificate',
   'Australian Commission on Safety and Quality in Health Care Hand Hygiene Certificate',
   'Australian Commission on Safety and Quality in Health Care Infection Control Certificate',
-  'NDIS Plan',
-  'Behaviour Support Plan',
-  'Restrictive Practices Record',
 ]);
 
 // Information sheets: download-only, no upload or online completion.

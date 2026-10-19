@@ -226,6 +226,21 @@ const BASE_EMPLOYEE_FORM_DEFINITIONS = {
     columns: ['Date', 'Odometer', 'Item checked', 'Result', 'Comments'],
     rows: 14,
   },
+  'Referee Checks Form': {
+    fields: [
+      ...personal,
+      field('Referee 1 name'),
+      field('Referee 1 relationship'),
+      field('Referee 1 phone'),
+      field('Referee 1 email'),
+      field('Referee 2 name'),
+      field('Referee 2 relationship'),
+      field('Referee 2 phone'),
+      field('Referee 2 email'),
+      field('Referee check outcome', true),
+      field('Checks completed by and date'),
+    ],
+  },
   'NDIS Worker Screening Clearance': {
     fields: [
       ...personal,
