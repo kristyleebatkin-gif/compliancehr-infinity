@@ -126,9 +126,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.participant_name": "{{user.full_name}}"
+            }
+          ]
         }
       ]
     },
@@ -160,9 +167,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.participant_name": "{{user.full_name}}"
+            }
+          ]
         },
         {
           "$and": [
