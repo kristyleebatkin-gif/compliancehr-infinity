@@ -17,6 +17,7 @@ import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import FundingUtilisation from '@/components/participants/FundingUtilisation';
 import ExportRow from '@/components/profile/ExportRow';
 import PortalInviteButton from '@/components/profile/PortalInviteButton';
+import ParticipantApprovalToggle from '@/components/participants/ParticipantApprovalToggle';
 import { useRole } from '@/lib/useRole';
 
 export default function ParticipantDetail() {
@@ -57,7 +58,10 @@ export default function ParticipantDetail() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild className="mb-2"><Link to="/participants"><ArrowLeft className="h-4 w-4" />Participants</Link></Button>
-        <PortalInviteButton kind="participant" profile={participant} />
+        <div className="flex flex-wrap items-center gap-2">
+          <ParticipantApprovalToggle participant={participant} onUpdate={load} />
+          <PortalInviteButton kind="participant" profile={participant} />
+        </div>
       </div>
 
       <ProfileHeader profile={participant} kind="participant" onUpdated={load} />

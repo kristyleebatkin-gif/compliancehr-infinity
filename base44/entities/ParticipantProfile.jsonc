@@ -187,6 +187,27 @@
       "default": "Active",
       "title": "Status"
     },
+    "admin_approved": {
+      "type": "boolean",
+      "default": false,
+      "title": "Approved by Admin",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
+    },
     "audit_consent": {
       "type": "string",
       "enum": [
@@ -257,7 +278,7 @@
               }
             },
             {
-              "data.status": "Active"
+              "data.admin_approved": true
             }
           ]
         },
