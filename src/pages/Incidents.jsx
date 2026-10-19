@@ -309,7 +309,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
                     </select>
                   </div>
                 </div>
-                {(inc.participant_name || inc.staff_name) && <div className="mb-3 flex flex-wrap gap-2 text-xs"><span className="font-semibold text-foreground/50">Attached profiles:</span>{inc.participant_name && <span className="rounded-full bg-purple-100 px-2 py-1 text-purple-800">Participant: {inc.participant_name}</span>}{inc.staff_name && <span className="rounded-full bg-green-100 px-2 py-1 text-green-800">Staff: {inc.staff_name}</span>}</div>}
+                {(inc.participant_name || inc.staff_name) && <div className="mb-3 flex flex-wrap gap-2 text-xs"><span className="font-semibold text-foreground/50">Attached profiles:</span>{inc.participant_name && <span className="rounded-full bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-300 px-2 py-1">Participant: {inc.participant_name}</span>}{inc.staff_name && <span className="rounded-full bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-300 px-2 py-1">Staff: {inc.staff_name}</span>}</div>}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <div>
                     <div className={labelCls}>Date</div>
