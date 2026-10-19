@@ -21,12 +21,14 @@ import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import StaffBadgeCard from '@/components/staff/StaffBadgeCard';
 import EmploymentTimeline from '@/components/staff/EmploymentTimeline';
 import ExportRow from '@/components/profile/ExportRow';
+import { useRole } from '@/lib/useRole';
 
 export default function StaffDetail() {
   const { id } = useParams();
   const [staff, setStaff] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const { isAdmin } = useRole();
 
   const load = async () => {
     try {
@@ -68,6 +70,7 @@ export default function StaffDetail() {
         description="The participants this staff member supports, shown on their profile and used for rostering."
         values={staff.participant_team || []}
         kind="participants"
+        editable={isAdmin}
         onUpdate={async (next) => { await base44.entities.StaffProfile.update(staff.id, { participant_team: next }); await load(); }}
       />
 

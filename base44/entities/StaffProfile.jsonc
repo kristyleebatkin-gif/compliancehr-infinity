@@ -162,7 +162,23 @@
         "type": "string"
       },
       "default": [],
-      "title": "Participant Team (Participants Supported)"
+      "title": "Participant Team (Participants Supported)",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "last_survey_sent_date": {
       "type": "string",

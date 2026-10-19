@@ -16,12 +16,14 @@ import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsT
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import FundingUtilisation from '@/components/participants/FundingUtilisation';
 import ExportRow from '@/components/profile/ExportRow';
+import { useRole } from '@/lib/useRole';
 
 export default function ParticipantDetail() {
   const { id } = useParams();
   const [participant, setParticipant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const { isAdmin } = useRole();
 
   const load = async () => {
     try {
@@ -65,6 +67,7 @@ export default function ParticipantDetail() {
         description="The staff team who support this participant."
         values={participant.support_team || []}
         kind="staff"
+        editable={isAdmin}
         onUpdate={async (next) => { await base44.entities.ParticipantProfile.update(participant.id, { support_team: next }); await load(); }}
         footer={participant.progress_notes_due_date ? (
           <p className="mt-3 text-[11px] text-muted-foreground">Progress note and report copies are emailed to administrators every 10 weeks. Progress notes due (3-monthly): <span className="font-semibold text-foreground">{participant.progress_notes_due_date}</span></p>

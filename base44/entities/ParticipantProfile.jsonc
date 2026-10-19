@@ -145,7 +145,23 @@
         "type": "string"
       },
       "default": [],
-      "title": "Support Worker Team"
+      "title": "Support Worker Team",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "last_progress_copy_date": {
       "type": "string",
