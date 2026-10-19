@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown, Copy, Download, FileDown, Plus, Trash2, CalendarDays, Pencil, Search, Clock } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { format, differenceInCalendarDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { downloadMinutesTemplate } from '@/lib/meetingPdf';
@@ -220,9 +221,9 @@ export default function MeetingCentre() {
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : meetings.length === 0 ? (
-            <Card><CardContent className="p-10 text-center text-muted-foreground">No meetings scheduled yet. Schedule your first meeting above.</CardContent></Card>
+            <EmptyState icon={CalendarDays} modulePath="/meetings" title="No meetings scheduled yet" message="Schedule your first meeting to start the calendar." />
           ) : visibleMeetings.length === 0 ? (
-            <Card><CardContent className="p-10 text-center text-muted-foreground">No meetings match this search or filter.</CardContent></Card>
+            <EmptyState icon={Search} modulePath="/meetings" title="No meetings match" message="Try a different search term or filter." />
           ) : (
             <div className="space-y-3">
               {visibleMeetings.map((m) => (

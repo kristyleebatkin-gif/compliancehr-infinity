@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
 const exportPoliciesCsv = (policies) => downloadCsv('compliance-policy-register.csv', [
@@ -215,7 +216,7 @@ export default function ComplianceHub() {
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : policies.length === 0 ? (
-            <Card><CardContent className="p-10 text-center text-muted-foreground">No policies yet. Add your first one above.</CardContent></Card>
+            <EmptyState icon={FileText} modulePath="/compliance" title="No policies yet" message="Add your first policy to the register." />
           ) : (
             <div className="grid gap-4 md:grid-cols-2">
               {policies.map((p) => (
@@ -278,7 +279,7 @@ export default function ComplianceHub() {
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : requirements.length === 0 ? (
-            <Card><CardContent className="p-10 text-center text-muted-foreground">No legal requirements tracked yet.</CardContent></Card>
+            <EmptyState icon={Scale} modulePath="/compliance" title="No legal requirements tracked yet" message="Track your first legal obligation to keep the register current." />
           ) : (
             <div className="grid gap-4 md:grid-cols-2">
               {requirements.map((r) => (

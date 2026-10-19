@@ -11,6 +11,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Trash2, Heart, UserRound, Download, MessageSquarePlus } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { Link } from 'react-router-dom';
 import { SHIFT_TYPES } from '@/lib/commTypes';
@@ -180,7 +181,7 @@ export default function Participants() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : people.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No participants yet.</CardContent></Card>
+        <EmptyState icon={Heart} modulePath="/participants" title="No participants yet" message="Add your first participant to start their profile." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {people.map((p) => (

@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, PartyPopper, Megaphone, Mail, Pencil, Eye, MapPin, Clock, Users, DollarSign, User, Loader2, Download } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
@@ -136,7 +137,7 @@ export default function ProgramsEvents() {
   };
 
   const EmptyList = () => (
-    <Card><CardContent className="p-10 text-center text-muted-foreground">Nothing here yet. Use Add program/event to create one.</CardContent></Card>
+    <EmptyState icon={PartyPopper} modulePath="/programs" title="Nothing here yet" message="Use Add program/event to create one." />
   );
 
   return (

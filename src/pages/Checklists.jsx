@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, ClipboardList, Check, Download } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
@@ -103,7 +104,7 @@ export default function Checklists() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : lists.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No checklists yet.</CardContent></Card>
+        <EmptyState icon={ClipboardList} modulePath="/checklists" title="No checklists yet" message="Create your first checklist to start tracking." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {lists.map((list) => {

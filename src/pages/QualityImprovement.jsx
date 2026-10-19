@@ -12,6 +12,7 @@ import { changeStatus } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, Plus, CheckCircle2, Trash2 } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
 
 const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
@@ -182,7 +183,7 @@ export default function QualityImprovement() {
             {loading ? (
               <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
             ) : items.filter((i) => matchesTab(i, tab)).length === 0 ? (
-              <Card><CardContent className="p-10 text-center text-muted-foreground">No {tab.label.toLowerCase()} recorded yet.</CardContent></Card>
+              <EmptyState icon={Lightbulb} modulePath="/quality" title={`No ${tab.label.toLowerCase()} recorded yet`} message="Raise your first idea, suggestion or corrective action." />
             ) : (
               <div className="space-y-3">
                 {items.filter((i) => matchesTab(i, tab)).map((item) => <ItemCard key={item.id} item={item} />)}

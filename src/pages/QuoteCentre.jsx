@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText, Search, Copy } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/ui/input';
 import { format, addDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
@@ -202,9 +203,9 @@ export default function QuoteCentre() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : quotes.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No quotes yet. Create your first quote above.</CardContent></Card>
+        <EmptyState icon={FileText} modulePath="/quotes" title="No quotes yet" message="Create your first quote to start winning work." />
       ) : visibleQuotes.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No quotes match this search or filter.</CardContent></Card>
+        <EmptyState icon={Search} modulePath="/quotes" title="No quotes match" message="Try a different search term or filter." />
       ) : (
         <div className="space-y-3">
           {visibleQuotes.map((q) => {

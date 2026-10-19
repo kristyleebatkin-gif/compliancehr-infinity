@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Download, History, Loader2, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2, FileText } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
@@ -148,7 +149,7 @@ export default function ReceiptHub() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : receipts.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No receipts logged yet. Scan or log your first receipt above.</CardContent></Card>
+        <EmptyState icon={ReceiptIcon} modulePath="/receipts" title="No receipts logged yet" message="Scan or log your first receipt to start reconciling." />
       ) : (
         <div className="space-y-3">
           {receipts.map((r) => (

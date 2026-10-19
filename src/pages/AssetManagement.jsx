@@ -10,6 +10,7 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Boxes, Wrench, Download } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 
@@ -106,7 +107,7 @@ export default function AssetManagement() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : assets.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No assets recorded yet.</CardContent></Card>
+        <EmptyState icon={Boxes} modulePath="/assets" title="No assets recorded yet" message="Add your first asset to start the register." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {assets.map((a) => (

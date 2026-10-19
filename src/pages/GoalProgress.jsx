@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Target, Users, Download } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
@@ -155,7 +156,7 @@ export default function GoalProgress() {
 
           <TabsContent value="all" className="mt-4">
             {goals.length === 0 ? (
-              <Card><CardContent className="p-10 text-center text-muted-foreground">No goals recorded yet.</CardContent></Card>
+              <EmptyState icon={Target} modulePath="/goals" title="No goals recorded yet" message="Add your first goal to start tracking progress." />
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
                 {goals.map((g) => <GoalCard key={g.id} g={g} />)}
@@ -165,7 +166,7 @@ export default function GoalProgress() {
 
           <TabsContent value="participants" className="mt-4">
             {participants.length === 0 ? (
-              <Card><CardContent className="p-10 text-center text-muted-foreground">No goals recorded yet.</CardContent></Card>
+              <EmptyState icon={Target} modulePath="/goals" title="No goals recorded yet" message="Add your first goal to start tracking progress." />
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
                 {participants.map((p) => (
