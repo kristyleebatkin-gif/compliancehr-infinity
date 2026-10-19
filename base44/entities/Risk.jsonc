@@ -242,6 +242,9 @@
           "user_condition": {
             "role": "Auditor"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
