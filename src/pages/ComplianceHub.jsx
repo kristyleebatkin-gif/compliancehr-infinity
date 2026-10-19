@@ -64,6 +64,7 @@ import ParticipantReviewRegister from '@/components/compliance/ParticipantReview
 import ConsentRegister from '@/components/compliance/ConsentRegister';
 import CertificationCalendar from '@/components/compliance/CertificationCalendar';
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
+import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
@@ -181,8 +182,9 @@ export default function ComplianceHub() {
 
       <RegisterInsights module="compliance" />
 
-      <Tabs defaultValue="readiness">
+      <Tabs defaultValue="quick-tasks">
         <TabsList className="flex-wrap">
+          <TabsTrigger value="quick-tasks">Quick Tasks</TabsTrigger>
           <TabsTrigger value="issues">Compliance Issues</TabsTrigger>
           <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
           <TabsTrigger value="trend-charts">Trend Charts</TabsTrigger>
@@ -216,6 +218,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="trend-charts" className="mt-4">
           <SafetyTrendChart />
+        </TabsContent>
+
+        <TabsContent value="quick-tasks" className="mt-4">
+          <ComplianceTaskActions />
         </TabsContent>
 
         <TabsContent value="risk-status" className="mt-4">
