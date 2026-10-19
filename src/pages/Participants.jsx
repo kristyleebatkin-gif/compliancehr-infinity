@@ -206,7 +206,7 @@ export default function Participants() {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="font-semibold">{p.full_name}</p>
-                    <p className="text-sm text-muted-foreground">{p.ndis_number ? `NDIS ${p.ndis_number}` : 'No NDIS number'}</p>
+                    <p className="text-sm text-muted-foreground">{p.ndis_number ? `NDIS ${p.ndis_number}` : 'No NDIS number'}{p.ndis_reference_number ? ` · Ref ${p.ndis_reference_number}` : ''}</p>
                   </div>
                   <Badge className={statusTone(p.status)}>{p.status}</Badge>
                 </div>

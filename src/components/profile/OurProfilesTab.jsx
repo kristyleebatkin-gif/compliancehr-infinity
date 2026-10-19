@@ -47,7 +47,7 @@ export default function OurProfilesTab({ kind }) {
     return records.filter((r) => {
       if (group !== 'all' && groupKey(r) !== group) return false;
       if (!term) return true;
-      return [r.full_name, r.email, r.phone, r.position, r.role, r.ndis_number, r.support_type]
+      return [r.full_name, r.email, r.phone, r.position, r.role, r.ndis_number, r.ndis_reference_number, r.support_type]
         .some((v) => (v || '').toLowerCase().includes(term));
     });
   }, [records, search, group, isParticipant]);
@@ -133,6 +133,7 @@ export default function OurProfilesTab({ kind }) {
                               {isParticipant ? (r.support_type || r.ndis_number || 'Participant') : (r.position || r.role || 'Employee')}
                             </div>
                             <div className="mt-2 space-y-0.5 text-xs text-foreground/50">
+                              {isParticipant && r.ndis_reference_number && <div className="truncate font-medium text-foreground/60">NDIS ref {r.ndis_reference_number}</div>}
                               {r.email && <div className="flex items-center gap-1.5 truncate"><Mail className="h-3 w-3 shrink-0" />{r.email}</div>}
                               {r.phone && <div className="flex items-center gap-1.5 truncate"><Phone className="h-3 w-3 shrink-0" />{r.phone}</div>}
                             </div>
