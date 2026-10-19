@@ -67,7 +67,7 @@ export const NAV_GROUPS = [
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
   { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
-  { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback'] },
+  { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback', 'crm'] },
   { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
   { label: 'Help & Tools', keys: ['assistant', 'help', 'user-guides'] },
 ];
