@@ -46,6 +46,7 @@ import AuditReportList from '@/components/compliance/AuditReportList';
 import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
 import AuditPackButton from '@/components/compliance/AuditPackButton';
 import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
+import ComplianceScore from '@/components/compliance/ComplianceScore';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -151,7 +152,8 @@ export default function ComplianceHub() {
           <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="readiness" className="mt-4">
+        <TabsContent value="readiness" className="mt-4 space-y-4">
+          <ComplianceScore />
           <ComplianceReadiness />
         </TabsContent>
 
