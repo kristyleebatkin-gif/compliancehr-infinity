@@ -233,6 +233,11 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 169. All user guides accurate to their matching module.
 
 ## Completion log — latest implementation
+- Participant progress note history is now visible (read-only) inside the participant's own profile view, and progress notes carry a participant user link so participants can read notes recorded on their own goals. Existing notes were checked; none needed linking.
+- Intake verification complete: the participant intake online form now also asks the NDIS reference number, support coordinator and plan manager names, reason for referral, current supports, strengths and goals, mealtime support, and notes; the staff information form now covers employment status, experience, previous employer, medical conditions, office-use notes and buddy shift details.
+- The Compliance Hub renewal calendar now plots upcoming task due dates (open and in-progress tasks only) alongside certificates, documents, policy reviews, legal requirements and NDIS deadlines, with its own filter chip.
+
+## Completion log — latest implementation
 - Item 18: Support Worker employment contract and position description drafts saved in the HR templates library and available in Contracts & PDs. Both support branded PDF downloads; employee-specific preparation remains connected to the HR register. Templates require completed terms and appropriate HR/legal review before issue.
 - Item 19: File completeness now matches profile IDs, employee numbers and unambiguous legacy names; includes registered documents, issued certificates, signed contracts, acknowledged position descriptions and latest saved checklists. Server-calculated summaries are labelled for the current page, pagination is available, and changes refresh the report.
 - Item 20: Added 31 editable HR templates, including onboarding, induction, screening, declarations, training, performance reviews, exit, safety checks and role paperwork. Existing templates were preserved. Document copies can be edited before preview/download.

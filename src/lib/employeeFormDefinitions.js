@@ -371,6 +371,15 @@ const STAFF_INTAKE_CASE_QUESTIONS = [
   field('NDIS worker screening check number'),
   field('First aid certificate current', false),
   field('Referees', false),
+  field('Current employment status', false),
+  field('Years of experience'),
+  field('Previous employer', false),
+  field('Previous employer phone'),
+  field('Previous employer email'),
+  field('Medical conditions', false),
+  field('Office use notes', false),
+  field('Buddy shift date'),
+  field('Buddy shift time'),
 ];
 
 export const EMPLOYEE_FORM_DEFINITIONS = Object.fromEntries(Object.entries(BASE_EMPLOYEE_FORM_DEFINITIONS).map(([title, definition]) => [title, {
