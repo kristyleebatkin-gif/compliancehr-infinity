@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
@@ -21,7 +21,13 @@ export default function GlobalSearch() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(EMPTY);
   const [searching, setSearching] = useState(false);
+  const inputRef = useRef(null);
   const navigate = useNavigate();
+
+  // Move focus into the search field as soon as it opens so typing works immediately.
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 0);
+  }, [open]);
 
   // Ctrl/Cmd + K opens, Escape closes
   useEffect(() => {
@@ -111,8 +117,10 @@ export default function GlobalSearch() {
           <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
             <Command shouldFilter={false} loop>
               <CommandInput
+                ref={inputRef}
                 value={query}
                 onValueChange={setQuery}
+                autoFocus
                 placeholder="Search people, documents, tasks, modules or run an action…"
               />
               {searching && (
