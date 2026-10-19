@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck, GitCompareArrows } from 'lucide-react';
+import ThreeWayMatch from '@/components/procurement/ThreeWayMatch';
 import { downloadCsv } from '@/lib/csvExport';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -116,6 +117,7 @@ export default function ProcurementHub() {
         <TabsList>
           <TabsTrigger value="orders">Purchase orders</TabsTrigger>
           <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
+          <TabsTrigger value="matching">Matching</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orders" className="mt-4 space-y-3">
@@ -234,6 +236,10 @@ export default function ProcurementHub() {
               })}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="matching" className="mt-4">
+          <ThreeWayMatch />
         </TabsContent>
       </Tabs>
     </div>

@@ -23,6 +23,7 @@ import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
+import exportProdaClaims from '@/lib/prodaClaimExport';
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, FileUp, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -105,6 +106,11 @@ export default function InvoicingCentre() {
     toast({ title: 'Invoices exported to CSV' });
   };
 
+  const exportProda = async () => {
+    const count = await exportProdaClaims(base44.entities.Invoice);
+    toast({ title: 'PRODA claim file exported', description: `${count} claim lines ready for bulk upload.` });
+  };
+
   const openSend = (inv) => {
     setSendTarget(inv);
     setSendForm({
@@ -165,6 +171,7 @@ export default function InvoicingCentre() {
           <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx" onChange={(e) => { uploadInvoiceTemplate(e.target.files?.[0]); e.target.value = ''; }} />
         </label>
         <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
+        <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
       </div>
 
       {!business.business_name && !loading && (

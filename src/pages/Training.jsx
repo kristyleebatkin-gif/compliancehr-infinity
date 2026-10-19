@@ -12,8 +12,9 @@ import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
 import TrainingInsights from '@/components/training/TrainingInsights';
 import TrainingStreaks from '@/components/training/TrainingStreaks';
+import SkillsGapAnalytics from '@/components/training/SkillsGapAnalytics';
 import AiQuizDrill from '@/components/training/AiQuizDrill';
-import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play, Download } from 'lucide-react';
+import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play, Download, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
@@ -122,9 +123,16 @@ export default function Training() {
         <button onClick={() => setView('ladder')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'ladder' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Award className="h-3.5 w-3.5" />Ladder</button>
         <button onClick={() => setView('drills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'drills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Sparkles className="h-3.5 w-3.5" />AI Drills</button>
         <button onClick={() => setView('insights')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'insights' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><TrendingUp className="h-3.5 w-3.5" />Insights</button>
+        <button onClick={() => setView('skills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'skills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Target className="h-3.5 w-3.5" />Skills</button>
       </div>
 
-      {view === 'insights' ? (
+      {view === 'skills' ? (
+        loading ? (
+          <div className="py-12 text-center text-sm text-foreground/40">Loading skills gaps...</div>
+        ) : (
+          <SkillsGapAnalytics completions={allCompletions} />
+        )
+      ) : view === 'insights' ? (
         loading ? (
           <div className="py-12 text-center text-sm text-foreground/40">Loading insights...</div>
         ) : (
