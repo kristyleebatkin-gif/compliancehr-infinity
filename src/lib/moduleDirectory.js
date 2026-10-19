@@ -4,7 +4,7 @@ import {
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
-  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, UserRound,
+  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, UserRound, Activity,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -21,6 +21,7 @@ export const MODULE_DIRECTORY = [
   { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
   { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
   { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
+  { key: 'incident-analytics', label: 'Incident Analytics', path: '/incident-analytics', icon: Activity, blurb: 'Charts of incident trends by category and by staff, to target support where it is needed.' },
   { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
   { key: 'compliance', label: 'Compliance & Report Centre', path: '/compliance', icon: ShieldCheck, blurb: 'Checklists, audits, file matrices, expiry scans and full business audit exports.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
@@ -61,7 +62,7 @@ export const NAV_GROUPS = [
   { label: 'Overview', keys: ['dashboard', 'my-work'] },
   { label: 'People', keys: ['staff', 'participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
-  { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
+  { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
   { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
   { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback'] },
   { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
