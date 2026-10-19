@@ -13,7 +13,7 @@ const STATUSES = ['Current', 'Expiring Soon', 'Expired', 'Archived'];
 
 const emptyForm = { title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_uri: '', notes: '' };
 
-export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, canPickEmployee, initial, onDone }) {
+export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, canPickEmployee, employeeName, initial, onDone }) {
   const editing = !!initial?.id;
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
@@ -28,9 +28,9 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
         file_uri: initial.file_uri || '', notes: initial.notes || '',
       });
     } else {
-      setForm({ ...emptyForm, employee_name: canPickEmployee ? '' : (me?.full_name || '') });
+      setForm({ ...emptyForm, employee_name: employeeName || (canPickEmployee ? '' : (me?.full_name || '')) });
     }
-  }, [open, editing, initial, canPickEmployee, me?.full_name]);
+  }, [open, editing, initial, canPickEmployee, employeeName, me?.full_name]);
 
   const handleFile = async (file) => {
     if (!file) return;
@@ -68,7 +68,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
           <div className="grid gap-1.5"><Label>Employee</Label>
             <Select value={form.employee_name} onValueChange={(v) => setForm({ ...form, employee_name: v })} disabled={!canPickEmployee}>
               <SelectTrigger><SelectValue placeholder={canPickEmployee ? 'Select staff member' : me?.full_name || ''} /></SelectTrigger>
-              <SelectContent>{(canPickEmployee ? staff : [me?.full_name].filter(Boolean)).map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}</SelectContent>
+              <SelectContent>{(canPickEmployee ? staff : [employeeName || me?.full_name].filter(Boolean)).map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}</SelectContent>
             </Select>
           </div>
           <div className="grid grid-cols-2 gap-3">

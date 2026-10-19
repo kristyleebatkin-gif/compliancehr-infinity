@@ -22,28 +22,28 @@ import GoalInsights from '@/components/goals/GoalInsights';
 import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 
-export default function GoalProgress() {
+export default function GoalProgress({ profile, profileKind } = {}) {
   const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ participant_name: '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
+  const [form, setForm] = useState({ participant_name: profileKind === 'participant' ? profile.full_name : '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
       // Support Workers only see participant goals approved by an admin.
-      const query = role === ROLES.SUPPORT ? { admin_approved: true } : {};
+      const query = { ...(role === ROLES.SUPPORT ? { admin_approved: true } : {}), ...(profileKind === 'participant' ? { participant_name: profile.full_name } : {}) };
       const page = await base44.entities.Goal.filter(query, { sort: '-created_date', limit: 200 });
       setGoals(page.items);
     } finally {
       setLoading(false);
     }
-  }, [role]);
+  }, [role, profileKind, profile?.full_name]);
 
   const exportGoals = async () => {
-    const rows = await fetchAllRecords(base44.entities.Goal, {}, '-created_date');
+    const rows = await fetchAllRecords(base44.entities.Goal, { ...(role === ROLES.SUPPORT ? { admin_approved: true } : {}), ...(profileKind === 'participant' ? { participant_name: profile.full_name } : {}) }, '-created_date');
     downloadCsv('Goal-Progress-Register.csv', [
       { key: 'participant_name', label: 'Participant' }, { key: 'goal', label: 'Goal' },
       { key: 'category', label: 'Category' }, { key: 'progress', label: 'Progress (%)' },
@@ -59,7 +59,7 @@ export default function GoalProgress() {
     setSaving(true);
     try {
       await base44.entities.Goal.create({ ...form, progress: Number(form.progress) || undefined, admin_approved: isAdmin });
-      setForm({ participant_name: '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
+      setForm({ participant_name: profileKind === 'participant' ? profile.full_name : '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
       setOpen(false);
       await load();
     } finally {
@@ -137,7 +137,7 @@ export default function GoalProgress() {
             <DialogHeader><DialogTitle>New goal</DialogTitle></DialogHeader>
             <div className="grid gap-3">
               <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Participant *</Label><Input value={form.participant_name} onChange={(e) => setForm({ ...form, participant_name: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Participant *</Label><Input value={form.participant_name} readOnly={profileKind === 'participant'} onChange={(e) => setForm({ ...form, participant_name: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
               </div>
               <div className="grid gap-1.5"><Label>Goal *</Label><Input value={form.goal} onChange={(e) => setForm({ ...form, goal: e.target.value })} /></div>

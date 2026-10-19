@@ -23,7 +23,7 @@ const STATUSES = ['Received', 'Viewed', 'Pending Further Action', 'Finalised'];
 const STATUS_DATE = { Viewed: 'viewed_date', 'Pending Further Action': 'pending_date', Finalised: 'finalised_date' };
 const blank = { type: 'Feedback', subject: '', message: '', submitted_by: '', contact_details: '', received_via: '', rating: '', assigned_to: '', outcome: '', status: 'Received' };
 
-export default function Feedback() {
+export default function Feedback({ profile } = {}) {
   const { toast } = useToast();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,14 +36,15 @@ export default function Feedback() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Feedback.filter({}, { sort: '-created_date', limit: 300 });
+      const page = await base44.entities.Feedback.filter(profile ? { $or: [{ submitted_by: profile.full_name }, ...(profile.email ? [{ contact_details: profile.email }] : [])] } : {}, { sort: '-created_date', limit: 300 });
       setItems(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [profile?.full_name, profile?.email]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { if (profile) setForm((current) => ({ ...current, submitted_by: profile.full_name, contact_details: profile.email || profile.phone || '' })); }, [profile?.id]);
 
   const save = async () => {
     if (!form.subject.trim()) return;

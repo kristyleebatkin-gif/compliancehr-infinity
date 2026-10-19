@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
-import StaffProfileSections from '@/components/staff/StaffProfileSections';
+import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
 
@@ -22,7 +22,7 @@ export default function OurEmployeeDetail() {
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/our-employees"><ArrowLeft className="h-4 w-4" />Our employee profiles</Link></Button>
       </div>
-      <StaffProfileSections staff={employee} onUpdated={refresh} showTeam={false} ourView header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
+      <OurProfileWorkspace key={employee.id} profile={employee} kind="staff" onUpdated={refresh} header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
     </div>
   );
 }

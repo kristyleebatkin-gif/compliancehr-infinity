@@ -29,8 +29,10 @@ function statusFor(title, completions) {
   return { status: 'Current', completion: latest };
 }
 
-export default function Training() {
+export default function Training({ profile } = {}) {
   const { user } = useAuth();
+  const completionQuery = profile ? { $or: [{ employee_id: profile.id }, { learner_id: profile.id }, { employee_name: profile.full_name }, { learner_name: profile.full_name }] } : {};
+  const ownLearning = !profile || profile.email === user?.email;
   const [completions, setCompletions] = useState([]);
   const [allCompletions, setAllCompletions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,24 +44,24 @@ export default function Training() {
     setLoading(true);
     try {
       const allPage = await base44.entities.TrainingCompletion.filter(
-        {},
+        completionQuery,
         { sort: '-completed_date', limit: 200, fields: ['learner_name', 'learner_type', 'module_title', 'completed_date', 'expiry_date', 'score', 'status'] },
       );
       setAllCompletions(allPage.items || []);
       const identity = user?.id || '';
       const name = user?.full_name || '';
       const minePage = await base44.entities.TrainingCompletion.filter(
-        { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] },
+        profile ? completionQuery : { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] },
         { sort: '-completed_date', limit: 200 },
       );
       setCompletions(minePage.items || []);
     } catch (e) { console.error(e); }
     setLoading(false);
   };
-  useEffect(() => { load(); }, [user?.id]);
+  useEffect(() => { load(); }, [user?.id, profile?.id, profile?.full_name]);
 
   const exportTrainingRegister = async () => {
-    const all = await fetchAllRecords(base44.entities.TrainingCompletion, {}, '-completed_date');
+    const all = await fetchAllRecords(base44.entities.TrainingCompletion, completionQuery, '-completed_date');
     downloadCsv('Training-Register.csv', [
       { key: 'learner_name', label: 'Learner' }, { key: 'learner_type', label: 'Learner Type' },
       { key: 'module_title', label: 'Module' }, { key: 'completed_date', label: 'Completed Date' },
@@ -100,7 +102,7 @@ export default function Training() {
 
       <RegisterInsights module="training" />
 
-      <TrainingStreaks completions={completions} meName={user?.full_name || ''} />
+      <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
       <SectionCard title="Your progress" description={`${stats.completed} of ${stats.total} modules completed`}>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -144,7 +146,7 @@ export default function Training() {
         loading ? (
           <div className="py-12 text-center text-sm text-foreground/40">Loading ladder...</div>
         ) : (
-          <TrainingLadder completions={allCompletions} meName={user?.full_name || ''} />
+          <TrainingLadder completions={allCompletions} meName={profile?.full_name || user?.full_name || ''} />
         )
       ) : view === 'templates' ? (
         <TrainingTemplates />
@@ -179,7 +181,7 @@ export default function Training() {
                       {mods.map((m) => {
                         const { status, completion } = statusFor(m.title, completions);
                         return (
-                          <ModuleCard key={m.number} module={m} status={status} completion={completion} onOpen={() => setLearnerNumber(m.number)} />
+                          <ModuleCard key={m.number} module={m} status={status} completion={completion} onOpen={() => { if (ownLearning) setLearnerNumber(m.number); }} readOnly={!ownLearning} />
                         );
                       })}
                     </div>
@@ -229,7 +231,7 @@ function Chip({ active, tone = 'brand', onClick, children }) {
   );
 }
 
-function ModuleCard({ module, status, completion, onOpen }) {
+function ModuleCard({ module, status, completion, onOpen, readOnly = false }) {
   const group = LMS_GROUPS.find((item) => item.name === module.group);
   const colors = GROUP_TONES[group?.color] || GROUP_TONES.brand;
   const badge = {
@@ -254,7 +256,7 @@ function ModuleCard({ module, status, completion, onOpen }) {
         <span>Valid {module.validity_months}m</span>
         {completion?.expiry_date && <><span>·</span><span>Exp {completion.expiry_date}</span></>}
       </div>
-      <button onClick={onOpen} className={`mt-auto w-full rounded-lg px-3 py-2.5 text-xs font-semibold text-white ${colors.button}`}>Open Module</button>
+      <button onClick={onOpen} disabled={readOnly} className={`mt-auto w-full rounded-lg px-3 py-2.5 text-xs font-semibold text-white disabled:opacity-50 ${colors.button}`}>{readOnly ? 'Learner access only' : 'Open Module'}</button>
     </div>
   );
 }

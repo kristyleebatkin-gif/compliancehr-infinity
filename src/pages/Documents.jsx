@@ -38,13 +38,13 @@ const expiryTone = (expiry) => {
   return 'bg-safe/10 text-safe';
 };
 
-export default function Documents() {
+export default function Documents({ profile, profileKind } = {}) {
   const { search } = useLocation();
   const focus = new URLSearchParams(search).get('focus');
   const [docs, setDocs] = useState([]);
   const [myDocs, setMyDocs] = useState([]);
   const [me, setMe] = useState(null);
-  const isParticipant = me?.role === 'Participant';
+  const isParticipant = profile ? profileKind === 'participant' : me?.role === 'Participant';
   const [myProfile, setMyProfile] = useState(null);
   const [staff, setStaff] = useState([]);
   const [certs, setCerts] = useState([]);
@@ -64,6 +64,22 @@ export default function Documents() {
     try {
       const meUser = await base44.auth.me();
       setMe(meUser);
+      if (profile) {
+        if (profileKind === 'participant') {
+          const page = await base44.entities.ParticipantDocument.filter({ participant_id: profile.id }, { sort: '-created_date', limit: 50 });
+          setMyDocs(page.items || []);
+          setMyProfile(profile);
+        } else {
+          const [page, certPage] = await Promise.all([
+            base44.entities.EmployeeDocument.filter({ employee_name: profile.full_name, status: { $ne: 'Archived' } }, { sort: 'expiry_date', limit: 50 }),
+            base44.entities.Certificate.filter({ staff_name: profile.full_name, status: { $ne: 'Revoked' } }, { sort: 'expiry_date', limit: 50 }),
+          ]);
+          setDocs(page.items || []);
+          setCerts(certPage.items || []);
+          setStaff([profile.full_name]);
+        }
+        return;
+      }
       if (meUser.role === 'Participant') {
         const [page, profilePage] = await Promise.allSettled([
           base44.entities.ParticipantDocument.filter({ participant_user_id: meUser.id }, { sort: '-created_date', limit: 50 }),
@@ -97,7 +113,7 @@ export default function Documents() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [profile?.id, profile?.full_name, profileKind]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -149,7 +165,7 @@ export default function Documents() {
   };
 
   const exportAll = async () => {
-    const rows = await fetchAllRecords(base44.entities.EmployeeDocument, {}, '-created_date');
+    const rows = await fetchAllRecords(base44.entities.EmployeeDocument, profile ? { employee_name: profile.full_name } : {}, '-created_date');
     downloadCsv('document-vault-full-register.csv', [
       { key: 'title', label: 'Title' }, { key: 'employee_name', label: 'Employee' }, { key: 'document_type', label: 'Type' },
       { key: 'issue_date', label: 'Issue Date' }, { key: 'expiry_date', label: 'Expiry Date' },
@@ -178,14 +194,13 @@ export default function Documents() {
         <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
       ) : (
         <>
-      <RegisterInsights module="documents" />
-      <DataControlPanel />
+      {!profile && <><RegisterInsights module="documents" /><DataControlPanel /></>}
 
       <Tabs defaultValue="documents">
         <TabsList className="flex-wrap">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
-          <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>
+          {!profile && <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="documents" className="mt-4 space-y-6">
@@ -194,21 +209,22 @@ export default function Documents() {
         <span className="flex-1" />
         <div className="flex items-center gap-2">
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
-          <Button variant="outline" onClick={runScan} disabled={scanning}>
+          {!profile && <Button variant="outline" onClick={runScan} disabled={scanning}>
             <RefreshCw className={`mr-2 h-4 w-4 ${scanning ? 'animate-spin' : ''}`} /> Scan expiries
-          </Button>
+          </Button>}
           <Button variant="outline" onClick={exportAll}>
             <Download className="mr-2 h-4 w-4" /> Bulk export all documents
           </Button>
         </div>
-        <BulkUploadDocuments staff={staff} onDone={load} />
+        {!profile && <BulkUploadDocuments staff={staff} onDone={load} />}
         <Button onClick={() => { setEditing(null); setOpen(true); }}><Plus className="mr-2 h-4 w-4" /> Add document</Button>
         <EmployeeDocumentDialog
           open={open}
           onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}
           staff={staff}
           me={me}
-          canPickEmployee={canManageAll}
+          canPickEmployee={canManageAll && !profile}
+          employeeName={profile?.full_name}
           initial={editing}
           onDone={load}
         />
@@ -339,12 +355,12 @@ export default function Documents() {
         definitions={PARTICIPANT_FORM_DEFINITIONS}
       />
       </div>
-      <div id="vault-business" className="scroll-mt-24">
+      {!profile && <><div id="vault-business" className="scroll-mt-24">
       <BusinessDocumentsLibrary />
       </div>
       <div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
-      </div>
+      </div></>}
         </TabsContent>
 
         <TabsContent value="expiry-calendar" className="mt-4">

@@ -36,7 +36,7 @@ const fieldBase = 'w-full rounded-lg border border-input bg-background px-2.5 py
 const labelCls = 'text-[11px] font-semibold text-foreground/60 mb-1';
 const blankInv = { title: '', investigation_id: '', incident_id: '', investigator: '', received_by: '', start_date: '', target_completion: '', status: 'Pending', incident_summary: '', evidence_reviewed: '', persons_interviewed: '', hazards_identified: '', risk_assessment: '', control_measures: '', findings: '', recommendations: '', root_cause: '', corrective_actions: '' };
 
-export default function Incidents() {
+export default function Incidents({ profile, profileKind } = {}) {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const { role } = useRole();
@@ -61,7 +61,7 @@ export default function Incidents() {
 
   useEffect(() => {
     const unsubInc = base44.entities.Incident.subscribe((event) => {
-      if (event.type === 'create') {
+      if (event.type === 'create' && (!profile || (profileKind === 'participant' ? event.data.participant_id === profile.id || event.data.participant_name === profile.full_name : event.data.staff_id === profile.id || event.data.staff_name === profile.full_name))) {
         setItems((prev) => (prev.some((i) => i.id === event.data.id) ? prev : [event.data, ...prev]));
       }
     });
@@ -77,7 +77,7 @@ export default function Incidents() {
     setLoading(true);
     try {
       const [incPage, invPage] = await Promise.all([
-        base44.entities.Incident.filter({}, { sort: '-date_occurred', limit: 500 }),
+        base44.entities.Incident.filter(profile ? profileKind === 'participant' ? { $or: [{ participant_id: profile.id }, { participant_name: profile.full_name }] } : { $or: [{ staff_id: profile.id }, { staff_name: profile.full_name }] } : {}, { sort: '-date_occurred', limit: 500 }),
         base44.entities.Investigation.filter({}, { sort: '-start_date', limit: 500 }),
       ]);
       setItems(incPage.items || []);
@@ -203,7 +203,7 @@ export default function Incidents() {
         action={
           <div className="flex flex-wrap items-center gap-2">
             {canReview && <Button size="sm" onClick={() => { setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
-            <Link to="/incidents/new">
+            <Link to={profile ? `/incidents/new?${profileKind === 'participant' ? 'participantId' : 'staffId'}=${encodeURIComponent(profile.id)}` : '/incidents/new'}>
               <Button size="sm" className="bg-red-600 text-white hover:bg-red-700 border-red-600"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
             </Link>
             {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}

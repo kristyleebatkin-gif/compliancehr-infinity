@@ -17,7 +17,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
-export default function HrHub() {
+export default function HrHub({ profile } = {}) {
   const [tab, setTab] = useState('leave');
   const [leaves, setLeaves] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -33,13 +33,13 @@ export default function HrHub() {
     setMe(user);
     const scoped = !!user && !MANAGER_ROLES.includes(user.role);
     const [l, r] = await Promise.all([
-      base44.entities.LeaveRequest.filter(scoped ? { created_by_id: user.id } : {}, { sort: '-created_date', limit: 100 }),
-      base44.entities.PerformanceReview.filter(scoped ? { created_by_id: user.id } : {}, { sort: '-review_date', limit: 100 }),
+      base44.entities.LeaveRequest.filter(profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {}, { sort: '-created_date', limit: 100 }),
+      base44.entities.PerformanceReview.filter(profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {}, { sort: '-review_date', limit: 100 }),
     ]);
     setLeaves(l.items || []);
     setReviews(r.items || []);
     setLoading(false);
-  }, []);
+  }, [profile?.full_name]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -89,7 +89,7 @@ export default function HrHub() {
 
   const remove = async (entity, id) => { await entity.delete(id); load(); };
 
-  const isManager = !!me && MANAGER_ROLES.includes(me.role);
+  const isManager = !profile && !!me && MANAGER_ROLES.includes(me.role);
   const pending = leaves.filter((l) => l.status === 'Pending');
   const scheduledReviews = reviews.filter((r) => r.status === 'Scheduled');
   const upcomingLeave = leaves.filter((l) => l.status === 'Approved' && l.end_date >= today());
@@ -137,7 +137,7 @@ export default function HrHub() {
           {showLeaveForm && (
             <Card><CardContent className="p-4">
               <form className="grid gap-3 md:grid-cols-2" onSubmit={saveLeave}>
-                <div className="grid gap-1.5"><Label>Staff member *</Label><Input name="staff_name" required defaultValue={isManager ? undefined : me?.full_name || ''} readOnly={!isManager} /></div>
+                <div className="grid gap-1.5"><Label>Staff member *</Label><Input name="staff_name" required defaultValue={profile?.full_name || (isManager ? undefined : me?.full_name || '')} readOnly={!isManager} /></div>
                 <div className="grid gap-1.5"><Label>Leave type</Label>
                   <select name="leave_type" className="h-9 rounded-md border border-input bg-transparent px-3 text-sm">
                     {['Annual', 'Personal / Sick', "Carer's", 'Unpaid', 'Long Service', 'Study', 'Other'].map((t) => <option key={t}>{t}</option>)}

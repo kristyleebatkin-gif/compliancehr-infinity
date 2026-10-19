@@ -54,7 +54,7 @@ const matrixCell = {
   Critical: 'bg-red-500 text-red-950',
 };
 
-export default function Risks() {
+export default function Risks({ profile, profileKind } = {}) {
   const [searchParams] = useSearchParams();
   const { can } = useRole();
   const { toast } = useToast();
@@ -69,7 +69,8 @@ export default function Risks() {
   const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Risk.filter({}, { sort: '-identified_date', limit: 500 });
+      const query = profile ? profileKind === 'participant' ? { $or: [{ participant_id: profile.id }, { participant_name: profile.full_name }] } : { owner: profile.full_name } : {};
+      const page = await base44.entities.Risk.filter(query, { sort: '-identified_date', limit: 500 });
       setRisks(page.items || []);
     } catch (e) { console.error(e); }
     setLoading(false);
@@ -110,7 +111,7 @@ export default function Risks() {
   const save = async (e) => {
     e.preventDefault();
     if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
-    const payload = { ...form, rating: cellRating(form.likelihood, form.consequence) };
+    const payload = { ...form, rating: cellRating(form.likelihood, form.consequence), ...(profileKind === 'participant' ? { participant_id: profile.id, participant_name: profile.full_name } : profile ? { owner: profile.full_name } : {}) };
     if (payload.assessment_type !== 'Not scheduled' && payload.last_assessed_date) {
       const next = new Date(`${payload.last_assessed_date}T00:00:00`);
       next.setMonth(next.getMonth() + (payload.assessment_type === 'Home' ? 1 : 3));

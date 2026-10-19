@@ -27,7 +27,7 @@ const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { 
 
 const NDIS_CATEGORIES = ['Assistance with Daily Life (Core)', 'Assistance with Social & Community Participation (Core)', 'Consumables (Core)', 'Transport (Core)', 'Capacity Building - Improved Daily Living', 'Capacity Building - Improved Health & Wellbeing', 'Capacity Building - Finding & Keeping a Job', 'Capacity Building - Improved Learning', 'Capacity Building - Improved Relationships', 'Capacity Building - Increased Social & Community Participation', 'Capacity Building - Improved Living Arrangements', 'Capital - Assistive Technology', 'Capital - Home Modifications', 'Other'];
 
-export default function ReceiptHub() {
+export default function ReceiptHub({ profile } = {}) {
   const { toast } = useToast();
   const [receipts, setReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,14 +41,15 @@ export default function ReceiptHub() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.Receipt.filter({}, { sort: '-date', limit: 200 });
+      const page = await base44.entities.Receipt.filter(profile ? { $or: [{ paid_by: profile.full_name }, { reimburse_to: profile.full_name }] } : {}, { sort: '-date', limit: 200 });
       setReceipts(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [profile?.full_name]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { if (profile) setForm((current) => ({ ...current, paid_by: profile.full_name })); }, [profile?.full_name]);
 
   const save = async () => {
     if (!form.description.trim()) return;

@@ -19,7 +19,7 @@ const MANAGEMENT = ['admin', 'Provider Administrator', 'Compliance Manager', 'Ad
 
 // Name Tags module: staff make, download and email their own branded name tag;
 // management roles get the full badge creator for any staff member.
-export default function NameTags({ embedded = false } = {}) {
+export default function NameTags({ embedded = false, profile: selectedProfile } = {}) {
   const { toast } = useToast();
   const [me, setMe] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -29,18 +29,18 @@ export default function NameTags({ embedded = false } = {}) {
   const [making, setMaking] = useState(false);
   const [emailing, setEmailing] = useState(false);
 
-  const isManager = MANAGEMENT.includes(me?.role);
+  const isManager = !selectedProfile && MANAGEMENT.includes(me?.role);
 
   const load = useCallback(async () => {
     try {
       const user = await base44.auth.me();
       setMe(user);
       setBranding(await loadCompanyBranding().catch(() => getCompanyBranding()));
-      if (MANAGEMENT.includes(user.role)) { setLoading(false); return; }
+      if (!selectedProfile && MANAGEMENT.includes(user.role)) { setLoading(false); return; }
       const [profPage, savedPage] = await Promise.allSettled([
-        base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
+        selectedProfile ? Promise.resolve({ items: [selectedProfile] }) : base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
         base44.entities.EmployeeDocument.filter(
-          { employee_name: user.full_name, document_type: 'Staff Badge' },
+          { employee_name: selectedProfile?.full_name || user.full_name, document_type: 'Staff Badge' },
           { sort: '-created_date', limit: 20 },
         ),
       ]);
@@ -48,7 +48,7 @@ export default function NameTags({ embedded = false } = {}) {
       setSaved(savedPage.status === 'fulfilled' ? savedPage.value.items || [] : []);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, []);
+  }, [selectedProfile?.id, selectedProfile?.full_name]);
 
   useEffect(() => { load(); }, [load]);
 

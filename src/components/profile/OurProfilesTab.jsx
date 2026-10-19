@@ -27,13 +27,13 @@ export default function OurProfilesTab({ kind }) {
     (async () => {
       try {
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter(selfOnly ? { email: user?.email || '' } : {}, { sort: 'full_name', limit: 200 });
+        const page = await entity.filter(selfOnly ? { email: user?.email || '' } : isParticipant && role === ROLES.SUPPORT ? { admin_approved: true } : {}, { sort: 'full_name', limit: 200 });
         if (active) setRecords(page.items || []);
       } catch (e) { console.error(e); }
       if (active) setLoading(false);
     })();
     return () => { active = false; };
-  }, [isParticipant, selfOnly, user?.email]);
+  }, [isParticipant, selfOnly, role, user?.email]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {

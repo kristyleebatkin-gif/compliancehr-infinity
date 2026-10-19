@@ -19,8 +19,11 @@ import AutomatedLogs from '@/components/communications/AutomatedLogs';
 import ComplaintsFeed from '@/components/communications/ComplaintsFeed';
 import ShoutoutFeed from '@/components/communications/ShoutoutFeed';
 import TeamFeed from '@/components/communications/TeamFeed';
+import StaffCommPanel from '@/components/communications/StaffCommPanel';
+import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
+import ProfileTodoList from '@/components/communications/ProfileTodoList';
 
-export default function Communications() {
+export default function Communications({ profile, profileKind } = {}) {
   return (
     <div className="space-y-6">
       <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
@@ -52,7 +55,7 @@ export default function Communications() {
         </TabsList>
         <TabsContent value="alerts"><AlertsCentre /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
-        <TabsContent value="diary"><CommunicationDiary /></TabsContent>
+        <TabsContent value="diary">{profile ? profileKind === 'participant' ? <ProfileCommDiary participant={profile} /> : <StaffCommPanel staff={profile} /> : <CommunicationDiary />}</TabsContent>
         <TabsContent value="inbox"><Inbox /></TabsContent>
         <TabsContent value="templates"><TemplateLibrary /></TabsContent>
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
@@ -62,7 +65,7 @@ export default function Communications() {
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>
+          {profile ? <ProfileTodoList person={profile} /> : <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
         <TabsContent value="ai"><AiCompose /></TabsContent>

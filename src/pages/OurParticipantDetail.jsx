@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
-import ParticipantProfileSections from '@/components/participants/ParticipantProfileSections';
+import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
 
@@ -12,9 +12,9 @@ export default function OurParticipantDetail() {
   const { id } = useParams();
   const { profile: participant, loading, error, refresh } = useProfileRecord('ParticipantProfile', id);
   const { role, user } = useRole();
-  const notPermitted = !loading && !error && participant && role === ROLES.PARTICIPANT && participant.email !== (user?.email || '');
+  const notPermitted = !loading && !error && participant && ((role === ROLES.PARTICIPANT && participant.email !== (user?.email || '')) || (role === ROLES.SUPPORT && !participant.admin_approved));
   if (loading || error || !participant || notPermitted) {
-    if (notPermitted) return <ProfileLoadState backTo="/our-participants" label="Our participant profiles" error message="You can only view your own participant profile." />;
+    if (notPermitted) return <ProfileLoadState backTo="/our-participants" label="Our participant profiles" error message={role === ROLES.SUPPORT ? 'This participant profile has not been approved for employee access.' : 'You can only view your own participant profile.'} />;
     return <ProfileLoadState loading={loading} error={error} backTo="/our-participants" label="Our participant profiles" />;
   }
   return (
@@ -23,7 +23,7 @@ export default function OurParticipantDetail() {
         <Button variant="ghost" size="sm" asChild><Link to="/our-participants"><ArrowLeft className="h-4 w-4" />Our participant profiles</Link></Button>
         <div className="flex flex-wrap items-center gap-2" />
       </div>
-      <ParticipantProfileSections participant={participant} onUpdated={refresh} ourView header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
+      <OurProfileWorkspace key={participant.id} profile={participant} kind="participant" onUpdated={refresh} header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
     </div>
   );
 }
