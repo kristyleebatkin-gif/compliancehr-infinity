@@ -183,6 +183,15 @@ export default function AssistantChat({ agent, onBack }) {
           <SendHorizontal className="h-5 w-5" />
         </button>
       </div>
+      {messages.length > 0 && (
+        <div className="flex flex-wrap gap-2 px-1">
+          {suggestions.map((s) => (
+            <button key={s} onClick={() => setInput(s)} disabled={sending} className="rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand disabled:opacity-50">
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="flex items-center gap-1.5 px-1 text-[11px] text-foreground/40">
         <MessagesSquare className="h-3 w-3" /> Chats are saved per agent — switch anytime from the dropdown.
       </div>
