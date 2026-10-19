@@ -53,6 +53,7 @@ import AuditReportList from '@/components/compliance/AuditReportList';
 import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
 import AuditPackButton from '@/components/compliance/AuditPackButton';
 import BoardReportButton from '@/components/compliance/BoardReportButton';
+import WeeklyReportPdfButton from '@/components/compliance/WeeklyReportPdfButton';
 import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
 import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
@@ -180,6 +181,7 @@ export default function ComplianceHub() {
         action={(
           <>
             <AuditPackButton />
+            <WeeklyReportPdfButton />
             <BoardReportButton />
             <ComplianceHealthExportButton />
             <AuditArchiveButton />
