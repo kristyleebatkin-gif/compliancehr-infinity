@@ -1,7 +1,8 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarClock, ClipboardCheck, FileSignature, Files, Heart, MessagesSquare, ScrollText, ShieldAlert } from 'lucide-react';
+import { CalendarClock, ClipboardCheck, FileSignature, Files, Heart, ListTodo, MessagesSquare, ScrollText, ShieldAlert } from 'lucide-react';
+import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsTab';
@@ -23,12 +24,15 @@ export default function ParticipantProfileSections({ participant, onUpdated, hea
       onUpdate={async (next) => { await base44.entities.ParticipantProfile.update(participant.id, { support_team: next }); await onUpdated(); }}
       footer={participant.progress_notes_due_date ? <p className="mt-3 text-[11px] text-muted-foreground">Progress note and report copies are emailed to administrators every 10 weeks. Progress notes due (3-monthly): <span className="font-semibold text-foreground">{participant.progress_notes_due_date}</span></p> : null} />
   );
+  // 'Our' participant views mirror the 'Our' employee modulars, except as
+  // outlined: participants get no HR, receipts or training content.
   const tabs = [
     { key: 'details', label: 'Details', Icon: ScrollText, content: <div className="space-y-6">{header}<FundingUtilisation participant={participant} onUpdated={onUpdated} />{teamSection}<ExportRow kind="participant" person={participant} section="details" /><ParticipantDetailsTab participant={participant} onUpdated={onUpdated} /></div> },
-    { key: 'documents', label: 'Documents', Icon: Files, content: <div className="space-y-6"><ParticipantDocumentsTab participant={participant} /><ProfileIntakeDocuments profileId={participant.id} /></div> },
-    { key: 'records', label: 'Incidents & Goals', Icon: Heart, content: <ParticipantRecordsTab participant={participant} /> },
-    { key: 'comm', label: 'Communication Diary', Icon: MessagesSquare, content: <ProfileCommDiary participant={participant} /> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <ParticipantFillableForms participant={participant} /> },
+    { key: 'documents', label: 'File Checklist', Icon: Files, content: <div className="space-y-6"><ParticipantDocumentsTab participant={participant} /><ProfileIntakeDocuments profileId={participant.id} /></div> },
+    { key: 'records', label: 'Safety Records', Icon: Heart, content: <ParticipantRecordsTab participant={participant} /> },
+    { key: 'comm', label: 'Communication Log', Icon: MessagesSquare, content: <ProfileCommDiary participant={participant} /> },
+    { key: 'todo', label: 'To-Do', Icon: ListTodo, content: <ProfileTodoList person={participant} /> },
     // Remaining person-level data (shifts, safety, reviews) lives only in the
     // admin Participant profiles module — never in 'Our' participant views.
     ...(ourView ? [] : [

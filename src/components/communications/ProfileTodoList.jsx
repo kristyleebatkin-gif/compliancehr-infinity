@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ListTodo, Loader2 } from 'lucide-react';
 
-export default function ProfileTodoList({ staff }) {
+export default function ProfileTodoList({ staff, person }) {
+  staff = staff || person;
   const { toast } = useToast();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
