@@ -4,6 +4,7 @@ import PageHeader from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
+import StaffComplianceFlags from '@/components/dashboard/StaffComplianceFlags';
 
 const INTAKE_COMPLETED = ['Approved', 'Converted to Profile'];
 const INTAKE_PENDING = ['Draft', 'Information Required', 'Ready for Review'];
@@ -105,6 +106,8 @@ export default function StaffProgressDashboard() {
         </div>
       ) : (
         <>
+          <StaffComplianceFlags />
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {statCards.map((card) => (
               <Card key={card.label} className="shadow-panel">

@@ -1,0 +1,45 @@
+{
+  "name": "Staff Compliance Flag Scan",
+  "description": "Daily scan that flags staff members whose compliance progress (onboarding pack completion) is below 80%. Notifies admins in-app and emails them when a staff member newly drops below the threshold.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "staff_compliance_flag_scan",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_flag_scan": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "staffComplianceFlagScan",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan staff compliance progress",
+            "description": "Flags staff below 80% compliance progress and alerts admins"
+          }
+        }
+      }
+    ]
+  }
+}
