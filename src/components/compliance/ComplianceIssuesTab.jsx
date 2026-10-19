@@ -13,6 +13,8 @@ import IssueResolveDialog from '@/components/compliance/IssueResolveDialog';
 import { downloadComplianceIssuesReport } from '@/lib/complianceIssuesPdf';
 import { nextIssueId } from '@/lib/complianceIssues.js';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
+import BulkEditBar from '@/components/documents/BulkEditBar';
+import { Checkbox } from '@/components/ui/checkbox';
 import IssueCategoryChart from '@/components/compliance/IssueCategoryChart';
 import IssueReportDialog from '@/components/compliance/IssueReportDialog';
 import { Plus, Download, ClipboardCheck, History, Trash2, ListChecks, FileSpreadsheet, FileText } from 'lucide-react';
@@ -44,6 +46,8 @@ export default function ComplianceIssuesTab() {
   const [historyIssue, setHistoryIssue] = useState(null);
   const [quickResolve, setQuickResolve] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [applying, setApplying] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -72,6 +76,28 @@ export default function ComplianceIssuesTab() {
       status_log: [issue.status_log, `${new Date().toISOString().slice(0, 10)} — ${issue.status} → In Progress`].filter(Boolean).join('\n'),
     });
     await load();
+  };
+
+  const toggleRow = (id) => setSelectedIds((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  const allShownSelected = filtered.length > 0 && filtered.every((i) => selectedIds.includes(i.id));
+  const toggleAll = () => setSelectedIds(allShownSelected ? [] : filtered.map((i) => i.id));
+
+  const bulkApply = async ({ status }) => {
+    if (!selectedIds.length) return;
+    setApplying(true);
+    try {
+      const rows = issues.filter((i) => selectedIds.includes(i.id)).map((issue) => ({
+        id: issue.id,
+        status,
+        status_log: [issue.status_log, `${new Date().toISOString().slice(0, 10)} — ${issue.status} → ${status} (bulk)`].filter(Boolean).join('\n'),
+        ...(status === 'Resolved' || status === 'Closed' ? { resolved_date: new Date().toISOString() } : {}),
+      }));
+      await base44.entities.ComplianceIssue.bulkUpdate(rows);
+      setSelectedIds([]);
+      await load();
+    } finally {
+      setApplying(false);
+    }
   };
 
   const exportCsv = async () => {
@@ -112,11 +138,28 @@ export default function ComplianceIssuesTab() {
         <EmptyState icon={ListChecks} modulePath="/compliance" title="No compliance issues yet" message="Log the first compliance issue so it can be documented, resolved and reported." action={<Button onClick={() => setLogOpen(true)}><Plus className="mr-2 h-4 w-4" /> Log issue</Button>} />
       ) : (
         <Card>
+          {selectedIds.length > 0 && (
+            <div className="border-b border-border/50 p-3">
+              <BulkEditBar
+                count={selectedIds.length}
+                applying={applying}
+                onApply={bulkApply}
+                onClear={() => setSelectedIds([])}
+                options={[
+                  { value: 'In Progress', label: 'Mark In Progress' },
+                  { value: 'Resolved', label: 'Approve (mark Resolved)' },
+                  { value: 'Closed', label: 'Close' },
+                  { value: 'Open', label: 'Reopen' },
+                ]}
+              />
+            </div>
+          )}
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                    <th className="px-4 py-3 w-10"><Checkbox checked={allShownSelected} onCheckedChange={toggleAll} aria-label="Select all shown" /></th>
                     <th className="px-4 py-3">Issue</th>
                     <th className="px-4 py-3">Category</th>
                     <th className="px-4 py-3">Priority</th>
@@ -128,7 +171,8 @@ export default function ComplianceIssuesTab() {
                 </thead>
                 <tbody>
                   {filtered.map((issue) => (
-                    <tr key={issue.id} className="border-b border-border/50 hover:bg-muted/30">
+                    <tr key={issue.id} className={`border-b border-border/50 hover:bg-muted/30 ${selectedIds.includes(issue.id) ? 'bg-primary/5' : ''}`}>
+                      <td className="px-4 py-3 w-10"><Checkbox checked={selectedIds.includes(issue.id)} onCheckedChange={() => toggleRow(issue.id)} aria-label={`Select ${issue.title}`} /></td>
                       <td className="px-4 py-3">
                         <p className="font-semibold">{issue.title}</p>
                         <p className="text-xs text-muted-foreground">{issue.issue_id ? `${issue.issue_id} · ` : ''}Logged {issue.date_logged ? format(new Date(issue.date_logged), 'd MMM yyyy') : ''}{issue.assigned_to ? ` · Assigned to ${issue.assigned_to}` : ''}</p>
