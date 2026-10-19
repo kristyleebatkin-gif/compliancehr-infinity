@@ -7,12 +7,16 @@ import { Button } from '@/components/ui/button';
 import EmptyState from '@/components/EmptyState';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
+import { useRole, ROLES } from '@/lib/useRole';
 import { Search, ChevronRight, Users, Heart, Mail, Phone } from 'lucide-react';
 
 // Admin view: every employee or participant profile in the organisation,
-// grouped into modular sections with search and quick filters.
+// grouped into modular sections with search and quick filters. Staff and
+// participants see only their own profile in their matching module.
 export default function OurProfilesTab({ kind }) {
   const isParticipant = kind === 'participant';
+  const { role, user } = useRole();
+  const selfOnly = isParticipant ? role === ROLES.PARTICIPANT : role === ROLES.SUPPORT;
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -23,13 +27,13 @@ export default function OurProfilesTab({ kind }) {
     (async () => {
       try {
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter({}, { sort: 'full_name', limit: 200 });
+        const page = await entity.filter(selfOnly ? { email: user?.email || '' } : {}, { sort: 'full_name', limit: 200 });
         if (active) setRecords(page.items || []);
       } catch (e) { console.error(e); }
       if (active) setLoading(false);
     })();
     return () => { active = false; };
-  }, [isParticipant]);
+  }, [isParticipant, selfOnly, user?.email]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
@@ -62,11 +66,12 @@ export default function OurProfilesTab({ kind }) {
   }
 
   if (!records.length) {
-    return <EmptyState icon={Users} title="No profiles yet" message={isParticipant ? 'Participant profiles will appear here once created.' : 'Employee profiles will appear here once created.'} modulePath={isParticipant ? 'participants' : 'staff'} />;
+    return <EmptyState icon={Users} title={selfOnly ? 'Your profile is not set up yet' : 'No profiles yet'} message={selfOnly ? 'Your profile will appear here once management creates it and links your email.' : (isParticipant ? 'Participant profiles will appear here once created.' : 'Employee profiles will appear here once created.')} modulePath={isParticipant ? 'participants' : 'staff'} />;
   }
 
   return (
     <div className="space-y-5">
+      {!selfOnly && <>
       {/* Stat tiles */}
       <div className="grid grid-cols-3 gap-3">
         {[
@@ -96,6 +101,7 @@ export default function OurProfilesTab({ kind }) {
           ))}
         </div>
       </div>
+      </>}
 
       {/* Modular grouped sections */}
       {visible.length === 0 ? (

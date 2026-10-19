@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { useAuth } from '@/lib/AuthContext';
 import { ROLES, canAccessNav, isCompliance, isAdmin } from '@/lib/roles';
 
+export { ROLES };
+
 export function useRole() {
   const { user } = useAuth();
   const rawRole = user?.role;
