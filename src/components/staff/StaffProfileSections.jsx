@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, BadgeCheck, CalendarClock, CalendarDays, ClipboardCheck, FileCheck2, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
+import StaffRiskSummary from '@/components/staff/StaffRiskSummary';
 import StaffDetailsPanel from '@/components/staff/StaffDetailsPanel';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
@@ -33,6 +34,7 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     .filter((module) => module.key !== 'details')
     .map((module) => ({ ...module, key: module.key === 'hr' ? 'hr-hub' : module.key, module: true }));
   const tabs = [
+    { key: 'risk', label: 'Risk Summary', Icon: ShieldAlert, content: <StaffRiskSummary staff={staff} /> },
     { key: 'details', label: 'Details', Icon: ClipboardCheck, content: <div className="space-y-6">{showTeam ? teamSection : null}<ExportRow kind="staff" person={staff} section="details" /><StaffDetailsPanel staff={staff} onUpdated={onUpdated} /></div> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <StaffFillableForms staff={staff} /> },
     { key: 'filechecklist', label: 'File Checklist', Icon: FileCheck2, content: <StaffFileChecklist staff={staff} /> },
