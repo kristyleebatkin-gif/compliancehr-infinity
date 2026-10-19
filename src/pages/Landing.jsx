@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
 import QuickStartSection from '@/components/landing/QuickStartSection';
@@ -11,6 +11,11 @@ import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
 
 export default function Landing() {
+  // The landing page is designed light: clear the persisted dark-mode class while viewing it.
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+  }, []);
+
   return (
     <div className="min-h-screen overflow-hidden bg-background font-elegant antialiased">
       <LandingNav />
