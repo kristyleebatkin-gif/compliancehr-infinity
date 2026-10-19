@@ -10,6 +10,10 @@
       "type": "string",
       "title": "Participant"
     },
+    "participant_user_id": {
+      "type": "string",
+      "title": "Participant User ID"
+    },
     "entry_type": {
       "type": "string",
       "enum": [
@@ -110,6 +114,9 @@
           "user_condition": {
             "role": "Auditor"
           }
+        },
+        {
+          "data.participant_user_id": "{{user.id}}"
         }
       ]
     },
