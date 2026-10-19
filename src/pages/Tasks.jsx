@@ -244,7 +244,7 @@ export default function Tasks() {
           <span className="text-xs font-medium text-foreground/40">Move to:</span>
           <div className="flex flex-wrap gap-1.5">
             {STATUSES.map((s) => (
-              <button key={s} onClick={() => bulkStatus(s)} className="rounded-lg border border-brand/40 bg-brand/5 px-3 py-2 text-sm font-semibold text-brand hover:bg-brand/15">{s}</button>
+              <button key={s} onClick={() => bulkStatus(s)} className={s === 'Completed' ? 'rounded-lg bg-safe px-3 py-2 text-sm font-bold text-safe-foreground hover:bg-safe/90' : 'rounded-lg border border-brand/40 bg-brand/5 px-3 py-2 text-sm font-semibold text-brand hover:bg-brand/15'}>{s}</button>
             ))}
           </div>
           <button onClick={() => setSelected([])} className="ml-auto flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-foreground/60 hover:bg-muted"><X className="h-4 w-4" />Clear</button>
