@@ -15,6 +15,7 @@ import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWi
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
+const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
 export default function HrHub() {
   const [tab, setTab] = useState('leave');
@@ -24,12 +25,16 @@ export default function HrHub() {
   const [showLeaveForm, setShowLeaveForm] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [me, setMe] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
+    const user = await base44.auth.me().catch(() => null);
+    setMe(user);
+    const scoped = !!user && !MANAGER_ROLES.includes(user.role);
     const [l, r] = await Promise.all([
-      base44.entities.LeaveRequest.filter({}, { sort: '-created_date', limit: 100 }),
-      base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100 }),
+      base44.entities.LeaveRequest.filter(scoped ? { created_by_id: user.id } : {}, { sort: '-created_date', limit: 100 }),
+      base44.entities.PerformanceReview.filter(scoped ? { created_by_id: user.id } : {}, { sort: '-review_date', limit: 100 }),
     ]);
     setLeaves(l.items || []);
     setReviews(r.items || []);
@@ -84,6 +89,7 @@ export default function HrHub() {
 
   const remove = async (entity, id) => { await entity.delete(id); load(); };
 
+  const isManager = !!me && MANAGER_ROLES.includes(me.role);
   const pending = leaves.filter((l) => l.status === 'Pending');
   const scheduledReviews = reviews.filter((r) => r.status === 'Scheduled');
   const upcomingLeave = leaves.filter((l) => l.status === 'Approved' && l.end_date >= today());
@@ -115,9 +121,9 @@ export default function HrHub() {
         <TabsList>
           <TabsTrigger value="leave">Leave requests</TabsTrigger>
           <TabsTrigger value="reviews">Performance reviews</TabsTrigger>
-          <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>
-          <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>
-          <TabsTrigger value="file-completeness">File completeness</TabsTrigger>
+          {isManager && <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>}
+          {isManager && <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>}
+          {isManager && <TabsTrigger value="file-completeness">File completeness</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
@@ -131,7 +137,7 @@ export default function HrHub() {
           {showLeaveForm && (
             <Card><CardContent className="p-4">
               <form className="grid gap-3 md:grid-cols-2" onSubmit={saveLeave}>
-                <div className="grid gap-1.5"><Label>Staff member *</Label><Input name="staff_name" required /></div>
+                <div className="grid gap-1.5"><Label>Staff member *</Label><Input name="staff_name" required defaultValue={isManager ? undefined : me?.full_name || ''} readOnly={!isManager} /></div>
                 <div className="grid gap-1.5"><Label>Leave type</Label>
                   <select name="leave_type" className="h-9 rounded-md border border-input bg-transparent px-3 text-sm">
                     {['Annual', 'Personal / Sick', "Carer's", 'Unpaid', 'Long Service', 'Study', 'Other'].map((t) => <option key={t}>{t}</option>)}
@@ -162,7 +168,7 @@ export default function HrHub() {
                     </div>
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${l.status === 'Approved' ? 'bg-safe/10 text-safe' : l.status === 'Declined' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'}`}>{l.status}</span>
                   </div>
-                  {l.status === 'Pending' && (
+                  {isManager && l.status === 'Pending' && (
                     <div className="mt-3 flex gap-2">
                       <Button size="sm" className="bg-safe text-white hover:bg-safe/90" onClick={() => decide(l, 'Approved')}><Check className="mr-1 h-3.5 w-3.5" />Approve</Button>
                       <Button size="sm" variant="outline" className="text-danger" onClick={() => decide(l, 'Declined')}><X className="mr-1 h-3.5 w-3.5" />Decline</Button>
@@ -176,7 +182,7 @@ export default function HrHub() {
 
         <TabsContent value="reviews" className="mt-4 space-y-3">
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => setShowReviewForm(!showReviewForm)}><Plus className="mr-2 h-4 w-4" />Schedule review</Button>
+            {isManager && <Button size="sm" onClick={() => setShowReviewForm(!showReviewForm)}><Plus className="mr-2 h-4 w-4" />Schedule review</Button>}
             <Button size="sm" variant="outline" onClick={() => downloadCsv('performance-reviews.csv', [
               { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'review_type' }, { label: 'Date', key: 'review_date' },
               { label: 'Reviewer', key: 'reviewer' }, { label: 'Rating', key: 'overall_rating' }, { label: 'Outcome', key: 'outcome' }, { label: 'Status', key: 'status' },
@@ -216,8 +222,8 @@ export default function HrHub() {
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${r.status === 'Completed' ? 'bg-safe/10 text-safe' : r.status === 'Cancelled' ? 'bg-muted text-muted-foreground' : 'bg-warning/10 text-warning'}`}>{r.status}</span>
                   </div>
                   <div className="mt-3 flex gap-2">
-                    {r.status !== 'Completed' && <Button size="sm" variant="outline" onClick={() => completeReview(r)}>Mark completed</Button>}
-                    <Button size="sm" variant="ghost" className="text-danger" onClick={() => remove(base44.entities.PerformanceReview, r.id)}><Trash2 className="h-4 w-4" /></Button>
+                    {isManager && r.status !== 'Completed' && <Button size="sm" variant="outline" onClick={() => completeReview(r)}>Mark completed</Button>}
+                    {isManager && <Button size="sm" variant="ghost" className="text-danger" onClick={() => remove(base44.entities.PerformanceReview, r.id)}><Trash2 className="h-4 w-4" /></Button>}
                   </div>
                 </CardContent></Card>
               ))}
@@ -225,17 +231,9 @@ export default function HrHub() {
           )}
         </TabsContent>
 
-        <TabsContent value="performance" className="mt-4">
-          <AppraisalComplianceDashboard />
-        </TabsContent>
-
-        <TabsContent value="paperwork" className="mt-4">
-          <HrPaperworkPanel />
-        </TabsContent>
-
-        <TabsContent value="file-completeness" className="mt-4">
-          <StaffFileCompletenessWidget />
-        </TabsContent>
+        {isManager && <TabsContent value="performance" className="mt-4"><AppraisalComplianceDashboard /></TabsContent>}
+        {isManager && <TabsContent value="paperwork" className="mt-4"><HrPaperworkPanel /></TabsContent>}
+        {isManager && <TabsContent value="file-completeness" className="mt-4"><StaffFileCompletenessWidget /></TabsContent>}
       </Tabs>
     </div>
   );
