@@ -1,4 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { CONSENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { auDate, auTime } from '../../shared/reminders.ts';
 
 const CONSENT_VALUES = new Set(['Audit consent received', 'Audit declined']);
 
@@ -7,6 +9,9 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasAnyRole(user, CONSENT_ROLES)) {
+      return Response.json({ error: 'Administrator access required' }, { status: 403 });
+    }
 
     const body = await req.json();
     const staffId = String(body.staff_id || '');
@@ -21,9 +26,12 @@ export default async function(req) {
     if (!profile) return Response.json({ error: 'Staff member not found' }, { status: 404 });
 
     const previous = profile.audit_consent || 'Audit declined';
-    const recordedBy = String(body.recorded_by || user.full_name || user.email || '').trim();
-    const recordedDate = String(body.recorded_date || '').trim();
-    const recordedTime = String(body.recorded_time || '').trim();
+    // Attribution is derived from the authenticated caller and the server clock,
+    // never from the request body.
+    const now = new Date();
+    const recordedBy = String(user.full_name || user.email || '').trim();
+    const recordedDate = auDate(now);
+    const recordedTime = auTime(now);
     await service.entities.StaffProfile.update(staffId, {
       audit_consent: consent,
       audit_consent_recorded_by: recordedBy,

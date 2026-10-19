@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -313,7 +314,7 @@ export default function ComplianceHub() {
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{r.next_review ? `Next review ${format(new Date(r.next_review), 'd MMM yyyy')}` : ''}</span>
                       <span className="flex items-center gap-1">
-                        {r.official_url && <a href={r.official_url} target="_blank" rel="noreferrer" className="inline-flex"><ExternalLink className="h-4 w-4" /></a>}
+                        {safeUrl(r.official_url) && <a href={safeUrl(r.official_url)} target="_blank" rel="noreferrer" className="inline-flex"><ExternalLink className="h-4 w-4" /></a>}
                         <Button variant="ghost" size="icon" onClick={() => remove(base44.entities.LegalRequirement, r.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </span>
                     </div>

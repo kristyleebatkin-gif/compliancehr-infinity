@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, STAFF_SEND_ROLES, hasAnyRole, appContactEmails } from '../../shared/systemAuth.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -14,6 +15,18 @@ export default async function(req) {
     const message = String(body.body || '').trim().slice(0, 5000);
     if (!EMAIL_RE.test(to) || !subject || !message) {
       return Response.json({ error: 'A valid recipient, subject and message are required' }, { status: 400 });
+    }
+
+    // Only staff roles may send from the organisation's identity, and
+    // non-management senders are limited to contacts stored in the app.
+    if (!hasAnyRole(user, STAFF_SEND_ROLES)) {
+      return Response.json({ error: 'Your role cannot send app email' }, { status: 403 });
+    }
+    if (!hasAnyRole(user, MANAGEMENT_ROLES)) {
+      const contacts = await appContactEmails(base44);
+      if (!contacts.has(to.toLowerCase())) {
+        return Response.json({ error: 'Recipients must be registered app users or contacts stored in the app' }, { status: 403 });
+      }
     }
 
     const attachments = Array.isArray(body.attachments)

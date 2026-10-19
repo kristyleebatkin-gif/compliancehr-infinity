@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
+import { safeUrl } from '@/lib/safeUrl';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Lock, IdCard, Building2, FolderLock, ShieldCheck } from 'lucide-react';
@@ -127,7 +128,7 @@ export default function CompanySafe() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {d.file_url && <a href={d.file_url} target="_blank" rel="noreferrer" className="text-sm text-primary underline">Open file</a>}
+                  {safeUrl(d.file_url) && <a href={safeUrl(d.file_url)} target="_blank" rel="noreferrer" className="text-sm text-primary underline">Open file</a>}
                   <Badge className={statusTone(d.status)}>{d.status}</Badge>
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.CompanyDocument.delete(d.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>

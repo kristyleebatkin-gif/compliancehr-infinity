@@ -144,12 +144,13 @@ export default async function(req) {
       });
     }
 
-    if (body.action !== 'import' || (!body.file_uri && !body.file_url)) return Response.json({ error: 'Unsupported action or missing file' }, { status: 400 });
-    let fileRef = String(body.file_url || '');
-    if (body.file_uri) {
-      const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: body.file_uri, expires_in: 600 });
-      fileRef = signed.signed_url;
+    // Only private app-uploaded files (resolved server-side via a signed URL)
+    // are accepted; caller-supplied URLs are refused to prevent SSRF.
+    if (body.action !== 'import' || !body.file_uri) {
+      return Response.json({ error: 'Unsupported action or missing file' }, { status: 400 });
     }
+    const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: body.file_uri, expires_in: 600 });
+    const fileRef = signed.signed_url;
     const response = await fetch(fileRef, { signal: AbortSignal.timeout(30000) });
     if (!response.ok) throw new Error(`Spreadsheet download failed (${response.status}).`);
     const workbook = XLSX.read(await response.arrayBuffer(), { type: 'array' });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
@@ -162,8 +163,8 @@ export default function MeetingCentre() {
                 {' '}· in {Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date()))} day{Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date())) === 1 ? '' : 's'}
               </p>
             </div>
-            {nextMeeting.meeting_link && (
-              <a href={nextMeeting.meeting_link} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-50">
+            {safeUrl(nextMeeting.meeting_link) && (
+              <a href={safeUrl(nextMeeting.meeting_link)} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-50">
                 <Clock className="h-4 w-4" />Join online
               </a>
             )}

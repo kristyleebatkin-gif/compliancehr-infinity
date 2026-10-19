@@ -10,6 +10,11 @@ import { Video, Plus, Copy, ExternalLink, PhoneOff } from 'lucide-react';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
+// Only the app's own Jitsi meeting rooms may be embedded; stored free-text
+// values pointing anywhere else (or with unsafe schemes) are never loaded.
+const JITSI_ROOM = /^https:\/\/meet\.jit\.si\/[A-Za-z0-9_-]+$/;
+const safeRoom = (url) => JITSI_ROOM.test(String(url || '').trim());
+
 export default function VideoCalls() {
   const { toast } = useToast();
   const [calls, setCalls] = useState([]);
@@ -87,7 +92,7 @@ export default function VideoCalls() {
         </CardContent>
       </Card>
 
-      {activeRoom && (
+      {activeRoom && safeRoom(activeRoom) && (
         <Card className="border-brand/40">
           <CardContent className="p-4">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -126,7 +131,7 @@ export default function VideoCalls() {
               <p className="mt-1 break-all text-xs text-muted-foreground">{c.body}</p>
               <div className="mt-3 flex gap-2">
                 <Button size="sm" variant="outline" onClick={() => copyLink(c.body)}><Copy className="mr-1.5 h-3.5 w-3.5" />Copy link</Button>
-                <Button size="sm" onClick={() => setActiveRoom(c.body)}><Video className="mr-1.5 h-3.5 w-3.5" />Join</Button>
+                <Button size="sm" onClick={() => safeRoom(c.body) && setActiveRoom(c.body)}><Video className="mr-1.5 h-3.5 w-3.5" />Join</Button>
               </div>
             </CardContent></Card>
           ))

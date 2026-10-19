@@ -44,15 +44,18 @@ export default async function(req) {
       return Response.json({ error: 'A supported entity_type and record_id are required.' }, { status: 400 });
     }
 
-    // Resolve through the caller-scoped client first so this function cannot be
-    // used to synchronize a record the current user is not allowed to access.
-    // Fall back to the service role for staff who can create but not read the
-    // register-level entity.
+    // Resolve through the caller-scoped client so this function cannot be used
+    // to synchronize a record the current user is not allowed to access. The
+    // only fallback is a record the caller created but cannot read back.
     let record;
     try {
       record = await base44.entities[entityType].get(recordId);
     } catch {
-      record = await base44.asServiceRole.entities[entityType].get(recordId);
+      const owned = await base44.asServiceRole.entities[entityType].get(recordId);
+      record = owned && String(owned.created_by_id || '') === String(user.id) ? owned : null;
+    }
+    if (!record) {
+      return Response.json({ error: 'Record not found or not accessible' }, { status: 404 });
     }
     if (entityType === 'Incident') {
       const participantId = String(record.participant_id || '');

@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
 // Cross-module register routing: files any new record from the routed entities
 // into its correct Register (and escalates critical items as Notifications).
@@ -124,6 +125,9 @@ const ROUTES = {
 export default async function(req) {
   try {
     const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const entity = body.entity;
     const recordId = body.record_id;
     const event = body.event || 'create';

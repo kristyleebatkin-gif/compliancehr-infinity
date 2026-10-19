@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, STAFF_SEND_ROLES, hasAnyRole, appContactEmails } from '../../shared/systemAuth.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -31,6 +32,19 @@ export default async function(req: Request) {
       || new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
     if (!recipients.length || !subject || !message) {
       return Response.json({ error: 'At least one valid recipient, a subject and a message are required' }, { status: 400 });
+    }
+
+    // Only staff roles may send from the organisation's identity, and
+    // non-management senders are limited to contacts stored in the app.
+    if (!hasAnyRole(user, STAFF_SEND_ROLES)) {
+      return Response.json({ error: 'Your role cannot send professional email' }, { status: 403 });
+    }
+    if (!hasAnyRole(user, MANAGEMENT_ROLES)) {
+      const contacts = await appContactEmails(base44);
+      const disallowed = recipients.find((r) => !contacts.has(r.toLowerCase()));
+      if (disallowed) {
+        return Response.json({ error: 'Recipients must be registered app users or contacts stored in the app' }, { status: 403 });
+      }
     }
     const attachments = Array.isArray(body.attachments)
       ? body.attachments

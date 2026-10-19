@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { auDate, pretty, addDays, pageItems } from '../../shared/reminders.ts';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
 const KIT_CHECK_TYPES = ['Natural Disaster Kit Check', 'First Aid Kit Check', 'Fire Safety Equipment Check'];
 const SIX_MONTHS_DAYS = 182;
@@ -8,11 +9,12 @@ const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'A
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     const service = base44.asServiceRole;
-    const body = await req.json().catch(() => ({}));
     const dryRun = !!body.dry_run;
 
     const today = new Date();
@@ -118,8 +120,8 @@ export default async function(req) {
       success: true,
       due_items: due.length,
       due_list: due,
-      emails_sent: dryRun ? [] : sentTo,
-      notifications_created: notificationsCreated,
+      emails_sent_count: dryRun ? 0 : sentTo.length,
+      notifications_created_count: notificationsCreated.length,
       dry_run: dryRun,
     });
   } catch (error) {

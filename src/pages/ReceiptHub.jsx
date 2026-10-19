@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -75,7 +76,8 @@ export default function ReceiptHub() {
   };
 
   const openReceiptFile = async (r) => {
-    if (r.receipt_url) { window.open(r.receipt_url, '_blank'); return; }
+    const storedUrl = safeUrl(r.receipt_url);
+    if (storedUrl) { window.open(storedUrl, '_blank'); return; }
     if (!r.file_uri) return;
     try {
       const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: r.file_uri });

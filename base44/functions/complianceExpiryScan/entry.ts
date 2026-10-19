@@ -1,10 +1,16 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+
+// Roles allowed to trigger the org-wide compliance status scan (matches
+// the manual scan UI access).
+const ALLOWED_ROLES = [...MANAGEMENT_ROLES, 'Team Leader'];
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasAnyRole(user, ALLOWED_ROLES)) return Response.json({ error: 'Administrator access required' }, { status: 403 });
 
     const today = new Date();
     const iso = (d) => d.toISOString().slice(0, 10);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,7 +31,8 @@ const hazardTone = (h = '') => {
 };
 
 export const sdsLink = (c) => {
-  if (c.sds_url) return c.sds_url;
+  const stored = safeUrl(c.sds_url);
+  if (stored) return stored;
   if (c.cas_number && c.cas_number !== 'Mixture') {
     return `https://www.sigmaaldrich.com/au/en/search?term=${encodeURIComponent(c.cas_number)}`;
   }

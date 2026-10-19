@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -85,9 +86,15 @@ export default function EmergencyResources() {
             {resources.map((r) => (
               <div key={r.id} className="flex items-center justify-between gap-2 rounded-lg border border-border/60 p-2.5">
                 <div className="min-w-0">
-                  <a href={r.url} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 truncate font-medium text-brand hover:underline">
-                    <ExternalLink className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{r.name}</span>
-                  </a>
+                  {safeUrl(r.url) ? (
+                    <a href={safeUrl(r.url)} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 truncate font-medium text-brand hover:underline">
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{r.name}</span>
+                    </a>
+                  ) : (
+                    <span className="flex items-center gap-1.5 truncate font-medium text-brand">
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{r.name}</span>
+                    </span>
+                  )}
                   {r.description && <p className="truncate text-xs text-muted-foreground">{r.description}</p>}
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-foreground/40">{r.resource_type}</p>
                 </div>

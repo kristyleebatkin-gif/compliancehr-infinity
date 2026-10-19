@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { safeUrl } from '@/lib/safeUrl';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -177,7 +178,7 @@ export default function EquipmentManuals() {
                   <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => downloadManualRecordPdf(m)}>
                     <Download className="h-3 w-3" />Record PDF
                   </Button>
-                  {m.manual_url && <a href={m.manual_url} target="_blank" rel="noreferrer" className="inline-flex h-7 items-center rounded-md px-2 text-xs font-semibold text-primary underline">Online manual</a>}
+                  {safeUrl(m.manual_url) && <a href={safeUrl(m.manual_url)} target="_blank" rel="noreferrer" className="inline-flex h-7 items-center rounded-md px-2 text-xs font-semibold text-primary underline">Online manual</a>}
                   <div className="ml-auto flex">
                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => openEdit(m)}><Pencil className="h-3.5 w-3.5" /></Button>
                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.EquipmentManual.delete(m.id); await load(); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>

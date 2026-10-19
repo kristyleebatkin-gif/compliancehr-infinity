@@ -31,7 +31,9 @@
           "call": "invoke_backend_function",
           "with": {
             "function_name": "trainingAuditReportEmail",
-            "args": {}
+            "args": {
+              "token": "a7f3d9c2e8b14f6a0d5c9e2b7f4a1c8e3d6b9f2a5c8e1d4b7a9f3c6e2d5b8a1f"
+            }
           },
           "then": "end",
           "x-base44": {

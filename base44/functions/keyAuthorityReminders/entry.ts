@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { auDate, auTime, pretty, pageItems } from '../../shared/reminders.ts';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
 // Daily delegated-authority expiry scan on key personnel. For every KeyBusinessContact
 // whose delegated-authority end date has expired or expires within 30 days it:
@@ -15,6 +16,9 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const service = base44.asServiceRole;
     const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const dryRun = !!body.dry_run;
 
     const now = new Date();

@@ -1,10 +1,15 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const service = base44.asServiceRole;
 
     const sydneyToday = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
