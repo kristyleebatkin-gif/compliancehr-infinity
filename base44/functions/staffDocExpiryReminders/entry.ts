@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { auDate, auTime, pretty, pageItems } from '../../shared/reminders.ts';
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
 // Daily staff compliance document expiry scan. For every EmployeeDocument that has
 // expired or expires within 30 days it:
@@ -17,6 +18,9 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const service = base44.asServiceRole;
     const body = await req.json().catch(() => ({}));
+    if (!(await authorizeSystemCall(base44, body))) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const dryRun = !!body.dry_run;
 
     const now = new Date();
@@ -139,7 +143,6 @@ export default async function(req) {
     return Response.json({
       success: true,
       due_items: due.length,
-      due_list: due,
       diary_entries_created: dryRun ? 0 : due.length,
       notifications_created: notificationsCreated,
       emails_sent: emailed,

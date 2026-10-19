@@ -1,5 +1,13 @@
 // Print helpers for Visual Boards: open a clean print window with the board content.
 
+// HTML-entity escape for any record-sourced value interpolated into the print markup.
+const esc = (v) => String(v ?? '')
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+
 const openPrintWindow = (title, bodyHtml) => {
   const win = window.open('', '_blank', 'width=900,height=700');
   if (!win) return false;
@@ -7,7 +15,7 @@ const openPrintWindow = (title, bodyHtml) => {
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>${title}</title>
+  <title>${esc(title)}</title>
   <style>
     * { box-sizing: border-box; }
     body { font-family: Arial, Helvetica, sans-serif; margin: 24px; color: #0f172a; }
@@ -30,8 +38,8 @@ const openPrintWindow = (title, bodyHtml) => {
 
 const headerBlock = (title, subtitle = '') => `
   <div class="print-header">
-    <h1>${title}</h1>
-    ${subtitle ? `<div class="meta">${subtitle}</div>` : ''}
+    <h1>${esc(title)}</h1>
+    ${subtitle ? `<div class="meta">${esc(subtitle)}</div>` : ''}
   </div>`;
 
 export const printClock = ({ mode, color, digitalTime, dateLine, size = 300 }) => {
@@ -61,10 +69,10 @@ export const printClock = ({ mode, color, digitalTime, dateLine, size = 300 }) =
 export const printRoutine = ({ title, participant, steps }) => {
   const rows = steps.length
     ? steps.map((s, i) => {
-        const sign = s.sign ? `<div style="color:#4f46e5;font-size:12px;margin-top:2px;">Sign prompt: ${s.sign} ${s.sign_description ? '&mdash; ' + s.sign_description : ''}</div>` : '';
+        const sign = s.sign ? `<div style="color:#4f46e5;font-size:12px;margin-top:2px;">Sign prompt: ${esc(s.sign)} ${s.sign_description ? '&mdash; ' + esc(s.sign_description) : ''}</div>` : '';
         return `<div style="display:flex;align-items:flex-start;gap:12px;border:1px solid #cbd5e1;border-radius:10px;padding:12px;margin-bottom:8px;${s.done ? 'background:#f0fdf4;' : ''}">
           <div style="width:22px;height:22px;border:2px solid ${s.done ? '#16a34a' : '#94a3b8'};border-radius:50%;${s.done ? 'background:#16a34a;' : ''};flex-shrink:0;"></div>
-          <div style="font-size:18px;"><b style="color:#64748b;">${i + 1}.</b> ${s.text}${sign}</div>
+          <div style="font-size:18px;"><b style="color:#64748b;">${i + 1}.</b> ${esc(s.text)}${sign}</div>
         </div>`;
       }).join('')
     : '<p style="color:#64748b;">No steps yet.</p>';
@@ -76,9 +84,9 @@ export const printRoutine = ({ title, participant, steps }) => {
 export const printSignSheet = (signs, title = 'Sign Language Prompts') => {
   const cards = signs.map((s) => `
     <div style="display:inline-block;width:30%;border:2px solid #4f46e5;border-radius:12px;padding:10px;margin:6px;vertical-align:top;text-align:center;">
-      <div style="font-size:40px;">${s.emoji}</div>
-      <div style="font-size:16px;font-weight:700;margin:4px 0;">${s.word}</div>
-      <div style="font-size:11px;color:#475569;text-align:left;">${s.description}</div>
+      <div style="font-size:40px;">${esc(s.emoji)}</div>
+      <div style="font-size:16px;font-weight:700;margin:4px 0;">${esc(s.word)}</div>
+      <div style="font-size:11px;color:#475569;text-align:left;">${esc(s.description)}</div>
     </div>`).join('');
   return openPrintWindow(title, `
     ${headerBlock(title, 'Simplified gesture prompts for visual support')}
