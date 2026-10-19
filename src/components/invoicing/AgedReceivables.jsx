@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Send, Timer } from 'lucide-react';
 import { format } from 'date-fns';
+import Sparkline from '@/components/ui/Sparkline';
 
 // Aged receivables: outstanding invoices bucketed by days overdue,
 // with one-click payment reminder emails.
@@ -88,39 +89,67 @@ export default function AgedReceivables({ invoices, onChanged }) {
         <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
           {bucketed.map((bucket) => (
             <div key={bucket.key} className={`rounded-xl border border-border/60 p-3 ${bucket.tone}`}>
-              <div className="text-lg font-bold leading-none text-foreground">${bucket.total.toLocaleString('en-AU', { maximumFractionDigits: 0 })}</div>
+              <div className="text-lg font-bold leading-none text-foreground tabular-nums">${bucket.total.toLocaleString('en-AU', { maximumFractionDigits: 0 })}</div>
               <div className="mt-1 text-[11px] font-medium text-foreground/55">{bucket.items.length} invoice{bucket.items.length === 1 ? '' : 's'}</div>
               <div className="mt-1 text-[11px] font-semibold">{bucket.label}</div>
+              <div className="mt-1.5"><Sparkline values={bucket.items.map((inv) => inv.amount || 0)} width={64} height={18} className="text-current opacity-60" /></div>
             </div>
           ))}
         </div>
 
         {overdueList.length > 0 && (
-          <div className="mt-4 space-y-2">
-            {overdueList.map((inv) => (
-              <div key={inv.id} className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 bg-card px-3 py-2">
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-semibold">
-                    {inv.invoice_number}{inv.client_name ? ` · ${inv.client_name}` : ''}
-                  </div>
-                  <div className="text-[11px] text-foreground/45">
-                    Due {inv.due_date ? format(new Date(`${inv.due_date}T00:00:00`), 'd MMM yyyy') : '—'} · ${((inv.amount || 0)).toLocaleString('en-AU', { minimumFractionDigits: 2 })}
-                  </div>
-                </div>
-                <Badge className={daysOverdue(inv, today) > 60 ? 'bg-danger/15 text-danger border-transparent' : 'bg-warning/15 text-warning border-transparent'}>
-                  {daysOverdue(inv, today)} days overdue
-                </Badge>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => remind(inv)}
-                  disabled={reminding === inv.id}
-                  className="shrink-0"
-                >
-                  {reminding === inv.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />} Remind
-                </Button>
-              </div>
-            ))}
+          <div className="mt-4 overflow-x-auto rounded-xl border border-border/60">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/40">
+                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
+                  <th className="px-3 py-2.5 font-semibold">Invoice</th>
+                  <th className="px-3 py-2.5 font-semibold">Due</th>
+                  <th className="px-3 py-2.5 text-right font-semibold tabular-nums">Amount</th>
+                  <th className="px-3 py-2.5 font-semibold">Overdue</th>
+                  <th className="px-3 py-2.5 text-right font-semibold">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {overdueList.map((inv) => (
+                  <tr key={inv.id} className="border-b border-border/50 last:border-0 hover:bg-muted/30">
+                    <td className="px-3 py-2.5 font-semibold">
+                      {inv.invoice_number}
+                      {inv.client_name && <span className="ml-2 text-xs font-normal text-muted-foreground">{inv.client_name}</span>}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-2.5 text-muted-foreground">
+                      {inv.due_date ? format(new Date(`${inv.due_date}T00:00:00`), 'd MMM yyyy') : '—'}
+                    </td>
+                    <td className="px-3 py-2.5 text-right font-semibold tabular-nums">
+                      ${(inv.amount || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td className="px-3 py-2.5">
+                      <Badge className={daysOverdue(inv, today) > 60 ? 'bg-danger/15 text-danger border-transparent' : 'bg-warning/15 text-warning border-transparent'}>
+                        {daysOverdue(inv, today)} days
+                      </Badge>
+                    </td>
+                    <td className="px-3 py-2.5 text-right">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => remind(inv)}
+                        disabled={reminding === inv.id}
+                      >
+                        {reminding === inv.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />} Remind
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="border-t bg-muted/40">
+                  <td colSpan={2} className="px-3 py-2 font-semibold">Total overdue</td>
+                  <td className="px-3 py-2 text-right font-bold tabular-nums">
+                    ${overdueList.reduce((sum, inv) => sum + (inv.amount || 0), 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}
+                  </td>
+                  <td colSpan={2} />
+                </tr>
+              </tfoot>
+            </table>
           </div>
         )}
       </CardContent>
