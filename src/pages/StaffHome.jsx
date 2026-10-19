@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
 import MyProfileDialog from '@/components/mywork/MyProfileDialog';
-import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -24,6 +24,7 @@ export default function StaffHome() {
   const [incidents, setIncidents] = useState([]);
   const [risks, setRisks] = useState([]);
   const [issues, setIssues] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [profile, setProfile] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,7 @@ export default function StaffHome() {
 
   const load = useCallback(async (user) => {
     try {
-      const [taskPage, incidentPage, riskPage, issuePage, profilePage] = await Promise.allSettled([
+      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, profilePage] = await Promise.allSettled([
         base44.entities.TodoTask.filter(
           { archived: { $ne: true }, $or: [{ assigned_to: user.full_name }, { assigned_email: user.email }] },
           { sort: 'due_date', limit: 200 }
@@ -39,12 +40,14 @@ export default function StaffHome() {
         base44.entities.Incident.filter({ reported_by: user.full_name }, { sort: '-created_date', limit: 10 }),
         base44.entities.Risk.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
         base44.entities.IssueConcernBarrier.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
+        base44.entities.Feedback.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
         base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
       ]);
       if (taskPage.status === 'fulfilled') setTasks(taskPage.value.items || []);
       if (incidentPage.status === 'fulfilled') setIncidents(incidentPage.value.items || []);
       if (riskPage.status === 'fulfilled') setRisks(riskPage.value.items || []);
       if (issuePage.status === 'fulfilled') setIssues(issuePage.value.items || []);
+      if (feedbackPage.status === 'fulfilled') setFeedbacks(feedbackPage.value.items || []);
       if (profilePage.status === 'fulfilled') setProfile((profilePage.value.items || [])[0] || null);
     } catch (e) { console.error(e); }
     setLoading(false);
@@ -186,6 +189,29 @@ export default function StaffHome() {
                   <div className="text-xs text-foreground/50">{i.date ? fmt(i.date) : ''}{i.potential_solution ? ' · Your suggestion recorded' : ''}{i.management_follow_up ? ' · Management follow-up received' : ''}</div>
                   {i.management_follow_up && <div className="mt-1 text-xs text-foreground/60"><span className="font-medium">Follow-up:</span> {i.management_follow_up}</div>}
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My feedback</h2>
+          <Link to="/feedback/submit" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Submit new<Plus className="h-3 w-3" /></Link>
+        </div>
+        {feedbacks.length === 0 ? (
+          <EmptyState icon={ThumbsUp} title="No feedback yet" message="When you share feedback or a complaint it will appear here with its status." />
+        ) : (
+          <div className="space-y-2">
+            {feedbacks.map((f) => (
+              <div key={f.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+                <ThumbsUp className={`h-5 w-5 shrink-0 ${f.type === 'Complaint' ? 'text-warning' : 'text-safe'}`} />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{f.subject}</div>
+                  <div className="text-xs text-foreground/50">{f.type}{f.received_date ? ` · ${fmt(f.received_date.slice(0, 10))}` : ''}</div>
+                </div>
+                <StatusPill status={f.status} />
               </div>
             ))}
           </div>

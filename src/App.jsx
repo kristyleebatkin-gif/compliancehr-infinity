@@ -31,6 +31,7 @@ import IncidentAnalytics from '@/pages/IncidentAnalytics';
 import StaffIncidentPortal from '@/pages/StaffIncidentPortal';
 import RiskSubmitPortal from '@/pages/RiskSubmitPortal';
 import IssueSubmitPortal from '@/pages/IssueSubmitPortal';
+import FeedbackSubmitPortal from '@/pages/FeedbackSubmitPortal';
 import Certificates from '@/pages/Certificates';
 import Participants from '@/pages/Participants';
 import ParticipantDetail from '@/pages/ParticipantDetail';
@@ -128,6 +129,7 @@ const AuthenticatedApp = () => {
           <Route path="/incidents/submit" element={<RoleGate navKey="incidents"><StaffIncidentPortal /></RoleGate>} />
           <Route path="/risks/submit" element={<RoleGate navKey="risks"><RiskSubmitPortal /></RoleGate>} />
           <Route path="/issues/submit" element={<RoleGate navKey="risks"><IssueSubmitPortal /></RoleGate>} />
+          <Route path="/feedback/submit" element={<RoleGate navKey="risks"><FeedbackSubmitPortal /></RoleGate>} />
           <Route path="/incidents/new" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
           <Route path="/incident-analytics" element={<RoleGate navKey="incident-analytics"><IncidentAnalytics /></RoleGate>} />
           <Route path="/incidents/:id" element={<RoleGate navKey="incidents"><IncidentDetail /></RoleGate>} />
