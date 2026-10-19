@@ -87,12 +87,19 @@ export async function routeDiaryEntry(record) {
       });
     } else if (noteType === 'Change Request') {
       const responsible = (record.staff_involved || [])[0] || record.sender_name || '';
+      let responsibleEmails = [];
+      if (responsible) {
+        const staffPage = await base44.entities.StaffProfile.filter({ full_name: responsible }, { limit: 1, fields: ['email'] });
+        const email = (staffPage.items || [])[0]?.email;
+        if (email) responsibleEmails = [email];
+      }
       await base44.entities.TodoTask.create({
         title: subject,
         module: 'Communications',
         task_date: date,
         due_date: '',
         responsible: responsible ? [responsible] : [],
+        responsible_emails: responsibleEmails,
         important_info: body,
         shared_by: record.sender_name || '',
       });

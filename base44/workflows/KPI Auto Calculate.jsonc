@@ -1,0 +1,45 @@
+{
+  "name": "KPI Auto Calculate",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "15 6 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "description": "Recomputes derivable provider KPIs from live records every morning and refreshes their status.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "kpi_auto_calculate",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "calculate": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "kpiAutoCalc",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Recalculate KPIs",
+            "description": "Latest values from live records"
+          }
+        }
+      }
+    ]
+  }
+}

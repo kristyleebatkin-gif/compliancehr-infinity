@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { useRole } from '@/lib/useRole';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
@@ -29,6 +31,31 @@ const NOTIF_TYPES = [
 ];
 
 const PAGE_SIZE = 25;
+
+// Click-through routing: explicit action_url first, then the linked entity or module.
+const ENTITY_LINKS = {
+  Incident: (id) => (id ? `/incidents/${id}` : '/incidents'),
+  Policy: () => '/compliance',
+  TrainingCompletion: () => '/training',
+  EmployeeDocument: () => '/staff',
+  ComplianceChecklistEntry: () => '/compliance',
+  ImprovementAction: () => '/quality',
+  InternalAudit: () => '/compliance',
+  Risk: () => '/risks',
+  Invoice: () => '/invoicing',
+  Quote: () => '/quotes',
+  Shift: () => '/rostering',
+  TodoTask: () => '/tasks',
+  Task: () => '/tasks',
+};
+
+const resolveLink = (n) => {
+  if (n.action_url) return n.action_url;
+  const type = n.linked_entity_type || '';
+  if (ENTITY_LINKS[type]) return ENTITY_LINKS[type](n.linked_entity_id);
+  const mod = MODULE_DIRECTORY.find((m) => m.label === type);
+  return mod ? mod.path : null;
+};
 
 export default function Notifications() {
   const { user } = useRole();
@@ -207,14 +234,26 @@ export default function Notifications() {
                   <span className="text-[11px] font-medium text-foreground/40">{moment(n.created_date).format('D MMM YYYY, h:mm a')}</span>
                 </div>
                 <div className={`mt-1.5 text-sm leading-6 ${n.read ? 'text-foreground/60' : 'font-medium text-foreground'}`}>{n.message}</div>
-                {n.action_url && (
-                  <a
-                    href={n.action_url}
-                    onClick={(e) => e.stopPropagation()}
-                    className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-brand/90"
-                  >
-                    Open <ExternalLink className="h-3 w-3" />
-                  </a>
+                {resolveLink(n) && (
+                  resolveLink(n).startsWith('http') ? (
+                    <a
+                      href={resolveLink(n)}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => { e.stopPropagation(); markRead(n); }}
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-brand/90"
+                    >
+                      Open <ExternalLink className="h-3 w-3" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={resolveLink(n)}
+                      onClick={() => markRead(n)}
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-brand/90"
+                    >
+                      Open <ExternalLink className="h-3 w-3" />
+                    </Link>
+                  )
                 )}
               </div>
               {!n.read && (
