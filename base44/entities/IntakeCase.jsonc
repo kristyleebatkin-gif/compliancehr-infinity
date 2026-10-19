@@ -786,6 +786,14 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "data.email": "{{user.email}}"
         }
       ]
     },
