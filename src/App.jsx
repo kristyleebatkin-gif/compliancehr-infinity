@@ -15,6 +15,7 @@ import ResetPassword from '@/pages/ResetPassword';
 
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
+import StaffHome from '@/pages/StaffHome';
 import Staff from '@/pages/Staff';
 import StaffDetail from '@/pages/StaffDetail';
 import ComplianceHub from '@/pages/ComplianceHub';
@@ -111,6 +112,7 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/my-work" element={<StaffHome />} />
           <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
           <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />

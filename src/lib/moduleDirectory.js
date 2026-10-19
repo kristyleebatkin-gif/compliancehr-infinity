@@ -4,13 +4,14 @@ import {
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
-  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck,
+  ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, UserRound,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, blurb: 'Live overview of compliance, safety and work across the organisation.' },
+  { key: 'my-work', label: 'My Work', path: '/my-work', icon: UserRound, blurb: 'Your personal view: tasks assigned to you and your incident reports.' },
   { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, blurb: 'Participant and employee intake forms, reviews and conversions.' },
   { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, blurb: 'Document register, central routing, uploads and vault exports.' },
   { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, blurb: 'Submitted forms, business details, branding and completed documents.' },
@@ -57,7 +58,7 @@ export const MODULE_DIRECTORY = [
 
 // Sidebar sections: every module key appears in exactly one group.
 export const NAV_GROUPS = [
-  { label: 'Overview', keys: ['dashboard'] },
+  { label: 'Overview', keys: ['dashboard', 'my-work'] },
   { label: 'People', keys: ['staff', 'participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
