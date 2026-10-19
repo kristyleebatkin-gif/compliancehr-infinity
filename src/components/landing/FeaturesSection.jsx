@@ -32,7 +32,7 @@ const FEATURES = [
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="relative mx-auto my-10 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white px-4 py-14 sm:py-20 shadow-xl shadow-slate-900/5 dark:border-white/10 dark:bg-card md:px-8">
+    <section id="features" className="relative mx-auto my-10 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white/70 px-4 py-14 sm:py-20 shadow-xl shadow-slate-900/5 backdrop-blur dark:border-white/10 dark:bg-card md:px-8">
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-300/40 blur-3xl dark:bg-pink-500/10" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/40 blur-3xl dark:bg-blue-500/10" />
       <div className="relative mx-auto max-w-2xl text-center">

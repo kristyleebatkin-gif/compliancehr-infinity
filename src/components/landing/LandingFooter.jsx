@@ -40,7 +40,7 @@ export default function LandingFooter() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-3">
-              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-14 w-14 shrink-0 rounded-2xl bg-white shadow-md ring-1 ring-white/20" fittingType="fill" focalPointX={0.5} focalPointY={0.33} />
+              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/4498c433a_generated_image.png" alt="ComplianceHR Infinity logo" className="h-14 w-14 shrink-0 rounded-2xl shadow-md ring-1 ring-white/20" fittingType="fit" />
               <span className="flex min-w-0 flex-col leading-tight">
                 <span className="font-editorial text-xl font-semibold tracking-tight text-white">
                   Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>

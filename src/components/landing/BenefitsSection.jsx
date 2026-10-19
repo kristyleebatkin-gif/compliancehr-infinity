@@ -29,7 +29,7 @@ const CHIP_STYLES = [
 
 export default function BenefitsSection() {
   return (
-    <section id="benefits" className="relative scroll-mt-16 overflow-hidden border-y border-border/70 bg-background">
+    <section id="benefits" className="relative scroll-mt-16 overflow-hidden border-y border-border/70">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-fuchsia-300/50 blur-3xl dark:bg-fuchsia-500/10" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-cyan-300/50 blur-3xl dark:bg-cyan-500/10" />

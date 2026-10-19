@@ -52,7 +52,7 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-border/70 bg-background">
+    <section className="relative overflow-hidden border-b border-border/70">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-48 left-1/2 h-[30rem] w-[72rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400/60 via-fuchsia-300/55 to-cyan-300/60 blur-3xl dark:from-violet-800/30 dark:via-fuchsia-900/20 dark:to-cyan-800/25" />
         <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-amber-300/45 blur-3xl dark:bg-amber-500/10" />
@@ -62,7 +62,7 @@ export default function LandingHero() {
 
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/4498c433a_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
 
           <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
@@ -79,12 +79,12 @@ export default function LandingHero() {
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl">
-            ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
+            ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link to={authed ? '/dashboard' : '/register'} className="group inline-flex items-center gap-2.5 rounded-full bg-slate-950 px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:shadow-2xl dark:bg-white dark:text-slate-950">
-              {authed ? 'Go to Dashboard' : 'Get started free'}
+              {authed ? 'Go to Dashboard' : 'Start 14-day free trial'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-400 dark:border-white/15 dark:bg-white/5">View the quick start guide</a>
