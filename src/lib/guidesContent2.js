@@ -557,4 +557,34 @@ export const GUIDES_PART_2 = {
       'Check the user guides first: most questions are answered there in less time than a ticket takes.',
     ],
   },
+
+  'suggestions-hub': {
+    tagline: 'Every register reviewed, every process covered',
+    purpose: 'The Suggestions Hub reviews every register in the app and shows what to visualise, automate and refine for each one, backed by live record counts. It is also the central record of the app\u2019s automated process coverage: every register now has a scheduled process that chases overdue, expiring and due-soon items, so nothing in any section can sit unattended. Audit actions escalate through the audit escalation workflow, compliance checklist tasks are chased daily, and every reminder scan run is recorded in the status log with its results.',
+    features: [
+      { name: 'All-register review', detail: 'Live counts (total, open, overdue, due soon) for every register with visualise, automate and refine suggestions per module.' },
+      { name: 'Daily register reminders', detail: 'A daily scan at 8:20am (Sydney) covering quality escalations, overdue invoices, quote expiry, certificate expiry, document reviews, asset maintenance, equipment and MSDS reviews, upcoming events, meeting actions, lead follow-ups, NDIS deadlines, supplier review and compliance checklist tasks.' },
+      { name: 'Reminder coverage table', detail: 'Each register shows the automated processes already covering it, so gaps are visible at a glance.' },
+      { name: 'Recorded results', detail: 'Every scan run is recorded in the status log with the items found, alerts posted and notifications sent; each item alert lands in the Communication Centre diary and admin notifications.' },
+      { name: 'Idempotent alerting', detail: 'Items alert once per state — no duplicate reminders day after day — and re-alert automatically when an item\u2019s state changes.' },
+    ],
+    steps: [
+      'Open the Suggestions Hub to see every register with live counts and its three categories of suggestions.',
+      'Work overdue and due-soon items flagged by the daily reminders — each alert links back to its module.',
+      'Check the Communication Centre diary for the system\u2019s register alerts and who they are directed to.',
+      'Review the status log for each scan run\u2019s recorded results: items found, alerts posted, notifications sent.',
+      'Use the weekly suggestions digest email for a management-level summary of everything the scans found.',
+    ],
+    tools: [
+      { name: 'Register reminder scan', detail: 'Daily automated scan across all thirteen previously uncovered areas, plus audit action escalation and task due reminders.' },
+      { name: 'Suggestions digest email', detail: 'Scheduled management email summarising register statistics and prioritised actions.' },
+      { name: 'Communication Centre diary', detail: 'Where every system alert is recorded, with attention routing and timestamps.' },
+      { name: 'Status log', detail: 'Permanent record of every reminder scan run and its results.' },
+    ],
+    tips: [
+      'If a register shows no open items, the daily scan records a clean run — silence means everything is covered.',
+      'Clear alerts from the oldest first: overdue items escalate in severity the longer they sit.',
+      'New registers should always be added to the reminder scan so coverage stays complete.',
+    ],
+  },
 };

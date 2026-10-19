@@ -213,6 +213,17 @@ export default async function(req) {
         })));
 
     if (groups.length === 0) {
+      if (!dryRun) {
+        await service.entities.StatusLog.create({
+          entity_type: 'Register Reminders',
+          record_id: today,
+          record_title: `Register reminder scan — ${today}`,
+          from_status: 'Scheduled',
+          to_status: 'Completed (no items)',
+          changed_by: 'System (Register Reminders)',
+          notes: 'Daily register reminder scan found no items requiring reminders.',
+        });
+      }
       return Response.json({ success: true, due_items: 0, message: 'No register items require reminders today.' });
     }
 
@@ -250,6 +261,19 @@ export default async function(req) {
           });
         }
       }
+    }
+
+    if (!dryRun) {
+      await service.entities.StatusLog.create({
+        entity_type: 'Register Reminders',
+        record_id: today,
+        record_title: `Register reminder scan — ${today}`,
+        from_status: 'Scheduled',
+        to_status: 'Completed',
+        changed_by: 'System (Register Reminders)',
+        notes: groups.map((g) => `${g.note_type}: ${g.items.length}`).join('; ')
+          + `; ${created.diary_entries} Communication Centre alerts, ${administrators.length * groups.length} admin notifications.`,
+      });
     }
 
     return Response.json({
