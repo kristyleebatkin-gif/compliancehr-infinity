@@ -22,8 +22,7 @@ export default function ParticipantDetail() {
           <PortalInviteButton kind="participant" profile={participant} />
         </div>
       </div>
-      <ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />
-      <ParticipantProfileSections participant={participant} onUpdated={refresh} />
+      <ParticipantProfileSections participant={participant} onUpdated={refresh} header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
     </div>
   );
 }

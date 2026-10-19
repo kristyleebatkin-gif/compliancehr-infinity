@@ -18,8 +18,7 @@ export default function StaffDetail() {
         <Button variant="ghost" size="sm" asChild><Link to="/staff"><ArrowLeft className="h-4 w-4" />Staff Profiles</Link></Button>
         <PortalInviteButton kind="staff" profile={staff} />
       </div>
-      <ProfileHeader profile={staff} kind="staff" onUpdated={refresh} />
-      <StaffProfileSections staff={staff} onUpdated={refresh} />
+      <StaffProfileSections staff={staff} onUpdated={refresh} header={<ProfileHeader profile={staff} kind="staff" onUpdated={refresh} />} />
     </div>
   );
 }
