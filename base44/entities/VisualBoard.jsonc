@@ -197,6 +197,16 @@
               "{{user.id}}"
             ]
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
@@ -239,6 +249,16 @@
               "data.audit_consent": "Audit consent received"
             }
           ]
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
