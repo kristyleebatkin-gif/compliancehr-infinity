@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
@@ -63,17 +64,18 @@ export default function GlobalSearch() {
       const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const rx = { $regex: esc, $options: 'i' };
       try {
-        const [staff, participants, documents, tasks] = await Promise.all([
-          base44.entities.StaffProfile.filter({ full_name: rx }, { limit: 5, fields: ['id', 'full_name', 'position'] }),
-          base44.entities.ParticipantProfile.filter({ full_name: rx }, { limit: 5, fields: ['id', 'full_name', 'status'] }),
+        const [staff, participants, employeeDocs, participantDocs, tasks] = await Promise.all([
+          base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }),
+          base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }),
           base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
-          base44.entities.TodoTask.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'status'] }),
+          base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
+          base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }),
         ]);
         setResults({
           modules: MODULE_DIRECTORY.filter((m) => m.label.toLowerCase().includes(term.toLowerCase())).slice(0, 5),
           staff: staff.items || [],
           participants: participants.items || [],
-          documents: documents.items || [],
+          documents: [...(employeeDocs.items || []), ...(participantDocs.items || [])].slice(0, 5),
           tasks: tasks.items || [],
         });
       } catch (error) {
@@ -111,7 +113,7 @@ export default function GlobalSearch() {
       <button onClick={() => setOpen(true)} aria-label="Search everything" title="Search everything" className="rounded-lg p-2 hover:bg-brand/5 sm:hidden">
         <Search className="h-5 w-5 text-foreground/60" />
       </button>
-      {open && (
+      {open && createPortal(
         <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-16 sm:pt-24">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setOpen(false)} />
           <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
@@ -213,7 +215,8 @@ export default function GlobalSearch() {
               <X className="h-4 w-4 text-foreground/40" />
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
