@@ -8,7 +8,7 @@ import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ExportRow from '@/components/profile/ExportRow';
 
-export default function OurProfileData({ profile, kind, header, onUpdated }) {
+export default function OurProfileData({ profile, kind, onUpdated }) {
   const participant = kind === 'participant';
   return (
     <Tabs defaultValue="details" className="space-y-4">
@@ -18,7 +18,6 @@ export default function OurProfileData({ profile, kind, header, onUpdated }) {
         <TabsTrigger value="files">File Checklist</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="space-y-6">
-        {header}
         <ExportRow kind={kind} person={profile} section="details" />
         {participant ? <ParticipantDetailsTab participant={profile} onUpdated={onUpdated} /> : <StaffDetailsTab staff={profile} onUpdated={onUpdated} />}
       </TabsContent>

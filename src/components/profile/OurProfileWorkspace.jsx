@@ -9,7 +9,7 @@ import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipan
 export default function OurProfileWorkspace({ profile, kind, header, onUpdated }) {
   const [params, setParams] = useSearchParams();
   const modules = OurProfileModuleList({ kind, profile,
-    details: <OurProfileData profile={profile} kind={kind} header={header} onUpdated={onUpdated} />,
+    details: <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
   });
   const selected = modules.find((module) => module.key === params.get('module')) || modules[0];
@@ -20,7 +20,9 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated }
     setParams(next, { replace: true });
   };
   return (
-    <Tabs value={selected.key} onValueChange={selectModule} className="min-w-0 space-y-5">
+    <>
+      {header}
+      <Tabs value={selected.key} onValueChange={selectModule} className="min-w-0 space-y-5">
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="h-3.5 w-3.5" />{label}</TabsTrigger>)}
       </TabsList>
@@ -29,6 +31,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated }
           {selected.content}
         </Suspense>
       </TabsContent>
-    </Tabs>
+      </Tabs>
+    </>
   );
 }
