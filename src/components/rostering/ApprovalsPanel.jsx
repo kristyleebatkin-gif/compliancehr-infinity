@@ -42,6 +42,11 @@ export default function ApprovalsPanel({ shifts, onChanged }) {
                     <p className="font-medium">{s.employee_name || 'Unassigned'}</p>
                     {s.participant_name && <span className="text-sm text-muted-foreground">→ {s.participant_name}</span>}
                     <Badge className={statusTone(s.status)}>{s.status}</Badge>
+                    {s.location_verified && (
+                      <Badge className={s.location_verified === 'Verified' ? 'bg-safe/10 text-safe' : s.location_verified === 'Outside range' ? 'bg-destructive/10 text-destructive' : 'bg-muted text-muted-foreground'}>
+                        {s.location_verified}
+                      </Badge>
+                    )}
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {[
@@ -70,15 +75,44 @@ export default function ApprovalsPanel({ shifts, onChanged }) {
 
 export function ClockButton({ shift, onChanged }) {
   const [busy, setBusy] = useState(false);
+  const { toast } = useToast();
+
+  const getPosition = () => new Promise((resolve) => {
+    if (!navigator.geolocation) return resolve(null);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy }),
+      () => resolve(null),
+      { enableHighAccuracy: true, timeout: 8000 },
+    );
+  });
+
+  const locationFor = (pos) => {
+    if (!pos) return { recorded: '', verified: 'Not checked' };
+    const recorded = `${pos.lat.toFixed(5)}, ${pos.lng.toFixed(5)} (±${Math.round(pos.accuracy || 0)}m)`;
+    if (shift.location_lat == null || shift.location_lng == null) return { recorded, verified: 'Not checked' };
+    const R = 6371000;
+    const dLat = (pos.lat - shift.location_lat) * Math.PI / 180;
+    const dLng = (pos.lng - shift.location_lng) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(shift.location_lat * Math.PI / 180) * Math.cos(pos.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    const metres = 2 * R * Math.asin(Math.sqrt(a));
+    return { recorded, verified: metres <= 250 ? 'Verified' : 'Outside range' };
+  };
 
   const clock = async (action) => {
     setBusy(true);
     try {
       const now = new Date().toISOString();
+      const pos = await getPosition();
+      const { recorded, verified } = locationFor(pos);
       if (action === 'in') {
-        await base44.entities.Shift.update(shift.id, { status: 'In Progress', clock_in: now });
+        await base44.entities.Shift.update(shift.id, { status: 'In Progress', clock_in: now, clock_in_location: recorded, location_verified: verified });
+        toast({
+          title: verified === 'Verified' ? 'Started — location verified' : verified === 'Outside range' ? 'Started — outside location range' : 'Shift started',
+          description: recorded || 'GPS unavailable, clocked in without location',
+        });
       } else {
-        await base44.entities.Shift.update(shift.id, { status: 'Completed', clock_out: now, approval_status: 'Pending Approval' });
+        await base44.entities.Shift.update(shift.id, { status: 'Completed', clock_out: now, approval_status: 'Pending Approval', clock_out_location: recorded });
+        toast({ title: 'Clocked out', description: recorded || 'GPS unavailable' });
       }
       await onChanged();
     } finally {

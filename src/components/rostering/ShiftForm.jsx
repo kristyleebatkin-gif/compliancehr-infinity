@@ -17,6 +17,7 @@ const AVAILABILITY_LABEL = {
 const BLANK = {
   employee_name: '', participant_name: '', date: '', start_time: '', end_time: '',
   status: 'Scheduled', service_type: '', funding_source: '', location: '',
+  location_lat: '', location_lng: '',
   notes: '', break_minutes: '', travel_km: '', billable_rate: '',
   repeat_rule: 'none', repeat_until: '', approval_status: 'Not Required',
 };
@@ -43,7 +44,8 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         employee_name: shift.employee_name || '', participant_name: shift.participant_name || '',
         date: shift.date || '', start_time: shift.start_time || '', end_time: shift.end_time || '',
         status: shift.status || 'Scheduled', service_type: shift.service_type || '', funding_source: shift.funding_source || '',
-        location: shift.location || '', notes: shift.notes || '',
+        location: shift.location || '', location_lat: shift.location_lat ?? '', location_lng: shift.location_lng ?? '',
+        notes: shift.notes || '',
         break_minutes: shift.break_minutes ?? '', travel_km: shift.travel_km ?? '', billable_rate: shift.billable_rate ?? '',
         repeat_rule: shift.repeat_rule || 'none', repeat_until: shift.repeat_until || '',
         approval_status: shift.approval_status || 'Not Required',
@@ -66,6 +68,8 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
       service_type: form.service_type || undefined,
       funding_source: form.funding_source || undefined,
       location: form.location,
+      location_lat: form.location_lat === '' ? undefined : Number(form.location_lat),
+      location_lng: form.location_lng === '' ? undefined : Number(form.location_lng),
       notes: form.notes,
       break_minutes: form.break_minutes === '' ? undefined : Number(form.break_minutes),
       travel_km: form.travel_km === '' ? undefined : Number(form.travel_km),
@@ -140,6 +144,10 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
                 <SelectContent>{SHIFT_STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-1.5"><Label>Location pin (lat)</Label><Input type="number" step="any" placeholder="Optional — enables geofence check" value={form.location_lat} onChange={(e) => setForm({ ...form, location_lat: e.target.value })} /></div>
+            <div className="grid gap-1.5"><Label>Location pin (lng)</Label><Input type="number" step="any" placeholder="e.g. 151.2093" value={form.location_lng} onChange={(e) => setForm({ ...form, location_lng: e.target.value })} /></div>
           </div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="grid gap-1.5"><Label>Break (min)</Label><Input type="number" min="0" value={form.break_minutes} onChange={(e) => setForm({ ...form, break_minutes: e.target.value })} /></div>

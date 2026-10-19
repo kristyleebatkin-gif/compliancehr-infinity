@@ -6,6 +6,7 @@ import IncidentWorkflow from '@/components/IncidentWorkflow';
 import EmptyState from '@/components/EmptyState';
 import { Field } from '@/components/Field';
 import IncidentFollowUp from '@/components/incidents/IncidentFollowUp';
+import IncidentPhotos from '@/components/incidents/IncidentPhotos';
 import { ArrowLeft, Pencil, Trash2, Search } from 'lucide-react';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
@@ -78,6 +79,9 @@ export default function IncidentDetail() {
           <Field label="Police Notified">{item.requires_police ? 'Yes' : 'No'}</Field>
           <Field label="NDIS Report">{item.requires_ndis_report ? 'Yes' : 'No'}</Field>
         </div>
+      </SectionCard>
+      <SectionCard title="Photo Evidence">
+        <IncidentPhotos incident={item} editable={canReview} onChanged={load} />
       </SectionCard>
       {canReview && item.requires_ndis_report && <SectionCard title="Regulatory Notification Tracking">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

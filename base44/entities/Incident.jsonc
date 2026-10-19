@@ -138,6 +138,22 @@
       "type": "string",
       "title": "Control Measures"
     },
+    "photo_uris": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Photo Evidence (File URIs)"
+    },
+    "photo_captions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Photo Captions"
+    },
     "requires_ndis_report": {
       "type": "boolean",
       "default": false,

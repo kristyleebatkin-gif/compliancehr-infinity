@@ -63,6 +63,14 @@
       "type": "string",
       "title": "Location"
     },
+    "location_lat": {
+      "type": "number",
+      "title": "Location Pin (Lat)"
+    },
+    "location_lng": {
+      "type": "number",
+      "title": "Location Pin (Lng)"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
@@ -109,6 +117,18 @@
       "type": "string",
       "format": "date-time",
       "title": "Clock Out"
+    },
+    "clock_in_location": {
+      "type": "string",
+      "title": "Clock-in GPS"
+    },
+    "clock_out_location": {
+      "type": "string",
+      "title": "Clock-out GPS"
+    },
+    "location_verified": {
+      "type": "string",
+      "title": "Location Check"
     },
     "repeat_rule": {
       "type": "string",
