@@ -6,6 +6,7 @@ import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
 import { findUnassigned, findDoubleBookings, findMissingInstructions, findSkillMismatches } from '@/lib/rosterValidation';
+import RosterRulesPanel from '@/components/rostering/RosterRulesPanel';
 
 const label = (s) => `${s.date ? format(new Date(s.date + 'T00:00:00'), 'd MMM') : '?'} · ${s.start_time || '?'}–${s.end_time || '?'} · ${s.participant_name || 'no participant'}${s.location ? ` · ${s.location}` : ''}`;
 
@@ -16,6 +17,8 @@ export default function RosterExceptions({ shifts = [], onEdit }) {
   const [rules, setRules] = useState(null);
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
+
+  const updateRule = (updated) => setRules((prev) => (prev || []).map((r) => (r.id === updated.id ? updated : r)));
 
   useEffect(() => {
     let live = true;
@@ -60,6 +63,7 @@ export default function RosterExceptions({ shifts = [], onEdit }) {
     <SectionCard
       title="Roster exceptions"
       description="Unassigned shifts, double-bookings, shifts missing participant instructions and staff skill mismatches — review before the week goes live"
+      action={<RosterRulesPanel rules={rules} onUpdated={updateRule} />}
     >
       {quiet ? (
         <EmptyState icon={AlertTriangle} title="No roster exceptions" subtitle="Every shift is assigned, booked cleanly, carries instructions and matches staff skills." />
