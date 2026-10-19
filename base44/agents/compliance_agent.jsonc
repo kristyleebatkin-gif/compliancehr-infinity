@@ -91,6 +91,12 @@
       "allowed_operations": [
         "read"
       ]
+    },
+    {
+      "entity_name": "AssetMaintenance",
+      "allowed_operations": [
+        "read"
+      ]
     }
   ],
   "context_files": [],
