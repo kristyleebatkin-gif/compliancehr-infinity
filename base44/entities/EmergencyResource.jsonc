@@ -131,6 +131,16 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
