@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { base44 } from '@/api/base44Client';
 import { today, appendLog } from '@/lib/complianceIssues.js';
 
-export default function IssueResolveDialog({ issue, open, onOpenChange, onSaved }) {
+export default function IssueResolveDialog({ issue, open, onOpenChange, onSaved, quick = false }) {
   const [form, setForm] = useState({ resolution_action: '', resolved_by: '', resolved_date: '', resolution_notes: '', verified_by: '' });
   const [saving, setSaving] = useState(false);
   const [me, setMe] = useState(null);
@@ -64,7 +64,7 @@ export default function IssueResolveDialog({ issue, open, onOpenChange, onSaved 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogHeader><DialogTitle>Record resolution — {issue?.title}</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle>{quick ? 'Quick resolve' : 'Record resolution'} — {issue?.title}</DialogTitle></DialogHeader>
         <div className="grid gap-3">
           <div className="grid gap-1.5"><Label>Resolution action taken *</Label>
             <Textarea rows={3} value={form.resolution_action} onChange={(e) => setForm({ ...form, resolution_action: e.target.value })} placeholder="What was done to fix this issue?" />
@@ -73,8 +73,8 @@ export default function IssueResolveDialog({ issue, open, onOpenChange, onSaved 
             <div className="grid gap-1.5"><Label>Resolved by</Label><Input value={form.resolved_by} onChange={(e) => setForm({ ...form, resolved_by: e.target.value })} placeholder="Who resolved it" /></div>
             <div className="grid gap-1.5"><Label>Resolved on</Label><Input type="date" value={form.resolved_date} onChange={(e) => setForm({ ...form, resolved_date: e.target.value })} /></div>
           </div>
-          <div className="grid gap-1.5"><Label>Notes</Label><Textarea rows={2} value={form.resolution_notes} onChange={(e) => setForm({ ...form, resolution_notes: e.target.value })} placeholder="Outcome, evidence or follow-up checks" /></div>
-          <div className="grid gap-1.5"><Label>Verified by (optional)</Label><Input value={form.verified_by} onChange={(e) => setForm({ ...form, verified_by: e.target.value })} placeholder="Manager who checked the fix" /></div>
+          {!quick && <div className="grid gap-1.5"><Label>Notes</Label><Textarea rows={2} value={form.resolution_notes} onChange={(e) => setForm({ ...form, resolution_notes: e.target.value })} placeholder="Outcome, evidence or follow-up checks" /></div>}
+          {!quick && <div className="grid gap-1.5"><Label>Verified by (optional)</Label><Input value={form.verified_by} onChange={(e) => setForm({ ...form, verified_by: e.target.value })} placeholder="Manager who checked the fix" /></div>}
           <Button onClick={save} disabled={saving || !form.resolution_action.trim()}>Save resolution</Button>
         </div>
       </DialogContent>

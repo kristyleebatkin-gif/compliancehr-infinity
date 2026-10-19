@@ -170,7 +170,37 @@ function actionLog(doc, issues, startY) {
   return y;
 }
 
-export function downloadComplianceIssuesReport(issues, { loggedBy = '' } = {}) {
+// Horizontal bar chart of issue counts per category.
+function categoryChart(doc, issues, startY) {
+  let y = startY;
+  const counts = {};
+  issues.forEach((i) => { const c = i.category || 'Other'; counts[c] = (counts[c] || 0) + 1; });
+  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  if (rows.length === 0) return y;
+  const pageW = doc.internal.pageSize.getWidth();
+  const margin = 40;
+  const labelW = 110;
+  const barW = pageW - margin * 2 - labelW - 40;
+  const max = Math.max(...rows.map((r) => r[1]), 1);
+  const rowH = 16;
+  rows.forEach(([label, count]) => {
+    y = ensureSpace(doc, y, rowH + 2);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(MUTED);
+    doc.text(label, margin, y + 8, { maxWidth: labelW - 6 });
+    const w = Math.max(4, (count / max) * barW);
+    doc.setFillColor('#e8f7f6');
+    doc.roundedRect(margin + labelW, y + 2, w, 10, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(DARK);
+    doc.text(String(count), margin + labelW + w + 6, y + 10);
+    y += rowH;
+  });
+  return y;
+}
+
+export function downloadComplianceIssuesReport(issues, { loggedBy = '', subtitle = 'All documented compliance issues, their resolution, and who resolved them and when.' } = {}) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const counts = { total: issues.length, open: 0, progress: 0, resolved: 0 };
   issues.forEach((i) => {
@@ -179,7 +209,7 @@ export function downloadComplianceIssuesReport(issues, { loggedBy = '' } = {}) {
     else if (['Resolved', 'Closed'].includes(i.status)) counts.resolved += 1;
   });
 
-  header(doc, 'All documented compliance issues, their resolution, and who resolved them and when.');
+  header(doc, subtitle);
   let y = statCards(doc, [
     { value: counts.total, label: 'Total Issues', tint: '#f3eef9' },
     { value: counts.open, label: 'Open', tint: '#fff4e5' },
@@ -187,6 +217,8 @@ export function downloadComplianceIssuesReport(issues, { loggedBy = '' } = {}) {
     { value: counts.resolved, label: 'Resolved', tint: '#e8f7f6' },
   ], 56);
 
+  y = sectionTitle(doc, 'Issues by Category', y);
+  y = categoryChart(doc, sorted, y + 2) + 6;
   y = sectionTitle(doc, 'Issues Register', y);
   const sorted = [...issues].sort((a, b) => {
     const order = { Open: 0, 'In Progress': 1, Resolved: 2, Closed: 3 };

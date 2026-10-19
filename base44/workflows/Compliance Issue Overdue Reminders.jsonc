@@ -1,0 +1,44 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "compliance_issue_overdue_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "escalate_overdue": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "complianceIssueReminders"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Escalate overdue issues",
+            "description": "Tasks, notifications and status log entries"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Every morning, escalates compliance issues past their target date: creates follow-up tasks, notifies management and logs the escalation",
+  "name": "Compliance Issue Overdue Reminders"
+}

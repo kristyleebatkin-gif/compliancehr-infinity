@@ -8,6 +8,7 @@ import ParticipantDashboard from '@/components/dashboard/ParticipantDashboard';
 import DashboardQuickStart from '@/components/dashboard/DashboardQuickStart';
 import AllModulesHub from '@/components/dashboard/AllModulesHub';
 import MorningBrief from '@/components/dashboard/MorningBrief';
+import IssuesDashboardWidget from '@/components/compliance/IssuesDashboardWidget';
 import { Activity, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 
 const HEADINGS = {
@@ -55,6 +56,8 @@ export default function Dashboard() {
       <DashboardQuickStart />
 
       {canAccessNav(role, 'compliance') && <MorningBrief />}
+
+      {canAccessNav(role, 'compliance') && <IssuesDashboardWidget />}
 
       <AllModulesHub />
 

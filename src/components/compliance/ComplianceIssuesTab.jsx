@@ -12,8 +12,28 @@ import IssueLogDialog from '@/components/compliance/IssueLogDialog';
 import IssueResolveDialog from '@/components/compliance/IssueResolveDialog';
 import { downloadComplianceIssuesReport } from '@/lib/complianceIssuesPdf';
 import { nextIssueId } from '@/lib/complianceIssues.js';
-import { Plus, Download, ClipboardCheck, History, Trash2, ListChecks } from 'lucide-react';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
+import IssueCategoryChart from '@/components/compliance/IssueCategoryChart';
+import IssueReportDialog from '@/components/compliance/IssueReportDialog';
+import { Plus, Download, ClipboardCheck, History, Trash2, ListChecks, FileSpreadsheet, FileText } from 'lucide-react';
 import { format } from 'date-fns';
+
+const CSV_COLUMNS = [
+  { key: 'issue_id', label: 'Issue ID' },
+  { key: 'title', label: 'Title' },
+  { key: 'category', label: 'Category' },
+  { key: 'source', label: 'Source' },
+  { key: 'priority', label: 'Priority' },
+  { key: 'status', label: 'Status' },
+  { key: 'date_logged', label: 'Date Logged' },
+  { key: 'logged_by', label: 'Logged By' },
+  { key: 'assigned_to', label: 'Assigned To' },
+  { key: 'target_date', label: 'Target Date' },
+  { key: 'resolution_action', label: 'Resolution Action' },
+  { key: 'resolved_by', label: 'Resolved By' },
+  { key: 'resolved_date', label: 'Resolved On' },
+  { key: 'verified_by', label: 'Verified By' },
+];
 
 export default function ComplianceIssuesTab() {
   const [issues, setIssues] = useState([]);
@@ -22,6 +42,8 @@ export default function ComplianceIssuesTab() {
   const [logOpen, setLogOpen] = useState(false);
   const [resolveIssue, setResolveIssue] = useState(null);
   const [historyIssue, setHistoryIssue] = useState(null);
+  const [quickResolve, setQuickResolve] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -52,6 +74,11 @@ export default function ComplianceIssuesTab() {
     await load();
   };
 
+  const exportCsv = async () => {
+    const rows = await fetchAllRecords(base44.entities.ComplianceIssue);
+    downloadCsv('compliance-issues-register.csv', CSV_COLUMNS, rows);
+  };
+
   if (loading) {
     return <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
@@ -65,9 +92,13 @@ export default function ComplianceIssuesTab() {
         <StatCard label="Resolved" value={counts.resolved} tone="emerald" icon={ClipboardCheck} />
       </div>
 
+      <IssueCategoryChart />
+
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={() => setLogOpen(true)}><Plus className="mr-2 h-4 w-4" /> Log compliance issue</Button>
+        <Button variant="outline" onClick={() => setReportOpen(true)}><FileText className="mr-2 h-4 w-4" /> Report with filters</Button>
         <Button variant="outline" onClick={() => downloadComplianceIssuesReport(issues)}><Download className="mr-2 h-4 w-4" /> Download report (PDF)</Button>
+        <Button variant="outline" onClick={exportCsv}><FileSpreadsheet className="mr-2 h-4 w-4" /> Export CSV</Button>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
           <SelectContent>
@@ -110,7 +141,12 @@ export default function ComplianceIssuesTab() {
                       <td className="px-4 py-3">
                         <div className="flex justify-end gap-1">
                           {issue.status === 'Open' && <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => markInProgress(issue)}>Start</Button>}
-                          {!['Resolved', 'Closed'].includes(issue.status) && <Button size="sm" className="h-7 px-2 text-xs" onClick={() => setResolveIssue(issue)}>Record action</Button>}
+                          {!['Resolved', 'Closed'].includes(issue.status) && (
+                            <>
+                              <Button size="sm" className="h-7 px-2 text-xs" onClick={() => { setQuickResolve(true); setResolveIssue(issue); }}>Quick resolve</Button>
+                              <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => { setQuickResolve(false); setResolveIssue(issue); }}>Record action</Button>
+                            </>
+                          )}
                           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setHistoryIssue(issue)}><History className="h-4 w-4" /></Button>
                           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.ComplianceIssue.delete(issue.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                         </div>
@@ -125,7 +161,8 @@ export default function ComplianceIssuesTab() {
       )}
 
       <IssueLogDialog open={logOpen} onOpenChange={setLogOpen} nextId={nextIssueId(issues)} onSaved={load} />
-      <IssueResolveDialog issue={resolveIssue} open={!!resolveIssue} onOpenChange={(o) => { if (!o) setResolveIssue(null); }} onSaved={load} />
+      <IssueResolveDialog issue={resolveIssue} open={!!resolveIssue} quick={quickResolve} onOpenChange={(o) => { if (!o) setResolveIssue(null); }} onSaved={load} />
+      <IssueReportDialog open={reportOpen} onOpenChange={setReportOpen} issues={issues} />
       <Dialog open={!!historyIssue} onOpenChange={(o) => { if (!o) setHistoryIssue(null); }}>
         <DialogContent>
           <DialogHeader><DialogTitle>Action history — {historyIssue?.title}</DialogTitle></DialogHeader>

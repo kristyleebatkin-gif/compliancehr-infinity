@@ -1,0 +1,44 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 8 * * 1",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "compliance_issues_weekly_digest",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "email_digest": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "complianceIssueDigest"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email weekly digest",
+            "description": "Resolution status report to management roles"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Every Monday at 8:30am, emails management a resolution status report on the Compliance Issues register",
+  "name": "Compliance Issues Weekly Digest"
+}
