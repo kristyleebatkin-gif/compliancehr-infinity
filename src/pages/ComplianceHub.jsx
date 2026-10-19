@@ -66,6 +66,7 @@ import CertificationCalendar from '@/components/compliance/CertificationCalendar
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
+import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -205,6 +206,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="cert-renewals">Certification Renewals</TabsTrigger>
           <TabsTrigger value="risk-heatmap">Risk Heatmap</TabsTrigger>
           <TabsTrigger value="onboarding-progress">Onboarding Progress</TabsTrigger>
+          <TabsTrigger value="staff-bulk-actions">Staff Bulk Actions</TabsTrigger>
         </TabsList>
 
         <TabsContent value="issues" className="mt-4">
@@ -438,6 +440,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="onboarding-progress" className="mt-4">
           <StaffOnboardingTracker />
+        </TabsContent>
+
+        <TabsContent value="staff-bulk-actions" className="mt-4">
+          <StaffBulkActions />
         </TabsContent>
       </Tabs>
 
