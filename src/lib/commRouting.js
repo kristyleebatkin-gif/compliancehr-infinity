@@ -44,7 +44,7 @@ export async function routeDiaryEntry(record) {
       });
     } else if (noteType === 'Feedback Form') {
       await base44.entities.Feedback.create({
-        type: 'Feedback Form',
+        type: 'Feedback',
         subject,
         message: body,
         submitted_by: record.sender_name || '',
