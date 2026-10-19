@@ -5,6 +5,14 @@
     "token": {
       "type": "string",
       "title": "Feed Token"
+    },
+    "owner_user_id": {
+      "type": "string",
+      "title": "Owner User ID"
+    },
+    "owner_name": {
+      "type": "string",
+      "title": "Owner Name"
     }
   },
   "required": [

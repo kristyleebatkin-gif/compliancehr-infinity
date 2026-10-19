@@ -17,7 +17,9 @@ export default function CalendarSyncDialog({ open, onOpenChange }) {
     let cancelled = false;
     (async () => {
       try {
-        const page = await base44.entities.CalendarFeed.filter({}, { limit: 1 });
+        const me = await base44.auth.me();
+        let page = await base44.entities.CalendarFeed.filter({ owner_user_id: me.id }, { limit: 1 });
+        if (!page.items?.length) page = await base44.entities.CalendarFeed.filter({}, { limit: 1 });
         if (cancelled) return;
         setToken(page.items?.[0]?.token || '');
       } finally {
@@ -30,10 +32,19 @@ export default function CalendarSyncDialog({ open, onOpenChange }) {
   const regenerate = async () => {
     setLoading(true);
     try {
+      const me = await base44.auth.me();
       const newToken = crypto.randomUUID().replace(/-/g, '');
-      const page = await base44.entities.CalendarFeed.filter({}, { limit: 1 });
-      if (page.items?.[0]) await base44.entities.CalendarFeed.update(page.items[0].id, { token: newToken });
-      else await base44.entities.CalendarFeed.create({ token: newToken });
+      const page = await base44.entities.CalendarFeed.filter({ owner_user_id: me.id }, { limit: 1 });
+      if (page.items?.[0]) {
+        await base44.entities.CalendarFeed.update(page.items[0].id, { token: newToken, owner_user_id: me.id, owner_name: me.full_name });
+      } else {
+        const legacy = await base44.entities.CalendarFeed.filter({}, { limit: 1 });
+        if (legacy.items?.[0]) {
+          await base44.entities.CalendarFeed.update(legacy.items[0].id, { token: newToken, owner_user_id: me.id, owner_name: me.full_name });
+        } else {
+          await base44.entities.CalendarFeed.create({ token: newToken, owner_user_id: me.id, owner_name: me.full_name });
+        }
+      }
       setToken(newToken);
       setCopied(false);
     } finally {
@@ -75,7 +86,7 @@ export default function CalendarSyncDialog({ open, onOpenChange }) {
               <li>Paste the feed URL and click <span className="font-semibold text-foreground">Add calendar</span>.</li>
               <li>The roster appears as a read-only layer; new shifts appear within about an hour (sooner via "Refresh").</li>
             </ol>
-            <p className="text-xs text-muted-foreground">Anyone holding this link can read the roster. Use <span className="font-semibold text-foreground">Regenerate</span> to invalidate the old link if it is ever shared by mistake.</p>
+            <p className="text-xs text-muted-foreground">This link shows only <span className="font-semibold text-foreground">your own shifts</span> (dates, times, service and status), and expires 90 days after it is generated. Use <span className="font-semibold text-foreground">Regenerate</span> to invalidate the old link if it is ever shared by mistake.</p>
             <div className="flex justify-end">
               <Button variant="outline" size="sm" onClick={regenerate} disabled={loading}><RefreshCw className="mr-2 h-3.5 w-3.5" /> Regenerate link</Button>
             </div>

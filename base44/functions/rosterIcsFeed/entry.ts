@@ -1,8 +1,10 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 // Read-only ICS feed of the rostering schedule for external calendar apps
-// (Google Calendar, Apple Calendar, Outlook). Protected by a token stored in
-// the CalendarFeed entity: .../functions/rosterIcsFeed?token=<token>
+// (Google Calendar, Apple Calendar, Outlook). Protected by a per-user token
+// stored in the CalendarFeed entity: .../functions/rosterIcsFeed?token=<token>
+// The feed is scoped to the token owner's own shifts, omits sensitive fields
+// (participants, locations, notes, funding) and expires 90 days after issue.
 // Token may arrive as a query param or JSON body field.
 
 function icsEscape(text) {
@@ -65,13 +67,23 @@ export default async function(req) {
     if (!feedPage.items || feedPage.items.length === 0) {
       return new Response('Invalid feed token', { status: 403 });
     }
+    const feed = feedPage.items[0];
 
-    // Load all non-cancelled shifts (paginated).
+    // Token expiry: feeds stop working 90 days after issue and must be
+    // regenerated in the app.
+    const FEED_MAX_AGE_MS = 90 * 86400000;
+    if (!feed.owner_user_id || !feed.owner_name
+      || !feed.created_date
+      || (Date.now() - new Date(feed.created_date).getTime()) > FEED_MAX_AGE_MS) {
+      return new Response('Feed token expired — regenerate the link in the app', { status: 403 });
+    }
+
+    // Scope to the subscriber: only shifts assigned to the token owner.
     const shifts = [];
     let cursor;
     do {
       const page = await base44.asServiceRole.entities.Shift.filter(
-        { status: { $ne: 'Cancelled' } },
+        { status: { $ne: 'Cancelled' }, employee_name: feed.owner_name },
         { sort: 'date', limit: 500, cursor }
       );
       shifts.push(...(page.items || []));
@@ -90,17 +102,14 @@ export default async function(req) {
       'X-PUBLISHED-TTL:PT1H',
     ];
 
+    // Data minimisation: dates, times, own name, service and status only —
+    // never participants, locations, notes or funding details.
     shifts.forEach((s) => {
-      const summaryParts = [s.employee_name || 'Unassigned'];
-      if (s.participant_name) summaryParts.push(`-> ${s.participant_name}`);
-      const summary = summaryParts.join(' ');
+      const summary = 'My shift';
 
       const descParts = [];
       if (s.service_type) descParts.push(`Service: ${s.service_type}`);
-      if (s.funding_source) descParts.push(`Funding: ${s.funding_source}`);
       descParts.push(`Status: ${s.status || 'Scheduled'}`);
-      if (s.location) descParts.push(`Location: ${s.location}`);
-      if (s.notes) descParts.push(`Notes: ${s.notes}`);
       if (s.approval_status && s.approval_status !== 'Not Required') descParts.push(`Approval: ${s.approval_status}`);
       const description = descParts.join('\\n');
 
@@ -139,7 +148,6 @@ export default async function(req) {
         }
         lines.push(foldLine(`SUMMARY:${icsEscape(summary)}`));
         lines.push(foldLine(`DESCRIPTION:${icsEscape(description)}`));
-        if (s.location) lines.push(foldLine(`LOCATION:${icsEscape(s.location)}`));
         lines.push(foldLine(`STATUS:${s.status === 'Completed' ? 'CONFIRMED' : 'TENTATIVE'}`));
         lines.push('END:VEVENT');
       });
