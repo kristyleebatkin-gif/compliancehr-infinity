@@ -17,6 +17,7 @@ import ApprovalsPanel from '@/components/rostering/ApprovalsPanel';
 import AvailabilityPanel, { AvailabilityFormDialog } from '@/components/rostering/AvailabilityPanel';
 import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
+import RosterExceptions from '@/components/rostering/RosterExceptions';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
@@ -288,6 +289,7 @@ export default function Rostering() {
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
+          <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
           <RosterLabourForecast shifts={boardShifts} />
           <RosterSuggestions onChanged={refresh} />
         </TabsContent>
