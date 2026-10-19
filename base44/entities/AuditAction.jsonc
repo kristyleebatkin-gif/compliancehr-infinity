@@ -57,6 +57,10 @@
       "type": "string",
       "title": "Notes"
     },
+    "closure_evidence": {
+      "type": "string",
+      "title": "Closure Evidence"
+    },
     "status_log": {
       "type": "string",
       "title": "Status History"

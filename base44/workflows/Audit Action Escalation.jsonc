@@ -1,0 +1,45 @@
+{
+  "name": "Audit Action Escalation",
+  "description": "Daily at 7:30am: escalates overdue audit corrective actions \u2014 emails the owner, logs the escalation in the Communication Centre and raises an overdue notification.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "audit_action_escalation",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "escalate_overdue_actions": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "auditActionEscalation",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Escalate overdue actions",
+            "description": "Emails owners of overdue audit corrective actions and logs the escalation"
+          }
+        }
+      }
+    ]
+  }
+}

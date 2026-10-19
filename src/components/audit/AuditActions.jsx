@@ -9,11 +9,11 @@ import { statusTone } from '@/lib/statusStyles';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { changeStatus } from '@/lib/statusLog';
+import { changeStatus, recordStatusLog, currentUserName, formatLogLine } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 import { format, isBefore, startOfDay } from 'date-fns';
-import { Plus, Trash2, Download, UserPlus } from 'lucide-react';
+import { Plus, Trash2, Download, UserPlus, Lock } from 'lucide-react';
 
 const STATUSES = ['Open', 'In Progress', 'Completed', 'Cancelled'];
 const EMPTY = { title: '', audit_title: '', description: '', allocated_to: '', allocated_email: '', priority: 'Medium', due_date: '', notes: '' };
@@ -26,6 +26,10 @@ export default function AuditActions({ audits }) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(EMPTY);
+  const [closing, setClosing] = useState(null);
+  const [closeOwner, setCloseOwner] = useState('');
+  const [closure, setClosure] = useState('');
+  const [closingSave, setClosingSave] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -48,11 +52,16 @@ export default function AuditActions({ audits }) {
     setSaving(true);
     try {
       const user = users.find((u) => u.id === form.allocated_to);
-      await base44.entities.AuditAction.create({
+      const record = await base44.entities.AuditAction.create({
         ...form,
         allocated_to: user?.full_name || form.allocated_to,
         allocated_email: user?.email || form.allocated_email,
       });
+      const changedBy = await currentUserName();
+      await base44.entities.AuditAction.update(record.id, {
+        status_log: formatLogLine('New', 'Open', changedBy),
+      });
+      await recordStatusLog('AuditAction', { id: record.id, title: record.title, status: 'Open' }, 'Open', changedBy);
       setForm(EMPTY);
       setOpen(false);
       await load();
@@ -64,9 +73,39 @@ export default function AuditActions({ audits }) {
 
   const setStatus = async (action, status) => {
     if (status === action.status) return;
+    if (status === 'Completed') {
+      setClosing(action);
+      setCloseOwner(action.allocated_to || '');
+      setClosure('');
+      return;
+    }
     await changeStatus({ entityType: 'AuditAction', entity: 'AuditAction', record: action, toStatus: status });
-    if (status === 'Completed') await base44.entities.AuditAction.update(action.id, { completed_date: format(new Date(), 'yyyy-MM-dd') });
     await load();
+  };
+
+  const confirmClose = async () => {
+    if (!closing || !closure.trim() || !closeOwner) return;
+    setClosingSave(true);
+    try {
+      const user = users.find((u) => u.id === closeOwner);
+      const changedBy = await currentUserName();
+      const line = formatLogLine(closing.status, 'Completed', changedBy);
+      await base44.entities.AuditAction.update(closing.id, {
+        status: 'Completed',
+        completed_date: format(new Date(), 'yyyy-MM-dd'),
+        closure_evidence: closure.trim(),
+        allocated_to: user?.full_name || closing.allocated_to,
+        allocated_email: user?.email || closing.allocated_email,
+        status_log: [closing.status_log, line].filter(Boolean).join('\n'),
+      });
+      await recordStatusLog('AuditAction', closing, 'Completed', changedBy, `Closure evidence: ${closure.trim()}`);
+      setClosing(null);
+      setClosure('');
+      await load();
+      toast({ title: 'Action closed with evidence' });
+    } finally {
+      setClosingSave(false);
+    }
   };
 
   const exportCsv = () => {
@@ -143,14 +182,16 @@ export default function AuditActions({ audits }) {
                         .map((p) => p[0]).filter(Boolean).join(' · ') || 'No details yet'}
                     </p>
                     {a.description && <p className="mt-1 text-sm text-muted-foreground">{a.description}</p>}
+                    {a.closure_evidence && <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-400"><span className="font-semibold">Closure evidence:</span> {a.closure_evidence}</p>}
                     {a.status_log && <p className="mt-1 truncate text-xs text-muted-foreground" title={a.status_log}>{a.status_log.split('\n').slice(-1)[0]}</p>}
                   </div>
                   <div className="flex items-center gap-2">
                     {a.priority === 'High' && <Badge variant="destructive">High</Badge>}
                     {isOverdue(a) && <Badge className={statusTone('Overdue')}>Overdue</Badge>}
                     <Badge className={statusTone(a.status)}>{a.status}</Badge>
-                    <Select value={a.status} onValueChange={(v) => setStatus(a, v)}>
-                      <SelectTrigger className="h-8 w-[130px] text-xs"><SelectValue /></SelectTrigger>
+                    {a.status === 'Completed' && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-label="Closed actions are locked" />}
+                    <Select value={a.status} onValueChange={(v) => setStatus(a, v)} disabled={a.status === 'Completed'}>
+                      <SelectTrigger className="h-8 w-[130px] text-xs" disabled={a.status === 'Completed'}><SelectValue /></SelectTrigger>
                       <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
                     </Select>
                     <Button variant="ghost" size="icon" onClick={async () => { if (confirm('Delete this action?')) { await base44.entities.AuditAction.delete(a.id); await load(); } }}>
@@ -163,6 +204,25 @@ export default function AuditActions({ audits }) {
           ))}
         </div>
       )}
+
+      <Dialog open={!!closing} onOpenChange={(o) => { if (!o) setClosing(null); }}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Close out action</DialogTitle></DialogHeader>
+          <p className="text-sm text-muted-foreground">An action can only close with a named owner and evidence of what was fixed. Once closed it is locked for audit integrity.</p>
+          <div className="grid gap-3">
+            <div className="grid gap-1.5"><Label>Owner *</Label>
+              <Select value={closeOwner} onValueChange={setCloseOwner}>
+                <SelectTrigger><SelectValue placeholder="Select owner" /></SelectTrigger>
+                <SelectContent>{users.map((u) => <SelectItem key={u.id} value={u.id}>{u.full_name || u.email}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-1.5"><Label>Closure evidence *</Label>
+              <Textarea value={closure} onChange={(e) => setClosure(e.target.value)} placeholder="What was done to fix it? Describe or summarise the evidence." />
+            </div>
+            <Button onClick={confirmClose} disabled={closingSave || !closure.trim() || !closeOwner}>Close action with evidence</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
