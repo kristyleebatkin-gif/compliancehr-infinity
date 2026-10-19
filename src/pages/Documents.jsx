@@ -310,7 +310,7 @@ export default function Documents() {
         </TabsContent>
 
         <TabsContent value="expiry-calendar" className="mt-4">
-          <ExpiryCalendar docs={docs} certs={certs} viewDoc={viewDoc} />
+          <ExpiryCalendar docs={docs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
         </TabsContent>
 
         <TabsContent value="data-control" className="mt-4">
