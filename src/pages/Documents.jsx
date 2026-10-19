@@ -213,7 +213,7 @@ export default function Documents() {
       ) : (
         <>
         {selected.length > 0 && (
-          <BulkEditBar count={selected.length} applying={applying} onApply={bulkApply} onClear={() => setSelected([])} />
+          <BulkEditBar count={selected.length} applying={applying} onApply={(v) => bulkApply(v.status)} onClear={() => setSelected([])} />
         )}
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {docs.map((d) => {

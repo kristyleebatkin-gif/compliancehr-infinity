@@ -6,6 +6,7 @@ import StatusBadge from '@/components/StatusBadge';
 import { Button } from '@/components/ui/button';
 import { Plus, Award, Pencil, Trash2, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import BulkEditBar from '@/components/documents/BulkEditBar';
 
 export default function Certificates() {
   const [items, setItems] = useState([]);
@@ -60,6 +61,28 @@ export default function Certificates() {
       }
       setShowForm(false); load();
     } catch (err) { console.error(err); }
+  };
+
+  const [selected, setSelected] = useState([]);
+  const [applying, setApplying] = useState(false);
+
+  const toggleSelect = (id, checked) => {
+    setSelected((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
+  };
+
+  // Bulk status change across selected certificates, with a single audit entry.
+  const bulkApply = async (status) => {
+    const targets = items.filter((c) => selected.includes(c.id));
+    if (!targets.length) return;
+    setApplying(true);
+    try {
+      await base44.entities.Certificate.bulkUpdate(targets.map((t) => ({ id: t.id, status })));
+      await base44.entities.AuditLog.create({ action: 'Bulk Updated', entity_type: 'Certificate', record_id: targets.map((t) => t.id).join(','), record_title: `${targets.length} certificates set to ${status}` }).catch((error) => console.error(error));
+      setSelected([]);
+      load();
+    } finally {
+      setApplying(false);
+    }
   };
 
   const del = async (c) => {
@@ -117,10 +140,23 @@ export default function Certificates() {
         ) : items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground"><Award className="h-8 w-8 mb-2" /><p className="text-sm">No certificates issued</p></div>
         ) : (
+          <>
+          {selected.length > 0 && (
+            <div className="border-b border-border bg-primary/5 px-5 py-3">
+              <BulkEditBar
+                count={selected.length}
+                applying={applying}
+                onApply={(v) => bulkApply(v.status)}
+                onClear={() => setSelected([])}
+                options={['Current', 'Expiring Soon', 'Expired', 'Revoked'].map((s) => ({ value: s, label: s }))}
+              />
+            </div>
+          )}
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-muted/40">
+                  <th className="w-10 px-4 py-3 text-left"><input type="checkbox" className="h-4 w-4 cursor-pointer rounded border-border accent-[hsl(var(--primary))]" checked={selected.length === items.length && items.length > 0} onChange={(e) => setSelected(e.target.checked ? items.map((c) => c.id) : [])} /></th>
                   <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Staff</th>
                   <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Module</th>
                   <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Issued</th>
@@ -133,6 +169,7 @@ export default function Certificates() {
               <tbody className="divide-y divide-border">
                 {items.map(c => (
                   <tr key={c.id} className="hover:bg-muted/50">
+                    <td className="px-4 py-3.5"><input type="checkbox" className="h-4 w-4 cursor-pointer rounded border-border accent-[hsl(var(--primary))]" checked={selected.includes(c.id)} onChange={(e) => toggleSelect(c.id, e.target.checked)} /></td>
                     <td className="px-5 py-3.5 text-sm font-medium text-foreground">{c.staff_name}</td>
                     <td className="px-5 py-3.5 text-sm text-muted-foreground">{c.module_title}</td>
                     <td className="px-5 py-3.5 text-sm text-muted-foreground">{c.issue_date ? new Date(c.issue_date).toLocaleDateString() : '—'}</td>
@@ -148,6 +185,7 @@ export default function Certificates() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
     </div>

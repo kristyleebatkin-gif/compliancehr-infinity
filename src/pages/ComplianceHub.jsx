@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History } from 'lucide-react';
 import { NewVersionDialog, PolicyHistoryDialog } from '@/components/compliance/PolicyVersions';
+import BulkEditBar from '@/components/documents/BulkEditBar';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
@@ -76,6 +77,26 @@ export default function ComplianceHub() {
   const [newVersionPolicy, setNewVersionPolicy] = useState(null);
   const [historyPolicy, setHistoryPolicy] = useState(null);
   const [rForm, setRForm] = useState({ title: '', category: '', jurisdiction: 'Australia', authority: '', purpose: '', status: 'Current', next_review: '', official_url: '' });
+  const [selPolicies, setSelPolicies] = useState([]);
+  const [applyingPolicies, setApplyingPolicies] = useState(false);
+
+  const togglePolicy = (id, checked) => {
+    setSelPolicies((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
+  };
+
+  // Bulk policy update: status on every selected policy, plus one shared version if entered.
+  const bulkApplyPolicies = async ({ status, version }) => {
+    const targets = policies.filter((p) => selPolicies.includes(p.id));
+    if (!targets.length) return;
+    setApplyingPolicies(true);
+    try {
+      await base44.entities.Policy.bulkUpdate(targets.map((t) => ({ id: t.id, status, ...(version ? { version } : {}) })));
+      setSelPolicies([]);
+      await load();
+    } finally {
+      setApplyingPolicies(false);
+    }
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -246,11 +267,29 @@ export default function ComplianceHub() {
             <EmptyState icon={FileText} modulePath="/compliance" title="No policies yet" message="Add your first policy to the register." />
           ) : (
             <div className="grid gap-4 md:grid-cols-2">
+              {selPolicies.length > 0 && (
+                <div className="md:col-span-2">
+                  <BulkEditBar
+                    count={selPolicies.length}
+                    applying={applyingPolicies}
+                    onApply={bulkApplyPolicies}
+                    onClear={() => setSelPolicies([])}
+                    options={POLICY_STATUSES.map((s) => ({ value: s, label: s }))}
+                    showVersion
+                  />
+                </div>
+              )}
               {policies.map((p) => (
                 <Card key={p.id}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-start gap-3">
+                        <input
+                          type="checkbox"
+                          className="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded border-border accent-[hsl(var(--primary))]"
+                          checked={selPolicies.includes(p.id)}
+                          onChange={(e) => togglePolicy(p.id, e.target.checked)}
+                        />
                         <div className="rounded-lg bg-muted p-2"><FileText className="h-5 w-5 text-muted-foreground" /></div>
                         <div>
                           <p className="font-semibold">{p.document_name}</p>
