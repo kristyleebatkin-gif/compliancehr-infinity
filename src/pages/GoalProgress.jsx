@@ -18,6 +18,7 @@ import { format } from 'date-fns';
 import GoalNotes from '@/components/goals/GoalNotes';
 import GoalInsights from '@/components/goals/GoalInsights';
 import GoalCoach from '@/components/goals/GoalCoach';
+import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 
 export default function GoalProgress() {
   const [goals, setGoals] = useState([]);
@@ -155,6 +156,7 @@ export default function GoalProgress() {
             <TabsTrigger value="participants">Progress by participant</TabsTrigger>
             <TabsTrigger value="insights">Insights</TabsTrigger>
             <TabsTrigger value="coach">AI goal coach</TabsTrigger>
+            <TabsTrigger value="funding">Funding outcomes</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-4">
@@ -204,6 +206,10 @@ export default function GoalProgress() {
 
           <TabsContent value="coach" className="mt-4">
             <GoalCoach goals={goals} />
+          </TabsContent>
+
+          <TabsContent value="funding" className="mt-4">
+            <FundingOutcomeChart goals={goals} />
           </TabsContent>
         </Tabs>
       )}

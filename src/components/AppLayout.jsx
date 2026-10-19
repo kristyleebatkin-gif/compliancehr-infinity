@@ -13,6 +13,7 @@ import {
   Search, Sun, Moon,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -345,6 +346,7 @@ export default function AppLayout() {
           <div className="mx-auto max-w-6xl px-3 pt-4 md:px-8 md:pt-6">
             <ModuleGuide />
           </div>
+          <AutoRegisterInsights />
           <div className="min-w-0 px-3 md:px-0">
             <ErrorBoundary>
               <Outlet />

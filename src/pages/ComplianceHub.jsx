@@ -51,6 +51,7 @@ import SafetyTrendChart from '@/components/compliance/SafetyTrendChart';
 import AuditPackButton from '@/components/compliance/AuditPackButton';
 import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
+import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -158,6 +159,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
           <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
           <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
+          <TabsTrigger value="standards-map">NDIS Standards Map</TabsTrigger>
         </TabsList>
 
         <TabsContent value="readiness" className="mt-4 space-y-4">
@@ -320,6 +322,10 @@ export default function ComplianceHub() {
               ))}
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="standards-map" className="mt-4">
+          <ControlEvidenceMap />
         </TabsContent>
 
         <TabsContent value="audit-report-list" className="mt-4">

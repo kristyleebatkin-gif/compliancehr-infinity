@@ -33,6 +33,7 @@ export default function Tasks() {
   const [selected, setSelected] = useState([]);
   const [running, setRunning] = useState(false);
   const [sending, setSending] = useState(null);
+  const [focusIdx, setFocusIdx] = useState(-1);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -141,6 +142,22 @@ export default function Tasks() {
 
   const filtered = filter === 'All' ? list : list.filter((t) => t.status === filter);
 
+  // Keyboard-first triage: N new, J/K next/previous, Enter open, Escape close.
+  useEffect(() => {
+    const onKey = (e) => {
+      const tag = (e.target.tagName || '').toLowerCase();
+      const typing = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+      if (e.key === 'Escape' && editing) { setEditing(null); setFocusIdx(-1); return; }
+      if (typing || editing) return;
+      if (e.key === 'n' || e.key === 'N') { e.preventDefault(); setFocusIdx(-1); openNew(); }
+      else if (e.key === 'j' || e.key === 'ArrowDown') { e.preventDefault(); setFocusIdx((i) => Math.min(i + 1, filtered.length - 1)); }
+      else if (e.key === 'k' || e.key === 'ArrowUp') { e.preventDefault(); setFocusIdx((i) => Math.max(i - 1, 0)); }
+      else if (e.key === 'Enter' && focusIdx >= 0 && filtered[focusIdx]) { openEdit(filtered[focusIdx]); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [filtered, editing, focusIdx]);
+
   const allChecked = filtered.length > 0 && filtered.every((t) => selected.includes(t.id));
   const toggleSelect = (id) => setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
   const toggleSelectAll = () => setSelected(allChecked ? [] : filtered.map((t) => t.id));
@@ -177,6 +194,7 @@ export default function Tasks() {
         {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
           <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
         ))}
+        <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>
         <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pl-3 text-xs font-medium text-foreground/60">
           <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} className="h-4 w-4" />
           Select all
@@ -189,8 +207,8 @@ export default function Tasks() {
         <EmptyState icon={ListTodo} title="No tasks" message="Create tasks to track compliance actions." />
       ) : (
         <div className="space-y-2">
-          {filtered.map((t) => (
-            <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'}`}>
+          {filtered.map((t, idx) => (
+            <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
               <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
               <button onClick={() => toggle(t)} className="shrink-0">
                 {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}

@@ -19,6 +19,20 @@ const REGISTRY = {
   receipts: { entity: 'Receipt', statusField: 'status', closed: ['Reconciled'], dateField: 'date', label: 'Receipt Hub' },
   compliance: { entity: 'LegalRequirement', statusField: 'status', closed: ['Superseded', 'Archived'], dateField: 'next_review', label: 'Compliance & Report Centre' },
   emergency: { entity: 'SafetyCheck', statusField: 'result', closed: [], dateField: 'next_due_date', label: 'Emergency Response' },
+  contacts: { entity: 'KeyBusinessContact', statusField: null, closed: [], label: 'Key Personnel Contacts' },
+  volunteers: { entity: 'Volunteer', statusField: 'status', closed: ['Inactive'], dateField: 'police_check_date', label: 'Volunteering & Placements' },
+  programs: { entity: 'CommunityEvent', statusField: 'status', closed: ['Completed', 'Cancelled'], dateField: 'event_date', label: 'Programs & Events' },
+  certificates: { entity: 'Certificate', statusField: 'status', closed: ['Expired', 'Revoked'], dateField: 'expiry_date', label: 'Certificates' },
+  suppliers: { entity: 'Supplier', statusField: 'status', closed: ['Inactive'], label: 'Procurement Hub' },
+  leads: { entity: 'Lead', statusField: 'stage', closed: ['Won', 'Lost'], label: 'CRM & Leads' },
+  hr: { entity: 'LeaveRequest', statusField: 'status', closed: ['Approved', 'Declined'], label: 'HR Hub' },
+  projects: { entity: 'BusinessProject', statusField: 'status', closed: ['Complete'], dateField: 'due_date', label: 'Projects Hub' },
+  feedback: { entity: 'Feedback', statusField: 'status', closed: ['Finalised'], label: 'Feedback & Surveys' },
+  intake: { entity: 'IntakeCase', statusField: 'status', closed: ['Converted to Profile', 'Declined', 'Withdrawn'], label: 'Intake Centre' },
+  ndis: { entity: 'NDISComplianceDeadline', statusField: 'status', closed: ['Completed', 'Submitted'], dateField: 'due_date', label: 'NDIS Provider Portal' },
+  referrals: { entity: 'Referral', statusField: 'status', closed: ['Completed', 'Declined'], label: 'Referral & Support' },
+  equipment: { entity: 'EquipmentManual', statusField: null, closed: [], dateField: 'review_date', label: 'Equipment & MSDS' },
+  community: { entity: 'CommunityProgram', statusField: 'status', closed: ['Completed', 'Cancelled'], label: 'Community & Council' },
 };
 
 export default async function (req) {
@@ -34,17 +48,22 @@ export default async function (req) {
     const ent = base44.entities[cfg.entity];
     const today = new Date().toISOString().slice(0, 10);
     const in30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
-    const openQuery = { [cfg.statusField]: { $nin: cfg.closed } };
+    const statusField = cfg.statusField || null;
+    const openQuery = statusField ? { [statusField]: { $nin: cfg.closed } } : {};
 
     const [total, statusAgg, overdue, expiring] = await Promise.all([
       ent.count({}),
-      ent.aggregate({ groupBy: cfg.statusField }),
+      statusField ? ent.aggregate({ groupBy: statusField }) : Promise.resolve({ rows: [] }),
       cfg.dateField ? ent.count({ ...openQuery, [cfg.dateField]: { $lt: today } }) : Promise.resolve(null),
       cfg.dateField ? ent.count({ ...openQuery, [cfg.dateField]: { $gte: today, $lte: in30 } }) : Promise.resolve(null),
     ]);
 
-    const byStatus = (statusAgg.rows || []).map((r) => ({ status: r[cfg.statusField] || 'Unset', count: r.count }));
-    const open = byStatus.filter((s) => !cfg.closed.includes(s.status)).reduce((a, s) => a + s.count, 0);
+    const byStatus = statusField
+      ? (statusAgg.rows || []).map((r) => ({ status: r[statusField] || 'Unset', count: r.count }))
+      : [];
+    const open = statusField
+      ? byStatus.filter((s) => !cfg.closed.includes(s.status)).reduce((a, s) => a + s.count, 0)
+      : total;
 
     const insights = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt: [
