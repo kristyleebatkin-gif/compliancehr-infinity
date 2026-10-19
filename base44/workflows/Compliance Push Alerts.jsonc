@@ -1,0 +1,44 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "compliance_push_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "push_alerts": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "compliancePushAlerts"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan and push",
+            "description": "New task assignments and upcoming document renewals"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Compliance Push Alerts",
+  "description": "Hourly scan that sends mobile push notifications to staff for new compliance task assignments and staff document/certificate renewals due in the next 7 days (each notified once)."
+}
