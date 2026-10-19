@@ -13,6 +13,7 @@ import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
 import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
 import HrTemplatesLibrary from '@/components/hr/HrTemplatesLibrary';
+import RegisterInsights from '@/components/RegisterInsights';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -103,6 +104,8 @@ export default function HrHub({ profile, embedded = false } = {}) {
         icon={UsersRound}
         accent={['#2563eb', '#0891b2']}
       />}
+
+      {!embedded && <RegisterInsights module="hr" />}
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[

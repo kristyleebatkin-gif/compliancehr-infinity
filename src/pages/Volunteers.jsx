@@ -5,7 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { useToast } from '@/components/ui/use-toast';
-import { Plus, Trash2, HeartHandshake, Pencil, Eye, Mail, MessageSquare, Download, FileCheck2 } from 'lucide-react';
+import { Plus, Trash2, HeartHandshake, Pencil, Eye, Mail, MessageSquare, Download, FileCheck2, UserPlus } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
+import { useRole } from '@/lib/useRole';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
@@ -24,6 +29,30 @@ export default function Volunteers() {
   const [editing, setEditing] = useState(null);
   const [viewing, setViewing] = useState(null);
   const [exporting, setExporting] = useState(false);
+  const { role } = useRole();
+  const isVolunteer = role === 'Volunteer';
+  const canManage = ['admin', 'Provider Administrator', 'Administration', 'Compliance Manager', 'Team Leader'].includes(role);
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviting, setInviting] = useState(false);
+
+  const sendInvite = async () => {
+    if (!inviteEmail.trim() || !inviteEmail.trim().includes('@')) {
+      toast({ title: 'Enter a valid email address', variant: 'destructive' });
+      return;
+    }
+    setInviting(true);
+    try {
+      await base44.users.inviteUser(inviteEmail.trim(), 'Volunteer');
+      toast({ title: 'Invitation sent', description: `${inviteEmail.trim()} will only see their own volunteering records.` });
+      setInviteOpen(false);
+      setInviteEmail('');
+    } catch (e) {
+      toast({ title: 'Invite failed', description: e.message || 'Please try again.', variant: 'destructive' });
+    } finally {
+      setInviting(false);
+    }
+  };
 
   const load = useCallback(async () => {
     setLoading(true);

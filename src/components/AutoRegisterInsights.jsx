@@ -11,7 +11,6 @@ const PATH_MODULES = [
   ['/certificates', 'certificates'],
   ['/procurement', 'suppliers'],
   ['/crm', 'leads'],
-  ['/hr', 'hr'],
   ['/projects', 'projects'],
   ['/feedback', 'feedback'],
   ['/ndis-portal', 'ndis'],
