@@ -213,7 +213,29 @@ export default function Documents() {
       ) : (
         <>
         {selected.length > 0 && (
-          <BulkEditBar count={selected.length} applying={applying} onApply={(v) => bulkApply(v.status)} onClear={() => setSelected([])} />
+          <BulkEditBar
+            count={selected.length}
+            applying={applying}
+            onApply={(v) => bulkApply(v.status)}
+            onClear={() => setSelected([])}
+            options={[
+              { value: 'Current', label: 'Approve (mark Current)' },
+              { value: 'Expiring Soon', label: 'Mark Expiring Soon' },
+              { value: 'Expired', label: 'Mark Expired' },
+              { value: 'Archived', label: 'Archive' },
+            ]}
+          />
+        )}
+        {docs.some((d) => canEditDoc(d)) && (
+          <label className="flex w-fit cursor-pointer items-center gap-2 text-sm font-medium text-foreground/70">
+            <input
+              type="checkbox"
+              className="h-4 w-4 cursor-pointer rounded border-border accent-[hsl(var(--primary))]"
+              checked={selected.length > 0 && selected.length === docs.filter((d) => canEditDoc(d)).length}
+              onChange={(e) => setSelected(e.target.checked ? docs.filter((d) => canEditDoc(d)).map((d) => d.id) : [])}
+            />
+            Select all
+          </label>
         )}
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {docs.map((d) => {
