@@ -23,6 +23,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
   const [aboutMe, setAboutMe] = useState(profile.about_me || '');
   const [savingAbout, setSavingAbout] = useState(false);
   const [emailingTag, setEmailingTag] = useState(false);
+  const [makingTag, setMakingTag] = useState(false);
 
   const { primary, accent } = profilePalette(profile.full_name);
   const isStaff = kind === 'staff';
@@ -85,6 +86,32 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
     await base44.entities.StaffProfile.update(profile.id, { employee_number: number });
     toast({ title: `Employee ID ${number} generated` });
     onUpdated();
+  };
+
+  // Staff make their own name tag: generated with company branding, then saved
+  // privately as a Staff Badge in their own documents.
+  const makeNameTag = async () => {
+    setMakingTag(true);
+    try {
+      const { staffBadgeBlob } = await import('@/lib/staffBadgePdf');
+      const blob = staffBadgeBlob({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) });
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
+        file: new File([blob], `Staff Badge - ${profile.full_name}.pdf`, { type: 'application/pdf' }),
+      });
+      await base44.entities.EmployeeDocument.create({
+        title: `Staff Badge - ${profile.full_name}`,
+        employee_name: profile.full_name,
+        document_type: 'Staff Badge',
+        status: 'Current',
+        file_uri,
+        notes: 'Made by the employee from My Profile.',
+      });
+      toast({ title: 'Name tag saved to your documents' });
+    } catch (error) {
+      toast({ title: 'Could not make name tag', description: error.message, variant: 'destructive' });
+    } finally {
+      setMakingTag(false);
+    }
   };
 
   const emailNameTag = async () => {
@@ -162,6 +189,9 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
           <div className="mt-4 flex flex-wrap gap-2">
             <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" onClick={() => downloadStaffBadgePdf({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) })}>
               <Download className="h-3.5 w-3.5" />Download name tag
+            </Button>
+            <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" disabled={makingTag} onClick={makeNameTag}>
+              {makingTag ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Make name tag
             </Button>
             <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" disabled={emailingTag} onClick={emailNameTag}>
               {emailingTag ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Mail className="h-3.5 w-3.5" />}Email name tag to employee
