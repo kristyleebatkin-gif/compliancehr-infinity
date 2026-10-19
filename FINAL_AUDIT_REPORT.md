@@ -40,6 +40,22 @@ Every open build task from the module-by-module audit is implemented, tested and
 19 unified tasks · 54 risks (0 missing owner/review) · 6 investigations · 10 policies ·
 10 certificates · 4 compliance issues · 3 internal audits · 4 roster rules · 5 staff profiles.
 
+## Data snapshot after backfill
+
+19 unified tasks · 53 risks (0 missing owner/review/rating inputs) · 6 investigations · 10 policies ·
+10 certificates · 4 compliance issues · 3 internal audits · 4 roster rules · 5 staff profiles ·
+2 audit actions · 3 satisfaction surveys · 2 appraisals · 3 workforce assurance records ·
+2 NDIS audit records · 1 board audit report. Every register in the app now holds records.
+
+## Follow-up audit (19 Oct 2026) — resolved
+
+- 8 task records with invalid migrated statuses normalised to the register's values.
+- Feedback routing bug in the Communication Centre fixed (invalid type value would fail silently).
+- Duplicate "Medication administration errors" risk removed; missing reportability decision
+  recorded on the missed-dose incident; one task given a due date.
+- Legacy unused ReceiptRecord register deleted.
+- Cross-check passed: every entity, function, workflow, email template and route reference resolves.
+
 ## Remaining (needs input or a native build)
 
 - Native mobile push notifications — enable once the app is published as a native mobile build.
