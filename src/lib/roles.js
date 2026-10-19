@@ -107,6 +107,7 @@ export const NAV_PERMISSIONS = {
   portal: [ROLES.PARTICIPANT, ...STAFF_ROLES, ROLES.AUDITOR],
   'safety-insights': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
   'incident-analytics': [...MANAGEMENT_ROLES, ROLES.QUALITY],
+  'staff-progress': [...MANAGEMENT_ROLES, ROLES.HR],
   analytics: [...MANAGEMENT_ROLES, ROLES.FINANCE],
   crm: [...MANAGEMENT_ROLES, ROLES.MARKETING],
   procurement: [...MANAGEMENT_ROLES, ROLES.FINANCE],
