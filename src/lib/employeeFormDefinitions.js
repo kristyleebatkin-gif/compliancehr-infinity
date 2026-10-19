@@ -334,10 +334,35 @@ const BASE_EMPLOYEE_FORM_DEFINITIONS = {
   },
 };
 
+// Full intake questionnaire: every employee intake case question not already
+// on the reconstructed source document, appended so the online form covers all.
+const STAFF_INTAKE_CASE_QUESTIONS = [
+  field('Employee ID number'),
+  field('Position'),
+  field('Employee role'),
+  field('Availability', false),
+  field('Why do you want this role', false),
+  field('Right to work in Australia', false),
+  field('Current driver licence', false),
+  field('Own vehicle', false),
+  field('Current rego (state and expiry)'),
+  field('Rego number'),
+  field('Qualifications and certificates', false),
+  field('Weekly hours goal'),
+  field('Employment provider'),
+  field('Hobbies and interests', false),
+  field('Supports they want to provide', false),
+  field('Working with children check number'),
+  field('NDIS worker screening check number'),
+  field('First aid certificate current', false),
+  field('Referees', false),
+];
+
 export const EMPLOYEE_FORM_DEFINITIONS = Object.fromEntries(Object.entries(BASE_EMPLOYEE_FORM_DEFINITIONS).map(([title, definition]) => [title, {
   ...definition,
   fields: normaliseFormFields([
     ...(EMPLOYEE_SOURCE_FORMS[title] || (title === 'NDIS Code of Conduct Acknowledgement' ? [...personal, ...NDIS_CODE_ACKNOWLEDGEMENTS, field('Employee signature'), field('Signature date')] : definition.fields)),
+    ...(title === 'Staff Information Form' ? STAFF_INTAKE_CASE_QUESTIONS : []),
     ...(title === 'Staff Commitment Declaration Form' ? NDIS_CODE_ACKNOWLEDGEMENTS : []),
   ]),
 }]));
