@@ -3,9 +3,9 @@ import { base44 } from '@/api/base44Client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Users, X } from 'lucide-react';
 
-// Team section for profiles: chips of team members with add/remove, saving
-// straight to the profile record.
-export default function TeamSection({ title, description, values = [], kind, onUpdate, footer }) {
+// Team section for profiles: chips of team members with add/remove (admins only),
+// saving straight to the profile record. Non-admins see a read-only list.
+export default function TeamSection({ title, description, values = [], kind, onUpdate, footer, editable = true }) {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
@@ -35,11 +35,13 @@ export default function TeamSection({ title, description, values = [], kind, onU
         {values.map((name) => (
           <span key={name} className="inline-flex items-center gap-1 rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold text-brand">
             {name}
-            <button onClick={() => onUpdate(values.filter((v) => v !== name))} className="rounded-full p-0.5 hover:bg-brand/20"><X className="h-3 w-3" /></button>
+            {editable && (
+              <button onClick={() => onUpdate(values.filter((v) => v !== name))} className="rounded-full p-0.5 hover:bg-brand/20"><X className="h-3 w-3" /></button>
+            )}
           </span>
         ))}
       </div>
-      {remaining.length > 0 && (
+      {editable && remaining.length > 0 && (
         <div className="mt-3">
           <Select value="none" onValueChange={(v) => { if (v !== 'none') onUpdate([...values, v]); }}>
             <SelectTrigger className="h-9 w-full sm:w-[250px]"><SelectValue placeholder="Add a team member..." /></SelectTrigger>
