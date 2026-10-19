@@ -24,8 +24,8 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
   const employee = kind === 'staff';
   const props = { embedded: true, profile, profileKind: kind };
   return [
-    { key: 'details', label: 'Profile & Data', Icon: UserRound, content: details },
-    ...(employee ? [{ key: 'participants', label: 'Approved Participant Profiles', Icon: Heart, content: approvedParticipants }] : []),
+    ...(details ? [{ key: 'details', label: 'Profile & Data', Icon: UserRound, content: details }] : []),
+    ...(employee && approvedParticipants ? [{ key: 'participants', label: 'Approved Participant Profiles', Icon: Heart, content: approvedParticipants }] : []),
     { key: 'personnel', label: 'Key Personnel', Icon: Contact, content: <KeyContacts {...props} /> },
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: <IntakeCentre {...props} /> },
