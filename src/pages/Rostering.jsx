@@ -151,7 +151,7 @@ export default function Rostering() {
       setMyName(me?.full_name || '');
       setStaff(s.items.map((i) => i.full_name));
       setParticipants(p.items.map((i) => i.full_name));
-    });
+    }).catch((e) => console.error(e));
   }, [loadStats]);
 
   useEffect(() => {

@@ -96,7 +96,7 @@ export default function ParticipantHome({ me }) {
         }
       />
 
-      <Section icon={UserRound} title="My profile" linkTo={null} emptyIcon={UserRound} emptyTitle="Profile not set up yet" emptyMessage="Your support team will set up your profile, then it will appear here." loading={loading} count={profile ? 1 : 0}>
+      <Section icon={UserRound} title="My profile" linkTo="/my-profile" linkLabel="View & edit" emptyIcon={UserRound} emptyTitle="Profile not set up yet" emptyMessage="Your support team will set up your profile, then it will appear here." loading={loading} count={profile ? 1 : 0}>
         <div className="rounded-xl border border-border/60 bg-card p-4">
           <div className="flex items-start gap-3">
             <UserRound className="mt-0.5 h-5 w-5 shrink-0 text-brand" />

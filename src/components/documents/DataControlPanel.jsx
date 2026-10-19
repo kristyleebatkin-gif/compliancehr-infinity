@@ -24,6 +24,9 @@ export default function DataControlPanel() {
     setCount(null);
     try {
       setCount(await base44.entities[entityName].count({}));
+    } catch (e) {
+      console.error(e);
+      setCount(0);
     } finally {
       setCounting(false);
     }

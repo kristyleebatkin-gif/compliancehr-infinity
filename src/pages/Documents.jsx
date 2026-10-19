@@ -21,6 +21,7 @@ import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import VaultUploads from '@/components/documents/VaultUploads';
+import ParticipantVault from '@/components/documents/ParticipantVault';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -38,6 +39,9 @@ export default function Documents() {
   const { search } = useLocation();
   const focus = new URLSearchParams(search).get('focus');
   const [docs, setDocs] = useState([]);
+  const [myDocs, setMyDocs] = useState([]);
+  const [me, setMe] = useState(null);
+  const isParticipant = me?.role === 'Participant';
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -50,12 +54,21 @@ export default function Documents() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [d, s] = await Promise.all([
+      const meUser = await base44.auth.me();
+      setMe(meUser);
+      if (meUser.role === 'Participant') {
+        const page = await base44.entities.ParticipantDocument.filter({ participant_user_id: meUser.id }, { sort: '-created_date', limit: 50 });
+        setMyDocs(page.items || []);
+        return;
+      }
+      const results = await Promise.allSettled([
         base44.entities.EmployeeDocument.filter({ status: { $ne: 'Archived' } }, { sort: 'expiry_date', limit: 50 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 100, fields: ['full_name'] }),
       ]);
-      setDocs(d.items);
-      setStaff(s.items.map((i) => i.full_name));
+      setDocs(results[0].status === 'fulfilled' ? results[0].value.items : []);
+      setStaff(results[1].status === 'fulfilled' ? results[1].value.items.map((i) => i.full_name) : []);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -143,6 +156,10 @@ export default function Documents() {
     <div className="space-y-6">
       <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />
 
+      {isParticipant ? (
+        <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} />
+      ) : (
+        <>
       <RegisterInsights module="documents" />
       <DataControlPanel />
 
@@ -279,6 +296,8 @@ export default function Documents() {
           <DataControlPanel />
         </TabsContent>
       </Tabs>
+        </>
+      )}
     </div>
   );
 }

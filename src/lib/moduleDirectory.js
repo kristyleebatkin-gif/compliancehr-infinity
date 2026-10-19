@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, UserPlus, FolderOpen, Vault, Users, Heart, LayoutPanelTop, Sparkles,
+  LayoutDashboard, UserPlus, FolderOpen, Vault, Users, Heart, LayoutPanelTop, Sparkles, UserCircle,
   Megaphone, AlertTriangle, ShieldAlert, ShieldCheck, GraduationCap, BadgeCheck,
   Boxes, CalendarClock, FileSpreadsheet, Target, Siren, CalendarDays, UsersRound,
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
@@ -12,6 +12,7 @@ import {
 export const MODULE_DIRECTORY = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, blurb: 'Live overview of compliance, safety and work across the organisation.' },
   { key: 'my-work', label: 'My Work', path: '/my-work', icon: UserRound, blurb: 'Your personal view: tasks assigned to you and your incident reports.' },
+  { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, blurb: 'View and edit your own personal and contact details.' },
   { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, blurb: 'Participant and employee intake forms, reviews and conversions.' },
   { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, blurb: 'Document register, central routing, uploads and vault exports.' },
   { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, blurb: 'Submitted forms, business details, branding and completed documents.' },
