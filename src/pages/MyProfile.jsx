@@ -88,7 +88,7 @@ export default function MyProfile() {
 
   return (
     <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
-      <PageHeader icon={UserRound} title="My Profile" subtitle={isParticipant ? 'View and edit your own contact and personal details.' : 'View and edit your own contact, payment and personal details.'} showAlerts={false} showCompliance={false} showAudit={false} />
+      <PageHeader icon={UserRound} title={isParticipant ? 'My participant profile' : 'My employee profile'} subtitle={isParticipant ? 'View and edit your own contact and personal details.' : 'View and edit your own contact, payment and personal details.'} showAlerts={false} showCompliance={false} showAudit={false} />
 
       {!profile ? (
         <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} />

@@ -392,7 +392,7 @@ export default function StaffHome() {
 
       <section className="space-y-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">My profile</h2>
+          <h2 className="text-lg font-semibold">My employee profile</h2>
           <Link to="/my-profile" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline"><Pencil className="h-3 w-3" />View &amp; edit</Link>
         </div>
         <Link to="/my-profile" className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5 hover:bg-muted/30">

@@ -3,7 +3,7 @@ import { Link, useLocation, Outlet } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
-import { canAccessNav } from '@/lib/roles';
+import { canAccessNav, ROLES } from '@/lib/roles';
 import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
@@ -100,7 +100,8 @@ export default function AppLayout() {
   const isActive = (path) =>
     location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
 
-  const currentLabel = PRIMARY_NAV.find((item) => isActive(item.path))?.label || 'Dashboard';
+  const navLabel = (item) => (item.key === 'my-profile' ? (role === ROLES.PARTICIPANT ? 'My participant profile' : 'My employee profile') : item.label);
+  const currentLabel = (() => { const found = PRIMARY_NAV.find((i) => isActive(i.path)); return found ? navLabel(found) : 'Dashboard'; })();
   const initials = (user?.full_name || 'CH')
     .split(' ')
     .filter(Boolean)
@@ -145,7 +146,7 @@ export default function AppLayout() {
                     >
                       {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
                       <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate">{navLabel(item)}</span>
                     </Link>
                   );
                 })}
@@ -369,7 +370,7 @@ export default function AppLayout() {
                 }`}
               >
                 <Icon className="h-5 w-5" />
-                <span className="max-w-full truncate">{item.label}</span>
+                <span className="max-w-full truncate">{navLabel(item)}</span>
               </Link>
             );
           })}
@@ -404,7 +405,7 @@ export default function AppLayout() {
                         className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 p-3 text-xs font-medium text-foreground/70 hover:bg-brand/5"
                       >
                         <Icon className="h-5 w-5 text-brand" />
-                        {item.label}
+                        {navLabel(item)}
                       </Link>
                     );
                   })}
