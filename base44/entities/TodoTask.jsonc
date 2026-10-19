@@ -6,6 +6,10 @@
       "type": "string",
       "title": "Task / Subject"
     },
+    "task_type": {
+      "type": "string",
+      "title": "Task Type"
+    },
     "module": {
       "type": "string",
       "title": "Module (Location)"
@@ -40,6 +44,37 @@
       "default": [],
       "title": "Responsible Emails"
     },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "assigned_email": {
+      "type": "string",
+      "title": "Assignee Email"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Urgent"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "title": "Estimated Hours"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "title": "Linked Entity Type"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
     "how_to_complete": {
       "type": "string",
       "title": "How to Complete"
@@ -52,12 +87,21 @@
       "type": "string",
       "title": "Important Info"
     },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
     "status": {
       "type": "string",
       "enum": [
         "Pending",
         "Pending Approval",
-        "Finalised"
+        "In Progress",
+        "Finalised",
+        "Open",
+        "Completed",
+        "Overdue",
+        "Cancelled"
       ],
       "default": "Pending",
       "title": "Status"
@@ -87,6 +131,11 @@
     "signature": {
       "type": "string",
       "title": "Digital Signature"
+    },
+    "archived": {
+      "type": "boolean",
+      "default": false,
+      "title": "Archived"
     },
     "shared_by": {
       "type": "string",
@@ -158,6 +207,11 @@
           "user_condition": {
             "role": "Intake Officer"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
@@ -222,6 +276,11 @@
           "user_condition": {
             "role": "Intake Officer"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
@@ -285,6 +344,11 @@
         {
           "user_condition": {
             "role": "Intake Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
           }
         }
       ]
