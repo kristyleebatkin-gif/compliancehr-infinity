@@ -318,6 +318,21 @@
           ]
         },
         {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.participant_name": "{{user.full_name}}"
+            }
+          ]
+        },
+        {
+          "data.staff_name": "{{user.full_name}}"
+        },
+        {
           "created_by_id": "{{user.id}}"
         }
       ]
