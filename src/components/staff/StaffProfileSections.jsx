@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, BadgeCheck, CalendarClock, CalendarDays, ClipboardCheck, FileCheck2, FileSignature, GraduationCap, KeyRound, ListTodo, MessagesSquare, ShieldAlert, TrendingUp } from 'lucide-react';
 import StaffRiskSummary from '@/components/staff/StaffRiskSummary';
+import StaffRiskAlertStrip from '@/components/staff/StaffRiskAlertStrip';
 import StaffDetailsPanel from '@/components/staff/StaffDetailsPanel';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
@@ -57,9 +58,10 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
   return (
     <>
       {header}
+      <StaffRiskAlertStrip staff={staff} />
       <Tabs defaultValue="details">
         <TabsList className="h-auto flex-wrap justify-start gap-1">
-          {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
+          {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key} id={key === 'risk' ? 'risk-tab' : undefined}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
         </TabsList>
         {tabs.map(({ key, content, module }) => (
           <TabsContent key={key} value={key}>
