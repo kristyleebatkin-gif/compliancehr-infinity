@@ -3,6 +3,8 @@
 export const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
 
 // Roles trusted to send email from the organisation's identity.
+// External/low-trust roles (e.g. Auditor) are deliberately excluded: they must
+// never send email from the organisation's identity.
 export const STAFF_SEND_ROLES = [
   ...MANAGEMENT_ROLES,
   'Human Resources Manager',
@@ -13,7 +15,6 @@ export const STAFF_SEND_ROLES = [
   'Quality & Improvement Manager',
   'Intake Officer',
   'Support Worker',
-  'Auditor',
 ];
 
 // Roles trusted to record NDIS audit consent.

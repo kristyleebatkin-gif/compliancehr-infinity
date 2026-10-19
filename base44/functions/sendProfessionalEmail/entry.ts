@@ -3,6 +3,10 @@ import { MANAGEMENT_ROLES, STAFF_SEND_ROLES, hasAnyRole, appContactEmails } from
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Attachment URLs must point at this app's own file storage; arbitrary
+// caller-supplied URLs (other hosts, javascript:, etc.) are refused.
+const isAppFileUrl = (u) => /^https?:\/\/[^/]+\.(?:base44\.com|base44\.app|wixstatic\.com)\//i.test(u);
+
 const esc = (v) => String(v ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -50,6 +54,7 @@ export default async function(req: Request) {
       ? body.attachments
         .slice(0, 5)
         .filter((a) => a && String(a.filename || '').trim() && String(a.file_url || a.content || '').trim())
+        .filter((a) => a.content || isAppFileUrl(String(a.file_url)))
         .map((a) => {
           const item = { filename: String(a.filename).trim() };
           if (a.content) item.content = String(a.content);
