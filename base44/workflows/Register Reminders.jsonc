@@ -1,0 +1,45 @@
+{
+  "name": "Register Reminders",
+  "description": "Daily scan across every register for items without automated follow-up: quality escalations, overdue invoices, quote expiry, certificate expiry, document reviews, asset maintenance, equipment/MSDS reviews, upcoming events, meeting actions, lead follow-ups, NDIS deadlines, supplier review and compliance checklist tasks. Posts Communication Centre alerts and admin notifications once per item state.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "20 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "register_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_register_reminders": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "registerReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Scan every register and raise reminders",
+            "description": "Posts Communication Centre alerts and admin notifications for overdue and due-soon items across all registers"
+          }
+        }
+      }
+    ]
+  }
+}
