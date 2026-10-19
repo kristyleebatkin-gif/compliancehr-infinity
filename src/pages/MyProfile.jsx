@@ -14,6 +14,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
+import StaffFillableForms from '@/components/staff/StaffFillableForms';
+import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
 import { logUserAction } from '@/lib/actionLog';
 import { UserRound, Save, CheckCircle2, History } from 'lucide-react';
 
@@ -152,6 +154,7 @@ export default function MyProfile() {
         <TabsList>
           <TabsTrigger value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
           {!isParticipant && participantProfile && <TabsTrigger value="participant-details">My participant profile</TabsTrigger>}
+          {profile && <TabsTrigger value="forms">Fillable Forms</TabsTrigger>}
           <TabsTrigger value="work">My Work</TabsTrigger>
           <TabsTrigger value="documents">My Documents</TabsTrigger>
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
@@ -249,6 +252,7 @@ export default function MyProfile() {
                 {!canEditParticipant && <p className="text-xs text-foreground/50">Read-only view. Support team and management can make updates.</p>}
               </CardContent>
             </Card>
+            <ParticipantFillableForms participant={participantProfile} />
             {canEditParticipant && (
               <Card className="border-border/60">
                 <CardContent className="p-5 space-y-4">
@@ -275,6 +279,12 @@ export default function MyProfile() {
             )}
           </TabsContent>
         )}
+
+        <TabsContent value="forms" className="mt-4">
+          {isParticipant
+            ? <ParticipantFillableForms participant={profile} />
+            : <StaffFillableForms staff={profile} />}
+        </TabsContent>
 
         <TabsContent value="work" className="mt-4">
           <StaffHome embedded />
