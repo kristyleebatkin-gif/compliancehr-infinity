@@ -1,0 +1,45 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "10 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "description": "Records a daily live-status snapshot of every module's register counts for the exportable dashboard log",
+  "name": "Module Daily Status Snapshot",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "module_daily_status_snapshot",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "snapshot": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "liveModuleOverview",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Record daily module status",
+            "description": "Live counts for all modules"
+          }
+        }
+      }
+    ]
+  }
+}

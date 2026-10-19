@@ -9,7 +9,8 @@ import DashboardQuickStart from '@/components/dashboard/DashboardQuickStart';
 import AllModulesHub from '@/components/dashboard/AllModulesHub';
 import MorningBrief from '@/components/dashboard/MorningBrief';
 import IssuesDashboardWidget from '@/components/compliance/IssuesDashboardWidget';
-import ProfilesOverview, { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
+import { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
+import LiveDashboards from '@/components/dashboard/LiveDashboards';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
@@ -69,16 +70,7 @@ export default function Dashboard() {
           ? <StaffDashboard />
           : <AdminDashboard />}
 
-      {OVERVIEW_ROLES.includes(role) && (
-        <div className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><Users className="h-4 w-4 text-white" /></span>
-            <span className="text-sm font-bold font-editorial text-foreground/80">Profiles overview</span>
-            <span className="text-xs text-muted-foreground">Every participant and employee profile, as each person sees their own.</span>
-          </div>
-          <ProfilesOverview />
-        </div>
-      )}
+      {OVERVIEW_ROLES.includes(role) && <LiveDashboards />}
 
       {OVERVIEW_ROLES.includes(role) && <RecentActionsPanel />}
 

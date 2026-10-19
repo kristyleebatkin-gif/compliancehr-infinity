@@ -1,0 +1,68 @@
+{
+  "name": "ModuleDailyStatus",
+  "type": "object",
+  "properties": {
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "snapshot_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Snapshot Date"
+    },
+    "total": {
+      "type": "number",
+      "title": "Total Records"
+    },
+    "breakdown_json": {
+      "type": "string",
+      "title": "Status Breakdown (JSON)"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Captured At"
+    }
+  },
+  "required": [
+    "module",
+    "snapshot_date"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
