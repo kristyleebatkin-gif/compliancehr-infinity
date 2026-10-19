@@ -98,6 +98,7 @@ export default async function(req) {
       .join('\n');
 
     const notificationsCreated = [];
+    const adminEmailsSent = [];
     if (!dryRun) {
       for (const admin of administrators) {
         await service.entities.Notification.create({
@@ -109,6 +110,17 @@ export default async function(req) {
           linked_entity_type: 'EmployeeDocument',
         });
         notificationsCreated.push(admin.email);
+        // Admin email digest so management can proactively renew certifications.
+        const result = await service.integrations.Core.SendEmail({
+          to: admin.email,
+          template_name: 'AdminDocExpiry',
+          variables: {
+            first_name: String(admin.full_name || '').split(' ')[0] || 'there',
+            item_count: String(due.length),
+            items_list: itemsList,
+          },
+        }).catch((error) => ({ error: error.message }));
+        if (!result.error) adminEmailsSent.push(admin.email);
       }
     }
 
@@ -145,6 +157,7 @@ export default async function(req) {
       due_items: due.length,
       diary_entries_created: dryRun ? 0 : due.length,
       notifications_created: notificationsCreated,
+      admin_emails_sent: adminEmailsSent,
       emails_sent: emailed,
       dry_run: dryRun,
     });
