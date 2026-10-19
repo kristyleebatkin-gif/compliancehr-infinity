@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
+import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import { UserRound, Save, CheckCircle2 } from 'lucide-react';
 
 const STAFF_FIELDS = [
@@ -134,8 +135,8 @@ export default function MyProfile() {
     <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
       <PageHeader
         icon={UserRound}
-        title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
-        subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
+        title={tab === 'our-staff' ? 'Our employee profiles' : tab === 'our-participants' ? 'Our participant profiles' : tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
+        subtitle={tab === 'our-staff' ? 'Every employee profile in the organisation, in one place.' : tab === 'our-participants' ? 'Every participant profile in the organisation, in one place.' : tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
         showAlerts={false} showCompliance={false} showAudit={false}
       />
 
@@ -146,6 +147,8 @@ export default function MyProfile() {
           <TabsTrigger value="work">My Work</TabsTrigger>
           <TabsTrigger value="documents">My Documents</TabsTrigger>
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
+          {me?.role === 'admin' && <TabsTrigger value="our-staff">Our employee profiles</TabsTrigger>}
+          {me?.role === 'admin' && <TabsTrigger value="our-participants">Our participant profiles</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="details" className="mt-4 space-y-6">
@@ -264,6 +267,18 @@ export default function MyProfile() {
         {!isParticipant && (
           <TabsContent value="name-tags" className="mt-4">
             <NameTags embedded />
+          </TabsContent>
+        )}
+
+        {me?.role === 'admin' && (
+          <TabsContent value="our-staff" className="mt-4">
+            <OurProfilesTab kind="staff" />
+          </TabsContent>
+        )}
+
+        {me?.role === 'admin' && (
+          <TabsContent value="our-participants" className="mt-4">
+            <OurProfilesTab kind="participant" />
           </TabsContent>
         )}
       </Tabs>
