@@ -21,6 +21,7 @@ import { fileReceiptToAssetRegister } from '@/lib/assetRegister';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ReceiptFilters, { filterReceipts } from '@/components/receipts/ReceiptFilters';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
@@ -112,6 +113,8 @@ export default function ReceiptHub() {
 
   const unrecTotal = receipts.filter((r) => r.status === 'Unreconciled').reduce((s, r) => s + (r.amount || 0), 0);
   const reimburseTotal = receipts.filter((r) => !r.reimbursed && r.reimburse_to).reduce((s, r) => s + (r.amount || 0), 0);
+  const [filters, setFilters] = useState({ q: '', status: 'All', minAmount: '', maxAmount: '', dateFrom: '', dateTo: '' });
+  const shownReceipts = filterReceipts(receipts, filters);
 
   return (
     <div className="space-y-6">
@@ -140,6 +143,8 @@ export default function ReceiptHub() {
 
       <RegisterInsights module="receipts" />
 
+      <ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />
+
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
@@ -157,7 +162,9 @@ export default function ReceiptHub() {
         <EmptyState icon={ReceiptIcon} modulePath="/receipts" title="No receipts logged yet" message="Scan or log your first receipt to start reconciling." />
       ) : (
         <div className="space-y-3">
-          {receipts.map((r) => (
+          {shownReceipts.length === 0 ? (
+            <EmptyState icon={ReceiptIcon} title="No receipts match these filters" message="Try widening your search or clearing the filters." />
+          ) : shownReceipts.map((r) => (
             <Card key={r.id}>
               <CardContent className="p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">

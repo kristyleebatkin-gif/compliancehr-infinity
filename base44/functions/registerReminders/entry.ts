@@ -17,7 +17,7 @@ const NOTE_TYPES = [
   'Quality Escalation', 'Invoice Overdue', 'Quote Expiry', 'Certificate Expiry',
   'Document Review', 'Asset Maintenance', 'Equipment Review', 'Event Reminder',
   'Meeting Action', 'Lead Follow-up', 'NDIS Deadline', 'Supplier Review',
-  'Compliance Checklist',
+  'Compliance Checklist', 'Consent Expiry',
 ];
 
 export default async function(req) {
@@ -39,7 +39,7 @@ export default async function(req) {
 
     const [
       qualityP, invoiceP, quoteP, certP, docsP, maintP, equipP, eventsP,
-      actionsP, leadsP, ndisP, suppliersP, checklistsP, usersP, entriesP, notifsP, taskP,
+      actionsP, leadsP, ndisP, suppliersP, checklistsP, consentsP, usersP, entriesP, notifsP, taskP,
     ] = await Promise.all([
       service.entities.QualityItem.filter({}, { limit: 500 }),
       service.entities.Invoice.filter({}, { limit: 500 }),
@@ -54,6 +54,7 @@ export default async function(req) {
       service.entities.NDISComplianceDeadline.filter({}, { limit: 500 }),
       service.entities.Supplier.filter({}, { limit: 500 }),
       service.entities.ComplianceChecklistEntry.filter({}, { limit: 1000 }),
+      service.entities.InformationSharingConsent.filter({}, { limit: 500 }),
       service.entities.User.list(),
       service.entities.CommunicationEntry.filter({ note_type: { $in: NOTE_TYPES } }, { limit: 1000 }),
       service.entities.Notification.filter({}, { limit: 1000 }),
@@ -227,6 +228,18 @@ export default async function(req) {
           date: r.c.next_due_date,
           subject: `Compliance task ${r.state.toLowerCase()}: ${r.c.title} (due ${pretty(r.c.next_due_date)})`,
           body: `Compliance checklist task "${r.c.title}" (${r.c.section || 'checklist'}) is ${r.state.toLowerCase()} (due ${pretty(r.c.next_due_date)}). Please complete or reschedule it.`,
+        })));
+
+    // 14. Information sharing consents — active consents expired or expiring within 30 days.
+    addGroup('Consent Expiry', 'Participants', 'Consent Due', 'Compliance Manager, Administration',
+      pageItems(consentsP)
+        .filter((c) => c.status === 'Active' && c.consent_end_date)
+        .map((c) => ({ c, state: c.consent_end_date < today ? 'Expired' : (c.consent_end_date <= horizon ? 'Expiring Soon' : null) }))
+        .filter((r) => r.state)
+        .map((r) => ({
+          date: r.c.consent_end_date,
+          subject: `Consent ${r.state.toLowerCase()}: ${r.c.participant_name} → ${r.c.recipient_name} (${pretty(r.c.consent_end_date)})`,
+          body: `Information sharing consent for ${r.c.participant_name} (authorised person: ${r.c.recipient_name}) ${r.state === 'Expired' ? 'expired' : 'expires'} ${pretty(r.c.consent_end_date)}. Please renew the consent or mark it withdrawn.`,
         })));
 
     if (groups.length === 0) {

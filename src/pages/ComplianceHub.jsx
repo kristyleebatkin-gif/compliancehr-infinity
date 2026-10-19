@@ -54,6 +54,7 @@ import AuditArchiveButton from '@/components/compliance/AuditArchiveButton';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
 import ControlEvidenceMap from '@/components/compliance/ControlEvidenceMap';
 import ComplianceIssuesTab from '@/components/compliance/ComplianceIssuesTab';
+import PolicyAcknowledgements from '@/components/compliance/PolicyAcknowledgements';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -195,6 +196,7 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="policies" className="mt-4 space-y-4">
+          <PolicyAcknowledgements policies={policies} />
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={() => exportPoliciesCsv(policies)}><Download className="mr-2 h-4 w-4" /> Export Register (CSV)</Button>
             <Dialog open={pOpen} onOpenChange={setPOpen}>
