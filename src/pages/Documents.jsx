@@ -23,6 +23,7 @@ import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLi
 import VaultUploads from '@/components/documents/VaultUploads';
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
+import BulkEditBar from '@/components/documents/BulkEditBar';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -50,6 +51,8 @@ export default function Documents() {
   const [editing, setEditing] = useState(null);
   const [scanning, setScanning] = useState(false);
   const [scanMsg, setScanMsg] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [applying, setApplying] = useState(false);
   const canManageAll = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
   const canEditDoc = (d) => canManageAll || (me?.role === 'Support Worker' && d.employee_name === me?.full_name);
 
@@ -105,6 +108,24 @@ export default function Documents() {
     if (!confirm('Delete this document?')) return;
     await base44.entities.EmployeeDocument.delete(doc.id);
     await load();
+  };
+
+  const toggleSelect = (id, checked) => {
+    setSelected((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
+  };
+
+  // Bulk status change: one update per selected record, applied in a single batch.
+  const bulkApply = async (status) => {
+    const targets = docs.filter((d) => selected.includes(d.id) && canEditDoc(d));
+    if (!targets.length) return;
+    setApplying(true);
+    try {
+      await base44.entities.EmployeeDocument.bulkUpdate(targets.map((t) => ({ id: t.id, status })));
+      setSelected([]);
+      await load();
+    } finally {
+      setApplying(false);
+    }
   };
 
   const viewDoc = async (doc) => {
@@ -190,6 +211,10 @@ export default function Documents() {
       ) : docs.length === 0 ? (
         <EmptyState icon={FolderOpen} modulePath="/documents" title="No documents on file yet" message="Upload or register your first document to start the vault." />
       ) : (
+        <>
+        {selected.length > 0 && (
+          <BulkEditBar count={selected.length} applying={applying} onApply={bulkApply} onClear={() => setSelected([])} />
+        )}
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {docs.map((d) => {
             const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
@@ -197,9 +222,19 @@ export default function Documents() {
             <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold">{d.title}</p>
-                    <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
+                  <div className="flex min-w-0 items-start gap-2.5">
+                    {canEditDoc(d) && (
+                      <input
+                        type="checkbox"
+                        className="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded border-border accent-[hsl(var(--primary))]"
+                        checked={selected.includes(d.id)}
+                        onChange={(e) => toggleSelect(d.id, e.target.checked)}
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold">{d.title}</p>
+                      <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
+                    </div>
                   </div>
                   <Badge className={expiryTone(d.expiry_date)}>{d.status}</Badge>
                 </div>
@@ -220,6 +255,7 @@ export default function Documents() {
             );
           })}
         </div>
+        </>
       )}
 
       <div className="flex items-center gap-2.5 pt-2">
