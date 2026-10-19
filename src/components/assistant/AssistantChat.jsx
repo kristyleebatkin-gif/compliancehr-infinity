@@ -5,7 +5,6 @@ import MessageBubble from './MessageBubble';
 import { ArrowLeft, Plus, SendHorizontal, Loader2, MessagesSquare } from 'lucide-react';
 import moment from 'moment';
 
-const FALLBACK_SUGGESTIONS = ['What needs my attention today?', 'Summarise recent activity', 'What is due this week?'];
 
 export default function AssistantChat({ agent, onBack }) {
   const [conversations, setConversations] = useState([]);
@@ -14,22 +13,10 @@ export default function AssistantChat({ agent, onBack }) {
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [loadingList, setLoadingList] = useState(true);
-  const [suggestions, setSuggestions] = useState(FALLBACK_SUGGESTIONS);
+  const suggestions = agent.suggestions || [];
   const scrollRef = useRef(null);
   const { toast } = useToast();
   const Icon = agent.icon;
-
-  // Generate the full suggestion list for this assistant and show all of it
-  useEffect(() => {
-    let cancelled = false;
-    base44.functions.invoke('assistantSuggestions', { agent_name: agent.name })
-      .then((res) => {
-        const questions = res?.data?.questions;
-        if (!cancelled && Array.isArray(questions) && questions.length > 0) setSuggestions(questions);
-      })
-      .catch((error) => console.error(error));
-    return () => { cancelled = true; };
-  }, [agent.name]);
 
   useEffect(() => {
     let cancelled = false;

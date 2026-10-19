@@ -4,10 +4,66 @@ import AssistantChat from '@/components/assistant/AssistantChat';
 import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot } from 'lucide-react';
 
 const AGENTS = [
-  { name: 'compliance_agent', label: 'Compliance Agent', tagline: 'Audits, policies, incidents, certificates and NDIS readiness, answered from live app data.', icon: ShieldCheck, from: '#6366f1', to: '#8b5cf6' },
-  { name: 'personal_assistant_agent', label: 'Personal Assistant', tagline: 'Everyday help: tasks, notes, reminders and quick answers.', icon: Sparkles, from: '#06b6d4', to: '#3b82f6' },
-  { name: 'receipt_finder_agent', label: 'Receipt Finder', tagline: 'Locate receipts, reconcile expenses and track purchases.', icon: ReceiptText, from: '#10b981', to: '#14b8a6' },
-  { name: 'roster_assistant_agent', label: 'Roster Assistant', tagline: 'Shift coverage, roster gaps and rostering questions.', icon: CalendarClock, from: '#f59e0b', to: '#f97316' },
+  {
+    name: 'compliance_agent', label: 'Compliance Agent', tagline: 'Audits, policies, incidents, certificates and NDIS readiness, answered from live app data.', icon: ShieldCheck, from: '#6366f1', to: '#8b5cf6',
+    suggestions: [
+      'How many open incidents do we have?',
+      'Are any NDIS deadlines overdue?',
+      'Which policies need updating?',
+      'What risks are currently active?',
+      'Is our staff training up to date?',
+      'Are any certificates expiring soon?',
+      'What complaints are unresolved?',
+      'Are there overdue improvement actions?',
+      'What did the last audit find?',
+      'Which investigations are still open?',
+    ],
+  },
+  {
+    name: 'personal_assistant_agent', label: 'Personal Assistant', tagline: 'Everyday help: tasks, notes, reminders and quick answers.', icon: Sparkles, from: '#06b6d4', to: '#3b82f6',
+    suggestions: [
+      'What tasks need my attention today?',
+      'How do I complete this compliance task?',
+      'What evidence should I upload here?',
+      'When is this task due?',
+      'What are my next steps?',
+      'How do I review this notification?',
+      'What documents are missing for compliance?',
+      'Who needs to sign off on this?',
+      'How do I track my pending tasks?',
+      'What follow-up actions should I take?',
+    ],
+  },
+  {
+    name: 'receipt_finder_agent', label: 'Receipt Finder', tagline: 'Locate receipts, reconcile expenses and track purchases.', icon: ReceiptText, from: '#10b981', to: '#14b8a6',
+    suggestions: [
+      'What receipts do we have from a supplier?',
+      'Which receipts were entered by a specific employee?',
+      'Find receipts for a specific participant.',
+      'What receipts were recorded on a date?',
+      'Find receipts matching a specific amount.',
+      'Look up a receipt by its number.',
+      'Find receipts by transaction reference.',
+      'Which receipts are unreconciled or pending?',
+      'Find receipts between two dates.',
+      'Find receipts near an approximate amount.',
+    ],
+  },
+  {
+    name: 'roster_assistant_agent', label: 'Roster Assistant', tagline: 'Shift coverage, roster gaps and rostering questions.', icon: CalendarClock, from: '#f59e0b', to: '#f97316',
+    suggestions: [
+      'Which shifts are unassigned this week?',
+      'Are there any double-booked shifts?',
+      'Which participants have missing shift details?',
+      'What shifts lack required instructions?',
+      'Which rosters have coverage gaps?',
+      'Can you compare this week to last week?',
+      'Which teams have unassigned roster slots?',
+      'Are any participants missing from the roster?',
+      'Which shifts have no participant matched?',
+      'What needs fixing before publishing the roster?',
+    ],
+  },
 ];
 
 export default function Assistant() {
