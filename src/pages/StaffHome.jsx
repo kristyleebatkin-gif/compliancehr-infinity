@@ -4,8 +4,9 @@ import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
+import ParticipantHome from '@/pages/ParticipantHome';
 import MyProfileDialog from '@/components/mywork/MyProfileDialog';
-import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap, Users } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap, Users, Megaphone, ReceiptText, Phone } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -28,6 +29,8 @@ export default function StaffHome() {
   const [trainings, setTrainings] = useState([]);
   const [goals, setGoals] = useState([]);
   const [myParticipants, setMyParticipants] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [receipts, setReceipts] = useState([]);
   const [profile, setProfile] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,7 +38,7 @@ export default function StaffHome() {
 
   const load = useCallback(async (user) => {
     try {
-      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, trainingPage, participantPage, profilePage] = await Promise.allSettled([
+      const [taskPage, incidentPage, riskPage, issuePage, feedbackPage, trainingPage, participantPage, profilePage, contactPage, receiptPage] = await Promise.allSettled([
         base44.entities.TodoTask.filter(
           { archived: { $ne: true }, $or: [{ assigned_to: user.full_name }, { assigned_email: user.email }] },
           { sort: 'due_date', limit: 200 }
@@ -50,6 +53,8 @@ export default function StaffHome() {
         ),
         base44.entities.ParticipantProfile.filter({ support_team: user.full_name }, { sort: 'full_name', limit: 20 }),
         base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
+        base44.entities.KeyBusinessContact.filter({ archived: { $ne: true } }, { sort: 'slot_number', limit: 10 }),
+        base44.entities.Receipt.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
       ]);
       if (taskPage.status === 'fulfilled') setTasks(taskPage.value.items || []);
       if (incidentPage.status === 'fulfilled') setIncidents(incidentPage.value.items || []);
@@ -58,6 +63,8 @@ export default function StaffHome() {
       if (feedbackPage.status === 'fulfilled') setFeedbacks(feedbackPage.value.items || []);
       if (trainingPage.status === 'fulfilled') setTrainings(trainingPage.value.items || []);
       if (participantPage.status === 'fulfilled') setMyParticipants(participantPage.value.items || []);
+      if (contactPage.status === 'fulfilled') setContacts(contactPage.value.items || []);
+      if (receiptPage.status === 'fulfilled') setReceipts(receiptPage.value.items || []);
       const prof = profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null;
       setProfile(prof);
       // Participant goals for the participants this staff member supports
@@ -75,6 +82,9 @@ export default function StaffHome() {
   useEffect(() => {
     base44.auth.me().then((user) => { setMe(user); return load(user); }).catch(() => setLoading(false));
   }, [load]);
+
+  // Participants get their own personal dashboard at the same My Work address.
+  if (me && me.role === 'Participant') return <ParticipantHome me={me} />;
 
   const openTasks = tasks.filter((t) => t.status !== 'Completed' && t.status !== 'Cancelled');
   const dueToday = openTasks.filter((t) => t.due_date === today());
@@ -266,6 +276,64 @@ export default function StaffHome() {
                 </div>
               );
             })}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Key contacts</h2>
+          <Link to="/contacts" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Contacts module<ArrowRight className="h-3 w-3" /></Link>
+        </div>
+        {contacts.length === 0 ? (
+          <EmptyState icon={Users} title="No contacts yet" message="Key personnel contacts will appear here." />
+        ) : (
+          <div className="space-y-2">
+            {contacts.map((c) => (
+              <div key={c.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+                <Users className="h-5 w-5 shrink-0 text-brand" />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{c.full_name}</div>
+                  <div className="truncate text-xs text-foreground/50">{c.role_title || ''}{c.email ? ` · ${c.email}` : ''}</div>
+                </div>
+                {c.phone && <a href={`tel:${c.phone}`} className="shrink-0 rounded-lg border border-border p-2 text-brand hover:bg-muted" title={`Call ${c.full_name}`}><Phone className="h-4 w-4" /></a>}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <Link to="/communications" className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5 hover:bg-muted/30">
+        <Megaphone className="h-5 w-5 shrink-0 text-brand" />
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-medium">Communication Centre</div>
+          <div className="text-xs text-foreground/50">Diary, inbox, professional email, broadcasts and team feeds.</div>
+        </div>
+        <ArrowRight className="h-4 w-4 shrink-0 text-foreground/30" />
+      </Link>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My receipts</h2>
+          <Link to="/receipts" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Receipt Hub<ArrowRight className="h-3 w-3" /></Link>
+        </div>
+        {receipts.length === 0 ? (
+          <EmptyState icon={ReceiptText} title="No receipts yet" message="Receipts you submit for reimbursement will appear here with their status." />
+        ) : (
+          <div className="space-y-2">
+            {receipts.map((r) => (
+              <div key={r.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+                <ReceiptText className={`h-5 w-5 shrink-0 ${r.reimbursed ? 'text-safe' : 'text-warning'}`} />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{r.description}</div>
+                  <div className="text-xs text-foreground/50">{r.merchant || ''}{r.date ? ` · ${fmt(r.date)}` : ''}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-semibold tabular-nums">${(r.amount || 0).toFixed(2)}</div>
+                  <div className="text-xs text-foreground/50">{r.reimbursed ? 'Reimbursed' : 'Awaiting reimbursement'}</div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </section>
