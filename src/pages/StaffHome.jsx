@@ -4,7 +4,8 @@ import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
-import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2 } from 'lucide-react';
+import MyProfileDialog from '@/components/mywork/MyProfileDialog';
+import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -21,20 +22,30 @@ export default function StaffHome() {
   const [me, setMe] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [incidents, setIncidents] = useState([]);
+  const [risks, setRisks] = useState([]);
+  const [issues, setIssues] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState(null);
 
   const load = useCallback(async (user) => {
     try {
-      const [taskPage, incidentPage] = await Promise.allSettled([
+      const [taskPage, incidentPage, riskPage, issuePage, profilePage] = await Promise.allSettled([
         base44.entities.TodoTask.filter(
           { archived: { $ne: true }, $or: [{ assigned_to: user.full_name }, { assigned_email: user.email }] },
           { sort: 'due_date', limit: 200 }
         ),
         base44.entities.Incident.filter({ reported_by: user.full_name }, { sort: '-created_date', limit: 10 }),
+        base44.entities.Risk.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
+        base44.entities.IssueConcernBarrier.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 10 }),
+        base44.entities.StaffProfile.filter({ email: user.email }, { limit: 1 }),
       ]);
       if (taskPage.status === 'fulfilled') setTasks(taskPage.value.items || []);
       if (incidentPage.status === 'fulfilled') setIncidents(incidentPage.value.items || []);
+      if (riskPage.status === 'fulfilled') setRisks(riskPage.value.items || []);
+      if (issuePage.status === 'fulfilled') setIssues(issuePage.value.items || []);
+      if (profilePage.status === 'fulfilled') setProfile((profilePage.value.items || [])[0] || null);
     } catch (e) { console.error(e); }
     setLoading(false);
   }, []);
@@ -63,8 +74,14 @@ export default function StaffHome() {
     <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
       <PageHeader
         title={firstName ? `Hi ${firstName}` : 'My Work'}
-        subtitle="Your personal view: the tasks assigned to you and your incident reports."
-        action={<Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>}
+        subtitle="Your personal view: your tasks, your incident, risk and issue reports, and your profile."
+        action={
+          <div className="flex flex-wrap gap-2">
+            <Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>
+            <Link to="/risks/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><ShieldAlert className="h-4 w-4" />Report a Risk</Link>
+            <Link to="/issues/submit" className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted"><MessageSquareWarning className="h-4 w-4" />Report an Issue</Link>
+          </div>
+        }
       />
 
       <div className="grid grid-cols-3 gap-3">
@@ -129,6 +146,74 @@ export default function StaffHome() {
         )}
       </section>
 
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My risks</h2>
+          <Link to="/risks/submit" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Submit new<Plus className="h-3 w-3" /></Link>
+        </div>
+        {risks.length === 0 ? (
+          <EmptyState icon={ShieldAlert} title="No risks reported" message="When you report a risk, hazard or near miss it will appear here with its status." />
+        ) : (
+          <div className="space-y-2">
+            {risks.map((r) => (
+              <Link key={r.id} to="/risks" className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5 hover:bg-muted/30">
+                <ShieldAlert className={`h-5 w-5 shrink-0 ${r.rating === 'Critical' || r.rating === 'High' ? 'text-danger' : 'text-warning'}`} />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{r.title}</div>
+                  <div className="text-xs text-foreground/50">{r.risk_id || ''}{r.identified_date ? ` · ${fmt(r.identified_date)}` : ''}{r.report_type ? ` · ${r.report_type}` : ''}</div>
+                </div>
+                <StatusPill status={r.status} />
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My issues &amp; concerns</h2>
+          <Link to="/issues/submit" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Submit new<Plus className="h-3 w-3" /></Link>
+        </div>
+        {issues.length === 0 ? (
+          <EmptyState icon={MessageSquareWarning} title="No issues raised" message="When you raise an issue, concern or barrier it will appear here with management's follow-up." />
+        ) : (
+          <div className="space-y-2">
+            {issues.map((i) => (
+              <div key={i.id} className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+                <MessageSquareWarning className="mt-0.5 h-5 w-5 shrink-0 text-teal" />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{i.issue}</div>
+                  <div className="text-xs text-foreground/50">{i.date ? fmt(i.date) : ''}{i.potential_solution ? ' · Your suggestion recorded' : ''}{i.management_follow_up ? ' · Management follow-up received' : ''}</div>
+                  {i.management_follow_up && <div className="mt-1 text-xs text-foreground/60"><span className="font-medium">Follow-up:</span> {i.management_follow_up}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">My profile</h2>
+          <button onClick={() => setShowProfile(true)} className="flex items-center gap-1 text-xs font-medium text-brand hover:underline"><Pencil className="h-3 w-3" />View &amp; edit</button>
+        </div>
+        <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
+          <UserRound className="h-5 w-5 shrink-0 text-brand" />
+          {profile ? (
+            <div className="min-w-0 flex-1 cursor-pointer" onClick={() => setShowProfile(true)} title="Click to view & edit">
+              <div className="text-sm font-medium">{profile.full_name}</div>
+              <div className="truncate text-xs text-foreground/50">{profile.email}{profile.phone ? ` · ${profile.phone}` : ''}{profile.position ? ` · ${profile.position}` : ''}</div>
+            </div>
+          ) : (
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-medium">Profile not set up yet</div>
+              <div className="text-xs text-foreground/50">Ask HR to create your staff profile, then you can update it here.</div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <MyProfileDialog profile={profile} open={showProfile} onClose={() => setShowProfile(false)} onSaved={() => me && load(me)} />
       <TaskEditDialog task={editingTask} open={!!editingTask} onClose={() => setEditingTask(null)} onSaved={() => me && load(me)} />
     </div>
   );
