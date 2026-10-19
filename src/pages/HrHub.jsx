@@ -12,6 +12,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
 import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
+import HrTemplatesLibrary from '@/components/hr/HrTemplatesLibrary';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -124,6 +125,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {isManager && <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>}
           {isManager && <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>}
           {isManager && <TabsTrigger value="file-completeness">File completeness</TabsTrigger>}
+          {isManager && <TabsTrigger value="templates">Templates library</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
@@ -234,6 +236,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
         {isManager && <TabsContent value="performance" className="mt-4"><AppraisalComplianceDashboard /></TabsContent>}
         {isManager && <TabsContent value="paperwork" className="mt-4"><HrPaperworkPanel /></TabsContent>}
         {isManager && <TabsContent value="file-completeness" className="mt-4"><StaffFileCompletenessWidget /></TabsContent>}
+        {isManager && <TabsContent value="templates" className="mt-4"><HrTemplatesLibrary /></TabsContent>}
       </Tabs>
     </div>
   );

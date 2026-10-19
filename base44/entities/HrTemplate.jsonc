@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "name": "HrTemplate",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Template Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Letter",
+        "Form",
+        "Contract",
+        "Notice",
+        "Other"
+      ],
+      "default": "Letter"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "content": {
+      "type": "string",
+      "title": "Template Content"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "content"
+  ]
+}
