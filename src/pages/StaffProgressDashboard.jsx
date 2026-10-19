@@ -116,6 +116,12 @@ export default function StaffProgressDashboard() {
             ))}
           </div>
 
+          <ProgressChart
+            title="Overall summary — intake + compliance tasks"
+            pendingLabel="Pending"
+            data={rows.map((r) => ({ name: r.name, completed: r.intakeCompleted + r.tasksCompleted, pending: r.intakePending + r.tasksPending }))}
+          />
+
           <div className="grid gap-5 lg:grid-cols-2">
             <ProgressChart
               title="Intake forms"
