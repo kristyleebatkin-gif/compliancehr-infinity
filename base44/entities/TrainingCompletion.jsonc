@@ -92,51 +92,6 @@
     "module_title"
   ],
   "rls": {
-    "read": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "data.employee_name": "{{user.full_name}}"
-        },
-        {
-          "data.learner_name": "{{user.full_name}}"
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Auditor"
-              }
-            },
-            {
-              "data.audit_consent": "Audit consent received"
-            }
-          ]
-        }
-      ]
-    },
     "create": {
       "$or": [
         {
@@ -168,6 +123,45 @@
           "user_condition": {
             "role": "Participant"
           }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
         }
       ]
     },

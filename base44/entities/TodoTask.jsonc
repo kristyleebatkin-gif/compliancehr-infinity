@@ -283,13 +283,7 @@
           }
         },
         {
-          "data.responsible": "{{user.full_name}}"
-        },
-        {
           "data.responsible_emails": "{{user.email}}"
-        },
-        {
-          "data.assigned_to": "{{user.full_name}}"
         },
         {
           "data.assigned_email": "{{user.email}}"
@@ -362,13 +356,7 @@
           }
         },
         {
-          "data.responsible": "{{user.full_name}}"
-        },
-        {
           "data.responsible_emails": "{{user.email}}"
-        },
-        {
-          "data.assigned_to": "{{user.full_name}}"
         },
         {
           "data.assigned_email": "{{user.email}}"

@@ -164,6 +164,35 @@
     "date"
   ],
   "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Rostering Coordinator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
     "read": {
       "$or": [
         {
@@ -200,62 +229,6 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Support Worker"
-              }
-            },
-            {
-              "data.employee_name": "{{user.full_name}}"
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Participant"
-              }
-            },
-            {
-              "data.participant_name": "{{user.full_name}}"
-            }
-          ]
-        },
-        {
-          "data.participant_name": "{{user.full_name}}"
-        }
-      ]
-    },
-    "create": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Rostering Coordinator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
         }
       ]
     },
@@ -285,18 +258,6 @@
           "user_condition": {
             "role": "Administration"
           }
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Support Worker"
-              }
-            },
-            {
-              "data.employee_name": "{{user.full_name}}"
-            }
-          ]
         }
       ]
     },

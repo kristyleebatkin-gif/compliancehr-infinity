@@ -45,6 +45,35 @@
     "goal_id"
   ],
   "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        }
+      ]
+    },
     "read": {
       "$or": [
         {
@@ -80,47 +109,6 @@
         {
           "user_condition": {
             "role": "Auditor"
-          }
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Participant"
-              }
-            },
-            {
-              "data.participant_name": "{{user.full_name}}"
-            }
-          ]
-        }
-      ]
-    },
-    "create": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
           }
         }
       ]

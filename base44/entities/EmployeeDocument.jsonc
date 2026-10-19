@@ -71,6 +71,38 @@
     "title"
   ],
   "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
     "read": {
       "$or": [
         {
@@ -104,41 +136,6 @@
           }
         },
         {
-          "data.employee_name": "{{user.full_name}}"
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        }
-      ]
-    },
-    "create": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
           "created_by_id": "{{user.id}}"
         }
       ]
@@ -166,9 +163,6 @@
           }
         },
         {
-          "data.employee_name": "{{user.full_name}}"
-        },
-        {
           "created_by_id": "{{user.id}}"
         }
       ]
@@ -189,9 +183,6 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
-        },
-        {
-          "data.employee_name": "{{user.full_name}}"
         },
         {
           "created_by_id": "{{user.id}}"

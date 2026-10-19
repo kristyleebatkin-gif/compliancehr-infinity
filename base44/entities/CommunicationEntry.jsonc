@@ -150,66 +150,6 @@
     "entry_kind"
   ],
   "rls": {
-    "read": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "data.sender_email": "{{user.email}}"
-        },
-        {
-          "data.staff_involved": "{{user.full_name}}"
-        },
-        {
-          "data.person_name": "{{user.full_name}}"
-        },
-        {
-          "data.entry_kind": {
-            "$in": [
-              "Broadcast",
-              "Team Banter",
-              "Video Call"
-            ]
-          }
-        }
-      ]
-    },
     "create": {
       "$or": [
         {
@@ -265,6 +205,60 @@
         {
           "user_condition": {
             "role": "Participant"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        },
+        {
+          "data.entry_kind": {
+            "$in": [
+              "Broadcast",
+              "Team Banter",
+              "Video Call"
+            ]
           }
         }
       ]

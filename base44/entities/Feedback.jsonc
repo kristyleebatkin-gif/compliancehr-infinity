@@ -162,9 +162,6 @@
         },
         {
           "created_by_id": "{{user.id}}"
-        },
-        {
-          "data.submitted_by": "{{user.full_name}}"
         }
       ]
     },

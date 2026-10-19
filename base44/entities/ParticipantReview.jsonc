@@ -127,18 +127,6 @@
           "$and": [
             {
               "user_condition": {
-                "role": "Participant"
-              }
-            },
-            {
-              "data.participant_name": "{{user.full_name}}"
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
                 "role": "Auditor"
               }
             },
