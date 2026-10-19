@@ -234,6 +234,18 @@
           }
         },
         {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "data.status": "Active"
+            }
+          ]
+        },
+        {
           "data.support_staff": "{{user.full_name}}"
         },
         {
