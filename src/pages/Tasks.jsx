@@ -8,6 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
 import TaskProgressChart from '@/components/tasks/TaskProgressChart';
 import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
+import TaskCalendar from '@/components/tasks/TaskCalendar';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TodoBoard from '@/components/communications/TodoBoard';
@@ -34,6 +35,7 @@ export default function Tasks() {
   const [running, setRunning] = useState(false);
   const [sending, setSending] = useState(null);
   const [focusIdx, setFocusIdx] = useState(-1);
+  const [view, setView] = useState('list');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -190,51 +192,62 @@ export default function Tasks() {
 
       <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
 
-      <div className="flex items-center gap-1 overflow-x-auto">
-        {['All', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
-          <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
-        ))}
-        <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>
-        <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pl-3 text-xs font-medium text-foreground/60">
-          <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} className="h-4 w-4" />
-          Select all
-        </label>
+      <div className="flex items-center justify-end gap-1.5">
+        <button onClick={() => setView('list')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'list' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>List</button>
+        <button onClick={() => setView('calendar')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'calendar' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>Calendar</button>
       </div>
 
-      {loading ? (
-        <div className="py-12 text-center text-sm text-foreground/40">Loading...</div>
-      ) : filtered.length === 0 ? (
-        <EmptyState icon={ListTodo} title="No tasks" message="Create tasks to track compliance actions." />
+      {view === 'calendar' ? (
+        <TaskCalendar tasks={list} onOpen={openEdit} />
       ) : (
-        <div className="space-y-2">
-          {filtered.map((t, idx) => (
-            <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
-              <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
-              <button onClick={() => toggle(t)} className="shrink-0">
-                {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}
-              </button>
-              <div className="min-w-0 flex-1">
-                <div className={`text-sm font-medium ${t.status === 'Completed' ? 'line-through text-foreground/40' : ''}`}>{t.title}</div>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/50">
-                  <span className={`rounded-full px-2 py-0.5 font-medium ${t.priority === 'Urgent' || t.priority === 'High' ? 'bg-danger/10 text-danger' : 'bg-muted text-foreground/60'}`}>{t.priority}</span>
-                  <span>{t.task_type}</span>
-                  {t.assigned_to && <span>• {t.assigned_to}</span>}
-                  {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{format(new Date(t.due_date), 'EEE d MMM yyyy')}</span>}
-                  {t.completed_date && t.status === 'Completed' && <span>• completed {format(new Date(t.completed_date), 'd MMM yyyy')}</span>}
+        <>
+          <div className="flex items-center gap-1 overflow-x-auto">
+            {['All', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
+              <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
+            ))}
+            <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>
+            <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pl-3 text-xs font-medium text-foreground/60">
+              <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} className="h-4 w-4" />
+              Select all
+            </label>
+          </div>
+
+          {loading ? (
+            <div className="py-12 text-center text-sm text-foreground/40">Loading...</div>
+          ) : filtered.length === 0 ? (
+            <EmptyState icon={ListTodo} title="No tasks" message="Create tasks to track compliance actions." />
+          ) : (
+            <div className="space-y-2">
+              {filtered.map((t, idx) => (
+                <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
+                  <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
+                  <button onClick={() => toggle(t)} className="shrink-0">
+                    {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}
+                  </button>
+                  <div className="min-w-0 flex-1">
+                    <div className={`text-sm font-medium ${t.status === 'Completed' ? 'line-through text-foreground/40' : ''}`}>{t.title}</div>
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/50">
+                      <span className={`rounded-full px-2 py-0.5 font-medium ${t.priority === 'Urgent' || t.priority === 'High' ? 'bg-danger/10 text-danger' : 'bg-muted text-foreground/60'}`}>{t.priority}</span>
+                      <span>{t.task_type}</span>
+                      {t.assigned_to && <span>• {t.assigned_to}</span>}
+                      {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{format(new Date(t.due_date), 'EEE d MMM yyyy')}</span>}
+                      {t.completed_date && t.status === 'Completed' && <span>• completed {format(new Date(t.completed_date), 'd MMM yyyy')}</span>}
+                    </div>
+                  </div>
+                  <select value={t.status} onChange={(e) => setStatus(t, e.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">
+                    {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  <div className="flex gap-1">
+                    <button onClick={() => setSending(t)} title="Send / alert assignee" className="rounded p-1.5 hover:bg-brand/10"><Mail className="h-4 w-4 text-foreground/50" /></button>
+                    <button onClick={() => alertAssignee(t)} title="Send in-app alert" className="rounded p-1.5 hover:bg-brand/10"><Bell className="h-4 w-4 text-foreground/50" /></button>
+                    <button onClick={() => openEdit(t)} aria-label="Edit task" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
+                    <button onClick={() => remove(t)} aria-label="Delete task" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
+                  </div>
                 </div>
-              </div>
-              <select value={t.status} onChange={(e) => setStatus(t, e.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">
-                {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-              <div className="flex gap-1">
-                <button onClick={() => setSending(t)} title="Send / alert assignee" className="rounded p-1.5 hover:bg-brand/10"><Mail className="h-4 w-4 text-foreground/50" /></button>
-                <button onClick={() => alertAssignee(t)} title="Send in-app alert" className="rounded p-1.5 hover:bg-brand/10"><Bell className="h-4 w-4 text-foreground/50" /></button>
-                <button onClick={() => openEdit(t)} aria-label="Edit task" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
-                <button onClick={() => remove(t)} aria-label="Delete task" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
 
       {selected.length > 0 && (
