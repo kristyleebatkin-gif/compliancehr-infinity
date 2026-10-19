@@ -51,7 +51,7 @@ const APP_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Adm
 
 export default function StaffAccessTab({ staff, onUpdated }) {
   const { toast } = useToast();
-  const { user } = useRole();
+  const { user, isAdmin } = useRole();
   const [username, setUsername] = useState(staff.username || '');
   const [appRole, setAppRole] = useState(staff.app_role || 'user');
   const [saving, setSaving] = useState(false);
@@ -102,18 +102,32 @@ export default function StaffAccessTab({ staff, onUpdated }) {
     <div className="space-y-6">
       <div className="rounded-2xl border border-border/60 bg-card p-5">
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold"><KeyRound className="h-4 w-4 text-brand" />Username &amp; login</div>
-        <div className="grid gap-3 md:grid-cols-2">
-          <div className="grid gap-1.5"><Label>Username</Label><Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="e.g. j.smith" /></div>
-          <div className="grid gap-1.5"><Label>App role (permission level)</Label>
-            <select value={appRole} onChange={(e) => setAppRole(e.target.value)} className="h-9 rounded-md border border-input bg-background px-3 text-sm">
-              {APP_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-            </select>
-          </div>
-        </div>
-        <p className="mt-3 text-xs text-muted-foreground">Passwords are managed securely by the platform: users are invited from App Users and set or reset their own password from the login page. Passwords are never stored on the profile.</p>
-        <div className="mt-3 flex justify-end">
-          <Button onClick={saveAccess} disabled={saving}>{saving && <Loader2 className="h-4 w-4 animate-spin" />}Save access settings</Button>
-        </div>
+        {isAdmin ? (
+          <>
+            <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-1.5"><Label>Username</Label><Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="e.g. j.smith" /></div>
+              <div className="grid gap-1.5"><Label>App role (permission level)</Label>
+                <select value={appRole} onChange={(e) => setAppRole(e.target.value)} className="h-9 rounded-md border border-input bg-background px-3 text-sm">
+                  {APP_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
+                </select>
+              </div>
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground">Passwords are managed securely by the platform: users are invited from App Users and set or reset their own password from the login page. Passwords are never stored on the profile.</p>
+            <div className="mt-3 flex justify-end">
+              <Button onClick={saveAccess} disabled={saving}>{saving && <Loader2 className="h-4 w-4 animate-spin" />}Save access settings</Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="font-medium text-muted-foreground">Username:</span>
+              <Badge variant="outline">{staff.username || 'Not set'}</Badge>
+              <span className="font-medium text-muted-foreground">App role:</span>
+              <Badge className={statusTone('Current')}>{appRole}</Badge>
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground">Only administrators can change access and permissions.</p>
+          </>
+        )}
       </div>
 
       <div className="rounded-2xl border border-border/60 bg-card p-5">

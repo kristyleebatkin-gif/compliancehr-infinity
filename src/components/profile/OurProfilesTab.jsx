@@ -129,11 +129,16 @@ export default function OurProfilesTab({ kind }) {
                               <div className="truncate text-sm font-semibold font-editorial">{r.full_name}</div>
                               <Badge className={`shrink-0 ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
                             </div>
-                            <div className="mt-0.5 truncate text-xs font-medium text-foreground/60">
-                              {isParticipant ? (r.support_type || r.ndis_number || 'Participant') : (r.position || r.role || 'Employee')}
+                            <div className="mt-1.5 flex flex-wrap gap-1">
+                              {isParticipant
+                                ? (r.support_type && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.support_type}</span>)
+                                : ((r.position || r.role) && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.position || r.role}</span>)}
+                              {isParticipant
+                                ? (r.ndis_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">NDIS {r.ndis_number}</span>)
+                                : (r.employee_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">ID {r.employee_number}</span>)}
+                              {isParticipant && r.ndis_reference_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">Ref {r.ndis_reference_number}</span>}
                             </div>
                             <div className="mt-2 space-y-0.5 text-xs text-foreground/50">
-                              {isParticipant && r.ndis_reference_number && <div className="truncate font-medium text-foreground/60">NDIS ref {r.ndis_reference_number}</div>}
                               {r.email && <div className="flex items-center gap-1.5 truncate"><Mail className="h-3 w-3 shrink-0" />{r.email}</div>}
                               {r.phone && <div className="flex items-center gap-1.5 truncate"><Phone className="h-3 w-3 shrink-0" />{r.phone}</div>}
                             </div>

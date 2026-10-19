@@ -33,11 +33,11 @@ export default function PortalInviteButton({ kind, profile }) {
   const [role, setRole] = useState('Support Worker');
   const [busy, setBusy] = useState(false);
 
-  if (!isAdmin || !profile) return null;
+  if (!isAdmin) return null;
 
   const openDialog = () => {
-    setEmail(profile.email || '');
-    setRole(kind === 'participant' ? 'Participant' : (STAFF_APP_ROLES.includes(profile.app_role) ? profile.app_role : 'Support Worker'));
+    setEmail(profile?.email || '');
+    setRole(kind === 'participant' ? 'Participant' : (profile?.app_role && STAFF_APP_ROLES.includes(profile.app_role) ? profile.app_role : 'Support Worker'));
     setOpen(true);
   };
 
@@ -65,14 +65,16 @@ export default function PortalInviteButton({ kind, profile }) {
     <>
       <Button variant="outline" onClick={openDialog}>
         <UserPlus className="h-4 w-4" />
-        Invite to portal
+        {profile ? 'Invite to portal' : kind === 'participant' ? 'Invite participant' : 'Invite employee'}
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Invite to the portal</DialogTitle>
             <DialogDescription>
-              {profile.full_name} gets an email with a link to set a password. After signing in, they will only see their own profile and data.
+              {profile
+                ? `${profile.full_name} gets an email with a link to set a password. After signing in, they will only see their own profile and data.`
+                : 'They get an email with a link to set a password. After signing in, they will only see their own profile and data.'}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">

@@ -79,7 +79,23 @@
     },
     "username": {
       "type": "string",
-      "title": "Username"
+      "title": "Username",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "app_role": {
       "type": "string",
@@ -101,7 +117,23 @@
         "Volunteer"
       ],
       "default": "user",
-      "title": "App Role (Permissions)"
+      "title": "App Role (Permissions)",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "profile_photo_uri": {
       "type": "string",
