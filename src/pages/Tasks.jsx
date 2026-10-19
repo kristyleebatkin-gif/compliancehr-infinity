@@ -241,10 +241,12 @@ export default function Tasks() {
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">
           <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{selected.length} selected</span>
           <button onClick={bulkArchive} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold hover:bg-muted"><Archive className="h-4 w-4" />Archive</button>
-          <select value="" onChange={(e) => bulkStatus(e.target.value)} className="h-9 rounded-lg border border-border bg-card px-2.5 text-sm font-medium">
-            <option value="">Move to status…</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
+          <span className="text-xs font-medium text-foreground/40">Move to:</span>
+          <div className="flex flex-wrap gap-1.5">
+            {STATUSES.map((s) => (
+              <button key={s} onClick={() => bulkStatus(s)} className="rounded-lg border border-brand/40 bg-brand/5 px-3 py-2 text-sm font-semibold text-brand hover:bg-brand/15">{s}</button>
+            ))}
+          </div>
           <button onClick={() => setSelected([])} className="ml-auto flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-foreground/60 hover:bg-muted"><X className="h-4 w-4" />Clear</button>
         </div>
       )}
