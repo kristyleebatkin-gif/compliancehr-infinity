@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { statusTone } from '@/lib/statusStyles';
+import StaffTemplateGenerator from '@/components/staff/StaffTemplateGenerator';
 
-export default function StaffHrTab({ staff }) {
+export default function StaffHrTab({ staff, me }) {
   const [leave, setLeave] = useState([]);
   const [appraisals, setAppraisals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,7 @@ export default function StaffHrTab({ staff }) {
 
   return (
     <div className="space-y-6">
+      <StaffTemplateGenerator staff={staff} me={me} />
       <div>
         <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-foreground/60">Leave Requests</h3>
         {leave.length === 0 ? (
