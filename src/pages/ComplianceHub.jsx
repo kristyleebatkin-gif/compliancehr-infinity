@@ -62,6 +62,7 @@ import PolicyAcknowledgements from '@/components/compliance/PolicyAcknowledgemen
 import InternalAuditRegister from '@/components/compliance/InternalAuditRegister';
 import ParticipantReviewRegister from '@/components/compliance/ParticipantReviewRegister';
 import ConsentRegister from '@/components/compliance/ConsentRegister';
+import CertificationCalendar from '@/components/compliance/CertificationCalendar';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -197,6 +198,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="participant-reviews">Participant Reviews</TabsTrigger>
           <TabsTrigger value="consents">Consent Register</TabsTrigger>
           <TabsTrigger value="form-templates">Form Templates</TabsTrigger>
+          <TabsTrigger value="cert-renewals">Certification Renewals</TabsTrigger>
         </TabsList>
 
         <TabsContent value="issues" className="mt-4">
@@ -414,6 +416,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="checklists" className="mt-4">
           <Checklists />
+        </TabsContent>
+
+        <TabsContent value="cert-renewals" className="mt-4">
+          <CertificationCalendar />
         </TabsContent>
       </Tabs>
 
