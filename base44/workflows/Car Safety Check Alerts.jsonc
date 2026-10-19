@@ -1,0 +1,45 @@
+{
+  "name": "Car Safety Check Alerts",
+  "description": "Every 5 minutes: sends the assigned support worker a car safety check prompt 5 minutes before their scheduled shift, once per shift.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "*/5 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "car_safety_check_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_car_safety_checks": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "carSafetyCheckAlert",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send car safety checks",
+            "description": "5-minute pre-shift safety prompt"
+          }
+        }
+      }
+    ]
+  }
+}

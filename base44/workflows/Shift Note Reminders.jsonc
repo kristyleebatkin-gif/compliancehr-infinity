@@ -1,0 +1,45 @@
+{
+  "name": "Shift Note Reminders",
+  "description": "Daily at 7pm: emails each support worker whose completed shift still has no shift note, every day until the note is recorded.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 19 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "shift_note_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "remind_missing_notes": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "shiftNoteReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sweep overdue shift notes",
+            "description": "Daily reminder for completed shifts without a note"
+          }
+        }
+      }
+    ]
+  }
+}

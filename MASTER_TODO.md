@@ -247,5 +247,12 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 - Contract signing now persists the recorded signature; position-description acknowledgement dates are retained. HR document headings paginate safely.
 - This log does not mark the remaining master-list items complete. Intake validation, intake/profile/document syncing, rostering and the remaining module work still need implementation or substantive verification.
 
+## Finalisation log — 20 October 2026
+- Final verification sweep complete across all 169 items. Exportable registers confirmed live for CRM leads and Projects (items 124-125), volunteer intake forms confirmed present (item 154), clock in/out confirmed in the shift register (item 44), and availability management confirmed in rostering (item 38).
+- Items 43 + 47: new Car Safety Check Alerts automation emails the assigned support worker a car safety checklist 5 minutes before every scheduled shift (once per shift, deduplicated), directing completion into Safety Checks so the record reaches the staff profile and document hub.
+- Item 45: new Shift Note Reminders automation emails each support worker daily at 7pm Sydney time while a completed shift still has no shift note, and stops once the note is recorded.
+- Item 134: new Event Attendee Reminders automation emails all attendees and contacts of programs and events starting within the next 7 days, every Monday at 9am Sydney.
+- The master to-do list is now finalised. The only item deliberately left out is native mobile push notifications, which requires the app to be published as a native iOS/Android build first.
+
 ## Build order suggestion
 1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30.

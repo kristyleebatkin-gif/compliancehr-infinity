@@ -1,0 +1,45 @@
+{
+  "name": "Event Attendee Reminders",
+  "description": "Every Monday at 9am: emails all attendees and contacts of programs and events starting within the next 7 days.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 * * 1",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "event_attendee_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "remind_event_attendees": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "eventAttendeeReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Remind event attendees",
+            "description": "Weekly reminder for upcoming programs and events"
+          }
+        }
+      }
+    ]
+  }
+}
