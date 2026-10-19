@@ -76,6 +76,8 @@ import SuggestionsHub from '@/pages/SuggestionsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import MyProfile from '@/pages/MyProfile';
+import MyDocuments from '@/pages/MyDocuments';
+import NameTags from '@/pages/NameTags';
 import Landing from '@/pages/Landing';
 import PublicComplaint from '@/pages/PublicComplaint';
 import PublicVolunteer from '@/pages/PublicVolunteer';
@@ -119,6 +121,8 @@ const AuthenticatedApp = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-work" element={<StaffHome />} />
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/my-documents" element={<MyDocuments />} />
+          <Route path="/name-tags" element={<RoleGate navKey="name-tags"><NameTags /></RoleGate>} />
           <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
           <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />

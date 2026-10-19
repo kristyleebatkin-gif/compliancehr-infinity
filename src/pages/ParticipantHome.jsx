@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import {
   UserRound, CalendarClock, Target, AlertTriangle, ShieldAlert, MessageSquareWarning,
-  ThumbsUp, FolderOpen, Users, Siren, ArrowRight, Phone, Megaphone,
+  ThumbsUp, Users, Siren, ArrowRight, Phone, Megaphone,
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -43,7 +43,6 @@ export default function ParticipantHome({ me }) {
   const [risks, setRisks] = useState([]);
   const [issues, setIssues] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
-  const [documents, setDocuments] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -67,12 +66,8 @@ export default function ParticipantHome({ me }) {
       const prof = profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null;
       setProfile(prof);
       if (prof) {
-        const [goalPage, docPage] = await Promise.allSettled([
-          base44.entities.Goal.filter({ participant_name: prof.full_name }, { sort: '-created_date', limit: 20 }),
-          base44.entities.ParticipantDocument.filter({ participant_user_id: me.id }, { sort: '-created_date', limit: 20 }),
-        ]);
-        if (goalPage.status === 'fulfilled') setGoals(goalPage.value.items || []);
-        if (docPage.status === 'fulfilled') setDocuments(docPage.value.items || []);
+        const goalPage = await base44.entities.Goal.filter({ participant_name: prof.full_name }, { sort: '-created_date', limit: 20 });
+        setGoals(goalPage.items || []);
       }
     } catch (e) { console.error(e); }
     setLoading(false);
@@ -144,24 +139,6 @@ export default function ParticipantHome({ me }) {
                 </div>
                 <span className="text-xs font-semibold text-foreground/60 tabular-nums">{g.progress || 0}%</span>
               </div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section icon={FolderOpen} title="My document vault" emptyIcon={FolderOpen} emptyTitle="No documents yet" emptyMessage="Documents shared with you will appear here to view or download." loading={loading} count={documents.length}>
-        <div className="space-y-2">
-          {documents.map((d) => (
-            <div key={d.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3.5">
-              <FolderOpen className="h-5 w-5 shrink-0 text-brand" />
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{d.title || d.document_type}</div>
-                <div className="text-xs text-foreground/50">{d.document_type}{d.uploaded_date ? ` · Uploaded ${fmt(d.uploaded_date)}` : ''}</div>
-              </div>
-              {d.file_url ? (
-                <a href={d.file_url} target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-brand hover:bg-muted">Open</a>
-              ) : null}
-              <StatusPill status={d.status} />
             </div>
           ))}
         </div>

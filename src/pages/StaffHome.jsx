@@ -4,7 +4,6 @@ import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import TaskEditDialog from '@/components/mywork/TaskEditDialog';
-import MyDocuments from '@/components/mywork/MyDocuments';
 import ParticipantHome from '@/pages/ParticipantHome';
 import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, ArrowRight, FilePlus2, ShieldAlert, MessageSquareWarning, UserRound, Pencil, ThumbsUp, Target, GraduationCap, Users, Megaphone, ReceiptText, Phone } from 'lucide-react';
 import { format } from 'date-fns';
@@ -278,8 +277,6 @@ export default function StaffHome() {
           </div>
         )}
       </section>
-
-      <MyDocuments me={me} />
 
       <section className="space-y-2">
         <div className="flex items-center justify-between">
