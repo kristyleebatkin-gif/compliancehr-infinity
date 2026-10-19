@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { sendGmail } from '../../shared/gmailSend.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
@@ -59,7 +60,7 @@ export default async function(req) {
         const subject = `[Action needed] ${task.task_type || 'Compliance'} task ${when}: ${String(task.title || '').slice(0, 100)}`;
         const body = `Compliance task alert\n\nTask: ${task.title || ''}\nType: ${task.task_type || '-'}\nPriority: ${task.priority || '-'}\nStatus: ${task.status || '-'}\nDue date: ${task.due_date} (this task ${when})\n\n${task.notes ? `Notes: ${task.notes}\n\n` : ''}Open your tasks here: ${APP_URL}/tasks\n\nPlease complete the task or update its status in the app so the register stays audit-ready.`;
 
-        await service.integrations.Core.SendEmail({ to, from_name: 'ComplianceHR Portal', subject, body });
+        await sendGmail(service, { to, subject, body });
 
         // Track the reminder in the Communication Centre (once per task per day).
         const alreadyLogged = await service.entities.CommunicationEntry.filter(

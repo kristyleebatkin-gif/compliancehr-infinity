@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { auDate, auTime, pretty, pageItems } from '../../shared/reminders.ts';
 import { authorizeSystemCall, MANAGEMENT_ROLES } from '../../shared/systemAuth.ts';
+import { sendGmail } from '../../shared/gmailSend.ts';
 
 // Daily worker-screening expiry scan. For every NDISComplianceDeadline of type
 // Worker Screening (or Worker Screening Audit) that is expired or due within 30
@@ -117,12 +118,7 @@ export default async function(req) {
         + `${lines.join('\n')}\n\nReview and renew the checks, then update the deadline records: ${APP_URL}/ndis-portal`;
       const subject = `[Action needed] Worker screening ${group.items.length === 1 ? 'due soon' : `${group.items.length} screenings due soon`}`;
       try {
-        await service.integrations.Core.SendEmail({
-          to: group.user.email,
-          from_name: 'ComplianceHR Portal',
-          subject,
-          body: emailBody,
-        });
+        await sendGmail(service, { to: group.user.email, subject, body: emailBody });
         emailsSent.push(group.user.email);
       } catch (error) {
         // Delivery failure is non-fatal: the in-app notification already went out.
