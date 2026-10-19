@@ -191,7 +191,7 @@ export default function Tasks() {
       <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
 
       <div className="flex items-center gap-1 overflow-x-auto">
-        {['All', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
+        {['All', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
           <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
         ))}
         <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>
