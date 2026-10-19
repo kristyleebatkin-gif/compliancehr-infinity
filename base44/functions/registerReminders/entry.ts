@@ -39,7 +39,7 @@ export default async function(req) {
 
     const [
       qualityP, invoiceP, quoteP, certP, docsP, maintP, equipP, eventsP,
-      actionsP, leadsP, ndisP, suppliersP, checklistsP, usersP, entriesP, notifsP,
+      actionsP, leadsP, ndisP, suppliersP, checklistsP, usersP, entriesP, notifsP, taskP,
     ] = await Promise.all([
       service.entities.QualityItem.filter({}, { limit: 500 }),
       service.entities.Invoice.filter({}, { limit: 500 }),
@@ -57,15 +57,20 @@ export default async function(req) {
       service.entities.User.list(),
       service.entities.CommunicationEntry.filter({ note_type: { $in: NOTE_TYPES } }, { limit: 1000 }),
       service.entities.Notification.filter({}, { limit: 1000 }),
+      service.entities.Task.filter({ task_type: 'Register Reminder', status: { $in: ['Open', 'In Progress'] } }, { limit: 1000 }),
     ]);
 
     const entryKeys = new Set(pageItems(entriesP).map((e) => String(e.subject || '')));
     const notifKeys = new Set(pageItems(notifsP).map((n) => String(n.message || '')));
+    const openTaskKeys = new Set(pageItems(taskP).map((t) => String(t.title || '')));
 
     const groups = [];
     const addGroup = (note_type, module, notif_type, attention, items) => {
       const fresh = items.filter((i) => !entryKeys.has(i.subject) && !notifKeys.has(i.subject));
-      if (fresh.length > 0) groups.push({ note_type, module, notif_type, attention, items: fresh });
+      if (fresh.length > 0) {
+        const tasks = fresh.filter((i) => !openTaskKeys.has(i.subject));
+        groups.push({ note_type, module, notif_type, attention, items: fresh, tasks });
+      }
     };
 
     // 1. Quality & Improvement — overdue / due-soon items.
@@ -75,8 +80,8 @@ export default async function(req) {
         .map((q) => ({ q, state: q.target_date < today ? 'Overdue' : (q.target_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
-          subject: `Quality item ${r.state.toLowerCase()}: ${r.title} (target ${pretty(r.target_date)})`,
-          body: `Quality ${r.q.type || 'item'} "${r.q.title}" is ${r.state.toLowerCase()} with a target date of ${pretty(r.target_date)}.`
+          subject: `Quality item ${r.state.toLowerCase()}: ${r.q.title} (target ${pretty(r.q.target_date)})`,
+          body: `Quality ${r.q.type || 'item'} "${r.q.title}" is ${r.state.toLowerCase()} with a target date of ${pretty(r.q.target_date)}.`
             + `${r.q.nominated_to ? ` Nominated to ${r.q.nominated_to}.` : ''} Please progress or reschedule it.`,
         })));
 
@@ -229,7 +234,7 @@ export default async function(req) {
 
     const administrators = pageItems(usersP).filter((u) => ADMIN_ROLES.includes(u.role)
       && u.account_status !== 'Archived' && String(u.email || '').trim());
-    const created = { diary_entries: 0, notifications: [] };
+    const created = { diary_entries: 0, follow_up_tasks: 0, notifications: [] };
 
     if (!dryRun) {
       for (const group of groups) {
@@ -260,6 +265,19 @@ export default async function(req) {
             linked_entity_type: group.module,
           });
         }
+        for (const task of group.tasks) {
+          await service.entities.Task.create({
+            title: task.subject,
+            task_type: 'Register Reminder',
+            assigned_to: group.attention,
+            priority: /overdue|expired/i.test(task.subject) ? 'High' : 'Medium',
+            status: 'Open',
+            due_date: /overdue|expired/i.test(task.subject) ? today : soon,
+            linked_entity_type: group.module,
+            notes: `${task.body} Resolve this follow-up, then mark this task completed so the resolution is recorded.`,
+          });
+          created.follow_up_tasks += 1;
+        }
       }
     }
 
@@ -272,7 +290,7 @@ export default async function(req) {
         to_status: 'Completed',
         changed_by: 'System (Register Reminders)',
         notes: groups.map((g) => `${g.note_type}: ${g.items.length}`).join('; ')
-          + `; ${created.diary_entries} Communication Centre alerts, ${administrators.length * groups.length} admin notifications.`,
+          + `; ${created.diary_entries} alerts, ${created.follow_up_tasks} follow-up tasks, ${administrators.length * groups.length} admin notifications.`,
       });
     }
 
@@ -281,6 +299,7 @@ export default async function(req) {
       scans: groups.map((g) => ({ note_type: g.note_type, module: g.module, items: g.items.length })),
       due_items: groups.reduce((sum, g) => sum + g.items.length, 0),
       diary_entries_created: created.diary_entries,
+      follow_up_tasks_created: created.follow_up_tasks,
       notifications_created: created.notifications.length > 0 || !dryRun ? administrators.length * groups.length : 0,
       dry_run: dryRun,
     });

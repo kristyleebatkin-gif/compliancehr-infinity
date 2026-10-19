@@ -565,7 +565,8 @@ export const GUIDES_PART_2 = {
       { name: 'All-register review', detail: 'Live counts (total, open, overdue, due soon) for every register with visualise, automate and refine suggestions per module.' },
       { name: 'Daily register reminders', detail: 'A daily scan at 8:20am (Sydney) covering quality escalations, overdue invoices, quote expiry, certificate expiry, document reviews, asset maintenance, equipment and MSDS reviews, upcoming events, meeting actions, lead follow-ups, NDIS deadlines, supplier review and compliance checklist tasks.' },
       { name: 'Reminder coverage table', detail: 'Each register shows the automated processes already covering it, so gaps are visible at a glance.' },
-      { name: 'Recorded results', detail: 'Every scan run is recorded in the status log with the items found, alerts posted and notifications sent; each item alert lands in the Communication Centre diary and admin notifications.' },
+      { name: 'Recorded results', detail: 'Every scan run is recorded in the status log with the items found, alerts posted, follow-up tasks created and notifications sent; each item alert lands in the Communication Centre diary and admin notifications.' },
+      { name: 'Follow-up tasks', detail: 'Every alert also raises a follow-up task in the Task Dashboard, pre-assigned to the responsible roles with a priority and due date, so the action is recorded and tracked through to resolution.' },
       { name: 'Idempotent alerting', detail: 'Items alert once per state — no duplicate reminders day after day — and re-alert automatically when an item\u2019s state changes.' },
     ],
     steps: [
