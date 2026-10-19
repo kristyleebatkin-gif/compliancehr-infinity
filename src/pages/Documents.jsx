@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, FolderOpen, RefreshCw, UploadCloud, Eye, Database, Download } from 'lucide-react';
+import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Database, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
@@ -22,6 +22,7 @@ import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import VaultUploads from '@/components/documents/VaultUploads';
 import ParticipantVault from '@/components/documents/ParticipantVault';
+import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -42,14 +43,15 @@ export default function Documents() {
   const [myDocs, setMyDocs] = useState([]);
   const [me, setMe] = useState(null);
   const isParticipant = me?.role === 'Participant';
+  const [myProfile, setMyProfile] = useState(null);
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState(null);
   const [scanning, setScanning] = useState(false);
   const [scanMsg, setScanMsg] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [form, setForm] = useState({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', file_uri: '', notes: '' });
+  const canManageAll = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
+  const canEditDoc = (d) => canManageAll || (me?.role === 'Support Worker' && d.employee_name === me?.full_name);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -57,8 +59,21 @@ export default function Documents() {
       const meUser = await base44.auth.me();
       setMe(meUser);
       if (meUser.role === 'Participant') {
-        const page = await base44.entities.ParticipantDocument.filter({ participant_user_id: meUser.id }, { sort: '-created_date', limit: 50 });
-        setMyDocs(page.items || []);
+        const [page, profilePage] = await Promise.allSettled([
+          base44.entities.ParticipantDocument.filter({ participant_user_id: meUser.id }, { sort: '-created_date', limit: 50 }),
+          base44.entities.ParticipantProfile.filter({ email: meUser.email }, { limit: 1 }),
+        ]);
+        setMyDocs(page.status === 'fulfilled' ? page.value.items || [] : []);
+        setMyProfile(profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null);
+        return;
+      }
+      if (meUser.role === 'Support Worker') {
+        // Support staff manage their own documents only
+        const page = await base44.entities.EmployeeDocument.filter(
+          { employee_name: meUser.full_name, status: { $ne: 'Archived' } },
+          { sort: 'expiry_date', limit: 50 },
+        );
+        setDocs(page.items || []);
         return;
       }
       const results = await Promise.allSettled([
@@ -85,36 +100,11 @@ export default function Documents() {
     return () => clearTimeout(timer);
   }, [focus, loading]);
 
-  const save = async () => {
-    if (!form.title.trim()) return;
-    setSaving(true);
-    try {
-      await base44.entities.EmployeeDocument.create(form);
-      setForm({ title: '', employee_name: '', document_type: 'Other', issue_date: '', expiry_date: '', status: 'Current', file_url: '', file_uri: '', notes: '' });
-      setOpen(false);
-      await load();
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const remove = async (id) => {
+  const remove = async (doc) => {
+    if (!canEditDoc(doc)) return;
     if (!confirm('Delete this document?')) return;
-    await base44.entities.EmployeeDocument.delete(id);
+    await base44.entities.EmployeeDocument.delete(doc.id);
     await load();
-  };
-
-  const handleFile = async (file) => {
-    if (!file) return;
-    setUploading(true);
-    try {
-      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      setForm((f) => ({ ...f, file_uri }));
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setUploading(false);
-    }
   };
 
   const viewDoc = async (doc) => {
@@ -157,7 +147,7 @@ export default function Documents() {
       <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />
 
       {isParticipant ? (
-        <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} />
+        <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
       ) : (
         <>
       <RegisterInsights module="documents" />
@@ -183,55 +173,16 @@ export default function Documents() {
           </Button>
         </div>
         <BulkUploadDocuments staff={staff} onDone={load} />
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New employee document</DialogTitle></DialogHeader>
-            <div className="grid gap-3">
-              <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>Employee</Label>
-                <Select value={form.employee_name} onValueChange={(v) => setForm({ ...form, employee_name: v })}>
-                  <SelectTrigger><SelectValue placeholder="Select staff member" /></SelectTrigger>
-                  <SelectContent>{staff.map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}</SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Document type</Label>
-                  <Select value={form.document_type} onValueChange={(v) => setForm({ ...form, document_type: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{DOC_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-1.5"><Label>Status</Label>
-                  <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{['Current', 'Expiring Soon', 'Expired', 'Archived'].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Issue date</Label><Input type="date" value={form.issue_date} onChange={(e) => setForm({ ...form, issue_date: e.target.value })} /></div>
-                <div className="grid gap-1.5"><Label>Expiry date</Label><Input type="date" value={form.expiry_date} onChange={(e) => setForm({ ...form, expiry_date: e.target.value })} /></div>
-              </div>
-              <div className="grid gap-1.5"><Label>Document file (optional)</Label>
-                <label className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm font-medium hover:bg-accent">
-                  {uploading
-                    ? <span className="block h-4 w-4 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
-                    : <UploadCloud className="h-4 w-4" />}
-                  {form.file_uri ? 'File attached' : 'Upload file'}
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls,.txt"
-                    className="hidden"
-                    disabled={uploading}
-                    onChange={(e) => { handleFile(e.target.files?.[0]); e.target.value = ''; }}
-                  />
-                </label>
-              </div>
-              <Button onClick={save} disabled={saving || !form.title.trim()}>Save document</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button onClick={() => { setEditing(null); setOpen(true); }}><Plus className="mr-2 h-4 w-4" /> Add document</Button>
+        <EmployeeDocumentDialog
+          open={open}
+          onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}
+          staff={staff}
+          me={me}
+          canPickEmployee={canManageAll}
+          initial={editing}
+          onDone={load}
+        />
       </div>
 
       {loading ? (
@@ -255,10 +206,13 @@ export default function Documents() {
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span className={expired ? 'font-semibold text-destructive' : ''}>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
                   <div className="flex items-center gap-1">
+                    {canEditDoc(d) && (
+                      <Button variant="ghost" size="icon" title="Edit document" onClick={() => { setEditing(d); setOpen(true); }}><Pencil className="h-4 w-4 text-foreground/60" /></Button>
+                    )}
                     {(d.file_uri || d.file_url) && (
                       <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
                     )}
-                    <Button variant="ghost" size="icon" onClick={() => remove(d.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    {canEditDoc(d) && <Button variant="ghost" size="icon" onClick={() => remove(d)}><Trash2 className="h-4 w-4 text-destructive" /></Button>}
                   </div>
                 </div>
               </CardContent>
