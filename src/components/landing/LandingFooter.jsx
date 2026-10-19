@@ -37,11 +37,13 @@ export default function LandingFooter() {
       <div className="relative mx-auto max-w-6xl px-4 py-14 md:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2.5">
-              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-10 w-10 rounded-xl bg-white shadow-md ring-1 ring-white/20" fittingType="fill" focalPointX={0.5} focalPointY={0.33} />
-              <span className="font-editorial text-xl font-semibold tracking-tight text-white">
-                Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
-                <span className="ml-1.5 align-middle text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">Infinity</span>
+            <Link to="/" className="flex items-center gap-3">
+              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a64b90222_IMG_1222.jpeg" alt="ComplianceHR Infinity logo" className="h-14 w-14 shrink-0 rounded-2xl bg-white shadow-md ring-1 ring-white/20" fittingType="fill" focalPointX={0.5} focalPointY={0.33} />
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="font-editorial text-xl font-semibold tracking-tight text-white">
+                  Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
+                </span>
+                <span className="mt-1 text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">Infinity</span>
               </span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/55">Complete Control. Greater Confidence. Brighter Success.</p>
