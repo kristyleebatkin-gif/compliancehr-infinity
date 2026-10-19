@@ -127,6 +127,9 @@
           "user_condition": {
             "role": "Support Worker"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -156,6 +159,9 @@
           "user_condition": {
             "role": "Auditor"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
