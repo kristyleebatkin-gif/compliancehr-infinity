@@ -153,6 +153,9 @@
           "data.team_worker_ids": "{{user.id}}"
         },
         {
+          "data.participant_user_id": "{{user.id}}"
+        },
+        {
           "$and": [
             {
               "user_condition": {
