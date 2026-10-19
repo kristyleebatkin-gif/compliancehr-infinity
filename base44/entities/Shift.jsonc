@@ -87,6 +87,10 @@
       "type": "number",
       "title": "Billable Rate ($/hr)"
     },
+    "participant_goal": {
+      "type": "string",
+      "title": "Shift Goal"
+    },
     "approval_status": {
       "type": "string",
       "enum": [

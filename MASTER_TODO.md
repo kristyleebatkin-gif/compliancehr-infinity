@@ -233,6 +233,7 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 169. All user guides accurate to their matching module.
 
 ## Completion log — latest implementation
+- Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
 - Participant progress note history is now visible (read-only) inside the participant's own profile view, and progress notes carry a participant user link so participants can read notes recorded on their own goals. Existing notes were checked; none needed linking.
 - Intake verification complete: the participant intake online form now also asks the NDIS reference number, support coordinator and plan manager names, reason for referral, current supports, strengths and goals, mealtime support, and notes; the staff information form now covers employment status, experience, previous employer, medical conditions, office-use notes and buddy shift details.

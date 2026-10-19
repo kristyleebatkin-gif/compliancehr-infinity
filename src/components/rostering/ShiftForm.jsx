@@ -18,7 +18,7 @@ const BLANK = {
   employee_name: '', participant_name: '', date: '', start_time: '', end_time: '',
   status: 'Scheduled', service_type: '', funding_source: '', location: '',
   location_lat: '', location_lng: '',
-  notes: '', break_minutes: '', travel_km: '', billable_rate: '',
+  notes: '', break_minutes: '', travel_km: '', billable_rate: '', participant_goal: '',
   repeat_rule: 'none', repeat_until: '', approval_status: 'Not Required',
 };
 
@@ -28,6 +28,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [availability, setAvailability] = useState([]);
+  const [goals, setGoals] = useState([]);
 
   useEffect(() => {
     if (!open || !form.date) { setAvailability([]); return; }
@@ -47,6 +48,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         location: shift.location || '', location_lat: shift.location_lat ?? '', location_lng: shift.location_lng ?? '',
         notes: shift.notes || '',
         break_minutes: shift.break_minutes ?? '', travel_km: shift.travel_km ?? '', billable_rate: shift.billable_rate ?? '',
+        participant_goal: shift.participant_goal || '',
         repeat_rule: shift.repeat_rule || 'none', repeat_until: shift.repeat_until || '',
         approval_status: shift.approval_status || 'Not Required',
       } : { ...BLANK, date: prefillDate || '' });
@@ -56,6 +58,17 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         .then((p) => setParticipants(p.items.map((i) => i.full_name)));
     }
   }, [open, shift]);
+
+  useEffect(() => {
+    setForm((f) => ({ ...f, participant_goal: '' }));
+    setGoals([]);
+    if (!form.participant_name) return;
+    let cancelled = false;
+    base44.entities.Goal.filter({ participant_name: form.participant_name }, { sort: '-created_date', limit: 50, fields: ['goal'] })
+      .then((p) => { if (!cancelled) setGoals((p.items || []).map((i) => i.goal).filter(Boolean)); })
+      .catch((e) => console.error(e));
+    return () => { cancelled = true; };
+  }, [form.participant_name]);
 
   const submit = () => {
     onSave({
@@ -74,6 +87,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
       break_minutes: form.break_minutes === '' ? undefined : Number(form.break_minutes),
       travel_km: form.travel_km === '' ? undefined : Number(form.travel_km),
       billable_rate: form.billable_rate === '' ? undefined : Number(form.billable_rate),
+      participant_goal: form.participant_goal || undefined,
       repeat_rule: editing ? undefined : form.repeat_rule,
       repeat_until: form.repeat_rule !== 'none' && !editing ? form.repeat_until : undefined,
       approval_status: form.approval_status,
