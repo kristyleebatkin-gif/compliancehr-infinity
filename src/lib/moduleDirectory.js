@@ -59,7 +59,9 @@ export const MODULE_DIRECTORY = [
 
 // Sidebar sections: every module key appears in exactly one group.
 export const NAV_GROUPS = [
-  { label: 'Overview', keys: ['dashboard', 'my-profile', 'staff', 'participants'] },
+  { label: 'Overview', keys: ['dashboard', 'my-profile'] },
+  { label: 'Employee Profiles', keys: ['staff'] },
+  { label: 'Participant Profiles', keys: ['participants'] },
   { label: 'People', keys: ['key-contacts', 'volunteering-placements', 'human-resources'] },
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
