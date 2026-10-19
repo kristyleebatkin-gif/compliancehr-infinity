@@ -161,6 +161,16 @@
           "user_condition": {
             "role": "CRM & Marketing Officer"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
         }
       ]
     },
