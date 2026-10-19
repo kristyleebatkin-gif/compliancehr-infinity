@@ -6,6 +6,7 @@ import IncidentWorkflow from '@/components/IncidentWorkflow';
 import EmptyState from '@/components/EmptyState';
 import { Field } from '@/components/Field';
 import IncidentFollowUp from '@/components/incidents/IncidentFollowUp';
+import IncidentImprovementLink from '@/components/incidents/IncidentImprovementLink';
 import IncidentPhotos from '@/components/incidents/IncidentPhotos';
 import { ArrowLeft, Pencil, Trash2, Search } from 'lucide-react';
 import { useRole } from '@/lib/useRole';
@@ -115,6 +116,7 @@ export default function IncidentDetail() {
 
       {/* Investigation & Follow-up */}
       {canReview && <IncidentFollowUp incident={item} />}
+      <IncidentImprovementLink incident={item} canEdit={canReview} />
     </div>
   );
 }

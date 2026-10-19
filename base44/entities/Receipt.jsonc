@@ -53,6 +53,30 @@
       "type": "string",
       "title": "Payment Method"
     },
+    "ndis_category": {
+      "type": "string",
+      "title": "NDIS Support Category",
+      "enum": [
+        "Assistance with Daily Life (Core)",
+        "Assistance with Social & Community Participation (Core)",
+        "Consumables (Core)",
+        "Transport (Core)",
+        "Capacity Building - Improved Daily Living",
+        "Capacity Building - Improved Health & Wellbeing",
+        "Capacity Building - Finding & Keeping a Job",
+        "Capacity Building - Improved Learning",
+        "Capacity Building - Improved Relationships",
+        "Capacity Building - Increased Social & Community Participation",
+        "Capacity Building - Improved Living Arrangements",
+        "Capital - Assistive Technology",
+        "Capital - Home Modifications",
+        "Other"
+      ]
+    },
+    "ndis_support_item_number": {
+      "type": "string",
+      "title": "NDIS Support Item Number"
+    },
     "status": {
       "type": "string",
       "enum": [

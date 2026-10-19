@@ -25,6 +25,8 @@ import ReceiptFilters, { filterReceipts } from '@/components/receipts/ReceiptFil
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
+const NDIS_CATEGORIES = ['Assistance with Daily Life (Core)', 'Assistance with Social & Community Participation (Core)', 'Consumables (Core)', 'Transport (Core)', 'Capacity Building - Improved Daily Living', 'Capacity Building - Improved Health & Wellbeing', 'Capacity Building - Finding & Keeping a Job', 'Capacity Building - Improved Learning', 'Capacity Building - Improved Relationships', 'Capacity Building - Increased Social & Community Participation', 'Capacity Building - Improved Living Arrangements', 'Capital - Assistive Technology', 'Capital - Home Modifications', 'Other'];
+
 export default function ReceiptHub() {
   const { toast } = useToast();
   const [receipts, setReceipts] = useState([]);
@@ -34,7 +36,7 @@ export default function ReceiptHub() {
   const [pdfOpen, setPdfOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [form, setForm] = useState({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
+  const [form, setForm] = useState({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', ndis_category: '', ndis_support_item_number: '', status: 'Unreconciled', receipt_url: '', notes: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -58,7 +60,7 @@ export default function ReceiptHub() {
         gst_amount: form.gst_amount === '' ? undefined : Number(form.gst_amount),
       });
       await fileReceiptToAssetRegister(record, form.paid_by);
-      setForm({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', status: 'Unreconciled', receipt_url: '', notes: '' });
+      setForm({ description: '', merchant: '', receipt_number: '', amount: '', gst_amount: '', date: '', paid_by: '', reimburse_to: '', category: '', payment_method: '', ndis_category: '', ndis_support_item_number: '', status: 'Unreconciled', receipt_url: '', notes: '' });
       setOpen(false);
       await load();
     } finally {
@@ -96,6 +98,7 @@ export default function ReceiptHub() {
       { key: 'paid_by', label: 'Paid By' }, { key: 'reimburse_to', label: 'Reimburse To' },
       { key: 'reimbursed', label: 'Reimbursed' }, { key: 'reimbursed_date', label: 'Reimbursed Date' },
       { key: 'category', label: 'Category' }, { key: 'payment_method', label: 'Payment Method' },
+      { key: 'ndis_category', label: 'NDIS Support Category' }, { key: 'ndis_support_item_number', label: 'NDIS Item Number' },
       { key: 'status', label: 'Status' }, { key: 'file_name', label: 'Stored Receipt' },
       { key: 'receipt_url', label: 'Receipt Link' }, { key: 'notes', label: 'Notes' },
     ], receipts);
@@ -178,6 +181,7 @@ export default function ReceiptHub() {
                   <div className="flex flex-wrap items-center gap-2">
                     {r.amount != null && <p className="font-semibold">{money(r.amount)}</p>}
                     <Badge variant={r.status === 'Reconciled' ? 'default' : 'secondary'}>{r.status}</Badge>
+                    {r.ndis_category && <Badge className="border-transparent bg-teal/10 text-teal">NDIS: {r.ndis_category}</Badge>}
                     {r.reimburse_to && <Badge className={r.reimbursed ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300'}>{r.reimbursed ? 'Reimbursed' : 'Reimbursement pending'}</Badge>}
                     {r.file_uri && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => openReceiptFile(r)}>Open receipt</Button>}
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleReconcile(r)} title="Toggle reconciled"><CheckCircle2 className="h-4 w-4" /></Button>
@@ -218,6 +222,18 @@ export default function ReceiptHub() {
               </div>
               <div className="grid gap-1.5"><Label>Payment method</Label><Input value={form.payment_method} onChange={(e) => setForm({ ...form, payment_method: e.target.value })} /></div>
               <div className="grid gap-1.5"><Label>Receipt link</Label><Input value={form.receipt_url} onChange={(e) => setForm({ ...form, receipt_url: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid gap-1.5"><Label>NDIS support category</Label>
+                <Select value={form.ndis_category || 'none'} onValueChange={(v) => setForm({ ...form, ndis_category: v === 'none' ? '' : v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Not applicable</SelectItem>
+                    {NDIS_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-1.5"><Label>NDIS support item number</Label><Input value={form.ndis_support_item_number} onChange={(e) => setForm({ ...form, ndis_support_item_number: e.target.value })} /></div>
             </div>
             <div className="grid gap-1.5"><Label>Notes</Label><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
             <Button onClick={save} disabled={saving || !form.description.trim()}>Save receipt</Button>

@@ -18,6 +18,9 @@ import AvailabilityPanel, { AvailabilityFormDialog } from '@/components/rosterin
 import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import RosterExceptions from '@/components/rostering/RosterExceptions';
+import RosterWeeklySignOff from '@/components/rostering/RosterWeeklySignOff';
+import RosterScreeningAlerts from '@/components/rostering/RosterScreeningAlerts';
+import BulkShiftEditor from '@/components/rostering/BulkShiftEditor';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
@@ -75,6 +78,7 @@ export default function Rostering() {
   const [fillData, setFillData] = useState({ shifts: [], availability: [] });
   const [availOpen, setAvailOpen] = useState(false);
   const [syncOpen, setSyncOpen] = useState(false);
+  const [bulkOpen, setBulkOpen] = useState(false);
   const [availForm, setAvailForm] = useState({ staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' });
 
   const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0 });
@@ -289,7 +293,9 @@ export default function Rostering() {
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
+          <RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
+          <RosterScreeningAlerts shifts={boardShifts} />
           <RosterLabourForecast shifts={boardShifts} />
           <RosterSuggestions onChanged={refresh} />
         </TabsContent>
@@ -342,6 +348,7 @@ export default function Rostering() {
             <Input type="date" value={listRange.from} onChange={(e) => setListRange({ ...listRange, from: e.target.value })} className="w-36" />
             <span className="text-sm text-muted-foreground">to</span>
             <Input type="date" value={listRange.to} onChange={(e) => setListRange({ ...listRange, to: e.target.value })} className="w-36" />
+            <Button variant="outline" onClick={() => setBulkOpen(true)}>Bulk edit</Button>
             <div className="flex-1" />
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
@@ -388,6 +395,7 @@ export default function Rostering() {
       <AvailabilityFormDialog open={availOpen} onOpenChange={setAvailOpen} form={availForm} setForm={setAvailForm} onSave={saveAvailability} saving={saving} staff={staff} />
 
       <CalendarSyncDialog open={syncOpen} onOpenChange={setSyncOpen} />
+      <BulkShiftEditor open={bulkOpen} onOpenChange={setBulkOpen} staff={staff} onChanged={refresh} />
     </div>
   );
 }

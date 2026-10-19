@@ -4,43 +4,15 @@ import { AlertTriangle, UserX, Users, FileWarning } from 'lucide-react';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
-
-const minutes = (t) => {
-  if (!t) return null;
-  const [h, m] = String(t).split(':').map((n) => parseInt(n, 10));
-  if (Number.isNaN(h)) return null;
-  return h * 60 + (m || 0);
-};
-
-const overlaps = (a, b) => {
-  const aS = minutes(a.start_time); const aE = minutes(a.end_time);
-  const bS = minutes(b.start_time); const bE = minutes(b.end_time);
-  if (aS == null || aE == null || bS == null || bE == null) return false;
-  return aS < bE && bS < aE;
-};
+import { findUnassigned, findDoubleBookings, findMissingInstructions } from '@/lib/rosterValidation';
 
 const label = (s) => `${s.date ? format(new Date(s.date + 'T00:00:00'), 'd MMM') : '?'} · ${s.start_time || '?'}–${s.end_time || '?'} · ${s.participant_name || 'no participant'}${s.location ? ` · ${s.location}` : ''}`;
 
 // Cross-entity validation panel: unassigned shifts, double-bookings and shifts missing instructions.
 export default function RosterExceptions({ shifts = [], onEdit }) {
-  const unassigned = shifts.filter((s) => !s.employee_name && s.status !== 'Cancelled');
-
-  const doubleBooked = [];
-  const seen = new Set();
-  const active = shifts.filter((s) => s.status !== 'Cancelled');
-  for (let i = 0; i < active.length; i++) {
-    for (let j = i + 1; j < active.length; j++) {
-      const a = active[i]; const b = active[j];
-      for (const field of ['employee_name', 'participant_name']) {
-        if (a[field] && b[field] && a[field] === b[field] && a.date === b.date && overlaps(a, b)) {
-          const key = `${a.id}|${b.id}|${field}`;
-          if (!seen.has(key)) { seen.add(key); doubleBooked.push({ field, a, b }); }
-        }
-      }
-    }
-  }
-
-  const missingInstructions = shifts.filter((s) => s.status !== 'Cancelled' && s.participant_name && !s.notes);
+  const unassigned = findUnassigned(shifts);
+  const doubleBooked = findDoubleBookings(shifts);
+  const missingInstructions = findMissingInstructions(shifts);
 
   const group = (icon, title, tone, items, render) => (
     <div className="rounded-lg border border-border/60 p-3">
