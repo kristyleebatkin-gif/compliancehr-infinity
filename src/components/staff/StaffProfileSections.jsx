@@ -36,13 +36,12 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     { key: 'safety', label: 'Safety Records', Icon: ShieldAlert, content: <StaffSafetyTab staff={staff} /> },
     { key: 'comm', label: 'Communication Log', Icon: MessagesSquare, content: <StaffCommPanel staff={staff} /> },
     { key: 'todo', label: 'To-Do', Icon: ListTodo, content: <ProfileTodoList staff={staff} /> },
-    // Remaining person-level data (certificates, rostering, HR) lives only in
-    // the admin Staff profiles module — never in 'Our' employee views.
-    ...(ourView ? [] : [
-      { key: 'certificates', label: 'Certificates', Icon: BadgeCheck, content: <StaffCertificatesTab staff={staff} /> },
-      { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <StaffShiftsTab staff={staff} /> },
-      { key: 'hr', label: 'Leave & Appraisals', Icon: CalendarDays, content: <StaffHrTab staff={staff} /> },
-    ]),
+    // Employee outline: HR, rostering and training are employee modules, so
+    // certificates, shifts/availability and leave/appraisals appear in 'Our'
+    // employee views too — each scoped to that one person.
+    { key: 'certificates', label: 'Certificates', Icon: BadgeCheck, content: <StaffCertificatesTab staff={staff} /> },
+    { key: 'shifts', label: 'Shifts & Availability', Icon: CalendarClock, content: <StaffShiftsTab staff={staff} /> },
+    { key: 'hr', label: 'Leave & Appraisals', Icon: CalendarDays, content: <StaffHrTab staff={staff} /> },
   ];
   return (
     <Tabs defaultValue="details">
