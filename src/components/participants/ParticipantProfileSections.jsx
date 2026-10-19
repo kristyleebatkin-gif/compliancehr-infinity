@@ -1,7 +1,7 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FileSignature, Files, Heart, MessagesSquare, ScrollText } from 'lucide-react';
+import { CalendarClock, ClipboardCheck, FileSignature, Files, Heart, MessagesSquare, ScrollText, ShieldAlert } from 'lucide-react';
 import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsTab';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsTab';
@@ -11,6 +11,9 @@ import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
 import ExportRow from '@/components/profile/ExportRow';
 import TeamSection from '@/components/profile/TeamSection';
+import ParticipantShiftsTab from '@/components/participants/ParticipantShiftsTab';
+import ParticipantSafetyTab from '@/components/participants/ParticipantSafetyTab';
+import ParticipantReviewsTab from '@/components/participants/ParticipantReviewsTab';
 import { useRole } from '@/lib/useRole';
 
 export default function ParticipantProfileSections({ participant, onUpdated, header, ourView = false }) {
@@ -26,6 +29,13 @@ export default function ParticipantProfileSections({ participant, onUpdated, hea
     { key: 'records', label: 'Incidents & Goals', Icon: Heart, content: <ParticipantRecordsTab participant={participant} /> },
     { key: 'comm', label: 'Communication Diary', Icon: MessagesSquare, content: <ProfileCommDiary participant={participant} /> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileSignature, content: <ParticipantFillableForms participant={participant} /> },
+    // Remaining person-level data (shifts, safety, reviews) lives only in the
+    // admin Participant profiles module — never in 'Our' participant views.
+    ...(ourView ? [] : [
+      { key: 'shifts', label: 'Shifts', Icon: CalendarClock, content: <ParticipantShiftsTab participant={participant} /> },
+      { key: 'safety', label: 'Risks & Safeguarding', Icon: ShieldAlert, content: <ParticipantSafetyTab participant={participant} /> },
+      { key: 'reviews', label: 'Reviews, Surveys & Complaints', Icon: ClipboardCheck, content: <ParticipantReviewsTab participant={participant} /> },
+    ]),
   ];
   return (
     <Tabs defaultValue="details">
