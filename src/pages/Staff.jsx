@@ -15,7 +15,6 @@ import { Plus, Search, Trash2, UserRound, Users, ShieldCheck, Trophy, Download }
 import { Link } from 'react-router-dom';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import CertificationOverview from '@/components/staff/CertificationOverview';
-import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import StaffRecognition from '@/components/staff/StaffRecognition';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import { getCompanyBranding } from '@/lib/companyBranding';
@@ -86,16 +85,12 @@ export default function Staff() {
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} />
 
       <RegisterInsights module="staff" />
-      <Tabs defaultValue="overview">
+      <Tabs defaultValue="profiles">
         <TabsList>
-          <TabsTrigger value="overview"><UserRound className="mr-1.5 h-4 w-4" />Overview</TabsTrigger>
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
           <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Staff certificates</TabsTrigger>
           <TabsTrigger value="recognition"><Trophy className="mr-1.5 h-4 w-4" />Leaderboard &amp; recognition</TabsTrigger>
         </TabsList>
-        <TabsContent value="overview" className="space-y-6">
-          <OurProfilesTab kind="staff" />
-        </TabsContent>
         <TabsContent value="profiles" className="space-y-6">
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={exportRegister} disabled={loading || staff.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
