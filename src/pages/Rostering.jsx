@@ -20,6 +20,7 @@ import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
+import RosterSuggestions from '@/components/rostering/RosterSuggestions';
 import CalendarSyncDialog from '@/components/rostering/CalendarSyncDialog';
 import { RefreshCw } from 'lucide-react';
 import { expandRecurrence } from '@/lib/rostering';
@@ -286,6 +287,7 @@ export default function Rostering() {
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
+          <RosterSuggestions onChanged={refresh} />
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">

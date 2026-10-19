@@ -14,6 +14,7 @@ import ParticipantFillableForms from '@/components/participants/ParticipantFilla
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ParticipantRecordsTab from '@/components/participants/ParticipantRecordsTab';
 import ProfileIntakeDocuments from '@/components/intake/ProfileIntakeDocuments';
+import FundingUtilisation from '@/components/participants/FundingUtilisation';
 
 export default function ParticipantDetail() {
   const { id } = useParams();
@@ -55,6 +56,8 @@ export default function ParticipantDetail() {
       </div>
 
       <ProfileHeader profile={participant} kind="participant" onUpdated={load} />
+
+      <FundingUtilisation participant={participant} onUpdated={load} />
 
       <TeamSection
         title={`${participant.full_name}'s support worker team`}

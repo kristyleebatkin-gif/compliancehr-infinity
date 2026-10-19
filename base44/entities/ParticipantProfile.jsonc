@@ -44,6 +44,20 @@
       "type": "string",
       "title": "Plan Manager Email"
     },
+    "plan_budget_total": {
+      "type": "number",
+      "title": "Plan Budget Total ($)"
+    },
+    "plan_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Plan Start Date"
+    },
+    "plan_end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Plan End Date"
+    },
     "advocate_representative": {
       "type": "string",
       "title": "Advocate / Representative"
