@@ -11,7 +11,9 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History } from 'lucide-react';
+import { NewVersionDialog, PolicyHistoryDialog } from '@/components/compliance/PolicyVersions';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
@@ -62,7 +64,9 @@ export default function ComplianceHub() {
   const [pOpen, setPOpen] = useState(false);
   const [rOpen, setROpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [pForm, setPForm] = useState({ document_name: '', category: 'Governance', version: '', review_date: '', status: 'Active', approved_by: '', description: '' });
+  const [pForm, setPForm] = useState({ document_name: '', category: 'Governance', version: '', review_date: '', status: 'Active', approved_by: '', description: '', content: '' });
+  const [newVersionPolicy, setNewVersionPolicy] = useState(null);
+  const [historyPolicy, setHistoryPolicy] = useState(null);
   const [rForm, setRForm] = useState({ title: '', category: '', jurisdiction: 'Australia', authority: '', purpose: '', status: 'Current', next_review: '', official_url: '' });
 
   const load = useCallback(async () => {
@@ -86,7 +90,7 @@ export default function ComplianceHub() {
     setSaving(true);
     try {
       await base44.entities.Policy.create(pForm);
-      setPForm({ document_name: '', category: 'Governance', version: '', review_date: '', status: 'Active', approved_by: '', description: '' });
+      setPForm({ document_name: '', category: 'Governance', version: '', review_date: '', status: 'Active', approved_by: '', description: '', content: '' });
       setPOpen(false);
       await load();
     } finally {
@@ -210,6 +214,7 @@ export default function ComplianceHub() {
                   </div>
                   <div className="grid gap-1.5"><Label>Approved by</Label><Input value={pForm.approved_by} onChange={(e) => setPForm({ ...pForm, approved_by: e.target.value })} /></div>
                   <div className="grid gap-1.5"><Label>Description</Label><Input value={pForm.description} onChange={(e) => setPForm({ ...pForm, description: e.target.value })} /></div>
+                  <div className="grid gap-1.5"><Label>Policy content</Label><Textarea rows={6} value={pForm.content} onChange={(e) => setPForm({ ...pForm, content: e.target.value })} placeholder="The full policy text — versions of this content are diffable later" /></div>
                   <Button onClick={savePolicy} disabled={saving || !pForm.document_name.trim()}>Save policy</Button>
                 </div>
               </DialogContent>
@@ -237,7 +242,11 @@ export default function ComplianceHub() {
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{p.review_date ? `Review due ${format(new Date(p.review_date), 'd MMM yyyy')}` : 'No review date set'}</span>
-                      <Button variant="ghost" size="icon" onClick={() => remove(base44.entities.Policy, p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      <span className="flex items-center gap-1">
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => setNewVersionPolicy(p)}><FilePlus className="mr-1 h-3.5 w-3.5" /> New version</Button>
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => setHistoryPolicy(p)}><History className="mr-1 h-3.5 w-3.5" /> History &amp; diff</Button>
+                        <Button variant="ghost" size="icon" onClick={() => remove(base44.entities.Policy, p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -321,6 +330,9 @@ export default function ComplianceHub() {
           <Checklists />
         </TabsContent>
       </Tabs>
+
+      <NewVersionDialog policy={newVersionPolicy} open={!!newVersionPolicy} onOpenChange={(o) => { if (!o) setNewVersionPolicy(null); }} onChanged={load} />
+      <PolicyHistoryDialog policy={historyPolicy} open={!!historyPolicy} onOpenChange={(o) => { if (!o) setHistoryPolicy(null); }} />
     </div>
   );
 }

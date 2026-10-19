@@ -28,6 +28,14 @@
       "type": "string",
       "title": "Version"
     },
+    "content": {
+      "type": "string",
+      "title": "Policy Content"
+    },
+    "version_history": {
+      "type": "string",
+      "title": "Version History (JSON)"
+    },
     "review_date": {
       "type": "string",
       "format": "date",

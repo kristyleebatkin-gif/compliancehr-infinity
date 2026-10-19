@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Stethoscope, Loader2, CheckCircle2, CircleAlert, Wrench } from 'lucide-react';
+import { Stethoscope, Loader2, CheckCircle2, CircleAlert, Wrench, Ticket, Mail } from 'lucide-react';
 
 export default function AiTroubleshooter({ onAskSupport }) {
   const [problem, setProblem] = useState('');
@@ -15,6 +15,30 @@ export default function AiTroubleshooter({ onAskSupport }) {
   const [running, setRunning] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [actionBusy, setActionBusy] = useState('');
+  const [actionDone, setActionDone] = useState('');
+
+  const takeAction = async (action) => {
+    setActionBusy(action);
+    setActionDone('');
+    try {
+      const res = await base44.functions.invoke('troubleshooterAction', {
+        action,
+        problem: problem.trim(),
+        module: module_ === 'Not sure' ? '' : module_,
+        error_message: errorMessage.trim(),
+        diagnosis: result?.diagnosis || '',
+        steps: result?.steps || [],
+        escalate: result?.escalate || false,
+        escalate_reason: result?.escalate_reason || '',
+      });
+      setActionDone(res.data?.message || 'Done.');
+    } catch (err) {
+      setError(err?.response?.data?.error || err.message || 'The action could not be completed.');
+    } finally {
+      setActionBusy('');
+    }
+  };
 
   const MODULES = ['Not sure', 'Document Vault', 'Company Safe', 'Staff Profiles', 'Participant Profiles', 'Communication Centre', 'Incident Clinic', 'Risk Reporting', 'Compliance & Report Centre', 'Training Centre', 'Certificates', 'Rostering', 'Invoicing Centre', 'Quote Centre', 'Receipt Hub', 'Goal Progress', 'Emergency Response', 'Meeting Centre', 'Intake', 'Users & Permissions Hub', 'Community & Council', 'Data / uploads', 'Login or access'];
 
@@ -109,6 +133,23 @@ export default function AiTroubleshooter({ onAskSupport }) {
                   <li key={i} className="flex items-start gap-2 text-sm"><CircleAlert className="mt-0.5 h-4 w-4 shrink-0 text-warning" /><span>{c}</span></li>
                 ))}
               </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="lg:col-span-2">
+            <CardContent className="p-4">
+              <p className="mb-3 text-sm font-bold">Take action on this diagnosis</p>
+              <div className="flex flex-wrap gap-2">
+                <Button variant="outline" disabled={!!actionBusy} onClick={() => takeAction('create_ticket')}>
+                  {actionBusy === 'create_ticket' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Ticket className="mr-2 h-4 w-4" />}
+                  Create a support ticket
+                </Button>
+                <Button variant="outline" disabled={!!actionBusy} onClick={() => takeAction('notify_admin')}>
+                  {actionBusy === 'notify_admin' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Mail className="mr-2 h-4 w-4" />}
+                  Notify my administrator
+                </Button>
+              </div>
+              {actionDone && <p className="mt-3 rounded-lg bg-safe/10 px-3 py-2 text-sm font-medium text-safe">{actionDone}</p>}
             </CardContent>
           </Card>
         </div>
