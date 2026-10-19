@@ -58,6 +58,10 @@
       "type": "string",
       "title": "Notes"
     },
+    "metrics": {
+      "type": "string",
+      "title": "Metrics (JSON)"
+    },
     "signoff_full_name": {
       "type": "string",
       "title": "Sign-off Full Name"

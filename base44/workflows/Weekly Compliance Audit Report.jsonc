@@ -1,0 +1,45 @@
+{
+  "name": "Weekly Compliance Audit Report",
+  "description": "Every Monday morning, snapshots the live compliance health score and all monitored controls into an automated weekly PDF-ready audit report saved to the Compliance Hub.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 8 * * 1",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "weekly_compliance_audit_report",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "generate_weekly_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "weeklyAuditReport",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Generate weekly audit report",
+            "description": "Snapshots compliance health into a saved audit report"
+          }
+        }
+      }
+    ]
+  }
+}

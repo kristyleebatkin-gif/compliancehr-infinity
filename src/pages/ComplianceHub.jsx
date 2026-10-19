@@ -71,6 +71,7 @@ import TaskKanban from '@/components/compliance/TaskKanban';
 import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';
 import ExecutiveSummary from '@/components/compliance/ExecutiveSummary';
 import ComplianceHealthExportButton from '@/components/compliance/ComplianceHealthExportButton';
+import WeeklyAuditReports from '@/components/compliance/WeeklyAuditReports';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
@@ -210,6 +211,7 @@ export default function ComplianceHub() {
           <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
           <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
           <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
+          <TabsTrigger value="weekly-audit-reports">Weekly Audit Reports</TabsTrigger>
           <TabsTrigger value="standards-map">NDIS Standards Map</TabsTrigger>
           <TabsTrigger value="internal-audits">Internal Audit Register</TabsTrigger>
           <TabsTrigger value="participant-reviews">Participant Reviews</TabsTrigger>
@@ -431,6 +433,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="audit-report-list" className="mt-4">
           <AuditReportList />
+        </TabsContent>
+
+        <TabsContent value="weekly-audit-reports" className="mt-4">
+          <WeeklyAuditReports />
         </TabsContent>
 
         <TabsContent value="internal-audits" className="mt-4">
