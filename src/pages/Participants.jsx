@@ -14,6 +14,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Plus, Search, Trash2, Heart, UserRound, Download, MessageSquarePlus } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
+import { Checkbox } from '@/components/ui/checkbox';
+import BulkActionBar from '@/components/BulkActionBar';
+import { useToast } from '@/components/ui/use-toast';
 import { Link } from 'react-router-dom';
 import { SHIFT_TYPES } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
@@ -31,6 +34,10 @@ export default function Participants() {
   const [diary, setDiary] = useState(blankDiary());
   const setDiaryField = (key) => (e) => setDiary({ ...diary, [key]: e.target.value });
   const [form, setForm] = useState({ full_name: '', email: '', phone: '', address: '', date_of_birth: '', ndis_number: '', support_coordinator: '', status: 'Active', notes: '' });
+  const [selected, setSelected] = useState(new Set());
+  const [busy, setBusy] = useState(false);
+  const { toast } = useToast();
+  const toggle = (id) => setSelected((prev) => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   const load = useCallback(async (term) => {
@@ -93,16 +100,47 @@ export default function Participants() {
     }
   };
 
+  const PARTICIPANT_EXPORT_COLUMNS = [
+    { key: 'full_name', label: 'Full Name' }, { key: 'ndis_number', label: 'NDIS Number' },
+    { key: 'ndis_reference_number', label: 'NDIS Reference Number' }, { key: 'email', label: 'Email' },
+    { key: 'phone', label: 'Phone' }, { key: 'address', label: 'Address' },
+    { key: 'date_of_birth', label: 'Date of Birth' }, { key: 'support_coordinator', label: 'Support Coordinator' },
+    { key: 'plan_manager', label: 'Plan Manager' }, { key: 'status', label: 'Status' },
+    { key: 'notes', label: 'Notes' },
+  ];
+
+  const exportRows = (rows, name) => downloadCsv(name, PARTICIPANT_EXPORT_COLUMNS, rows);
+
   const exportRegister = async () => {
     const rows = await fetchAllRecords(base44.entities.ParticipantProfile, {}, 'full_name');
-    downloadCsv('Participant-Register.csv', [
-      { key: 'full_name', label: 'Full Name' }, { key: 'ndis_number', label: 'NDIS Number' },
-      { key: 'ndis_reference_number', label: 'NDIS Reference Number' }, { key: 'email', label: 'Email' },
-      { key: 'phone', label: 'Phone' }, { key: 'address', label: 'Address' },
-      { key: 'date_of_birth', label: 'Date of Birth' }, { key: 'support_coordinator', label: 'Support Coordinator' },
-      { key: 'plan_manager', label: 'Plan Manager' }, { key: 'status', label: 'Status' },
-      { key: 'notes', label: 'Notes' },
-    ], rows);
+    exportRows(rows, 'Participant-Register.csv');
+  };
+
+  const bulkExport = () => exportRows(people.filter((p) => selected.has(p.id)), 'Participant-Register-Selected.csv');
+
+  const bulkStatus = async (status) => {
+    setBusy(true);
+    try {
+      await base44.entities.ParticipantProfile.updateMany({ id: { $in: [...selected] } }, { $set: { status } });
+      setSelected(new Set());
+      await load(search);
+      toast({ title: `Status set to ${status}` });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const bulkDelete = async () => {
+    if (!window.confirm(`Delete ${selected.size} participant(s)? This cannot be undone.`)) return;
+    setBusy(true);
+    try {
+      await base44.entities.ParticipantProfile.deleteMany({ id: { $in: [...selected] } });
+      setSelected(new Set());
+      await load(search);
+      toast({ title: 'Selected participants deleted' });
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -176,6 +214,19 @@ export default function Participants() {
         </Dialog>
       </div>
 
+      {selected.size > 0 && (
+        <BulkActionBar
+          count={selected.size}
+          label="participants selected"
+          statuses={['Active', 'On Hold', 'Inactive']}
+          busy={busy}
+          onExport={bulkExport}
+          onStatus={bulkStatus}
+          onDelete={bulkDelete}
+          onClear={() => setSelected(new Set())}
+          onSelectAll={() => setSelected(new Set(people.map((p) => p.id)))}
+        />
+      )}
       <div className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input className="pl-9" placeholder="Search participants" value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -191,6 +242,7 @@ export default function Participants() {
             <Card key={p.id}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
+                  <Checkbox checked={selected.has(p.id)} onCheckedChange={() => toggle(p.id)} className="mt-0.5" />
                   <div>
                     <p className="font-semibold">{p.full_name}</p>
                     <p className="text-sm text-muted-foreground">{p.ndis_number ? `NDIS ${p.ndis_number}` : 'No NDIS number'}{p.ndis_reference_number ? ` · Ref ${p.ndis_reference_number}` : ''}</p>

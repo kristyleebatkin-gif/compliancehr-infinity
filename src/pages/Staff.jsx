@@ -18,6 +18,9 @@ import CertificationOverview from '@/components/staff/CertificationOverview';
 import StaffRecognition from '@/components/staff/StaffRecognition';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import { getCompanyBranding } from '@/lib/companyBranding';
+import { Checkbox } from '@/components/ui/checkbox';
+import BulkActionBar from '@/components/BulkActionBar';
+import { useToast } from '@/components/ui/use-toast';
 
 const generateEmployeeNumber = () => `EMP${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -33,6 +36,10 @@ export default function Staff() {
   const branding = getCompanyBranding();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ full_name: '', email: '', phone: '', position: '', role: 'Support Worker', status: 'Active', start_date: '', supervisor: '', emergency_contact: '' });
+  const [selected, setSelected] = useState(new Set());
+  const [busy, setBusy] = useState(false);
+  const { toast } = useToast();
+  const toggle = (id) => setSelected((prev) => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   const load = useCallback(async (term) => {
     setLoading(true);
@@ -67,17 +74,48 @@ export default function Staff() {
     await load(search);
   };
 
+  const STAFF_EXPORT_COLUMNS = [
+    { key: 'full_name', label: 'Full Name' }, { key: 'employee_number', label: 'Employee Number' },
+    { key: 'email', label: 'Email' }, { key: 'phone', label: 'Phone' },
+    { key: 'position', label: 'Position' }, { key: 'role', label: 'Role' },
+    { key: 'app_role', label: 'App Role (Permissions)' }, { key: 'status', label: 'Status' },
+    { key: 'start_date', label: 'Start Date' }, { key: 'supervisor', label: 'Supervisor' },
+    { key: 'emergency_contact', label: 'Emergency Contact' }, { key: 'emergency_contact_phone', label: 'Emergency Contact Phone' },
+    { key: 'notes', label: 'Notes' },
+  ];
+
+  const exportRows = (rows, name) => downloadCsv(name, STAFF_EXPORT_COLUMNS, rows);
+
   const exportRegister = async () => {
     const rows = await fetchAllRecords(base44.entities.StaffProfile, {}, 'full_name');
-    downloadCsv('Staff-Register.csv', [
-      { key: 'full_name', label: 'Full Name' }, { key: 'employee_number', label: 'Employee Number' },
-      { key: 'email', label: 'Email' }, { key: 'phone', label: 'Phone' },
-      { key: 'position', label: 'Position' }, { key: 'role', label: 'Role' },
-      { key: 'app_role', label: 'App Role (Permissions)' }, { key: 'status', label: 'Status' },
-      { key: 'start_date', label: 'Start Date' }, { key: 'supervisor', label: 'Supervisor' },
-      { key: 'emergency_contact', label: 'Emergency Contact' }, { key: 'emergency_contact_phone', label: 'Emergency Contact Phone' },
-      { key: 'notes', label: 'Notes' },
-    ], rows);
+    exportRows(rows, 'Staff-Register.csv');
+  };
+
+  const bulkExport = () => exportRows(staff.filter((s) => selected.has(s.id)), 'Staff-Register-Selected.csv');
+
+  const bulkStatus = async (status) => {
+    setBusy(true);
+    try {
+      await base44.entities.StaffProfile.updateMany({ id: { $in: [...selected] } }, { $set: { status } });
+      setSelected(new Set());
+      await load(search);
+      toast({ title: `Status set to ${status}` });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const bulkDelete = async () => {
+    if (!window.confirm(`Delete ${selected.size} staff member(s)? This cannot be undone.`)) return;
+    setBusy(true);
+    try {
+      await base44.entities.StaffProfile.deleteMany({ id: { $in: [...selected] } });
+      setSelected(new Set());
+      await load(search);
+      toast({ title: 'Selected staff deleted' });
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -132,6 +170,19 @@ export default function Staff() {
             </Dialog>
           </div>
 
+          {selected.size > 0 && (
+            <BulkActionBar
+              count={selected.size}
+              label="staff selected"
+              statuses={STATUSES}
+              busy={busy}
+              onExport={bulkExport}
+              onStatus={bulkStatus}
+              onDelete={bulkDelete}
+              onClear={() => setSelected(new Set())}
+              onSelectAll={() => setSelected(new Set(staff.map((s) => s.id)))}
+            />
+          )}
           <div className="relative max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input className="pl-9" placeholder="Search staff by name" value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -147,6 +198,7 @@ export default function Staff() {
                 <Card key={s.id}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-2">
+                      <Checkbox checked={selected.has(s.id)} onCheckedChange={() => toggle(s.id)} className="mt-0.5" />
                       <div>
                         <p className="font-semibold">{s.full_name}</p>
                         <p className="text-sm text-muted-foreground">{s.position || s.role}{s.employee_number ? ` · ${s.employee_number}` : ''}</p>
