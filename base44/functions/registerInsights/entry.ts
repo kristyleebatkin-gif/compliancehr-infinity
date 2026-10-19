@@ -15,6 +15,10 @@ const REGISTRY = {
   meetings: { entity: 'Meeting', statusField: 'status', closed: ['Completed', 'Cancelled'], dateField: 'date', label: 'Meeting Centre' },
   assets: { entity: 'Asset', statusField: 'status', closed: ['Retired'], label: 'Asset Management' },
   participants: { entity: 'ParticipantProfile', statusField: 'status', closed: ['Inactive'], label: 'Participants' },
+  staff: { entity: 'StaffProfile', statusField: 'status', closed: ['Inactive'], label: 'Employee Profiles' },
+  receipts: { entity: 'Receipt', statusField: 'status', closed: ['Reconciled'], dateField: 'date', label: 'Receipt Hub' },
+  compliance: { entity: 'LegalRequirement', statusField: 'status', closed: ['Superseded', 'Archived'], dateField: 'next_review', label: 'Compliance & Report Centre' },
+  emergency: { entity: 'SafetyCheck', statusField: 'result', closed: [], dateField: 'next_due_date', label: 'Emergency Response' },
 };
 
 export default async function (req) {

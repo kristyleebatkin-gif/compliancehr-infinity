@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -92,6 +93,8 @@ export default function EmergencyResponse() {
         subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources."
         action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
       />
+
+      <RegisterInsights module="emergency" />
 
       <EmergencyQuickDial />
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -107,6 +108,8 @@ export default function Participants() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
+
+      <RegisterInsights module="participants" />
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={showDiary} onOpenChange={setShowDiary}>

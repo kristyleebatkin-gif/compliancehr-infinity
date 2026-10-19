@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -79,6 +80,8 @@ export default function Staff() {
   return (
     <div className="space-y-6">
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} />
+
+      <RegisterInsights module="staff" />
       <Tabs defaultValue="profiles">
         <TabsList>
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>

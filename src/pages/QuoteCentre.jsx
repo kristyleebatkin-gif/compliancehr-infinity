@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -178,6 +179,8 @@ export default function QuoteCentre() {
           </div>
         </div>
       </div>
+
+      <RegisterInsights module="quotes" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>

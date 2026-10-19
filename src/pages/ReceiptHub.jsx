@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -134,6 +135,8 @@ export default function ReceiptHub() {
           </div>
         </div>
       </div>
+
+      <RegisterInsights module="receipts" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>

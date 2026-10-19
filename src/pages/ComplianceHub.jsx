@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PageHeader from '@/components/PageHeader';
+import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -138,6 +139,8 @@ export default function ComplianceHub() {
           </>
         )}
       />
+
+      <RegisterInsights module="compliance" />
 
       <Tabs defaultValue="readiness">
         <TabsList className="flex-wrap">
