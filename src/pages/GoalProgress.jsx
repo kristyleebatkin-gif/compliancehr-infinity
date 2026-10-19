@@ -29,6 +29,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ participant_name: profileKind === 'participant' ? profile.full_name : '', goal: '', category: '', progress: '', status: 'In Progress', target_date: '', support_needed: '' });
+  const [teamParticipants, setTeamParticipants] = useState([]);
 
   // In 'Our' profiles participants see their own goals only; employees see
   // goals only for the approved participants they support.
@@ -44,10 +45,19 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
     try {
       const page = await base44.entities.Goal.filter(goalScope(), { sort: '-created_date', limit: 200 });
       setGoals(page.items);
+      // In 'Our' employee profiles, new goals may only be assigned to approved
+      // participants from this person's support team.
+      if (ourView && profileKind === 'staff' && profile) {
+        const pp = await base44.entities.ParticipantProfile.filter(
+          { admin_approved: true, full_name: { $in: profile.participant_team || [] } },
+          { sort: 'full_name', limit: 100, fields: ['full_name'] }
+        );
+        setTeamParticipants(pp.items.map((p) => p.full_name));
+      }
     } finally {
       setLoading(false);
     }
-  }, [goalScope]);
+  }, [goalScope, ourView, profileKind, profile?.id]);
 
   const exportGoals = async () => {
     const rows = await fetchAllRecords(base44.entities.Goal, goalScope(), '-created_date');
@@ -63,6 +73,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
 
   const save = async () => {
     if (!form.participant_name.trim() || !form.goal.trim()) return;
+    if (ourView && profileKind === 'staff' && !teamParticipants.includes(form.participant_name)) return;
     setSaving(true);
     try {
       await base44.entities.Goal.create({ ...form, progress: Number(form.progress) || undefined, admin_approved: isAdmin });
@@ -144,7 +155,16 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
             <DialogHeader><DialogTitle>New goal</DialogTitle></DialogHeader>
             <div className="grid gap-3">
               <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-1.5"><Label>Participant *</Label><Input value={form.participant_name} readOnly={profileKind === 'participant'} onChange={(e) => setForm({ ...form, participant_name: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Participant *</Label>
+                  {ourView && profileKind === 'staff' ? (
+                    <Select value={form.participant_name} onValueChange={(v) => setForm({ ...form, participant_name: v })}>
+                      <SelectTrigger><SelectValue placeholder="Select participant" /></SelectTrigger>
+                      <SelectContent>{teamParticipants.map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}</SelectContent>
+                    </Select>
+                  ) : (
+                    <Input value={form.participant_name} readOnly={profileKind === 'participant'} onChange={(e) => setForm({ ...form, participant_name: e.target.value })} />
+                  )}
+                </div>
                 <div className="grid gap-1.5"><Label>Category</Label><Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></div>
               </div>
               <div className="grid gap-1.5"><Label>Goal *</Label><Input value={form.goal} onChange={(e) => setForm({ ...form, goal: e.target.value })} /></div>
