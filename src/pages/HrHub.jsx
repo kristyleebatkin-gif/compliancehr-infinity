@@ -155,7 +155,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
 
       <div className="mt-2"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
 
-        <TabsContent value="leave" className="mt-2 space-y-2">
+        <TabsContent value="leave" className="mt-4 space-y-2">
           {embedded && <div className="flex gap-2">
             <Button size="sm" onClick={() => setShowLeaveForm(!showLeaveForm)}><Plus className="mr-2 h-4 w-4" />Log leave request</Button>
             <Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
