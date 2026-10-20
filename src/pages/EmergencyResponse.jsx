@@ -86,7 +86,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader
         icon={Siren}
         title="Emergency Response"

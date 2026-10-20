@@ -136,7 +136,7 @@ export default function MeetingCentre() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         icon={CalendarDays}
         title="Meeting Centre"
@@ -159,7 +159,7 @@ export default function MeetingCentre() {
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="register" className="mt-4 space-y-6">
+        <TabsContent value="register" className="mt-4 space-y-4">
           {nextMeeting && (
             <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
               <CardContent className="flex flex-wrap items-center gap-5 p-5">

@@ -297,7 +297,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader
         icon={CalendarRange}
         title="Rostering"

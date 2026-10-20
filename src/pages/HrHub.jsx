@@ -98,7 +98,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const upcomingLeave = leaves.filter((l) => l.status === 'Approved' && l.end_date >= today());
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-6' : 'mx-auto min-w-0 max-w-6xl space-y-6 p-3 sm:p-4 md:p-8'}>
+    <div className={embedded ? 'min-w-0 space-y-4' : 'mx-auto min-w-0 max-w-6xl space-y-4 p-3 sm:p-3 md:p-5'}>
       {!embedded && <PageHeader
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."

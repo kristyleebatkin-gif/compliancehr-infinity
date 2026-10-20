@@ -155,7 +155,7 @@ export default function QuoteCentre() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="relative overflow-hidden rounded-2xl gradient-brand p-6 text-white shadow-lg">
         <div className="pointer-events-none absolute -right-12 -top-20 h-56 w-56 rounded-full bg-white/15 blur-2xl" />
         <div className="pointer-events-none absolute -bottom-16 left-24 h-36 w-36 rounded-full bg-fuchsia-300/25 blur-2xl" />

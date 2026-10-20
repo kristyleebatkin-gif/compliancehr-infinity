@@ -51,7 +51,7 @@ export default function IncidentAnalytics() {
   const topStaff = data.byStaff[0]?.name;
 
   return (
-    <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Incident Analytics"
         subtitle="Where incidents are happening and who is reporting them, so support can be directed where it is needed."

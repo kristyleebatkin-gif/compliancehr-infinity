@@ -119,7 +119,7 @@ export default function Staff() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} />
 
       <Tabs defaultValue="profiles">

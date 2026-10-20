@@ -8,7 +8,7 @@ import PermissionMatrix from '@/components/users/PermissionMatrix';
 
 export default function UsersPermissionsHub() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         icon={Users}
         title="Users & Permissions Hub"
@@ -17,9 +17,9 @@ export default function UsersPermissionsHub() {
         showAudit={false}
       />
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-3">
         {/* Left side under the header: users and the permission matrix */}
-        <div className="space-y-6 lg:col-span-2">
+        <div className="space-y-4 lg:col-span-2">
           <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 text-white shadow-sm"><Users className="h-3.5 w-3.5" /></span>
             Users &amp; roles
@@ -34,7 +34,7 @@ export default function UsersPermissionsHub() {
         </div>
 
         {/* Right side: audit checklist and report, moved over */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white shadow-sm"><ClipboardCheck className="h-3.5 w-3.5" /></span>
             Audit this module

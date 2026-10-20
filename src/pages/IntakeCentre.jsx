@@ -31,7 +31,7 @@ const OPTIONS = [
 
 export default function IntakeCentre({ embedded = false, profile, profileKind } = {}) {
   if (embedded) return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Tabs defaultValue={profileKind === 'participant' ? 'Participant' : 'Employee'}>
         <TabsList><TabsTrigger value={profileKind === 'participant' ? 'Participant' : 'Employee'}>{profileKind === 'participant' ? 'Participant Intake' : 'Employee Intake'}</TabsTrigger></TabsList>
         <TabsContent value={profileKind === 'participant' ? 'Participant' : 'Employee'}><IntakeCaseWorkflow intakeType={profileKind === 'participant' ? 'Participant' : 'Employee'} profile={profile} /></TabsContent>
@@ -39,7 +39,7 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
     </div>
   );
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-4 md:p-8">
+    <div className="mx-auto max-w-5xl space-y-4 p-3 md:p-5">
       <PageHeader title="Intake Centre" subtitle="Choose an intake stream to open cases, collect evidence, review readiness and create approved profiles." />
       <RegisterInsights module="intake" />
 

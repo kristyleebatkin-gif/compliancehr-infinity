@@ -132,7 +132,7 @@ export default function InvoicingCentre() {
   }), [invoices]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         icon={FileSpreadsheet}
         title="Invoicing Centre"
@@ -170,7 +170,7 @@ export default function InvoicingCentre() {
           ))}
         </TabsList>
 
-        <TabsContent value="invoices" className="space-y-6">
+        <TabsContent value="invoices" className="space-y-4">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {[
               { label: 'Invoices', value: summary.total, Icon: FileSpreadsheet, grad: 'from-indigo-500 via-violet-500 to-purple-500' },

@@ -105,7 +105,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader icon={IdCard} title="Name Tags" subtitle="Make, download and email your branded staff name tag." showAlerts={false} />}
 
       {loading ? (
@@ -113,9 +113,9 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
       ) : isManager ? (
         <StaffBadgeCreator />
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {profile ? (
-            <div className="flex flex-wrap items-start gap-6 rounded-2xl border border-border/60 bg-card p-6">
+            <div className="flex flex-wrap items-start gap-4 rounded-2xl border border-border/60 bg-card p-6">
               <StaffBadgePreview branding={branding} staff={profile} />
               <div className="flex min-w-[220px] flex-1 flex-col gap-2">
                 <h2 className="font-display text-lg font-bold">Make my name tag</h2>

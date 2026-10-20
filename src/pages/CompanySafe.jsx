@@ -64,7 +64,7 @@ export default function CompanySafe() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader icon={Lock} title="Company Safe" subtitle="Business identity, business documents and important business information, secured in one safe." showAlerts={false} />
 
       <Dialog open={open} onOpenChange={setOpen}>

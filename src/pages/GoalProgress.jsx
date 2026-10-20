@@ -143,7 +143,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />}
 
       <RegisterInsights module="goals" />

@@ -144,7 +144,7 @@ export default function Participants() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         icon={Heart}
         title="Participant Profiles"

@@ -84,7 +84,7 @@ export default function ComplianceReadiness() {
             title="Compliance Readiness"
             description="Training progress and certification currency for all active staff at a glance"
           >
-            <div className="flex flex-col items-center gap-6 lg:flex-row">
+            <div className="flex flex-col items-center gap-4 lg:flex-row">
               <ScoreRing value={readiness} label="Readiness" />
               <div className="grid w-full flex-1 gap-3 sm:grid-cols-2">
                 <Tile icon={Users} label="Active staff" value={staffCount} tone="bg-brand/10 text-brand" />

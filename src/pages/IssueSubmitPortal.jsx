@@ -45,7 +45,7 @@ export default function IssueSubmitPortal() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl p-4 md:p-8">
+      <div className="mx-auto max-w-2xl p-3 md:p-5">
         <div className="rounded-2xl border border-safe/30 bg-safe/5 p-10 text-center">
           <CheckCircle2 className="mx-auto h-12 w-12 text-safe" />
           <h2 className="mt-4 text-xl font-semibold">Issue submitted</h2>
@@ -62,7 +62,7 @@ export default function IssueSubmitPortal() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Report an Issue, Concern or Barrier"
         subtitle="A simple form for staff to raise anything getting in the way of good support. Every submission goes to management for follow-up."

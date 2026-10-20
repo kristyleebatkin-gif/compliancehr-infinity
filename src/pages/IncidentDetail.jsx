@@ -44,7 +44,7 @@ export default function IncidentDetail() {
   const followUpLate = item.five_day_follow_up_due && !item.five_day_follow_up_submitted && item.five_day_follow_up_due < new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="mx-auto max-w-4xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-4xl p-3 md:p-5 space-y-4">
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> All Incidents</Link>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

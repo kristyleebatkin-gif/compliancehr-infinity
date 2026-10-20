@@ -196,7 +196,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-6 py-8 space-y-4">
       {!embedded && <PageHeader
         title="Incident Clinic"
         subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"

@@ -86,7 +86,7 @@ export default function AnalyticsHub() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Business Analytics"
         subtitle="Live cross-module KPIs: revenue, sales outcomes, operations and workforce - exportable for the board pack."

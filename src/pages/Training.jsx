@@ -94,7 +94,7 @@ export default function Training({ profile, embedded = false } = {}) {
   }, [visible]);
 
   return (
-    <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       {!embedded && <PageHeader
         title="Training Hub"
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
@@ -182,7 +182,7 @@ export default function Training({ profile, embedded = false } = {}) {
           {loading ? (
             <div className="py-12 text-center text-sm text-foreground/40">Loading curriculum...</div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {Object.entries(grouped).map(([group, mods]) => {
                 return (
                   <div key={group}>

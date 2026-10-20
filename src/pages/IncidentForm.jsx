@@ -107,7 +107,7 @@ export default function IncidentForm() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-4">
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> All Incidents</Link>
       <PageHeader title={isEdit ? 'Review Incident' : 'New Incident'} subtitle={canReview ? 'Record details, attach profiles and manage the administrative review workflow' : 'Submit the incident for administrative review'} />
 
@@ -147,7 +147,7 @@ export default function IncidentForm() {
         <Field label="Risks / Hazards Identified"><TextArea rows={3} value={form.hazards_identified || ''} onChange={(e) => set('hazards_identified', e.target.value)} /></Field>
         <Field label="Risk Assessment"><TextArea rows={3} value={form.risk_assessment || ''} onChange={(e) => set('risk_assessment', e.target.value)} placeholder="Likelihood, consequence, risk rating and people exposed" /></Field>
         <Field label="Control Measures"><TextArea rows={3} value={form.control_measures || ''} onChange={(e) => set('control_measures', e.target.value)} placeholder="Immediate and ongoing controls, owner and review date" /></Field>
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap gap-4">
           <Checkbox label="Requires NDIS Report" checked={form.requires_ndis_report} onChange={(e) => set('requires_ndis_report', e.target.checked)} />
           <Checkbox label="Police Notified" checked={form.requires_police} onChange={(e) => set('requires_police', e.target.checked)} />
           <Checkbox label="WHS Regulator Notification Required" checked={form.whs_notification_required} onChange={(e) => set('whs_notification_required', e.target.checked)} />

@@ -187,7 +187,7 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
   });
 
   return (
-    <div className="mx-auto max-w-6xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
 
       <RegisterInsights module="risks" />

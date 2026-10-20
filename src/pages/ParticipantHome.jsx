@@ -78,7 +78,7 @@ export default function ParticipantHome({ me }) {
   const firstName = (me?.full_name || '').split(' ')[0];
 
   return (
-    <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-3xl p-3 md:p-5 space-y-4">
       <PageHeader
         title={firstName ? `Hi ${firstName}` : 'My Work'}
         subtitle="Your personal view: your profile, shifts, goals, documents and your reports."

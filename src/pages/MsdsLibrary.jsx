@@ -96,7 +96,7 @@ export default function MsdsLibrary() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Emergency call prompts */}
       <div className="rounded-2xl border border-danger/30 bg-danger/10 p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-3">

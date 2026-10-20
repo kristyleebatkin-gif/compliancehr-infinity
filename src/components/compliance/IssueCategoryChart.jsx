@@ -38,7 +38,7 @@ export default function IssueCategoryChart() {
         <CardTitle className="font-display text-lg">Issues by category &amp; month</CardTitle>
         <CardDescription>Where compliance concerns are concentrated, and how they trend over time.</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-6 md:grid-cols-2">
+      <CardContent className="grid gap-4 md:grid-cols-2">
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={byCategory} margin={{ top: 4, right: 8, left: -18, bottom: 40 }}>

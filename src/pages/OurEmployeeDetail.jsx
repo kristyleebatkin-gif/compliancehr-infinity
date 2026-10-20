@@ -19,7 +19,7 @@ export default function OurEmployeeDetail() {
     return <ProfileLoadState loading={loading} error={error} backTo="/our-employees" label="Our employee profiles" />;
   }
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/our-employees"><ArrowLeft className="h-4 w-4" />Our employee profiles</Link></Button>
         <PortalInviteButton kind="staff" profile={employee} />

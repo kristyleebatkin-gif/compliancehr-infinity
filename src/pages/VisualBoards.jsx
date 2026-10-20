@@ -15,7 +15,7 @@ export default function VisualBoards({ embedded = false } = {}) {
   const [tab, setTab] = useState('clock');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader title="Visual Boards" subtitle="Communication supports: clock, visual routine, speech, signs, a full communication board, weather, day and date, and a translator." />}
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>

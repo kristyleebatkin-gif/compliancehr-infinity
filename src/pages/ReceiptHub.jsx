@@ -123,7 +123,7 @@ export default function ReceiptHub({ profile } = {}) {
   const shownReceipts = filterReceipts(receipts, filters);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         icon={ReceiptIcon}
         title="Receipt Hub"

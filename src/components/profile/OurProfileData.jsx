@@ -17,7 +17,7 @@ export default function OurProfileData({ profile, kind, onUpdated }) {
         <TabsTrigger value="forms">Fillable Forms</TabsTrigger>
         <TabsTrigger value="files">File Checklist</TabsTrigger>
       </TabsList>
-      <TabsContent value="details" className="space-y-6">
+      <TabsContent value="details" className="space-y-4">
         <ExportRow kind={kind} person={profile} section="details" />
         {participant ? <ParticipantDetailsTab participant={profile} onUpdated={onUpdated} /> : <StaffDetailsTab staff={profile} onUpdated={onUpdated} />}
       </TabsContent>

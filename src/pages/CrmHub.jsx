@@ -133,7 +133,7 @@ export default function CrmHub() {
   ], leads);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="CRM & Leads"
         subtitle="Track every enquiry through the sales pipeline: enquiries, proposals, wins and follow-ups."

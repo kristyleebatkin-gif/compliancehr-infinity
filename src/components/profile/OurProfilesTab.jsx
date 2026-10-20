@@ -131,7 +131,7 @@ export default function OurProfilesTab({ kind }) {
       {visible.length === 0 ? (
         <EmptyState icon={Icon} title="No matches" message="Try a different search term or filter." modulePath={isParticipant ? 'participants' : 'staff'} />
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {groups
             .map(([key, list]) => [key, list.filter((r) => visible.includes(r))])
             .filter(([, list]) => list.length > 0)

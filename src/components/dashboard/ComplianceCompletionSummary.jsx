@@ -102,7 +102,7 @@ export default function ComplianceCompletionSummary() {
           <div className="mt-0.5 text-xs text-foreground/50">Compliance tasks, incidents, risks and improvement actions will appear here.</div>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           <div className="flex flex-col items-center gap-2">
             <Ring percent={data.overall} />
             <div className="text-center text-xs font-medium text-foreground/60">

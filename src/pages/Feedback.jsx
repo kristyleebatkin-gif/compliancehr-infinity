@@ -221,7 +221,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
@@ -280,7 +280,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4">
               <Card><CardContent className="p-3">
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
                 <ResponsiveContainer width="100%" height={140}>

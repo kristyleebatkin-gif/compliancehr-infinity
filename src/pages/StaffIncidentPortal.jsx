@@ -57,7 +57,7 @@ export default function StaffIncidentPortal() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl p-4 md:p-8">
+      <div className="mx-auto max-w-2xl p-3 md:p-5">
         <div className="rounded-2xl border border-safe/30 bg-safe/5 p-10 text-center">
           <CheckCircle2 className="mx-auto h-12 w-12 text-safe" />
           <h2 className="mt-4 text-xl font-semibold">Incident reported</h2>
@@ -74,7 +74,7 @@ export default function StaffIncidentPortal() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Report an Incident"
         subtitle="A simple form for staff to report what happened. Every submission goes straight to the Incident register for follow-up."

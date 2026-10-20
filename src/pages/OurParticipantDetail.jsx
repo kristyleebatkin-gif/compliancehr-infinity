@@ -19,7 +19,7 @@ export default function OurParticipantDetail() {
     return <ProfileLoadState loading={loading} error={error} backTo="/our-participants" label="Our participant profiles" />;
   }
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/our-participants"><ArrowLeft className="h-4 w-4" />Our participant profiles</Link></Button>
         <div className="flex flex-wrap items-center gap-2">

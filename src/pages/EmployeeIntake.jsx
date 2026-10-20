@@ -7,7 +7,7 @@ import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 
 export default function EmployeeIntake() {
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
+    <div className="mx-auto max-w-6xl space-y-4 p-3 md:p-5">
       <Link to="/intake" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
         <ArrowLeft className="h-4 w-4" /> Intake Centre
       </Link>

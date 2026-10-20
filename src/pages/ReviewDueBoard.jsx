@@ -109,7 +109,7 @@ export default function ReviewDueBoard() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Review & Audit Board"
         subtitle="Every risk, incident, feedback, complaint, issue, take 5 and safety check, aged for review: yellow at 2 months, red at 10 weeks, audit due the day before 3 months"

@@ -19,7 +19,7 @@ const PORTALS = [
 
 export default function NdisProviderPortal() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">

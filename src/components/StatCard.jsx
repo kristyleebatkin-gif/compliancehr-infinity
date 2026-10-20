@@ -17,7 +17,7 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
     <div
       onClick={onClick}
       className={cn(
-        'group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-4 shadow-sm ring-1 ring-transparent transition-all duration-200 sm:p-5',
+        'group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-3.5 shadow-sm ring-1 ring-transparent transition-all duration-200 sm:p-4',
         onClick ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg' : 'hover:shadow-md',
         t.ring
       )}
@@ -28,11 +28,11 @@ export default function StatCard({ label, value, icon: Icon, trend, tone = 'slat
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="truncate text-sm font-semibold text-muted-foreground">{label}</div>
-          <div className={cn('mt-2 text-2xl font-bold tabular-nums tracking-tight sm:text-3xl', t.value)}>{value}</div>
-          {trend && <div className="mt-1.5 text-xs font-semibold text-muted-foreground">{trend}</div>}
+          <div className={cn('mt-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl', t.value)}>{value}</div>
+          {trend && <div className="mt-1 text-xs font-semibold text-muted-foreground">{trend}</div>}
         </div>
         {Icon && (
-          <div className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-md transition-transform duration-200 group-hover:scale-105', t.chip)}>
+          <div className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-lg shadow-md transition-transform duration-200 group-hover:scale-105', t.chip)}>
             <Icon className="h-5 w-5" />
           </div>
         )}

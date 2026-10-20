@@ -95,7 +95,7 @@ export default function Certificates() {
   const input = "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40";
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-6 py-8 space-y-4">
       <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry" showAlerts={false} showCompliance={false} />
 
       <div className="flex flex-wrap gap-2">

@@ -195,7 +195,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && <PageHeader
         icon={FolderOpen}
         title="Document Vault"
@@ -225,7 +225,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="documents" className="mt-4 space-y-6">
+        <TabsContent value="documents" className="mt-4 space-y-4">
       <div id="staff-docs" className="flex scroll-mt-24 flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
         <span className="text-sm font-bold font-editorial text-foreground/80">Staff Documents</span>
         <span className="flex-1" />

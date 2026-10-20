@@ -94,7 +94,7 @@ export default function ProcurementHub() {
   const committed = orders.filter((o) => ['Submitted', 'Approved'].includes(o.status)).reduce((t, o) => t + Number(o.total || 0), 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Procurement"
         subtitle="Suppliers, purchase orders and spend tracking - from order to receipt, with full audit traceability."

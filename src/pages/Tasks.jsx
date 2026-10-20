@@ -192,7 +192,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-5xl p-3 md:p-5 space-y-4">
       <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={exportTasks} disabled={loading || list.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-60"><Download className="h-4 w-4" />Export CSV</button><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
 
       <RegisterInsights module="tasks" />

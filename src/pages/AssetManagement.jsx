@@ -61,7 +61,7 @@ export default function AssetManagement() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules." />
 
       <RegisterInsights module="assets" />

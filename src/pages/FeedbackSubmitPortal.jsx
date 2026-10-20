@@ -49,7 +49,7 @@ export default function FeedbackSubmitPortal() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl p-4 md:p-8">
+      <div className="mx-auto max-w-2xl p-3 md:p-5">
         <div className="rounded-2xl border border-safe/30 bg-safe/5 p-10 text-center">
           <CheckCircle2 className="mx-auto h-12 w-12 text-safe" />
           <h2 className="mt-4 text-xl font-semibold">Thank you</h2>
@@ -66,7 +66,7 @@ export default function FeedbackSubmitPortal() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Share Feedback or a Complaint"
         subtitle="Tell us what is working well, or raise a complaint. Every submission goes to the Feedback & Complaints register for review."

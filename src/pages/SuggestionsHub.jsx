@@ -54,7 +54,7 @@ export default function SuggestionsHub() {
   const overdueModules = (review?.modules || []).filter((m) => (m.overdue || 0) > 0 || (m.expiring || 0) > 0).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Suggestions Hub"
         subtitle="A live review of every module: what to visualise, automate and refine, generated from real register numbers."

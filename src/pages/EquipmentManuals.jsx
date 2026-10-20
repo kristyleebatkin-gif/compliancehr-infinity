@@ -123,7 +123,7 @@ export default function EquipmentManuals() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
         <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add manual</Button>
         <Button variant="outline" onClick={exportRegister} disabled={loading || manuals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>

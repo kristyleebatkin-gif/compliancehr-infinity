@@ -13,7 +13,7 @@ export default function StaffDetail() {
   const { profile: staff, loading, error, refresh } = useProfileRecord('StaffProfile', id);
   if (loading || error || !staff) return <ProfileLoadState loading={loading} error={error} backTo="/staff" label="Staff Profiles" />;
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/staff"><ArrowLeft className="h-4 w-4" />Staff Profiles</Link></Button>
         <PortalInviteButton kind="staff" profile={staff} />

@@ -103,7 +103,7 @@ export default function StaffHome({ embedded = false } = {}) {
   const fmt = (d) => d ? format(new Date(d), 'EEE d MMM') : '';
 
   return (
-    <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-3xl p-3 md:p-5 space-y-4">
       {embedded ? (
         <div className="flex flex-wrap gap-2">
           <Link to="/incidents/submit" className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><FilePlus2 className="h-4 w-4" />Report an Incident</Link>

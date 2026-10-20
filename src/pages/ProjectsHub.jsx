@@ -69,7 +69,7 @@ export default function ProjectsHub() {
   const priorityTone = (p) => (p === 'High' ? 'bg-danger/10 text-danger' : p === 'Medium' ? 'bg-warning/10 text-warning' : 'bg-muted text-muted-foreground');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Projects Hub"
         subtitle="Business improvement projects, growth initiatives and internal builds - tracked from planning to complete."

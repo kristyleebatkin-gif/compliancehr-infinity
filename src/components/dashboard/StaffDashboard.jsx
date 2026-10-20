@@ -29,7 +29,7 @@ export default function StaffDashboard() {
   const { can } = useRole();
   const visibleModules = MODULES.filter((module) => can(module.to.slice(1)));
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <MyAvailability />
 
       <div>

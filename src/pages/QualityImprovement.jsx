@@ -148,7 +148,7 @@ export default function QualityImprovement() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title="Quality & Improvement"
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."

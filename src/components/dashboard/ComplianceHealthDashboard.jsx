@@ -114,7 +114,7 @@ export default function ComplianceHealthDashboard() {
           <div className="mt-0.5 text-xs text-foreground/50">Department health bars appear as soon as audit tasks are added.</div>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           <div className="flex flex-col items-center gap-2">
             <Ring percent={overall} />
             <div className="text-center text-xs font-medium text-foreground/60">

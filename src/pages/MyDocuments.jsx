@@ -54,7 +54,7 @@ export default function MyDocuments({ embedded = false } = {}) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {embedded ? (
         !isParticipant && (
           <div className="flex flex-wrap gap-2">

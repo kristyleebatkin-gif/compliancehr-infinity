@@ -96,7 +96,7 @@ export default function StaffProgressDashboard() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
+    <div className="mx-auto max-w-6xl space-y-4 p-3 md:p-5">
       <PageHeader
         title="Staff Profile"
         subtitle="Your staff profile, plus how many intake forms and compliance tasks each staff member has completed versus pending."
@@ -107,7 +107,7 @@ export default function StaffProgressDashboard() {
           <TabsTrigger value="progress"><TrendingUp className="mr-1.5 h-4 w-4" />Staff progress</TabsTrigger>
           <TabsTrigger value="profile"><UserRound className="mr-1.5 h-4 w-4" />My profile</TabsTrigger>
         </TabsList>
-        <TabsContent value="progress" className="space-y-6">
+        <TabsContent value="progress" className="space-y-4">
       {loading ? (
         <div className="flex items-center justify-center gap-2 py-16 text-sm text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" /> Loading staff progress…

@@ -135,14 +135,14 @@ export default function MyProfile() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-3xl p-4 md:p-8">
+      <div className="mx-auto max-w-3xl p-3 md:p-5">
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-4 md:p-8 space-y-6">
+    <div className="mx-auto max-w-5xl p-3 md:p-4 space-y-3.5">
       <PageHeader
         icon={UserRound}
         title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
@@ -160,13 +160,13 @@ export default function MyProfile() {
           {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
         </TabsList>
 
-        <TabsContent value="details" className="mt-4 space-y-6">
+        <TabsContent value="details" className="mt-3 space-y-4">
           {!profile ? (
             <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} />
           ) : (
             <>
               <Card className="border-border/60">
-                <CardContent className="p-5 space-y-3">
+                <CardContent className="p-4 space-y-2.5">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="text-lg font-semibold font-editorial">{profile.full_name}</div>
@@ -194,8 +194,8 @@ export default function MyProfile() {
               </Card>
 
               <Card className="border-border/60">
-                <CardContent className="p-5 space-y-4">
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <CardContent className="p-4 space-y-3.5">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     {fields.map(([key, label, kind]) => (
                       <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
                         <Label>{label}</Label>
@@ -218,7 +218,7 @@ export default function MyProfile() {
 
               {profile.change_log && (
                 <Card className="border-border/60">
-                  <CardContent className="p-5 space-y-2">
+                  <CardContent className="p-4 space-y-2">
                     <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Activity log</div>
                     <p className="text-xs text-foreground/50">Actions recorded on this profile, latest first.</p>
                     <div className="space-y-1">
@@ -234,9 +234,9 @@ export default function MyProfile() {
         </TabsContent>
 
         {!isParticipant && participantProfile && (
-          <TabsContent value="participant-details" className="mt-4 space-y-6">
+          <TabsContent value="participant-details" className="mt-3 space-y-4">
             <Card className="border-border/60">
-              <CardContent className="p-5 space-y-3">
+              <CardContent className="p-4 space-y-2.5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="text-lg font-semibold font-editorial">{participantProfile.full_name}</div>
@@ -255,8 +255,8 @@ export default function MyProfile() {
             <ParticipantFillableForms participant={participantProfile} />
             {canEditParticipant && (
               <Card className="border-border/60">
-                <CardContent className="p-5 space-y-4">
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <CardContent className="p-4 space-y-3.5">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     {PARTICIPANT_FIELDS.map(([key, label, kind]) => (
                       <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
                         <Label>{label}</Label>
@@ -280,22 +280,22 @@ export default function MyProfile() {
           </TabsContent>
         )}
 
-        <TabsContent value="forms" className="mt-4">
+        <TabsContent value="forms" className="mt-3">
           {isParticipant
             ? <ParticipantFillableForms participant={profile} />
             : <StaffFillableForms staff={profile} />}
         </TabsContent>
 
-        <TabsContent value="work" className="mt-4">
+        <TabsContent value="work" className="mt-3">
           <StaffHome embedded />
         </TabsContent>
 
-        <TabsContent value="documents" className="mt-4">
+        <TabsContent value="documents" className="mt-3">
           <MyDocuments embedded />
         </TabsContent>
 
         {!isParticipant && (
-          <TabsContent value="name-tags" className="mt-4">
+          <TabsContent value="name-tags" className="mt-3">
             <NameTags embedded />
           </TabsContent>
         )}

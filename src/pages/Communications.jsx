@@ -99,7 +99,7 @@ export default function Communications({ profile, profileKind, embedded = false 
     : TABS;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {!embedded && !participantOnly && <PageHeader
           title="Communication Centre"
           subtitle={employeeSelf
@@ -137,7 +137,7 @@ export default function Communications({ profile, profileKind, embedded = false 
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
         <TabsContent value="ai"><AiCompose /></TabsContent>

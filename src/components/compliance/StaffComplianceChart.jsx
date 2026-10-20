@@ -89,7 +89,7 @@ export default function StaffComplianceChart() {
         <p className="mb-2 text-xs font-medium text-muted-foreground">
           Share of active staff with every document, certificate and compliance task up to date, versus staff with items expiring within {EXPIRY_WINDOW_DAYS} days or already expired / overdue.
         </p>
-        <div className="grid items-center gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div className="grid items-center gap-4 lg:grid-cols-[1fr_1.1fr]">
           <div className="relative h-72">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
