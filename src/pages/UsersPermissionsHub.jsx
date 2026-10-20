@@ -3,7 +3,7 @@ import '@/components/users/usersWorkspace.css';
 import PageHeader from '@/components/PageHeader';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
-import { Users, ShieldCheck, ClipboardCheck, History } from 'lucide-react';
+import { Users, ShieldCheck, ClipboardCheck } from 'lucide-react';
 import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
@@ -47,10 +47,6 @@ export default function UsersPermissionsHub() {
           <p className="text-xs text-muted-foreground">
             Run a live compliance audit checklist or generate an audit report covering users, roles and module permissions.
           </p>
-          <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
-            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><History className="h-3.5 w-3.5 text-white" /></span>
-            Staff &amp; participant actions
-          </div>
           <RecentActionsPanel />
         </div>
       </div>

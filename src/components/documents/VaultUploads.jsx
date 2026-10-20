@@ -78,7 +78,7 @@ export default function VaultUploads() {
   const counts = docs.reduce((acc, d) => { const k = d.library || 'vault'; acc[k] = (acc[k] || 0) + 1; return acc; }, {});
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
+    <div className="vault-uploads rounded-lg border border-border/60 bg-card p-1.5">
       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-sm font-semibold"><FolderCheck className="h-4 w-4 text-brand" />Vault uploads report ({docs.length + extraDocs.length})</div>
         <Button size="sm" variant="outline" disabled={exporting || loading} onClick={exportAll}>
@@ -86,7 +86,7 @@ export default function VaultUploads() {
         </Button>
       </div>
       <p className="mb-4 text-xs text-muted-foreground">Every file uploaded across participants, staff, intake and the company safe, all in one place, with a downloadable export of the complete vault.</p>
-      <div className="mb-4 flex flex-wrap gap-1.5">
+      <div className="vault-upload-counts mb-1 flex flex-wrap gap-1">
         {Object.entries(counts).map(([library, count]) => (
           <Badge key={library} variant="outline" className="text-[10px]">{library}: {count}</Badge>
         ))}
@@ -97,7 +97,7 @@ export default function VaultUploads() {
       ) : docs.length === 0 ? (
         <p className="text-sm text-muted-foreground">No uploads yet.</p>
       ) : (
-        <div className="space-y-1.5">
+        <div className="vault-upload-list">
           {docs.map((d) => (
             <div key={d.id} className="flex items-center justify-between gap-2 rounded-lg border border-border/60 px-3 py-2">
               <div className="flex min-w-0 items-center gap-2">

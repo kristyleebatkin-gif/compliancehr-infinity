@@ -10,7 +10,7 @@ export default function DocumentSubjectCard({ subject, count, expanded, onOpen, 
   const Icon = subject.icon;
   const library = ['business-doc', 'business', 'policies', 'registers'].includes(subject.key);
   const companyAccess = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(role);
-  return <section id={`vault-subject-${subject.key}`} className={`scroll-mt-24 min-w-0 rounded-lg border border-border bg-card shadow-sm ${expanded ? 'sm:col-span-2 xl:col-span-3' : ''}`}>
+  return <section id={`vault-subject-${subject.key}`} data-vault-subject style={{ '--subject-color': subject.colour }} className={`scroll-mt-24 min-w-0 rounded-lg border border-border bg-card shadow-sm ${expanded ? 'sm:col-span-2 xl:col-span-3' : ''}`}>
     <button type="button" onClick={() => onOpen(subject)} aria-expanded={library ? expanded : undefined} className="flex w-full items-start gap-2 rounded-t-lg border-t-2 p-2 text-left hover:bg-muted/40" style={{ borderTopColor: subject.colour }}>
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted" style={{ color: subject.colour }}><Icon className="h-4 w-4" /></span>
       <span className="min-w-0 flex-1"><span className="block text-xs font-bold text-foreground">{subject.title}</span><span className="mt-0.5 block text-[10px] leading-snug text-muted-foreground">{subject.blurb}</span></span>

@@ -10,4 +10,23 @@
 .users-workspace .permission-matrix { display: table; width: 100%; table-layout: fixed; min-width: 0; }
 .users-workspace .permission-matrix.permission-matrix :is(th, td) { padding: 0.1875rem 0.0625rem; line-height: 1rem; overflow-wrap: anywhere; }
 .users-workspace .permission-matrix .matrix-module { width: 24%; padding-right: 0.25rem; }
-.users-workspace .permission-matrix .matrix-role { writing-mode: vertical-rl; transform: rotate(180deg); height: 7.5rem; margin: auto; white-space: nowrap; font-size: 0.5625rem; letter-spacing: 0; }
+.users-workspace .permission-matrix .matrix-role { writing-mode: vertical-rl; transform: rotate(180deg); height: 5.75rem; margin: auto; white-space: nowrap; font-size: 0.5625rem; letter-spacing: 0; }
+.users-workspace .matrix-viewport { max-height: 24rem; overscroll-behavior: contain; border: 1px solid hsl(var(--border)); border-radius: 0.375rem; }
+.users-workspace .permission-matrix { border-collapse: separate; border-spacing: 0; }
+.users-workspace .permission-matrix thead { position: sticky; top: 0; z-index: 1; background: hsl(var(--accent)); }
+.users-workspace .permission-matrix.permission-matrix :is(th, td) { padding: 0.0625rem; font-size: 0.5625rem; line-height: 0.875rem; }
+.users-workspace .permission-matrix .matrix-module { width: 20%; }
+.users-workspace .permission-matrix td > span { width: 0.75rem; height: 0.75rem; }
+.users-workspace .permission-matrix td svg { width: 0.625rem; height: 0.625rem; }
+.users-workspace .recent-actions-panel > div { padding: 0.375rem; }
+.users-workspace .recent-actions-heading { gap: 0.25rem; }
+.users-workspace .recent-actions-heading > span:first-child { width: 1.25rem; height: 1.25rem; }
+.users-workspace .recent-actions-heading > span { font-size: 0.625rem; line-height: 0.875rem; }
+.users-workspace .recent-actions-list { max-height: 10rem; overflow-y: auto; overscroll-behavior: contain; }
+.users-workspace .recent-actions-list > :not([hidden]) ~ :not([hidden]) { margin-top: 0.1875rem; }
+.users-workspace .recent-actions-row { padding: 0.1875rem 0.375rem; column-gap: 0.375rem; row-gap: 0; }
+.users-workspace .recent-actions-row, .users-workspace .recent-actions-row > span { font-size: 0.625rem; line-height: 0.875rem; }
+@media (max-width: 639px) {
+  .users-workspace .permission-matrix .matrix-module { width: 25%; }
+  .users-workspace .permission-matrix .matrix-role { font-size: 0.5rem; }
+}

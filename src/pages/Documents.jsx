@@ -23,6 +23,7 @@ import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
+import '@/components/documents/vaultWorkspace.css';
 
 
 import ParticipantVault from '@/components/documents/ParticipantVault';
@@ -195,7 +196,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   };
 
   return (
-    <div className="compact-module space-y-2">
+    <div className="vault-workspace compact-module space-y-2">
       {!embedded && <PageHeader
         icon={FolderOpen}
         title="Document Vault"

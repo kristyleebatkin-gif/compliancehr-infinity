@@ -63,7 +63,7 @@ export default function PermissionMatrix() {
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-sm"><ShieldCheck className="h-3.5 w-3.5" /></span>
         Role permission matrix
       </div>
-      <div className="overflow-x-auto">
+      <div className="matrix-viewport overflow-auto">
         <table className="permission-matrix w-full text-left text-[10px]">
           <thead>
             <tr className="border-b border-border/60">

@@ -19,9 +19,9 @@ export default function RecentActionsPanel() {
   }, []);
 
   return (
-    <Card className="border-border/60">
+    <Card className="recent-actions-panel border-border/60">
       <CardContent className="p-4 space-y-3">
-        <div className="flex items-center gap-2">
+        <div className="recent-actions-heading flex flex-wrap items-center gap-2">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
             <History className="h-4 w-4 text-white" />
           </span>
@@ -33,9 +33,9 @@ export default function RecentActionsPanel() {
         ) : rows.length === 0 ? (
           <p className="py-4 text-center text-sm text-muted-foreground">No actions logged yet. Profile edits, document uploads, task updates and name tags are captured here automatically.</p>
         ) : (
-          <div className="space-y-1.5">
+          <div className="recent-actions-list space-y-1.5">
             {rows.map((r) => (
-              <div key={r.id} className="flex flex-wrap items-center gap-x-3 gap-y-0.5 rounded-lg bg-muted/30 px-3 py-2 text-sm">
+              <div key={r.id} className="recent-actions-row flex flex-wrap items-center gap-x-3 gap-y-0.5 rounded-lg bg-muted/30 px-3 py-2 text-sm">
                 <span className="font-medium">{r.performed_by || 'Unknown'}</span>
                 {r.performed_by_role && <span className="text-xs text-muted-foreground">({r.performed_by_role})</span>}
                 <span className="font-semibold text-brand">{r.action}</span>
