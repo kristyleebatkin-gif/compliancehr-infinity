@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2, Landmark, CheckCircle2, Trash2, Upload, Split, BookmarkPlus } from 'lucide-react';
+import { Loader2, Landmark, CheckCircle2, Trash2, Upload, Split, BookmarkPlus, FileUp } from 'lucide-react';
 import { format } from 'date-fns';
-import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule } from '@/lib/bankMatchRules';
+import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule, parseStatementCsv } from '@/lib/bankMatchRules';
 
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`;
 
@@ -34,26 +34,8 @@ export default function BankReconciliation({ invoices, onChanged }) {
 
   useEffect(() => { load(); }, []);
 
-  const parseCsv = (text) => text
-    .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter(Boolean)
-    .map((l) => {
-      const parts = l.split(',').map((s) => s.trim());
-      if (parts.length < 3) return null;
-      const [date, description, rawAmount] = parts;
-      const amount = Number(rawAmount.replace(/[$\s]/g, ''));
-      if (!Number.isFinite(amount)) return null;
-      const iso = /^\d{4}-\d{2}-\d{2}$/.test(date)
-        ? date
-        : (() => { const d = new Date(date); return isNaN(d.getTime()) ? null : format(d, 'yyyy-MM-dd'); })();
-      if (!iso) return null;
-      return { statement_date: iso, description: description || '', amount };
-    })
-    .filter(Boolean);
-
   const importLines = async () => {
-    const parsed = parseCsv(csv);
+    const parsed = parseStatementCsv(csv);
     if (!parsed.length) {
       toast({ title: 'Nothing to import', description: 'Use one line per statement row: date,description,amount', variant: 'destructive' });
       return;
@@ -159,10 +141,14 @@ export default function BankReconciliation({ invoices, onChanged }) {
         <div className="grid gap-1.5">
           <Label>Paste bank statement lines (one per row: date,description,amount)</Label>
           <Textarea rows={4} placeholder={'2026-10-20,Direct deposit INV-0001,1250.00\n2026-10-21,Card fee,15.00'} value={csv} onChange={(e) => setCsv(e.target.value)} />
-          <div>
+          <div className="flex flex-wrap gap-2">
             <Button onClick={importLines} disabled={busy === 'import' || !csv.trim()}>
               {busy === 'import' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}Import lines
             </Button>
+            <label className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-md border border-input px-3 text-sm font-medium hover:bg-accent">
+              <FileUp className="h-4 w-4" />Upload CSV file
+              <input type="file" accept=".csv,.txt" className="hidden" onChange={async (e) => { const f = e.target.files?.[0]; if (f) setCsv(await f.text()); e.target.value = ''; }} />
+            </label>
           </div>
         </div>
 

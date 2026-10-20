@@ -4,8 +4,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Landmark, CheckCircle2, Split, BookmarkPlus, Trash2 } from 'lucide-react';
-import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule } from '@/lib/bankMatchRules';
+import { Loader2, Landmark, CheckCircle2, Split, BookmarkPlus, Trash2, Upload, FileUp } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule, parseStatementCsv } from '@/lib/bankMatchRules';
 
 const money = (v) => `$${Math.abs(Number(v || 0)).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`;
 
@@ -16,6 +18,7 @@ export default function ExpenseReconciliation({ onChanged }) {
   const [lines, setLines] = useState(null);
   const [orders, setOrders] = useState([]);
   const [rules, setRules] = useState([]);
+  const [csv, setCsv] = useState('');
   const [busy, setBusy] = useState(null);
 
   const load = async () => {
@@ -30,6 +33,21 @@ export default function ExpenseReconciliation({ onChanged }) {
   };
 
   useEffect(() => { load(); }, []);
+
+  const importLines = async () => {
+    const parsed = parseStatementCsv(csv, { makeNegative: true });
+    if (!parsed.length) {
+      toast({ title: 'Nothing to import', description: 'Use one line per statement row: date,description,amount', variant: 'destructive' });
+      return;
+    }
+    setBusy('import');
+    await base44.entities.BankStatementLine.bulkCreate(parsed);
+    setCsv('');
+    setBusy(null);
+    await load();
+    if (onChanged) onChanged();
+    toast({ title: `${parsed.length} outflow${parsed.length === 1 ? '' : 's'} imported` });
+  };
 
   // Open purchase orders as matcher entries, keyed by supplier name.
   const entries = orders
@@ -99,6 +117,20 @@ export default function ExpenseReconciliation({ onChanged }) {
           </div>
           <div className="ml-auto">
             {lines !== null && <Badge className={unreconciled ? 'bg-warning/15 text-warning border-transparent' : 'bg-safe/15 text-safe border-transparent'}>{unreconciled ? `${unreconciled} to reconcile` : 'All reconciled'}</Badge>}
+          </div>
+        </div>
+
+        <div className="mb-4 grid gap-1.5">
+          <Label>Paste bank statement lines - money out (one per row: date,description,amount). Positive amounts are saved as outflows.</Label>
+          <Textarea rows={3} placeholder={'2026-10-20,Origin Energy,312.00\n2026-10-21,Coles Petrol,88.50'} value={csv} onChange={(e) => setCsv(e.target.value)} />
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={importLines} disabled={busy === 'import' || !csv.trim()}>
+              {busy === 'import' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}Import outflows
+            </Button>
+            <label className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-md border border-input px-3 text-sm font-medium hover:bg-accent">
+              <FileUp className="h-4 w-4" />Upload CSV file
+              <input type="file" accept=".csv,.txt" className="hidden" onChange={async (e) => { const f = e.target.files?.[0]; if (f) setCsv(await f.text()); e.target.value = ''; }} />
+            </label>
           </div>
         </div>
 

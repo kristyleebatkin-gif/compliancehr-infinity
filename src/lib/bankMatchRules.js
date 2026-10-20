@@ -1,4 +1,5 @@
 import { base44 } from '@/api/base44Client';
+import { format } from 'date-fns';
 
 // Xero-style bank rule matching, shared by the invoice (money in) and expense
 // (money out) reconciliation views.
@@ -68,4 +69,27 @@ export async function saveRule(direction, keyword, targetName, createdByName) {
 
 export async function deleteRule(id) {
   await base44.entities.BankRule.delete(id);
+}
+
+// Parses pasted or uploaded bank statement CSV (one row: date,description,amount).
+// makeNegative stores every line as an outflow (for the expense side).
+export function parseStatementCsv(text, { makeNegative = false } = {}) {
+  return String(text)
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => {
+      const parts = l.split(',').map((s) => s.trim());
+      if (parts.length < 3) return null;
+      const [date, description, rawAmount] = parts;
+      let amount = Number(rawAmount.replace(/[$\s]/g, ''));
+      if (!Number.isFinite(amount)) return null;
+      if (makeNegative) amount = -Math.abs(amount);
+      const iso = /^\d{4}-\d{2}-\d{2}$/.test(date)
+        ? date
+        : (() => { const d = new Date(date); return isNaN(d.getTime()) ? null : format(d, 'yyyy-MM-dd'); })();
+      if (!iso) return null;
+      return { statement_date: iso, description: description || '', amount };
+    })
+    .filter(Boolean);
 }
