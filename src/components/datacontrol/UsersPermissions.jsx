@@ -27,8 +27,9 @@ export default function UsersPermissions() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.User.list();
-      setUsers(page.items);
+      const records = await base44.entities.User.list();
+      setUsers(records);
+      setDenied(false);
     } catch {
       setDenied(true);
     } finally {
