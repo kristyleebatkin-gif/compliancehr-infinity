@@ -1,9 +1,9 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { notifyProcurementRoles, poVariables } from '../../shared/procurementNotify.ts';
 
 // Notifies management and finance staff whenever a purchase order is created
 // or its status changes, and logs the entry to the audit trail. Called by the
 // Procurement Order Alerts workflow (entity trigger on PurchaseOrder).
-const NOTIFY_ROLES = ['admin', 'Provider Administrator', 'Administration', 'Finance & Accounts Officer'];
 const EVENT_LABEL = { create: 'created', update: 'updated' };
 
 export default async function(req) {
@@ -20,14 +20,7 @@ export default async function(req) {
     if (!po) return Response.json({ error: 'Purchase order not found' }, { status: 404 });
 
     const eventLabel = EVENT_LABEL[event] || 'updated';
-    const variables = {
-      po_number: po.po_number || String(po.id),
-      supplier_name: po.supplier_name || 'Unknown supplier',
-      total: po.total != null ? `$${Number(po.total).toFixed(2)}` : 'Not set',
-      status: po.status || 'Draft',
-      order_date: po.order_date || '',
-      event: eventLabel,
-    };
+    const variables = poVariables(po, eventLabel);
 
     await base44.asServiceRole.entities.AuditLog.create({
       action: `Purchase order ${eventLabel}`,
@@ -42,20 +35,7 @@ export default async function(req) {
       timestamp: new Date().toISOString(),
     });
 
-    const users = await base44.asServiceRole.entities.User.list();
-    const recipients = (users || [])
-      .filter((u) => NOTIFY_ROLES.includes(u.role) && u.email)
-      .map((u) => u.email);
-
-    const results = await Promise.allSettled(recipients.map((to) =>
-      base44.asServiceRole.integrations.Core.SendEmail({
-        to,
-        template_name: 'ProcurementOrderAlert',
-        variables,
-      })
-    ));
-
-    const notified = results.filter((r) => r.status === 'fulfilled').length;
+    const { notified, recipients } = await notifyProcurementRoles(base44, variables);
     return Response.json({ ok: true, notified, recipients, event: eventLabel });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

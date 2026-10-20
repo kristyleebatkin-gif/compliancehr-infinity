@@ -1,0 +1,45 @@
+{
+  "name": "Procurement Automation Sweep",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "procurement_automation_sweep",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_automation": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "procurementAutomation",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Run procurement automation",
+            "description": "Matches receipts, advances orders, reconciles payments"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Runs the end-to-end procurement automation hourly: matches supplier receipts to orders, advances matched orders, reconciles bank payments and alerts management",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}
