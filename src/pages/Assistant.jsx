@@ -81,7 +81,7 @@ export default function Assistant() {
   if (agent) return <AssistantChat agent={agent} onBack={() => setAgent(null)} />;
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2">
       <PageHeader
         title="AI Assistant"
         subtitle="One home for all four AI assistants. Each one reads your live app data to answer, check and summarise."
@@ -90,24 +90,24 @@ export default function Assistant() {
         showAudit={false}
       />
       <AssistantHints />
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-2 sm:grid-cols-2">
         {AGENTS.map((a) => {
           const Icon = a.icon;
           return (
             <button
               key={a.name}
               onClick={() => setAgent(a)}
-              className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full opacity-20 blur-2xl transition-opacity group-hover:opacity-35" style={{ backgroundColor: a.to }} />
               <div className="flex items-start gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-md" style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})` }}>
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow-md" style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})` }}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-foreground">{a.label}</div>
-                  <div className="mt-1 text-sm leading-5 text-foreground/55">{a.tagline}</div>
-                  <div className="mt-2 text-xs font-bold" style={{ color: a.from }}>Start chatting →</div>
+                  <div className="text-xs font-bold text-foreground">{a.label}</div>
+                  <div className="mt-0.5 text-[11px] leading-4 text-foreground/55">{a.tagline}</div>
+                  <div className="mt-1 text-[10px] font-bold" style={{ color: a.from }}>Start chatting →</div>
                 </div>
               </div>
             </button>
@@ -130,8 +130,8 @@ export default function Assistant() {
           ].map((g) => (
             <div key={g.title} className="rounded-xl border border-border/60 bg-muted/20 p-3">
               <p className={`flex items-center gap-1.5 text-xs font-bold ${g.tone}`}><g.icon className="h-3.5 w-3.5" />{g.title}</p>
-              <ul className="mt-2 space-y-1.5">
-                {g.items.map((x) => <li key={x} className="flex items-start gap-1.5 text-xs text-foreground/75"><CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-brand" />{x}</li>)}
+              <ul className="mt-1 space-y-1">
+                {g.items.map((x) => <li key={x} className="flex items-start gap-1.5 text-[11px] leading-4 text-foreground/75"><CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-brand" />{x}</li>)}
               </ul>
             </div>
           ))}

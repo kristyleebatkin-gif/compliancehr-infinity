@@ -95,7 +95,7 @@ export default function AssistantChat({ agent, onBack }) {
   const convLabel = (c) => c?.metadata?.name || `Chat ${moment(c?.created_date).format('D MMM')}`;
 
   return (
-    <div className="space-y-3">
+    <div className="compact-module space-y-2">
       {/* Chat top bar */}
       <div className="flex items-center gap-2">
         <button onClick={onBack} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-foreground/60 hover:bg-brand/5">
@@ -122,17 +122,17 @@ export default function AssistantChat({ agent, onBack }) {
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex h-[60vh] min-h-[380px] flex-col overflow-y-auto rounded-2xl border border-border/60 bg-card p-4 shadow-sm">
+      <div ref={scrollRef} className="flex h-[50vh] min-h-[280px] flex-col overflow-y-auto rounded-xl border border-border/60 bg-card p-2.5 shadow-sm">
         {messages.length === 0 && !waiting && (
           <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-md" style={{ background: `linear-gradient(135deg, ${agent.from}, ${agent.to})` }}>
-              <Icon className="h-7 w-7" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm" style={{ background: `linear-gradient(135deg, ${agent.from}, ${agent.to})` }}>
+              <Icon className="h-4 w-4" />
             </div>
-            <div className="mt-3 text-lg font-bold font-display">{agent.label}</div>
+            <div className="mt-2 text-sm font-bold font-display">{agent.label}</div>
             <div className="mt-1 max-w-sm text-sm text-foreground/50">{agent.tagline}. Ask anything to get started.</div>
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <div className="mt-2 flex flex-wrap justify-center gap-1">
               {suggestions.map((s) => (
-                <button key={s} onClick={() => setInput(s)} className="rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand">
+                <button key={s} onClick={() => setInput(s)} className="rounded-lg border border-border bg-muted/40 px-2 py-1 text-[11px] font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand">
                   {s}
                 </button>
               ))}
@@ -158,13 +158,13 @@ export default function AssistantChat({ agent, onBack }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
           placeholder={`Message ${agent.label}…`}
-          className="h-11 flex-1 rounded-xl border border-border bg-card px-4 text-sm shadow-sm outline-none focus:ring-1 focus:ring-ring"
+          className="h-8 min-w-0 flex-1 rounded-lg border border-border bg-card px-2.5 text-xs shadow-sm outline-none focus:ring-1 focus:ring-ring"
         />
         <button
           onClick={send}
           aria-label="Send message"
           disabled={!input.trim() || sending || !activeConv}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm transition-opacity disabled:opacity-40"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow-sm transition-opacity disabled:opacity-40"
           style={{ background: `linear-gradient(135deg, ${agent.from}, ${agent.to})` }}
         >
           <SendHorizontal className="h-5 w-5" />
@@ -173,7 +173,7 @@ export default function AssistantChat({ agent, onBack }) {
       {messages.length > 0 && (
         <div className="flex flex-wrap gap-2 px-1">
           {suggestions.map((s) => (
-            <button key={s} onClick={() => setInput(s)} disabled={sending} className="rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand disabled:opacity-50">
+            <button key={s} onClick={() => setInput(s)} disabled={sending} className="rounded-lg border border-border bg-muted/40 px-2 py-1 text-[11px] font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand disabled:opacity-50">
               {s}
             </button>
           ))}

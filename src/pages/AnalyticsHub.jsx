@@ -86,7 +86,7 @@ export default function AnalyticsHub() {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2">
       <PageHeader
         title="Business Analytics"
         subtitle="Live cross-module KPIs: revenue, sales outcomes, operations and workforce - exportable for the board pack."
@@ -100,24 +100,24 @@ export default function AnalyticsHub() {
 
       {stats && (
         <>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {kpis.map((k) => (
               <Card key={k.label} className={k.warn ? 'border-danger/40' : ''}>
                 <CardContent className="p-4">
-                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{k.label}</p>
-                  <p className="mt-1 text-2xl font-bold tracking-tight">{k.value}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{k.sub}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{k.label}</p>
+                  <p className="mt-0.5 break-words text-lg font-bold tracking-tight">{k.value}</p>
+                  <p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">{k.sub}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid min-w-0 gap-2 sm:grid-cols-2 [&>div]:min-w-0">
             <Card>
               <CardContent className="p-4">
-                <p className="mb-3 text-sm font-bold">Revenue by month (invoiced)</p>
-                {stats.revenue.length === 0 ? <p className="py-10 text-center text-sm text-muted-foreground">No invoices yet.</p> : (
-                  <ResponsiveContainer width="100%" height={260}>
+                <p className="mb-1.5 text-xs font-bold">Revenue by month (invoiced)</p>
+                {stats.revenue.length === 0 ? <p className="py-5 text-center text-xs text-muted-foreground">No invoices yet.</p> : (
+                  <ResponsiveContainer width="100%" height={190}>
                     <BarChart data={stats.revenue}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} />
                       <XAxis dataKey="bucket" fontSize={11} />
@@ -132,14 +132,14 @@ export default function AnalyticsHub() {
 
             <Card>
               <CardContent className="p-4">
-                <p className="mb-3 text-sm font-bold">Quote outcomes</p>
-                {stats.quoteRows.length === 0 ? <p className="py-10 text-center text-sm text-muted-foreground">No quotes yet.</p> : (
-                  <ResponsiveContainer width="100%" height={260}>
+                <p className="mb-1.5 text-xs font-bold">Quote outcomes</p>
+                {stats.quoteRows.length === 0 ? <p className="py-5 text-center text-xs text-muted-foreground">No quotes yet.</p> : (
+                  <ResponsiveContainer width="100%" height={190}>
                     <PieChart>
-                      <Pie data={stats.quoteRows} dataKey="value" nameKey="status" innerRadius={60} outerRadius={100} paddingAngle={2}>
+                      <Pie data={stats.quoteRows} dataKey="value" nameKey="status" innerRadius={36} outerRadius={58} paddingAngle={2}>
                         {stats.quoteRows.map((_, i) => <Cell key={i} fill={PIE_COLOURS[i % PIE_COLOURS.length]} />)}
                       </Pie>
-                      <Legend wrapperStyle={{ fontSize: 12 }} />
+                      <Legend wrapperStyle={{ fontSize: 10 }} />
                       <Tooltip />
                     </PieChart>
                   </ResponsiveContainer>
@@ -149,9 +149,9 @@ export default function AnalyticsHub() {
 
             <Card>
               <CardContent className="p-4">
-                <p className="mb-3 text-sm font-bold">Incidents by month</p>
-                {stats.incidents.length === 0 ? <p className="py-10 text-center text-sm text-muted-foreground">No incidents recorded.</p> : (
-                  <ResponsiveContainer width="100%" height={260}>
+                <p className="mb-1.5 text-xs font-bold">Incidents by month</p>
+                {stats.incidents.length === 0 ? <p className="py-5 text-center text-xs text-muted-foreground">No incidents recorded.</p> : (
+                  <ResponsiveContainer width="100%" height={190}>
                     <BarChart data={stats.incidents}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} />
                       <XAxis dataKey="bucket" fontSize={11} />
@@ -166,14 +166,14 @@ export default function AnalyticsHub() {
 
             <Card>
               <CardContent className="p-4">
-                <p className="mb-3 text-sm font-bold">Task completion</p>
-                {stats.taskRows.length === 0 ? <p className="py-10 text-center text-sm text-muted-foreground">No tasks yet.</p> : (
-                  <ResponsiveContainer width="100%" height={260}>
+                <p className="mb-1.5 text-xs font-bold">Task completion</p>
+                {stats.taskRows.length === 0 ? <p className="py-5 text-center text-xs text-muted-foreground">No tasks yet.</p> : (
+                  <ResponsiveContainer width="100%" height={190}>
                     <PieChart>
-                      <Pie data={stats.taskRows} dataKey="value" nameKey="status" innerRadius={60} outerRadius={100} paddingAngle={2}>
+                      <Pie data={stats.taskRows} dataKey="value" nameKey="status" innerRadius={36} outerRadius={58} paddingAngle={2}>
                         {stats.taskRows.map((_, i) => <Cell key={i} fill={PIE_COLOURS[(i + 2) % PIE_COLOURS.length]} />)}
                       </Pie>
-                      <Legend wrapperStyle={{ fontSize: 12 }} />
+                      <Legend wrapperStyle={{ fontSize: 10 }} />
                       <Tooltip />
                     </PieChart>
                   </ResponsiveContainer>

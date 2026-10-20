@@ -92,6 +92,8 @@ export default function HelpCentre() {
         }
       />
 
+      <CommonProblems />
+
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="guides" className="text-violet-700 data-[state=active]:text-violet-700"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
@@ -250,8 +252,6 @@ export default function HelpCentre() {
           </div>
         </TabsContent>
       </Tabs>
-
-      <CommonProblems />
     </div>
   );
 }

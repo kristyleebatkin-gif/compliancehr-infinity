@@ -40,6 +40,8 @@
     --chart-3: 134 61% 40%;
     --chart-4: 33 100% 50%;
     --chart-5: 335 70% 52%;
+    --ai-hint: 330 100% 95%;
+    --ai-hint-foreground: 333 74% 35%;
     --radius: 0.75rem;
     --font-heading: ui-sans-serif, system-ui, sans-serif;
     --font-body: ui-sans-serif, system-ui, sans-serif;
@@ -90,6 +92,8 @@
     --chart-3: 134 61% 50%;
     --chart-4: 33 100% 55%;
     --chart-5: 335 70% 60%;
+    --ai-hint: 330 40% 19%;
+    --ai-hint-foreground: 330 90% 85%;
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 90%;
     --sidebar-primary: 262 83% 66%;
