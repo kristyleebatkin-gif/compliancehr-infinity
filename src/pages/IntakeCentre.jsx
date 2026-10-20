@@ -129,9 +129,9 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
       <PageHeader title="Intake Centre" subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles." />
       <div className="mt-3"><RegisterInsights module="intake" compact /></div>
       <div className="mt-2 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
-        <div className="grid grid-cols-2">
+        <div className="relative grid grid-cols-2">
+          <span className="pointer-events-none absolute bottom-0 left-1/2 top-0 w-px" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-500"><StreamPanel stream={STREAMS[0]} stats={stats} /></div>
-          <div className="hidden w-px md:block" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-700"><StreamPanel stream={STREAMS[1]} stats={stats} /></div>
         </div>
         <div className="flex items-center gap-3 border-t border-white/10 bg-white/5 px-3 py-1.5" style={{ backdropFilter: 'blur(6px)' }}>
