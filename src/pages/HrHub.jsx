@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
@@ -15,10 +15,13 @@ import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWi
 import HrTemplatesLibrary from '@/components/hr/HrTemplatesLibrary';
 import PayrollHub from '@/components/payroll/PayrollHub';
 import RegisterInsights from '@/components/RegisterInsights';
+import HrDashboardNavigation from '@/components/hr/HrDashboardNavigation';
+import HrEmployeeFiles from '@/components/hr/HrEmployeeFiles';
+import MyPayroll from '@/components/payroll/MyPayroll';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
-const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
+const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Management', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
 export default function HrHub({ profile, embedded = false } = {}) {
   const [tab, setTab] = useState('leave');
@@ -29,20 +32,32 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [me, setMe] = useState(null);
+  const [summary, setSummary] = useState({ pending: 0, approved: 0, scheduled: 0, completed: 0 });
+  const [leavePage, setLeavePage] = useState({});
+  const [reviewPage, setReviewPage] = useState({});
 
   const load = useCallback(async () => {
     setLoading(true);
     const user = await base44.auth.me().catch(() => null);
     setMe(user);
     const scoped = !!user && !MANAGER_ROLES.includes(user.role);
-    const [l, r] = await Promise.all([
-      base44.entities.LeaveRequest.filter(profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {}, { sort: '-created_date', limit: 100 }),
-      base44.entities.PerformanceReview.filter(profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {}, { sort: '-review_date', limit: 100 }),
+    const leaveQuery = profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {};
+    const personalReviews = !!profile || scoped;
+    const [l, r, pendingCount, approvedCount, reviewStats] = await Promise.all([
+      base44.entities.LeaveRequest.filter(leaveQuery, { sort: '-created_date', limit: 100 }),
+      personalReviews ? base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}) }).then((res) => res.data) : base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100 }),
+      base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Pending' }),
+      base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Approved', end_date: { $gte: today() } }),
+      personalReviews ? Promise.resolve(null) : base44.entities.PerformanceReview.aggregate({ groupBy: 'status' }),
     ]);
     setLeaves(l.items || []);
     setReviews(r.items || []);
+    setLeavePage(l);
+    setReviewPage(r);
+    const rows = r.status_counts || reviewStats?.rows || [];
+    setSummary({ pending: pendingCount, approved: approvedCount, scheduled: rows.find((row) => row.status === 'Scheduled')?.count || 0, completed: rows.find((row) => row.status === 'Completed')?.count || 0 });
     setLoading(false);
-  }, [profile?.full_name]);
+  }, [profile?.id, profile?.full_name]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -93,9 +108,18 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const remove = async (entity, id) => { await entity.delete(id); load(); };
 
   const isManager = !profile && !!me && MANAGER_ROLES.includes(me.role);
-  const pending = leaves.filter((l) => l.status === 'Pending');
-  const scheduledReviews = reviews.filter((r) => r.status === 'Scheduled');
-  const upcomingLeave = leaves.filter((l) => l.status === 'Approved' && l.end_date >= today());
+  const payrollVisible = !profile || profile.email?.toLowerCase() === me?.email?.toLowerCase();
+  const loadMore = async (kind) => {
+    setLoading(true);
+    const personalReviews = !!profile || (!!me && !MANAGER_ROLES.includes(me.role));
+    const page = kind === 'leave'
+      ? await base44.entities.LeaveRequest.filter(profile ? { staff_name: profile.full_name } : !isManager ? { created_by_id: me.id } : {}, { sort: '-created_date', limit: 100, cursor: leavePage.next_cursor })
+      : personalReviews ? (await base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}), cursor: reviewPage.next_cursor })).data
+      : await base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100, cursor: reviewPage.next_cursor });
+    if (kind === 'leave') { setLeaves((old) => [...old, ...page.items]); setLeavePage(page); }
+    else { setReviews((old) => [...old, ...page.items]); setReviewPage(page); }
+    setLoading(false);
+  };
 
   return (
     <div className={embedded ? 'min-w-0 space-y-4' : 'mx-auto min-w-0 max-w-6xl space-y-4 p-3 sm:p-3 md:p-5'}>
@@ -106,14 +130,16 @@ export default function HrHub({ profile, embedded = false } = {}) {
         accent={['#2563eb', '#0891b2']}
       />}
 
-      {!embedded && <RegisterInsights module="hr" />}
+      <Tabs value={tab} onValueChange={setTab}>
+      <HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />
+      {!embedded && isManager && <div className="mt-3"><RegisterInsights module="hr" /></div>}
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: 'Pending leave requests', value: pending.length, icon: CalendarClock },
-          { label: 'Currently on leave / approved', value: upcomingLeave.length, icon: UsersRound },
-          { label: 'Reviews scheduled', value: scheduledReviews.length, icon: ClipboardCheck },
-          { label: 'Reviews completed', value: reviews.filter((r) => r.status === 'Completed').length, icon: Check },
+          { label: 'Pending leave requests', value: loading ? '…' : summary.pending, icon: CalendarClock },
+          { label: 'Currently on leave / approved', value: loading ? '…' : summary.approved, icon: UsersRound },
+          { label: 'Reviews scheduled', value: loading ? '…' : summary.scheduled, icon: ClipboardCheck },
+          { label: 'Reviews completed', value: loading ? '…' : summary.completed, icon: Check },
         ].map((s) => (
           <Card key={s.label}><CardContent className="flex items-center gap-2 p-2.5">
             <div className="rounded-lg bg-blue-50 p-1.5 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><s.icon className="h-4 w-4" /></div>
@@ -121,17 +147,6 @@ export default function HrHub({ profile, embedded = false } = {}) {
           </CardContent></Card>
         ))}
       </div>
-
-      <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="h-auto w-full flex-wrap justify-start gap-1">
-          <TabsTrigger value="leave">Leave requests</TabsTrigger>
-          <TabsTrigger value="reviews">Performance reviews</TabsTrigger>
-          {isManager && <TabsTrigger value="performance">Appraisal dashboard</TabsTrigger>}
-          {isManager && <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>}
-          {isManager && <TabsTrigger value="file-completeness">File completeness</TabsTrigger>}
-          {isManager && <TabsTrigger value="templates">Templates library</TabsTrigger>}
-          {isManager && <TabsTrigger value="payroll">Payroll</TabsTrigger>}
-        </TabsList>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
           <div className="flex gap-2">
@@ -185,6 +200,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
               ))}
             </div>
           )}
+          {leavePage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('leave')}>Load more leave requests</Button>}
         </TabsContent>
 
         <TabsContent value="reviews" className="mt-4 space-y-3">
@@ -236,13 +252,14 @@ export default function HrHub({ profile, embedded = false } = {}) {
               ))}
             </div>
           )}
+          {reviewPage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('reviews')}>Load more reviews</Button>}
         </TabsContent>
 
         {isManager && <TabsContent value="performance" className="mt-4"><AppraisalComplianceDashboard /></TabsContent>}
-        {isManager && <TabsContent value="paperwork" className="mt-4"><HrPaperworkPanel /></TabsContent>}
+        <TabsContent value="paperwork" className="mt-4">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
         {isManager && <TabsContent value="file-completeness" className="mt-4"><StaffFileCompletenessWidget /></TabsContent>}
         {isManager && <TabsContent value="templates" className="mt-4"><HrTemplatesLibrary /></TabsContent>}
-        {isManager && <TabsContent value="payroll" className="mt-4"><PayrollHub embedded /></TabsContent>}
+        {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-4">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
       </Tabs>
     </div>
   );
