@@ -112,7 +112,9 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
     e.preventDefault();
     if (!form.title) { toast({ title: 'Title required', variant: 'destructive' }); return; }
     const payload = { ...form, rating: cellRating(form.likelihood, form.consequence), ...(profileKind === 'participant' ? { participant_id: profile.id, participant_name: profile.full_name } : profile ? { owner: profile.full_name } : {}) };
-    if (payload.assessment_type !== 'Not scheduled' && payload.last_assessed_date) {
+    const previous = risks.find((risk) => risk.id === editing);
+    const scheduleChanged = previous && (previous.assessment_type !== payload.assessment_type || previous.last_assessed_date !== payload.last_assessed_date);
+    if (payload.assessment_type !== 'Not scheduled' && payload.last_assessed_date && (!payload.next_due_date || (scheduleChanged && payload.next_due_date === previous.next_due_date))) {
       const next = new Date(`${payload.last_assessed_date}T00:00:00`);
       next.setMonth(next.getMonth() + (payload.assessment_type === 'Home' ? 1 : 3));
       payload.next_due_date = next.toISOString().slice(0, 10);
@@ -187,7 +189,7 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
   });
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="compact-module mx-auto max-w-6xl p-3 space-y-3">
       {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
 
       <RegisterInsights module="risks" />
@@ -238,6 +240,7 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
       {/* Individual (3-monthly) and home (monthly) assessment due tracking */}
       <AssessmentDuePanel
         risks={risks}
+        onEdit={openEdit}
         canEdit={can('risks')}
         onUpdate={async (risk, patch) => {
           await base44.entities.Risk.update(risk.id, patch);
@@ -539,7 +542,9 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Assessment Schedule"><Select value={form.assessment_type || 'Not scheduled'} onChange={(e) => set('assessment_type', e.target.value)}><option value="Not scheduled">Not scheduled</option><option value="Individual">Individual (every 3 months)</option><option value="Home">Home (every month)</option></Select></Field>
                 <Field label="Last Assessed"><DateInput value={form.last_assessed_date || ''} onChange={(e) => set('last_assessed_date', e.target.value)} /></Field>
+                <Field label="Next Due Date"><DateInput value={form.next_due_date || ''} onChange={(e) => set('next_due_date', e.target.value)} /></Field>
               </div>
+              <Field label="Action Log"><TextArea value={form.action_log || ''} onChange={(e) => set('action_log', e.target.value)} /></Field>
               <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
             </form>
           </div>

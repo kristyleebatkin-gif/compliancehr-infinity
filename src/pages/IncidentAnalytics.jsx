@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import IncidentAnalyticsGuidance from '@/components/incidents/IncidentAnalyticsGuidance';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 import { Activity } from 'lucide-react';
@@ -51,7 +52,7 @@ export default function IncidentAnalytics() {
   const topStaff = data.byStaff[0]?.name;
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="compact-module mx-auto max-w-6xl p-3 space-y-3">
       <PageHeader
         title="Incident Analytics"
         subtitle="Where incidents are happening and who is reporting them, so support can be directed where it is needed."
@@ -69,17 +70,19 @@ export default function IncidentAnalytics() {
               { label: 'Locations involved', value: data.byLocation.length, grad: 'from-cyan-500 via-teal-500 to-emerald-500' },
             ].map((card) => (
               <div key={card.label} className={`rounded-2xl bg-gradient-to-br ${card.grad} p-4 text-white shadow-md`}>
-                <div className="w-fit rounded-xl bg-white/20 p-2.5"><Activity className="h-5 w-5" /></div>
-                <p className="mt-3 text-3xl font-bold tabular-nums">{card.value}</p>
-                <p className="text-sm font-medium text-white/85">{card.label}</p>
+                <div className="w-fit rounded-lg bg-white/20 p-1.5"><Activity className="h-3.5 w-3.5" /></div>
+                <p className="mt-1 text-xl font-bold tabular-nums">{card.value}</p>
+                <p className="text-[11px] font-medium text-white/85">{card.label}</p>
               </div>
             ))}
           </div>
 
+          <IncidentAnalyticsGuidance />
+
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
-              <CardHeader><CardTitle className="text-base">By severity</CardTitle></CardHeader>
-              <CardContent className="h-64">
+              <CardHeader className="p-2.5"><CardTitle className="text-base">By severity</CardTitle></CardHeader>
+              <CardContent className="h-52 px-2.5 pb-2.5">
                 {data.bySeverity.length === 0 ? (
                   <div className="flex h-full items-center justify-center text-sm text-foreground/40">No incidents yet</div>
                 ) : (
@@ -97,8 +100,8 @@ export default function IncidentAnalytics() {
             </Card>
 
             <Card>
-              <CardHeader><CardTitle className="text-base">By status</CardTitle></CardHeader>
-              <CardContent className="h-64">
+              <CardHeader className="p-2.5"><CardTitle className="text-base">By status</CardTitle></CardHeader>
+              <CardContent className="h-52 px-2.5 pb-2.5">
                 {data.byStatus.length === 0 ? (
                   <div className="flex h-full items-center justify-center text-sm text-foreground/40">No incidents yet</div>
                 ) : (
@@ -116,8 +119,8 @@ export default function IncidentAnalytics() {
           </div>
 
           <Card>
-            <CardHeader><CardTitle className="text-base">Incident hotspots (by location)</CardTitle></CardHeader>
-            <CardContent className="h-64">
+            <CardHeader className="p-2.5"><CardTitle className="text-base">Incident hotspots (by location)</CardTitle></CardHeader>
+            <CardContent className="h-52 px-2.5 pb-2.5">
               {data.byLocation.length === 0 ? (
                 <div className="flex h-full items-center justify-center text-sm text-foreground/40">No location data yet</div>
               ) : (
@@ -136,41 +139,8 @@ export default function IncidentAnalytics() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
-              <CardHeader><CardTitle className="text-base">Helpful resources</CardTitle></CardHeader>
-              <CardContent className="space-y-2 text-sm">
-                {[
-                  { href: '/incidents', label: 'Incident Clinic — log and manage incidents', tone: 'border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100' },
-                  { href: '/incidents/submit', label: 'Staff incident reporting portal', tone: 'border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100' },
-                  { href: '/risks', label: 'Risk management — assessments and registers', tone: 'border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100' },
-                  { href: '/quality', label: 'Quality & improvement — turn findings into actions', tone: 'border-teal-200 bg-teal-50 text-teal-700 hover:bg-teal-100' },
-                  { href: '/user-guides', label: 'User guides — incident management how-tos', tone: 'border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100' },
-                ].map((l) => (
-                  <a key={l.href} href={l.href} className={`block rounded-xl border px-3.5 py-2.5 font-semibold shadow-sm transition-colors ${l.tone}`}>{l.label}</a>
-                ))}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader><CardTitle className="text-base">What good looks like</CardTitle></CardHeader>
-              <CardContent className="space-y-2.5 text-sm">
-                {[
-                  ['Report early, report everything.', 'Low-severity near misses are the cheapest lessons you will ever get.'],
-                  ['Watch the trend, not the single event.', 'A rising monthly line signals workload, environment or communication pressures.'],
-                  ['Close the loop.', 'Every incident should end with an investigation outcome and, where needed, a change to practice.'],
-                  ['Feed the register.', 'The incident register and analytics together are your evidence base for audits and board reporting.'],
-                ].map(([head, body], i) => (
-                  <div key={i} className="flex gap-3 rounded-xl border border-violet-100 bg-violet-50/60 p-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-500 text-[11px] font-bold text-white">{i + 1}</span>
-                    <p className="text-muted-foreground"><span className="font-semibold text-foreground">{head}</span> {body}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader><CardTitle className="text-base">Incidents over the last {MONTHS_BACK} months</CardTitle></CardHeader>
-              <CardContent className="h-64">
+              <CardHeader className="p-2.5"><CardTitle className="text-base">Incidents over the last {MONTHS_BACK} months</CardTitle></CardHeader>
+              <CardContent className="h-52 px-2.5 pb-2.5">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={data.trend} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
                     <defs>
@@ -190,8 +160,8 @@ export default function IncidentAnalytics() {
             </Card>
 
             <Card>
-              <CardHeader><CardTitle className="text-base">Incidents by category</CardTitle></CardHeader>
-              <CardContent className="h-64">
+              <CardHeader className="p-2.5"><CardTitle className="text-base">Incidents by category</CardTitle></CardHeader>
+              <CardContent className="h-52 px-2.5 pb-2.5">
                 {data.byCategory.length === 0 ? (
                   <div className="flex h-full items-center justify-center text-sm text-foreground/40">No incidents yet</div>
                 ) : (
@@ -209,11 +179,11 @@ export default function IncidentAnalytics() {
           </div>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-2.5">
               <CardTitle className="text-base">Incidents by staff member</CardTitle>
               <p className="text-xs text-foreground/50">{topStaff ? `${topStaff} reports the most — a sign of strong reporting culture, not necessarily poor practice.` : ''}</p>
             </CardHeader>
-            <CardContent className="h-80">
+            <CardContent className="h-60 px-2.5 pb-2.5">
               {data.byStaff.length === 0 ? (
                 <div className="flex h-full items-center justify-center text-sm text-foreground/40">No staff-reported incidents yet</div>
               ) : (

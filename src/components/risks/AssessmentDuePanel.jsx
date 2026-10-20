@@ -11,7 +11,7 @@ const addMonths = (dateStr, months) => {
 };
 
 // Individual (3-monthly) and home (monthly) risk assessment due tracking.
-export default function AssessmentDuePanel({ risks, canEdit, onUpdate }) {
+export default function AssessmentDuePanel({ risks, canEdit, onUpdate, onEdit }) {
   const today = new Date().toISOString().slice(0, 10);
   const scheduled = risks.filter((r) => r.assessment_type === 'Individual' || r.assessment_type === 'Home');
 
@@ -53,9 +53,10 @@ export default function AssessmentDuePanel({ risks, canEdit, onUpdate }) {
                 <Badge variant="outline" className="text-[10px]">{r.assessment_type}</Badge>
                 <span className="text-xs font-medium text-muted-foreground">Due {r.next_due_date || 'set date'}</span>
                 <Badge variant="outline" className={`text-[10px] ${state.cls}`}>{state.label}</Badge>
-                {canEdit && (
+                {canEdit && <div className="module-action-bar flex flex-wrap gap-1">
+                  {onEdit && <Button size="sm" variant="outline" onClick={() => onEdit(r)}>Edit assessment</Button>}
                   <Button size="sm" variant="outline" onClick={() => markAssessed(r)}><CheckCircle2 className="h-3.5 w-3.5" />Mark assessed today</Button>
-                )}
+                </div>}
               </div>
             );
           })}

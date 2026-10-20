@@ -35,10 +35,10 @@ import { expandRecurrence } from '@/lib/rostering';
 
 const StatCard = ({ icon: Icon, label, value, tone }) => (
   <Card>
-    <CardContent className="flex items-center gap-2 p-2.5">
+    <CardContent className="flex items-center gap-1.5 px-2 py-1.5">
       <div className={`rounded-lg p-1.5 ${tone}`}><Icon className="h-4 w-4" /></div>
       <div className="min-w-0">
-        <p className="text-lg font-bold leading-6">{value}</p>
+        <p className="text-base font-bold leading-5">{value}</p>
         <p className="text-[11px] leading-4 text-muted-foreground">{label}</p>
       </div>
     </CardContent>

@@ -240,7 +240,7 @@ export default function ComplianceHub() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-3">
       <PageHeader
         icon={ShieldCheck}
         title="Compliance & Report Centre"
@@ -307,7 +307,7 @@ export default function ComplianceHub() {
         </TabsContent>
 
         <TabsContent value="readiness" className="mt-4 space-y-4">
-          <ComplianceScore />
+          <ComplianceScore compact />
           <ComplianceReadiness />
         </TabsContent>
 

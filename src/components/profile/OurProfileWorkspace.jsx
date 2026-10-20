@@ -24,7 +24,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
   return (
     <>
       {header}
-      <Tabs value={selected.key} onValueChange={selectModule} className="min-w-0 space-y-5">
+      <Tabs value={selected.key} onValueChange={selectModule} className={`${personal ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="h-3.5 w-3.5" />{label}</TabsTrigger>)}
       </TabsList>

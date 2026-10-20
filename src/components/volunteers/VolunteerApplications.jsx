@@ -52,7 +52,7 @@ export default function VolunteerApplications() {
 
   return (
     <Card>
-      <CardContent className="p-5">
+      <CardContent className="p-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="rounded-lg bg-sky-500/10 p-2"><Inbox className="h-4 w-4 text-sky-600" /></div>
@@ -69,10 +69,10 @@ export default function VolunteerApplications() {
           </div>
         </div>
 
-        <div className="mt-4 space-y-2">
+        <div className="mt-2 space-y-1">
           {loading && <p className="py-6 text-center text-sm text-muted-foreground">Loading applications...</p>}
           {!loading && apps.map((a) => (
-            <div key={a.id} className="rounded-xl border border-border/60 bg-muted/30 p-3">
+            <div key={a.id} className="rounded-lg border border-border/60 bg-muted/30 px-2 py-1.5">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
                   <p className="text-sm font-semibold">{a.full_name} <span className="text-xs font-normal text-muted-foreground">· {a.interest_type}</span></p>

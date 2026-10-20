@@ -17,7 +17,7 @@ const BADGE = {
 const LABEL = { pass: 'Pass', attention: 'Attention', fail: 'Action needed' };
 
 // Live compliance score ring + automated evidence table (continuous monitoring).
-export default function ComplianceScore() {
+export default function ComplianceScore({ compact = false }) {
   const { toast } = useToast();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -45,16 +45,16 @@ export default function ComplianceScore() {
 
   return (
     <Card className="shadow-panel">
-      <CardContent className="p-5">
-        <div className="flex flex-col gap-5 md:flex-row md:items-center">
+      <CardContent className={compact ? 'p-2.5' : 'p-5'}>
+        <div className={compact ? 'flex flex-col gap-2 md:flex-row md:items-center' : 'flex flex-col gap-5 md:flex-row md:items-center'}>
           <div className="flex items-center gap-4">
             {loading && !data ? (
-              <div className="h-[140px] w-[140px] animate-pulse rounded-full bg-muted" />
+              <div className={compact ? 'h-24 w-24 animate-pulse rounded-full bg-muted' : 'h-[140px] w-[140px] animate-pulse rounded-full bg-muted'} />
             ) : (
-              <ScoreRing value={score} size={140} label="Live score" />
+              <ScoreRing value={score} size={compact ? 96 : 140} label="Live score" />
             )}
             <div>
-              <div className="font-display text-lg font-bold">Continuous compliance score</div>
+              <div className={compact ? 'font-display text-sm font-bold' : 'font-display text-lg font-bold'}>Continuous compliance score</div>
               <p className="mt-1 max-w-xs text-xs text-muted-foreground">
                 Collected automatically from {data?.registers_monitored ?? 10} connected registers — no manual tick-and-flick. Re-collected every two minutes.
               </p>
@@ -72,7 +72,7 @@ export default function ComplianceScore() {
               <Link
                 key={c.key}
                 to={c.path}
-                className="flex items-center gap-2 rounded-lg border border-border/60 bg-card px-3 py-2 transition-colors hover:bg-muted/30"
+                className={`flex items-center gap-2 rounded-lg border border-border/60 bg-card px-2 transition-colors hover:bg-muted/30 ${compact ? 'py-1' : 'py-2'}`}
               >
                 <Badge className={`text-[10px] ${BADGE[c.status]}`}>{LABEL[c.status]}</Badge>
                 <div className="min-w-0 flex-1">

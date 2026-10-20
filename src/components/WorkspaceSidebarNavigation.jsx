@@ -5,7 +5,7 @@ import { NAV_GROUPS } from '@/lib/moduleDirectory';
 export default function WorkspaceSidebarNavigation({ items, isActive, navLabel }) {
   return <nav aria-label="Workspace navigation" className="min-h-0 flex-1 overflow-y-auto px-3 pb-3">
     {NAV_GROUPS.map((group) => {
-      const links = items.filter((item) => group.keys.includes(item.key));
+      const links = items.filter((item) => group.keys.includes(item.key) && !(item.key === 'staff-progress' && items.some((entry) => entry.key === 'staff')));
       if (!links.length) return null;
       return <section key={group.label} className="mb-3">
         <h2 className="mb-1 flex items-center gap-2 px-2 pt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{group.label}<span className="h-px flex-1 bg-border/70" /></h2>

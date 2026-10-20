@@ -78,7 +78,7 @@ export default function AuditorsPortal() {
         showAlerts={false}
       />
 
-      <ComplianceScore />
+      <ComplianceScore compact />
 
       {data === null ? (
         <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>

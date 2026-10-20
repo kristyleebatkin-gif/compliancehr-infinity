@@ -27,7 +27,7 @@ import Incidents from '@/pages/Incidents';
 import IncidentDetail from '@/pages/IncidentDetail';
 import IncidentForm from '@/pages/IncidentForm';
 import IncidentAnalytics from '@/pages/IncidentAnalytics';
-import StaffProgressDashboard from '@/pages/StaffProgressDashboard';
+import StaffProfilesHub from '@/pages/StaffProfilesHub';
 import StaffIncidentPortal from '@/pages/StaffIncidentPortal';
 import RiskSubmitPortal from '@/pages/RiskSubmitPortal';
 import IssueSubmitPortal from '@/pages/IssueSubmitPortal';
@@ -132,7 +132,7 @@ const AuthenticatedApp = () => {
           <Route path="/our-participants/:id" element={<RoleGate navKey="our-participants"><OurParticipantDetail /></RoleGate>} />
           <Route path="/my-documents" element={<Navigate to="/my-profile?tab=documents" replace />} />
           <Route path="/name-tags" element={<Navigate to="/my-profile?tab=name-tags" replace />} />
-          <Route path="/staff" element={<RoleGate navKey="staff"><Staff /></RoleGate>} />
+          <Route path="/staff" element={<RoleGate navKey="staff"><StaffProfilesHub /></RoleGate>} />
           <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
@@ -147,7 +147,7 @@ const AuthenticatedApp = () => {
           <Route path="/feedback/submit" element={<RoleGate navKey="risks"><FeedbackSubmitPortal /></RoleGate>} />
           <Route path="/incidents/new" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
           <Route path="/incident-analytics" element={<RoleGate navKey="incident-analytics"><IncidentAnalytics /></RoleGate>} />
-          <Route path="/staff-progress" element={<RoleGate navKey="staff-progress"><StaffProgressDashboard /></RoleGate>} />
+          <Route path="/staff-progress" element={<RoleGate navKey="staff-progress"><StaffProfilesHub initialTab="progress" /></RoleGate>} />
           <Route path="/incidents/:id" element={<RoleGate navKey="incidents"><IncidentDetail /></RoleGate>} />
           <Route path="/incidents/:id/edit" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
           <Route path="/certificates" element={<RoleGate navKey="certificates"><Certificates /></RoleGate>} />

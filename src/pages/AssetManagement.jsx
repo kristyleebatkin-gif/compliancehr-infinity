@@ -61,7 +61,7 @@ export default function AssetManagement() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-3">
       <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules." />
 
       <RegisterInsights module="assets" />
@@ -112,26 +112,26 @@ export default function AssetManagement() {
       ) : assets.length === 0 ? (
         <EmptyState icon={Boxes} modulePath="/assets" title="No assets recorded yet" message="Add your first asset to start the register." />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {assets.map((a) => (
             <Card key={a.id}>
-              <CardContent className="p-3">
+              <CardContent className="p-2">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-3">
                     <div className="rounded-lg bg-muted p-2"><Wrench className="h-5 w-5 text-muted-foreground" /></div>
                     <div>
-                      <p className="font-semibold">{a.name}</p>
-                      <p className="text-sm text-muted-foreground">{a.category}{a.serial_number ? ` · ${a.serial_number}` : ''}</p>
+                      <p className="text-sm font-semibold">{a.name}</p>
+                      <p className="text-xs text-muted-foreground">{a.category}{a.serial_number ? ` · ${a.serial_number}` : ''}</p>
                     </div>
                   </div>
                   <Badge className={statusTone(a.status)}>{a.status}</Badge>
                 </div>
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[11px] text-muted-foreground">
                   <Badge variant={condTone(a.condition)}>{a.condition}</Badge>
                   {a.next_service_date && <span>Service due {format(new Date(a.next_service_date), 'd MMM yyyy')}</span>}
                   {a.location && <span>· {a.location}</span>}
                 </div>
-                <div className="mt-3 flex justify-end">
+                <div className="module-action-bar mt-1 flex justify-end">
                   <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Asset.delete(a.id); await load(); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                 </div>
               </CardContent>

@@ -43,7 +43,7 @@ function ProgressChart({ title, data, pendingLabel }) {
   );
 }
 
-export default function StaffProgressDashboard() {
+export default function StaffProgressDashboard({ embedded = false }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -96,11 +96,11 @@ export default function StaffProgressDashboard() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-3 md:p-5">
-      <PageHeader
+    <div className={embedded ? 'min-w-0 space-y-3' : 'mx-auto max-w-6xl space-y-4 p-3 md:p-5'}>
+      {!embedded && <PageHeader
         title="Staff Profile"
         subtitle="Your staff profile, plus how many intake forms and compliance tasks each staff member has completed versus pending."
-      />
+      />}
 
       <Tabs defaultValue="progress">
         <TabsList>
