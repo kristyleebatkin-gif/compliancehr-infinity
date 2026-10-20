@@ -191,7 +191,7 @@ export default function QuoteCentre() {
         <p className="text-[11px] text-muted-foreground">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="module-filter-bar flex flex-wrap items-center">
         <div className="relative min-w-52 flex-1">
           <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search quote number, client, participant or NDIS number..." value={search} onChange={(e) => setSearch(e.target.value)} />

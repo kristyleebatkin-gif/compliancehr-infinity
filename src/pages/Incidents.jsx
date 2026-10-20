@@ -248,7 +248,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
           </div>
         }
       >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+        <div className="module-filter-bar mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
@@ -263,7 +263,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
               <button onClick={() => setView('list')} className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-semibold transition ${view === 'list' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />List</button>
               {canReview && <button onClick={() => setView('board')} className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-semibold transition ${view === 'board' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><KanbanSquare className="h-3.5 w-3.5" />Board</button>}
             </div>
-            <div className="flex gap-1.5 overflow-x-auto pb-1">
+            <div className="flex gap-1 overflow-x-auto pb-1">
               {statusFilters.map(s => (
                 <button
                   key={s}

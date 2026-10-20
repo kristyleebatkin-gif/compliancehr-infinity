@@ -125,7 +125,7 @@ export default function NdisUpdates() {
           <TabsTrigger value="newsletters">Newsletters</TabsTrigger>
         </TabsList>
         <TabsContent value="updates">
-          <div className="mb-3 flex flex-wrap items-center gap-2">
+          <div className="module-filter-bar mb-2 flex flex-wrap items-center">
             <p className="text-sm font-semibold">Filter by type</p>
             <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>

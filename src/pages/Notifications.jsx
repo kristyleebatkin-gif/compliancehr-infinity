@@ -155,7 +155,7 @@ export default function Notifications() {
       />
 
       {/* Summary + filters */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="module-filter-bar flex flex-wrap items-center">
         <button
           onClick={() => setReadFilter('all')}
           className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${readFilter === 'all' ? 'gradient-brand text-white shadow-sm' : 'border border-border bg-card text-foreground/60 hover:bg-brand/5'}`}

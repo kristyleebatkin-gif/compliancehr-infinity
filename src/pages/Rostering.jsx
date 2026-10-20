@@ -352,7 +352,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="module-filter-bar flex flex-wrap items-center">
             <Button variant="outline" size="sm" onClick={() => { const t = format(new Date(), 'yyyy-MM-dd'); setCalFrom(t); setCalTo(t); }} title="Today only">Today</Button>
             <Button variant="outline" size="sm" onClick={() => setCalPreset('week')}>This week</Button>
             <Button variant="outline" size="sm" onClick={() => setCalPreset('month')}>This month</Button>

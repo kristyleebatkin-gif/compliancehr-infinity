@@ -351,7 +351,7 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
         title="Risk Register"
         description={`Displaying ${filteredRisks.length} of ${risks.length} risk reports`}
         action={(
-          <div className="flex flex-wrap gap-2">
+          <div className="module-filter-bar flex flex-wrap">
             <select value={issueFilter} onChange={(event) => setIssueFilter(event.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-xs font-semibold">
               <option>All</option>
               <option>Issues and Concerns</option>

@@ -117,7 +117,7 @@ export default function ReviewDueBoard() {
         moduleKey="compliance"
       />
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="module-filter-bar flex flex-wrap items-center">
         {[
           { key: "all", label: `All (${counts.all})` },
           { key: "due_soon", label: `Yellow - review due (${counts.due_soon})` },

@@ -155,7 +155,7 @@ export default function HelpCentre() {
         </TabsContent>
 
         <TabsContent value="howtos" className="mt-4 space-y-3">
-          <div className="flex flex-wrap gap-2">
+          <div className="module-filter-bar flex flex-wrap">
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger className="w-52"><SelectValue /></SelectTrigger>
               <SelectContent>

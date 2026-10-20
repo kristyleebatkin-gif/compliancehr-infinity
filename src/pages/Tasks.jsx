@@ -208,7 +208,7 @@ export default function Tasks() {
         <TaskCalendar tasks={list} onOpen={openEdit} />
       ) : (
         <>
-          <div className="flex items-center gap-1 overflow-x-auto">
+          <div className="module-filter-bar flex items-center gap-1 overflow-x-auto">
             {['All', 'My tasks', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
               <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
             ))}

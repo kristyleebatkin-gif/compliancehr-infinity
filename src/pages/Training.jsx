@@ -171,7 +171,7 @@ export default function Training({ profile, embedded = false } = {}) {
         )
       ) : (
         <>
-          <div className="flex flex-wrap gap-2">
+          <div className="module-filter-bar flex flex-wrap">
             <Chip active={activeGroup === 'All'} tone="brand" onClick={() => setActiveGroup('All')}>All ({LMS_MODULES.length})</Chip>
             {LMS_GROUPS.map((g) => {
               const count = LMS_MODULES.filter((m) => m.group === g.name).length;

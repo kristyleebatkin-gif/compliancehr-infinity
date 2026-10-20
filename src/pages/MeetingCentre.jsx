@@ -202,7 +202,7 @@ export default function MeetingCentre() {
           </div>
 
           <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="module-filter-bar flex flex-wrap items-center">
             <div className="relative min-w-52 flex-1">
               <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input className="pl-8" placeholder="Search meetings, chair or attendees..." value={search} onChange={(e) => setSearch(e.target.value)} />

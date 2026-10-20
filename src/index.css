@@ -237,4 +237,27 @@
     background: hsl(var(--safe) / 0.10) !important;
     color: hsl(var(--safe)) !important;
   }
+  .module-filter-bar {
+    gap: 0.375rem;
+  }
+  .module-filter-bar :is(button, select, input:not([type="checkbox"]):not([type="radio"])) {
+    min-height: 2rem;
+    height: 2rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  .module-filter-bar :is(button, select) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  .module-filter-bar button {
+    gap: 0.25rem;
+  }
+  @media (min-width: 768px) {
+    .module-filter-bar input {
+      font-size: 0.75rem;
+    }
+  }
 }

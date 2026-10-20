@@ -31,10 +31,10 @@ export function filterReceipts(receipts, { q, status, minAmount, maxAmount, date
 export default function ReceiptFilters({ filters, setFilters, count, total }) {
   const set = (k, v) => setFilters((f) => ({ ...f, [k]: v }));
   return (
-    <div className="rounded-xl border border-border/60 bg-card p-3">
-      <div className="grid gap-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
+    <div className="module-filter-bar rounded-xl border border-border/60 bg-card p-2">
+      <div className="grid gap-1.5 sm:grid-cols-2 xl:grid-cols-[2fr_1fr_1fr_1fr]">
         <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search merchant, description, number, paid by…" value={filters.q} onChange={(e) => set('q', e.target.value)} />
         </div>
         <Select value={filters.status} onValueChange={(v) => set('status', v)}>

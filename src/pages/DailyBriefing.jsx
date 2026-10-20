@@ -124,7 +124,7 @@ export default function DailyBriefing() {
         showAudit={false}
         action={(
           <Select value={windowDays} onValueChange={setWindowDays}>
-            <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-8 w-40 px-2 py-1 text-xs"><SelectValue /></SelectTrigger>
             <SelectContent>
               {WINDOWS.map((w) => <SelectItem key={w} value={w}>Expiring window: {w} days</SelectItem>)}
             </SelectContent>
