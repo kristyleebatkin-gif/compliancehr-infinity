@@ -90,21 +90,21 @@ export default function StaffBadgeCreator() {
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 text-sm font-semibold">Staff badge creator</div>
-      <p className="mb-4 text-xs text-muted-foreground">Badges use the business name, logo and slogan stored in the company safe.</p>
-      <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-        <div className="space-y-3">
+    <div className="rounded-xl border border-border/60 bg-card p-2.5">
+      <div className="mb-0.5 text-xs font-semibold">Staff badge creator</div>
+      <p className="mb-2 text-[11px] text-muted-foreground">Badges use the business name, logo and slogan stored in the company safe.</p>
+      <div className="grid items-start gap-2 sm:grid-cols-[minmax(0,1fr)_200px]">
+        <div className="min-w-0 space-y-2">
           <div className="grid max-w-sm gap-1.5">
             <Label>Staff member</Label>
             <Select value={staffId} onValueChange={setStaffId}>
-              <SelectTrigger><SelectValue placeholder={staffList.length ? 'Select staff' : 'No staff yet'} /></SelectTrigger>
+              <SelectTrigger className="h-7 text-xs"><SelectValue placeholder={staffList.length ? 'Select staff' : 'No staff yet'} /></SelectTrigger>
               <SelectContent>
                 {staffList.map((s) => <SelectItem key={s.id} value={s.id}>{s.full_name}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="module-action-bar flex flex-wrap gap-1">
             <Button size="sm" disabled={!selected || saving} onClick={saveToSafe}>
               {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save
             </Button>
@@ -117,7 +117,7 @@ export default function StaffBadgeCreator() {
           </div>
         </div>
 
-        <StaffBadgePreview branding={branding} staff={selected} />
+        <div className="w-full max-w-[200px]"><StaffBadgePreview branding={branding} staff={selected} compact /></div>
       </div>
     </div>
   );

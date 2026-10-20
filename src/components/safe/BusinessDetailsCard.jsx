@@ -175,6 +175,7 @@ export default function BusinessDetailsCard() {
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
           <Field label="Contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
+          <Field label="Contact phone" type="tel" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
           <Field label="Business email" value={form.email} onChange={set('email')} />
           <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
         </div>

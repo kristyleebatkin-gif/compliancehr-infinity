@@ -16,13 +16,13 @@ export default function LiveSecurityEvidence() {
     });
     return () => { alive = false; };
   }, []);
-  return <Card><CardContent className="p-4">
-    <p className="mb-3 text-sm font-semibold">Live evidence</p>
-    {stats ? <div className="grid gap-3 sm:grid-cols-3">
-      {['Status-trail entries', 'Platform audit-log entries', 'Controlled user accounts'].map((label, index) => <div key={label} className="rounded-xl border border-border/60 p-3">
-        <p className="text-2xl font-editorial tabular-nums">{stats[index] === null ? '—' : stats[index].toLocaleString()}</p>
-        <p className="text-xs text-muted-foreground">{label}</p>
+  return <Card><CardContent className="p-2">
+    <p className="mb-1.5 text-xs font-semibold">Live evidence</p>
+    {stats ? <div className="grid grid-cols-3 gap-1.5">
+      {['Status-trail entries', 'Platform audit-log entries', 'Controlled user accounts'].map((label, index) => <div key={label} className="min-w-0 rounded-lg border border-border/60 px-2 py-1">
+        <p className="text-lg leading-6 font-editorial tabular-nums">{stats[index] === null ? '—' : stats[index].toLocaleString()}</p>
+        <p className="text-[10px] leading-3.5 text-muted-foreground">{label}</p>
       </div>)}
-    </div> : <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Collecting evidence...</div>}
+    </div> : <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Loader2 className="h-3 w-3 animate-spin" />Collecting evidence...</div>}
   </CardContent></Card>;
 }
