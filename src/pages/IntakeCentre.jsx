@@ -6,30 +6,87 @@ import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
 import { STATUS_HEX, STATUS_ORDER } from '@/components/intake/intakeDisplay';
-import { Heart, Users, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
+import { Heart, Users, ArrowRight } from 'lucide-react';
 
 const ACTIVE_STATUSES = ['Draft', 'Information Required', 'Ready for Review'];
 
 const STREAMS = [
   {
     title: 'Participant Intake',
-    desc: 'Complete participant details, collect required forms, review readiness and create an approved participant profile.',
+    desc: 'Details, forms, referee checks and approvals — then a ready participant profile.',
     to: '/intake/participant',
     icon: Heart,
-    text: '#fff1f5',
     badge: 'Participant onboarding',
+    gradient: 'linear-gradient(160deg, #be185d 0%, #db2777 45%, #f97316 100%)',
+    cta: '#be185d',
     map: 'p',
   },
   {
     title: 'Employee Intake',
-    desc: 'Manage applicants, collect onboarding evidence, complete approvals and create an employee profile.',
+    desc: 'Applicants, onboarding evidence, approvals and a ready employee profile.',
     to: '/intake/employee',
     icon: Users,
-    text: '#f3f0ff',
     badge: 'Workforce onboarding',
+    gradient: 'linear-gradient(160deg, #6d28d9 0%, #7c3aed 45%, #2563eb 100%)',
+    cta: '#6d28d9',
     map: 'e',
   },
 ];
+
+function ReadinessRing({ value, total }) {
+  const pct = total > 0 ? Math.round((value / total) * 100) : 0;
+  const r = 38;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="relative h-24 w-24">
+      <svg viewBox="0 0 88 88" className="h-24 w-24 -rotate-90">
+        <circle cx="44" cy="44" r={r} fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="7" />
+        <circle
+          cx="44" cy="44" r={r} fill="none" stroke="#ffffff" strokeWidth="7" strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)}
+          style={{ transition: 'stroke-dashoffset 600ms ease' }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="font-display text-xl font-extrabold tabular-nums text-white">{pct}%</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">ready</span>
+      </div>
+    </div>
+  );
+}
+
+function StreamPanel({ stream, stats }) {
+  const map = stats?.[stream.map] || {};
+  const total = Object.values(map).reduce((t, n) => t + n, 0);
+  const ready = map['Ready for Review'] || 0;
+  const active = ACTIVE_STATUSES.reduce((t, s) => t + (map[s] || 0), 0);
+  return (
+    <Link
+      to={stream.to}
+      className="group relative flex min-h-[400px] flex-col items-center justify-center gap-4 overflow-hidden p-6 text-center transition-all hover:brightness-105"
+      style={{ background: stream.gradient }}
+    >
+      <div className="pointer-events-none absolute -right-14 -top-14 h-48 w-48 rounded-full bg-white/15 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+      <span className="pointer-events-none absolute left-0 top-0 h-[2px] w-2/3" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.7), transparent)' }} />
+      <span className="relative rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white/85 ring-1 ring-white/25" style={{ backdropFilter: 'blur(4px)' }}>{stream.badge}</span>
+      <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 shadow-lg ring-1 ring-white/30 transition-transform duration-200 group-hover:scale-105" style={{ backdropFilter: 'blur(4px)' }}>
+        <stream.icon className="h-8 w-8 text-white" />
+      </div>
+      <h2 className="relative font-display text-2xl font-extrabold text-white">{stream.title}</h2>
+      <p className="relative max-w-sm text-sm leading-6 text-white/75">{stream.desc}</p>
+      <ReadinessRing value={ready} total={total} />
+      <div className="relative flex flex-wrap justify-center gap-2">
+        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Active <span className="tabular-nums opacity-80">{stats ? active : '…'}</span></span>
+        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Ready for review <span className="tabular-nums opacity-80">{stats ? ready : '…'}</span></span>
+        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Total <span className="tabular-nums opacity-80">{stats ? total : '…'}</span></span>
+      </div>
+      <span className="relative mt-2 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold shadow-lg transition-all group-hover:gap-3" style={{ color: stream.cta }}>
+        Open <ArrowRight className="h-4 w-4" />
+      </span>
+    </Link>
+  );
+}
 
 export default function IntakeCentre({ embedded = false, profile, profileKind } = {}) {
   const [stats, setStats] = useState(null);
@@ -66,94 +123,40 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
     merged[status] = (merged[status] || 0) + count;
   }));
   const total = Object.values(merged).reduce((t, n) => t + n, 0);
-  const sum = (map, keys) => keys.reduce((t, k) => t + ((stats?.[map]?.[k]) || 0), 0);
-  const grand = (map) => Object.values(stats?.[map] || {}).reduce((t, n) => t + n, 0);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-3 p-3 md:p-4">
-      <PageHeader title="Intake Centre" subtitle="Choose an intake stream to open cases, collect evidence, review readiness and create approved profiles." />
-      <RegisterInsights module="intake" />
-
-      <div className="rounded-2xl border border-border/60 bg-card p-3.5 shadow-sm">
-        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 text-sm font-bold">
-            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Activity className="h-4 w-4" /></span>
-            Pipeline at a glance
-          </div>
-          <span className="rounded-full bg-primary/10 px-3 py-0.5 text-xs font-bold text-primary">{stats ? `${total} cases` : '…'}</span>
+    <div className="p-3 md:p-4">
+      <PageHeader title="Intake Centre" subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles." />
+      <div className="mt-3 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
+        <div className="grid md:grid-cols-2">
+          <div className="animate-in fade-in slide-in-from-bottom-2 duration-500"><StreamPanel stream={STREAMS[0]} stats={stats} /></div>
+          <div className="hidden w-px md:block" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />
+          <div className="animate-in fade-in slide-in-from-bottom-2 duration-700"><StreamPanel stream={STREAMS[1]} stats={stats} /></div>
         </div>
-        {total > 0 ? (
-          <>
-            <div className="flex h-3 overflow-hidden rounded-full bg-muted">
-              {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
-                <span key={s} style={{ flexBasis: `${(merged[s] / total) * 100}%`, backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
-              ))}
-            </div>
-            <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1">
-              {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
-                <span key={s} className="flex items-center gap-1.5 text-xs font-semibold text-foreground/70">
-                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
-                  {s} <span className="tabular-nums text-foreground/45">{merged[s]}</span>
-                </span>
-              ))}
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-muted-foreground">{stats ? 'No intake cases yet — open a stream below to start your first case.' : 'Loading pipeline…'}</p>
-        )}
-      </div>
-
-      <div className="space-y-3">
-        {STREAMS.map((stream, index) => (
-          <Link
-            key={stream.to}
-            to={stream.to}
-            className="group relative block overflow-hidden rounded-2xl p-5 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-2xl"
-            style={{
-              background: index === 0
-                ? 'linear-gradient(120deg, #db2777 0%, #ec4899 55%, #f97316 100%)'
-                : 'linear-gradient(120deg, #7c3aed 0%, #6d28d9 55%, #2563eb 100%)',
-              color: stream.text,
-            }}
-          >
-            <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-14 right-1/3 h-28 w-28 rounded-full bg-white/10 blur-xl" />
-            <div className="relative flex flex-wrap items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-md ring-1 ring-white/30" style={{ backdropFilter: 'blur(4px)' }}>
-                <stream.icon className="h-7 w-7" />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-white/10 bg-white/5 px-4 py-2.5" style={{ backdropFilter: 'blur(6px)' }}>
+          <span className="text-xs font-bold uppercase tracking-wider text-white/60">Pipeline</span>
+          {total > 0 ? (
+            <>
+              <div className="flex h-2 min-w-40 flex-1 overflow-hidden rounded-full bg-white/10">
+                {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
+                  <span key={s} style={{ flexBasis: `${(merged[s] / total) * 100}%`, backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
+                ))}
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-display text-xl font-extrabold">{stream.title}</h2>
-                  <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold">{stream.badge}</span>
-                </div>
-                <p className="mt-1 max-w-2xl text-sm leading-6 opacity-80">{stream.desc}</p>
-                <div className="mt-2.5 flex flex-wrap gap-2">
-                  {[
-                    { label: 'Active', value: stats ? sum(stream.map, ACTIVE_STATUSES) : null },
-                    { label: 'Ready for review', value: stats ? ((stats[stream.map]['Ready for Review']) || 0) : null },
-                    { label: 'Total cases', value: stats ? grand(stream.map) : null },
-                  ].map((chip) => (
-                    <span key={chip.label} className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold" style={{ backdropFilter: 'blur(4px)' }}>
-                      {chip.label} <span className="tabular-nums opacity-80">{chip.value === null ? '…' : chip.value}</span>
-                    </span>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
+                  <span key={s} className="flex items-center gap-1.5 text-xs font-semibold text-white/75">
+                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
+                    {s} <span className="tabular-nums text-white/50">{merged[s]}</span>
+                  </span>
+                ))}
               </div>
-              <span className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold shadow-md transition-all group-hover:gap-3" style={{ color: index === 0 ? '#be185d' : '#6d28d9' }}>
-                Open <ArrowRight className="h-4 w-4" />
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      <div className="flex items-start gap-3 rounded-2xl border border-cyan-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-3.5 dark:border-cyan-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/25">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-cyan-500 text-white shadow-md">
-          <ShieldCheck className="h-4 w-4" />
+            </>
+          ) : (
+            <span className="text-xs font-semibold text-white/60">{stats ? 'No cases yet — open a portal above.' : 'Loading pipeline…'}</span>
+          )}
         </div>
-        <p className="text-sm leading-6 text-foreground/70"><span className="font-bold text-foreground">Secure, guided onboarding.</span> Each stream keeps identity details, evidence, forms and approval steps together, and carries consents, referee checks and documents onto the created profile.</p>
       </div>
+      <div className="mt-3"><RegisterInsights module="intake" /></div>
     </div>
   );
 }
