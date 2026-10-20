@@ -96,14 +96,21 @@ export default function KeyContacts({ readOnly = false } = {}) {
             <ModuleComplianceStrip path="/contacts" />
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
-            {[['Contacts', String(contacts.length)], ['Emergency', String(contacts.filter((c) => c.category === 'Emergency').length)], ['Medical', String(contacts.filter((c) => c.category === 'Medical').length)]].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
-                <p className="text-sm font-bold">{value}</p>
-              </div>
-            ))}
           </div>
         </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          ['Contacts', contacts.length, 'from-cyan-500 via-sky-500 to-blue-600'],
+          ['Emergency', contacts.filter((c) => c.category === 'Emergency').length, 'from-rose-500 via-red-500 to-orange-500'],
+          ['Medical', contacts.filter((c) => c.category === 'Medical').length, 'from-emerald-500 via-teal-500 to-cyan-600'],
+        ].map(([label, value, grad]) => (
+          <div key={label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${grad}`}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{label}</p>
+            <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
+          </div>
+        ))}
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

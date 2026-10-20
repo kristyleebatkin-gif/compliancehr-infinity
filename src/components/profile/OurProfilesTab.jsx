@@ -61,6 +61,23 @@ export default function OurProfilesTab({ kind }) {
   const attentionCount = records.length - activeCount;
   const Icon = isParticipant ? Heart : Users;
 
+  const searchBox = (
+    <div className="relative sm:w-72">
+      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Input className="pl-9" placeholder={`Search ${isParticipant ? 'participants' : 'employees'} by name, email or number`} value={search} onChange={(e) => setSearch(e.target.value)} />
+    </div>
+  );
+  const filterRow = (
+    <div className="flex flex-wrap gap-1.5">
+      <Button variant={group === 'all' ? 'default' : 'outline'} size="sm" onClick={() => setGroup('all')}>All ({records.length})</Button>
+      {groups.map(([key, list]) => (
+        <Button key={key} variant={group === key ? 'default' : 'outline'} size="sm" onClick={() => setGroup(key === group ? 'all' : key)}>
+          {key} ({list.length})
+        </Button>
+      ))}
+    </div>
+  );
+
   if (loading) {
     return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
@@ -83,6 +100,12 @@ export default function OurProfilesTab({ kind }) {
         </div>
       )}
       {!selfOnly && <>
+      {/* Participants: search sits directly under the header */}
+      {isParticipant && searchBox}
+
+      {/* Employees: quick-filter tabs first, then the search below them */}
+      {!isParticipant && <>{filterRow}{searchBox}</>}
+
       {/* Stat tiles */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
@@ -100,21 +123,8 @@ export default function OurProfilesTab({ kind }) {
         ))}
       </div>
 
-      {/* Search + quick filters */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-        <div className="relative sm:w-72">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input className="pl-9" placeholder={`Search ${isParticipant ? 'participants' : 'employees'} by name, email or number`} value={search} onChange={(e) => setSearch(e.target.value)} />
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          <Button variant={group === 'all' ? 'default' : 'outline'} size="sm" onClick={() => setGroup('all')}>All ({records.length})</Button>
-          {groups.map(([key, list]) => (
-            <Button key={key} variant={group === key ? 'default' : 'outline'} size="sm" onClick={() => setGroup(key === group ? 'all' : key)}>
-              {key} ({list.length})
-            </Button>
-          ))}
-        </div>
-      </div>
+      {/* Participants keep their quick filters above the grouped sections */}
+      {isParticipant && filterRow}
       </>}
 
       {/* Modular grouped sections */}

@@ -122,7 +122,6 @@ export default function Staff() {
     <div className="space-y-6">
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} />
 
-      <RegisterInsights module="staff" />
       <Tabs defaultValue="profiles">
         <TabsList>
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
@@ -230,6 +229,8 @@ export default function Staff() {
           <StaffRecognition />
         </TabsContent>
       </Tabs>
+
+      <RegisterInsights module="staff" />
     </div>
   );
 }

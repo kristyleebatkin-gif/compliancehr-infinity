@@ -145,13 +145,15 @@ export default function Participants() {
 
   return (
     <div className="space-y-6">
-      <PageHeader icon={Heart} title="Participant Profiles" subtitle="People you support and their details." />
-
-      <RegisterInsights module="participants" />
-      <div className="flex flex-wrap items-center gap-2">
-        <Button variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+      <PageHeader
+        icon={Heart}
+        title="Participant Profiles"
+        subtitle="People you support and their details."
+        action={(
+          <div className="flex flex-wrap items-center gap-2">
+        <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="h-4 w-4" />Export register</Button>
         <Dialog open={showDiary} onOpenChange={setShowDiary}>
-          <DialogTrigger asChild><Button variant="outline"><MessageSquarePlus className="mr-2 h-4 w-4" />Diary entry</Button></DialogTrigger>
+          <DialogTrigger asChild><Button size="sm" variant="outline"><MessageSquarePlus className="h-4 w-4" />Diary entry</Button></DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">
             <DialogHeader><DialogTitle>Add diary entry</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -184,7 +186,7 @@ export default function Participants() {
           </DialogContent>
         </Dialog>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add participant</Button></DialogTrigger>
+          <DialogTrigger asChild><Button size="sm"><Plus className="h-4 w-4" />Add participant</Button></DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">
             <DialogHeader><DialogTitle>New participant</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -212,7 +214,11 @@ export default function Participants() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+          </div>
+        )}
+      />
+
+      <RegisterInsights module="participants" />
 
       {selected.size > 0 && (
         <BulkActionBar

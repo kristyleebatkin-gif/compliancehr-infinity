@@ -94,17 +94,16 @@ export default function Volunteers() {
         subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
         icon={HeartHandshake}
         accent={['#0891b2', '#0d9488']}
+        action={!isVolunteer && canManage && (
+          <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="h-4 w-4" />Add volunteer</Button>
+            <Button size="sm" variant="outline" onClick={() => setInviteOpen(true)}><UserPlus className="h-4 w-4" />Invite volunteer</Button>
+            <Button size="sm" variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="h-4 w-4" />Export register</Button>
+          </div>
+        )}
       />
 
       {!isVolunteer && <AutoRegisterInsights placement="header" />}
-
-      {canManage && (
-        <div className="flex flex-wrap items-center gap-2">
-          <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add volunteer</Button>
-          <Button variant="outline" onClick={() => setInviteOpen(true)}><UserPlus className="mr-2 h-4 w-4" />Invite volunteer</Button>
-          <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        </div>
-      )}
 
       {canManage && <VolunteerApplications />}
 

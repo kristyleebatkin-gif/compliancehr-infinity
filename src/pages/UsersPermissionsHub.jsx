@@ -39,7 +39,7 @@ export default function UsersPermissionsHub() {
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white shadow-sm"><ClipboardCheck className="h-3.5 w-3.5" /></span>
             Audit this module
           </div>
-          <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
             <ModuleAuditChecklistButton />
             <ModuleAuditButton />
           </div>
