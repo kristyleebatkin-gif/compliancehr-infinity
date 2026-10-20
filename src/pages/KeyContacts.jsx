@@ -128,7 +128,7 @@ export default function KeyContacts({ readOnly = false } = {}) {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {contacts.map((c) => (
             <Card key={c.id}>
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="font-semibold">{c.name}</p>

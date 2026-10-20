@@ -218,7 +218,7 @@ export default function QuoteCentre() {
             const total = lines.length ? lines.reduce((sum, l) => sum + lineAmount(l), 0) : (Number(q.total) || 0);
             return (
               <Card key={q.id}>
-                <CardContent className="p-4">
+                <CardContent className="px-3 py-2">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-semibold">{q.quote_number} · {q.client_name || 'No client set'}</p>

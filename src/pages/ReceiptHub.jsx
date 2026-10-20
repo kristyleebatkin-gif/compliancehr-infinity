@@ -168,8 +168,8 @@ export default function ReceiptHub({ profile } = {}) {
             <EmptyState icon={ReceiptIcon} title="No receipts match these filters" message="Try widening your search or clearing the filters." />
           ) : shownReceipts.map((r) => (
             <Card key={r.id} className={`border-l-4 transition-shadow hover:shadow-md ${r.status === 'Reconciled' ? 'border-l-emerald-500' : 'border-l-amber-400'}`}>
-              <CardContent className="p-4">
-                <div className="flex flex-wrap items-center justify-between gap-3">
+              <CardContent className="px-3 py-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="min-w-0">
                     <p className="font-medium">{r.description}{r.category ? ` · ${r.category}` : ''}</p>
                     <p className="text-sm text-muted-foreground">

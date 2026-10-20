@@ -243,10 +243,10 @@ export default function Participants() {
       ) : people.length === 0 ? (
         <EmptyState icon={Heart} modulePath="/participants" title="No participants yet" message="Add your first participant to start their profile." />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {people.map((p) => (
             <Card key={p.id}>
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-2">
                   <Checkbox checked={selected.has(p.id)} onCheckedChange={() => toggle(p.id)} className="mt-0.5" />
                   <div>
@@ -255,14 +255,14 @@ export default function Participants() {
                   </div>
                   <Badge className={statusTone(p.status)}>{p.status}</Badge>
                 </div>
-                <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+                <div className="mt-2 space-y-0.5 text-xs leading-5 text-muted-foreground">
                   {p.email && <p>{p.email}</p>}
                   {p.phone && <p>{p.phone}</p>}
                   {p.address && <p>{p.address}</p>}
                   {p.support_coordinator && <p>Coordinator: {p.support_coordinator}</p>}
                   {p.notes && <p className="pt-1 italic">{p.notes}</p>}
                 </div>
-                <div className="mt-3 flex justify-end gap-1">
+                <div className="mt-2 flex justify-end gap-1">
                   <Button variant="outline" size="sm" asChild>
                     <Link to={`/participants/${p.id}`}><UserRound className="h-4 w-4" />Open profile</Link>
                   </Button>

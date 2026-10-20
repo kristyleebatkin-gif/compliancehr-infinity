@@ -290,7 +290,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
         ) : (
           <div className="space-y-3">
             {filtered.map((inc) => (
-              <div key={inc.id} className="rounded-xl border border-border/60 p-3.5">
+              <div key={inc.id} className="rounded-xl border border-border/60 px-3 py-2">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <Link to={`/incidents/${inc.id}`} className="text-sm font-semibold text-foreground hover:underline">{inc.title || 'Untitled'}</Link>
@@ -376,7 +376,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
         ) : (
           <div className="space-y-3">
             {invFiltered.map((inv) => (
-              <div key={inv.id} className="rounded-xl border border-border/60 p-3.5">
+              <div key={inv.id} className="rounded-xl border border-border/60 px-3 py-2">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <Link to={`/incidents/${inv.incident_id}`} className="text-sm font-semibold text-foreground hover:underline">{inv.title || 'Untitled'}</Link>

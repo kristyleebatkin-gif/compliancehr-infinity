@@ -226,7 +226,7 @@ export default function Tasks() {
           ) : (
             <div className="space-y-2">
               {filtered.map((t, idx) => (
-                <div key={t.id} className={`flex items-center gap-3 rounded-xl border p-3.5 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
+                <div key={t.id} className={`flex items-center gap-2 rounded-xl border px-3 py-2 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
                   <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
                   <button onClick={() => toggle(t)} className="shrink-0">
                     {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}

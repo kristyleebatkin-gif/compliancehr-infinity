@@ -11,8 +11,8 @@ import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 export default function StaffProfileCard({ staff, branding, selected, onToggle, onRemove }) {
   return (
     <Card className="min-w-0 overflow-hidden rounded-xl border-border/70 shadow-sm">
-      <CardContent className="flex h-full flex-col gap-3 p-3 sm:flex-row sm:items-start lg:flex-col lg:items-stretch">
-        <div className="flex min-w-0 flex-1 flex-col gap-3 self-stretch">
+      <CardContent className="flex h-full flex-col gap-2 p-2.5 sm:flex-row sm:items-start lg:flex-col lg:items-stretch">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 self-stretch">
           <div className="flex items-start gap-2.5">
             <Checkbox aria-label={`Select ${staff.full_name}`} checked={selected} onCheckedChange={onToggle} className="mt-1 shrink-0" />
             <div className="min-w-0 flex-1">

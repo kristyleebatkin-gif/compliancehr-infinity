@@ -111,7 +111,7 @@ export default function QualityImprovement() {
 
   const ItemCard = ({ item }) => (
     <Card>
-      <CardContent className="p-4">
+      <CardContent className="px-3 py-2">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <button className="text-left" onClick={() => { setEditing(item); setDialogOpen(true); }}>
             <p className="font-medium hover:underline">{item.title}</p>

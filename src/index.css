@@ -237,6 +237,16 @@
     background: hsl(var(--safe) / 0.10) !important;
     color: hsl(var(--safe)) !important;
   }
+  @media screen {
+    main table:not(.text-xs):not(.border-separate) > :is(thead, tbody, tfoot) > tr > :is(th, td) {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.25rem;
+    }
+    main table:not(.text-xs):not(.border-separate) > thead > tr > th {
+      height: 2rem;
+    }
+  }
   .module-filter-bar {
     gap: 0.375rem;
   }

@@ -287,7 +287,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
             const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
             return (
             <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>
-              <CardContent className="p-4">
+              <CardContent className="px-3 py-2">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex min-w-0 items-start gap-2.5">
                     {canEditDoc(d) && (

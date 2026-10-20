@@ -162,7 +162,7 @@ export default function ProcurementHub() {
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {orders.map((o) => (
-                <Card key={o.id} className={`border-l-4 ${o.status === 'Received' ? 'border-l-emerald-500' : o.status === 'Approved' ? 'border-l-violet-500' : o.status === 'Submitted' ? 'border-l-amber-400' : 'border-l-slate-300'}`}><CardContent className="p-4">
+                <Card key={o.id} className={`border-l-4 ${o.status === 'Received' ? 'border-l-emerald-500' : o.status === 'Approved' ? 'border-l-violet-500' : o.status === 'Submitted' ? 'border-l-amber-400' : 'border-l-slate-300'}`}><CardContent className="p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-semibold">{o.po_number}</p>
@@ -225,7 +225,7 @@ export default function ProcurementHub() {
               {suppliers.map((s) => {
                 const spend = orders.filter((o) => o.supplier_name === s.name && o.status === 'Received').reduce((t, o) => t + Number(o.total || 0), 0);
                 return (
-                  <Card key={s.id}><CardContent className="p-4">
+                  <Card key={s.id}><CardContent className="p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div><p className="font-semibold">{s.name}</p><p className="text-xs text-muted-foreground">{s.category}</p></div>
                       <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${s.status === 'Active' ? 'bg-safe/10 text-safe' : 'bg-muted text-muted-foreground'}`}>{s.status}</span>

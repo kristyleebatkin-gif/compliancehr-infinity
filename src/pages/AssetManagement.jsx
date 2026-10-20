@@ -115,7 +115,7 @@ export default function AssetManagement() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {assets.map((a) => (
             <Card key={a.id}>
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-3">
                     <div className="rounded-lg bg-muted p-2"><Wrench className="h-5 w-5 text-muted-foreground" /></div>

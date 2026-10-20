@@ -233,7 +233,7 @@ export default function MeetingCentre() {
             <div className="space-y-3">
               {visibleMeetings.map((m) => (
                 <Card key={m.id} className={`border-l-4 shadow-sm transition hover:shadow-md ${STATUS_BORDERS[m.status] || ''}`}>
-                  <CardContent className="p-4">
+                  <CardContent className="px-3 py-2">
                     <div className="flex items-start justify-between gap-2">
                       <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded((prev) => ({ ...prev, [m.id]: !prev[m.id] }))}>
                         <p className="flex items-center gap-2 font-semibold">
