@@ -1,0 +1,45 @@
+{
+  "name": "Review Aging Alerts",
+  "description": "Daily aging scan across risks, incidents, feedback, complaints, issues, take fives and safety checks. Colours items yellow at 2 months and red at 10 weeks, alerts managers the day before 3 months, and records the time, date and cycle on each record and in the audit log.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 8 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "review_aging_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_review_aging_scan": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "reviewAgingAlerts",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Age reviews, colour items and alert managers",
+            "description": "Yellow at 2 months, red at 10 weeks, audit-due alert the day before 3 months, with manager notifications and audit logging"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+
+// Review & audit aging engine. Runs daily from the "Review Aging Alerts" workflow.
+// Every Risk, Incident, Feedback, Complaint, Issue/Concern, Take 5 and Safety check
+// is aged from its entry date (or last completed review) and coloured:
+//   yellow (review due soon) at 2 months (60 days),
+//   red (overdue) at 10 weeks (70 days),
+//   audit-due alert the day before 3 months (89 days).
+// Managers are alerted at each threshold (once per cycle) and every alert is
+// stamped with the time, date and cycle on the record and in the audit log.
+
+const SCANS = [
+  { entity: 'Risk', label: 'Risk' },
+  { entity: 'Incident', label: 'Incident' },
+  { entity: 'Feedback', label: 'Feedback' },
+  { entity: 'Complaint', label: 'Complaint' },
+  { entity: 'IssueConcernBarrier', label: 'Issue / Concern' },
+  { entity: 'TakeFive', label: 'Take 5' },
+  { entity: 'SafetyCheck', label: 'Safety check' },
+];
+
+const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
+
+const THRESHOLDS = [
+  { days: 60, field: 'review_alert_60_sent', label: 'Review due soon (yellow)' },
+  { days: 70, field: 'review_alert_70_sent', label: 'Review overdue (red)' },
+  { days: 89, field: 'review_alert_89_sent', label: 'Audit due - day before 3 months' },
+];
+
+const titleOf = (r) =>
+  r.title || r.name || r.risk_name || r.summary || r.subject || r.feedback_type ||
+  r.complaint_type || r.check_type || r.issue_type || r.item || 'Untitled record';
+
+export default async function(req) {
+  try {
+    const base44 = createClientFromRequest(req);
+    const service = base44.asServiceRole;
+    const now = Date.now();
+    const day = 24 * 60 * 60 * 1000;
+
+    const dueItems = [];
+    const perEntityCounts = [];
+
+    for (const { entity, label } of SCANS) {
+      const records = await service.entities[entity].list();
+      const updates = [];
+      for (const r of records || []) {
+        const baseDate = r.review_completed_date || r.created_date;
+        if (!baseDate) continue;
+        const days = Math.floor((now - new Date(baseDate).getTime()) / day);
+        const status = days >= 89 ? 'audit_due' : days >= 70 ? 'overdue' : days >= 60 ? 'due_soon' : 'current';
+
+        const patch = { review_status: status, review_status_checked_at: new Date().toISOString() };
+        const alerts = [];
+        for (const t of THRESHOLDS) {
+          if (days >= t.days && !r[t.field]) {
+            patch[t.field] = true;
+            alerts.push(t);
+          }
+        }
+        if (Object.keys(patch).length > 2 || alerts.length) {
+          updates.push({ id: r.id, ...patch });
+        }
+        if (alerts.length) {
+          dueItems.push({
+            entity,
+            label,
+            id: r.id,
+            title: titleOf(r),
+            entered: (r.created_date || '').slice(0, 10),
+            base_date: (baseDate || '').slice(0, 10),
+            days,
+            thresholds: alerts.map((a) => a.label).join('; '),
+          });
+        }
+      }
+      if (updates.length) await service.entities[entity].bulkUpdate(updates);
+      perEntityCounts.push({ label, scanned: (records || []).length, updated: updates.length });
+    }
+
+    // Notify managers (in-app + email), once per scan run
+    let notified = 0;
+    if (dueItems.length) {
+      const users = await service.entities.User.list();
+      const managers = (users || []).filter((u) => MANAGER_ROLES.includes(u.role) && u.email);
+
+      const listHtml = dueItems.slice(0, 25).map((d) =>
+        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.label}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.title}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.entered}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.thresholds}</td></tr>`
+      ).join('');
+
+      const results = await Promise.allSettled(managers.map((m) => {
+        const message = `${dueItems.length} risk/incident/feedback item(s) need review or audit. ` +
+          `Yellow = review due (2 months), red = overdue (10 weeks), audit due day before 3 months. ` +
+          `Open the Review Board to complete and record reviews.`;
+        return Promise.all([
+          service.entities.Notification.create({
+            type: 'Review Reminder',
+            recipient: m.email,
+            recipient_id: m.id,
+            message,
+            action_url: '/review-due',
+          }),
+          service.integrations.Core.SendEmail({
+            to: m.email,
+            subject: `Review & audit due: ${dueItems.length} item(s) need action`,
+            html: `<p>Hi ${m.full_name || 'there'},</p>` +
+              `<p>The following items have passed their review thresholds (yellow at 2 months, red at 10 weeks, audit due the day before 3 months since entry or last review):</p>` +
+              `<table style="border-collapse:collapse;width:100%;font-size:13px;">` +
+              `<tr><th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Type</th>` +
+              `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Record</th>` +
+              `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Entered / last reviewed</th>` +
+              `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Alert</th></tr>${listHtml}</table>` +
+              `<p>Complete and record each review on the Review Board.</p>`,
+          }),
+        ]);
+      }));
+      notified = results.filter((r) => r.status === 'fulfilled').length;
+
+      await service.entities.AuditLog.create({
+        action: 'Review & audit aging alert sent',
+        entity_type: 'ReviewAging',
+        record_title: `${dueItems.length} item(s) due for review/audit`,
+        performed_by: 'Review Aging Alerts (automated)',
+        details: JSON.stringify({ counts: perEntityCounts, due: dueItems.map((d) => `${d.label}: ${d.title} (${d.thresholds})`).slice(0, 40) }),
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    return Response.json({ ok: true, scanned: perEntityCounts, due_count: dueItems.length, notified });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+}
