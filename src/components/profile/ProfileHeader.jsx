@@ -9,7 +9,7 @@ import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { businessDateTime } from '@/lib/intakeCases';
 import { logUserAction } from '@/lib/actionLog';
-import { BadgeCheck, Camera, Download, Loader2, Save, UserRound } from 'lucide-react';
+import { BadgeCheck, Camera, Download, History, Loader2, Save, Sparkles, UserRound } from 'lucide-react';
 
 /**
  * Colour-coded profile front page shared by staff and participants:
@@ -182,17 +182,17 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
       </div>
 
       <div className="grid gap-5 p-6 md:grid-cols-2">
-        <div>
-          <div className="mb-2 text-sm font-semibold">About Me</div>
-          <Textarea rows={3} value={aboutMe} onChange={(e) => setAboutMe(e.target.value)} placeholder="A little about this person - interests, story, anything they want to share." />
+        <div className="rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-4 shadow-sm">
+          <div className="mb-2 flex items-center gap-2 text-sm font-semibold"><Sparkles className="h-4 w-4 text-primary" />About Me</div>
+          <Textarea rows={4} value={aboutMe} onChange={(e) => setAboutMe(e.target.value)} placeholder="A little about this person - interests, story, anything they want to share." />
           <div className="mt-2 flex justify-end">
             <Button size="sm" variant="outline" disabled={savingAbout || aboutMe === (profile.about_me || '')} onClick={saveAboutMe}>
               {savingAbout ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save About Me
             </Button>
           </div>
         </div>
-        <div>
-          <div className="mb-2 text-sm font-semibold">Details check &amp; change log</div>
+        <div className="rounded-xl border border-border/60 bg-muted/40 p-4">
+          <div className="mb-2 flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-primary" />Details check &amp; change log</div>
           {changeLogLines.length === 0 ? (
             <p className="text-xs text-muted-foreground">No changes logged yet. Every three months the person is prompted to check their details, and each change is logged here with the date, time and action.</p>
           ) : (

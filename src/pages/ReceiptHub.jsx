@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useToast } from '@/components/ui/use-toast';
 import { Download, History, Loader2, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2, FileText } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
+import PageHeader from '@/components/PageHeader';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
@@ -123,28 +124,24 @@ export default function ReceiptHub({ profile } = {}) {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><ReceiptIcon className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Receipt Hub</h1>
-              <p className="text-sm text-white/75">Scan, store, reconcile and reimburse receipts with full records.</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <ModuleComplianceStrip path="/receipts" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+      <PageHeader
+        icon={ReceiptIcon}
+        title="Receipt Hub"
+        subtitle="Scan, store, reconcile and reimburse receipts with full records."
+        showAlerts={false}
+        showCompliance={!profile}
+        showAudit={!profile}
+        action={(
+          <div className="flex flex-wrap gap-2">
             {[['Receipts', String(receipts.length)], ['Unreconciled', money(unrecTotal)], ['To reimburse', money(reimburseTotal)]].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
+              <div key={label} className="rounded-xl bg-card px-3 py-2 text-center shadow-sm ring-1 ring-border/60">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
                 <p className="text-sm font-bold">{value}</p>
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        )}
+      />
 
       <RegisterInsights module="receipts" />
 

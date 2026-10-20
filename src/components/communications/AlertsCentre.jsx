@@ -7,13 +7,15 @@ import { Loader2, RefreshCw, Siren, Bell, MessageCircleWarning } from 'lucide-re
 import { MODULE_TRACKERS, loadTrackerCounts } from '@/lib/moduleTrackers';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { cn } from '@/lib/utils';
+import { useRole } from '@/lib/useRole';
 
 // Alias keys share a tracker with their base module path — audit the base only.
 const TRACKER_ALIASES = new Set(['/volunteering-placements', '/key-contacts', '/community-referral', '/rostering', '/msds']);
 
 const moduleLabel = (path) => MODULE_DIRECTORY.find((m) => m.path === path)?.label || path;
 
-export default function AlertsCentre() {
+export default function AlertsCentre({ selfOnly = false } = {}) {
+  const { user } = useRole();
   const [loading, setLoading] = useState(true);
   const [alerts, setAlerts] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -21,7 +23,7 @@ export default function AlertsCentre() {
 
   const load = async () => {
     setLoading(true);
-    const paths = Object.keys(MODULE_TRACKERS).filter((p) => !TRACKER_ALIASES.has(p));
+    const paths = selfOnly ? [] : Object.keys(MODULE_TRACKERS).filter((p) => !TRACKER_ALIASES.has(p));
     const found = [];
     // Gather live tracker alerts module by module in small batches.
     for (let i = 0; i < paths.length; i += 8) {
@@ -45,9 +47,12 @@ export default function AlertsCentre() {
     try {
       const page = await base44.entities.CommunicationEntry.filter(
         { issues_concerns: { $exists: true, $ne: '' } },
-        { sort: '-created_date', limit: 20 },
+        { sort: '-created_date', limit: 50 },
       );
-      setFlagged(page.items || []);
+      setFlagged((page.items || []).filter((f) => !selfOnly
+        || f.sender_email === (user?.email || '')
+        || f.sender_name === (user?.full_name || '')
+        || (f.staff_involved || []).includes(user?.full_name || '')));
     } catch { setFlagged([]); }
 
     setLoading(false);
@@ -68,7 +73,7 @@ export default function AlertsCentre() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-foreground/65">
-          Every live system alert, unread notification and flagged communication across all modules, gathered in one place.
+          {selfOnly ? 'Your unread notifications and any flagged communication that involves you.' : 'Every live system alert, unread notification and flagged communication across all modules, gathered in one place.'}
         </p>
         <Button variant="outline" size="sm" onClick={load} disabled={loading}>
           <RefreshCw className={cn('h-3.5 w-3.5', loading && 'animate-spin')} />Refresh
@@ -81,7 +86,7 @@ export default function AlertsCentre() {
         </div>
       ) : (
         <div className="space-y-6">
-          <section className="space-y-2">
+          {!selfOnly && (<section className="space-y-2">
             <h3 className="flex items-center gap-2 text-sm font-bold"><Siren className="h-4 w-4 text-warning" />Live System Alerts ({alerts.length})</h3>
             {alerts.length === 0 ? (
               <p className="rounded-xl border border-safe/30 bg-safe/5 p-4 text-sm text-safe">All clear — every module's compliance tracker is in date.</p>
@@ -98,7 +103,7 @@ export default function AlertsCentre() {
                 ))}
               </div>
             )}
-          </section>
+          </section>)}
 
           <section className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">

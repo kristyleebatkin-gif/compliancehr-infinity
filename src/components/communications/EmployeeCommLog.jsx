@@ -10,10 +10,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ChevronDown, ChevronRight, Download, Loader2, NotebookPen, Paperclip } from 'lucide-react';
 import { EMPLOYEE_LOG_TYPES, COMMON_SUBJECTS, loadCommContacts, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
+import { useRole } from '@/lib/useRole';
 import ContactPicker from './ContactPicker';
 
-export default function EmployeeCommLog() {
+export default function EmployeeCommLog({ selfOnly = false } = {}) {
   const { toast } = useToast();
+  const { user } = useRole();
   const [staffList, setStaffList] = useState([]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,8 @@ export default function EmployeeCommLog() {
 
   const addFiles = (e) => setFiles((prev) => [...prev, ...Array.from(e.target.files || [])].slice(0, 5));
 
-  const grouped = EMPLOYEE_LOG_TYPES.map((type) => ({ type, entries: items.filter((i) => (i.log_type || 'General Administration') === type) }))
+  const grouped = EMPLOYEE_LOG_TYPES.map((type) => ({ type, entries: items.filter((i) => (i.log_type || 'General Administration') === type
+    && (!selfOnly || i.person_name === (user?.full_name || '') || i.sender_email === (user?.email || '') || (i.staff_involved || []).includes(user?.full_name || ''))) }))
     .filter((g) => g.entries.length > 0);
 
   const save = async () => {

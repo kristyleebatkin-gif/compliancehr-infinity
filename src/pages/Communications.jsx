@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import EmptyState from '@/components/EmptyState';
+import { useRole, ROLES } from '@/lib/useRole';
 import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
@@ -43,49 +46,90 @@ const TAB_TONES = {
   'employee-log': 'data-[state=active]:from-stone-500 data-[state=active]:to-neutral-400',
 };
 
+const TABS = [
+  ['alerts', Siren, 'Alerts'],
+  ['logs', History, 'Alert Logs'],
+  ['diary', MessagesSquare, 'Diary'],
+  ['inbox', InboxIcon, 'Inbox'],
+  ['templates', BookMarked, 'Templates'],
+  ['email', Mail, 'Send Email'],
+  ['bulk', Megaphone, 'Bulk Messages'],
+  ['banter', MessagesSquare, 'Team Banter'],
+  ['shoutouts', Sparkles, 'Shoutouts'],
+  ['feed', Radio, 'Team Feed'],
+  ['complaints', MessagesSquare, 'Complaints'],
+  ['todo', ListTodo, 'To-Do Board'],
+  ['video', Video, 'Video Calls'],
+  ['ai', Sparkles, 'AI Compose'],
+  ['shift-notes', NotebookPen, 'Shift Notes'],
+  ['employee-log', Briefcase, 'Employee Log'],
+];
+
+// Employees only get alerts for them, their own shift notes and employee log,
+// send email, and the diary entries linked to them. Participants see their own diary only.
+const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log'];
+
 export default function Communications({ profile, profileKind, embedded = false } = {}) {
+  const { role, user } = useRole();
+  const employeeSelf = role === ROLES.SUPPORT || role === ROLES.VOLUNTEER;
+  const participantOnly = role === ROLES.PARTICIPANT;
+  const restricted = employeeSelf || participantOnly;
+  const [selfProfile, setSelfProfile] = useState(null);
+
+  // Standalone view for a restricted user: resolve their own profile so the
+  // diary shows only entries about them.
+  useEffect(() => {
+    if (!restricted || profile) return;
+    let active = true;
+    (async () => {
+      try {
+        const page = participantOnly
+          ? await base44.entities.ParticipantProfile.filter({ email: user?.email || '' }, { limit: 1 })
+          : await base44.entities.StaffProfile.filter({ email: user?.email || '' }, { limit: 1 });
+        if (active) setSelfProfile(page.items?.[0] || null);
+      } catch { if (active) setSelfProfile(null); }
+    })();
+    return () => { active = false; };
+  }, [restricted, participantOnly, profile, user?.email]);
+
+  const effProfile = profile || selfProfile;
+  const effKind = profileKind || (participantOnly ? 'participant' : 'staff');
+  const shown = participantOnly ? TABS.filter(([value]) => value === 'diary')
+    : employeeSelf ? TABS.filter(([value]) => SELF_TABS.includes(value))
+    : TABS;
+
   return (
     <div className="space-y-6">
-      {!embedded && <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
+      {!embedded && !participantOnly && <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
         <PageHeader
           title="Communication Centre"
-          subtitle="Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person's participant or staff record, and note types route to their matching module."
+          subtitle={employeeSelf
+            ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
+            : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
           accent={['#4f46e5', '#22d3ee']}
         />
       </div>}
 
       <Tabs defaultValue="diary">
         <TabsList className="flex flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">
-          {[
-            ['alerts', <Siren key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Alerts', 'from-rose-500 to-red-400'],
-            ['logs', <History key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Alert Logs', 'from-slate-500 to-slate-400'],
-            ['diary', <MessagesSquare key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Diary', 'from-indigo-500 to-violet-400'],
-            ['inbox', <InboxIcon key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Inbox', 'from-sky-500 to-cyan-400'],
-            ['templates', <BookMarked key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Templates', 'from-amber-500 to-orange-400'],
-            ['email', <Mail key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Send Email', 'from-blue-500 to-indigo-400'],
-            ['bulk', <Megaphone key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Bulk Messages', 'from-fuchsia-500 to-pink-400'],
-            ['banter', <MessagesSquare key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Team Banter', 'from-teal-500 to-emerald-400'],
-            ['shoutouts', <Sparkles key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Shoutouts', 'from-yellow-500 to-amber-400'],
-            ['feed', <Radio key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Team Feed', 'from-cyan-500 to-teal-400'],
-            ['complaints', <MessagesSquare key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Complaints', 'from-rose-500 to-orange-400'],
-            ['todo', <ListTodo key="i" className="mr-1 inline h-3.5 w-3.5" />, 'To-Do Board', 'from-violet-500 to-fuchsia-400'],
-            ['video', <Video key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Video Calls', 'from-emerald-500 to-green-400'],
-            ['ai', <Sparkles key="i" className="mr-1 inline h-3.5 w-3.5" />, 'AI Compose', 'from-purple-500 to-indigo-400'],
-            ['shift-notes', <NotebookPen key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Shift Notes', 'from-lime-500 to-teal-400'],
-            ['employee-log', <Briefcase key="i" className="mr-1 inline h-3.5 w-3.5" />, 'Employee Log', 'from-stone-500 to-neutral-400'],
-          ].map(([value, icon, label, tone]) => (
+          {shown.map(([value, Icon, label]) => (
             <TabsTrigger
               key={value}
               value={value}
               className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
             >
-              {icon}{label}
+              <Icon className="mr-1 inline h-3.5 w-3.5" />{label}
             </TabsTrigger>
           ))}
         </TabsList>
-        <TabsContent value="alerts"><AlertsCentre /></TabsContent>
+        <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
-        <TabsContent value="diary">{profile ? profileKind === 'participant' ? <ProfileCommDiary participant={profile} /> : <StaffCommPanel staff={profile} /> : <CommunicationDiary />}</TabsContent>
+        <TabsContent value="diary">
+          {effProfile ? (effKind === 'participant' ? <ProfileCommDiary participant={effProfile} /> : <StaffCommPanel staff={effProfile} />)
+            : restricted
+              ? <EmptyState title="Your profile is not linked yet" message="Once your profile is linked to your login email, your own communication diary appears here." />
+              : <CommunicationDiary />}
+        </TabsContent>
         <TabsContent value="inbox"><Inbox /></TabsContent>
         <TabsContent value="templates"><TemplateLibrary /></TabsContent>
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
@@ -95,12 +139,12 @@ export default function Communications({ profile, profileKind, embedded = false 
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          {profile ? <ProfileTodoList person={profile} /> : <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-6"><TodoBoard /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
         <TabsContent value="ai"><AiCompose /></TabsContent>
-        <TabsContent value="shift-notes"><ShiftNotes /></TabsContent>
-        <TabsContent value="employee-log"><EmployeeCommLog /></TabsContent>
+        <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
+        <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
       </Tabs>
     </div>
   );

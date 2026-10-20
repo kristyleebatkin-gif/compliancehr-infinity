@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, NotebookPen, Paperclip, Trash2, X } from 'lucide-react';
 import { NOTE_TYPES, SHIFT_TYPES, NOTE_TIPS, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
 import { routeDiaryEntry } from '@/lib/commRouting';
+import { useRole } from '@/lib/useRole';
 
 const EMPTY = {
   participant_name: '', note_type: 'Shift Note', shift_type: '', staff_involved: [],
@@ -17,8 +18,9 @@ const EMPTY = {
   goal: '', medication_supervised: '', body: '', issues_concerns: '', incident_report: '',
 };
 
-export default function ShiftNotes() {
+export default function ShiftNotes({ selfOnly = false } = {}) {
   const { toast } = useToast();
+  const { user } = useRole();
   const [participants, setParticipants] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [goals, setGoals] = useState([]);
@@ -66,6 +68,7 @@ export default function ShiftNotes() {
   const addFiles = (e) => setFiles((prev) => [...prev, ...Array.from(e.target.files || [])]);
 
   const filtered = items.filter((n) => (!filters.participant || n.person_name === filters.participant)
+    && (!selfOnly || (n.sender_email === (user?.email || '') || (n.staff_involved || []).includes(user?.full_name || '')))
     && (!filters.note_type || n.note_type === filters.note_type)
     && (!filters.shift_type || n.shift_type === filters.shift_type)
     && (!filters.from || (n.entry_date || '') >= filters.from)

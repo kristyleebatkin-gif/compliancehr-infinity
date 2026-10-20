@@ -8,7 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
 import { useRole, ROLES } from '@/lib/useRole';
-import { Search, ChevronRight, Users, Heart, Mail, Phone } from 'lucide-react';
+import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } from 'lucide-react';
 
 // Admin view: every employee or participant profile in the organisation,
 // grouped into modular sections with search and quick filters. Staff and
@@ -71,17 +71,31 @@ export default function OurProfilesTab({ kind }) {
 
   return (
     <div className="space-y-5">
+      {selfOnly && records[0] && (
+        <div className="flex items-center gap-4 rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 p-5 text-white shadow-md">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-lg font-bold">{initials(records[0].full_name)}</div>
+          <div className="min-w-0">
+            <p className="truncate font-display text-xl font-bold">{records[0].full_name}</p>
+            <p className="text-sm text-white/80">{isParticipant ? (records[0].support_type || 'Participant') : (records[0].position || records[0].role || 'Employee')}</p>
+            <p className="truncate text-xs text-white/70">{records[0].email}</p>
+          </div>
+          <Badge className="ml-auto shrink-0 border-0 bg-white/20 text-white">{records[0].status || 'Active'}</Badge>
+        </div>
+      )}
       {!selfOnly && <>
       {/* Stat tiles */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
-          { label: 'Total profiles', value: records.length, cls: 'text-foreground' },
-          { label: 'Active', value: activeCount, cls: 'text-safe' },
-          { label: isParticipant ? 'On hold / inactive' : 'On leave / inactive', value: attentionCount, cls: 'text-warning' },
+          { label: 'Total profiles', value: records.length, Icon: Users, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
+          { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
+          { label: isParticipant ? 'On hold / inactive' : 'On leave / inactive', value: attentionCount, Icon: Clock, grad: 'from-amber-500 via-orange-500 to-rose-500' },
         ].map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border/60 bg-card p-4 shadow-sm">
-            <div className={`font-display text-2xl font-extrabold tabular-nums ${s.cls}`}>{s.value}</div>
-            <div className="mt-0.5 text-xs font-medium text-foreground/50">{s.label}</div>
+          <div key={s.label} className={`flex items-center gap-3 rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
+            <div className="rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
+            <div>
+              <div className="font-display text-2xl font-extrabold tabular-nums">{s.value}</div>
+              <div className="text-xs font-medium text-white/80">{s.label}</div>
+            </div>
           </div>
         ))}
       </div>
@@ -114,6 +128,7 @@ export default function OurProfilesTab({ kind }) {
             .map(([key, list]) => (
               <section key={key}>
                 <div className="mb-2.5 flex items-center gap-2">
+                  <span className="h-3 w-3 shrink-0 rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${profilePalette(key).primary}, ${profilePalette(key).accent})` }} />
                   <h3 className="font-display text-sm font-bold uppercase tracking-wide text-foreground/70">{key}</h3>
                   <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-foreground/60">{list.length}</span>
                   <div className="h-px flex-1 bg-border/60" />
