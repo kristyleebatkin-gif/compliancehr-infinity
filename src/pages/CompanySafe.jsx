@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
 import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
+import BusinessPlanUploads from '@/components/safe/BusinessPlanUploads';
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 import SecurityPosture from '@/components/safe/SecurityPosture';
 
@@ -75,6 +76,8 @@ export default function CompanySafe() {
           <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
           <SectionLabel icon={Building2} tint="bg-[#2563eb]">Important Business Information</SectionLabel>
           <BusinessDetailsCard />
+          <SectionLabel icon={Building2} tint="bg-[#0369a1]">Business Plans</SectionLabel>
+          <BusinessPlanUploads />
           <SectionLabel icon={FolderLock} tint="bg-brand">Compliance &amp; Business Documents</SectionLabel>
           <ComplianceUploads />
         </div>
