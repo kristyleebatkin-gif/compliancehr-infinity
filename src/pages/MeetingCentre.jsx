@@ -22,6 +22,7 @@ import { downloadMinutesTemplate } from '@/lib/meetingPdf';
 import { AGENDA_TEMPLATES } from '@/lib/meetingAgendaTemplates';
 import MeetingCalendar from '@/components/meetings/MeetingCalendar';
 import MeetingDetail from '@/components/meetings/MeetingDetail';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 
 const TYPES = ['Compliance Review', 'Governance / Board', 'Staff Meeting', 'Participant Planning', 'Quality & Improvement', 'Incident / Risk Review', 'Other'];
 const STATUS_BORDERS = { Scheduled: 'border-l-sky-500', Completed: 'border-l-emerald-500', Cancelled: 'border-l-rose-400' };
@@ -143,13 +144,16 @@ export default function MeetingCentre() {
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
-        beforeAudit={<>
-          <Button size="sm" variant="outline" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
-          <TabsList className="h-7 bg-muted/50 p-0.5">
+        showCompliance={false}
+        showDivider={false}
+        beforeAudit={<div className="flex flex-wrap items-center gap-1">
+          <TabsList className="h-7 w-auto bg-muted/50 p-0.5">
             <TabsTrigger value="register" className="text-[11px]">Meeting register</TabsTrigger>
             <TabsTrigger value="calendar" className="text-[11px]">Calendar</TabsTrigger>
           </TabsList>
-        </>}
+          <ModuleComplianceStrip path="/meetings" />
+          <Button size="sm" variant="outline" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
+        </div>}
         action={<>
           <Button size="sm" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
           <Button size="sm" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>

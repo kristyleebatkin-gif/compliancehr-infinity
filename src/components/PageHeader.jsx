@@ -7,7 +7,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, compactActions = true }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, compactActions = true, showDivider = true }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   // Header band uses the logo's brand gradient; the module accent stays as a thin identity strip.
@@ -41,7 +41,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           </div>
         )}
         <div>
-          <div className="mb-1.5 h-0.5 w-10 rounded-full bg-white/60 shadow-sm" />
+          {showDivider && <div className="mb-1.5 h-0.5 w-10 rounded-full bg-white/60 shadow-sm" />}
           <h1 className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">{title}</h1>
           {subtitle && <p className="mt-1 max-w-3xl text-[13px] font-medium text-white/80">{subtitle}</p>}
         </div>

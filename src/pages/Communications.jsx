@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
@@ -25,26 +25,7 @@ import TeamFeed from '@/components/communications/TeamFeed';
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
-
-// Literal gradient classes so Tailwind keeps them in the build.
-const TAB_TONES = {
-  alerts: 'data-[state=active]:from-rose-500 data-[state=active]:to-red-400',
-  logs: 'data-[state=active]:from-slate-500 data-[state=active]:to-slate-400',
-  diary: 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
-  inbox: 'data-[state=active]:from-sky-500 data-[state=active]:to-cyan-400',
-  templates: 'data-[state=active]:from-amber-500 data-[state=active]:to-orange-400',
-  email: 'data-[state=active]:from-blue-500 data-[state=active]:to-indigo-400',
-  bulk: 'data-[state=active]:from-fuchsia-500 data-[state=active]:to-pink-400',
-  banter: 'data-[state=active]:from-teal-500 data-[state=active]:to-emerald-400',
-  shoutouts: 'data-[state=active]:from-yellow-500 data-[state=active]:to-amber-400',
-  feed: 'data-[state=active]:from-cyan-500 data-[state=active]:to-teal-400',
-  complaints: 'data-[state=active]:from-rose-500 data-[state=active]:to-orange-400',
-  todo: 'data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-400',
-  video: 'data-[state=active]:from-emerald-500 data-[state=active]:to-green-400',
-  ai: 'data-[state=active]:from-purple-500 data-[state=active]:to-indigo-400',
-  'shift-notes': 'data-[state=active]:from-lime-500 data-[state=active]:to-teal-400',
-  'employee-log': 'data-[state=active]:from-stone-500 data-[state=active]:to-neutral-400',
-};
+import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 
 const TABS = [
   ['alerts', Siren, 'Alerts'],
@@ -109,17 +90,7 @@ export default function Communications({ profile, profileKind, embedded = false 
         />}
 
       <Tabs defaultValue="diary">
-        <TabsList className="flex flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
-          {shown.map(([value, Icon, label]) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
-            >
-              <Icon className="mr-1 inline h-3.5 w-3.5" />{label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <CommunicationNavigation tabs={shown} />
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
         <TabsContent value="diary">

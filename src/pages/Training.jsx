@@ -5,10 +5,12 @@ import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import ScoreRing from '@/components/ScoreRing';
-import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
+import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES } from '@/lib/lmsCurriculum';
 import LmsLearner from '@/components/training/LmsLearner';
 import TrainingModuleCard from '@/components/training/TrainingModuleCard';
 import TrainingSubjectHeading from '@/components/training/TrainingSubjectHeading';
+import TrainingCategoryFilter from '@/components/training/TrainingCategoryFilter';
+import TrainingNavigation from '@/components/training/TrainingNavigation';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
@@ -96,7 +98,7 @@ export default function Training({ profile, embedded = false } = {}) {
   }, [visible]);
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
       {!embedded && <PageHeader
         title="Training Hub"
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
@@ -107,17 +109,9 @@ export default function Training({ profile, embedded = false } = {}) {
 
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
-      <div className="flex flex-wrap rounded-lg border border-border/60 bg-card p-0.5">
-        <button onClick={() => setView('modules')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'modules' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />Modules</button>
-        <button onClick={() => setView('calendar')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'calendar' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><CalendarDays className="h-3.5 w-3.5" />Calendar</button>
-        <button onClick={() => setView('templates')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'templates' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><GraduationCap className="h-3.5 w-3.5" />Role templates</button>
-        <button onClick={() => setView('ladder')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'ladder' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Award className="h-3.5 w-3.5" />Ladder</button>
-        <button onClick={() => setView('drills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'drills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Sparkles className="h-3.5 w-3.5" />AI Drills</button>
-        <button onClick={() => setView('insights')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'insights' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><TrendingUp className="h-3.5 w-3.5" />Insights</button>
-        <button onClick={() => setView('skills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'skills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Target className="h-3.5 w-3.5" />Skills</button>
-      </div>
+      <TrainingNavigation view={view} onChange={setView} />
 
-      <div className="relative overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-r from-violet-100/70 via-white to-cyan-100/70 shadow-sm dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/25 via-card to-teal/25 shadow-sm">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
         <button onClick={() => setProgressOpen((v) => !v)} className="flex w-full items-center justify-between gap-2 px-4 py-3">
           <span className="flex items-center gap-2 text-sm font-bold font-display text-foreground">
@@ -173,13 +167,7 @@ export default function Training({ profile, embedded = false } = {}) {
         )
       ) : (
         <>
-          <div className="module-filter-bar flex flex-wrap">
-            <Chip active={activeGroup === 'All'} tone="brand" onClick={() => setActiveGroup('All')}>All ({LMS_MODULES.length})</Chip>
-            {LMS_GROUPS.map((g) => {
-              const count = LMS_MODULES.filter((m) => m.group === g.name).length;
-              return <Chip key={g.name} tone={g.color} active={activeGroup === g.name} onClick={() => setActiveGroup(g.name)}>{g.name} ({count})</Chip>;
-            })}
-          </div>
+          <TrainingCategoryFilter activeGroup={activeGroup} onChange={setActiveGroup} />
 
           {loading ? (
             <div className="py-12 text-center text-sm text-foreground/40">Loading curriculum...</div>
@@ -214,31 +202,16 @@ export default function Training({ profile, embedded = false } = {}) {
 
 function Stat({ icon: Icon, label, value, tone }) {
   const tones = {
-    safe: 'bg-safe/10 text-safe',
-    warning: 'bg-warning/10 text-warning',
-    danger: 'bg-danger/10 text-danger',
-    muted: 'bg-muted text-foreground/60',
+    safe: 'border-safe/40 bg-safe/20 text-foreground',
+    warning: 'border-warning/40 bg-warning/25 text-foreground',
+    danger: 'border-danger/40 bg-danger/20 text-foreground',
+    muted: 'border-primary/40 bg-primary/20 text-foreground',
   };
   return (
-    <div className="rounded-lg border border-border/60 p-3">
-      <div className={`mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg ${tones[tone]}`}><Icon className="h-4 w-4" /></div>
+    <div className={`rounded-lg border p-3 ${tones[tone]}`}>
+      <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg bg-card/75"><Icon className="h-4 w-4" /></div>
       <div className="text-lg font-semibold">{value}</div>
       <div className="text-xs text-foreground/50">{label}</div>
     </div>
-  );
-}
-
-const GROUP_TONES = {
-  brand: { active: 'bg-brand text-white', number: 'bg-gradient-to-br from-blue-600 to-violet-600', button: 'bg-gradient-to-r from-blue-600 to-violet-600 hover:opacity-90', label: 'text-brand' },
-  teal: { active: 'bg-teal text-white', number: 'bg-gradient-to-br from-teal-500 to-cyan-500', button: 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:opacity-90', label: 'text-teal' },
-  danger: { active: 'bg-danger text-white', number: 'bg-gradient-to-br from-rose-500 to-red-500', button: 'bg-gradient-to-r from-rose-500 to-red-500 hover:opacity-90', label: 'text-danger' },
-  safe: { active: 'bg-safe text-white', number: 'bg-gradient-to-br from-emerald-500 to-teal-500', button: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90', label: 'text-safe' },
-  warning: { active: 'bg-warning text-slate-900', number: 'bg-gradient-to-br from-amber-400 to-orange-500', button: 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 hover:opacity-90', label: 'text-warning' },
-};
-
-function Chip({ active, tone = 'brand', onClick, children }) {
-  const colors = GROUP_TONES[tone] || GROUP_TONES.brand;
-  return (
-    <button onClick={onClick} className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${active ? colors.active : 'bg-muted text-foreground/60 hover:bg-muted/70'}`}>{children}</button>
   );
 }

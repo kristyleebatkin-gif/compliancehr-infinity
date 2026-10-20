@@ -12,7 +12,7 @@ const BADGES = {
 export default function TrainingModuleCard({ module, status, completion, onOpen, readOnly = false }) {
   const [badgeClass, badgeLabel] = BADGES[status] || BADGES['Not Started'];
   const tone = trainingTones(module.group);
-  return <article className={`relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${tone.border}`}>
+  return <article className={`relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border shadow-sm ${tone.border} ${tone.surface}`}>
     <div className={`h-1 w-full ${tone.rail}`} />
     <div className={`flex items-center justify-between gap-2 border-b px-4 py-3 ${tone.border} ${tone.surface}`}>
       <span className={`flex items-center gap-2 text-xs font-bold ${tone.text}`}><span className={`flex h-8 w-8 items-center justify-center rounded-lg border bg-card ${tone.border}`}><BookOpen className="h-4 w-4" /></span>Module {String(module.number).padStart(2, '0')}</span>

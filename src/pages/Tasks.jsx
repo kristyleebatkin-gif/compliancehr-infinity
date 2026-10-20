@@ -214,9 +214,9 @@ export default function Tasks() {
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
+      <TaskCompletionReports />
 
       <TodoBoard compact />
-      <TaskCompletionReports />
 
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}

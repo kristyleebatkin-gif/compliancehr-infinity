@@ -104,17 +104,19 @@ export default function ProcurementHub() {
 
       <RegisterInsights module="suppliers" />
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[
           { label: 'Spend received', value: money(totalSpend), icon: PackageCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
           { label: 'Committed (submitted + approved)', value: money(committed), icon: Truck, grad: 'from-amber-500 via-orange-500 to-rose-500' },
           { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length, icon: ShoppingCart, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
           { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length, icon: Truck, grad: 'from-sky-500 via-blue-500 to-indigo-500' },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
-            <div className="w-fit rounded-xl bg-white/20 p-2.5"><s.icon className="h-5 w-5" /></div>
-            <p className="mt-3 text-2xl font-bold tabular-nums">{s.value}</p>
-            <p className="mt-0.5 text-xs font-medium text-white/85">{s.label}</p>
+          <div key={s.label} className={`min-w-0 rounded-xl bg-gradient-to-br ${s.grad} p-2.5 text-white shadow-sm`}>
+            <div className="flex items-center gap-2">
+              <s.icon className="h-4 w-4 shrink-0" />
+              <p className="min-w-0 break-words text-base font-bold tabular-nums">{s.value}</p>
+            </div>
+            <p className="mt-1 text-[10px] font-semibold leading-snug text-white">{s.label}</p>
           </div>
         ))}
       </div>
