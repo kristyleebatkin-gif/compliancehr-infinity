@@ -16,6 +16,7 @@ import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import WorkspaceSidebarNavigation from '@/components/WorkspaceSidebarNavigation';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
@@ -110,7 +111,7 @@ export default function AppLayout() {
   };
 
   const isActive = (path) =>
-    location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
+    location.pathname === path || (path !== '/' && location.pathname.startsWith(`${path}/`));
 
   const navLabel = (item) => (item.key === 'my-profile' ? (role === ROLES.PARTICIPANT ? 'My participant profile' : 'My employee profile') : item.label);
   const currentLabel = (() => { const found = PRIMARY_NAV.find((i) => isActive(i.path)); return found ? navLabel(found) : 'Dashboard'; })();
@@ -123,7 +124,7 @@ export default function AppLayout() {
 
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2.5 px-5 py-5">
+      <div className="flex items-center gap-2.5 px-4 py-4">
         <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
         <div className="min-w-0">
           <div className="text-[15px] font-bold tracking-tight font-editorial">Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span> <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand">Infinity</span></div>
@@ -137,36 +138,7 @@ export default function AppLayout() {
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 py-2">
-        {NAV_GROUPS.map((group) => {
-          const items = visiblePrimary.filter((item) => group.keys.includes(item.key));
-          if (!items.length) return null;
-          return (
-            <div key={group.label} className="mb-2.5">
-              <div className="mb-1 px-3 pt-1 text-[10px] font-semibold uppercase tracking-wider text-foreground/40">{group.label}</div>
-              <div className="space-y-0.5">
-                {items.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.path);
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all ${
-                        active ? 'bg-brand/10 font-bold text-brand shadow-sm' : 'font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand'
-                      }`}
-                    >
-                      {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
-                      <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
-                      <span className="truncate">{navLabel(item)}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </nav>
+      <WorkspaceSidebarNavigation items={visiblePrimary} isActive={isActive} navLabel={navLabel} />
 
       <div className="border-t border-brand/10 px-3 py-3">
         <div className="mb-1 px-3">
@@ -225,7 +197,7 @@ export default function AppLayout() {
 
   return (
     <div className="flex h-screen app-workspace-bg">
-      <aside className="app-sidebar-bg hidden w-64 shrink-0 border-r border-brand/10 md:flex">
+      <aside className="app-sidebar-bg hidden w-56 shrink-0 border-r border-primary/10 md:flex xl:w-64">
         <SidebarContent />
       </aside>
 
@@ -240,7 +212,7 @@ export default function AppLayout() {
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="relative z-40 flex shrink-0 items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-2.5">
             <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
             </button>
@@ -250,13 +222,13 @@ export default function AppLayout() {
               fittingType="fit"
               className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
             />
-            <div className="hidden sm:block">
-              <div className="text-sm font-bold tracking-tight font-display text-foreground">{currentLabel}</div>
+            <div className="hidden min-w-0 sm:block">
+              <div title={currentLabel} className="max-w-44 truncate font-display text-sm font-bold tracking-tight text-foreground xl:max-w-64">{currentLabel}</div>
               <div className="text-[11px] font-medium text-foreground/40">ComplianceHR Infinity</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
             <GlobalSearch />
             {/* Emergency quick access (pink) */}
             <Link
@@ -293,6 +265,8 @@ export default function AppLayout() {
             <div className="relative">
               <button
                 onClick={() => { setUserMenuOpen(false); setNotifOpen((v) => !v); }}
+                aria-label="Notifications"
+                aria-expanded={notifOpen}
                 className="relative rounded-lg p-2 hover:bg-brand/5"
               >
                 <Bell className="h-5 w-5 text-foreground/60" />
@@ -351,6 +325,8 @@ export default function AppLayout() {
             <div className="relative">
               <button
                 onClick={() => { setNotifOpen(false); setUserMenuOpen((v) => !v); }}
+                aria-label="Account menu"
+                aria-expanded={userMenuOpen}
                 className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-brand/5"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-full gradient-brand text-xs font-bold text-white shadow-md">

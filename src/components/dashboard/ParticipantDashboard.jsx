@@ -21,7 +21,7 @@ export default function ParticipantDashboard() {
   return (
     <div>
       <div className="mb-3 text-base font-semibold">Your Portal</div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
         {visibleModules.map((c) => <DashboardTile key={c.title} {...c} />)}
       </div>
     </div>

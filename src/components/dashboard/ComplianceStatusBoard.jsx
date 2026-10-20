@@ -27,7 +27,7 @@ export default function ComplianceStatusBoard() {
         const [tasks, incidents, overdueCount] = await Promise.all([
           base44.entities.TodoTask.aggregate({ query: { archived: { $ne: true } }, groupBy: 'status' }),
           base44.entities.Incident.aggregate({ groupBy: 'status' }),
-          base44.entities.TodoTask.count({ status: { $nin: ['Completed', 'Cancelled'] }, archived: { $ne: true }, due_date: { $lt: today() } }),
+          base44.entities.TodoTask.count({ status: { $nin: ['Completed', 'Cancelled'] }, archived: { $ne: true }, $or: [{ status: 'Overdue' }, { due_date: { $gt: '', $lt: today() } }] }),
         ]);
         if (!alive) return;
         setTaskRows(tasks.rows || []);
@@ -54,7 +54,7 @@ export default function ComplianceStatusBoard() {
   const taskTotal = taskRows.filter((r) => !IGNORED_TASK.includes(r.status)).reduce((a, r) => a + (r.count || 0), 0);
   const taskDone = countFor(taskRows, 'Completed');
   const activeTasks = taskTotal - taskDone;
-  const overdueTotal = overdue + countFor(taskRows, 'Overdue');
+  const overdueTotal = overdue;
   const incidentTotal = incidentRows.reduce((a, r) => a + (r.count || 0), 0);
   const pendingIncidents = PENDING_INCIDENT.reduce((a, s) => a + countFor(incidentRows, s), 0);
 
@@ -66,13 +66,13 @@ export default function ComplianceStatusBoard() {
     return counts.filter((c) => c.count > 0);
   };
 
-  const taskSegments = buildSegments(TASK_ORDER, taskRows, { Overdue: overdue });
+  const taskSegments = buildSegments([...TASK_ORDER, 'Completed'], taskRows);
   const incidentSegments = buildSegments(INCIDENT_ORDER, incidentRows);
   const taskProgress = taskTotal ? Math.round((taskDone / taskTotal) * 100) : 0;
   const incidentProgress = incidentTotal ? Math.round(((incidentTotal - pendingIncidents) / incidentTotal) * 100) : 0;
 
   const Board = ({ title, icon: Icon, href, segments, progress, doneLabel, empty }) => (
-    <div className="rounded-xl border border-border/60 bg-muted/30 p-4">
+    <div className="min-w-0 rounded-xl border border-border/60 bg-muted/20 p-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Link to={href} className="flex items-center gap-2 text-sm font-bold hover:underline">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg gradient-brand text-white shadow-md"><Icon className="h-4 w-4" /></span>

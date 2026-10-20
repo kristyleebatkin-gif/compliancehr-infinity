@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 const MODULES = [
-  { icon: Users, title: 'My Staff Profile', desc: 'View and update your staff records', to: '/staff', color: '#16a34a' },
+  { icon: Users, title: 'My Staff Profile', desc: 'View and update your staff records', to: '/my-profile', color: '#16a34a' },
   { icon: GraduationCap, title: 'Training Hub', desc: 'Training modules and certifications', to: '/training', color: '#d946ef' },
   { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Report and track incidents', to: '/incidents', color: '#ef4444' },
   { icon: ShieldAlert, title: 'Risk Reporting', desc: 'Log and manage risks and Take 5s', to: '/risks', color: '#f97316' },
@@ -34,7 +34,7 @@ export default function StaffDashboard() {
 
       <div>
         <div className="mb-3 text-base font-semibold">Your Tools</div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
           {visibleModules.map((c) => <DashboardTile key={c.title} {...c} />)}
         </div>
       </div>

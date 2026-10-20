@@ -15,6 +15,7 @@ export default function AttentionPanel() {
     total: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -26,7 +27,7 @@ export default function AttentionPanel() {
           base44.entities.Incident.count({ status: openStatus }),
           base44.entities.Incident.count({ status: openStatus, severity: { $in: ['High', 'Critical'] } }),
           base44.entities.Risk.count({ impact: 'High', likelihood: { $ne: 'Low' } }),
-          base44.entities.EmployeeDocument.count({ expiry_date: { $ne: '', $lte: in30 } }),
+          base44.entities.EmployeeDocument.count({ expiry_date: { $gt: '', $lte: in30 }, status: { $ne: 'Archived' } }),
           base44.entities.Incident.filter({ status: openStatus, severity: { $in: ['High', 'Critical'] } }, { sort: 'incident_date', limit: 6, fields: ['title', 'incident_date'] }),
           base44.entities.Risk.filter({ impact: 'High', likelihood: { $ne: 'Low' } }, { sort: 'created_date', limit: 6, fields: ['title', 'review_date', 'created_date'] }),
         ]);
@@ -47,13 +48,14 @@ export default function AttentionPanel() {
         setData({
           groups: [
             { key: 'incidents', label: 'Open incidents', count: openInc.length, urgent: urgentInc.length, to: '/incidents', Icon: AlertTriangle, tone: 'orange' },
-            { key: 'risks', label: 'Open high / critical risks', count: openHighRisks.length, to: '/risks', Icon: ShieldAlert, tone: 'red' },
-            { key: 'docs', label: 'Expiring documents (30d)', count: expiringDocs.length, to: '/documents', Icon: FileClock, tone: 'warning' },
+            { key: 'risks', label: 'High-impact risks', count: openHighRisks.length, to: '/risks', Icon: ShieldAlert, tone: 'red' },
+            { key: 'docs', label: 'Expired / due within 30 days', count: expiringDocs.length, to: '/documents', Icon: FileClock, tone: 'warning' },
           ],
           top,
           total: openInc.length + openHighRisks.length + expiringDocs.length,
         });
       } catch (e) {
+        if (alive) setFailed(true);
         console.error(e);
       } finally {
         if (alive) setLoading(false);
@@ -94,6 +96,8 @@ export default function AttentionPanel() {
         <div className="flex items-center justify-center py-8 text-foreground/40">
           <Loader2 className="h-5 w-5 animate-spin" />
         </div>
+      ) : failed ? (
+        <p role="alert" className="rounded-lg border border-border bg-card p-3 text-sm text-muted-foreground">Attention totals could not be loaded. <Link to="/compliance" className="font-semibold text-primary underline">Open compliance registers</Link></p>
       ) : data.total === 0 ? (
         <div className="flex flex-col items-center justify-center py-8 text-center">
           <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg"><CheckCircle2 className="h-6 w-6" /></div>
@@ -120,12 +124,12 @@ export default function AttentionPanel() {
               <div className="mb-2 text-xs font-semibold text-foreground/50">Most urgent</div>
               <div className="space-y-1.5">
                 {data.top.map((t, i) => (
-                  <Link key={i} to={t.to} className="flex items-center justify-between rounded-lg border border-rose-200 bg-gradient-to-r from-rose-50 to-orange-50 px-3 py-2 transition-all hover:-translate-y-0.5 hover:shadow-sm dark:border-rose-900 dark:from-rose-950/20 dark:to-orange-950/20">
-                    <div className="flex items-center gap-2">
-                      <span className={`h-2 w-2 rounded-full ${t.tone === 'danger' ? 'bg-danger' : 'bg-warning'}`} />
+                  <Link key={i} to={t.to} className="flex items-center justify-between gap-2 rounded-lg border border-rose-200 bg-gradient-to-r from-rose-50 to-orange-50 px-3 py-2 transition-colors hover:border-primary/30 dark:border-rose-900 dark:from-rose-950/20 dark:to-orange-950/20">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className={`h-2 w-2 shrink-0 rounded-full ${t.tone === 'danger' ? 'bg-danger' : 'bg-warning'}`} />
                       <span className="text-sm text-foreground/80 line-clamp-1">{t.label}</span>
                     </div>
-                    {t.date && <span className="text-xs text-foreground/40">{t.date}</span>}
+                    {t.date && <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{String(t.date).slice(0, 10)}</span>}
                   </Link>
                 ))}
               </div>

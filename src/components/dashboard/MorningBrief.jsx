@@ -55,7 +55,7 @@ export default function MorningBrief() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 2xl:grid-cols-6">
           {metrics.map((m) => {
             const Icon = m.icon;
             return (
@@ -67,7 +67,7 @@ export default function MorningBrief() {
             );
           })}
         </div>
-        <div className="mt-4 grid gap-3 md:grid-cols-3">
+        <div className="mt-3 grid gap-2 xl:grid-cols-3">
           {lists.map((list) => (
             <div key={list.title} className="rounded-xl border border-border/60 bg-card p-3">
               <div className={`text-[11px] font-bold uppercase tracking-wider ${list.tone}`}>{list.title}</div>

@@ -23,26 +23,32 @@ export default function ExpiryReviewFeed() {
   const [expiries, setExpiries] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [failed, setFailed] = useState(false);
+  const [totals, setTotals] = useState({ urgent: 0, reviews: 0 });
 
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const [empDocs, certs, pending] = await Promise.all([
+        const soon = new Date(Date.now() + 14 * DAY).toISOString().slice(0, 10);
+        const [empDocs, certs, pending, urgentDocs, urgentCerts, pendingCount] = await Promise.all([
           base44.entities.EmployeeDocument.filter(
-            { expiry_date: { $lte: in60() }, status: { $ne: 'Archived' } },
+            { expiry_date: { $gt: '', $lte: in60() }, status: { $ne: 'Archived' } },
             { sort: 'expiry_date', limit: 15, fields: ['title', 'employee_name', 'expiry_date'] }
           ),
           base44.entities.Certificate.filter(
-            { expiry_date: { $lte: in60() } },
+            { expiry_date: { $gt: '', $lte: in60() }, status: { $ne: 'Revoked' } },
             { sort: 'expiry_date', limit: 15, fields: ['module_title', 'staff_name', 'expiry_date'] }
           ),
           base44.entities.ParticipantDocument.filter(
             { review_outcome: 'Pending Review' },
             { sort: '-created_date', limit: 15, fields: ['title', 'document_type', 'participant_name', 'submitted_date'] }
           ),
+          base44.entities.EmployeeDocument.count({ expiry_date: { $gt: '', $lte: soon }, status: { $ne: 'Archived' } }),
+          base44.entities.Certificate.count({ expiry_date: { $gt: '', $lte: soon }, status: { $ne: 'Revoked' } }),
+          base44.entities.ParticipantDocument.count({ review_outcome: 'Pending Review' }),
         ]);
         if (!alive) return;
+        setTotals({ urgent: urgentDocs + urgentCerts, reviews: pendingCount });
         setExpiries([
           ...empDocs.items.map((d) => ({ key: `doc-${d.id}`, icon: FileWarning, title: d.title, sub: `${d.employee_name || ''} · Staff document`, date: d.expiry_date })),
           ...certs.items.map((c) => ({ key: `cert-${c.id}`, icon: FileClock, title: c.module_title, sub: `${c.staff_name || ''} · Certificate`, date: c.expiry_date })),
@@ -65,11 +71,11 @@ export default function ExpiryReviewFeed() {
     return <div className="h-48 animate-pulse rounded-2xl border border-border/60 bg-card" />;
   }
 
-  const urgentCount = expiries.filter((e) => daysLeft(e.date) < 0 || daysLeft(e.date) <= 14).length;
-  const reviewCount = reviews.length;
+  const urgentCount = totals.urgent;
+  const reviewCount = totals.reviews;
 
   const Column = ({ title, icon: Icon, href, count, countCls, items, empty, renderItem }) => (
-    <div className="rounded-xl border border-border/60 bg-muted/30 p-4">
+    <div className="min-w-0 rounded-xl border border-border/60 bg-muted/20 p-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Link to={href} className="flex items-center gap-2 text-sm font-bold hover:underline">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg gradient-brand text-white shadow-md"><Icon className="h-4 w-4" /></span>
@@ -83,7 +89,7 @@ export default function ExpiryReviewFeed() {
           <ClipboardCheck className="h-4 w-4 text-safe" />{empty}
         </div>
       ) : (
-        <div className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1">
+        <div className="mt-3 max-h-60 space-y-1.5 overflow-y-auto pr-1">
           {items.map(renderItem)}
         </div>
       )}
@@ -96,7 +102,7 @@ export default function ExpiryReviewFeed() {
         <span className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-white shadow-md"><CalendarClock className="h-5 w-5" /></span>
         <div>
           <h2 className="font-display text-lg font-bold leading-tight">Expiry &amp; review feed</h2>
-          <p className="text-xs text-muted-foreground">Upcoming compliance expiries (next 60 days) and participant documents awaiting review.</p>
+          <p className="text-xs text-muted-foreground">Recent items shown below; badges count all urgent expiries and pending reviews.</p>
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
