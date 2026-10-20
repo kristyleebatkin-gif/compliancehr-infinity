@@ -11,10 +11,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Download, ListTodo, Loader2, Plus, PenLine } from 'lucide-react';
 import { APP_MODULES, loadCommContacts, exportCsv } from '@/lib/commTypes';
 import SharedTodoCommandBoard from '@/components/tasks/SharedTodoCommandBoard';
+import ReviewTodoBoard from '@/components/tasks/ReviewTodoBoard';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
-export default function TodoBoard({ compact = false }) {
+export default function TodoBoard({ compact = false, presentation = 'default' }) {
   const { toast } = useToast();
   const [staffList, setStaffList] = useState([]);
   const [items, setItems] = useState([]);
@@ -179,7 +180,7 @@ export default function TodoBoard({ compact = false }) {
 
   return (
     <div className={compact ? 'min-w-0' : 'space-y-4'}>
-      {compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : <>
+      {presentation === 'review' ? <ReviewTodoBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : <>
       <div className={compact ? 'flex flex-wrap items-center justify-between gap-2 rounded-lg bg-primary/5 p-2.5' : 'flex flex-wrap items-center justify-between gap-2'}>
         {compact ? <div className="flex min-w-0 items-center gap-2"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><ListTodo className="h-4 w-4" /></span><div><h2 className="text-sm font-semibold">Shared To-do List</h2><p className="text-[11px] text-muted-foreground">Share, complete and sign off team actions.</p></div></div> : <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>}
         <Button size={compact ? 'sm' : 'default'} onClick={() => setOpen(true)}><Plus className="h-4 w-4" />New shared to-do</Button>
@@ -295,7 +296,7 @@ export default function TodoBoard({ compact = false }) {
       </>}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[85vh] overflow-y-auto">
+        <DialogContent className={`max-h-[85vh] overflow-y-auto${presentation === 'review' ? ' review-todo-dialog' : ''}`}>
           <DialogHeader><DialogTitle>New shared to-do</DialogTitle></DialogHeader>
           <div className="grid gap-3">
             <div className="grid gap-1.5"><Label>Task / subject *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
@@ -335,7 +336,7 @@ export default function TodoBoard({ compact = false }) {
       </Dialog>
 
       <Dialog open={Boolean(finaliseTarget)} onOpenChange={(o) => !o && setFinaliseTarget(null)}>
-        <DialogContent>
+        <DialogContent className={presentation === 'review' ? 'review-todo-dialog' : undefined}>
           <DialogHeader><DialogTitle>Finalise task</DialogTitle></DialogHeader>
           <p className="text-xs text-muted-foreground">{finaliseTarget?.title}</p>
           <div className="grid gap-3">
@@ -350,8 +351,8 @@ export default function TodoBoard({ compact = false }) {
       </Dialog>
 
       <Dialog open={Boolean(signTarget)} onOpenChange={(o) => !o && setSignTarget(null)}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>Manager sign-off</DialogTitle></DialogHeader>
+        <DialogContent className={presentation === 'review' ? 'review-todo-dialog' : undefined}>
+          <DialogHeader><DialogTitle>{presentation === 'review' ? 'Review & sign off' : 'Manager sign-off'}</DialogTitle></DialogHeader>
           <p className="text-xs text-muted-foreground">{signTarget?.title}</p>
           {signTarget && (
             <p className="text-xs text-muted-foreground">

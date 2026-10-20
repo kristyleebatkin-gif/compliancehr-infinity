@@ -1,0 +1,55 @@
+.review-todo-page,.review-todo-dialog{--rt-bg:#F4EEFF;--rt-surface:#fff;--rt-ink:#2a1239;--rt-primary:#50216A;--rt-accent:#C0A0E8;--rt-border:#d9c8f2;--rt-muted:#5b4270;--rt-copy:#6b4a85;font-family:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--rt-ink)}
+.review-todo-page{width:100%;min-height:1620px;background:var(--rt-bg);box-sizing:border-box;padding:44px 40px 56px;display:flex;flex-direction:column;gap:44px;border:1px solid var(--rt-border)}
+.review-todo-page *,.review-todo-dialog *{box-sizing:border-box}
+.review-todo-page .rt-mast{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;padding-bottom:30px;border-bottom:2px solid var(--rt-accent)}
+.review-todo-page .rt-mast h1{margin:0;font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-1.4px;color:var(--rt-primary)}
+.review-todo-page .rt-mast p{margin:14px 0 0;font-size:15px;line-height:1.5;color:var(--rt-copy);max-width:420px}
+.review-todo-page .rt-stack{display:flex;flex-direction:column;gap:9px;width:190px;flex-shrink:0}
+.review-todo-page .rt-btn,.review-todo-dialog button:not([class*="absolute"]){border:1.5px solid var(--rt-primary);background:var(--rt-surface);color:var(--rt-primary);border-radius:10px;padding:11px 14px;font:800 13px/1.2 system-ui,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;transition:background .18s,color .18s,box-shadow .18s;height:auto;white-space:normal}
+.review-todo-page .rt-btn svg{width:15px;height:15px;flex-shrink:0}
+.review-todo-page .rt-btn.rt-pri,.review-todo-dialog button:last-child:not([class*="absolute"]){background:var(--rt-primary);color:var(--rt-surface)}
+.review-todo-page .rt-btn:hover,.review-todo-dialog button:not([class*="absolute"]):hover{background:var(--rt-accent);color:var(--rt-ink);box-shadow:0 4px 14px rgba(80,33,106,.2)}
+.review-todo-page .rt-btn.rt-pri:hover,.review-todo-dialog button:last-child:not([class*="absolute"]):hover{background:#6a2f8a;color:var(--rt-surface)}
+.review-todo-page .rt-btn:active,.review-todo-dialog button:not([class*="absolute"]):active{box-shadow:inset 0 2px 4px rgba(42,18,57,.3)}
+.review-todo-page .rt-btn:focus-visible,.review-todo-dialog button:focus-visible{outline:3px solid var(--rt-accent);outline-offset:2px}
+.review-todo-page .rt-sec{display:flex;flex-direction:column;gap:18px;min-width:0}
+.review-todo-page .rt-first{animation:fin .9s ease-out both}
+.review-todo-page .rt-s2{animation:fin .9s ease-out .45s both}
+.review-todo-page .rt-s3{animation:fin .9s ease-out .7s both}
+@keyframes fin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.review-todo-page .rt-sh{display:flex;align-items:center;gap:14px}
+.review-todo-page .rt-sh h2{margin:0;font-size:26px;font-weight:900;letter-spacing:-.7px;color:var(--rt-primary);line-height:1.25}
+.review-todo-page .rt-cnt{min-width:34px;height:34px;border-radius:999px;background:var(--rt-primary);color:var(--rt-surface);font-weight:900;font-size:15px;display:grid;place-items:center;padding:0 10px;animation:soft 3.6s ease-in-out infinite alternate;flex-shrink:0}
+@keyframes soft{from{opacity:1}to{opacity:.55}}
+.review-todo-page .rt-cnt.rt-q{animation:none}
+.review-todo-page .rt-card{background:var(--rt-surface);border:1px solid var(--rt-border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 8px 24px -12px rgba(80,33,106,.3);min-width:0}
+.review-todo-page .rt-wide{border-left:6px solid var(--rt-primary)}
+.review-todo-page .rt-row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.review-todo-page .rt-tn{margin:0;font-size:18px;line-height:1.25;font-weight:800;color:var(--rt-ink);letter-spacing:-.3px;overflow-wrap:anywhere}
+.review-todo-page .rt-bd{font-size:11px;font-weight:800;padding:6px 11px;border-radius:999px;background:var(--rt-accent);color:var(--rt-ink);white-space:nowrap;flex-shrink:0}
+.review-todo-page .rt-outline{background:var(--rt-surface);border:1.5px solid var(--rt-accent);color:var(--rt-primary)}
+.review-todo-page .rt-meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13px;line-height:1.5;color:var(--rt-muted);overflow-wrap:anywhere}
+.review-todo-page .rt-meta b{color:var(--rt-primary);font-weight:800}
+.review-todo-page .rt-det{display:flex;flex-direction:column;gap:6px;background:var(--rt-bg);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--rt-muted);overflow-wrap:anywhere}
+.review-todo-page .rt-det b{color:var(--rt-primary)}
+.review-todo-page .rt-foot{display:flex;justify-content:flex-end;gap:10px}
+.review-todo-page .rt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.review-todo-page .rt-grid .rt-card{height:100%}
+.review-todo-page .rt-grid .rt-card .rt-foot{margin-top:auto}
+.review-todo-page .rt-ledger{background:var(--rt-surface);border:1px solid var(--rt-border);border-radius:16px;overflow:hidden;box-shadow:0 8px 24px -12px rgba(80,33,106,.3)}
+.review-todo-page .rt-lh,.review-todo-page .rt-lr{display:grid;grid-template-columns:1.5fr .8fr .9fr .9fr .9fr;gap:12px;padding:14px 20px;font-size:13px;line-height:1.45;align-items:start;overflow-wrap:anywhere}
+.review-todo-page .rt-lh{background:var(--rt-primary);color:var(--rt-surface);font-weight:800;font-size:12px}
+.review-todo-page .rt-lr{border-top:1px solid #ece2fa;color:var(--rt-muted)}
+.review-todo-page .rt-lr b{color:var(--rt-ink)}
+.review-todo-page .rt-ld{padding:0 20px 18px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:var(--rt-muted)}
+.review-todo-page .rt-ld .rt-meta{flex-direction:column;gap:6px}
+.review-todo-page .rt-ld .rt-det{background:transparent;padding:0;border-radius:0}
+.review-todo-page .rt-lf{padding:12px 20px;display:flex;justify-content:flex-end}
+.review-todo-page .rt-note{font-size:12px;color:var(--rt-copy);line-height:1.45;margin:0}
+.review-todo-page .rt-intro{font-size:14px;margin-top:-10px}
+.review-todo-dialog{background:var(--rt-surface);border:1px solid var(--rt-border);border-radius:16px;padding:22px;box-shadow:0 8px 24px -12px rgba(80,33,106,.3)}
+.review-todo-dialog h2{font-size:17px;font-weight:900;color:var(--rt-primary);letter-spacing:-.4px}
+.review-todo-dialog label{font-size:12px;font-weight:700;color:var(--rt-primary)}
+.review-todo-dialog :is(input,select,textarea){border:1px solid var(--rt-accent);border-radius:8px;background:var(--rt-surface);color:var(--rt-ink);min-height:28px}
+.review-todo-dialog textarea{min-height:44px}
+@media(max-width:639px){.review-todo-page{padding:28px 18px 36px;gap:30px}.review-todo-page .rt-mast{flex-direction:column;align-items:stretch;gap:22px}.review-todo-page .rt-mast h1{font-size:34px}.review-todo-page .rt-stack{width:100%}.review-todo-page .rt-grid{grid-template-columns:1fr}.review-todo-page .rt-row{flex-wrap:wrap}.review-todo-page .rt-card{padding:18px}.review-todo-page .rt-lh,.review-todo-page .rt-lr{gap:7px;padding:12px;font-size:11px}.review-todo-page .rt-sh h2{font-size:23px}}
