@@ -16,7 +16,7 @@ import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
 import TaskCalendar from '@/components/tasks/TaskCalendar';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
-import TodoBoard from '@/components/communications/TodoBoard';
+import '@/components/tasks/taskDashboardLayout.css';
 import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download, Archive, X } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
@@ -209,14 +209,11 @@ export default function Tasks() {
 
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
-      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
+      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
 
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
-      <TaskCompletionReports />
-
-      <TodoBoard compact />
 
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
@@ -283,6 +280,7 @@ export default function Tasks() {
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
 
       <TaskLeaderboard />
+      <TaskCompletionReports />
     </div>
   );
 }

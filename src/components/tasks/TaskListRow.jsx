@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 const STATUSES = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
 export default function TaskListRow({ task: t, checked, focused, onSelect, onToggle, onStatus, onSend, onAlert, onEdit, onDelete }) {
-  return <div className={`flex flex-wrap items-center gap-2 rounded-xl border px-3 py-2 transition-colors ${checked ? 'border-primary bg-primary/5' : 'border-border/60 bg-card'} ${focused ? 'ring-2 ring-primary/60' : ''}`}>
+  return <div className={`task-register-row flex flex-wrap items-center gap-1.5 rounded-lg border px-2 py-1 transition-colors ${checked ? 'border-primary bg-primary/5' : 'border-border/60 bg-card'} ${focused ? 'ring-2 ring-primary/60' : ''}`}>
     <input type="checkbox" checked={checked} onChange={onSelect} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-primary" />
     <button onClick={onToggle} aria-label={t.status === 'Completed' ? 'Reopen task' : 'Complete task'} className="shrink-0">{t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}</button>
     <div className="min-w-0 flex-1">

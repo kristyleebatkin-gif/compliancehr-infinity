@@ -261,9 +261,9 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2, 'from-fuchsia-500 to-pink-400'],
                   ['Finalised', items.filter((i) => i.status === 'Finalised').length, CheckCircle2, 'from-emerald-500 to-teal-400'],
                 ].map(([label, value, Icon, tone]) => (
-                  <div key={label} className={`min-w-0 rounded-lg bg-gradient-to-br ${tone} p-2 text-white shadow-sm`}>
-                    <div className="flex items-start gap-1"><Icon className="h-3 w-3 shrink-0 opacity-90" /><p className="text-[9px] font-bold uppercase leading-tight tracking-wide opacity-85">{label}</p></div>
-                    <p className="mt-1 text-lg font-extrabold leading-none">{value}</p>
+                  <div key={label} className={`flex min-h-24 min-w-0 flex-col justify-between rounded-xl bg-gradient-to-br ${tone} p-3 text-white shadow-sm`}>
+                    <div className="flex items-start gap-2"><Icon className="h-4 w-4 shrink-0 opacity-90" /><p className="text-[11px] font-bold uppercase leading-tight tracking-wide opacity-85">{label}</p></div>
+                    <p className="mt-3 text-3xl font-extrabold leading-none">{value}</p>
                   </div>
                 ))}
               </div>

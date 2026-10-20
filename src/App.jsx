@@ -23,6 +23,7 @@ import DailyBriefing from '@/pages/DailyBriefing';
 import Documents from '@/pages/Documents';
 import Training from '@/pages/Training';
 import Tasks from '@/pages/Tasks';
+import SharedTodoDashboard from '@/pages/SharedTodoDashboard';
 import Incidents from '@/pages/Incidents';
 import IncidentDetail from '@/pages/IncidentDetail';
 import IncidentForm from '@/pages/IncidentForm';
@@ -140,6 +141,7 @@ const AuthenticatedApp = () => {
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
           <Route path="/tasks" element={<RoleGate navKey="tasks"><Tasks /></RoleGate>} />
+          <Route path="/shared-to-do" element={<RoleGate navKey="tasks"><SharedTodoDashboard /></RoleGate>} />
           <Route path="/incidents" element={<RoleGate navKey="incidents"><Incidents /></RoleGate>} />
           <Route path="/incidents/submit" element={<RoleGate navKey="incidents"><StaffIncidentPortal /></RoleGate>} />
           <Route path="/risks/submit" element={<RoleGate navKey="risks"><RiskSubmitPortal /></RoleGate>} />
