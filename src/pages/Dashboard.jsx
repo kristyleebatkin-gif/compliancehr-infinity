@@ -27,7 +27,7 @@ export default function Dashboard() {
   const firstName = (user?.full_name || '').split(' ')[0];
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="mx-auto max-w-6xl p-3 md:p-4 space-y-3">
       <div className="relative overflow-hidden rounded-3xl gradient-brand p-5 text-white shadow-2xl shadow-violet-500/25 md:p-6">
         <div className="absolute -right-12 -top-20 h-56 w-56 rounded-full bg-violet-200/20 blur-sm" />
         <div className="absolute left-[42%] top-[-5rem] h-40 w-40 rounded-full bg-cyan-300/20 blur-xl" />

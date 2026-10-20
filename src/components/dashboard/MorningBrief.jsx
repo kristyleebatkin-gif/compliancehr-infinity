@@ -20,7 +20,7 @@ export default function MorningBrief() {
   if (loading) {
     return (
       <Card className="gradient-brand-soft">
-        <CardContent className="flex items-center gap-2 p-5 text-sm text-foreground/60">
+        <CardContent className="flex items-center gap-2 p-4 text-sm text-foreground/60">
           <Coffee className="h-4 w-4 text-brand" /> Preparing your morning brief…
         </CardContent>
       </Card>
@@ -45,7 +45,7 @@ export default function MorningBrief() {
 
   return (
     <Card className="gradient-brand-soft shadow-panel">
-      <CardContent className="p-5">
+      <CardContent className="p-4">
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-brand text-white"><Coffee className="h-4 w-4" /></div>

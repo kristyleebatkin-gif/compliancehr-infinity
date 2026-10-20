@@ -43,7 +43,7 @@ export default function ComplianceStatusBoard() {
   if (failed) return null;
   if (!taskRows || !incidentRows) {
     return (
-      <div className="grid gap-4 rounded-2xl border border-border/60 bg-card p-5 shadow-md md:grid-cols-2">
+      <div className="grid gap-4 rounded-2xl border border-border/60 bg-card p-4 shadow-md md:grid-cols-2">
         <div className="h-28 animate-pulse rounded-xl bg-muted/60" />
         <div className="h-28 animate-pulse rounded-xl bg-muted/60" />
       </div>
@@ -110,7 +110,7 @@ export default function ComplianceStatusBoard() {
   );
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-md">
+    <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-md">
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-white shadow-md"><KanbanSquare className="h-5 w-5" /></span>
         <div>

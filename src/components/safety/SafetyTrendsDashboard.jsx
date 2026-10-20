@@ -105,7 +105,7 @@ export default function SafetyTrendsDashboard() {
           <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
         </div>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Tile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="#f59e0b" />
             <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="#7c3aed" />

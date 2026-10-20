@@ -90,7 +90,7 @@ export default function IncidentExpiryChart() {
   const expiryTotal = expBuckets.reduce((a, r) => a + r.count, 0);
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-md">
+    <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-md">
       <div className="grid gap-4 md:grid-cols-2">
         {/* Incident report progress donut */}
         <div className="rounded-xl border border-border/60 bg-muted/30 p-4">

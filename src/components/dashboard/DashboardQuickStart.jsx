@@ -33,7 +33,7 @@ export default function DashboardQuickStart() {
   return (
     <section
       aria-labelledby="dashboard-quick-start"
-      className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30 sm:p-5"
+      className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30 sm:p-4"
     >
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

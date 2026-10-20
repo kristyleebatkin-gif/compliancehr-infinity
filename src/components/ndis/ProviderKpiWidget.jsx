@@ -40,7 +40,7 @@ export default function ProviderKpiWidget() {
 
   return (
     <Card>
-      <CardContent className="p-5">
+      <CardContent className="p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="rounded-lg bg-indigo-500/10 p-2"><Target className="h-4 w-4 text-indigo-600" /></div>

@@ -47,7 +47,7 @@ function ModuleCard({ mod }) {
   const max = Math.max(1, ...mod.breakdown.map((b) => b.count));
   const extraCounts = Object.entries(mod.counts || {});
   return (
-    <Link to={mod.href} className="group rounded-2xl border bg-card p-5 shadow-panel transition-shadow hover:shadow-lg">
+    <Link to={mod.href} className="group rounded-2xl border bg-card p-4 shadow-panel transition-shadow hover:shadow-lg">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5">
           <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-white ${mod.bar}`}>

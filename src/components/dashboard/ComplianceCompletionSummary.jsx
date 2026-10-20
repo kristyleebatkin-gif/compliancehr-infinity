@@ -72,7 +72,7 @@ export default function ComplianceCompletionSummary() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-5 shadow-lg shadow-emerald-500/5 dark:border-emerald-900 dark:from-emerald-950/25 dark:via-card dark:to-teal-950/20">
+    <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-4 shadow-lg shadow-emerald-500/5 dark:border-emerald-900 dark:from-emerald-950/25 dark:via-card dark:to-teal-950/20">
       <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-violet-500" />
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>

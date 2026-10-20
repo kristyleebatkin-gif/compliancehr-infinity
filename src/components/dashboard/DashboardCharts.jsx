@@ -44,7 +44,7 @@ function StatCard({ icon: Icon, label, value, tone, to }) {
   return (
     <Link
       to={to}
-      className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:items-center sm:gap-4"
+      className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-4 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:items-center sm:gap-4"
       style={{ borderColor: `${tone}55`, background: `linear-gradient(135deg, ${tone}2b, hsl(var(--card)) 72%)` }}
     >
       <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${tone}, ${tone}99)` }} />
@@ -116,7 +116,7 @@ export default function DashboardCharts() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="relative overflow-hidden rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-orange-50 p-5 shadow-lg shadow-rose-500/5 dark:border-rose-900 dark:from-rose-950/25 dark:via-card dark:to-orange-950/20">
+        <div className="relative overflow-hidden rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-orange-50 p-4 shadow-lg shadow-rose-500/5 dark:border-rose-900 dark:from-rose-950/25 dark:via-card dark:to-orange-950/20">
           <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-500 via-amber-500 to-emerald-500" />
           <div className="mb-1 flex items-center gap-2 text-sm font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-600 to-orange-500 text-white shadow-md">
@@ -140,7 +140,7 @@ export default function DashboardCharts() {
           </ResponsiveContainer>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-5 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-amber-950/20">
+        <div className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-amber-950/20">
           <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-emerald-500 via-yellow-400 via-orange-500 to-red-500" />
           <div className="mb-1 flex items-center gap-2 text-sm font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-md">
@@ -163,7 +163,7 @@ export default function DashboardCharts() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-fuchsia-50 p-5 shadow-lg shadow-orange-500/5 dark:border-orange-900 dark:from-orange-950/25 dark:via-card dark:to-fuchsia-950/20">
+      <div className="relative overflow-hidden rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-fuchsia-50 p-4 shadow-lg shadow-orange-500/5 dark:border-orange-900 dark:from-orange-950/25 dark:via-card dark:to-fuchsia-950/20">
         <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-violet-500 via-cyan-500 via-amber-500 to-fuchsia-500" />
         <div className="mb-1 flex items-center gap-2 text-sm font-bold">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-600 to-rose-500 text-white shadow-md">

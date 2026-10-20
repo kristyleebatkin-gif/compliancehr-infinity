@@ -21,7 +21,7 @@ export default function DepartmentComplianceSummary() {
   const needsAttention = (departments || []).filter((d) => d.rate < 80).length;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-5 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-sky-950/20">
+    <div className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-sky-950/20">
       <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-violet-500 via-indigo-500 to-sky-500" />
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>

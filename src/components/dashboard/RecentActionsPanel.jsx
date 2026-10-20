@@ -20,7 +20,7 @@ export default function RecentActionsPanel() {
 
   return (
     <Card className="border-border/60">
-      <CardContent className="p-5 space-y-3">
+      <CardContent className="p-4 space-y-3">
         <div className="flex items-center gap-2">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
             <History className="h-4 w-4 text-white" />

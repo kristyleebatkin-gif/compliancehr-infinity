@@ -91,7 +91,7 @@ export default function ExpiryReviewFeed() {
   );
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-md">
+    <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-md">
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-white shadow-md"><CalendarClock className="h-5 w-5" /></span>
         <div>
