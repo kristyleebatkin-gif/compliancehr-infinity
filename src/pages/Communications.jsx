@@ -109,7 +109,7 @@ export default function Communications({ profile, profileKind, embedded = false 
         />}
 
       <Tabs defaultValue="diary">
-        <TabsList className="flex flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">
+        <TabsList className="flex flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
           {shown.map(([value, Icon, label]) => (
             <TabsTrigger
               key={value}

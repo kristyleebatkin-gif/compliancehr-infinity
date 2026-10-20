@@ -122,7 +122,7 @@ export default function Staff() {
       <RegisterInsights module="staff" compact wrapSummary />
 
       <Tabs defaultValue="profiles">
-        <TabsList className="grid h-auto w-full grid-cols-3 gap-1 rounded-xl border border-border/60 p-1 [&>button]:min-h-9 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs [&>button>svg]:shrink-0">
+        <TabsList className="grid h-auto w-full grid-cols-3 gap-1 rounded-xl border border-border/60 p-1 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs [&>button>svg]:shrink-0">
           <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
           <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Staff certificates</TabsTrigger>
           <TabsTrigger value="recognition"><Trophy className="mr-1.5 h-4 w-4" />Leaderboard &amp; recognition</TabsTrigger>

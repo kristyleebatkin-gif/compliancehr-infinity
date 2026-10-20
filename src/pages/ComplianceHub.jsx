@@ -266,12 +266,12 @@ export default function ComplianceHub() {
       <ComplianceGlobalSearch />
 
       <Tabs defaultValue="standards-map">
-        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">
+        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
           {TABS.map(([value, label]) => (
             <TabsTrigger
               key={value}
               value={value}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
             >
               {label}
             </TabsTrigger>
