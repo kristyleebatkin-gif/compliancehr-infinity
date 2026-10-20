@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import AssistantChat from '@/components/assistant/AssistantChat';
-import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, Lightbulb, ClipboardList, Wallet, Users2 } from 'lucide-react';
+import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2 } from 'lucide-react';
+import AssistantHints from '@/components/assistant/AssistantHints';
 
 const AGENTS = [
   {
@@ -88,6 +89,7 @@ export default function Assistant() {
         showCompliance={false}
         showAudit={false}
       />
+      <AssistantHints />
       <div className="grid gap-3 sm:grid-cols-2">
         {AGENTS.map((a) => {
           const Icon = a.icon;
@@ -136,20 +138,7 @@ export default function Assistant() {
         </div>
       </div>
 
-      {/* Hints & tips */}
-      <div className="rounded-2xl border border-amber-300/60 bg-amber-50/60 p-4 dark:border-amber-500/30 dark:bg-amber-950/20">
-        <p className="flex items-center gap-2 text-sm font-bold text-amber-700 dark:text-amber-300"><Lightbulb className="h-4 w-4" />Hints &amp; tips for using the AI assistants</p>
-        <ul className="mt-2 grid gap-1.5 text-xs text-foreground/75 sm:grid-cols-2">
-          {[
-            'Name the module or register in your question, e.g. "in the Incident Clinic...".',
-            'Be specific: give dates, names, statuses or amounts to narrow the answer.',
-            'Ask follow-up questions to drill down - the assistant remembers the chat.',
-            'Ask for the format you want: a summary, a list, a checklist or a draft message.',
-            'Numbers are read live from your registers, so newly saved records appear straight away.',
-            'The assistants can read and explain - they do not change records or send anything without you.',
-          ].map((t) => <li key={t} className="flex items-start gap-1.5"><Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />{t}</li>)}
-        </ul>
-      </div>
+
     </div>
   );
 }
