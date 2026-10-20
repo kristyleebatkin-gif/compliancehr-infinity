@@ -131,7 +131,6 @@ export default function HrHub({ profile, embedded = false } = {}) {
       />}
 
       <Tabs value={tab} onValueChange={setTab}>
-      <HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />
       {!embedded && isManager && <div className="mt-3"><RegisterInsights module="hr" /></div>}
 
       <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -147,6 +146,8 @@ export default function HrHub({ profile, embedded = false } = {}) {
           </CardContent></Card>
         ))}
       </div>
+
+      <div className="mt-3"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
           <div className="flex gap-2">
