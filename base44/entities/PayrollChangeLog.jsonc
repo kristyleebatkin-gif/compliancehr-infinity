@@ -1,0 +1,104 @@
+{
+  "name": "PayrollChangeLog",
+  "type": "object",
+  "properties": {
+    "payroll_detail_id": {
+      "type": "string",
+      "title": "Payroll Detail"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "field": {
+      "type": "string",
+      "title": "Field Changed"
+    },
+    "old_value": {
+      "type": "string",
+      "title": "Previous Value"
+    },
+    "new_value": {
+      "type": "string",
+      "title": "New Value"
+    },
+    "changed_by": {
+      "type": "string",
+      "title": "Changed By"
+    },
+    "changed_by_user_id": {
+      "type": "string",
+      "title": "Changed By User ID"
+    },
+    "changed_by_email": {
+      "type": "string",
+      "title": "Changed By Email"
+    },
+    "changed_by_role": {
+      "type": "string",
+      "title": "Changed By Role"
+    },
+    "changed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Changed At"
+    },
+    "note": {
+      "type": "string",
+      "title": "Note"
+    }
+  },
+  "required": [
+    "employee_name",
+    "field"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "data.changed_by_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

@@ -13,11 +13,16 @@
     },
     "amount": {
       "type": "number",
-      "title": "Amount ($, positive = money in)"
+      "title": "Amount ($, positive = money in)",
+      "required": true
     },
     "matched_invoice_id": {
       "type": "string",
       "title": "Matched Invoice"
+    },
+    "matched_po_id": {
+      "type": "string",
+      "title": "Matched Purchase Order"
     },
     "reconciled": {
       "type": "boolean",

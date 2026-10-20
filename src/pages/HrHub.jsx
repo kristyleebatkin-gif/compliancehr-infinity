@@ -13,6 +13,7 @@ import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
 import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
 import HrTemplatesLibrary from '@/components/hr/HrTemplatesLibrary';
+import PayrollHub from '@/components/payroll/PayrollHub';
 import RegisterInsights from '@/components/RegisterInsights';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -129,6 +130,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {isManager && <TabsTrigger value="paperwork">Contracts &amp; PDs</TabsTrigger>}
           {isManager && <TabsTrigger value="file-completeness">File completeness</TabsTrigger>}
           {isManager && <TabsTrigger value="templates">Templates library</TabsTrigger>}
+          {isManager && <TabsTrigger value="payroll">Payroll</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="leave" className="mt-4 space-y-3">
@@ -240,6 +242,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
         {isManager && <TabsContent value="paperwork" className="mt-4"><HrPaperworkPanel /></TabsContent>}
         {isManager && <TabsContent value="file-completeness" className="mt-4"><StaffFileCompletenessWidget /></TabsContent>}
         {isManager && <TabsContent value="templates" className="mt-4"><HrTemplatesLibrary /></TabsContent>}
+        {isManager && <TabsContent value="payroll" className="mt-4"><PayrollHub embedded /></TabsContent>}
       </Tabs>
     </div>
   );

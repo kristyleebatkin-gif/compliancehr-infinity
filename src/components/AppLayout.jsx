@@ -10,7 +10,7 @@ import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirecto
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
-  Search, Sun, Moon, User,
+  Search, Sun, Moon, User, Wallet,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
@@ -337,6 +337,13 @@ export default function AppLayout() {
                       className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground/70 hover:bg-brand/5 hover:text-brand"
                     >
                       <User className="h-4 w-4" /> My profile
+                    </Link>
+                    <Link
+                      to="/my-payroll"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground/70 hover:bg-brand/5 hover:text-brand"
+                    >
+                      <Wallet className="h-4 w-4" /> My payroll
                     </Link>
                     <button
                       onClick={handleLogout}

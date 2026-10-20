@@ -77,6 +77,7 @@ import SuggestionsHub from '@/pages/SuggestionsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
 import MyProfile from '@/pages/MyProfile';
+import MyPayrollPage from '@/pages/MyPayrollPage';
 import OurEmployeeProfiles from '@/pages/OurEmployeeProfiles';
 import OurParticipantProfiles from '@/pages/OurParticipantProfiles';
 import OurEmployeeDetail from '@/pages/OurEmployeeDetail';
@@ -124,6 +125,7 @@ const AuthenticatedApp = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-work" element={<Navigate to="/my-profile?tab=work" replace />} />
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/my-payroll" element={<MyPayrollPage />} />
           <Route path="/our-employees" element={<RoleGate navKey="our-staff"><OurEmployeeProfiles /></RoleGate>} />
           <Route path="/our-employees/:id" element={<RoleGate navKey="our-staff"><OurEmployeeDetail /></RoleGate>} />
           <Route path="/our-participants" element={<RoleGate navKey="our-participants"><OurParticipantProfiles /></RoleGate>} />

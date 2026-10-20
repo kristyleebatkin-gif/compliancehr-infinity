@@ -1,0 +1,46 @@
+<mjml>
+  <mj-head>
+    <mj-title>Your payslip for {{pay_period_start}} to {{pay_period_end}}</mj-title>
+    <mj-preview>Your payslip is ready to view in ComplianceHR.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, Helvetica, Arial, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0f1729" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#7c3bed" border-radius="24px" font-weight="700" inner-padding="14px 28px" align="left" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f8fafc">
+    <mj-section background-color="#7c3bed" padding="20px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="ComplianceHR Infinity" width="120px" align="left" />
+        <mj-text color="#ffffff" font-size="18px" font-weight="700">ComplianceHR Infinity</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="36px 36px 8px">
+      <mj-column>
+        <mj-text font-family="Fraunces, Georgia, serif" font-size="26px" font-weight="700" line-height="1.2">Your payslip is ready, {{first_name}}</mj-text>
+        <mj-text color="#0f1729" font-size="15px">Here is a summary of your pay for {{pay_period_start}} to {{pay_period_end}}. The full breakdown is in your ComplianceHR portal.</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="8px 36px">
+      <mj-column background-color="#ffffff" border="1px solid #e5e7eb" border-radius="24px" padding="20px">
+        <mj-text font-size="14px"><strong>Pay date:</strong> {{pay_date}}</mj-text>
+        <mj-text font-size="14px"><strong>Hours worked:</strong> {{hours_worked}}</mj-text>
+        <mj-text font-size="14px"><strong>Gross pay:</strong> {{gross}}</mj-text>
+        <mj-text font-size="14px"><strong>PAYG tax (estimated):</strong> {{payg_tax}}</mj-text>
+        <mj-text font-size="14px"><strong>Superannuation:</strong> {{super_amount}}</mj-text>
+        <mj-text font-size="16px"><strong>Net pay:</strong> {{net}}</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="16px 36px">
+      <mj-column>
+        <mj-button href="https://compliancehrinfinity.com" background-color="#7c3bed" text-color="#ffffff">Open my payroll portal</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#f8fafc" padding="20px 36px">
+      <mj-column>
+        <mj-text color="#64748b" font-size="12px">This message was sent by ComplianceHR Infinity. Figures are estimates until the pay run is finalised. Please keep this payslip confidential.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

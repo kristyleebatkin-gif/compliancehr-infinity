@@ -1,0 +1,217 @@
+{
+  "name": "StaffPayrollDetail",
+  "type": "object",
+  "properties": {
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Employee User ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "employee_email": {
+      "type": "string",
+      "title": "Employee Email"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee ID"
+    },
+    "employment_type": {
+      "type": "string",
+      "title": "Employment Type"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "title": "Hourly Rate ($)"
+    },
+    "pay_cycle": {
+      "type": "string",
+      "enum": [
+        "Weekly",
+        "Fortnightly",
+        "Monthly"
+      ],
+      "default": "Fortnightly",
+      "title": "Pay Cycle"
+    },
+    "bsb": {
+      "type": "string",
+      "title": "BSB"
+    },
+    "account_number": {
+      "type": "string",
+      "title": "Account Number"
+    },
+    "account_name": {
+      "type": "string",
+      "title": "Account Name"
+    },
+    "super_fund_name": {
+      "type": "string",
+      "title": "Super Fund Name"
+    },
+    "super_member_number": {
+      "type": "string",
+      "title": "Super Member Number"
+    },
+    "super_rate": {
+      "type": "number",
+      "title": "Super Rate (%)",
+      "default": 11.5
+    },
+    "tfn_number": {
+      "type": "string",
+      "title": "Tax File Number"
+    },
+    "tax_declaration": {
+      "type": "string",
+      "title": "Tax Declaration"
+    },
+    "salary_sacrifice": {
+      "type": "number",
+      "title": "Salary Sacrifice ($ per pay)",
+      "default": 0
+    },
+    "allowances_per_pay": {
+      "type": "number",
+      "title": "Other Allowances ($ per pay)",
+      "default": 0
+    },
+    "source_intake_case_id": {
+      "type": "string",
+      "title": "Source Intake Case"
+    },
+    "extracted_from_intake": {
+      "type": "boolean",
+      "title": "Extracted From Intake",
+      "default": false
+    },
+    "verified": {
+      "type": "boolean",
+      "title": "Verified",
+      "default": false
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "employee_name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "data.employee_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "data.employee_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

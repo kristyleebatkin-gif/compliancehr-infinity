@@ -1,0 +1,199 @@
+{
+  "name": "Payslip",
+  "type": "object",
+  "properties": {
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "employee_user_id": {
+      "type": "string",
+      "title": "Employee User ID"
+    },
+    "staff_profile_id": {
+      "type": "string",
+      "title": "Staff Profile"
+    },
+    "pay_period_start": {
+      "type": "string",
+      "format": "date",
+      "title": "Pay Period Start"
+    },
+    "pay_period_end": {
+      "type": "string",
+      "format": "date",
+      "title": "Pay Period End"
+    },
+    "pay_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Pay Date"
+    },
+    "earnings_json": {
+      "type": "string",
+      "title": "Earnings Detail (JSON)"
+    },
+    "gross": {
+      "type": "number",
+      "title": "Gross Pay ($)"
+    },
+    "payg_tax": {
+      "type": "number",
+      "title": "PAYG Tax ($)"
+    },
+    "superannuation": {
+      "type": "number",
+      "title": "Superannuation ($)"
+    },
+    "deductions": {
+      "type": "number",
+      "title": "Deductions ($)",
+      "default": 0
+    },
+    "net": {
+      "type": "number",
+      "title": "Net Pay ($)"
+    },
+    "hours_worked": {
+      "type": "number",
+      "title": "Hours Worked"
+    },
+    "shifts_count": {
+      "type": "number",
+      "title": "Shifts"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Paid",
+        "Cancelled"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "pay_run_id": {
+      "type": "string",
+      "title": "Pay Run"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Emailed At"
+    },
+    "sent_to": {
+      "type": "string",
+      "title": "Emailed To"
+    },
+    "payment_ref": {
+      "type": "string",
+      "title": "Payment Reference"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "employee_name",
+    "pay_period_start",
+    "pay_period_end"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "data.employee_user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}

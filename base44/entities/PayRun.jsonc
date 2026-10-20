@@ -1,0 +1,162 @@
+{
+  "name": "PayRun",
+  "type": "object",
+  "properties": {
+    "run_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Run Date"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date",
+      "title": "Period Start"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date",
+      "title": "Period End"
+    },
+    "pay_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Pay Date"
+    },
+    "employee_count": {
+      "type": "number",
+      "title": "Employees Paid"
+    },
+    "total_gross": {
+      "type": "number",
+      "title": "Total Gross ($)"
+    },
+    "total_payg": {
+      "type": "number",
+      "title": "Total PAYG ($)"
+    },
+    "total_super": {
+      "type": "number",
+      "title": "Total Super ($)"
+    },
+    "total_net": {
+      "type": "number",
+      "title": "Total Net ($)"
+    },
+    "bank_reference": {
+      "type": "string",
+      "title": "Bank Reference"
+    },
+    "aba_generated": {
+      "type": "boolean",
+      "title": "Bank File Generated",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Sent to bank",
+        "Paid",
+        "Cancelled"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "period_start",
+    "period_end"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    }
+  }
+}
