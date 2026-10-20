@@ -78,6 +78,52 @@ export default async function(req) {
       perEntityCounts.push({ label, scanned: (records || []).length, updated: updates.length });
     }
 
+    // Emergency drills: every drill is due again every 3 months. Managers are
+    // alerted 10 weeks (70 days) after the last drill to schedule the next one,
+    // stamped with the time and date of the alert.
+    let drillAlerts = 0;
+    const drills = await service.entities.EmergencyDrill.list();
+    const drillDates = (drills || [])
+      .map((d) => d.date || d.created_date)
+      .filter(Boolean)
+      .sort();
+    if (drillDates.length) {
+      const latest = (drills || []).find((d) => (d.date || d.created_date) === drillDates[drillDates.length - 1]);
+      const daysSinceDrill = Math.floor((now - new Date(drillDates[drillDates.length - 1]).getTime()) / day);
+      if (latest && daysSinceDrill >= 70 && !latest.next_drill_alert_sent) {
+        const users0 = await service.entities.User.list();
+        const mgrs = (users0 || []).filter((u) => MANAGER_ROLES.includes(u.role) && u.email);
+        await Promise.allSettled(mgrs.map((m) => Promise.all([
+          service.entities.Notification.create({
+            type: 'Review Reminder',
+            recipient: m.email,
+            recipient_id: m.id,
+            message: `Last emergency drill was ${daysSinceDrill} days ago (${drillDates[drillDates.length - 1]}). Drills are due every 3 months - schedule the next drill now.`,
+            action_url: '/emergency-response',
+          }),
+          service.integrations.Core.SendEmail({
+            to: m.email,
+            subject: 'Emergency drill due - schedule the next drill',
+            html: `<p>Hi ${m.full_name || 'there'},</p><p>The last emergency drill was recorded on <b>${drillDates[drillDates.length - 1]}</b> (${daysSinceDrill} days ago). Drills are due every 3 months, so please schedule and record the next drill in Emergency Response.</p>`,
+          }),
+        ])));
+        await service.entities.EmergencyDrill.update(latest.id, {
+          next_drill_alert_sent: true,
+          next_drill_alert_at: new Date().toISOString(),
+        });
+        await service.entities.AuditLog.create({
+          action: 'Drill renewal alert sent',
+          entity_type: 'EmergencyDrill',
+          record_id: String(latest.id),
+          record_title: latest.title || 'Emergency drill',
+          performed_by: 'Review Aging Alerts (automated)',
+          details: `${daysSinceDrill} days since last drill; managers alerted to schedule the next drill`,
+          timestamp: new Date().toISOString(),
+        });
+        drillAlerts = mgrs.length;
+      }
+    }
+
     // Notify managers (in-app + email), once per scan run
     let notified = 0;
     if (dueItems.length) {

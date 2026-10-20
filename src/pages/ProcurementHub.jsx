@@ -75,6 +75,10 @@ export default function ProcurementHub() {
 
   const advance = async (po) => {
     const next = NEXT_STATUS[po.status];
+    if (next === 'Approved' && !po.receipt_id) {
+      window.alert('Match a supplier receipt to this order in the Matching tab before approving.');
+      return;
+    }
     const patch = { status: next };
     if (next === 'Approved') patch.approved_by = 'You';
     if (next === 'Received') patch.received_date = today();
