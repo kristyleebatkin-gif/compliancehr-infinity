@@ -126,21 +126,6 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
@@ -154,16 +139,6 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
           }
         }
       ]
@@ -179,16 +154,6 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
         }
       ]
     },
@@ -202,11 +167,6 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
           }
         }
       ]
