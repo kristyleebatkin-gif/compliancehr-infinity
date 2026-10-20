@@ -69,8 +69,6 @@ export default function CompanySafe() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <div className="space-y-4">
-          <SectionLabel icon={ShieldCheck} tint="bg-safe">Security &amp; Trust</SectionLabel>
-          <SecurityPosture />
           <SectionLabel icon={IdCard} tint="bg-[#ec4899]">Staff Badge Creator</SectionLabel>
           <StaffBadgeCreator />
           <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
@@ -119,10 +117,10 @@ export default function CompanySafe() {
         <div className="space-y-3">
           <SectionLabel icon={Lock} tint="bg-brand">Saved Safe Documents</SectionLabel>
           {docs.map((d) => (
-            <Card key={d.id}>
+            <Card key={d.id} className="border-l-4 border-l-brand shadow-sm transition hover:shadow-md">
               <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-brand/10 p-2"><Lock className="h-5 w-5 text-brand" /></div>
+                  <div className="rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 p-2 shadow-sm"><Lock className="h-5 w-5 text-white" /></div>
                   <div>
                     <p className="font-medium">{d.name}{d.version ? ` (v${d.version})` : ''}</p>
                     <p className="text-sm text-muted-foreground">
@@ -140,6 +138,11 @@ export default function CompanySafe() {
           ))}
         </div>
       )}
+
+      <div className="space-y-3">
+        <SectionLabel icon={ShieldCheck} tint="bg-safe">Security &amp; Trust</SectionLabel>
+        <SecurityPosture />
+      </div>
     </div>
   );
 }

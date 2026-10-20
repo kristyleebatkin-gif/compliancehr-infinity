@@ -40,8 +40,8 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
   }
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-md">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+    <div className="rounded-2xl border border-border/60 bg-card p-3 shadow-md">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-sm font-bold">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md">
             <KanbanSquare className="h-4 w-4" />
@@ -85,7 +85,7 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
                       <span className="flex items-center gap-1.5"><span className={`h-1.5 w-1.5 rounded-full ${DOT[col]}`} />{col}</span>
                       <span>{colTasks.length}</span>
                     </div>
-                    <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
+                    <div className="max-h-44 space-y-1.5 overflow-y-auto pr-1">
                       {colTasks.map((t) => (
                         <button
                           key={t.id}

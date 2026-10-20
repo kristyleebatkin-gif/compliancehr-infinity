@@ -62,9 +62,18 @@ const INVOICE_TERMS = [
   ['contact_information', 'Contact information'],
 ];
 
+const SECTION_TONES = [
+  'from-violet-500 to-purple-500', 'from-sky-500 to-blue-600', 'from-fuchsia-500 to-pink-500',
+  'from-emerald-500 to-teal-500', 'from-amber-500 to-orange-500', 'from-indigo-500 to-violet-600',
+  'from-rose-500 to-pink-600', 'from-cyan-500 to-sky-600', 'from-purple-500 to-fuchsia-600',
+];
+
 const Section = ({ icon: Icon, title, children }) => (
-  <div className="rounded-2xl border border-border/60 bg-card p-5">
-    <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><Icon className="h-4 w-4" />{title}</div>
+  <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-sm">
+    <div className="mb-3 flex items-center gap-2.5 text-sm font-bold">
+      <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br text-white shadow-sm ${SECTION_TONES[title.length % SECTION_TONES.length]}`}><Icon className="h-3.5 w-3.5" /></span>
+      {title}
+    </div>
     {children}
   </div>
 );
@@ -141,19 +150,19 @@ export default function BusinessDetailsCard() {
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
           <Field label="Contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
-          <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
           <Field label="Business email" value={form.email} onChange={set('email')} />
+          <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
         </div>
       </Section>
 
       <Section icon={PenLine} title="Business signature">
         <div className="grid gap-2 sm:grid-cols-3">
-          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={4} />
+          <Area label="Business contact signature" value={form.contact_signature} onChange={set('contact_signature')} rows={3} />
+          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
           <Field label="Business contact role" value={form.contact_role} onChange={set('contact_role')} />
           <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
           <Field label="Business contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
-          <Area label="Business contact signature" value={form.contact_signature} onChange={set('contact_signature')} rows={3} />
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business NDIS registered provider number" value={form.ndis_provider_number} onChange={set('ndis_provider_number')} />
         </div>
@@ -188,6 +197,7 @@ export default function BusinessDetailsCard() {
 
       <Section icon={Building2} title="Business operational details">
         <div className="grid gap-2 sm:grid-cols-3">
+          <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business operating hours" value={form.operating_hours} onChange={set('operating_hours')} />
           <Field label="Business preferred communication method" value={form.preferred_communication} onChange={set('preferred_communication')} />
           <Field label="Business owner" value={form.business_owner} onChange={set('business_owner')} />

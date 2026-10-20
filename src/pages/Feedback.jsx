@@ -281,6 +281,18 @@ export default function Feedback({ profile, embedded = false } = {}) {
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
             <div className="space-y-6">
+              <Card><CardContent className="p-3">
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
+                <ResponsiveContainer width="100%" height={140}>
+                  <BarChart data={chartData} barCategoryGap="20%">
+                    <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
+                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                    <Bar dataKey="Feedback" stackId="a" fill="#0d9488" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Complaint" stackId="a" fill="#e11d48" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent></Card>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
                 <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Record entry</Button>
@@ -298,18 +310,6 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   </div>
                 ))}
               </div>
-              <Card><CardContent className="p-4">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
-                <ResponsiveContainer width="100%" height={180}>
-                  <BarChart data={chartData} barCategoryGap="20%">
-                    <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
-                    <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
-                    <Legend wrapperStyle={{ fontSize: 11 }} />
-                    <Bar dataKey="Feedback" stackId="a" fill="#0d9488" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Complaint" stackId="a" fill="#e11d48" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent></Card>
               <div className="space-y-4">
                 <List type="Feedback" />
                 <List type="Complaint" />

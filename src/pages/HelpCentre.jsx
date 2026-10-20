@@ -94,20 +94,16 @@ export default function HelpCentre() {
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
-          <TabsTrigger value="guides"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
-          <TabsTrigger value="manuals"><Library className="mr-1.5 inline h-3.5 w-3.5" />User guides</TabsTrigger>
-          <TabsTrigger value="howtos"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
-          <TabsTrigger value="troubleshoot"><Stethoscope className="mr-1.5 inline h-3.5 w-3.5" />AI troubleshooter</TabsTrigger>
+          <TabsTrigger value="guides" className="text-violet-700 data-[state=active]:text-violet-700"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
+          <TabsTrigger value="manuals" className="text-emerald-700 data-[state=active]:text-emerald-700"><Library className="mr-1.5 inline h-3.5 w-3.5" />User guides</TabsTrigger>
+          <TabsTrigger value="howtos" className="text-amber-700 data-[state=active]:text-amber-700"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
+          <TabsTrigger value="troubleshoot" className="text-fuchsia-700 data-[state=active]:text-fuchsia-700"><Stethoscope className="mr-1.5 inline h-3.5 w-3.5" />AI troubleshooter</TabsTrigger>
           <TabsTrigger value="assistants" className="text-purple-700 data-[state=active]:text-purple-700"><Bot className="mr-1.5 inline h-3.5 w-3.5" />Personal assistants</TabsTrigger>
-          <TabsTrigger value="health"><Activity className="mr-1.5 inline h-3.5 w-3.5" />System health &amp; quick fixes</TabsTrigger>
+          <TabsTrigger value="health" className="text-teal-700 data-[state=active]:text-teal-700"><Activity className="mr-1.5 inline h-3.5 w-3.5" />System health &amp; quick fixes</TabsTrigger>
           <TabsTrigger value="tech-support" className="text-sky-700 data-[state=active]:text-sky-700"><Headset className="mr-1.5 inline h-3.5 w-3.5" />Technical support</TabsTrigger>
-          <TabsTrigger value="support"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
-          <TabsTrigger value="escalate"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
+          <TabsTrigger value="support" className="text-indigo-700 data-[state=active]:text-indigo-700"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
+          <TabsTrigger value="escalate" className="text-rose-700 data-[state=active]:text-rose-700"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
         </TabsList>
-
-        <div className="mt-4">
-          <CommonProblems />
-        </div>
 
         <TabsContent value="manuals" className="mt-4">
           <Card className="border-primary/30 bg-primary/5"><CardContent className="p-5">
@@ -132,7 +128,7 @@ export default function HelpCentre() {
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
               {guides.map(([path, g]) => (
-                <Card key={path}>
+                <Card key={path} className="border-l-4 border-l-violet-400/60 shadow-sm transition hover:shadow-md">
                   <CardContent className="p-4">
                     <button className="flex w-full items-center justify-between gap-3 text-left" onClick={() => setOpenGuide(openGuide === path ? null : path)}>
                       <div className="min-w-0">
@@ -176,7 +172,7 @@ export default function HelpCentre() {
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
               {articles.map((a) => (
-                <Card key={a.title}>
+                <Card key={a.title} className="border-l-4 border-l-amber-400/60 shadow-sm transition hover:shadow-md">
                   <CardContent className="p-4">
                     <button className="flex w-full items-center justify-between gap-3 text-left" onClick={() => setOpenArticle(openArticle === a.title ? null : a.title)}>
                       <div className="min-w-0">
@@ -254,6 +250,8 @@ export default function HelpCentre() {
           </div>
         </TabsContent>
       </Tabs>
+
+      <CommonProblems />
     </div>
   );
 }

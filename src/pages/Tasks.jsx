@@ -199,10 +199,6 @@ export default function Tasks() {
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
 
-      <TaskProgressChart tasks={list} users={users} />
-
-      <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
-
       <div className="flex items-center justify-end gap-1.5">
         <button onClick={() => setView('list')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'list' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>List</button>
         <button onClick={() => setView('calendar')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'calendar' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>Calendar</button>
@@ -260,6 +256,10 @@ export default function Tasks() {
           )}
         </>
       )}
+
+      <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />
+
+      <TaskProgressChart tasks={list} users={users} />
 
       {selected.length > 0 && (
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">

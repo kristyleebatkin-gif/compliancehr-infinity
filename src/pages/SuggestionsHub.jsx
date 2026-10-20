@@ -85,15 +85,15 @@ export default function SuggestionsHub() {
         <>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
             {[
-              ['Modules reviewed', review.moduleCount, Sparkles],
-              ['Total suggestions', review.suggestionCount, Sparkles],
-              ['Needs attention', overdueModules, AlertTriangle],
-              ['Generated', new Date(review.generated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }), Clock],
-            ].map(([label, value, Icon]) => (
-              <Card key={label}><CardContent className="p-3">
-                <div className="flex items-center gap-2"><Icon className="h-4 w-4 text-muted-foreground" /><p className="text-xs text-muted-foreground">{label}</p></div>
-                <p className="mt-1 text-xl font-bold tabular-nums">{value}</p>
-              </CardContent></Card>
+              ['Modules reviewed', review.moduleCount, 'from-violet-500 via-purple-500 to-fuchsia-500'],
+              ['Total suggestions', review.suggestionCount, 'from-sky-500 via-blue-600 to-indigo-600'],
+              ['Needs attention', overdueModules, 'from-amber-500 via-orange-500 to-rose-500'],
+              ['Generated', new Date(review.generated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }), 'from-emerald-500 via-teal-500 to-cyan-600'],
+            ].map(([label, value, grad]) => (
+              <div key={label} className={`rounded-2xl bg-gradient-to-br p-3.5 text-white shadow-md ${grad}`}>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{label}</p>
+                <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
+              </div>
             ))}
           </div>
 

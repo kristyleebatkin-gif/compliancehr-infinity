@@ -159,15 +159,15 @@ export default function QualityImprovement() {
 
       <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
         {[
-          ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length, Lightbulb],
-          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length, MessageSquarePlus],
-          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length, Wrench],
-          ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length, CheckCircle2],
-        ].map(([label, value, Icon]) => (
-          <Card key={label}><CardContent className="p-3">
-            <div className="flex items-center gap-2"><Icon className="h-4 w-4 text-muted-foreground" /><p className="text-xs text-muted-foreground">{label}</p></div>
-            <p className="mt-1 text-xl font-bold">{value}</p>
-          </CardContent></Card>
+          ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length, 'from-violet-500 via-purple-500 to-fuchsia-500'],
+          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length, 'from-sky-500 via-blue-600 to-indigo-600'],
+          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length, 'from-amber-500 via-orange-500 to-rose-500'],
+          ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length, 'from-emerald-500 via-teal-500 to-cyan-600'],
+        ].map(([label, value, grad]) => (
+          <div key={label} className={`rounded-2xl bg-gradient-to-br p-3.5 text-white shadow-md ${grad}`}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{label}</p>
+            <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
+          </div>
         ))}
       </div>
 

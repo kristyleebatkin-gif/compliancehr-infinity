@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import AssistantChat from '@/components/assistant/AssistantChat';
-import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot } from 'lucide-react';
+import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, Lightbulb, ClipboardList, Wallet, Users2 } from 'lucide-react';
 
 const AGENTS = [
   {
@@ -111,6 +111,44 @@ export default function Assistant() {
             </button>
           );
         })}
+      </div>
+
+      {/* What the assistants can complete */}
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm">
+        <div className="bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 p-4 text-white">
+          <p className="flex items-center gap-2 text-sm font-bold"><ClipboardList className="h-4 w-4" />What the AI assistants can complete for you</p>
+          <p className="mt-0.5 text-xs opacity-90">Every assistant reads your live app data, so answers are always based on real registers.</p>
+        </div>
+        <div className="grid gap-4 p-4 sm:grid-cols-2">
+          {[
+            { icon: ShieldCheck, tone: 'text-indigo-600', title: 'Compliance & governance', items: ['Summarise audits, policies, incidents and investigations', 'List certificates, screenings and policies expiring soon', 'Track NDIS deadlines, KPIs and improvement actions', 'Check audit trails, consents and complaint status'] },
+            { icon: Sparkles, tone: 'text-cyan-600', title: 'Your daily work', items: ['Show your allocated tasks and what is overdue', 'Draft notes, updates, letters and sign-offs', 'Write polite reminders and follow-up messages', 'Explain policies, checklists and how a process works'] },
+            { icon: Wallet, tone: 'text-emerald-600', title: 'Finance & receipts', items: ['Find receipts by supplier, date, employee or amount', 'Check reconciliation status and match transactions', 'Locate receipts for a participant or receipt number'] },
+            { icon: Users2, tone: 'text-amber-600', title: 'Rostering & shifts', items: ['Find unassigned shifts and coverage gaps this week', 'Spot double-booked participants and missing details', "Check whether last week's roster can copy forward"] },
+          ].map((g) => (
+            <div key={g.title} className="rounded-xl border border-border/60 bg-muted/20 p-3">
+              <p className={`flex items-center gap-1.5 text-xs font-bold ${g.tone}`}><g.icon className="h-3.5 w-3.5" />{g.title}</p>
+              <ul className="mt-2 space-y-1.5">
+                {g.items.map((x) => <li key={x} className="flex items-start gap-1.5 text-xs text-foreground/75"><CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-brand" />{x}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Hints & tips */}
+      <div className="rounded-2xl border border-amber-300/60 bg-amber-50/60 p-4 dark:border-amber-500/30 dark:bg-amber-950/20">
+        <p className="flex items-center gap-2 text-sm font-bold text-amber-700 dark:text-amber-300"><Lightbulb className="h-4 w-4" />Hints &amp; tips for using the AI assistants</p>
+        <ul className="mt-2 grid gap-1.5 text-xs text-foreground/75 sm:grid-cols-2">
+          {[
+            'Name the module or register in your question, e.g. "in the Incident Clinic...".',
+            'Be specific: give dates, names, statuses or amounts to narrow the answer.',
+            'Ask follow-up questions to drill down - the assistant remembers the chat.',
+            'Ask for the format you want: a summary, a list, a checklist or a draft message.',
+            'Numbers are read live from your registers, so newly saved records appear straight away.',
+            'The assistants can read and explain - they do not change records or send anything without you.',
+          ].map((t) => <li key={t} className="flex items-start gap-1.5"><Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />{t}</li>)}
+        </ul>
       </div>
     </div>
   );

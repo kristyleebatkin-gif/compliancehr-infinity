@@ -17,6 +17,8 @@ import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Download, CalendarDay
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
@@ -57,6 +59,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   const [scanMsg, setScanMsg] = useState('');
   const [selected, setSelected] = useState([]);
   const [applying, setApplying] = useState(false);
+  const [tab, setTab] = useState('documents');
   const canManageAll = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
   const canEditDoc = (d) => canManageAll || (me?.role === 'Support Worker' && d.employee_name === me?.full_name);
 
@@ -193,7 +196,20 @@ export default function Documents({ profile, profileKind, embedded = false } = {
 
   return (
     <div className="space-y-6">
-      {!embedded && <PageHeader icon={FolderOpen} title="Document Vault" subtitle="Every Document, Expiry Tracking and Data Control." showAlerts={false} />}
+      {!embedded && <PageHeader
+        icon={FolderOpen}
+        title="Document Vault"
+        subtitle="Every Document, Expiry Tracking and Data Control."
+        showAlerts={false}
+        action={(
+          <>
+            <Button size="sm" variant={tab === 'documents' ? 'default' : 'outline'} onClick={() => setTab('documents')}><FolderOpen className="h-4 w-4" />Every doc</Button>
+            <Button size="sm" variant={tab === 'expiry-calendar' ? 'default' : 'outline'} onClick={() => setTab('expiry-calendar')}><CalendarDays className="h-4 w-4" />Expiry cal</Button>
+            <ModuleAuditChecklistButton />
+            <ModuleAuditButton />
+          </>
+        )}
+      />}
 
       {isParticipant ? (
         <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
@@ -201,7 +217,9 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         <>
       {!profile && <RegisterInsights module="documents" />}
 
-      <Tabs defaultValue="documents">
+      {!profile && <DocumentsDashboard />}
+
+      <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
@@ -307,8 +325,6 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </div>
         </>
       )}
-
-      {!profile && <DocumentsDashboard />}
 
       {!profile && <><div id="vault-business" className="scroll-mt-24 space-y-4 pt-2">
       <BusinessDocumentsLibrary />
