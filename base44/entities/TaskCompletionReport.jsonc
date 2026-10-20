@@ -1,0 +1,110 @@
+{
+  "name": "TaskCompletionReport",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "batch_key": {
+      "type": "string"
+    },
+    "task_count": {
+      "type": "number"
+    },
+    "first_completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "csv_file_uri": {
+      "type": "string"
+    },
+    "pdf_file_uri": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "batch_key",
+    "task_count"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Rostering Coordinator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "CRM & Marketing Officer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Intake Officer"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

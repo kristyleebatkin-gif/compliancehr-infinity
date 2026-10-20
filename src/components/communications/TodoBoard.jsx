@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Checkbox } from '@/components/ui/checkbox';
 import { Download, ListTodo, Loader2, Plus, PenLine } from 'lucide-react';
 import { APP_MODULES, loadCommContacts, exportCsv } from '@/lib/commTypes';
+import SharedTodoCommandBoard from '@/components/tasks/SharedTodoCommandBoard';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
@@ -168,10 +169,17 @@ export default function TodoBoard({ compact = false }) {
     }
   };
 
+  const exportFinalised = () => exportCsv('finalised-tasks.csv', finalised.map((t) => ({
+    task: t.title, module: t.module, date: t.task_date, time: t.task_time, due_date: t.due_date,
+    responsible: (t.responsible || []).join('; '), completed_by: t.completed_by, completed_date: t.completed_date,
+    time_taken_minutes: t.time_taken_minutes, signed_off_by: t.signed_off_by, signed_off_date: t.signed_off_date,
+    signature: t.signature, shared_by: t.shared_by,
+  })));
   const toggleResponsible = (email) => setForm((f) => ({ ...f, responsible: f.responsible.includes(email) ? f.responsible.filter((e) => e !== email) : [...f.responsible, email] }));
 
   return (
-    <div className={compact ? 'space-y-3 rounded-xl border border-primary/25 bg-card p-3 shadow-sm' : 'space-y-4'}>
+    <div className={compact ? 'min-w-0' : 'space-y-4'}>
+      {compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : <>
       <div className={compact ? 'flex flex-wrap items-center justify-between gap-2 rounded-lg bg-primary/5 p-2.5' : 'flex flex-wrap items-center justify-between gap-2'}>
         {compact ? <div className="flex min-w-0 items-center gap-2"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><ListTodo className="h-4 w-4" /></span><div><h2 className="text-sm font-semibold">Shared To-do List</h2><p className="text-[11px] text-muted-foreground">Share, complete and sign off team actions.</p></div></div> : <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>}
         <Button size={compact ? 'sm' : 'default'} onClick={() => setOpen(true)}><Plus className="h-4 w-4" />New shared to-do</Button>
@@ -284,6 +292,7 @@ export default function TodoBoard({ compact = false }) {
           )}
         </>
       )}
+      </>}
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[85vh] overflow-y-auto">

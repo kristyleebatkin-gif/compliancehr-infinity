@@ -1,0 +1,69 @@
+{
+  "name": "30 Completed Task Reports",
+  "description": "Record each task once when it is completed, before manager sign-off, and privately save a PDF and CSV after every 30 completions.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "TodoTask",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": "${ (.trigger.data.status | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) and ((.trigger.old_data.status // \"\" | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) | not) }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "thirty_completed_task_reports",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "record_completion": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "taskCompletionReports",
+            "args": {
+              "mode": "record",
+              "task_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "settle_completions",
+          "x-base44": {
+            "title": "Record completed task",
+            "description": "Save the completion details once per task, without waiting for sign-off"
+          }
+        }
+      },
+      {
+        "settle_completions": {
+          "wait": "PT5S",
+          "then": "save_batch_report",
+          "x-base44": {
+            "title": "Collect simultaneous completions",
+            "description": "Keep batches ordered when team members complete tasks together"
+          }
+        }
+      },
+      {
+        "save_batch_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "taskCompletionReports",
+            "args": {
+              "mode": "report",
+              "completion_id": "${ .record_completion.completion_id // null }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Save each 30-task report",
+            "description": "Generate private PDF and CSV exports for the Tasks dashboard"
+          }
+        }
+      }
+    ]
+  }
+}

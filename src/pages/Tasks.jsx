@@ -7,6 +7,7 @@ import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
+import TaskCompletionReports from '@/components/tasks/TaskCompletionReports';
 import TaskToolbar from '@/components/tasks/TaskToolbar';
 import TaskSummaryCards from '@/components/tasks/TaskSummaryCards';
 import TaskList from '@/components/tasks/TaskList';
@@ -215,6 +216,7 @@ export default function Tasks() {
       <TaskDashboard tasks={list} onOpen={openEdit} />
 
       <TodoBoard compact />
+      <TaskCompletionReports />
 
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}

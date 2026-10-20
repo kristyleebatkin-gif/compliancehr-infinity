@@ -54,7 +54,7 @@ function StaffStrip({ tasks }) {
     <Card className="min-w-0 h-28 overflow-y-auto"><CardContent className="p-2.5">
       <p className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/60"><Users className="h-3.5 w-3.5" />Who is carrying what (live)</p>
       {!rows.length && <p className="text-xs text-muted-foreground">No pending workload.</p>}
-      <div className="max-h-28 space-y-1.5 overflow-y-auto">
+      <div className="grid max-h-28 grid-cols-1 gap-x-4 gap-y-1.5 overflow-y-auto sm:grid-cols-3">
         {rows.map((r) => (
           <div key={r.name} className="grid grid-cols-2 items-center gap-1">
             <span className="min-w-0 truncate text-[9px] font-semibold" title={r.name}>{r.name}</span>
@@ -116,11 +116,9 @@ export default function TaskDashboard({ tasks, onOpen }) {
         <Panel title="Current" icon={Clock} tone="from-violet-500 to-purple-400" tasks={current} onOpen={onOpen} emptyText="No current tasks." />
         <Panel title="Future" icon={CalendarClock} tone="from-sky-500 to-cyan-400" tasks={future} onOpen={onOpen} emptyText="No future tasks scheduled." />
         <Panel title="Past" icon={CheckCircle2} tone="from-emerald-500 to-teal-400" tasks={past} onOpen={onOpen} emptyText="No past tasks." />
-        <div className="min-w-0 space-y-1.5">
-          <TimeCard tasks={tasks} avgMin={avgMin} />
-          <StaffStrip tasks={tasks} />
-        </div>
+        <TimeCard tasks={tasks} avgMin={avgMin} />
       </div>
+      <StaffStrip tasks={tasks} />
 
     </div>
   );
