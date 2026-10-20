@@ -97,8 +97,8 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
 
   return (
     <div className="rounded-xl border border-border/60 bg-muted/30 p-3">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2 text-xs font-semibold text-muted-foreground">
           <FileText className="h-3.5 w-3.5" /> Progress notes &amp; reports ({entries.length})
         </div>
         {!readOnly && (
@@ -116,8 +116,8 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
         <div className="mt-2 space-y-2">
           {entries.map((entry) => (
             <div key={entry.id} className="rounded-lg border border-border/60 bg-card p-2.5">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
                   <Badge variant="outline" className="text-[10px]">{entry.entry_type}</Badge>
                   <span className="text-xs text-muted-foreground">
                     {entry.recorded_date ? format(new Date(entry.recorded_date), 'd MMM yyyy') : ''}
@@ -138,7 +138,7 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
                 </div>
               </div>
               {entry.file_name && <p className="mt-1 flex items-center gap-1 text-xs text-teal"><FileText className="h-3 w-3" />{entry.file_name}</p>}
-              {entry.notes && <p className="mt-1 whitespace-pre-wrap text-sm">{entry.notes}</p>}
+              {entry.notes && <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6">{entry.notes}</p>}
             </div>
           ))}
         </div>
