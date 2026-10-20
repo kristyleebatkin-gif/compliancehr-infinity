@@ -107,7 +107,7 @@ export default function IncidentForm() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl p-4 md:p-8 space-y-4">
+    <div className="mx-auto max-w-3xl p-3 space-y-2">
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> All Incidents</Link>
       <PageHeader title={isEdit ? 'Review Incident' : 'New Incident'} subtitle={canReview ? 'Record details, attach profiles and manage the administrative review workflow' : 'Submit the incident for administrative review'} />
 
@@ -120,8 +120,8 @@ export default function IncidentForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="rounded-2xl border border-border/60 bg-card p-5 md:p-6 space-y-5">
-        <Field label="Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
+      <form onSubmit={handleSubmit} className="compact-safety-form rounded-xl border border-border/60 bg-card p-3 space-y-2">
+        <Field label="Title" className="sm:col-span-2"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Incident ID"><TextInput value={form.incident_id || ''} onChange={(e) => set('incident_id', e.target.value)} /></Field>
           <Field label="Location"><TextInput value={form.location || ''} onChange={(e) => set('location', e.target.value)} /></Field>
@@ -142,17 +142,17 @@ export default function IncidentForm() {
           <Field label="Severity"><Select value={form.severity} onChange={(e) => set('severity', e.target.value)}>{severities.map((s) => <option key={s}>{s}</option>)}</Select></Field>
           {canReview && <Field label="Review Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{statuses.map((s) => <option key={s}>{s}</option>)}</Select></Field>}
         </div>
-        <Field label="Description"><TextArea rows={4} value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>
+        <Field label="Description" className="sm:col-span-2"><TextArea rows={3} value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>
         <Field label="Immediate Actions Taken"><TextArea rows={3} value={form.immediate_actions || ''} onChange={(e) => set('immediate_actions', e.target.value)} /></Field>
         <Field label="Risks / Hazards Identified"><TextArea rows={3} value={form.hazards_identified || ''} onChange={(e) => set('hazards_identified', e.target.value)} /></Field>
         <Field label="Risk Assessment"><TextArea rows={3} value={form.risk_assessment || ''} onChange={(e) => set('risk_assessment', e.target.value)} placeholder="Likelihood, consequence, risk rating and people exposed" /></Field>
         <Field label="Control Measures"><TextArea rows={3} value={form.control_measures || ''} onChange={(e) => set('control_measures', e.target.value)} placeholder="Immediate and ongoing controls, owner and review date" /></Field>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-x-3 gap-y-1">
           <Checkbox label="Requires NDIS Report" checked={form.requires_ndis_report} onChange={(e) => set('requires_ndis_report', e.target.checked)} />
           <Checkbox label="Police Notified" checked={form.requires_police} onChange={(e) => set('requires_police', e.target.checked)} />
           <Checkbox label="WHS Regulator Notification Required" checked={form.whs_notification_required} onChange={(e) => set('whs_notification_required', e.target.checked)} />
         </div>
-        {canReview && <div className="space-y-4 rounded-xl border border-warning/30 bg-warning/5 p-4">
+        {canReview && <div className="space-y-2 rounded-lg border border-warning/30 bg-warning/5 p-2.5">
           <div><h3 className="text-sm font-semibold">Regulatory Notification Assessment</h3><p className="text-xs text-foreground/55">Record applicable deadlines and references based on the incident type, provider jurisdiction and current regulator requirements.</p></div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Reportable Incident Type"><Select value={form.reportable_incident_type || 'Not assessed'} onChange={(e) => set('reportable_incident_type', e.target.value)}>{reportableTypes.map((value) => <option key={value}>{value}</option>)}</Select></Field>
@@ -171,7 +171,7 @@ export default function IncidentForm() {
           <Field label="Reportability Decision and Reasons"><TextArea value={form.reportability_decision_reasons || ''} onChange={(e) => set('reportability_decision_reasons', e.target.value)} /></Field>
           <Field label="Late Notification Reason"><TextArea value={form.late_notification_reason || ''} onChange={(e) => set('late_notification_reason', e.target.value)} /></Field>
         </div>}
-        <div className="flex justify-end gap-2 border-t border-border/60 pt-4">
+        <div className="flex flex-wrap justify-end gap-1.5 border-t border-border/60 pt-2">
           <button type="button" onClick={() => navigate('/incidents')} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button>
           <button type="submit" disabled={saving} className="flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-60"><Save className="h-4 w-4" />{saving ? 'Saving...' : canReview ? 'Save Incident Review' : 'Submit Incident'}</button>
         </div>

@@ -435,13 +435,13 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
       {/* New Investigation modal */}
       {canReview && showInv && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-card p-5 shadow-xl max-h-[90vh] overflow-y-auto">
-            <div className="mb-4 flex items-center justify-between">
+          <div className="w-full max-w-lg sm:max-w-2xl rounded-xl bg-card p-3 shadow-xl max-h-[90vh] overflow-y-auto">
+            <div className="mb-2 flex items-center justify-between">
               <h3 className="text-lg font-semibold">{editingInvestigation ? 'Edit Investigation' : 'Add New Investigation'}</h3>
               <button onClick={() => setShowInv(false)} className="rounded p-1.5 hover:bg-muted"><X className="h-4 w-4 text-foreground/50" /></button>
             </div>
-            <form onSubmit={saveInvestigation} className="space-y-3">
-              <Field label="Investigation Title"><TextInput value={invForm.title} onChange={(e) => set('title', e.target.value)} required placeholder="e.g. Investigation - Slip incident 12 Aug" /></Field>
+            <form onSubmit={saveInvestigation} className="compact-safety-form space-y-2">
+              <Field label="Investigation Title" className="sm:col-span-2"><TextInput value={invForm.title} onChange={(e) => set('title', e.target.value)} required placeholder="e.g. Investigation - Slip incident 12 Aug" /></Field>
               <Field label="Investigation ID"><TextInput value={invForm.investigation_id} onChange={(e) => set('investigation_id', e.target.value)} placeholder="INV-2026-001" /></Field>
               <Field label="Related Incident"><Select value={invForm.incident_id} onChange={(e) => set('incident_id', e.target.value)}><option value="">— Select incident —</option>{items.map((i) => <option key={i.id} value={i.id}>{i.title}</option>)}</Select></Field>
               <div className="grid grid-cols-2 gap-3">

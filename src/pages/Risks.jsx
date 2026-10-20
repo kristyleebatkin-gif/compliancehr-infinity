@@ -502,15 +502,15 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-card p-5 shadow-xl max-h-[90vh] overflow-y-auto">
-            <h3 className="mb-4 text-lg font-semibold">{editing === 'new' ? 'Add Risk' : 'Edit Risk'}</h3>
-            <form onSubmit={save} className="space-y-3">
-              <Field label="Risk Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
+          <div className="w-full max-w-lg sm:max-w-2xl rounded-xl bg-card p-3 shadow-xl max-h-[90vh] overflow-y-auto">
+            <h3 className="mb-2 text-base font-semibold">{editing === 'new' ? 'Add Risk' : 'Edit Risk'}</h3>
+            <form onSubmit={save} className="compact-safety-form space-y-2">
+              <Field label="Risk Title" className="sm:col-span-2"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Report Type"><Select value={form.report_type || 'Risk'} onChange={(e) => set('report_type', e.target.value)}><option value="Risk">Risk Report</option><option value="Hazard">Hazard</option><option value="Near Miss">Near Miss</option></Select></Field>
                 <Field label="Risk ID"><TextInput value={form.risk_id || ''} onChange={(e) => set('risk_id', e.target.value)} /></Field>
               </div>
-              <Field label="Description"><TextArea value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>
+              <Field label="Description" className="sm:col-span-2"><TextArea value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></Field>
               <Field label="Risks / Hazards Identified"><TextArea value={form.hazards_identified || ''} onChange={(e) => set('hazards_identified', e.target.value)} /></Field>
               <Field label="Risk Assessment"><TextArea value={form.risk_assessment || ''} onChange={(e) => set('risk_assessment', e.target.value)} placeholder="Who may be harmed, existing controls, likelihood, consequence and rating" /></Field>
               <Field label="Control Measures"><TextArea value={form.control_measures || ''} onChange={(e) => set('control_measures', e.target.value)} placeholder="Controls, responsible person, due date and monitoring arrangements" /></Field>
