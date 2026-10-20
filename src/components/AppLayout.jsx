@@ -395,7 +395,7 @@ export default function AppLayout() {
         </header>
 
         <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className="mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4">
+          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-6xl px-3 md:px-8' : 'mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4'}>
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />

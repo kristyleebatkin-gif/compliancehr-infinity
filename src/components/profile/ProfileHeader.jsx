@@ -16,7 +16,7 @@ import { BadgeCheck, Camera, Download, History, Loader2, Save, Sparkles, UserRou
  * photo, ID numbers, contact numbers, start/end dates, About Me,
  * name tag (staff) and the details-check change log.
  */
-export default function ProfileHeader({ profile, kind, onUpdated }) {
+export default function ProfileHeader({ profile, kind, onUpdated, compact = false }) {
   const { toast } = useToast();
   const [photoUrl, setPhotoUrl] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -120,9 +120,9 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-      <div className="relative px-6 py-6 text-white" style={{ background: `linear-gradient(120deg, ${primary} 0%, ${accent} 100%)` }}>
+      <div className={compact ? 'relative px-4 py-3 text-white' : 'relative px-6 py-6 text-white'} style={{ background: `linear-gradient(120deg, ${primary} 0%, ${accent} 100%)` }}>
         <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 8%, rgba(255,255,255,0.28), transparent 42%), radial-gradient(circle at 6% 95%, rgba(255,255,255,0.18), transparent 38%)' }} />
-        <div className="relative flex flex-wrap items-center gap-5">
+        <div className={compact ? 'relative flex flex-wrap items-center gap-3' : 'relative flex flex-wrap items-center gap-5'}>
           <label className="group relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-full border-2 border-white/70 ring-4 ring-white/25 bg-white/15">
             {photoUrl
               ? <img src={photoUrl} alt={profile.full_name} className="h-full w-full object-cover" />
@@ -170,7 +170,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
           )}
         </div>
         {isStaff && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className={compact ? 'mt-2 flex flex-wrap gap-2' : 'mt-4 flex flex-wrap gap-2'}>
             <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" onClick={() => downloadStaffBadgePdf({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) })}>
               <Download className="h-3.5 w-3.5" />Download name tag
             </Button>
@@ -181,7 +181,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
         )}
       </div>
 
-      <div className="grid gap-5 p-6 md:grid-cols-2">
+      <div className={compact ? 'grid gap-3 p-3 md:grid-cols-2' : 'grid gap-5 p-6 md:grid-cols-2'}>
         <div className="rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-4 shadow-sm">
           <div className="mb-2 flex items-center gap-2 text-sm font-semibold"><Sparkles className="h-4 w-4 text-primary" />About Me</div>
           <Textarea rows={4} value={aboutMe} onChange={(e) => setAboutMe(e.target.value)} placeholder="A little about this person - interests, story, anything they want to share." />

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 
-export default function StaffBadgePreview({ branding, staff }) {
+export default function StaffBadgePreview({ branding, staff, compact = false }) {
   return (
-    <div className="w-[268px] shrink-0 overflow-hidden rounded-xl border border-border bg-white shadow-md">
+    <div className={compact ? 'w-full min-w-0 overflow-hidden rounded-lg border border-border bg-card shadow-sm' : 'w-[268px] shrink-0 overflow-hidden rounded-xl border border-border bg-white shadow-md'}>
       <div className="flex items-center gap-2.5 bg-white px-4 pb-2.5 pt-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted">
           {branding.logoDataUrl || branding.logoUrl
@@ -31,7 +31,7 @@ export default function StaffBadgePreview({ branding, staff }) {
           <span className="text-[7px] text-muted-foreground">PHOTO</span>
         </div>
       </div>
-      <div className="flex items-center justify-between border-t border-border/60 bg-white px-4 py-2 text-[7.5px] text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-1 border-t border-border/60 bg-white px-4 py-2 text-[7.5px] text-muted-foreground">
         <span className="font-semibold text-foreground/70">{branding.companyName || 'ComplianceHR'}</span>
         <span>This badge remains the property of the business.</span>
       </div>
