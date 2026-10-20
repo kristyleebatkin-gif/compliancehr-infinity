@@ -68,6 +68,7 @@ export default function AppLayout() {
     setMobileOpen(false);
     setMoreOpen(false);
     setUserMenuOpen(false);
+    setNotifOpen(false);
     if (user?.id && accountStatus === 'Active' && role !== 'Archived') {
       base44.functions.invoke('logUserAction', {
         action: 'View',
@@ -77,7 +78,18 @@ export default function AppLayout() {
         details: 'Page viewed',
       }).catch((error) => console.error(error));
     }
-  }, [accountStatus, location.pathname, role, user?.id]);
+  }, [accountStatus, location.pathname, location.search, role, user?.id]);
+
+  useEffect(() => {
+    const closeMenus = (event) => {
+      if (event.key === 'Escape') {
+        setNotifOpen(false);
+        setUserMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', closeMenus);
+    return () => window.removeEventListener('keydown', closeMenus);
+  }, []);
 
   const unread = notifications.filter((n) => !n.read).length;
 
@@ -227,7 +239,7 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="flex items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
+        <header className="relative z-40 flex shrink-0 items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
           <div className="flex items-center gap-3">
             <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
@@ -280,7 +292,7 @@ export default function AppLayout() {
             {/* Notifications */}
             <div className="relative">
               <button
-                onClick={() => setNotifOpen((v) => !v)}
+                onClick={() => { setUserMenuOpen(false); setNotifOpen((v) => !v); }}
                 className="relative rounded-lg p-2 hover:bg-brand/5"
               >
                 <Bell className="h-5 w-5 text-foreground/60" />
@@ -338,7 +350,7 @@ export default function AppLayout() {
             {/* User menu */}
             <div className="relative">
               <button
-                onClick={() => setUserMenuOpen((v) => !v)}
+                onClick={() => { setNotifOpen(false); setUserMenuOpen((v) => !v); }}
                 className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-brand/5"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-full gradient-brand text-xs font-bold text-white shadow-md">
@@ -382,7 +394,7 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
+        <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
           <div className="mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4">
             <ModuleGuide />
           </div>
