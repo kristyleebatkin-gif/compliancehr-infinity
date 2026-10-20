@@ -71,7 +71,7 @@ export default function ModuleAlertsButton() {
   return (
     <Popover open={open} onOpenChange={(o) => { setOpen(o); if (o) openPanel(); }}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="relative shrink-0 rounded-lg border-border/60 bg-card/75 text-[13px] font-semibold shadow-sm hover:bg-muted" aria-label={`${seg.slice(1) || 'module'} alerts`}>
+        <Button variant="outline" size="sm" className="relative h-7 w-7 shrink-0 gap-1 rounded-lg border-border/60 bg-card/75 p-1 text-[11px] font-semibold shadow-sm hover:bg-muted [&_svg]:size-3.5" aria-label={`${seg.slice(1) || 'module'} alerts`}>
           {total > 0 ? <BellRing className="h-4 w-4 text-danger" /> : <Bell className="h-4 w-4" />}
           {total > 0 && (
             <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white shadow">

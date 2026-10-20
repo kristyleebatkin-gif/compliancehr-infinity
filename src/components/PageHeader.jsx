@@ -48,7 +48,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       </div>
     </div>
       {(showCompliance || showAudit || action) && (
-        <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
+        <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
           {showCompliance && <ModuleComplianceStrip path={seg} />}
           {showAudit && (compactActions ? (
             <div className="flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3">
@@ -56,7 +56,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
               <ModuleAuditButton />
             </div>
           ) : <><ModuleAuditChecklistButton /><ModuleAuditButton /></>)}
-          {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
+          {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2')}>{action}</div>}
         </div>
       )}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
@@ -67,5 +67,5 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
 
 // Row of controls rendered just below the header card (left-aligned by default).
 export function HeaderUnderRow({ children, className }) {
-  return <div className={cn('flex flex-wrap items-center gap-2', className)}>{children}</div>;
+  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1', className)}>{children}</div>;
 }
