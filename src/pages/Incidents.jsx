@@ -204,7 +204,7 @@ export default function Incidents({ profile, profileKind, embedded = false } = {
           <div className="flex flex-wrap items-center gap-2">
             {canReview && <Button size="sm" onClick={() => { setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
             <Link to={profile ? `/incidents/new?${profileKind === 'participant' ? 'participantId' : 'staffId'}=${encodeURIComponent(profile.id)}` : '/incidents/new'}>
-              <Button size="sm" className="bg-red-600 text-white hover:bg-red-700 border-red-600"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
+              <Button size="sm" className="bg-safe text-safe-foreground hover:bg-safe/90 border-safe"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
             </Link>
             {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
           </div>

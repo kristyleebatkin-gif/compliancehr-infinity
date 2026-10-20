@@ -11,9 +11,22 @@ import { useToast } from '@/components/ui/use-toast';
 
 export default function ApprovalsPanel({ shifts, onChanged }) {
   const [busyId, setBusyId] = useState(null);
+  const [bulkBusy, setBulkBusy] = useState(false);
   const { toast } = useToast();
 
   const pending = shifts.filter((s) => s.approval_status === 'Pending Approval');
+
+  const approveAll = async () => {
+    if (pending.length === 0) return;
+    setBulkBusy(true);
+    try {
+      await base44.entities.Shift.bulkUpdate(pending.map((s) => ({ id: s.id, approval_status: 'Approved' })));
+      toast({ title: `${pending.length} shift${pending.length === 1 ? '' : 's'} approved`, description: 'All clocked hours approved in bulk.' });
+      await onChanged();
+    } finally {
+      setBulkBusy(false);
+    }
+  };
 
   const decide = async (shift, decision) => {
     setBusyId(shift.id);
@@ -29,8 +42,17 @@ export default function ApprovalsPanel({ shifts, onChanged }) {
   return (
     <Card>
       <CardContent className="p-4">
-        <h3 className="font-semibold">Timesheet approvals</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Completed shifts awaiting approval of worked hours.</p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 className="font-semibold">Timesheet approvals</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Completed shifts awaiting approval of worked hours.</p>
+          </div>
+          {pending.length > 0 && (
+            <Button size="sm" className="bg-safe text-safe-foreground hover:bg-safe/90 border-safe" onClick={approveAll} disabled={bulkBusy}>
+              <Check className="mr-1 h-4 w-4" /> {bulkBusy ? 'Approving…' : `Approve all (${pending.length})`}
+            </Button>
+          )}
+        </div>
         {pending.length === 0 ? (
           <p className="py-8 text-center text-muted-foreground">No shifts awaiting approval.</p>
         ) : (

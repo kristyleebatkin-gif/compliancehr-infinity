@@ -5,20 +5,32 @@ import { Badge } from '@/components/ui/badge';
 import { ShieldAlert, ShieldCheck } from 'lucide-react';
 
 // Flags rostered staff whose NDIS worker screening is expired, due soon or not tracked.
-export default function RosterScreeningAlerts({ shifts = [] }) {
+export default function RosterScreeningAlerts({ shifts }) {
   const [deadlines, setDeadlines] = useState([]);
+  const [ownShifts, setOwnShifts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // When no shifts are passed, the panel loads upcoming shifts itself so it
+  // can also live outside the rostering module (e.g. compliance).
   useEffect(() => {
-    base44.entities.NDISComplianceDeadline.filter({ deadline_type: 'Worker Screening' }, { limit: 200 })
-      .then((p) => setDeadlines(p.items || []))
+    const calls = [
+      base44.entities.NDISComplianceDeadline.filter({ deadline_type: 'Worker Screening' }, { limit: 200 }),
+    ];
+    if (shifts === undefined) {
+      const today = new Date().toISOString().slice(0, 10);
+      const in14 = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+      calls.push(base44.entities.Shift.filter({ date: { $gte: today, $lte: in14 } }, { limit: 300 }));
+    }
+    Promise.all(calls)
+      .then(([p, s]) => { setDeadlines(p.items || []); if (s) setOwnShifts(s.items || []); })
       .catch(() => setDeadlines([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [shifts]);
 
   if (loading) return null;
 
-  const rosteredStaff = Array.from(new Set(shifts.filter((s) => s.status !== 'Cancelled' && s.employee_name).map((s) => s.employee_name)));
+  const effectiveShifts = shifts === undefined ? ownShifts : shifts;
+  const rosteredStaff = Array.from(new Set(effectiveShifts.filter((s) => s.status !== 'Cancelled' && s.employee_name).map((s) => s.employee_name)));
   if (rosteredStaff.length === 0) return null;
 
   const today = new Date().toISOString().slice(0, 10);

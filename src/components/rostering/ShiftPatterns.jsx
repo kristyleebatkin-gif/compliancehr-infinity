@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Save, Loader2, Trash2, Copy, Plus } from 'lucide-react';
+import { Save, Loader2, Trash2, Copy, Plus, CalendarPlus } from 'lucide-react';
 import { format, addDays, startOfWeek, endOfWeek } from 'date-fns';
 import { shiftHours } from '@/lib/rostering';
 
@@ -25,6 +25,76 @@ export default function ShiftPatterns() {
 
   const [applying, setApplying] = useState(null);
   const [applyResult, setApplyResult] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState('');
+
+  // Import each participant's requested weekly support shifts from their
+  // intake case as a reusable pattern template (days + times from intake).
+  const importIntakePatterns = async () => {
+    setImporting(true);
+    setImportResult('');
+    try {
+      const [casePage, tplPage] = await Promise.all([
+        base44.entities.IntakeCase.filter({ intake_type: 'Participant' }, { sort: '-created_date', limit: 100 }),
+        base44.entities.ShiftPatternTemplate.list('-created_date', 200),
+      ]);
+      const existingNames = new Set((tplPage.items || []).map((t) => t.name));
+      const DAY_OFFSETS = { monday: 0, tuesday: 1, wednesday: 2, thursday: 3, friday: 4, saturday: 5, sunday: 6 };
+      const to24h = (num, suffix) => {
+        let h = parseInt(num, 10);
+        const m = num.includes(':') ? num.split(':')[1] : '00';
+        const sfx = (suffix || '').toLowerCase().replace(/\./g, '');
+        if (sfx.startsWith('p') && h < 12) h += 12;
+        if (sfx.startsWith('a') && h === 12) h = 0;
+        return `${String(h).padStart(2, '0')}:${m}`;
+      };
+      let created = 0;
+      let skipped = 0;
+      const toCreate = [];
+      for (const c of casePage.items || []) {
+        if (!['Approved', 'Converted to Profile'].includes(c.status) || !c.shift_times) { skipped++; continue; }
+        const name = `${c.applicant_name} - weekly support pattern`;
+        if (existingNames.has(name)) { skipped++; continue; }
+        const offsets = (c.shift_dates || '').toLowerCase().split(',')
+          .map((d) => d.trim())
+          .map((d) => Object.keys(DAY_OFFSETS).find((k) => d.startsWith(k)))
+          .filter((k) => k !== undefined)
+          .map((k) => DAY_OFFSETS[k]);
+        const dayList = offsets.length ? offsets : [0];
+        const timeMatches = (c.shift_times || '').match(/(\d{1,2}(?::\d{2})?)\s*([ap]\.?m\.?)?\s*(?:-|–|to)\s*(\d{1,2}(?::\d{2})?)\s*([ap]\.?m\.?)?/gi) || [];
+        if (timeMatches.length === 0) { skipped++; continue; }
+        existingNames.add(name);
+        const entries = [];
+        dayList.forEach((off) => {
+          timeMatches.forEach((raw) => {
+            const m = raw.match(/(\d{1,2}(?::\d{2})?)\s*([ap]\.?m\.?)?\s*(?:-|–|to)\s*(\d{1,2}(?::\d{2})?)\s*([ap]\.?m\.?)?/i);
+            entries.push({
+              employee_name: '',
+              participant_name: c.applicant_name,
+              start_time: to24h(m[1], m[2]),
+              end_time: to24h(m[3], m[4]),
+              day_offset: off,
+              notes: `Weekly support pattern from intake (${raw.trim()})`,
+            });
+          });
+        });
+        toCreate.push({
+          name,
+          description: `Imported from participant intake on ${format(new Date(), 'd MMM yyyy')}`,
+          shift_count: entries.length,
+          pattern_json: JSON.stringify(entries),
+        });
+        created++;
+      }
+      if (toCreate.length) await base44.entities.ShiftPatternTemplate.bulkCreate(toCreate);
+      setImportResult(created
+        ? `Imported ${created} pattern template${created === 1 ? '' : 's'} from intake${skipped ? ` (${skipped} skipped)` : ''}. Apply them to any week below.`
+        : `Nothing new to import${skipped ? ` (${skipped} skipped — already imported or no usable shift days/times recorded)` : ''}.`);
+      await load(weekStart);
+    } finally {
+      setImporting(false);
+    }
+  };
 
   const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
   const fromStr = format(weekStart, 'yyyy-MM-dd');
@@ -108,6 +178,9 @@ export default function ShiftPatterns() {
         <span className="text-sm font-semibold">{format(weekStart, 'd MMM')} – {format(weekEnd, 'd MMM yyyy')}</span>
         <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, 7))}>›</Button>
         <div className="flex-1" />
+        <Button size="sm" variant="outline" onClick={importIntakePatterns} disabled={importing}>
+          {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <CalendarPlus className="h-4 w-4" />} Import patterns from intake
+        </Button>
         <Button size="sm" onClick={() => setSaveOpen(true)} disabled={weekShifts.filter((s) => s.status !== 'Cancelled').length === 0}>
           <Save className="h-4 w-4" /> Save this week as template
         </Button>
@@ -140,6 +213,7 @@ export default function ShiftPatterns() {
             </div>
           )}
           {applyResult && <p className="mt-3 rounded-lg bg-safe/10 p-2 text-xs font-medium text-safe">{applyResult}</p>}
+          {importResult && <p className="mt-2 rounded-lg bg-brand/10 p-2 text-xs font-medium text-brand">{importResult}</p>}
         </CardContent>
       </Card>
 

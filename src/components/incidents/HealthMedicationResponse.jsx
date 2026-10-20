@@ -63,7 +63,7 @@ export default function HealthMedicationResponse() {
           ))}
         </ol>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Link to="/incidents/new" className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-red-700"><FileText className="h-3.5 w-3.5" />Log incident in Incident Clinic</Link>
+          <Link to="/incidents/new" className="inline-flex items-center gap-1.5 rounded-lg bg-safe px-3.5 py-2 text-xs font-bold text-safe-foreground hover:bg-safe/90"><FileText className="h-3.5 w-3.5" />Log incident in Incident Clinic</Link>
           <button onClick={() => document.getElementById('incident-register')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-xs font-semibold hover:bg-muted"><ClipboardList className="h-3.5 w-3.5" />Go to Incident Log &amp; Register</button>
         </div>
       </div>

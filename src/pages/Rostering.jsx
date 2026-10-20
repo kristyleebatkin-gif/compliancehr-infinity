@@ -19,7 +19,6 @@ import FillShiftDialog from '@/components/rostering/FillShiftDialog';
 import ShiftCalendar from '@/components/rostering/ShiftCalendar';
 import RosterExceptions from '@/components/rostering/RosterExceptions';
 import RosterWeeklySignOff from '@/components/rostering/RosterWeeklySignOff';
-import RosterScreeningAlerts from '@/components/rostering/RosterScreeningAlerts';
 import BulkShiftEditor from '@/components/rostering/BulkShiftEditor';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
@@ -28,7 +27,10 @@ import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
 import RosterSuggestions from '@/components/rostering/RosterSuggestions';
 import RosterLabourForecast from '@/components/rostering/RosterLabourForecast';
 import CalendarSyncDialog from '@/components/rostering/CalendarSyncDialog';
-import { RefreshCw } from 'lucide-react';
+import RosterOpsOverview from '@/components/rostering/RosterOpsOverview';
+import RosterLeaveFeed from '@/components/rostering/RosterLeaveFeed';
+import { RefreshCw, Repeat, BarChart3 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import { expandRecurrence } from '@/lib/rostering';
 
 const StatCard = ({ icon: Icon, label, value, tone }) => (
@@ -83,19 +85,22 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
   const [bulkOpen, setBulkOpen] = useState(false);
   const [availForm, setAvailForm] = useState({ staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' });
 
-  const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0 });
+  const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0, completed: 0, awaitingConfirmation: 0 });
   const [myName, setMyName] = useState('');
+  const { toast } = useToast();
 
   const loadStats = useCallback(async () => {
     const mon = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const sun = format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const in14 = format(addDays(new Date(), 14), 'yyyy-MM-dd');
-    const [week, unfilled, pending] = await Promise.all([
+    const [week, unfilled, pending, completed, awaitingConfirmation] = await Promise.all([
       base44.entities.Shift.count({ ...scope, date: { $gte: mon, $lte: sun } }),
       profileKind === 'staff' ? Promise.resolve(0) : base44.entities.Shift.count({ ...scope, date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 }, employee_name: null }),
       base44.entities.Shift.count({ ...scope, approval_status: 'Pending Approval' }),
+      base44.entities.Shift.count({ ...scope, status: 'Completed', date: { $gte: mon, $lte: sun } }),
+      base44.entities.Shift.count({ ...scope, staff_confirmation: 'Pending Confirmation', date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 } }),
     ]);
-    setStats({ week, unfilled, pending });
+    setStats({ week, unfilled, pending, completed, awaitingConfirmation });
   }, [scope, profileKind]);
 
   const loadBoard = useCallback(async (start) => {
@@ -210,6 +215,43 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
     await refresh();
   };
 
+  // Autocomplete the roster: copy last week's shifts into the viewed week,
+  // skipping anything already rostered at the same day/staff/start time.
+  const repeatLastWeek = async () => {
+    setSaving(true);
+    try {
+      const prevStart = addDays(weekStart, -7);
+      const [prevPage, existingPage] = await Promise.all([
+        base44.entities.Shift.filter({
+          ...scope,
+          date: { $gte: format(prevStart, 'yyyy-MM-dd'), $lte: format(endOfWeek(prevStart, { weekStartsOn: 1 }), 'yyyy-MM-dd') },
+        }, { sort: 'date', limit: 300 }),
+        base44.entities.Shift.filter({
+          ...scope,
+          date: { $gte: format(weekStart, 'yyyy-MM-dd'), $lte: format(endOfWeek(weekStart, { weekStartsOn: 1 }), 'yyyy-MM-dd') },
+        }, { limit: 300, fields: ['date', 'employee_name', 'start_time'] }),
+      ]);
+      const existing = new Set((existingPage.items || []).map((s) => `${s.date}|${s.employee_name || ''}|${s.start_time || ''}`));
+      const toCreate = (prevPage.items || [])
+        .filter((s) => s.status !== 'Cancelled')
+        .map((s) => ({ ...s, date: format(addDays(new Date(s.date + 'T00:00:00'), 7), 'yyyy-MM-dd') }))
+        .filter((s) => !existing.has(`${s.date}|${s.employee_name || ''}|${s.start_time || ''}`))
+        .map((s) => {
+          const { id, created_date, updated_date, created_by_id, status, clock_in, clock_out, clock_in_location, clock_out_location, location_verified, approval_status, staff_confirmation, invoiced, invoice_id, reminder_sent, ...fields } = s;
+          return { ...fields, status: 'Scheduled', staff_confirmation: 'Pending Confirmation', approval_status: 'Not Required', invoiced: false };
+        });
+      if (toCreate.length === 0) {
+        toast({ title: 'Nothing to copy', description: 'Last week was empty or all of its shifts are already rostered this week.' });
+      } else {
+        await base44.entities.Shift.bulkCreate(toCreate);
+        toast({ title: `Roster completed from last week`, description: `${toCreate.length} shift${toCreate.length === 1 ? '' : 's'} copied into the viewed week.` });
+      }
+      await refresh();
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const advance = async (shift) => {
     const now = new Date().toISOString();
     if (shift.status === 'Scheduled') {
@@ -264,10 +306,12 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
         action={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
       />}
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard icon={CalendarClock} label="Shifts this week" value={stats.week} tone="bg-brand/10 text-brand" />
+        <StatCard icon={ClipboardCheck} label="Completed this week" value={stats.completed} tone="bg-safe/10 text-safe" />
         <StatCard icon={UserX} label="Unfilled (next 14 days)" value={stats.unfilled} tone="bg-warning/10 text-warning" />
         <StatCard icon={ClipboardCheck} label="Awaiting approval" value={stats.pending} tone="bg-teal/10 text-teal" />
+        <StatCard icon={CalendarClock} label="Awaiting confirmation" value={stats.awaitingConfirmation} tone="bg-brand/10 text-brand" />
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
@@ -276,10 +320,12 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
           <TabsTrigger value="calendar"><CalendarDays className="mr-1.5 h-4 w-4" /> Calendar</TabsTrigger>
           <TabsTrigger value="shifts"><CalendarClock className="mr-1.5 h-4 w-4" /> Shift register</TabsTrigger>
           {!profile && <><TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
+          <TabsTrigger value="ops"><ClipboardList className="mr-1.5 h-4 w-4" /> Ops overview</TabsTrigger>
           <TabsTrigger value="coverage"><Flame className="mr-1.5 h-4 w-4" /> Coverage map</TabsTrigger>
           <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
           <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
-          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger></>}
+          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger>
+          <TabsTrigger value="leave"><CalendarPlus className="mr-1.5 h-4 w-4" /> Leave</TabsTrigger></>}
           {profileKind !== 'participant' && <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>}
         </TabsList>
 
@@ -291,6 +337,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
               <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, 7))}><ChevronRight className="h-4 w-4" /></Button>
             </div>
             <div className="flex-1" />
+            <Button variant="outline" onClick={repeatLastWeek} disabled={saving} title="Copy last week's shifts into this week"><Repeat className="mr-2 h-4 w-4" /> Repeat last week</Button>
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
           {loading ? (
@@ -298,11 +345,10 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
-          {!profile && <><RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
+          {!profile && <><RosterSuggestions onChanged={refresh} />
+          <RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
-          <RosterScreeningAlerts shifts={boardShifts} />
-          <RosterLabourForecast shifts={boardShifts} />
-          <RosterSuggestions onChanged={refresh} /></>}
+          <RosterLabourForecast shifts={boardShifts} /></>}
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
@@ -368,6 +414,10 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
           {loading ? <Loading /> : <ApprovalsPanel shifts={approvalShifts} onChanged={refresh} />}
         </TabsContent>
 
+        <TabsContent value="ops" className="mt-4">
+          <RosterOpsOverview onOpenApprovals={() => setTab('approvals')} />
+        </TabsContent>
+
         <TabsContent value="coverage" className="mt-4">
           <CoverageHeatMap />
         </TabsContent>
@@ -375,6 +425,10 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
         <TabsContent value="availability" className="mt-4">
           <AvailabilityPanel staff={staff} staffName={profileKind === 'staff' ? profile.full_name : undefined} />
         </TabsContent>
+
+        {!profile && <TabsContent value="leave" className="mt-4">
+          <RosterLeaveFeed />
+        </TabsContent>}
 
         <TabsContent value="payroll" className="mt-4">
           <PayrollReport />

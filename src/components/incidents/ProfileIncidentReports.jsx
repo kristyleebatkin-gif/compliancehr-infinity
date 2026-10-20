@@ -23,7 +23,7 @@ export default function ProfileIncidentReports({ profileType, profileId, profile
       title="Attached Incident Reports"
       description={`Administrative review history for ${profileName}`}
       action={canCreate && (
-        <Link to={`/incidents/new?${queryKey}=${encodeURIComponent(profileId)}`} className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white">
+        <Link to={`/incidents/new?${queryKey}=${encodeURIComponent(profileId)}`} className="inline-flex items-center gap-1.5 rounded-lg bg-safe px-3 py-2 text-xs font-semibold text-safe-foreground hover:bg-safe/90">
           <Plus className="h-3.5 w-3.5" /> Add Incident
         </Link>
       )}
