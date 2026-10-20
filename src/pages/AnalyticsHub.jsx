@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Loader2, AlertCircle } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, PieChart, Pie, Cell, Legend } from 'recharts';
+import '@/components/documents/vaultWorkspace.css';
 
 const PIE_COLOURS = ['#4f46e5', '#0d9488', '#16a34a', '#ca8a04', '#dc2626', '#9333ea', '#2563eb', '#db2777'];
 const BUCKET_COMPUTED = ['count', 'sum_amount', 'avg_amount', 'min_amount', 'max_amount'];
@@ -86,7 +87,7 @@ export default function AnalyticsHub() {
   ];
 
   return (
-    <div className="compact-module space-y-2">
+    <div className="analytics-workspace compact-module space-y-2">
       <PageHeader
         title="Business Analytics"
         subtitle="Live cross-module KPIs: revenue, sales outcomes, operations and workforce - exportable for the board pack."
@@ -102,7 +103,7 @@ export default function AnalyticsHub() {
         <>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {kpis.map((k) => (
-              <Card key={k.label} className={`${k.tone} ${k.warn ? 'ring-1 ring-danger/40' : ''}`}>
+              <Card key={k.label} className={`analytics-kpi ${k.tone} ${k.warn ? 'ring-1 ring-danger/40' : ''}`}>
                 <CardContent className="p-4">
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{k.label}</p>
                   <p className="mt-0.5 break-words text-lg font-bold tracking-tight text-foreground">{k.value}</p>

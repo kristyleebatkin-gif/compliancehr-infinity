@@ -11,19 +11,16 @@ import ActivityLog from '@/components/datacontrol/ActivityLog';
 import BreachRegister from '@/components/datacontrol/BreachRegister';
 
 import { DATA_MODULES as MODULES } from '@/lib/dataModules';
-
-// Access & action logs are management-only.
-const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Human Resources Manager', 'Quality & Improvement Manager'];
+import { useAuth } from '@/lib/AuthContext';
+import { isVaultProvider } from '@/components/documents/vaultAccess';
 
 export default function DataControlPanel() {
-  const [me, setMe] = useState(null);
+  const { user: me } = useAuth();
   const [selected, setSelected] = useState('StaffProfile');
   const [count, setCount] = useState(null);
   const [counting, setCounting] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const isManager = !!me && MANAGER_ROLES.includes(me.role);
-
-  useEffect(() => { base44.auth.me().then(setMe).catch(() => {}); }, []);
+  const isManager = isVaultProvider(me?.role);
 
   const runCount = useCallback(async (entityName) => {
     setCounting(true);
@@ -70,8 +67,9 @@ export default function DataControlPanel() {
     }
   };
 
+  if (!isManager) return null;
   return (
-    <div className="compact-module space-y-2 rounded-lg border border-border bg-card p-2.5">
+    <div className="vault-data-control compact-module space-y-2 rounded-lg border border-border bg-card p-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="rounded-lg bg-brand/10 p-2"><Database className="h-4 w-4 text-brand" /></div>

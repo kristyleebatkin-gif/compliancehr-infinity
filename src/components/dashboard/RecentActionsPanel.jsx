@@ -3,21 +3,27 @@ import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
 import { History } from 'lucide-react';
+import { useAuth } from '@/lib/AuthContext';
+import { isVaultProvider } from '@/components/documents/vaultAccess';
 
 // Latest non-page-view actions by staff and participants, straight from the
 // audit trail so admins see what people did without opening each module.
 export default function RecentActionsPanel() {
+  const { user } = useAuth();
+  const allowed = isVaultProvider(user?.role);
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!allowed) { setRows([]); return; }
     base44.entities.AuditLog
       .filter({ entity_type: { $nin: ['App Page', 'User Session'] } }, { sort: '-timestamp', limit: 8 })
       .then((page) => setRows(page.items || []))
       .catch(() => setRows([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [allowed, user?.id]);
 
+  if (!allowed) return null;
   return (
     <Card className="recent-actions-panel border-border/60">
       <CardContent className="p-4 space-y-3">

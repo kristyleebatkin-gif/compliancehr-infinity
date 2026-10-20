@@ -24,6 +24,7 @@ import { format, differenceInCalendarDays } from 'date-fns';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
 import '@/components/documents/vaultWorkspace.css';
+import { isVaultManager, isVaultProvider } from '@/components/documents/vaultAccess';
 
 
 import ParticipantVault from '@/components/documents/ParticipantVault';
@@ -61,7 +62,9 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   const [selected, setSelected] = useState([]);
   const [applying, setApplying] = useState(false);
   const [tab, setTab] = useState('documents');
-  const canManageAll = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
+  const canViewUploads = isVaultManager(me?.role);
+  const canViewDataControl = isVaultProvider(me?.role);
+  const canManageAll = canViewUploads || ['Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
   const canEditDoc = (d) => canManageAll || (me?.role === 'Support Worker' && d.employee_name === me?.full_name);
 
   const load = useCallback(async () => {
@@ -202,10 +205,11 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         title="Document Vault"
         subtitle="Every Document, Expiry Tracking and Data Control."
         showAlerts={false}
+        showAudit={false}
+        showDivider={false}
         action={(
           <>
-            <Button size="sm" variant={tab === 'documents' ? 'default' : 'outline'} onClick={() => setTab('documents')}><FolderOpen className="h-4 w-4" />Every doc</Button>
-            <Button size="sm" variant={tab === 'expiry-calendar' ? 'default' : 'outline'} onClick={() => setTab('expiry-calendar')}><CalendarDays className="h-4 w-4" />Expiry cal</Button>
+            <span className="text-xs font-bold text-foreground">Audit this module</span>
             <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </>
         )}
@@ -225,7 +229,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="documents" className="mt-4 space-y-4">
+        <TabsContent value="documents" className="mt-2 space-y-2">
       <div id="staff-docs" className="flex scroll-mt-24 flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
         <span className="text-sm font-bold font-editorial text-foreground/80">Staff Documents</span>
         <span className="flex-1" />
@@ -326,7 +330,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </>
       )}
 
-      {!profile && <><div id="vault-vault" className="scroll-mt-24 pt-2">
+      {!profile && canViewUploads && <><div id="vault-vault" className="scroll-mt-24">
       <VaultUploads />
       </div></>}
         </TabsContent>
@@ -336,7 +340,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </TabsContent>
       </Tabs>
 
-      {!profile && <DataControlPanel />}
+      {!profile && canViewDataControl && <DataControlPanel />}
         </>
       )}
     </div>

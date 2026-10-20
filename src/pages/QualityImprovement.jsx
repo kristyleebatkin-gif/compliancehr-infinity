@@ -15,6 +15,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, Plus, CheckCircle2, Trash2 } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
+import QualityToolbar from '@/components/quality/QualityToolbar';
 
 const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
 const TABS = [
@@ -149,7 +150,7 @@ export default function QualityImprovement() {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2">
       <PageHeader
         title="Quality & Improvement"
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
@@ -173,15 +174,9 @@ export default function QualityImprovement() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <div className="flex flex-wrap items-center gap-2">
-          <TabsList>
-            {TABS.map((t) => <TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}
-          </TabsList>
-          <Button size="sm" onClick={() => openNewFor(TABS.find((t) => t.value === activeTab))}><Plus className="h-4 w-4" />Add {TABS.find((t) => t.value === activeTab).label.toLowerCase().replace(/s$/, '')}</Button>
-          <Button variant="outline" size="sm" onClick={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab))), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)}><Download className="h-4 w-4" />Export</Button>
-        </div>
+        <QualityToolbar tabs={TABS} activeTab={activeTab} onAdd={openNewFor} onExport={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab))), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)} />
         {TABS.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value} className="mt-4 space-y-4">
+          <TabsContent key={tab.value} value={tab.value} className="mt-2 space-y-2">
 
             {loading ? (
               <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

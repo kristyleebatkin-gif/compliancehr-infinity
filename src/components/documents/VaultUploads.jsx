@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Download, Eye, FolderCheck, Loader2, Trash2 } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import { useAuth } from '@/lib/AuthContext';
+import { isVaultManager, isVaultProvider } from '@/components/documents/vaultAccess';
 
 /**
  * Vault uploads report: lists and exports every document uploaded anywhere in
@@ -14,12 +16,15 @@ import { downloadCsv } from '@/lib/csvExport';
  */
 export default function VaultUploads() {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const allowed = isVaultManager(user?.role);
   const [docs, setDocs] = useState([]);
   const [extraDocs, setExtraDocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
 
   const load = async () => {
+    if (!allowed) return;
     setLoading(true);
     try {
       // Full cursor loop - exports need every record, not just the first page.
@@ -40,7 +45,7 @@ export default function VaultUploads() {
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { if (allowed) load(); else { setDocs([]); setExtraDocs([]); } }, [allowed, user?.id]);
 
   const view = async (doc) => {
     try {
@@ -56,6 +61,7 @@ export default function VaultUploads() {
   };
 
   const exportAll = () => {
+    if (!allowed) return;
     setExporting(true);
     try {
       const rows = [
@@ -75,6 +81,7 @@ export default function VaultUploads() {
     }
   };
 
+  if (!allowed) return null;
   const counts = docs.reduce((acc, d) => { const k = d.library || 'vault'; acc[k] = (acc[k] || 0) + 1; return acc; }, {});
 
   return (
@@ -111,9 +118,9 @@ export default function VaultUploads() {
                 {(d.file_uri || d.file_url) && (
                   <Button variant="ghost" size="icon" onClick={() => view(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
                 )}
-                <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.FormsLibraryDocument.delete(d.id); await load(); }}>
+                {isVaultProvider(user?.role) && <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.FormsLibraryDocument.delete(d.id); await load(); }}>
                   <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
+                </Button>}
               </div>
             </div>
           ))}
