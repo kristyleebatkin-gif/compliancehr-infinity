@@ -8,10 +8,10 @@ const today = () => format(new Date(), 'yyyy-MM-dd');
 
 function Panel({ title, icon: Icon, tone, tasks, onOpen, emptyText }) {
   return (
-    <Card className="min-w-0">
+    <Card className="min-w-0 h-28 overflow-y-auto">
       <CardContent className="p-2.5">
         <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/60">
-          <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${tone} text-white shadow`}>
+          <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-gradient-to-br ${tone} text-white shadow-sm`}>
             <Icon className="h-3.5 w-3.5" />
           </span>
           {title} ({tasks.length})
@@ -51,18 +51,18 @@ function StaffStrip({ tasks }) {
     .slice(0, 6);
   const max = Math.max(1, ...rows.map((r) => r.open));
   return (
-    <Card className="min-w-0"><CardContent className="p-2.5">
+    <Card className="min-w-0 h-28 overflow-y-auto"><CardContent className="p-2.5">
       <p className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/60"><Users className="h-3.5 w-3.5" />Who is carrying what (live)</p>
       {!rows.length && <p className="text-xs text-muted-foreground">No pending workload.</p>}
       <div className="max-h-28 space-y-1.5 overflow-y-auto">
         {rows.map((r) => (
-          <div key={r.name} className="flex items-center gap-1.5">
-            <span className="w-20 shrink-0 truncate text-[10px] font-semibold">{r.name}</span>
-            <div className="flex h-3 flex-1 overflow-hidden rounded-full bg-muted">
+          <div key={r.name} className="grid grid-cols-2 items-center gap-1">
+            <span className="min-w-0 truncate text-[9px] font-semibold" title={r.name}>{r.name}</span>
+            <div className="col-span-2 row-start-2 flex h-1.5 overflow-hidden rounded-full bg-muted">
               {r.overdue > 0 && <div className="shrink-0 bg-gradient-to-r from-rose-500 to-red-500" style={{ width: `${(r.overdue / max) * 100}%` }} />}
               <div className="min-w-1 flex-1 bg-gradient-to-r from-violet-500 to-fuchsia-400" style={{ maxWidth: `${((r.open - r.overdue) / max) * 100}%` }} />
             </div>
-            <span className="w-20 shrink-0 text-right text-[9px] font-semibold text-foreground/60">{r.open} open{r.overdue ? ` · ${r.overdue} overdue` : ''}</span>
+            <span className="col-start-2 row-start-1 text-right text-[8px] font-semibold text-foreground/60">{r.open} open{r.overdue ? ` · ${r.overdue} overdue` : ''}</span>
           </div>
         ))}
       </div>
@@ -76,9 +76,9 @@ function TimeCard({ tasks, avgMin }) {
   const totalMin = timed.reduce((s, t) => s + Number(t.time_taken_minutes), 0);
   const fastest = [...timed].sort((a, b) => a.time_taken_minutes - b.time_taken_minutes)[0];
   return (
-    <Card className="min-w-0"><CardContent className="p-2.5">
+    <Card className="min-w-0 h-28 overflow-y-auto"><CardContent className="p-2.5">
       <p className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/60"><Timer className="h-3.5 w-3.5" />Completion insights</p>
-      <div className="grid grid-cols-3 gap-2 text-center">
+      <div className="grid grid-cols-1 gap-1 text-center [&>div]:flex [&>div]:items-center [&>div]:justify-between [&>div]:gap-1 [&>div]:px-1 [&>div]:py-0.5 [&>div>p]:text-[9px]">
         <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-950/40">
           <p className="text-lg font-extrabold text-emerald-700 dark:text-emerald-300">{completed}</p>
           <p className="text-[10px] font-semibold uppercase text-emerald-700/70 dark:text-emerald-300/70">Done</p>
@@ -112,12 +112,10 @@ export default function TaskDashboard({ tasks, onOpen }) {
   return (
     <div className="space-y-3">
       <TaskAssistantCard compact inline />
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="grid items-stretch gap-1.5 grid-cols-2 sm:grid-cols-5">
         <Panel title="Current" icon={Clock} tone="from-violet-500 to-purple-400" tasks={current} onOpen={onOpen} emptyText="No current tasks." />
         <Panel title="Future" icon={CalendarClock} tone="from-sky-500 to-cyan-400" tasks={future} onOpen={onOpen} emptyText="No future tasks scheduled." />
         <Panel title="Past" icon={CheckCircle2} tone="from-emerald-500 to-teal-400" tasks={past} onOpen={onOpen} emptyText="No past tasks." />
-      </div>
-      <div className="grid items-start gap-2 md:grid-cols-2">
         <StaffStrip tasks={tasks} />
         <TimeCard tasks={tasks} avgMin={avgMin} />
       </div>
