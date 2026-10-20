@@ -33,7 +33,7 @@ export default function DashboardQuickStart() {
   return (
     <section
       aria-labelledby="dashboard-quick-start"
-      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card p-4 shadow-panel"
+      className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-100 via-white to-cyan-100 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30 sm:p-4"
     >
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -47,18 +47,18 @@ export default function DashboardQuickStart() {
         </div>
         <Link
           to="/user-guides"
-          className="inline-flex items-center gap-1.5 self-start rounded-lg border border-primary/20 bg-primary/10 px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/15"
+          className="inline-flex items-center gap-1.5 self-start rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-3 py-1.5 text-xs font-semibold text-white shadow-md shadow-violet-500/15 transition-all hover:-translate-y-0.5 hover:shadow-lg"
         >
           <BookOpen className="h-3.5 w-3.5" />
           View full user manual
         </Link>
       </div>
 
-      <ol className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+      <ol className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {STEPS.map((step, index) => {
           const Icon = step.icon;
           return (
-            <li key={step.title} className="flex gap-2.5 rounded-xl border bg-card p-3" style={{ borderColor: `${step.colour}45`, background: `linear-gradient(135deg, ${step.colour}20, hsl(var(--card)))` }}>
+            <li key={step.title} className="flex gap-3 rounded-xl border bg-card/85 p-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md" style={{ borderColor: `${step.colour}45`, background: `linear-gradient(135deg, ${step.colour}20, hsl(var(--card)))` }}>
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow-md" style={{ background: `linear-gradient(135deg, ${step.colour}, ${step.colour}bb)` }}>
                 <Icon className="h-4 w-4" />
               </div>

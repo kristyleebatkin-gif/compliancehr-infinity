@@ -1,32 +1,92 @@
-import React, { useState } from 'react';
-import { canAccessNav, ROLES } from '@/lib/roles';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
-import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
-import { LayoutGrid, Search, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import ModuleHubItem from '@/components/dashboard/ModuleHubItem';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { moduleColour } from '@/lib/moduleColours';
+import { ArrowRight, LayoutGrid } from 'lucide-react';
+
+// Live status hues the hub shares with the module compliance strips.
+const STATUS_MAP = {
+  incidents: { label: 'Incident register', dot: '#dc2626' },
+  risks: { label: 'Risk register', dot: '#ea580c' },
+  compliance: { label: 'Expiry scan + audits', dot: '#7c3aed' },
+  training: { label: 'Expiry alerts live', dot: '#0d9488' },
+  'emergency-response': { label: 'Live alerts armed', dot: '#dc2626' },
+  invoicing: { label: 'Unbilled shifts tracked', dot: '#16a34a' },
+  rostering: { label: 'Reminder alerts live', dot: '#8b5cf6' },
+  goals: { label: 'Progress notes due', dot: '#db2777' },
+  intake: { label: 'Cases awaiting review', dot: '#2563eb' },
+  documents: { label: 'Central routing on', dot: '#ca8a04' },
+};
 
 export default function AllModulesHub() {
   const { role } = useRole();
-  const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
-  const modules = MODULE_DIRECTORY.filter((module) => canAccessNav(role, module.key)).map((module) => module.key === 'my-profile' ? { ...module, label: role === ROLES.PARTICIPANT ? 'My participant profile' : 'My employee profile' } : module);
-  const groups = NAV_GROUPS.filter((group) => modules.some((module) => group.keys.includes(module.key)));
-  const selected = groups.find((group) => group.label === category);
-  const term = search.trim().toLowerCase();
-  const visible = modules.filter((module) => (!selected || selected.keys.includes(module.key)) && `${module.label} ${module.blurb}`.toLowerCase().includes(term));
-  return <section aria-labelledby="all-modules-hub" className="overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-panel">
-    <div className="h-1 gradient-brand" />
-    <div className="space-y-3 p-3 sm:p-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5"><span className="rounded-lg bg-primary/10 p-2 text-primary"><LayoutGrid className="h-4 w-4" /></span><div><h2 id="all-modules-hub" className="font-display text-base font-bold">All modules</h2><p className="text-xs text-muted-foreground">Find a tool, register or workflow.</p></div></div>
-        <div className="relative w-full sm:w-56"><Search className="pointer-events-none absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /><Input aria-label="Find a workspace module" placeholder="Find a module…" value={search} onChange={(event) => setSearch(event.target.value)} className="h-9 pl-8 pr-8 text-xs" />{search && <button type="button" aria-label="Clear module search" onClick={() => setSearch('')} className="absolute right-1 top-1 rounded p-1.5 text-muted-foreground"><X className="h-4 w-4" /></button>}</div>
+  const modules = MODULE_DIRECTORY.filter((module) => module.key === 'dashboard' || canAccessNav(role, module.key));
+
+  return (
+    <section aria-labelledby="all-modules-hub" className="relative overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20 sm:p-6">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
+      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 id="all-modules-hub" className="flex items-center gap-2 text-base font-bold font-display text-foreground">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg gradient-brand text-white shadow-sm">
+              <LayoutGrid className="h-4 w-4" />
+            </span>
+            All modules
+          </h2>
+          <p className="mt-0.5 text-sm text-foreground/60">
+            Every module, form, register and live tracker in your workspace, connected and role-filtered.
+          </p>
+        </div>
+        <span className="self-start rounded-full gradient-brand px-3 py-1 text-xs font-bold text-white shadow-sm">
+          {modules.length} modules
+        </span>
       </div>
-      <div className="flex flex-wrap gap-1.5" aria-label="Module categories">
-        {['All', ...groups.map((group) => group.label)].map((label) => <button key={label} type="button" aria-pressed={category === label} onClick={() => setCategory(label)} className={`rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${category === label ? 'border-primary/25 bg-primary/10 text-primary' : 'border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground'}`}>{label}</button>)}
+
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">
+        {modules.map((module) => {
+          const Icon = module.icon;
+          const color = moduleColour(module.label);
+          const status = STATUS_MAP[module.key];
+          return (
+            <Link
+              key={module.key}
+              to={module.path}
+              className="group relative flex min-h-40 flex-col overflow-hidden rounded-2xl border p-4 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
+              style={{ borderColor: `${color}45`, background: `linear-gradient(150deg, ${color}26 0%, ${color}0d 40%, hsl(var(--card)) 72%)` }}
+            >
+              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${color}66)` }} />
+              <div className="flex items-start gap-3">
+                <div
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white transition-transform group-hover:scale-110"
+                  style={{ background: `linear-gradient(135deg, ${color}, ${color}dd)`, boxShadow: `0 8px 20px -8px ${color}aa` }}
+                >
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-sm font-bold leading-tight text-foreground">{module.label}</div>
+                  <p className="mt-1 text-xs leading-relaxed text-foreground/60 line-clamp-3">{module.blurb}</p>
+                </div>
+              </div>
+              <div className="mt-auto flex items-center justify-between pt-3">
+                {status ? (
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-foreground/55">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: status.dot }} />
+                      <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: status.dot }} />
+                    </span>
+                    {status.label}
+                  </span>
+                ) : <span />}
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold opacity-60 transition-opacity group-hover:opacity-100" style={{ color }}>
+                  Open <ArrowRight className="h-3 w-3" />
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-      <div className="flex items-center justify-between border-t border-border/70 pt-2 text-[11px] text-muted-foreground"><span>{category === 'All' ? 'Workspace directory' : category}</span><span aria-live="polite">{visible.length} of {modules.length} modules</span></div>
-      {visible.length ? <div role="region" aria-label="Available modules" tabIndex={0} className="grid max-h-96 grid-cols-1 gap-2 overflow-y-auto overscroll-contain pr-1 sm:grid-cols-2 2xl:grid-cols-3">{visible.map((module) => <ModuleHubItem key={module.key} module={module} />)}</div> : <div className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">No matching modules. Try another name or category.</div>}
-    </div>
-  </section>;
+    </section>
+  );
 }
