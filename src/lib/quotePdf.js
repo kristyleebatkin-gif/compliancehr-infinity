@@ -37,8 +37,10 @@ export function buildQuotePdf(quote, business = {}) {
   const contentW = pageW - margin * 2;
   const branding = getCompanyBranding();
 
-  doc.setFillColor(15, 23, 42);
+  doc.setFillColor(124, 58, 237);
   doc.rect(0, 0, pageW, 96, 'F');
+  doc.setFillColor(236, 72, 153);
+  doc.rect(0, 96, pageW, 5, 'F');
   if (branding.logoDataUrl) {
     try {
       const props = doc.getImageProperties(branding.logoDataUrl);
@@ -114,7 +116,7 @@ export function buildQuotePdf(quote, business = {}) {
     { label: 'Rate', x: margin + 460, w: 60 },
     { label: 'Amount', x: pageW - margin, w: 0 },
   ];
-  doc.setFillColor(15, 23, 42);
+  doc.setFillColor(124, 58, 237);
   doc.rect(margin, y, contentW, 22, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
@@ -142,7 +144,7 @@ export function buildQuotePdf(quote, business = {}) {
     const rowHeight = 30;
     if (y + rowHeight > 700) { doc.addPage(); y = 60; }
     if (index % 2 === 1) {
-      doc.setFillColor(248, 250, 252);
+      doc.setFillColor(244, 239, 255);
       doc.rect(margin, y, contentW, rowHeight, 'F');
     }
     const cellY = y + 14;
@@ -171,12 +173,12 @@ export function buildQuotePdf(quote, business = {}) {
   doc.text('GST', pageW - margin - 100, y);
   doc.text('Included (NDIS supports are GST-free)', pageW - margin, y, { align: 'right' });
   y += 16;
-  doc.setDrawColor(15, 23, 42);
+  doc.setDrawColor(124, 58, 237);
   doc.line(pageW - margin - 110, y, pageW - margin, y);
   y += 18;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
-  doc.setTextColor(15, 23, 42);
+  doc.setTextColor(124, 58, 237);
   doc.text('QUOTE TOTAL', pageW - margin - 100, y);
   doc.text(money(subtotal), pageW - margin, y, { align: 'right' });
   y += 30;
@@ -184,7 +186,7 @@ export function buildQuotePdf(quote, business = {}) {
   if (y > 560) { doc.addPage(); y = 60; }
 
   // Terms and conditions
-  doc.setFillColor(248, 250, 252);
+  doc.setFillColor(244, 239, 255);
   const termsText = safeText(quote.terms_conditions) || business.quote_terms || DEFAULT_TERMS;
   doc.setFontSize(8.5);
   const termsHeight = doc.splitTextToSize(termsText, contentW - 24).length * 11 + 30;

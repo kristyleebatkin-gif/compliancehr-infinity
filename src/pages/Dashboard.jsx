@@ -56,13 +56,13 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <AllModulesHub />
+
       <DashboardQuickStart />
 
       {canAccessNav(role, 'compliance') && <MorningBrief />}
 
       {canAccessNav(role, 'compliance') && <IssuesDashboardWidget />}
-
-      <AllModulesHub />
 
       {role === ROLES.PARTICIPANT
         ? <ParticipantDashboard />

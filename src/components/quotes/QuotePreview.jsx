@@ -18,7 +18,7 @@ export default function QuotePreview({ quote, business = {} }) {
 
   return (
     <div className="rounded-xl border border-border bg-white text-slate-900 shadow-sm">
-      <div className="flex items-start justify-between gap-4 bg-slate-900 p-6 text-white">
+      <div className="flex items-start justify-between gap-4 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 p-6 text-white">
         <div className="min-w-0">
           <div className="text-lg font-bold">{business.business_name || 'Business name'}</div>
           <div className="mt-1 text-[11px] leading-relaxed text-slate-300">{businessAddressLine(business) || 'Business address'}</div>
@@ -56,7 +56,7 @@ export default function QuotePreview({ quote, business = {} }) {
 
       <table className="w-full text-xs">
         <thead>
-          <tr className="bg-slate-900 text-left text-white">
+          <tr className="bg-violet-700 text-left text-white">
             <th className="px-3 py-2 font-semibold">Support item</th>
             <th className="px-3 py-2 font-semibold">Description</th>
             <th className="px-3 py-2 font-semibold">Unit</th>
@@ -70,7 +70,7 @@ export default function QuotePreview({ quote, business = {} }) {
             <tr className="border-b border-slate-100"><td className="px-3 py-3" colSpan={6}>No line items yet</td></tr>
           )}
           {lines.map((line, i) => (
-            <tr key={i} className={i % 2 ? 'bg-slate-50' : ''}>
+            <tr key={i} className={i % 2 ? 'bg-violet-50' : ''}>
               <td className="border-b border-slate-100 px-3 py-2 align-top font-mono text-[10px]">{line.code || '-'}</td>
               <td className="border-b border-slate-100 px-3 py-2 align-top">{line.description}</td>
               <td className="border-b border-slate-100 px-3 py-2 align-top">{line.unit}</td>
@@ -86,7 +86,7 @@ export default function QuotePreview({ quote, business = {} }) {
         <div className="w-64 space-y-1.5">
           <div className="flex justify-between"><span>Subtotal</span><span className="font-medium">{money(subtotal)}</span></div>
           <div className="flex justify-between text-slate-500"><span>GST</span><span>Included (GST-free)</span></div>
-          <div className="flex justify-between border-t border-slate-900 pt-1.5 text-sm font-bold"><span>QUOTE TOTAL</span><span>{money(subtotal)}</span></div>
+          <div className="flex justify-between border-t-2 border-violet-700 pt-1.5 text-sm font-bold text-violet-700"><span>QUOTE TOTAL</span><span>{money(subtotal)}</span></div>
         </div>
       </div>
 

@@ -168,21 +168,21 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
       <div className="w-full max-w-2xl rounded-2xl bg-card shadow-xl max-h-[92vh] overflow-y-auto">
-        <div className="sticky top-0 z-10 bg-card border-b border-border/60 px-5 py-4">
+        <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-5 py-4 text-white">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-brand">Module {module.number} · {module.group}</div>
-              <h3 className="text-lg font-semibold">{module.title}</h3>
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-cyan-100">Module {module.number} · {module.group}</div>
+              <h3 className="text-lg font-bold">{module.title}</h3>
             </div>
-            <button onClick={() => { if (issued) onCompleted?.(); onClose(); }} className="rounded-lg p-1.5 hover:bg-muted"><X className="h-4 w-4" /></button>
+            <button onClick={() => { if (issued) onCompleted?.(); onClose(); }} className="rounded-lg p-1.5 hover:bg-white/15"><X className="h-4 w-4" /></button>
           </div>
-          <div className="mt-3 flex gap-1 overflow-x-auto rounded-lg bg-muted p-1">
+          <div className="mt-3 flex gap-1 overflow-x-auto rounded-lg bg-white/10 p-1 backdrop-blur">
             {STAGES.map((s) => {
               const Icon = s.icon;
               const locked = (s.k === 'supervisor' || s.k === 'certificate') && !passed;
               return (
                 <button key={s.k} disabled={locked} onClick={() => setStage(s.k)}
-                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-medium ${stage === s.k ? 'bg-card text-brand shadow-sm' : 'text-foreground/50'} ${locked ? 'opacity-40' : ''}`}>
+                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-medium ${stage === s.k ? 'bg-white text-violet-700 shadow-sm' : 'text-white/70 hover:text-white'} ${locked ? 'opacity-40' : ''}`}>
                   {locked ? <Lock className="h-3.5 w-3.5" /> : <Icon className="h-3.5 w-3.5" />}{s.label}
                 </button>
               );
@@ -193,7 +193,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
         <div className="p-5 space-y-4">
           {stage === 'overview' && (
             <div className="space-y-4">
-              <div className="rounded-lg bg-muted/40 p-4 text-sm text-foreground/70">{module.description}</div>
+              <div className="rounded-xl bg-gradient-to-r from-violet-100/70 to-cyan-100/70 p-4 text-sm text-foreground/70 dark:from-violet-950/30 dark:to-cyan-950/30">{module.description}</div>
               <div>
                 <div className="mb-2 text-sm font-semibold">Learning objectives</div>
                 <ul className="space-y-1.5">
@@ -214,12 +214,12 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
                   ))}
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-3 text-center text-xs">
-                <div className="rounded-lg bg-muted/40 p-3"><div className="font-semibold">{module.duration_hours}h</div><div className="text-foreground/50">Duration</div></div>
-                <div className="rounded-lg bg-muted/40 p-3"><div className="font-semibold">{module.validity_months}m</div><div className="text-foreground/50">Valid</div></div>
-                <div className="rounded-lg bg-muted/40 p-3"><div className="font-semibold">{module.pass_mark}%</div><div className="text-foreground/50">Pass mark</div></div>
+              <div className="grid grid-cols-3 gap-3 text-center text-xs text-white">
+                <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 p-3 shadow-md"><div className="text-base font-bold">{module.duration_hours}h</div><div className="text-[11px] text-white/80">Duration</div></div>
+                <div className="rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 p-3 shadow-md"><div className="text-base font-bold">{module.validity_months}m</div><div className="text-[11px] text-white/80">Valid</div></div>
+                <div className="rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 p-3 shadow-md"><div className="text-base font-bold">{module.pass_mark}%</div><div className="text-[11px] text-white/80">Pass mark</div></div>
               </div>
-              <button onClick={() => setStage('guide')} className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand/90">Start Learner Guide</button>
+              <button onClick={() => setStage('guide')} className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">Start Learner Guide</button>
             </div>
           )}
 
@@ -236,7 +236,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
                   ))}
                 </div>
               </div>
-              <button onClick={() => setStage('quiz')} className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand/90">Continue to Quiz</button>
+              <button onClick={() => setStage('quiz')} className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">Continue to Quiz</button>
             </div>
           )}
 
@@ -248,7 +248,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
                   <div className="grid gap-2">
                     {q.options.map((o) => (
                       <button key={o} onClick={() => setAnswers({ ...answers, [i]: o })}
-                        className={`rounded-lg border px-3 py-1.5 text-sm font-medium text-left ${answers[i] === o ? 'border-brand bg-brand/10 text-brand' : 'border-border hover:bg-muted'}`}>{o}</button>
+                        className={`rounded-lg border px-3 py-1.5 text-sm font-medium text-left transition ${answers[i] === o ? 'border-violet-500 bg-violet-500/10 text-violet-700 shadow-sm dark:text-violet-300' : 'border-border hover:bg-muted'}`}>{o}</button>
                     ))}
                   </div>
                   {score !== null && q.explanation && (
@@ -269,9 +269,9 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
               )}
               {score === null ? (
                 <button onClick={submitQuiz} disabled={Object.keys(answers).length < module.quiz.length}
-                  className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-50">Submit Quiz</button>
+                  className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50">Submit Quiz</button>
               ) : passed ? (
-                <button onClick={() => setStage('supervisor')} className="w-full rounded-lg bg-safe px-4 py-2.5 text-sm font-semibold text-white hover:bg-safe/90">Continue to Supervisor Sign-off</button>
+                <button onClick={() => setStage('supervisor')} className="w-full rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">Continue to Supervisor Sign-off</button>
               ) : (
                 <button onClick={resetQuiz} className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white">Retry Quiz</button>
               )}
@@ -326,7 +326,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
                 </div>
               </div>
               <button onClick={() => setStage('certificate')} disabled={!canComplete}
-                className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-50">Continue to Certificate</button>
+                className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50">Continue to Certificate</button>
               {!canComplete && <div className="text-center text-xs text-foreground/40">Complete the quiz, all competencies and confirm a Competent outcome to unlock your certificate.</div>}
             </div>
           )}
@@ -359,7 +359,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
                     </div>
                   ) : (
                     <button onClick={generateCertificate} disabled={busy}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-50">
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50">
                       {busy ? <span className="block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : <Award className="h-4 w-4" />}
                       {busy ? 'Issuing...' : 'Issue & Save Certificate'}
                     </button>

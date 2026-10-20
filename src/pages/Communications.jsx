@@ -100,15 +100,13 @@ export default function Communications({ profile, profileKind, embedded = false 
 
   return (
     <div className="space-y-6">
-      {!embedded && !participantOnly && <div className="gradient-brand-soft rounded-2xl p-4 ring-1 ring-brand/10">
-        <PageHeader
+      {!embedded && !participantOnly && <PageHeader
           title="Communication Centre"
           subtitle={employeeSelf
             ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
             : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
           accent={['#4f46e5', '#22d3ee']}
-        />
-      </div>}
+        />}
 
       <Tabs defaultValue="diary">
         <TabsList className="flex flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">

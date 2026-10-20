@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck, GitCompareArrows } from 'lucide-react';
 import ThreeWayMatch from '@/components/procurement/ThreeWayMatch';
 import ExpenseReconciliation from '@/components/procurement/ExpenseReconciliation';
+import RegisterInsights from '@/components/RegisterInsights';
 import { downloadCsv } from '@/lib/csvExport';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -101,20 +102,20 @@ export default function ProcurementHub() {
         accent={['#ca8a04', '#ea580c']}
       />
 
+      <RegisterInsights module="suppliers" />
+
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: 'Spend received', value: money(totalSpend), icon: PackageCheck },
-          { label: 'Committed (submitted + approved)', value: money(committed), icon: Truck },
-          { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length },
-          { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length },
+          { label: 'Spend received', value: money(totalSpend), icon: PackageCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
+          { label: 'Committed (submitted + approved)', value: money(committed), icon: Truck, grad: 'from-amber-500 via-orange-500 to-rose-500' },
+          { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length, icon: ShoppingCart, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
+          { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length, icon: Truck, grad: 'from-sky-500 via-blue-500 to-indigo-500' },
         ].map((s) => (
-          <Card key={s.label}><CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{s.label}</p>
-              {s.icon && <s.icon className="h-4 w-4 text-brand" />}
-            </div>
-            <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
-          </CardContent></Card>
+          <div key={s.label} className={`rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
+            <div className="w-fit rounded-xl bg-white/20 p-2.5"><s.icon className="h-5 w-5" /></div>
+            <p className="mt-3 text-2xl font-bold tabular-nums">{s.value}</p>
+            <p className="mt-0.5 text-xs font-medium text-white/85">{s.label}</p>
+          </div>
         ))}
       </div>
 
@@ -161,7 +162,7 @@ export default function ProcurementHub() {
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {orders.map((o) => (
-                <Card key={o.id}><CardContent className="p-4">
+                <Card key={o.id} className={`border-l-4 ${o.status === 'Received' ? 'border-l-emerald-500' : o.status === 'Approved' ? 'border-l-violet-500' : o.status === 'Submitted' ? 'border-l-amber-400' : 'border-l-slate-300'}`}><CardContent className="p-4">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-semibold">{o.po_number}</p>

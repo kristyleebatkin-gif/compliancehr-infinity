@@ -110,7 +110,7 @@ export default function ExpenseReconciliation({ onChanged }) {
     <Card>
       <CardContent className="p-5">
         <div className="mb-4 flex items-center gap-2">
-          <div className="rounded-lg bg-warning/10 p-2"><Landmark className="h-4 w-4 text-warning" /></div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 text-white shadow-sm"><Landmark className="h-4 w-4" /></div>
           <div>
             <p className="text-sm font-bold">Expense reconciliation</p>
             <p className="text-xs text-muted-foreground">Match money-out statement lines (imported in Invoicing) against purchase orders to confirm supplier payments.</p>
@@ -143,7 +143,7 @@ export default function ExpenseReconciliation({ onChanged }) {
             {lines.map((line) => {
               const { doc: po, rule, basis } = suggestionFor(line);
               return (
-                <div key={line.id} className="rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5">
+                <div key={line.id} className={`rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5 ${line.reconciled ? 'border-l-4 border-l-emerald-500' : basis === 'rule' ? 'border-l-4 border-l-teal-500' : po ? 'border-l-4 border-l-amber-400' : ''}`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="min-w-0">
                       <p className="text-sm font-semibold">{line.description || 'Bank line'}</p>
@@ -187,8 +187,8 @@ export default function ExpenseReconciliation({ onChanged }) {
         )}
 
         {rules.length > 0 && (
-          <div className="mt-4 rounded-xl border border-border/60 p-3">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Bank rules - money out ({rules.length})</p>
+          <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-orange-700">Bank rules - money out ({rules.length})</p>
             <div className="space-y-1">
               {rules.map((r) => (
                 <div key={r.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5 text-xs">

@@ -39,6 +39,7 @@ export default function Training({ profile, embedded = false } = {}) {
   const [activeGroup, setActiveGroup] = useState('All');
   const [learnerNumber, setLearnerNumber] = useState(null);
   const [view, setView] = useState('modules');
+  const [progressOpen, setProgressOpen] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -104,20 +105,6 @@ export default function Training({ profile, embedded = false } = {}) {
 
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
-      <SectionCard title="Your progress" description={`${stats.completed} of ${stats.total} modules completed`}>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-          <div className="flex shrink-0 items-center justify-center">
-            <ScoreRing value={progressPct} size={120} label="complete" />
-          </div>
-          <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
-            <Stat icon={CheckCircle2} label="Current" value={stats.current} tone="safe" />
-            <Stat icon={Clock} label="Expiring soon" value={stats.expiring} tone="warning" />
-            <Stat icon={AlertTriangle} label="Expired" value={stats.expired} tone="danger" />
-            <Stat icon={BookOpen} label="Not started" value={stats.notStarted} tone="muted" />
-          </div>
-        </div>
-      </SectionCard>
-
       <div className="flex flex-wrap rounded-lg border border-border/60 bg-card p-0.5">
         <button onClick={() => setView('modules')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'modules' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />Modules</button>
         <button onClick={() => setView('calendar')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'calendar' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><CalendarDays className="h-3.5 w-3.5" />Calendar</button>
@@ -126,6 +113,32 @@ export default function Training({ profile, embedded = false } = {}) {
         <button onClick={() => setView('drills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'drills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Sparkles className="h-3.5 w-3.5" />AI Drills</button>
         <button onClick={() => setView('insights')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'insights' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><TrendingUp className="h-3.5 w-3.5" />Insights</button>
         <button onClick={() => setView('skills')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${view === 'skills' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><Target className="h-3.5 w-3.5" />Skills</button>
+      </div>
+
+      <div className="relative overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-r from-violet-100/70 via-white to-cyan-100/70 shadow-sm dark:border-violet-900 dark:from-violet-950/30 dark:via-card dark:to-cyan-950/30">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
+        <button onClick={() => setProgressOpen((v) => !v)} className="flex w-full items-center justify-between gap-2 px-4 py-3">
+          <span className="flex items-center gap-2 text-sm font-bold font-display text-foreground">
+            <TrendingUp className="h-4 w-4 text-brand" />Your progress
+            <span className="text-xs font-medium text-foreground/50">· {stats.completed} of {stats.total} modules completed</span>
+          </span>
+          <span className="text-xs font-semibold text-brand">{progressOpen ? 'Minimise' : 'Expand'}</span>
+        </button>
+        {progressOpen && (
+          <div className="border-t border-border/60 p-4">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <div className="flex shrink-0 items-center justify-center">
+                <ScoreRing value={progressPct} size={120} label="complete" />
+              </div>
+              <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
+                <Stat icon={CheckCircle2} label="Current" value={stats.current} tone="safe" />
+                <Stat icon={Clock} label="Expiring soon" value={stats.expiring} tone="warning" />
+                <Stat icon={AlertTriangle} label="Expired" value={stats.expired} tone="danger" />
+                <Stat icon={BookOpen} label="Not started" value={stats.notStarted} tone="muted" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {view === 'skills' ? (
@@ -217,11 +230,11 @@ function Stat({ icon: Icon, label, value, tone }) {
 }
 
 const GROUP_TONES = {
-  brand: { active: 'bg-brand text-white', number: 'bg-brand text-white', button: 'bg-brand text-white hover:bg-brand/90', label: 'text-brand' },
-  teal: { active: 'bg-teal text-white', number: 'bg-teal text-white', button: 'bg-teal text-white hover:bg-teal/90', label: 'text-teal' },
-  danger: { active: 'bg-danger text-white', number: 'bg-danger text-white', button: 'bg-danger text-white hover:bg-danger/90', label: 'text-danger' },
-  safe: { active: 'bg-safe text-white', number: 'bg-safe text-white', button: 'bg-safe text-white hover:bg-safe/90', label: 'text-safe' },
-  warning: { active: 'bg-warning text-slate-900', number: 'bg-warning text-slate-900', button: 'bg-warning text-slate-900 hover:bg-warning/90', label: 'text-warning' },
+  brand: { active: 'bg-brand text-white', number: 'bg-gradient-to-br from-blue-600 to-violet-600', button: 'bg-gradient-to-r from-blue-600 to-violet-600 hover:opacity-90', label: 'text-brand' },
+  teal: { active: 'bg-teal text-white', number: 'bg-gradient-to-br from-teal-500 to-cyan-500', button: 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:opacity-90', label: 'text-teal' },
+  danger: { active: 'bg-danger text-white', number: 'bg-gradient-to-br from-rose-500 to-red-500', button: 'bg-gradient-to-r from-rose-500 to-red-500 hover:opacity-90', label: 'text-danger' },
+  safe: { active: 'bg-safe text-white', number: 'bg-gradient-to-br from-emerald-500 to-teal-500', button: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90', label: 'text-safe' },
+  warning: { active: 'bg-warning text-slate-900', number: 'bg-gradient-to-br from-amber-400 to-orange-500', button: 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 hover:opacity-90', label: 'text-warning' },
 };
 
 function Chip({ active, tone = 'brand', onClick, children }) {
@@ -241,22 +254,27 @@ function ModuleCard({ module, status, completion, onOpen, readOnly = false }) {
     'Expired': { cls: 'bg-danger/10 text-danger', label: 'Expired' },
   }[status];
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-border/60 bg-card p-5 transition-all hover:shadow-sm">
-      <div className="mb-3 flex items-center justify-between">
-        <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${colors.number}`}>
-          <span className="text-sm font-bold">{module.number}</span>
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
+      <div className={`h-1.5 w-full ${colors.number}`} />
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-sm ${colors.number}`}>
+            <span className="text-sm font-bold">{module.number}</span>
+          </div>
+          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold ${badge.cls}`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-current" />{badge.label}
+          </span>
         </div>
-        <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badge.cls}`}>{badge.label}</span>
+        <div className={`text-[11px] font-bold uppercase tracking-wide ${colors.label}`}>{module.group}</div>
+        <div className="mt-1 text-[15px] font-semibold leading-snug">{module.title}</div>
+        <div className="mt-1 line-clamp-2 text-xs text-foreground/50">{module.description}</div>
+        <div className="mt-3 flex items-center gap-3 text-xs text-foreground/50">
+          <span>{module.duration_hours}h</span><span>·</span>
+          <span>Valid {module.validity_months}m</span>
+          {completion?.expiry_date && <><span>·</span><span>Exp {completion.expiry_date}</span></>}
+        </div>
+        <button onClick={onOpen} disabled={readOnly} className={`mt-auto w-full rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90 disabled:opacity-50 ${colors.button}`}>{readOnly ? 'Learner access only' : 'Open Module'}</button>
       </div>
-      <div className={`text-xs font-medium ${colors.label}`}>{module.group}</div>
-      <div className="mt-1 text-sm font-semibold leading-snug">{module.title}</div>
-      <div className="mt-1 line-clamp-2 text-xs text-foreground/50">{module.description}</div>
-      <div className="mt-3 flex items-center gap-3 text-xs text-foreground/50">
-        <span>{module.duration_hours}h</span><span>·</span>
-        <span>Valid {module.validity_months}m</span>
-        {completion?.expiry_date && <><span>·</span><span>Exp {completion.expiry_date}</span></>}
-      </div>
-      <button onClick={onOpen} disabled={readOnly} className={`mt-auto w-full rounded-lg px-3 py-2.5 text-xs font-semibold text-white disabled:opacity-50 ${colors.button}`}>{readOnly ? 'Learner access only' : 'Open Module'}</button>
     </div>
   );
 }

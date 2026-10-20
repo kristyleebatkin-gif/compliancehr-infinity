@@ -133,12 +133,14 @@ export default function ReceiptHub({ profile } = {}) {
         showAudit={!profile}
         action={(
           <div className="flex flex-wrap gap-2">
-            {[['Receipts', String(receipts.length)], ['Unreconciled', money(unrecTotal)], ['To reimburse', money(reimburseTotal)]].map(([label, value]) => (
-              <div key={label} className="rounded-xl bg-card px-3 py-2 text-center shadow-sm ring-1 ring-border/60">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
-                <p className="text-sm font-bold">{value}</p>
+            {[['Receipts', String(receipts.length), 'bg-sky-500/20'], ['Unreconciled', money(unrecTotal), 'bg-amber-500/25'], ['To reimburse', money(reimburseTotal), 'bg-fuchsia-500/20']].map(([label, value, tone]) => (
+              <div key={label} className={`rounded-xl ${tone} px-3 py-2 text-center ring-1 ring-white/25`}>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
+                <p className="text-sm font-bold text-white">{value}</p>
               </div>
             ))}
+            <Button variant="outline" className="bg-white/95" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+            <Button variant="outline" className="bg-white/95" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
           </div>
         )}
       />
@@ -151,8 +153,6 @@ export default function ReceiptHub({ profile } = {}) {
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
-        <Button variant="outline" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        <Button variant="outline" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
       </div>
 
       <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />
@@ -167,7 +167,7 @@ export default function ReceiptHub({ profile } = {}) {
           {shownReceipts.length === 0 ? (
             <EmptyState icon={ReceiptIcon} title="No receipts match these filters" message="Try widening your search or clearing the filters." />
           ) : shownReceipts.map((r) => (
-            <Card key={r.id}>
+            <Card key={r.id} className={`border-l-4 transition-shadow hover:shadow-md ${r.status === 'Reconciled' ? 'border-l-emerald-500' : 'border-l-amber-400'}`}>
               <CardContent className="p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0">

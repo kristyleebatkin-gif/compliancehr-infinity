@@ -48,7 +48,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       </div>
     </div>
       {(showCompliance || showAudit || action) && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-border/60 bg-card p-2.5 shadow-sm">
           {showCompliance && <ModuleComplianceStrip path={seg} />}
           {showAudit && <ModuleAuditChecklistButton />}
           {showAudit && <ModuleAuditButton />}

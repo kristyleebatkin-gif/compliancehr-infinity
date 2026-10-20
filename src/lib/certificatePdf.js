@@ -1,8 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding, getCompanyBranding } from '@/lib/companyBranding';
 
-export const NAVY = '#1B2A4A';
-export const GOLD = '#C9A227';
+export const NAVY = '#7C3AED';
+export const GOLD = '#EC4899';
 export const TEAL_HEX = '#00A6A6';
 export const SIGNATURE_IMAGE_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3cedb4a2f_IMG_1221.jpeg';
 
@@ -11,28 +11,28 @@ function drawCertificatePage(doc, data) {
   const pageH = doc.internal.pageSize.getHeight();
   const margin = 40;
 
-  doc.setDrawColor(27, 42, 74);
+  doc.setDrawColor(124, 58, 237);
   doc.setLineWidth(3);
   doc.rect(margin, margin, pageW - margin * 2, pageH - margin * 2, 'S');
-  doc.setDrawColor(201, 162, 39);
+  doc.setDrawColor(236, 72, 153);
   doc.setLineWidth(1);
   doc.rect(margin + 8, margin + 8, pageW - (margin + 8) * 2, pageH - (margin + 8) * 2, 'S');
 
   let y = 110;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
-  doc.setTextColor(27, 42, 74);
+  doc.setTextColor(124, 58, 237);
   drawCompanyBranding(doc, pageW / 2 - 100, y, { fontSize: 14 });
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(27, 42, 74);
+  doc.setTextColor(124, 58, 237);
   doc.text((data.academyName || `${getCompanyBranding().companyName || 'ComplianceHR'} Training Hub`).toUpperCase(), pageW / 2, y + 16, { align: 'center' });
 
   y += 60;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(26);
   doc.text('Certificate of Completion', pageW / 2, y, { align: 'center' });
-  doc.setDrawColor(201, 162, 39);
+  doc.setDrawColor(236, 72, 153);
   doc.line(pageW / 2 - 60, y + 8, pageW / 2 + 60, y + 8);
 
   y += 44;
@@ -43,9 +43,9 @@ function drawCertificatePage(doc, data) {
   y += 32;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(26);
-  doc.setTextColor(27, 42, 74);
+  doc.setTextColor(124, 58, 237);
   doc.text(data.learnerName || 'Learner', pageW / 2, y, { align: 'center' });
-  doc.setDrawColor(201, 162, 39);
+  doc.setDrawColor(236, 72, 153);
   doc.line(pageW / 2 - 130, y + 8, pageW / 2 + 130, y + 8);
 
   y += 36;
@@ -85,7 +85,7 @@ function drawCertificatePage(doc, data) {
   y += 18;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.setTextColor(27, 42, 74);
+  doc.setTextColor(124, 58, 237);
   doc.text(fmt(data.date), pageW / 2 - 120, y, { align: 'center' });
   doc.text(fmt(expiry && expiry.toISOString().slice(0, 10)), pageW / 2 + 120, y, { align: 'center' });
   doc.setDrawColor(120);
@@ -99,10 +99,10 @@ function drawCertificatePage(doc, data) {
   doc.setTextColor(140);
   doc.text('FOUNDER & DIRECTOR', pageW / 2, y + 10, { align: 'center' });
   doc.setFontSize(9);
-  doc.setTextColor(27, 42, 74);
+  doc.setTextColor(124, 58, 237);
   doc.setFont('helvetica', 'bold');
   doc.text('KRISTY WHELAN', pageW / 2, y - 6, { align: 'center' });
-  doc.setDrawColor(201, 162, 39);
+  doc.setDrawColor(236, 72, 153);
   doc.setLineWidth(0.7);
   doc.line(pageW / 2 - 90, y - 12, pageW / 2 + 90, y - 12);
 

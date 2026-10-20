@@ -31,9 +31,9 @@ export default function ProfessionalCertificate({ learnerName, companyName, modu
         <div className="absolute inset-x-2 top-3 h-0.5" style={{ background: GOLD }} />
 
         <div className="relative">
-          {/* Crest */}
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full" style={{ border: `2px solid ${GOLD}`, boxShadow: `inset 0 0 0 2px ${NAVY}` }}>
-            <span className="text-xs font-bold font-display" style={{ color: NAVY, fontFamily: 'Georgia, serif' }}>CHR</span>
+          {/* App logo crest */}
+          <div className="mx-auto flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white" style={{ border: `2px solid ${GOLD}`, boxShadow: `inset 0 0 0 2px ${NAVY}` }}>
+            <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="App logo" fittingType="fit" className="h-12 w-12 object-contain" />
           </div>
 
           <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.25em]" style={{ color: NAVY }}>{companyName || 'ComplianceHR'}</div>

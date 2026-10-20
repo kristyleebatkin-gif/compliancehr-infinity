@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, GitCompareArrows, CircleCheck, CircleAlert, CircleX, Link2, Link2Off } from 'lucide-react';
+import { Loader2, GitCompareArrows, CircleCheck, CircleAlert, CircleX, Link2, Link2Off, Download } from 'lucide-react';
+import { downloadCsv } from '@/lib/csvExport';
 
 const norm = (s) => String(s || '').trim().toLowerCase();
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { maximumFractionDigits: 2 })}`;
@@ -83,11 +84,18 @@ export default function ThreeWayMatch() {
     <Card>
       <CardContent className="p-5">
         <div className="flex items-center gap-2">
-          <div className="rounded-lg bg-emerald-500/10 p-2"><GitCompareArrows className="h-4 w-4 text-emerald-600" /></div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-sm"><GitCompareArrows className="h-4 w-4" /></div>
           <div>
             <p className="text-sm font-bold">Three-way matching</p>
             <p className="text-xs text-muted-foreground">Purchase order + supplier receipt + supplier record. A PO cannot be approved until its receipt is matched here.</p>
           </div>
+          <Button size="sm" variant="outline" className="ml-auto" onClick={() => downloadCsv('three-way-match.csv', [
+            { label: 'PO number', key: 'po_number' }, { label: 'Supplier', key: 'supplier' }, { label: 'Total', key: 'total' },
+            { label: 'Status', key: 'status' }, { label: 'Receipt merchant', key: 'receipt_merchant' }, { label: 'Receipt amount', key: 'receipt_amount' },
+            { label: 'Name-matched receipts', key: 'receiptCount' },
+          ], (data || []).map((r) => ({ ...r, receipt_merchant: r.receipt?.merchant || '', receipt_amount: r.receipt?.amount ?? '' })))}>
+            <Download className="mr-2 h-4 w-4" />Export matching
+          </Button>
         </div>
 
         {data === null ? (
@@ -101,7 +109,7 @@ export default function ThreeWayMatch() {
             {data.map((r) => {
               const Icon = ICON[r.status];
               return (
-                <div key={r.id} className="rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5">
+                <div key={r.id} className={`rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5 ${r.status === 'Unmatched' ? 'border-l-4 border-l-rose-400' : r.status === 'Partial match' ? 'border-l-4 border-l-amber-400' : 'border-l-4 border-l-emerald-500'}`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="min-w-0">
                       <p className="text-sm font-semibold">{r.po_number}</p>

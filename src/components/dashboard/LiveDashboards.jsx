@@ -88,6 +88,7 @@ export default function LiveDashboards() {
   const [generatedAt, setGeneratedAt] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const isAdmin = ADMIN_ROLES.includes(role);
 
   const load = useCallback(async () => {
@@ -142,6 +143,9 @@ export default function LiveDashboards() {
           {generatedAt && <span className="text-xs text-muted-foreground">Updated {new Date(generatedAt).toLocaleTimeString()}</span>}
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => setExpanded((v) => !v)}>
+            {expanded ? 'Minimise' : `Show dashboards${modules ? ` (${modules.length})` : ''}`}
+          </Button>
           <Button variant="outline" size="sm" onClick={load} disabled={loading}>
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh
           </Button>
@@ -152,7 +156,7 @@ export default function LiveDashboards() {
           )}
         </div>
       </div>
-      {loading && !modules ? (
+      {expanded && (loading && !modules ? (
         <div className="flex items-center justify-center rounded-2xl border bg-card p-10">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-slate-800" />
         </div>
@@ -163,7 +167,7 @@ export default function LiveDashboards() {
             return <ModuleCard key={mod.key} mod={{ ...meta, ...mod, title: meta.title }} />;
           })}
         </div>
-      ) : null}
+      ) : null)}
     </div>
   );
 }
