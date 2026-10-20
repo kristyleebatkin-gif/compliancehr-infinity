@@ -50,12 +50,12 @@ export default function SupportTickets() {
     if (!form.subject.trim()) return;
     setSaving(true);
     try {
-      await base44.entities.HelpDeskTicket.create({
-        ...form,
+      await base44.functions.invoke('techSupportRequest', {
+        kind: 'support_ticket',
+        subject: form.subject,
         module: form.module === 'General' ? '' : form.module,
-        requested_by: user?.full_name || 'App user',
-        requested_email: user?.email || '',
-        status: 'Open',
+        description: form.description,
+        priority: form.priority,
       });
       setForm({ subject: '', module: 'General', description: '', priority: 'Medium' });
       await load(user);

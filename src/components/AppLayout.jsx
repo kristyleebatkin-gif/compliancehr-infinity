@@ -8,7 +8,7 @@ import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
 import {
-  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
+  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
   Search, Sun, Moon, User, Wallet,
 } from 'lucide-react';
@@ -246,6 +246,30 @@ export default function AppLayout() {
 
           <div className="flex items-center gap-2">
             <GlobalSearch />
+            {/* Emergency quick access (pink) */}
+            <Link
+              to="/emergency-response"
+              title="Emergency Response"
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-bold shadow-sm transition-colors ${isActive('/emergency-response') ? 'bg-pink-600 text-white border-pink-600 hover:bg-pink-700' : 'border-pink-300 bg-pink-500/10 text-pink-600 hover:bg-pink-500/20'}`}
+            >
+              <Siren className="h-4 w-4" /><span className="hidden xl:inline">Emergency</span>
+            </Link>
+            {/* Personal Assistant quick access (purple) */}
+            <Link
+              to="/assistant"
+              title="Personal Assistant"
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-bold shadow-sm transition-colors ${isActive('/assistant') ? 'bg-purple-600 text-white border-purple-600 hover:bg-purple-700' : 'border-purple-300 bg-purple-500/10 text-purple-600 hover:bg-purple-500/20'}`}
+            >
+              <Sparkles className="h-4 w-4" /><span className="hidden xl:inline">Personal Assistant</span>
+            </Link>
+            {/* Technical Support quick access (blue) */}
+            <Link
+              to="/help?tab=tech-support"
+              title="Technical Support"
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-bold shadow-sm transition-colors ${location.pathname === '/help' ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700' : 'border-blue-300 bg-blue-500/10 text-blue-600 hover:bg-blue-500/20'}`}
+            >
+              <LifeBuoy className="h-4 w-4" /><span className="hidden xl:inline">Technical Support</span>
+            </Link>
             <button
               onClick={() => setDarkMode((v) => !v)}
               title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}

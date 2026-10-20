@@ -70,6 +70,10 @@
       "type": "string",
       "title": "Assigned To"
     },
+    "assigned_email": {
+      "type": "string",
+      "title": "Assigned Person Email"
+    },
     "outcome": {
       "type": "string",
       "title": "Outcome / Resolution"
@@ -157,11 +161,19 @@
         },
         {
           "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Auditor"
           }
         },
         {
           "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_email": "{{user.email}}"
         }
       ]
     },

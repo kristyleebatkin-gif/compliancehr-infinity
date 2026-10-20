@@ -256,6 +256,8 @@ export const GUIDES_PART_1 = {
       { name: 'Video calls', detail: 'Real-time video call rooms with entries logged in the diary as Video Call records.' },
       { name: 'AI compose assistant', detail: 'Draft professional emails, notes, broadcast and documents from a short brief.' },
       { name: 'Task board and leaderboard', detail: 'Follow-ups become tasks with owners; the leaderboard tracks completion.' },
+      { name: 'Colourful tab navigation', detail: 'Every tool — diary, inbox, email, bulk message, banter, video calls, complaints, shoutouts, templates — has its own colour-coded tab for fast navigation.' },
+      { name: 'Profile diary mirroring', detail: 'Complaints and feedback logged anywhere are mirrored into the linked person\'s profile communication diary.' },
     ],
     steps: [
       'Record a shift note after every shift — grouped by goal, support type and location.',
@@ -625,6 +627,7 @@ export const GUIDES_PART_1 = {
       { name: 'Overdue action tracking', detail: 'Outstanding actions from previous meetings surface automatically.' },
       { name: 'Branded minutes PDF', detail: 'Professional minutes export with branding.' },
       { name: 'Meeting minutes register', detail: 'Exportable register of all meetings and minutes.' },
+      { name: 'Automated attendee reminders', detail: 'Attendees are emailed automatically 24 hours and again 12 hours before each meeting — checked hourly.' },
     ],
     steps: [
       'Schedule the meeting with an agenda from a template and the attendee list.',

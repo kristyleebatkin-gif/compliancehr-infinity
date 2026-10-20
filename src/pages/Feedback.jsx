@@ -22,7 +22,7 @@ import { format } from 'date-fns';
 
 const STATUSES = ['Received', 'Viewed', 'Pending Further Action', 'Finalised'];
 const STATUS_DATE = { Viewed: 'viewed_date', 'Pending Further Action': 'pending_date', Finalised: 'finalised_date' };
-const blank = { type: 'Feedback', subject: '', message: '', submitted_by: '', contact_details: '', received_via: '', rating: '', assigned_to: '', outcome: '', status: 'Received' };
+const blank = { type: 'Feedback', subject: '', message: '', submitted_by: '', contact_details: '', received_via: '', rating: '', assigned_to: '', assigned_email: '', outcome: '', status: 'Received' };
 
 export default function Feedback({ profile, embedded = false } = {}) {
   const { toast } = useToast();
@@ -33,6 +33,11 @@ export default function Feedback({ profile, embedded = false } = {}) {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState('');
   const [form, setForm] = useState(blank);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    base44.entities.User.list().then((u) => setUsers(u)).catch(() => setUsers([]));
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -85,6 +90,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
           task_type: form.type === 'Complaint' ? 'Complaint Follow-up' : 'Feedback Follow-up',
           module: 'Feedback & Surveys',
           assigned_to: form.assigned_to,
+          assigned_email: form.assigned_email || '',
           linked_entity_type: 'Feedback',
           linked_entity_id: saved?.id,
           status: 'Open',
@@ -243,7 +249,16 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="grid gap-1.5"><Label>Received via</Label><Input placeholder="Phone, email, in person, form" value={form.received_via} onChange={(e) => setForm({ ...form, received_via: e.target.value })} /></div>
-                    <div className="grid gap-1.5"><Label>Assigned to</Label><Input value={form.assigned_to} onChange={(e) => setForm({ ...form, assigned_to: e.target.value })} /></div>
+                    <div className="grid gap-1.5"><Label>Assigned to</Label>
+                      {users.length ? (
+                        <Select value={form.assigned_to || undefined} onValueChange={(v) => setForm({ ...form, assigned_to: v, assigned_email: users.find((u) => u.full_name === v)?.email || '' })}>
+                          <SelectTrigger><SelectValue placeholder="Select a person" /></SelectTrigger>
+                          <SelectContent>{users.map((u) => <SelectItem key={u.id} value={u.full_name}>{u.full_name}</SelectItem>)}</SelectContent>
+                        </Select>
+                      ) : (
+                        <Input value={form.assigned_to} onChange={(e) => setForm({ ...form, assigned_to: e.target.value })} />
+                      )}
+                    </div>
                   </div>
                   <div className="flex justify-end gap-2 pt-1">
                     <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>

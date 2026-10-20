@@ -5,14 +5,18 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Stethoscope, Activity } from 'lucide-react';
+import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Stethoscope, Activity, Bot, Headset, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { moduleGuides } from '@/lib/moduleGuides';
 import { HELP_ARTICLES, HELP_CATEGORIES } from '@/lib/helpCentreContent';
+import { SELF_CHECKS } from '@/lib/helpCentreExtras';
 import SupportTickets from '@/components/help/SupportTickets';
 import AiTroubleshooter from '@/components/help/AiTroubleshooter';
 import SystemHealth from '@/components/help/SystemHealth';
+import CommonProblems from '@/components/help/CommonProblems';
+import AssistantsGuide from '@/components/help/AssistantsGuide';
+import TechSupportForm from '@/components/help/TechSupportForm';
 
 const ESCALATIONS = [
   { name: 'Emergency (police, fire, ambulance)', phone: '000', note: 'Immediate danger to life' },
@@ -24,7 +28,7 @@ const ESCALATIONS = [
 ];
 
 export default function HelpCentre() {
-  const [tab, setTab] = useState('guides');
+  const [tab, setTab] = useState(() => new URLSearchParams(window.location.search).get('tab') || 'guides');
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const [openGuide, setOpenGuide] = useState(null);
@@ -42,7 +46,9 @@ export default function HelpCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-sky-700 via-violet-700 to-violet-700 p-6 text-white shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-sky-700 via-violet-700 to-violet-700 p-6 text-white shadow-panel">
+        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pink-500/30 blur-2xl" />
+        <div className="pointer-events-none absolute -left-8 bottom-0 h-32 w-32 rounded-full bg-cyan-400/25 blur-2xl" />
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="rounded-xl bg-white/10 p-3"><LifeBuoy className="h-7 w-7" /></div>
@@ -72,10 +78,16 @@ export default function HelpCentre() {
           <TabsTrigger value="manuals"><Library className="mr-1.5 inline h-3.5 w-3.5" />User guides</TabsTrigger>
           <TabsTrigger value="howtos"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
           <TabsTrigger value="troubleshoot"><Stethoscope className="mr-1.5 inline h-3.5 w-3.5" />AI troubleshooter</TabsTrigger>
+          <TabsTrigger value="assistants" className="text-purple-700 data-[state=active]:text-purple-700"><Bot className="mr-1.5 inline h-3.5 w-3.5" />Personal assistants</TabsTrigger>
           <TabsTrigger value="health"><Activity className="mr-1.5 inline h-3.5 w-3.5" />System health &amp; quick fixes</TabsTrigger>
+          <TabsTrigger value="tech-support" className="text-sky-700 data-[state=active]:text-sky-700"><Headset className="mr-1.5 inline h-3.5 w-3.5" />Technical support</TabsTrigger>
           <TabsTrigger value="support"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
           <TabsTrigger value="escalate"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
         </TabsList>
+
+        <div className="mt-4">
+          <CommonProblems />
+        </div>
 
         <TabsContent value="manuals" className="mt-4">
           <Card className="border-primary/30 bg-primary/5"><CardContent className="p-5">
@@ -165,12 +177,34 @@ export default function HelpCentre() {
           )}
         </TabsContent>
 
-        <TabsContent value="troubleshoot" className="mt-4">
+        <TabsContent value="troubleshoot" className="mt-4 space-y-4">
           <AiTroubleshooter onAskSupport={() => setTab('support')} />
+          <Card><CardContent className="p-5">
+            <div className="flex items-center gap-2">
+              <div className="rounded-lg bg-brand/10 p-2"><ClipboardList className="h-4 w-4 text-brand" /></div>
+              <p className="font-bold">Other quick checks before you raise a request</p>
+            </div>
+            <div className="mt-3 grid gap-2 md:grid-cols-2">
+              {SELF_CHECKS.map((c, i) => (
+                <div key={i} className="flex items-start gap-2.5 rounded-lg border border-border/60 bg-card p-2.5 text-sm">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">{i + 1}</span>
+                  <p className="text-foreground/80">{c}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="assistants" className="mt-4">
+          <AssistantsGuide />
         </TabsContent>
 
         <TabsContent value="health" className="mt-4">
           <SystemHealth />
+        </TabsContent>
+
+        <TabsContent value="tech-support" className="mt-4">
+          <TechSupportForm />
         </TabsContent>
 
         <TabsContent value="support" className="mt-4">

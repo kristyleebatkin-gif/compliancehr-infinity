@@ -115,6 +115,7 @@ export const NAV_PERMISSIONS = {
 };
 
 export function canAccessNav(role, navKey) {
+  if (role === 'admin') return true; // platform admin always has full access
   const allowed = NAV_PERMISSIONS[navKey];
   if (!allowed) return true;
   return allowed.includes(role);
