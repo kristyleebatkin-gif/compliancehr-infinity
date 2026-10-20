@@ -73,7 +73,7 @@ export default function DocumentsDashboard() {
   };
 
   return (
-    <div className="space-y-4">
+    <div id="vault-dashboard" className="scroll-mt-24 space-y-4">
       <div className="flex flex-wrap items-center gap-2.5">
         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-600 shadow-md">
           <FolderOpen className="h-4 w-4 text-white" />

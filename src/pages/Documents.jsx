@@ -120,8 +120,10 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   // Scroll to the section a module's Docs button asked for (e.g. ?focus=employee)
   useEffect(() => {
     if (!focus) return;
+    // Legacy vault sections now live in their own modules; map them to today's sections.
+    const anchors = { employee: 'staff-docs', business: 'vault-business', participant: 'vault-dashboard' };
     const timer = setTimeout(() => {
-      document.getElementById(`vault-${focus}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById(anchors[focus] || `vault-${focus}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 500);
     return () => clearTimeout(timer);
   }, [focus, loading]);
