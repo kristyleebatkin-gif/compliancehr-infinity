@@ -12,6 +12,7 @@ import { format, addDays } from 'date-fns';
 import { archiveQuoteCopy } from '@/lib/quoteArchive';
 import { useToast } from '@/components/ui/use-toast';
 import QuotePreview from '@/components/quotes/QuotePreview';
+import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -132,9 +133,12 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
                 <p className="text-xs font-semibold uppercase tracking-wide text-foreground/50">Support line items</p>
                 <p className="text-[10px] text-muted-foreground">{PRICE_GUIDE_VERSION} — rates editable on every line</p>
               </div>
-              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setLines([...lines, { code: '', description: '', unit: 'hour', qty: 1, unit_price: 0 }])}>
-                <Plus className="h-3 w-3" />Add line
-              </Button>
+              <div className="flex items-center gap-2">
+                <AiItemSuggest mode="quote" onAdd={(newLines) => setLines([...lines, ...newLines])} />
+                <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setLines([...lines, { code: '', description: '', unit: 'hour', qty: 1, unit_price: 0 }])}>
+                  <Plus className="h-3 w-3" />Add line
+                </Button>
+              </div>
             </div>
             <div className="space-y-2">
               {lines.map((line, index) => (

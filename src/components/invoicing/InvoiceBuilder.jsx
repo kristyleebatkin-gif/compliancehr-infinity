@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Loader2, Plus, Search, Trash2, Users, Clock, ListPlus, Eye, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
+import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
 import { SUPPORT_ITEMS, PRICE_GUIDE_VERSION, PRICE_GUIDE_NOTE, classifyShift, lineAmount } from '@/lib/ndisPriceGuide';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
@@ -240,6 +241,7 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <div className="text-xs font-semibold uppercase tracking-wide text-foreground/50">NDIS supports &amp; line items</div>
               <div className="flex gap-2">
+                <AiItemSuggest mode="invoice" onAdd={(newLines) => setF({ lines: [...form.lines, ...newLines] })} />
                 <Button variant="outline" size="sm" onClick={() => setShowGuide(!showGuide)}><Search className="h-4 w-4" />Price guide</Button>
                 <Button variant="outline" size="sm" onClick={addCustomLine}><Plus className="h-4 w-4" />Custom line</Button>
               </div>
