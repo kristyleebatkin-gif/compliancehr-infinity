@@ -574,6 +574,7 @@ export const POLICY_TEMPLATES = [
   { code: 'CM-POL-018', volume: 2, title: 'Service Agreements with Participants Policy and Procedure' },
   { code: 'CM-POL-019', volume: 2, title: 'Responsive Support Provision Policy and Procedure' },
   { code: 'CM-POL-020', volume: 2, title: 'Transition to or From a Provider Policy and Procedure' },
+  { code: 'CM-POL-028', volume: 2, title: 'Complaint Handling Procedure' },
   { code: 'CM-POL-021', volume: 3, title: 'Safe Environment Policy and Procedure' },
   { code: 'CM-POL-022', volume: 3, title: 'Infection Prevention and Control Policy and Procedure' },
   { code: 'CM-POL-023', volume: 3, title: 'Participant Money and Property Policy and Procedure' },

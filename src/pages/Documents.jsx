@@ -21,6 +21,7 @@ import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
+import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import BulkEditBar from '@/components/documents/BulkEditBar';
@@ -205,7 +206,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
 
         <TabsContent value="documents" className="mt-4 space-y-6">
       <div id="staff-docs" className="flex scroll-mt-24 flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
-        <span className="text-sm font-bold font-editorial text-foreground/80">Every document on file</span>
+        <span className="text-sm font-bold font-editorial text-foreground/80">Staff Documents</span>
         <span className="flex-1" />
         <div className="flex items-center gap-2">
           {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
@@ -305,6 +306,10 @@ export default function Documents({ profile, profileKind, embedded = false } = {
       )}
 
       {!profile && <DocumentsDashboard />}
+
+      {!profile && <><div id="vault-business" className="scroll-mt-24 pt-2">
+      <BusinessDocumentsLibrary />
+      </div></>}
 
       {!profile && <><div id="vault-vault" className="scroll-mt-24 pt-2">
       <VaultUploads />

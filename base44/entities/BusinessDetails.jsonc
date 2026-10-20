@@ -20,11 +20,11 @@
     },
     "ndis_provider_number": {
       "type": "string",
-      "title": "NDIS Provider Registration Number"
+      "title": "NDIS Registered Provider Number"
     },
     "address_line": {
       "type": "string",
-      "title": "Street Address"
+      "title": "Business Address"
     },
     "postal_address": {
       "type": "string",
@@ -44,7 +44,7 @@
     },
     "phone": {
       "type": "string",
-      "title": "Phone"
+      "title": "Business Phone"
     },
     "after_hours_phone": {
       "type": "string",
@@ -52,23 +52,120 @@
     },
     "email": {
       "type": "string",
-      "title": "Email"
+      "title": "Business Email"
     },
     "website": {
       "type": "string",
-      "title": "Website"
+      "title": "Business Website"
     },
     "contact_person": {
       "type": "string",
-      "title": "Primary Contact"
+      "title": "Business Key Contact Name"
     },
     "contact_person_phone": {
       "type": "string",
-      "title": "Primary Contact Phone"
+      "title": "Key Contact Phone"
     },
     "contact_person_email": {
       "type": "string",
-      "title": "Primary Contact Email"
+      "title": "Business Contact Email"
+    },
+    "business_structure": {
+      "type": "string",
+      "title": "Business Structure"
+    },
+    "registration_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Business Registration Date"
+    },
+    "asic_registration": {
+      "type": "string",
+      "title": "ASIC Registration"
+    },
+    "business_activity": {
+      "type": "string",
+      "title": "Business Activity"
+    },
+    "key_contact": {
+      "type": "string",
+      "title": "Business Key Contact"
+    },
+    "operating_hours": {
+      "type": "string",
+      "title": "Business Operating Hours"
+    },
+    "preferred_communication": {
+      "type": "string",
+      "title": "Business Preferred Communication Method"
+    },
+    "business_owner": {
+      "type": "string",
+      "title": "Business Owner"
+    },
+    "authorised_contact_name": {
+      "type": "string",
+      "title": "Business Authorised Contact Name"
+    },
+    "authorised_contact": {
+      "type": "string",
+      "title": "Business Authorised Contact"
+    },
+    "organisational_structure": {
+      "type": "string",
+      "title": "Organisational Structure"
+    },
+    "delegation_of_authority": {
+      "type": "string",
+      "title": "Delegation of Authority"
+    },
+    "tax_file_number": {
+      "type": "string",
+      "title": "Tax File Number",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Business Purpose"
     },
     "business_goal": {
       "type": "string",
@@ -76,7 +173,7 @@
     },
     "mission": {
       "type": "string",
-      "title": "Mission"
+      "title": "Mission Statement"
     },
     "vision": {
       "type": "string",
@@ -86,9 +183,993 @@
       "type": "string",
       "title": "Values"
     },
+    "contact_role": {
+      "type": "string",
+      "title": "Contact Role"
+    },
+    "signature_farewell": {
+      "type": "string",
+      "title": "Signature Farewell"
+    },
+    "contact_signature": {
+      "type": "string",
+      "title": "Business Contact Signature"
+    },
+    "confidentiality_disclaimer": {
+      "type": "string",
+      "title": "Confidentiality Disclaimer"
+    },
+    "ndis_commissioner_username": {
+      "type": "string",
+      "title": "NDIS Commissioner Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ndis_commissioner_password": {
+      "type": "string",
+      "title": "NDIS Commissioner Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "business_email_username": {
+      "type": "string",
+      "title": "Business Email Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "business_email_password": {
+      "type": "string",
+      "title": "Business Email Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "computer_username": {
+      "type": "string",
+      "title": "Business Computer Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "computer_password": {
+      "type": "string",
+      "title": "Business Computer Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ato_username": {
+      "type": "string",
+      "title": "ATO Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ato_password": {
+      "type": "string",
+      "title": "ATO Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "workcover_username": {
+      "type": "string",
+      "title": "Workcover Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "workcover_password": {
+      "type": "string",
+      "title": "Workcover Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "qleave_username": {
+      "type": "string",
+      "title": "Qleave Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "qleave_password": {
+      "type": "string",
+      "title": "Qleave Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ram_username": {
+      "type": "string",
+      "title": "RAM Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ram_password": {
+      "type": "string",
+      "title": "RAM Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "digital_id_username": {
+      "type": "string",
+      "title": "Digital ID Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "digital_id_password": {
+      "type": "string",
+      "title": "Digital ID Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_1_name": {
+      "type": "string",
+      "title": "Other Passwords (1) Name",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_1_username": {
+      "type": "string",
+      "title": "Other Passwords (1) Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_1_password": {
+      "type": "string",
+      "title": "Other Passwords (1) Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_2_name": {
+      "type": "string",
+      "title": "Other Passwords (2) Name",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_2_username": {
+      "type": "string",
+      "title": "Other Passwords (2) Username",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "other_password_2_password": {
+      "type": "string",
+      "title": "Other Passwords (2) Password",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            }
+          ]
+        }
+      }
+    },
     "bank_name": {
       "type": "string",
-      "title": "Bank Name",
+      "title": "Business Bank Name",
       "rls": {
         "read": {
           "$or": [
@@ -132,7 +1213,7 @@
     },
     "bsb": {
       "type": "string",
-      "title": "BSB",
+      "title": "Business BSB",
       "rls": {
         "read": {
           "$or": [
@@ -176,7 +1257,7 @@
     },
     "account_number": {
       "type": "string",
-      "title": "Account Number",
+      "title": "Business Account",
       "rls": {
         "read": {
           "$or": [
@@ -269,8 +1350,48 @@
     },
     "payment_terms_note": {
       "type": "string",
-      "title": "Payment Terms Note",
+      "title": "Payment Terms",
       "default": "Payment is due within 14 days of the invoice date."
+    },
+    "payment_methods": {
+      "type": "string",
+      "title": "Payment Methods"
+    },
+    "payment_details": {
+      "type": "string",
+      "title": "Payment Details"
+    },
+    "payment_reference": {
+      "type": "string",
+      "title": "Payment Reference"
+    },
+    "invoice_disputes": {
+      "type": "string",
+      "title": "Invoice Disputes"
+    },
+    "gst_terms": {
+      "type": "string",
+      "title": "Goods and Services Tax (GST)"
+    },
+    "cancellation_refunds": {
+      "type": "string",
+      "title": "Cancellation and Refunds"
+    },
+    "invoice_changes": {
+      "type": "string",
+      "title": "Changes to Invoices"
+    },
+    "payment_confirmation": {
+      "type": "string",
+      "title": "Payment Confirmation"
+    },
+    "outstanding_accounts": {
+      "type": "string",
+      "title": "Outstanding Accounts"
+    },
+    "contact_information": {
+      "type": "string",
+      "title": "Contact Information"
     },
     "default_invoice_notes": {
       "type": "string",

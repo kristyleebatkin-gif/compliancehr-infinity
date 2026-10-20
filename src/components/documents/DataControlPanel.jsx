@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,11 +12,18 @@ import BreachRegister from '@/components/datacontrol/BreachRegister';
 
 import { DATA_MODULES as MODULES } from '@/lib/dataModules';
 
+// Access & action logs are management-only.
+const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Human Resources Manager', 'Quality & Improvement Manager'];
+
 export default function DataControlPanel() {
+  const [me, setMe] = useState(null);
   const [selected, setSelected] = useState('StaffProfile');
   const [count, setCount] = useState(null);
   const [counting, setCounting] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const isManager = !!me && MANAGER_ROLES.includes(me.role);
+
+  useEffect(() => { base44.auth.me().then(setMe).catch(() => {}); }, []);
 
   const runCount = useCallback(async (entityName) => {
     setCounting(true);
@@ -81,14 +88,16 @@ export default function DataControlPanel() {
 
       <Tabs defaultValue="activity">
         <TabsList className="flex-wrap">
-          <TabsTrigger value="activity">Access &amp; activity log</TabsTrigger>
+          {isManager && <TabsTrigger value="activity">Access &amp; activity log</TabsTrigger>}
           <TabsTrigger value="breaches"><ShieldAlert className="mr-1.5 inline h-3.5 w-3.5" />Data breaches</TabsTrigger>
           <TabsTrigger value="exports"><ShieldCheck className="mr-1.5 inline h-3.5 w-3.5" />Data exports</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="activity" className="mt-4">
-          <ActivityLog />
-        </TabsContent>
+        {isManager && (
+          <TabsContent value="activity" className="mt-4">
+            <ActivityLog />
+          </TabsContent>
+        )}
 
         <TabsContent value="breaches" className="mt-4">
           <BreachRegister />
