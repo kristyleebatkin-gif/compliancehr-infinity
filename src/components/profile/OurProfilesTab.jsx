@@ -34,7 +34,7 @@ export default function OurProfilesTab({ kind }) {
         if (!user?.id) return;
         await preparePersonalProfileAccess();
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter(selfOnly ? ownProfileQuery(user) : {}, { sort: 'full_name', limit: 50 });
+        const page = await entity.filter(selfOnly ? ownProfileQuery(user) : {}, { sort: 'full_name', limit: 200 });
         if (active) setRecords(page.items || []);
       } catch (e) { if (active) setError(e.message || 'Unable to load your profile.'); }
       if (active) setLoading(false);

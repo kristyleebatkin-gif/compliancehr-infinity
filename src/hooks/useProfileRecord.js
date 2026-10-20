@@ -17,5 +17,5 @@ export default function useProfileRecord(entityName, id) {
     enabled: Boolean(id && user?.id),
     retry: false,
   });
-  return { profile: query.data, loading: query.isLoading, error: query.error, refresh: query.refetch };
+  return { profile: query.data, loading: !user?.id || query.isLoading, error: query.error, refresh: query.refetch };
 }
