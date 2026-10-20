@@ -227,7 +227,7 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="flex items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-3 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
+        <header className="flex items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
           <div className="flex items-center gap-3">
             <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
@@ -383,7 +383,7 @@ export default function AppLayout() {
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className="mx-auto max-w-6xl px-3 pt-4 md:px-8 md:pt-6">
+          <div className="mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4">
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />
