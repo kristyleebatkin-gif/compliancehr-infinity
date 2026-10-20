@@ -122,18 +122,24 @@ export default function HrHub({ profile, embedded = false } = {}) {
   };
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-4' : 'mx-auto min-w-0 max-w-6xl space-y-4 p-3 sm:p-3 md:p-5'}>
+    <div className={embedded ? 'min-w-0 space-y-1' : 'mx-auto min-w-0 max-w-6xl space-y-1 p-3 sm:p-3 md:p-5'}>
       {!embedded && <PageHeader
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."
         icon={UsersRound}
         accent={['#2563eb', '#0891b2']}
+        beforeAudit={<Button size="sm" onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}><Plus className="h-4 w-4" />Log Leave Request</Button>}
+        actionClassName="ml-auto"
+        action={<Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
+          { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
+          { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
+        ], leaves)}>Export CSV</Button>}
       />}
 
       <Tabs value={tab} onValueChange={setTab}>
-      {!embedded && isManager && <div className="mt-3"><RegisterInsights module="hr" /></div>}
+      {!embedded && isManager && <div className="mt-1"><RegisterInsights module="hr" /></div>}
 
-      <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-1 grid gap-1 sm:grid-cols-2 xl:grid-cols-4">
         {[
           { label: 'Pending leave requests', value: loading ? '…' : summary.pending, icon: CalendarClock },
           { label: 'Currently on leave / approved', value: loading ? '…' : summary.approved, icon: UsersRound },
@@ -147,16 +153,16 @@ export default function HrHub({ profile, embedded = false } = {}) {
         ))}
       </div>
 
-      <div className="mt-3"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
+      <div className="mt-1"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
 
-        <TabsContent value="leave" className="mt-4 space-y-3">
-          <div className="flex gap-2">
+        <TabsContent value="leave" className="mt-1 space-y-1">
+          {embedded && <div className="flex gap-2">
             <Button size="sm" onClick={() => setShowLeaveForm(!showLeaveForm)}><Plus className="mr-2 h-4 w-4" />Log leave request</Button>
             <Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
               { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
               { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
             ], leaves)}>Export CSV</Button>
-          </div>
+          </div>}
           {showLeaveForm && (
             <Card><CardContent className="p-4">
               <form className="grid gap-3 md:grid-cols-2" onSubmit={saveLeave}>
@@ -204,7 +210,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {leavePage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('leave')}>Load more leave requests</Button>}
         </TabsContent>
 
-        <TabsContent value="reviews" className="mt-4 space-y-3">
+        <TabsContent value="reviews" className="mt-1 space-y-3">
           <div className="flex gap-2">
             {isManager && <Button size="sm" onClick={() => setShowReviewForm(!showReviewForm)}><Plus className="mr-2 h-4 w-4" />Schedule review</Button>}
             <Button size="sm" variant="outline" onClick={() => downloadCsv('performance-reviews.csv', [
@@ -256,11 +262,11 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {reviewPage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('reviews')}>Load more reviews</Button>}
         </TabsContent>
 
-        {isManager && <TabsContent value="performance" className="mt-4"><AppraisalComplianceDashboard /></TabsContent>}
-        <TabsContent value="paperwork" className="mt-4">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
-        {isManager && <TabsContent value="file-completeness" className="mt-4"><StaffFileCompletenessWidget /></TabsContent>}
-        {isManager && <TabsContent value="templates" className="mt-4"><HrTemplatesLibrary /></TabsContent>}
-        {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-4">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
+        {isManager && <TabsContent value="performance" className="mt-1"><AppraisalComplianceDashboard /></TabsContent>}
+        <TabsContent value="paperwork" className="mt-1">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
+        {isManager && <TabsContent value="file-completeness" className="mt-1"><StaffFileCompletenessWidget /></TabsContent>}
+        {isManager && <TabsContent value="templates" className="mt-1"><HrTemplatesLibrary /></TabsContent>}
+        {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-1">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
       </Tabs>
     </div>
   );

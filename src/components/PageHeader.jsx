@@ -7,7 +7,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, compactActions = true, showDivider = true }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, compactActions = true, showDivider = true, actionClassName }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   // Header band uses the logo's brand gradient; the module accent stays as a thin identity strip.
@@ -57,7 +57,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
               <ModuleAuditButton />
             </div>
           ) : <><ModuleAuditChecklistButton /><ModuleAuditButton /></>)}
-          {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2')}>{action}</div>}
+          {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>{action}</div>}
         </div>
       )}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
