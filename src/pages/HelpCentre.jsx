@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Stethoscope, Activity, Bot, Headset, ClipboardList } from 'lucide-react';
+import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Sparkles, Stethoscope, Activity, Bot, Headset, ClipboardList } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 import { Link } from 'react-router-dom';
 import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { moduleGuides } from '@/lib/moduleGuides';
@@ -46,31 +47,50 @@ export default function HelpCentre() {
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-sky-700 via-violet-700 to-violet-700 p-6 text-white shadow-panel">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pink-500/30 blur-2xl" />
-        <div className="pointer-events-none absolute -left-8 bottom-0 h-32 w-32 rounded-full bg-cyan-400/25 blur-2xl" />
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><LifeBuoy className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Help Centre</h1>
-              <p className="text-sm text-violet-200">Self-help guides for every module, how-to answers, escalation contacts and a direct line to support.</p>
+      <PageHeader
+        title="Help Centre"
+        icon={LifeBuoy}
+        subtitle="Self-help guides for every module, how-to answers, escalation contacts and a direct line to support."
+        showCompliance={false}
+        showAudit={false}
+        action={
+          <>
+            {/* Emergency quick access (pink) */}
+            <Link
+              to="/emergency-response"
+              title="Emergency Response"
+              className="inline-flex items-center gap-1.5 rounded-full border border-pink-300 bg-pink-500/10 px-3 py-1.5 text-xs font-bold text-pink-600 shadow-sm hover:bg-pink-500/20"
+            >
+              <Siren className="h-4 w-4" />Emergency
+            </Link>
+            {/* Personal Assistant quick access (purple) */}
+            <Link
+              to="/assistant"
+              title="Personal Assistant"
+              className="inline-flex items-center gap-1.5 rounded-full border border-purple-300 bg-purple-500/10 px-3 py-1.5 text-xs font-bold text-purple-600 shadow-sm hover:bg-purple-500/20"
+            >
+              <Sparkles className="h-4 w-4" />Personal Assistant
+            </Link>
+            {/* Technical Support quick access (blue) */}
+            <button
+              onClick={() => setTab('tech-support')}
+              title="Technical Support"
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold shadow-sm transition-colors ${tab === 'tech-support' ? 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700' : 'border-blue-300 bg-blue-500/10 text-blue-600 hover:bg-blue-500/20'}`}
+            >
+              <LifeBuoy className="h-4 w-4" />Technical Support
+            </button>
+            <div className="relative min-w-56 max-w-xl flex-1">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                className="pl-9"
+                placeholder="Search every guide and how-to article..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
             </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
-          </div>
-        </div>
-        <div className="relative mt-4 max-w-xl">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-violet-200" />
-          <Input
-            className="border-white/20 bg-white/10 pl-9 text-white placeholder:text-violet-200"
-            placeholder="Search every guide and how-to article..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-      </div>
+          </>
+        }
+      />
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
