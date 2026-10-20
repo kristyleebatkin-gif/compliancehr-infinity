@@ -69,10 +69,10 @@ export default function CompanySafe() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <div className="space-y-4">
-          <SectionLabel icon={IdCard} tint="bg-[#ec4899]">Staff Badge Creator</SectionLabel>
-          <StaffBadgeCreator />
           <SectionLabel icon={ShieldCheck} tint="bg-safe">Security &amp; Trust</SectionLabel>
           <SecurityPosture />
+          <SectionLabel icon={IdCard} tint="bg-[#ec4899]">Staff Badge Creator</SectionLabel>
+          <StaffBadgeCreator />
           <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
           <SectionLabel icon={Building2} tint="bg-[#2563eb]">Important Business Information</SectionLabel>
           <BusinessDetailsCard />

@@ -4,7 +4,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Save } from 'lucide-react';
+import { Download, Loader2, Mail, Save } from 'lucide-react';
+import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { staffBadgeBlob } from '@/lib/staffBadgePdf';
 import { routeDocument } from '@/lib/documentRouting';
@@ -69,6 +70,25 @@ export default function StaffBadgeCreator() {
     }
   };
 
+  const downloadTag = () => {
+    if (!selected) return;
+    downloadStaffBadgePdf({ staffName: selected.full_name, position: selected.position, employeeNumber: selected.employee_number });
+  };
+
+  const emailTag = async () => {
+    if (!selected?.id) return;
+    setSaving(true);
+    try {
+      const res = await base44.functions.invoke('sendNameTagEmail', { staff_id: selected.id });
+      if (res.data?.success) toast({ title: `Name tag emailed to ${res.data.sent_to}` });
+      else toast({ title: 'Could not email name tag', description: res.data?.error, variant: 'destructive' });
+    } catch (error) {
+      toast({ title: 'Could not email name tag', description: error.message, variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
       <div className="mb-1 text-sm font-semibold">Staff badge creator</div>
@@ -87,6 +107,12 @@ export default function StaffBadgeCreator() {
           <div className="flex flex-wrap gap-2">
             <Button size="sm" disabled={!selected || saving} onClick={saveToSafe}>
               {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save
+            </Button>
+            <Button size="sm" variant="outline" disabled={!selected} onClick={downloadTag}>
+              <Download className="h-3.5 w-3.5" />Download
+            </Button>
+            <Button size="sm" variant="outline" disabled={!selected} onClick={emailTag}>
+              <Mail className="h-3.5 w-3.5" />Email
             </Button>
           </div>
         </div>

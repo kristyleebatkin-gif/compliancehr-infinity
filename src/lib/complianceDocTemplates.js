@@ -9,9 +9,7 @@ import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
  */
 
 export const COMPLIANCE_DOC_TYPES = [
-  'NDIS Registration Certificate',
   'NDIS Audit Report',
-  'Public Liability Insurance',
   'Professional Indemnity Insurance',
   'Workcover Insurance',
   'Fair Work Legislation',

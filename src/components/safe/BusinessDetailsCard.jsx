@@ -40,7 +40,7 @@ const LOGIN_SECTIONS = [
   { title: 'NDIS Commissioner', prefix: 'ndis_commissioner' },
   { title: 'Business email', prefix: 'business_email' },
   { title: 'Business computer details', prefix: 'computer' },
-  { title: 'ATO details', prefix: 'ato' },
+  { title: 'ATO details', prefix: 'ato', withTfn: true },
   { title: 'Workcover details', prefix: 'workcover' },
   { title: 'Qleave', prefix: 'qleave' },
   { title: 'RAM details', prefix: 'ram' },
@@ -62,12 +62,10 @@ const INVOICE_TERMS = [
   ['contact_information', 'Contact information'],
 ];
 
-const Group = ({ icon: Icon, title, children }) => (
-  <div>
-    <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/50">
-      {Icon && <Icon className="h-3.5 w-3.5" />}{title}
-    </div>
-    <div className="grid gap-2 sm:grid-cols-3">{children}</div>
+const Section = ({ icon: Icon, title, children }) => (
+  <div className="rounded-2xl border border-border/60 bg-card p-5">
+    <div className="mb-3 flex items-center gap-2 text-sm font-semibold"><Icon className="h-4 w-4" />{title}</div>
+    {children}
   </div>
 );
 
@@ -75,8 +73,8 @@ const Field = ({ label, value, onChange, type = 'text' }) => (
   <div className="grid gap-1.5"><Label>{label}</Label><Input type={type} value={value ?? ''} onChange={onChange} /></div>
 );
 
-const Area = ({ label, value, onChange, rows = 3 }) => (
-  <div className="grid gap-1.5 sm:col-span-3"><Label>{label}</Label><Textarea rows={rows} value={value ?? ''} onChange={onChange} /></div>
+const Area = ({ label, value, onChange, rows = 3, className = '' }) => (
+  <div className={`grid gap-1.5 sm:col-span-3 ${className}`}><Label>{label}</Label><Textarea rows={rows} value={value ?? ''} onChange={onChange} /></div>
 );
 
 export default function BusinessDetailsCard() {
@@ -127,61 +125,69 @@ export default function BusinessDetailsCard() {
   if (loading) return <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><Building2 className="h-4 w-4" />Important Business Information</div>
-      <p className="mb-4 text-xs text-muted-foreground">Everything stored here appears on invoices, letters, business documents and forms. Login details are only visible to management roles.</p>
-      <div className="space-y-5">
-        <Group icon={Eye} title="Business vision, purpose, values &amp; mission statement">
+    <div className="space-y-5">
+      <Section icon={Eye} title="Business vision, purpose, values &amp; mission statement">
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Area label="Vision" value={form.vision} onChange={set('vision')} />
           <Area label="Purpose" value={form.purpose} onChange={set('purpose')} />
           <Area label="Mission statement" value={form.mission} onChange={set('mission')} />
           <Area label="Values" value={form.values} onChange={set('values')} />
-        </Group>
+        </div>
+      </Section>
 
-        <Group icon={PenLine} title="Business letterhead">
+      <Section icon={PenLine} title="Business letterhead">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
-          <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
           <Field label="Contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
-        </Group>
+          <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
+          <Field label="Business email" value={form.email} onChange={set('email')} />
+        </div>
+      </Section>
 
-        <Group icon={PenLine} title="Business signature">
-          <Field label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} />
+      <Section icon={PenLine} title="Business signature">
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={4} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
-          <Field label="Business contact signature" value={form.contact_signature} onChange={set('contact_signature')} />
           <Field label="Business contact role" value={form.contact_role} onChange={set('contact_role')} />
+          <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
+          <Field label="Business contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
+          <Area label="Business contact signature" value={form.contact_signature} onChange={set('contact_signature')} rows={3} />
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Business NDIS registered provider number" value={form.ndis_provider_number} onChange={set('ndis_provider_number')} />
-        </Group>
-
-        <div>
-          <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/50"><ShieldAlert className="h-3.5 w-3.5" />Confidentiality disclaimer</div>
-          <div className="grid gap-1.5">
-            <Label>Disclaimer</Label>
-            <Textarea rows={10} placeholder="Space to write or paste your full confidentiality disclaimer..." value={form.confidentiality_disclaimer} onChange={set('confidentiality_disclaimer')} />
-          </div>
         </div>
+      </Section>
 
-        <Group title="Important business information">
+      <Section icon={ShieldAlert} title="Confidentiality disclaimer">
+        <div className="grid gap-1.5">
+          <Label>Disclaimer</Label>
+          <Textarea rows={10} placeholder="Space to write or paste your full confidentiality disclaimer..." value={form.confidentiality_disclaimer} onChange={set('confidentiality_disclaimer')} />
+        </div>
+      </Section>
+
+      <Section icon={Building2} title="Important business information">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Trading name" value={form.trading_name} onChange={set('trading_name')} />
           <Field label="Business structure" value={form.business_structure} onChange={set('business_structure')} />
           <Field label="Business ABN" value={form.abn} onChange={set('abn')} />
           <Field label="Business ACN" value={form.acn} onChange={set('acn')} />
           <Field label="Business registration date" type="date" value={form.registration_date} onChange={set('registration_date')} />
-          <Field label="NDIS registered provider" value={form.ndis_provider_number} onChange={set('ndis_provider_number')} />
           <Field label="ASIC registration" value={form.asic_registration} onChange={set('asic_registration')} />
           <Field label="Business activity" value={form.business_activity} onChange={set('business_activity')} />
           <Field label="Business address" value={form.address_line} onChange={set('address_line')} />
           <Field label="Business phone" value={form.phone} onChange={set('phone')} />
           <Field label="Business email" value={form.email} onChange={set('email')} />
-          <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
           <Field label="Business website" value={form.website} onChange={set('website')} />
           <Field label="Business key contact name" value={form.contact_person} onChange={set('contact_person')} />
-          <Field label="Business key contact" value={form.key_contact} onChange={set('key_contact')} />
-        </Group>
+          <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
+          <Field label="Business key contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
+        </div>
+      </Section>
 
-        <Group icon={Building2} title="Business operational details">
+      <Section icon={Building2} title="Business operational details">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Business operating hours" value={form.operating_hours} onChange={set('operating_hours')} />
           <Field label="Business preferred communication method" value={form.preferred_communication} onChange={set('preferred_communication')} />
           <Field label="Business owner" value={form.business_owner} onChange={set('business_owner')} />
@@ -189,34 +195,36 @@ export default function BusinessDetailsCard() {
           <Field label="Business authorised contact" value={form.authorised_contact} onChange={set('authorised_contact')} />
           <Area label="Organisational structure" value={form.organisational_structure} onChange={set('organisational_structure')} />
           <Area label="Delegation of authority" value={form.delegation_of_authority} onChange={set('delegation_of_authority')} />
-          <Field label="Tax file number" value={form.tax_file_number} onChange={set('tax_file_number')} />
-        </Group>
+        </div>
+      </Section>
 
-        <Group icon={Landmark} title="Banking &amp; financial identity">
-          <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
+      <Section icon={Landmark} title="Banking &amp; financial identity">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Business bank name" value={form.bank_name} onChange={set('bank_name')} />
           <Field label="Business BSB" value={form.bsb} onChange={set('bsb')} />
           <Field label="Business account" value={form.account_number} onChange={set('account_number')} />
           <Field label="Account name" value={form.account_name} onChange={set('account_name')} />
-        </Group>
-
-        <div>
-          <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/50"><KeyRound className="h-3.5 w-3.5" />Login details (management only)</div>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {LOGIN_SECTIONS.map((s) => (
-              <div key={s.title} className="rounded-xl border border-border/60 bg-muted/20 p-3">
-                <p className="mb-2 flex items-center gap-1.5 text-xs font-bold"><KeyRound className="h-3.5 w-3.5 text-brand" />{s.title}</p>
-                <div className="grid gap-1.5">
-                  {s.withName && <Field label="Name" value={form[`${s.prefix}_name`]} onChange={set(`${s.prefix}_name`)} />}
-                  <Field label="Username" value={form[`${s.prefix}_username`]} onChange={set(`${s.prefix}_username`)} />
-                  <Field label="Password" type="password" value={form[`${s.prefix}_password`]} onChange={set(`${s.prefix}_password`)} />
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
+      </Section>
 
-        <Group icon={ScrollText} title="Invoice &amp; payment terms and conditions">
+      <Section icon={KeyRound} title="Login details (management only)">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {LOGIN_SECTIONS.map((s) => (
+            <div key={s.title} className="rounded-xl border border-border/60 bg-muted/20 p-3">
+              <p className="mb-2 flex items-center gap-1.5 text-xs font-bold"><KeyRound className="h-3.5 w-3.5 text-brand" />{s.title}</p>
+              <div className="grid gap-1.5">
+                {s.withTfn && <Field label="Tax file number" value={form.tax_file_number} onChange={set('tax_file_number')} />}
+                {s.withName && <Field label="Name" value={form[`${s.prefix}_name`]} onChange={set(`${s.prefix}_name`)} />}
+                <Field label="Username" value={form[`${s.prefix}_username`]} onChange={set(`${s.prefix}_username`)} />
+                <Field label="Password" type="password" value={form[`${s.prefix}_password`]} onChange={set(`${s.prefix}_password`)} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section icon={ScrollText} title="Invoice &amp; payment terms and conditions">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Payment terms (days)" type="number" value={form.payment_terms_days} onChange={set('payment_terms_days')} />
           <div className="grid gap-1.5 sm:col-span-2"><Label>Payment terms</Label><Input value={form.payment_terms_note} onChange={set('payment_terms_note')} /></div>
           {INVOICE_TERMS.map(([key, label]) => (
@@ -224,17 +232,18 @@ export default function BusinessDetailsCard() {
           ))}
           <Area label="Default invoice notes" value={form.default_invoice_notes} onChange={set('default_invoice_notes')} />
           <Area label="Bill payment instructions" value={form.payment_instructions} onChange={set('payment_instructions')} />
-        </Group>
+        </div>
+      </Section>
 
-        <Group icon={ScrollText} title="Quote terms &amp; conditions (Quote Centre)">
+      <Section icon={ScrollText} title="Quote terms &amp; conditions (Quote Centre)">
+        <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Quote validity (days)" type="number" value={form.quote_validity_days} onChange={set('quote_validity_days')} />
           <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Input value={form.quote_terms} onChange={set('quote_terms')} /></div>
           <p className="text-xs text-muted-foreground sm:col-span-3">Used as the default terms on every new quote; individual quotes can override them.</p>
-        </Group>
-      </div>
-      <div className="mt-4 flex gap-2">
-        <Button onClick={save} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save business details</Button>
-      </div>
+        </div>
+      </Section>
+
+      <Button onClick={save} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save business details</Button>
     </div>
   );
 }

@@ -6,9 +6,7 @@ import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud } from '
 import { routeDocument } from '@/lib/documentRouting';
 import { COMPLIANCE_DOC_TYPES, downloadComplianceTemplatePdf } from '@/lib/complianceDocTemplates';
 
-const DOC_TYPES = COMPLIANCE_DOC_TYPES;
-
-export default function ComplianceUploads() {
+export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, title = 'Compliance & business documents', description = 'Upload the provider\'s certificates, insurances and statutory records, or download a professional record template for each one. Files are stored in the company safe.' }) {
   const { toast } = useToast();
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
@@ -68,13 +66,13 @@ export default function ComplianceUploads() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="gradient-brand h-4 w-1.5 rounded-full" />Compliance & business documents</div>
-      <p className="mb-4 text-xs text-muted-foreground">Upload the provider's certificates, insurances and statutory records, or download a professional record template for each one. Files are stored in the company safe.</p>
+      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="gradient-brand h-4 w-1.5 rounded-full" />{title}</div>
+      <p className="mb-4 text-xs text-muted-foreground">{description}</p>
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : (
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {DOC_TYPES.map((docType) => {
+          {docTypes.map((docType) => {
             const uploaded = documents.filter((d) => d.document_type === docType);
             return (
               <div key={docType} className="rounded-lg border border-brand/20 bg-brand/[0.03] p-2.5">
