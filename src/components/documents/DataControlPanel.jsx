@@ -71,7 +71,7 @@ export default function DataControlPanel() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2 rounded-lg border border-border bg-card p-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="rounded-lg bg-brand/10 p-2"><Database className="h-4 w-4 text-brand" /></div>
@@ -80,14 +80,14 @@ export default function DataControlPanel() {
             <p className="text-xs text-muted-foreground">Users and permissions, access logging, breach response, and data exports.</p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="module-action-bar flex flex-wrap items-center gap-1">
           <Button variant="outline" onClick={() => { window.location.href = '/users'; }}><Users className="mr-2 h-4 w-4" />Users &amp; permissions hub<ArrowRight className="ml-2 h-4 w-4" /></Button>
           <Button variant="outline" onClick={downloadBreachResponsePlan}><FileDown className="mr-2 h-4 w-4" />Data breach response plan</Button>
         </div>
       </div>
 
       <Tabs defaultValue="activity">
-        <TabsList className="flex-wrap">
+        <TabsList className="h-auto flex-wrap justify-start">
           {isManager && <TabsTrigger value="activity">Access &amp; activity log</TabsTrigger>}
           <TabsTrigger value="breaches"><ShieldAlert className="mr-1.5 inline h-3.5 w-3.5" />Data breaches</TabsTrigger>
           <TabsTrigger value="exports"><ShieldCheck className="mr-1.5 inline h-3.5 w-3.5" />Data exports</TabsTrigger>

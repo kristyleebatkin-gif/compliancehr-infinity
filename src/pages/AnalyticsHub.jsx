@@ -77,12 +77,12 @@ export default function AnalyticsHub() {
   useEffect(() => { load(); }, [load]);
 
   const kpis = [
-    { label: 'Total invoiced', value: money(stats?.invoicedTotal), sub: `${stats?.invoiceCount || 0} invoices` },
-    { label: 'Paid', value: money(stats?.paid), sub: 'collected revenue' },
-    { label: 'Outstanding', value: money(stats?.outstanding), sub: `incl. ${money(stats?.overdue)} overdue`, warn: stats?.overdue > 0 },
-    { label: 'Quote win rate', value: stats?.quoteWinRate != null ? `${stats.quoteWinRate}%` : 'n/a', sub: `${stats?.quotesWon || 0} accepted` },
-    { label: 'Open tasks', value: stats?.openTasks ?? 0, sub: `${stats?.doneTasks || 0} completed` },
-    { label: 'Active staff', value: stats?.activeStaff ?? 0, sub: `${stats?.activeParticipants || 0} active participants` },
+    { label: 'Total invoiced', value: money(stats?.invoicedTotal), sub: `${stats?.invoiceCount || 0} invoices`, tone: 'border-primary/30 bg-primary/10 text-primary' },
+    { label: 'Paid', value: money(stats?.paid), sub: 'collected revenue', tone: 'border-safe/30 bg-safe/10 text-safe' },
+    { label: 'Outstanding', value: money(stats?.outstanding), sub: `incl. ${money(stats?.overdue)} overdue`, warn: stats?.overdue > 0, tone: 'border-warning/30 bg-warning/10 text-warning' },
+    { label: 'Quote win rate', value: stats?.quoteWinRate != null ? `${stats.quoteWinRate}%` : 'n/a', sub: `${stats?.quotesWon || 0} accepted`, tone: 'border-chart-5/30 bg-chart-5/10 text-chart-5' },
+    { label: 'Open tasks', value: stats?.openTasks ?? 0, sub: `${stats?.doneTasks || 0} completed`, tone: 'border-teal/30 bg-teal/10 text-teal' },
+    { label: 'Active staff', value: stats?.activeStaff ?? 0, sub: `${stats?.activeParticipants || 0} active participants`, tone: 'border-chart-4/30 bg-chart-4/10 text-chart-4' },
   ];
 
   return (
@@ -102,10 +102,10 @@ export default function AnalyticsHub() {
         <>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {kpis.map((k) => (
-              <Card key={k.label} className={k.warn ? 'border-danger/40' : ''}>
+              <Card key={k.label} className={`${k.tone} ${k.warn ? 'ring-1 ring-danger/40' : ''}`}>
                 <CardContent className="p-4">
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{k.label}</p>
-                  <p className="mt-0.5 break-words text-lg font-bold tracking-tight">{k.value}</p>
+                  <p className="mt-0.5 break-words text-lg font-bold tracking-tight text-foreground">{k.value}</p>
                   <p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">{k.sub}</p>
                 </CardContent>
               </Card>

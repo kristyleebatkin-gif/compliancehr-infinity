@@ -21,7 +21,7 @@ export default function LiveSecurityEvidence() {
     {stats ? <div className="grid grid-cols-3 gap-1.5">
       {['Status-trail entries', 'Platform audit-log entries', 'Controlled user accounts'].map((label, index) => <div key={label} className="min-w-0 rounded-lg border border-border/60 px-2 py-1">
         <p className="text-lg leading-6 font-editorial tabular-nums">{stats[index] === null ? '—' : stats[index].toLocaleString()}</p>
-        <p className="text-[10px] leading-3.5 text-muted-foreground">{label}</p>
+        <p className="text-[10px] leading-4 text-muted-foreground">{label}</p>
       </div>)}
     </div> : <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Loader2 className="h-3 w-3 animate-spin" />Collecting evidence...</div>}
   </CardContent></Card>;

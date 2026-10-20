@@ -23,8 +23,7 @@ import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
-import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
-import CompanySafeDocuments from '@/components/documents/CompanySafeDocuments';
+
 
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
@@ -126,7 +125,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   useEffect(() => {
     if (!focus) return;
     // Legacy vault sections now live in their own modules; map them to today's sections.
-    const anchors = { employee: 'staff-docs', business: 'vault-business', participant: 'vault-dashboard' };
+    const anchors = { employee: 'staff-docs', business: 'vault-subject-business', policies: 'vault-subject-policies', registers: 'vault-subject-registers', company: 'vault-subject-business-doc', participant: 'vault-dashboard' };
     const timer = setTimeout(() => {
       document.getElementById(anchors[focus] || `vault-${focus}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 500);
@@ -196,7 +195,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2">
       {!embedded && <PageHeader
         icon={FolderOpen}
         title="Document Vault"
@@ -217,7 +216,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         <>
       {!profile && <RegisterInsights module="documents" />}
 
-      {!profile && <DocumentsDashboard />}
+      {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex-wrap">
@@ -325,12 +324,6 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </div>
         </>
       )}
-
-      {!profile && <><div id="vault-business" className="scroll-mt-24 space-y-4 pt-2">
-      {['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(me?.role) && <CompanySafeDocuments role={me.role} />}
-      <BusinessDocumentsLibrary />
-
-      </div></>}
 
       {!profile && <><div id="vault-vault" className="scroll-mt-24 pt-2">
       <VaultUploads />

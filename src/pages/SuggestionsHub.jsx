@@ -54,13 +54,17 @@ export default function SuggestionsHub() {
   const overdueModules = (review?.modules || []).filter((m) => (m.overdue || 0) > 0 || (m.expiring || 0) > 0).length;
 
   return (
-    <div className="space-y-4">
+    <div className="compact-module space-y-2">
       <PageHeader
         title="Suggestions Hub"
         subtitle="A live review of every module: what to visualise, automate and refine, generated from real register numbers."
         showAlerts={false}
         action={
-          <div className="flex gap-2">
+          <div className="flex flex-wrap items-center gap-1">
+            <div className="relative w-44 min-w-0">
+              <Search className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground" />
+              <Input aria-label="Search modules" placeholder="Search modules..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-7" />
+            </div>
             <Button variant="outline" size="sm" onClick={load} disabled={loading}>
               <RefreshCw className="h-4 w-4" /> Refresh
             </Button>
@@ -83,10 +87,6 @@ export default function SuggestionsHub() {
 
       {review && !loading && (
         <>
-          <div className="relative max-w-sm">
-            <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search modules..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
-          </div>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
             {[
               ['Modules reviewed', review.moduleCount, 'from-violet-500 via-purple-500 to-fuchsia-500'],
@@ -108,7 +108,7 @@ export default function SuggestionsHub() {
             <div className="grid gap-4 md:grid-cols-2">
               {modules.map((m) => (
                 <Card key={m.key} className={m.overdue > 0 ? 'border-warning/60' : ''}>
-                  <CardContent className="p-4 space-y-3">
+                  <CardContent className="space-y-2 p-2.5">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <h3 className="font-heading font-bold text-base leading-tight">{m.label}</h3>
@@ -128,7 +128,7 @@ export default function SuggestionsHub() {
                           </div>
                           <ul className="mt-1 space-y-1 pl-1">
                             {(m[key] || []).map((s, i) => (
-                              <li key={i} className="text-sm text-muted-foreground flex gap-1.5"><span className="text-primary/50">•</span>{s}</li>
+                              <li key={i} className="flex gap-1.5 text-xs leading-snug text-muted-foreground"><span className="text-primary/50">•</span>{s}</li>
                             ))}
                             {!(m[key] || []).length && <li className="text-xs text-muted-foreground/60">No suggestions generated.</li>}
                           </ul>

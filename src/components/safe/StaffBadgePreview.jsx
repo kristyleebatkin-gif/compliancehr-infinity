@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Image } from '@/components/ui/image';
 
 export default function StaffBadgePreview({ branding, staff, compact = false }) {
   return (
@@ -7,7 +8,7 @@ export default function StaffBadgePreview({ branding, staff, compact = false }) 
       <div className={compact ? 'flex items-center gap-2 bg-card px-2 py-1.5' : 'flex items-center gap-2.5 bg-white px-4 pb-2.5 pt-3'}>
         <div className={compact ? 'flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border/60 bg-muted' : 'flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted'}>
           {branding.logoDataUrl || branding.logoUrl
-            ? <img src={branding.logoDataUrl || branding.logoUrl} alt="Logo" className="h-full w-full object-contain" />
+            ? <Image src={branding.logoDataUrl || branding.logoUrl} alt="Logo" className="h-full w-full" fittingType="fit" />
             : <Badge variant="outline" className="text-[8px]">Logo</Badge>}
         </div>
         <div className="min-w-0">

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Download, FolderOpen, Loader2, Users, Heart, Building2, ScrollText, Layers, CalendarClock, ClipboardCheck, AlertTriangle, Zap, Ambulance, ShieldPlus, Target, MessageSquare, Boxes, Share2, FileSignature, HeartHandshake, Recycle, Scale, Briefcase, UserCog, Award } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
-import { cn } from '@/lib/utils';
+import DocumentSubjectCard from '@/components/documents/DocumentSubjectCard';
 
 /**
  * Documents Dashboard: one colour-coded card per subject/register in the vault,
@@ -36,9 +35,14 @@ const SUBJECTS = [
   { key: 'infection', title: 'Infection Control', icon: ShieldPlus, colour: '#15803d', soft: '#f0fdf4', blurb: 'Infection control checklists and standards evidence', entity: 'Checklist', link: '/checklists' },
 ];
 
-export default function DocumentsDashboard() {
+export default function DocumentsDashboard({ role, focus }) {
   const navigate = useNavigate();
   const [counts, setCounts] = useState({});
+  const [expanded, setExpanded] = useState(null);
+  useEffect(() => {
+    const section = { business: 'business', policies: 'policies', registers: 'registers', company: 'business-doc' }[focus];
+    if (section) setExpanded(section);
+  }, [focus]);
 
   useEffect(() => {
     let alive = true;
@@ -57,7 +61,12 @@ export default function DocumentsDashboard() {
   }, []);
 
   const open = (subject) => {
-    if (subject.anchor) {
+    if (['business-doc', 'business', 'policies', 'registers'].includes(subject.key)) {
+      setExpanded((current) => current === subject.key ? null : subject.key);
+    } else if (subject.anchor === 'vault-business') {
+      setExpanded('business');
+      requestAnimationFrame(() => document.getElementById('vault-subject-business')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    } else if (subject.anchor) {
       document.getElementById(subject.anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else if (subject.link) {
       navigate(subject.link);
@@ -73,74 +82,20 @@ export default function DocumentsDashboard() {
   };
 
   return (
-    <div id="vault-dashboard" className="scroll-mt-24 space-y-4">
-      <div className="flex flex-wrap items-center gap-2.5">
+    <div id="vault-dashboard" className="scroll-mt-24 space-y-2">
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-primary/20 bg-primary/10 p-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-600 shadow-md">
           <FolderOpen className="h-4 w-4 text-white" />
         </span>
-        <h2 className="text-lg font-bold font-editorial text-foreground">Documents Dashboard</h2>
+        <h2 className="text-sm font-bold text-foreground">Document libraries &amp; subject dashboard</h2>
         <span className="h-1 w-10 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500" />
         <Badge variant="outline" className="bg-accent/60 text-accent-foreground">{SUBJECTS.length} subjects &amp; topics</Badge>
         <span className="flex-1" />
         <span className="text-xs font-medium text-muted-foreground">Overview and full export for every subject</span>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {SUBJECTS.map((subject) => {
-          const Icon = subject.icon;
-          const count = subject.entity ? counts[subject.key] : undefined;
-          return (
-            <div
-              key={subject.key}
-              role="button"
-              tabIndex={0}
-              onClick={() => open(subject)}
-              onKeyDown={(e) => { if (e.key === 'Enter') open(subject); }}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2"
-              style={{ boxShadow: '0 1px 2px rgba(15,23,42,0.04), 0 10px 28px -18px rgba(15,23,42,0.25)' }}
-            >
-              <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${subject.colour}, ${subject.colour}88)` }} />
-              <div className="p-4">
-                <div className="flex items-start gap-3">
-                  <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white shadow-md transition-transform duration-200 group-hover:scale-105"
-                    style={{ background: `linear-gradient(135deg, ${subject.colour}, ${subject.colour}b3)` }}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-bold" style={{ color: subject.colour }}>{subject.title}</p>
-                    <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{subject.blurb}</p>
-                  </div>
-                  {subject.entity && (
-                    <span
-                      className="rounded-lg px-2.5 py-1 text-lg font-extrabold tabular-nums"
-                      style={{ background: subject.soft, color: subject.colour }}
-                    >
-                      {count == null ? <Loader2 className="h-4 w-4 animate-spin" /> : count}
-                    </span>
-                  )}
-                </div>
-                <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/50 pt-3">
-                  <span className="text-xs font-semibold" style={{ color: subject.colour }}>
-                    {subject.anchor ? 'Open section' : 'Open module'}
-                  </span>
-                  {subject.entity && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-7 text-[11px]"
-                      onClick={(e) => { e.stopPropagation(); exportSubject(subject); }}
-                    >
-                      <Download className="h-3 w-3" />Export CSV
-                    </Button>
-                  )}
-                </div>
-              </div>
-              <div className={cn('pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100')} style={{ background: `radial-gradient(400px circle at 20% -20%, ${subject.soft}, transparent)` }} />
-            </div>
-          );
-        })}
+      <div className="grid items-start gap-2 sm:grid-cols-2 xl:grid-cols-3">
+        {SUBJECTS.map((subject) => <DocumentSubjectCard key={subject.key} subject={subject} count={counts[subject.key]} expanded={expanded === subject.key} onOpen={open} onExport={exportSubject} role={role} />)}
       </div>
     </div>
   );

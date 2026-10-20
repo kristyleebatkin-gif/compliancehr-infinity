@@ -69,7 +69,7 @@ export default function Tasks() {
       setTaskMetrics({ dueToday, overdue, averageMinutes: timedCount ? Math.round(timedMinutes / timedCount) : 0 });
       setTaskTotals(totals.rows || []);
       setList(page.items || []);
-      setUsers(userPage.items || []);
+      setUsers(userPage || []);
     } catch (e) { console.error(e); }
     setLoading(false);
   }, []);
