@@ -2,6 +2,8 @@ import React from 'react';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
 import { businessAddressLine } from '@/lib/quotePdf';
 import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import FinanceBrandIdentity from '@/components/invoicing/FinanceBrandIdentity';
+import SupportLineDetails from '@/components/invoicing/SupportLineDetails';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -21,7 +23,7 @@ export default function QuotePreview({ quote, business = {} }) {
     <div className="rounded-xl border border-border bg-white text-slate-900 shadow-sm">
       <div className="flex items-start justify-between gap-4 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 p-6 text-white">
         <div className="min-w-0">
-          <div className="text-lg font-bold">{business.business_name || 'Business name'}</div>
+          <FinanceBrandIdentity business={business} />
           <div className="mt-1 text-[11px] leading-relaxed text-slate-300">{businessAddressLine(business) || 'Business address'}</div>
           <div className="text-[11px] text-slate-300">{[business.phone || business.contact_person_phone, business.email, business.website].filter(Boolean).join('  |  ')}</div>
           <div className="text-[11px] text-slate-300">{[business.abn && `ABN ${business.abn}`, business.ndis_provider_number && `NDIS Provider ${business.ndis_provider_number}`].filter(Boolean).join('  |  ')}</div>
@@ -74,7 +76,7 @@ export default function QuotePreview({ quote, business = {} }) {
           {lines.map((line, i) => (
             <tr key={i} className={i % 2 ? 'bg-violet-50' : ''}>
               <td className="border-b border-slate-100 px-3 py-2 align-top font-mono text-[10px]">{line.code || '-'}</td>
-              <td className="border-b border-slate-100 px-3 py-2 align-top">{line.description}</td>
+              <td className="border-b border-slate-100 px-3 py-2 align-top">{line.description}<SupportLineDetails line={line} /></td>
               <td className="border-b border-slate-100 px-3 py-2 align-top">{line.unit}</td>
               <td className="border-b border-slate-100 px-3 py-2 text-right align-top">{line.qty}</td>
               <td className="border-b border-slate-100 px-3 py-2 text-right align-top">{money(line.unit_price)}</td>

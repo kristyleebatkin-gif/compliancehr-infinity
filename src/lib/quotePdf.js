@@ -3,6 +3,7 @@ import { drawDocumentFooter, getCompanyBranding } from '@/lib/companyBranding';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
 import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
 import financePdfSections from '@/components/invoicing/financePdfSections';
+import financeSupportTable from '@/lib/financeSupportTable';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -39,9 +40,9 @@ export function buildQuotePdf(quote, business = {}) {
   const branding = getCompanyBranding();
 
   doc.setFillColor(124, 58, 237);
-  doc.rect(0, 0, pageW, 96, 'F');
+  doc.rect(0, 0, pageW, 128, 'F');
   doc.setFillColor(236, 72, 153);
-  doc.rect(0, 96, pageW, 5, 'F');
+  doc.rect(0, 128, pageW, 5, 'F');
   if (branding.logoDataUrl) {
     try {
       const props = doc.getImageProperties(branding.logoDataUrl);
@@ -53,18 +54,19 @@ export function buildQuotePdf(quote, business = {}) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
   doc.setTextColor(255, 255, 255);
-  doc.text(safeText(business.business_name || 'Quotation'), headerX, 38, { maxWidth: 320 });
+  doc.text(safeText(business.business_name || branding.companyName || 'Quotation'), headerX, 38, { maxWidth: 320 });
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(203, 213, 225);
   const headerLines = [
+    branding.slogan,
     businessAddressLine(business),
     [business.phone || business.contact_person_phone, business.email, business.website].filter(Boolean).join('  |  '),
     [business.abn && `ABN ${business.abn}`, business.ndis_provider_number && `NDIS Provider ${business.ndis_provider_number}`].filter(Boolean).join('  |  '),
     [business.contact_person && `Contact: ${business.contact_person}`, business.contact_person_phone && `Contact phone: ${business.contact_person_phone}`].filter(Boolean).join('  |  '),
   ];
   headerLines.forEach((line, i) => {
-    if (line) doc.text(line, headerX, 52 + i * 12, { maxWidth: 420 });
+    if (line) doc.text(line, headerX, 52 + i * 12, { maxWidth: pageW - margin - headerX });
   });
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
@@ -75,7 +77,7 @@ export function buildQuotePdf(quote, business = {}) {
     doc.text(quote.quote_number, pageW - margin, 58, { align: 'right' });
   }
 
-  let y = 132;
+  let y = 160;
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
@@ -110,55 +112,7 @@ export function buildQuotePdf(quote, business = {}) {
   y += Math.max(clientLines.length, participantLines.length, 2) * 13 + 12;
 
   const lines = parseLineItems(quote.line_items);
-  const cols = [
-    { label: 'Support item', x: margin, w: 210 },
-    { label: 'Description', x: margin + 216, w: 150 },
-    { label: 'Unit', x: margin + 372, w: 40 },
-    { label: 'Qty', x: margin + 416, w: 40 },
-    { label: 'Rate', x: margin + 460, w: 60 },
-    { label: 'Amount', x: pageW - margin, w: 0 },
-  ];
-  doc.setFillColor(124, 58, 237);
-  doc.rect(margin, y, contentW, 22, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8.5);
-  doc.setTextColor(255, 255, 255);
-  cols.forEach((c) => {
-    if (c.label === 'Amount') doc.text(c.label, c.x, y + 15, { align: 'right' });
-    else doc.text(c.label, c.x, y + 15, { maxWidth: c.w });
-  });
-  y += 22;
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.5);
-  doc.setTextColor(30, 41, 59);
-  if (lines.length === 0) {
-    doc.setFontSize(8);
-    doc.text('Support item code', margin + 4, y + 10);
-    doc.text('Description of support', margin + 216, y + 10);
-    doc.text('Unit', margin + 372, y + 10);
-    doc.text('Qty', margin + 416, y + 10);
-    doc.text('Rate', margin + 460, y + 10);
-    doc.text('Amount', pageW - margin, y + 10, { align: 'right' });
-    y += 30;
-  }
-  lines.forEach((line, index) => {
-    const rowHeight = 30;
-    if (y + rowHeight > 700) { doc.addPage(); y = 60; }
-    if (index % 2 === 1) {
-      doc.setFillColor(244, 239, 255);
-      doc.rect(margin, y, contentW, rowHeight, 'F');
-    }
-    const cellY = y + 14;
-    wrap(doc, safeText(line.code) || '-', cols[0].x + 4, cellY, cols[0].w - 8, 10, 8);
-    wrap(doc, safeText(line.description), cols[1].x + 4, cellY, cols[1].w - 8, 10, 8);
-    doc.text(safeText(line.unit), cols[2].x, cellY);
-    doc.text(String(line.qty ?? ''), cols[3].x, cellY);
-    doc.text(money(line.unit_price), cols[4].x, cellY, { maxWidth: 58 });
-    doc.text(money(lineAmount(line)), pageW - margin, cellY, { align: 'right' });
-    y += rowHeight;
-  });
-  y += 10;
+  y = financeSupportTable(doc, lines, y, margin);
 
   const subtotal = lines.length
     ? lines.reduce((sum, line) => sum + lineAmount(line), 0)

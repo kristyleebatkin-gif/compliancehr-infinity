@@ -1,21 +1,17 @@
 import { useContext } from 'react';
 import { useAuth } from '@/lib/AuthContext';
-import { ROLES, canAccessNav, isCompliance, isAdmin } from '@/lib/roles';
+import { ROLES, canAccessNav, isCompliance, isAdmin, normalizeRole, hasApprovedAccess } from '@/lib/roles';
 
 export { ROLES };
 
 export function useRole() {
   const { user } = useAuth();
-  const rawRole = user?.role;
-  const role = rawRole === 'admin' ? ROLES.ADMIN
-    : rawRole === 'user' ? ROLES.SUPPORT
-    : rawRole === 'Team Leader' ? ROLES.TEAM_LEADER
-    : (rawRole || ROLES.SUPPORT);
+  const role = normalizeRole(user?.role);
   return {
     user,
     role,
     isAdmin: isAdmin(role),
     isCompliance: isCompliance(role),
-    can: (navKey) => canAccessNav(role, navKey),
+    can: (navKey) => hasApprovedAccess(user) && canAccessNav(role, navKey),
   };
 }

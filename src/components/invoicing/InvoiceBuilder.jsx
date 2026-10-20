@@ -12,6 +12,8 @@ import { format } from 'date-fns';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
 import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import SupportLineFields from '@/components/invoicing/SupportLineFields';
+import { loadCompanyBranding } from '@/lib/companyBranding';
 import invoiceArchive from '@/components/invoicing/invoiceArchive';
 import { SUPPORT_ITEMS, PRICE_GUIDE_VERSION, PRICE_GUIDE_NOTE, classifyShift, lineAmount } from '@/lib/ndisPriceGuide';
 
@@ -34,6 +36,7 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
       const [bizPage, partPage] = await Promise.all([
         base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
         base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 500, fields: ['full_name', 'email', 'address', 'ndis_number', 'plan_manager', 'plan_manager_email'] }),
+        loadCompanyBranding(),
       ]);
       setBusiness(bizPage.items[0] || {});
       setParticipants(partPage.items || []);
@@ -97,6 +100,10 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
         qty: item.hours || 1,
         unit_price: item.rate,
         shift_id: s.id,
+        support_worker: s.employee_name || '',
+        service_date: s.date || '',
+        start_time: s.start_time || '',
+        end_time: s.end_time || '',
       };
     });
     setF({ lines: [...form.lines, ...newLines] });
@@ -273,6 +280,7 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
                   <div className="grid gap-1 sm:col-span-2"><Label className="text-[10px]">Unit price ($)</Label><Input type="number" step="0.01" value={line.unit_price} onChange={(e) => setLine(index, { unit_price: e.target.value })} /></div>
                   <div className="sm:col-span-1 text-right text-sm font-semibold">${lineAmount(line).toFixed(2)}</div>
                   <div className="sm:col-span-1 flex justify-end"><Button variant="ghost" size="icon" onClick={() => removeLine(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button></div>
+                  <SupportLineFields line={line} onChange={(patch) => setLine(index, patch)} />
                 </div>
               ))}
             </div>

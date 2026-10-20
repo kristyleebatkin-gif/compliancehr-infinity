@@ -102,6 +102,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const refresh = () => { if (document.visibilityState === 'visible') checkUserAuth(); };
+    const timer = setInterval(refresh, 60000);
+    window.addEventListener('focus', refresh);
+    return () => { clearInterval(timer); window.removeEventListener('focus', refresh); };
+  }, [isAuthenticated]);
+
   const logout = (shouldRedirect = true) => {
     setUser(null);
     setIsAuthenticated(false);

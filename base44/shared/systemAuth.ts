@@ -1,6 +1,8 @@
 // Shared authorization helpers for backend functions.
 
-export const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
+import { hasApprovedAccess } from './appAccess.ts';
+
+export const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Management'];
 
 // Roles trusted to send email from the organisation's identity.
 // External/low-trust roles (e.g. Auditor) are deliberately excluded: they must
@@ -15,6 +17,7 @@ export const STAFF_SEND_ROLES = [
   'Quality & Improvement Manager',
   'Intake Officer',
   'Support Worker',
+  'Employee',
 ];
 
 // Roles trusted to record NDIS audit consent.
@@ -24,7 +27,7 @@ export const CONSENT_ROLES = [...MANAGEMENT_ROLES, 'Human Resources Manager', 'Q
 export const HR_ROLES = [...MANAGEMENT_ROLES, 'Team Leader', 'Human Resources Manager'];
 
 export function hasAnyRole(user: any, roles: string[]): boolean {
-  return !!user && roles.includes(user.role);
+  return hasApprovedAccess(user) && roles.includes(user.role);
 }
 
 // Authorizes a privileged automation function: only an authenticated user

@@ -14,6 +14,7 @@ import { useToast } from '@/components/ui/use-toast';
 import QuotePreview from '@/components/quotes/QuotePreview';
 import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
 import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import SupportLineFields from '@/components/invoicing/SupportLineFields';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -162,6 +163,7 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
                     <Input className="h-8 text-xs" type="number" step="0.01" placeholder="Qty" value={line.qty} onChange={(e) => setLine(index, { qty: e.target.value })} />
                     <Input className="h-8 text-xs" type="number" step="0.01" placeholder="Rate" value={line.unit_price} onChange={(e) => setLine(index, { unit_price: e.target.value })} />
                   </div>
+                  <SupportLineFields line={line} onChange={(patch) => setLine(index, patch)} />
                   <p className="text-right text-xs font-medium">Amount: ${lineAmount(line).toFixed(2)}</p>
                 </div>
               ))}

@@ -21,6 +21,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
+import { loadCompanyBranding } from '@/lib/companyBranding';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`);
 const STATUSES = ['Draft', 'Sent', 'Accepted', 'Declined', 'Expired'];
@@ -46,6 +47,7 @@ export default function QuoteCentre() {
       const [quotePage, businessPage] = await Promise.all([
         base44.entities.Quote.filter({}, { sort: '-created_date', limit: 200 }),
         base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+        loadCompanyBranding(),
       ]);
       setQuotes(quotePage.items);
       setBusiness(businessPage.items?.[0] || {});
@@ -191,7 +193,7 @@ export default function QuoteCentre() {
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>
-        <Button variant="outline" onClick={() => downloadQuoteTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Quote template</Button>
+        <Button variant="outline" disabled={loading} onClick={() => downloadQuoteTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Quote template</Button>
         <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || quotes.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <p className="text-[11px] text-muted-foreground">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
       </div>

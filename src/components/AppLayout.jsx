@@ -5,6 +5,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, ROLES } from '@/lib/roles';
 import ModuleGuide from '@/components/ModuleGuide';
+import { Navigate } from 'react-router-dom';
+import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
 import {
@@ -183,6 +185,9 @@ export default function AppLayout() {
       </div>
     </div>
   );
+
+  if (role === ROLES.AUDITOR) return <AuditorOnlyLayout />;
+  if (role === ROLES.TEAM_LEADER && location.pathname === '/my-payroll') return <Navigate to="/dashboard" replace />;
 
   if (role === 'Archived') {
     return (
@@ -374,13 +379,13 @@ export default function AppLayout() {
                     >
                       <User className="h-4 w-4" /> My profile
                     </Link>
-                    <Link
+                    {canAccessNav(role, 'my-payroll') && <Link
                       to="/my-payroll"
                       onClick={() => setUserMenuOpen(false)}
                       className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground/70 hover:bg-brand/5 hover:text-brand"
                     >
                       <Wallet className="h-4 w-4" /> My payroll
-                    </Link>
+                    </Link>}
                     <button
                       onClick={handleLogout}
                       className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-danger hover:bg-danger/5"

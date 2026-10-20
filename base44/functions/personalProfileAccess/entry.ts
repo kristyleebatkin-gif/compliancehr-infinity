@@ -1,11 +1,12 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user?.id || !user.email) return Response.json({ error: 'Please sign in.' }, { status: 401 });
-    if (['Pending Approval', 'Archived'].includes(user.role) || ['Pending Approval', 'Rejected', 'Archived'].includes(user.account_status)) {
+    if (!hasApprovedAccess(user)) {
       return Response.json({ error: 'Your account is not active.' }, { status: 403 });
     }
     // Only the authenticated account's verified email is used. No caller-selected IDs or names.

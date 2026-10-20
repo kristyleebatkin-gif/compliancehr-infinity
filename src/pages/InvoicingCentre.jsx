@@ -28,6 +28,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
+import { loadCompanyBranding } from '@/lib/companyBranding';
 
 const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
 
@@ -54,6 +55,7 @@ export default function InvoicingCentre() {
       const [page, bizPage] = await Promise.all([
         base44.entities.Invoice.filter({}, { sort: '-created_date', limit: 100 }),
         base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+        loadCompanyBranding(),
       ]);
       setInvoices(page.items);
       setBusiness(bizPage.items[0] || {});

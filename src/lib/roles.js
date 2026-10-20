@@ -1,128 +1,50 @@
 export const ROLES = {
-  ADMIN: 'Provider Administrator',
-  COMPLIANCE: 'Compliance Manager',
-  TEAM_LEADER: 'Administration',
-  SUPPORT: 'Support Worker',
-  PARTICIPANT: 'Participant',
-  AUDITOR: 'Auditor',
-  FINANCE: 'Finance & Accounts Officer',
-  HR: 'Human Resources Manager',
-  ROSTERING: 'Rostering Coordinator',
-  QUALITY: 'Quality & Improvement Manager',
-  MARKETING: 'CRM & Marketing Officer',
-  INTAKE: 'Intake Officer',
-  VOLUNTEER: 'Volunteer',
-  PENDING_APPROVAL: 'Pending Approval',
+  ADMIN: 'Provider Administrator', MANAGEMENT: 'Management', COMPLIANCE: 'Management',
+  TEAM_LEADER: 'Administration', EMPLOYEE: 'Employee', SUPPORT: 'Employee',
+  PARTICIPANT: 'Participant', AUDITOR: 'Auditor', PENDING_APPROVAL: 'Pending Approval',
+  FINANCE: 'Finance & Accounts Officer', HR: 'Human Resources Manager', ROSTERING: 'Rostering Coordinator',
+  QUALITY: 'Quality & Improvement Manager', MARKETING: 'CRM & Marketing Officer', INTAKE: 'Intake Officer', VOLUNTEER: 'Volunteer',
 };
-
-// Every assignable role, including the platform built-ins ('admin'/'user')
-// and the legacy 'Team Leader' value (normalised to Administration at sign-in).
-export const ALL_ROLES = [
-  'admin',
-  ROLES.ADMIN,
-  ROLES.COMPLIANCE,
-  ROLES.TEAM_LEADER,
-  'Team Leader',
-  ROLES.SUPPORT,
-  ROLES.FINANCE,
-  ROLES.HR,
-  ROLES.ROSTERING,
-  ROLES.QUALITY,
-  ROLES.MARKETING,
-  ROLES.INTAKE,
-  ROLES.PARTICIPANT,
-  ROLES.AUDITOR,
-  ROLES.VOLUNTEER,
-];
-
-// Roles with organisation-wide management visibility.
-const MANAGEMENT_ROLES = ['admin', ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER];
-const ADMIN_PROVIDER_ROLES = ['admin', ROLES.ADMIN];
-const STAFF_ROLES = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER, ROLES.SUPPORT];
-const EVERYONE = [...ALL_ROLES];
-
-// navKey -> roles allowed to see/use it. Each business role has independent,
-// role-appropriate access across every module in the app.
+export const ALL_ROLES = ['Provider Administrator', 'Management', 'Administration', 'Employee', 'Participant', 'Auditor'];
+const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.MANAGEMENT];
+const OPERATIONS = [...FULL_ACCESS, ROLES.TEAM_LEADER];
+const PERSONAL = [...OPERATIONS, ROLES.EMPLOYEE, ROLES.PARTICIPANT];
+const FINANCIAL_KEYS = ['invoicing', 'quotes', 'receipts', 'insurance-finance', 'procurement', 'analytics', 'my-payroll'];
+export function normalizeRole(role) {
+  if (role === 'admin') return ROLES.ADMIN;
+  if (role === 'Team Leader') return ROLES.TEAM_LEADER;
+  if (['user', 'Support Worker', ROLES.FINANCE, ROLES.HR, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, ROLES.VOLUNTEER, 'Compliance Manager'].includes(role)) return ROLES.EMPLOYEE;
+  return role || ROLES.PENDING_APPROVAL;
+}
+export function hasApprovedAccess(user) {
+  if (!user || ['Rejected', 'Archived', 'Suspended'].includes(user.account_status)) return false;
+  if (['admin', ROLES.ADMIN].includes(user.role)) return true;
+  return user.access_approved === true && user.account_status === 'Active' && ALL_ROLES.includes(user.role);
+}
 export const NAV_PERMISSIONS = {
-  'my-profile': EVERYONE,
-  // Management keeps its registers; other employees and participants use their own matching profile.
-  'our-staff': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT, ROLES.FINANCE, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, 'user'],
-  'our-participants': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT, ROLES.PARTICIPANT],
-  dashboard: EVERYONE,
-  notifications: EVERYONE,
-  assistant: EVERYONE,
-  help: EVERYONE,
-  'user-guides': EVERYONE,
-  'key-contacts': EVERYONE,
-  'community-council': EVERYONE,
-  'community-referral': EVERYONE,
-  'ndis-news': EVERYONE,
-  programs: EVERYONE,
-  events: EVERYONE,
-  'whats-on': EVERYONE,
-  weather: EVERYONE,
-  'visual-boards': EVERYONE,
-
-  participants: [...ADMIN_PROVIDER_ROLES],
-  intake: [...ADMIN_PROVIDER_ROLES, ROLES.COMPLIANCE, ROLES.TEAM_LEADER, ROLES.HR, ROLES.INTAKE, ROLES.SUPPORT, ROLES.PARTICIPANT],
-  staff: [...ADMIN_PROVIDER_ROLES],
-  training: [...STAFF_ROLES, ROLES.HR, ROLES.AUDITOR, ROLES.VOLUNTEER],
-  compliance: [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  'daily-briefing': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  incidents: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR],
-  risks: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR],
-  'audit-centre': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  documents: [...STAFF_ROLES, ROLES.HR, ROLES.INTAKE, ROLES.PARTICIPANT, ROLES.AUDITOR],
-  'company-safe': MANAGEMENT_ROLES,
-  certificates: [...MANAGEMENT_ROLES, ROLES.HR, ROLES.AUDITOR],
-  'audit-log': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  'auditor-portal': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  feedback: [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR, ROLES.SUPPORT, ROLES.PARTICIPANT],
-  tasks: [...MANAGEMENT_ROLES, ROLES.SUPPORT, ROLES.ROSTERING, ROLES.QUALITY, ROLES.AUDITOR],
-  quality: [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  'suggestions-hub': [...MANAGEMENT_ROLES, ROLES.QUALITY],
-  assets: [...MANAGEMENT_ROLES, ROLES.FINANCE, ROLES.AUDITOR],
-  goals: [...MANAGEMENT_ROLES, ROLES.SUPPORT, ROLES.ROSTERING, ROLES.AUDITOR, ROLES.PARTICIPANT],
-  shifts: [...MANAGEMENT_ROLES, ROLES.SUPPORT, ROLES.ROSTERING, ROLES.AUDITOR],
-  rostering: [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER, ROLES.ROSTERING, ROLES.SUPPORT, ROLES.PARTICIPANT],
-  'human-resources': [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER, ROLES.HR, ROLES.SUPPORT],
-  invoicing: [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER, ROLES.FINANCE],
-  quotes: [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER, ROLES.FINANCE],
-  manual: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR],
-  users: MANAGEMENT_ROLES,
-  forms: [...MANAGEMENT_ROLES, ROLES.AUDITOR],
-  checklists: [...STAFF_ROLES, ROLES.QUALITY, ROLES.AUDITOR, ROLES.VOLUNTEER],
-  'emergency-response': [...STAFF_ROLES, ROLES.AUDITOR, ROLES.VOLUNTEER, ROLES.PARTICIPANT],
-  meetings: [...MANAGEMENT_ROLES, ROLES.HR, ROLES.QUALITY],
-  'data-control': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  receipts: [...ADMIN_PROVIDER_ROLES, ROLES.TEAM_LEADER, ROLES.FINANCE, ROLES.SUPPORT],
-  'equipment-manuals': [...STAFF_ROLES, ROLES.AUDITOR, ROLES.VOLUNTEER, ROLES.PARTICIPANT],
-  msds: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR, ROLES.VOLUNTEER],
-  'insurance-finance': [...MANAGEMENT_ROLES, ROLES.FINANCE],
-  'ndis-provider': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  'volunteering-placements': [...MANAGEMENT_ROLES, ROLES.HR],
-  communications: [...STAFF_ROLES, ROLES.PARTICIPANT, ROLES.AUDITOR, ROLES.VOLUNTEER],
-  portal: [ROLES.PARTICIPANT, ...STAFF_ROLES, ROLES.AUDITOR],
-  'safety-insights': [...MANAGEMENT_ROLES, ROLES.QUALITY, ROLES.AUDITOR],
-  'incident-analytics': [...MANAGEMENT_ROLES, ROLES.QUALITY],
-  'staff-progress': [...MANAGEMENT_ROLES, ROLES.HR],
-  analytics: [...MANAGEMENT_ROLES, ROLES.FINANCE],
-  crm: [...MANAGEMENT_ROLES, ROLES.MARKETING],
-  procurement: [...MANAGEMENT_ROLES, ROLES.FINANCE],
-  projects: [...MANAGEMENT_ROLES, ROLES.MARKETING, ROLES.FINANCE],
+  'my-profile': PERSONAL, 'our-staff': [...OPERATIONS, ROLES.EMPLOYEE], 'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
+  dashboard: PERSONAL, notifications: PERSONAL, assistant: PERSONAL, help: PERSONAL, 'user-guides': PERSONAL,
+  'key-contacts': PERSONAL, 'community-council': PERSONAL, 'community-referral': PERSONAL, 'ndis-news': PERSONAL,
+  programs: PERSONAL, events: PERSONAL, 'whats-on': PERSONAL, weather: PERSONAL, 'visual-boards': PERSONAL,
+  participants: OPERATIONS, intake: PERSONAL, staff: OPERATIONS, training: PERSONAL, compliance: OPERATIONS,
+  'daily-briefing': OPERATIONS, incidents: PERSONAL, risks: PERSONAL, 'audit-centre': OPERATIONS,
+  documents: PERSONAL, 'company-safe': FULL_ACCESS, certificates: OPERATIONS, 'audit-log': OPERATIONS,
+  'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR], feedback: PERSONAL, tasks: PERSONAL, quality: OPERATIONS,
+  'suggestions-hub': OPERATIONS, assets: OPERATIONS, goals: PERSONAL, shifts: PERSONAL, rostering: PERSONAL,
+  'human-resources': PERSONAL, invoicing: FULL_ACCESS, quotes: FULL_ACCESS, manual: PERSONAL, users: FULL_ACCESS,
+  forms: OPERATIONS, checklists: OPERATIONS, 'emergency-response': PERSONAL, meetings: OPERATIONS,
+  'data-control': FULL_ACCESS, receipts: [...FULL_ACCESS, ROLES.EMPLOYEE], 'equipment-manuals': PERSONAL, msds: PERSONAL,
+  'insurance-finance': FULL_ACCESS, 'ndis-provider': OPERATIONS, 'volunteering-placements': OPERATIONS,
+  communications: PERSONAL, portal: PERSONAL, 'safety-insights': OPERATIONS, 'incident-analytics': OPERATIONS,
+  'staff-progress': OPERATIONS, analytics: FULL_ACCESS, crm: OPERATIONS, procurement: FULL_ACCESS,
+  projects: OPERATIONS, 'my-payroll': FULL_ACCESS,
 };
-
 export function canAccessNav(role, navKey) {
-  if (role === 'admin') return true; // platform admin always has full access
-  const allowed = NAV_PERMISSIONS[navKey];
-  if (!allowed) return true;
-  return allowed.includes(role);
+  role = normalizeRole(role);
+  if (FULL_ACCESS.includes(role)) return true;
+  if (role === ROLES.AUDITOR) return navKey === 'auditor-portal';
+  if (role === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) return false;
+  return Boolean(NAV_PERMISSIONS[navKey]?.includes(role));
 }
-
-export function isAdmin(role) {
-  return role === 'admin' || role === ROLES.ADMIN;
-}
-
-export function isCompliance(role) {
-  return role === 'admin' || role === ROLES.ADMIN || role === ROLES.COMPLIANCE;
-}
+export function isAdmin(role) { return FULL_ACCESS.includes(role); }
+export function isCompliance(role) { return FULL_ACCESS.includes(role); }
