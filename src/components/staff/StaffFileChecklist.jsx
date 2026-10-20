@@ -121,8 +121,10 @@ export default function StaffFileChecklist({ staff }) {
         completed_date: today,
         completed_time: time,
       };
-      if (entry) await base44.entities.ComplianceChecklistEntry.update(entry.id, payload);
-      else {
+      if (entry) {
+        const { checklist_key, ...changes } = payload;
+        await base44.entities.ComplianceChecklistEntry.update(entry.id, changes);
+      } else {
         const created = await base44.entities.ComplianceChecklistEntry.create(payload);
         setEntry(created);
       }

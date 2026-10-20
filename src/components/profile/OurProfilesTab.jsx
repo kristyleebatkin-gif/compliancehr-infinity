@@ -8,6 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
 import { useRole, ROLES } from '@/lib/useRole';
+import { managesProfiles, ownProfileQuery, preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
 import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } from 'lucide-react';
 
 // Admin view: every employee or participant profile in the organisation,
@@ -16,24 +17,30 @@ import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } fro
 export default function OurProfilesTab({ kind }) {
   const isParticipant = kind === 'participant';
   const { role, user } = useRole();
-  const selfOnly = isParticipant ? role === ROLES.PARTICIPANT : role === ROLES.SUPPORT;
+  const selfOnly = !managesProfiles(role);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [group, setGroup] = useState('all');
 
   useEffect(() => {
     let active = true;
+    setRecords([]);
+    setLoading(true);
+    setError('');
     (async () => {
       try {
+        if (!user?.id) return;
+        await preparePersonalProfileAccess();
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter(selfOnly ? { email: user?.email || '' } : isParticipant && role === ROLES.SUPPORT ? { admin_approved: true } : {}, { sort: 'full_name', limit: 200 });
+        const page = await entity.filter(selfOnly ? ownProfileQuery(user) : {}, { sort: 'full_name', limit: 50 });
         if (active) setRecords(page.items || []);
-      } catch (e) { console.error(e); }
+      } catch (e) { if (active) setError(e.message || 'Unable to load your profile.'); }
       if (active) setLoading(false);
     })();
     return () => { active = false; };
-  }, [isParticipant, selfOnly, role, user?.email]);
+  }, [isParticipant, selfOnly, role, user?.id, user?.email]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
@@ -81,6 +88,8 @@ export default function OurProfilesTab({ kind }) {
   if (loading) {
     return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
+
+  if (error) return <div role="alert" className="rounded-xl border border-destructive/30 bg-card p-4 text-destructive">{error}</div>;
 
   if (!records.length) {
     return <EmptyState icon={Users} title={selfOnly ? 'Your profile is not set up yet' : 'No profiles yet'} message={selfOnly ? 'Your profile will appear here once management creates it and links your email.' : (isParticipant ? 'Participant profiles will appear here once created.' : 'Employee profiles will appear here once created.')} modulePath={isParticipant ? 'participants' : 'staff'} />;

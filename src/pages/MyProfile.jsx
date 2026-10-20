@@ -9,6 +9,7 @@ import PersonalProfileForm from '@/components/profile/PersonalProfileForm';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import OurProfileData from '@/components/profile/OurProfileData';
 import PersonalProfileHeader from '@/components/profile/PersonalProfileHeader';
+import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
 
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
@@ -55,6 +56,7 @@ export default function MyProfile() {
 
   const load = useCallback(async () => {
     try {
+      await preparePersonalProfileAccess();
       const user = await base44.auth.me();
       setMe(user);
       const isParticipant = user.role === 'Participant';
