@@ -94,7 +94,7 @@ export default function InvoicePreview({ invoice, business = {} }) {
         <div className="w-64 space-y-1.5">
           <div className="flex justify-between"><span>Subtotal</span><span className="font-medium">{money(subtotal)}</span></div>
           <div className="flex justify-between text-slate-500"><span>GST</span><span>Included (GST-free)</span></div>
-          <div className="flex justify-between border-t border-slate-900 pt-1.5 text-sm font-bold"><span>TOTAL DUE</span><span>{money(subtotal)}</span></div>
+          <div className="flex justify-between border-t-2 border-violet-700 pt-1.5 text-sm font-bold text-violet-700"><span>TOTAL DUE</span><span>{money(subtotal)}</span></div>
         </div>
       </div>
 

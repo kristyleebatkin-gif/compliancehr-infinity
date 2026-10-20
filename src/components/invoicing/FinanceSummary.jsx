@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, TrendingUp, TrendingDown, Wallet, ArrowRight } from 'lucide-react';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell } from 'recharts';
 import { statusTone } from '@/lib/statusStyles';
 
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -73,40 +73,38 @@ export default function FinanceSummary() {
   const net = data.paid + data.income - data.expenses - data.reimbursements;
 
   const cards = [
-    { label: 'Collected revenue', value: money0(data.paid + data.income), sub: `${money0(data.outstanding)} outstanding incl. ${money0(data.overdue)} overdue`, warn: data.overdue > 0 },
-    { label: 'Expenses', value: money0(data.expenses), sub: `${money0(data.reimbursements)} reimbursements` },
-    { label: 'Committed POs', value: money0(data.committedPos), sub: 'submitted + approved orders' },
-    { label: 'Net position', value: net >= 0 ? `+${money0(net)}` : `-${money0(Math.abs(net))}`, sub: 'collected revenue less expenses' },
+    { label: 'Collected revenue', value: money0(data.paid + data.income), sub: `${money0(data.outstanding)} outstanding incl. ${money0(data.overdue)} overdue`, Icon: TrendingUp, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
+    { label: 'Expenses', value: money0(data.expenses), sub: `${money0(data.reimbursements)} reimbursements`, Icon: TrendingDown, grad: 'from-rose-500 via-red-500 to-orange-500' },
+    { label: 'Committed POs', value: money0(data.committedPos), sub: 'submitted + approved orders', Icon: Wallet, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
+    { label: 'Net position', value: net >= 0 ? `+${money0(net)}` : `-${money0(Math.abs(net))}`, sub: 'collected revenue less expenses', Icon: Wallet, grad: net >= 0 ? 'from-teal-500 via-emerald-500 to-green-500' : 'from-amber-500 via-orange-500 to-red-500' },
   ];
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         {cards.map((c) => (
-          <Card key={c.label} className={c.warn ? 'border-danger/40' : ''}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {c.label === 'Collected revenue' ? <TrendingUp className="h-3.5 w-3.5 text-emerald-600" /> : c.label === 'Expenses' ? <TrendingDown className="h-3.5 w-3.5 text-rose-600" /> : <Wallet className="h-3.5 w-3.5 text-indigo-600" />}
-                {c.label}
-              </div>
-              <p className="mt-1 text-2xl font-bold tracking-tight">{c.value}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">{c.sub}</p>
-            </CardContent>
-          </Card>
+          <div key={c.label} className={`rounded-2xl bg-gradient-to-br ${c.grad} p-4 text-white shadow-md`}>
+            <div className="w-fit rounded-xl bg-white/20 p-2.5"><c.Icon className="h-5 w-5" /></div>
+            <p className="mt-3 text-2xl font-bold tabular-nums">{c.value}</p>
+            <p className="mt-0.5 text-xs font-medium text-white/85">{c.label}</p>
+            <p className="mt-0.5 text-[11px] text-white/70">{c.sub}</p>
+          </div>
         ))}
       </div>
 
       {expenseChart.length > 0 && (
         <Card>
           <CardContent className="p-4">
-            <p className="mb-3 text-sm font-bold">Expenses by category</p>
+            <p className="mb-3 flex items-center gap-2 text-sm font-bold"><span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-rose-500 to-orange-500" />Expenses by category</p>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={expenseChart}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="bucket" fontSize={11} interval={0} />
                 <YAxis fontSize={11} />
                 <Tooltip formatter={(v) => money(v)} />
-                <Bar dataKey="value" name="Expenses" fill="#16a34a" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="value" name="Expenses" radius={[6, 6, 0, 0]}>
+                  {expenseChart.map((_, i) => <Cell key={i} fill={['#f43f5e', '#f97316', '#eab308', '#8b5cf6', '#0ea5e9', '#10b981'][i % 6]} />)}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -116,7 +114,7 @@ export default function FinanceSummary() {
       <Card>
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-bold">Recent finance records</p>
+            <p className="flex items-center gap-2 text-sm font-bold"><span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500" />Recent finance records</p>
             <Link to="/receipts" className="inline-flex items-center gap-1 text-xs font-semibold text-brand hover:underline">Receipt hub <ArrowRight className="h-3.5 w-3.5" /></Link>
           </div>
           <div className="mt-3 space-y-2">

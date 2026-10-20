@@ -25,6 +25,8 @@ export function buildInvoicePdf(invoice, business = {}) {
   // Header band
   doc.setFillColor(124, 58, 237);
   doc.rect(0, 0, pageW, 96, 'F');
+  doc.setFillColor(236, 72, 153);
+  doc.rect(0, 96, pageW, 5, 'F');
   if (branding.logoDataUrl) {
     try {
       const props = doc.getImageProperties(branding.logoDataUrl);
@@ -165,14 +167,14 @@ export function buildInvoicePdf(invoice, business = {}) {
   y += 18;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
-  doc.setTextColor(15, 23, 42);
+  doc.setTextColor(124, 58, 237);
   doc.text('TOTAL DUE', pageW - margin - 100, y);
   doc.text(money(subtotal), pageW - margin, y, { align: 'right' });
   y += 30;
 
   // Payment details + terms
   if (y > 620) { doc.addPage(); y = 60; }
-  doc.setFillColor(248, 250, 252);
+  doc.setFillColor(244, 239, 255);
   const boxTop = y;
   const paymentLines = (safeText(invoice.payment_details) || '').split('\n').filter(Boolean);
   const termsLines = (safeText(invoice.payment_terms) || '').split('\n').filter(Boolean);

@@ -195,7 +195,7 @@ export default function InvoicingCentre() {
           ) : (
             <div className="space-y-3">
               {invoices.map((inv) => (
-                <Card key={inv.id}>
+                <Card key={inv.id} className={`border-l-4 ${inv.status === 'Paid' ? 'border-l-emerald-500' : inv.status === 'Overdue' ? 'border-l-rose-500' : inv.status === 'Sent' ? 'border-l-sky-500' : 'border-l-slate-300'}`}>
                   <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
                     <div className="min-w-0">
                       <p className="font-medium">{inv.invoice_number}{inv.client_name ? ` · ${inv.client_name}` : ''}{inv.participant_name ? ` (${inv.participant_name})` : ''}</p>
