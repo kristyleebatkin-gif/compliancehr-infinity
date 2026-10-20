@@ -63,7 +63,7 @@ function StreamPanel({ stream, stats }) {
   return (
     <Link
       to={stream.to}
-      className="group relative flex min-h-[320px] flex-col items-center justify-center gap-3 overflow-hidden p-4 text-center transition-all hover:brightness-105 md:min-h-[400px] md:p-6"
+      className="group relative flex h-full min-h-[360px] flex-col items-center justify-center gap-3 overflow-hidden p-4 text-center transition-all hover:brightness-105 md:min-h-[400px] md:p-6"
       style={{ background: stream.gradient }}
     >
       <div className="pointer-events-none absolute -right-14 -top-14 h-48 w-48 rounded-full bg-white/15 blur-2xl" />
