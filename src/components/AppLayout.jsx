@@ -121,9 +121,9 @@ export default function AppLayout() {
     .map((part) => part[0].toUpperCase())
     .join('') || 'CH';
 
-  const SidebarContent = () => (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2.5 px-5 py-5">
+  const sidebarContent = (
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="flex shrink-0 items-center gap-2.5 px-5 py-5">
         <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
         <div className="min-w-0">
           <div className="text-[15px] font-bold tracking-tight font-editorial">Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span> <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand">Infinity</span></div>
@@ -137,7 +137,7 @@ export default function AppLayout() {
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 py-2">
+      <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-2">
         {NAV_GROUPS.map((group) => {
           const items = visiblePrimary.filter((item) => group.keys.includes(item.key));
           if (!items.length) return null;
@@ -168,7 +168,7 @@ export default function AppLayout() {
         })}
       </nav>
 
-      <div className="border-t border-brand/10 px-3 py-3">
+      <div className="shrink-0 border-t border-brand/10 px-3 py-3">
         <div className="mb-1 px-3">
           <div className="truncate text-sm font-semibold">{user?.full_name || 'User'}</div>
           <div className="truncate text-xs text-foreground/50">{user?.email || ''}</div>
@@ -224,16 +224,16 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="flex h-screen app-workspace-bg">
+    <div className="app-readable flex h-dvh overflow-hidden app-workspace-bg">
       <aside className="app-sidebar-bg hidden w-64 shrink-0 border-r border-brand/10 md:flex">
-        <SidebarContent />
+        {sidebarContent}
       </aside>
 
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setMobileOpen(false)} />
           <aside className="absolute left-0 top-0 h-full w-64 bg-sidebar shadow-xl">
-            <SidebarContent />
+            {sidebarContent}
           </aside>
         </div>
       )}

@@ -107,7 +107,7 @@ export default function Assistant() {
                 <div className="min-w-0">
                   <div className="text-xs font-bold text-foreground">{a.label}</div>
                   <div className="mt-0.5 text-[11px] leading-4 text-foreground/55">{a.tagline}</div>
-                  <div className="mt-1 text-[10px] font-bold" style={{ color: a.from }}>Start chatting →</div>
+                  <div className="mt-1 text-[11px] font-bold text-foreground">Start chatting →</div>
                 </div>
               </div>
             </button>

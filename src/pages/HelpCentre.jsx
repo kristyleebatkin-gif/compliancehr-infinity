@@ -92,10 +92,8 @@ export default function HelpCentre() {
         }
       />
 
-      <CommonProblems />
-
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex-wrap">
+        <TabsList className="h-auto w-full flex-wrap justify-start gap-1">
           <TabsTrigger value="guides" className="text-violet-700 data-[state=active]:text-violet-700"><BookOpen className="mr-1.5 inline h-3.5 w-3.5" />Module guides</TabsTrigger>
           <TabsTrigger value="manuals" className="text-emerald-700 data-[state=active]:text-emerald-700"><Library className="mr-1.5 inline h-3.5 w-3.5" />User guides</TabsTrigger>
           <TabsTrigger value="howtos" className="text-amber-700 data-[state=active]:text-amber-700"><Lightbulb className="mr-1.5 inline h-3.5 w-3.5" />Quick how-tos</TabsTrigger>
@@ -106,6 +104,8 @@ export default function HelpCentre() {
           <TabsTrigger value="support" className="text-indigo-700 data-[state=active]:text-indigo-700"><MessagesSquare className="mr-1.5 inline h-3.5 w-3.5" />Support desk</TabsTrigger>
           <TabsTrigger value="escalate" className="text-rose-700 data-[state=active]:text-rose-700"><Siren className="mr-1.5 inline h-3.5 w-3.5" />Escalation contacts</TabsTrigger>
         </TabsList>
+
+        <div className="mt-3"><CommonProblems /></div>
 
         <TabsContent value="manuals" className="mt-4">
           <Card className="border-primary/30 bg-primary/5"><CardContent className="p-5">
