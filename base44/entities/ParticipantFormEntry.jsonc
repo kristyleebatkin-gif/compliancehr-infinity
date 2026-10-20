@@ -4,7 +4,33 @@
   "properties": {
     "participant_id": {
       "type": "string",
-      "title": "Participant"
+      "title": "Participant",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            }
+          ]
+        }
+      }
     },
     "participant_name": {
       "type": "string",
@@ -70,18 +96,20 @@
         },
         {
           "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
             "role": "Auditor"
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "data.participant_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.participant_id": "{{user.data.personal_participant_profile_id}}"
+            }
+          ]
         }
       ]
     },
@@ -108,14 +136,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "data.participant_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.participant_id": "{{user.data.personal_participant_profile_id}}"
+            }
+          ]
         }
       ]
     },
@@ -142,9 +172,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
+          "$and": [
+            {
+              "data.participant_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.participant_id": "{{user.data.personal_participant_profile_id}}"
+            }
+          ]
         }
       ]
     },
