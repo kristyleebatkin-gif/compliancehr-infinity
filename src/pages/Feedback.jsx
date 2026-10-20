@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import FeedbackToolbar from '@/components/feedback/FeedbackToolbar';
 import { Button } from '@/components/ui/button';
 
 import { Badge } from '@/components/ui/badge';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import FeedbackEntryDialog from '@/components/feedback/FeedbackEntryDialog';
 import SurveyRegister from '@/components/feedback/SurveyRegister';
@@ -15,7 +15,7 @@ import FeedbackDetailDialog from '@/components/feedback/FeedbackDetailDialog';
 import { changeStatus } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
-import { CheckCircle2, Download, Eye, FileDown, Loader2, Megaphone, Plus, Trash2, UploadCloud } from 'lucide-react';
+import { CheckCircle2, Eye, FileDown, Loader2, Megaphone, Trash2, UploadCloud } from 'lucide-react';
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 import { format } from 'date-fns';
 
@@ -225,29 +225,17 @@ export default function Feedback({ profile, embedded = false } = {}) {
   };
 
   return (
-    <Tabs value={tab} onValueChange={setTab} className="space-y-3">
+    <Tabs value={tab} onValueChange={setTab} className="feedback-workspace min-w-0 space-y-3">
       {!embedded && <PageHeader
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         showAlerts={false}
         showCompliance={false}
-        beforeAudit={<>
-          <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>
-          {tab === 'Feedback' && <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-3 w-3" />Record entry</Button>}
-          <ModuleComplianceStrip path="/feedback" />
-        </>}
-        action={
-          <div className="flex items-center gap-1">
-            {tab === 'Feedback' && <Button size="sm" variant="outline" onClick={exportRegister}><Download className="h-3 w-3" />Export register</Button>}
-
-          </div>
-        }
+        showAudit={false}
+        action={<FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} />}
       />}
 
-        {embedded && <div className="module-action-bar flex flex-wrap items-center gap-1">
-          <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>
-          {tab === 'Feedback' && <><Button size="sm" onClick={() => setOpen(true)}><Plus className="h-3 w-3" />Record entry</Button><Button size="sm" variant="outline" onClick={exportRegister}><Download className="h-3 w-3" />Export register</Button></>}
-        </div>}
+        {embedded && <FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} embedded />}
         <TabsContent value="Feedback" className="mt-2">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

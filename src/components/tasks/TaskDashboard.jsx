@@ -112,12 +112,14 @@ export default function TaskDashboard({ tasks, onOpen }) {
   return (
     <div className="space-y-3">
       <TaskAssistantCard compact inline />
-      <div className="grid items-stretch gap-1.5 grid-cols-2 sm:grid-cols-5">
+      <div className="grid items-start gap-1.5 grid-cols-2 sm:grid-cols-4">
         <Panel title="Current" icon={Clock} tone="from-violet-500 to-purple-400" tasks={current} onOpen={onOpen} emptyText="No current tasks." />
         <Panel title="Future" icon={CalendarClock} tone="from-sky-500 to-cyan-400" tasks={future} onOpen={onOpen} emptyText="No future tasks scheduled." />
         <Panel title="Past" icon={CheckCircle2} tone="from-emerald-500 to-teal-400" tasks={past} onOpen={onOpen} emptyText="No past tasks." />
-        <StaffStrip tasks={tasks} />
-        <TimeCard tasks={tasks} avgMin={avgMin} />
+        <div className="min-w-0 space-y-1.5">
+          <TimeCard tasks={tasks} avgMin={avgMin} />
+          <StaffStrip tasks={tasks} />
+        </div>
       </div>
 
     </div>

@@ -4,12 +4,12 @@ import { AlertTriangle, CalendarClock, CheckCircle2, Clock, ListTodo, TrendingUp
 export default function TaskSummaryCards({ totals, metrics, loading }) {
   const counts = Object.fromEntries((totals || []).map((row) => [row.status, row.count]));
   const cards = [
-    ['Open', counts.Open || 0, ListTodo, 'border-primary/30 bg-gradient-to-br from-primary/25 to-primary/5 text-primary'],
-    ['In progress', counts['In Progress'] || 0, Clock, 'border-teal/30 bg-gradient-to-br from-teal/25 to-teal/5 text-teal'],
-    ['Due today', metrics.dueToday, CalendarClock, 'border-warning/30 bg-gradient-to-br from-warning/25 to-warning/5 text-warning'],
-    ['Overdue', metrics.overdue, AlertTriangle, 'border-danger/30 bg-gradient-to-br from-danger/25 to-danger/5 text-danger'],
-    ['Completed', (counts.Completed || 0) + (counts.Finalised || 0), CheckCircle2, 'border-safe/30 bg-gradient-to-br from-safe/25 to-safe/5 text-safe'],
-    ['Avg finish', metrics.averageMinutes ? `${metrics.averageMinutes}m` : '-', TrendingUp, 'border-accent-foreground/30 bg-gradient-to-br from-accent-foreground/25 to-accent text-accent-foreground'],
+    ['Open', counts.Open || 0, ListTodo, 'border-primary bg-gradient-to-br from-primary/75 to-primary/40 text-foreground'],
+    ['In progress', counts['In Progress'] || 0, Clock, 'border-teal bg-gradient-to-br from-teal/75 to-teal/40 text-foreground'],
+    ['Due today', metrics.dueToday, CalendarClock, 'border-warning bg-gradient-to-br from-warning/75 to-warning/40 text-foreground'],
+    ['Overdue', metrics.overdue, AlertTriangle, 'border-danger bg-gradient-to-br from-danger/75 to-danger/40 text-foreground'],
+    ['Completed', (counts.Completed || 0) + (counts.Finalised || 0), CheckCircle2, 'border-safe bg-gradient-to-br from-safe/75 to-safe/40 text-foreground'],
+    ['Avg finish', metrics.averageMinutes ? `${metrics.averageMinutes}m` : '-', TrendingUp, 'border-chart-5 bg-gradient-to-br from-chart-5/75 to-chart-5/40 text-foreground'],
   ];
   return <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6" aria-label="Task summaries">
     {cards.map(([label, count, Icon, tone]) => <div key={label} className={`min-w-0 rounded-lg border px-2 py-1.5 ${tone}`}>
