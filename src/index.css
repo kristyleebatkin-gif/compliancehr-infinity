@@ -166,6 +166,24 @@
 }
 
 @layer utilities {
+  /* Darker colour-matched text on light surfaces; preserve dark-mode and white labels. */
+  :root:not(.dark) .app-readable :is(.text-red-400, .text-red-500, .text-red-600, .text-red-700, .text-danger, .text-destructive) { @apply text-red-800; }
+  :root:not(.dark) .app-readable :is(.text-orange-400, .text-orange-500, .text-orange-600, .text-orange-700) { @apply text-orange-800; }
+  :root:not(.dark) .app-readable :is(.text-amber-400, .text-amber-500, .text-amber-600, .text-amber-700, .text-warning) { @apply text-amber-800; }
+  :root:not(.dark) .app-readable :is(.text-yellow-400, .text-yellow-500, .text-yellow-600, .text-yellow-700) { @apply text-yellow-800; }
+  :root:not(.dark) .app-readable :is(.text-lime-400, .text-lime-500, .text-lime-600, .text-lime-700) { @apply text-lime-800; }
+  :root:not(.dark) .app-readable :is(.text-green-400, .text-green-500, .text-green-600, .text-green-700) { @apply text-green-800; }
+  :root:not(.dark) .app-readable :is(.text-emerald-400, .text-emerald-500, .text-emerald-600, .text-emerald-700, .text-safe) { @apply text-emerald-800; }
+  :root:not(.dark) .app-readable :is(.text-teal-400, .text-teal-500, .text-teal-600, .text-teal-700) { @apply text-teal-800; }
+  :root:not(.dark) .app-readable :is(.text-cyan-400, .text-cyan-500, .text-cyan-600, .text-cyan-700) { @apply text-cyan-800; }
+  :root:not(.dark) .app-readable :is(.text-sky-400, .text-sky-500, .text-sky-600, .text-sky-700) { @apply text-sky-800; }
+  :root:not(.dark) .app-readable :is(.text-blue-400, .text-blue-500, .text-blue-600, .text-blue-700, .text-teal) { @apply text-blue-800; }
+  :root:not(.dark) .app-readable :is(.text-indigo-400, .text-indigo-500, .text-indigo-600, .text-indigo-700) { @apply text-indigo-800; }
+  :root:not(.dark) .app-readable :is(.text-violet-400, .text-violet-500, .text-violet-600, .text-violet-700, .text-brand, [class*="text-brand/"], .text-primary, [class*="text-primary/"], .text-accent-foreground) { @apply text-violet-800; }
+  :root:not(.dark) .app-readable :is(.text-purple-400, .text-purple-500, .text-purple-600, .text-purple-700) { @apply text-purple-800; }
+  :root:not(.dark) .app-readable :is(.text-fuchsia-400, .text-fuchsia-500, .text-fuchsia-600, .text-fuchsia-700) { @apply text-fuchsia-800; }
+  :root:not(.dark) .app-readable :is(.text-pink-400, .text-pink-500, .text-pink-600, .text-pink-700) { @apply text-pink-800; }
+  :root:not(.dark) .app-readable :is(.text-rose-400, .text-rose-500, .text-rose-600, .text-rose-700) { @apply text-rose-800; }
   /* Keep supporting copy legible without changing contrasting button labels. */
   .app-readable [class*="text-foreground/"] {
     color: hsl(var(--foreground) / 0.9);
