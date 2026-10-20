@@ -6,19 +6,6 @@ import { format } from 'date-fns';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
-function Tile({ icon: Icon, label, value, tone, hint }) {
-  return (
-    <div className={`min-w-0 rounded-xl bg-gradient-to-br ${tone} p-2 text-white shadow-sm`}>
-      <div className="flex flex-wrap items-center gap-1">
-        <Icon className="h-3 w-3 shrink-0 opacity-90" />
-        <p className="text-[9px] font-bold uppercase leading-tight tracking-wide opacity-85">{label}</p>
-      </div>
-      <p className="mt-1 text-xl font-extrabold leading-none">{value}</p>
-      {hint && <p className="mt-1 text-[10px] font-medium opacity-80">{hint}</p>}
-    </div>
-  );
-}
-
 function Panel({ title, icon: Icon, tone, tasks, onOpen, emptyText }) {
   return (
     <Card className="min-w-0">
@@ -134,16 +121,7 @@ export default function TaskDashboard({ tasks, onOpen }) {
         <StaffStrip tasks={tasks} />
         <TimeCard tasks={tasks} avgMin={avgMin} />
       </div>
-      <div>
-        <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-          <Tile icon={ListTodo} label="Open" value={tasks.filter((t) => t.status === 'Open').length} tone="from-violet-500 to-purple-400" />
-          <Tile icon={Clock} label="In progress" value={tasks.filter((t) => t.status === 'In Progress').length} tone="from-sky-500 to-cyan-400" />
-          <Tile icon={CalendarClock} label="Due today" value={dueToday.length} tone="from-amber-500 to-orange-400" />
-          <Tile icon={AlertTriangle} label="Overdue" value={overdue.length} tone="from-rose-500 to-red-400" hint={overdue.length ? 'Needs attention now' : 'All on track'} />
-          <Tile icon={CheckCircle2} label="Completed" value={completedCount} tone="from-emerald-500 to-teal-400" />
-          <Tile icon={TrendingUp} label="Avg finish" value={avgMin ? `${avgMin}m` : '-'} tone="from-fuchsia-500 to-pink-400" hint="Across timed tasks" />
-        </div>
-      </div>
+
     </div>
   );
 }

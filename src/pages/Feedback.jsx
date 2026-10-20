@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -227,9 +228,15 @@ export default function Feedback({ profile, embedded = false } = {}) {
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         showAlerts={false}
-        beforeAudit={<TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>}
+        showCompliance={false}
+        beforeAudit={<>
+          <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>
+          {tab === 'Feedback' && <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-3 w-3" />Record entry</Button>}
+          <ModuleComplianceStrip path="/feedback" />
+        </>}
         action={
-          <div>
+          <div className="flex items-center gap-1">
+            {tab === 'Feedback' && <Button size="sm" variant="outline" onClick={exportRegister}><Download className="h-3 w-3" />Export register</Button>}
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
                 <DialogHeader><DialogTitle>Record feedback or complaint</DialogTitle></DialogHeader>
@@ -273,23 +280,22 @@ export default function Feedback({ profile, embedded = false } = {}) {
         }
       />}
 
-        <div className="flex flex-wrap items-center gap-1.5">
-          {tab === 'Feedback' && <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Record entry</Button>}
-          {embedded && <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>}
-          {tab === 'Feedback' && <Button size="sm" variant="outline" className="ml-auto" onClick={exportRegister}><Download className="h-4 w-4" />Export register</Button>}
-        </div>
+        {embedded && <div className="module-action-bar flex flex-wrap items-center gap-1">
+          <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>
+          {tab === 'Feedback' && <><Button size="sm" onClick={() => setOpen(true)}><Plus className="h-3 w-3" />Record entry</Button><Button size="sm" variant="outline" onClick={exportRegister}><Download className="h-3 w-3" />Export register</Button></>}
+        </div>}
         <TabsContent value="Feedback" className="mt-2">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
-            <div className="space-y-4">
-              <Card><CardContent className="p-2">
+            <div className="space-y-2">
+              <Card><CardContent className="p-1.5">
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
-                <ResponsiveContainer width="100%" height={72}>
+                <ResponsiveContainer width="100%" height={48}>
                   <BarChart data={chartData} barCategoryGap="20%">
-                    <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
+                    <XAxis dataKey="m" height={16} tick={{ fontSize: 9 }} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
                     <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
-                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                    <Legend height={12} iconSize={6} wrapperStyle={{ fontSize: 9, lineHeight: '12px' }} />
                     <Bar dataKey="Feedback" stackId="a" fill="#0d9488" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="Complaint" stackId="a" fill="#e11d48" radius={[4, 4, 0, 0]} />
                   </BarChart>
@@ -309,7 +315,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   </div>
                 ))}
               </div>
-              <div className="space-y-4">
+              <div className="space-y-2">
                 <List type="Feedback" />
                 <List type="Complaint" />
               </div>

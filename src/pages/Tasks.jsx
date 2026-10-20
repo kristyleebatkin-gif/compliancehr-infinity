@@ -30,6 +30,7 @@ export default function Tasks() {
   const { toast } = useToast();
   const [list, setList] = useState([]);
   const [taskTotals, setTaskTotals] = useState([]);
+  const [taskMetrics, setTaskMetrics] = useState({ dueToday: 0, overdue: 0, averageMinutes: 0 });
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
@@ -53,11 +54,19 @@ export default function Tasks() {
       const seesAll = MANAGEMENT_ROLES.includes(me?.role);
       setMeEmail(me?.email || '');
       const taskQuery = seesAll ? { archived: { $ne: true } } : { archived: { $ne: true }, assigned_email: me?.email };
-      const [page, userPage, totals] = await Promise.all([
+      const today = format(new Date(), 'yyyy-MM-dd');
+      const activeStatuses = { $in: ['Open', 'In Progress', 'Overdue'] };
+      const [page, userPage, totals, dueToday, overdue, timing] = await Promise.all([
         base44.entities.TodoTask.filter(taskQuery, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list(),
         base44.entities.TodoTask.aggregate({ query: taskQuery, groupBy: 'status' }),
+        base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: today }),
+        base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: { $lt: today } }),
+        base44.entities.TodoTask.aggregate({ query: { ...taskQuery, status: { $in: ['Completed', 'Finalised'] }, time_taken_minutes: { $gt: 0 } }, groupBy: 'status', avg: ['time_taken_minutes'] }),
       ]);
+      const timedCount = (timing.rows || []).reduce((sum, row) => sum + row.count, 0);
+      const timedMinutes = (timing.rows || []).reduce((sum, row) => sum + (row.avg_time_taken_minutes || 0) * row.count, 0);
+      setTaskMetrics({ dueToday, overdue, averageMinutes: timedCount ? Math.round(timedMinutes / timedCount) : 0 });
       setTaskTotals(totals.rows || []);
       setList(page.items || []);
       setUsers(userPage.items || []);
@@ -198,10 +207,10 @@ export default function Tasks() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl p-3 md:p-5 space-y-4">
+    <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
       <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<TaskToolbar view={view} onView={setView} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
 
-      <TaskSummaryCards totals={taskTotals} loading={loading} />
+      <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}

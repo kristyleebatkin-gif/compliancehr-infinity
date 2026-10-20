@@ -287,6 +287,24 @@
       font-size: 0.75rem;
     }
   }
+  @media screen {
+    .tasks-workspace :is(div, section)[class~="p-3"],
+    .tasks-workspace :is(div, section)[class~="p-3.5"],
+    .tasks-workspace :is(div, section)[class~="p-5"],
+    .tasks-workspace :is(div, section)[class~="p-2.5"] { padding: 0.5rem; }
+    .tasks-workspace [class~="gap-3"], .tasks-workspace [class~="gap-5"] { gap: 0.375rem; }
+    .tasks-workspace [class~="space-y-3"] > :not([hidden]) ~ :not([hidden]),
+    .tasks-workspace [class~="space-y-4"] > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; }
+    .tasks-workspace [class~="mb-3"], .tasks-workspace [class~="mb-4"] { margin-bottom: 0.375rem; }
+    .tasks-workspace [class~="mt-3"] { margin-top: 0.375rem; }
+    .tasks-workspace [class~="text-sm"] { font-size: 0.75rem; line-height: 1rem; }
+    .tasks-workspace [class~="text-xs"] { font-size: 0.6875rem; line-height: 1rem; }
+    .tasks-workspace [class~="min-h-24"] { min-height: 3.25rem; }
+    .tasks-workspace [class~="h-44"] { height: 6rem; }
+    .tasks-workspace [class~="max-h-28"], .tasks-workspace [class~="max-h-32"] { max-height: 5rem; }
+    .tasks-workspace [class~="max-h-60"] { max-height: 9rem; }
+    .tasks-workspace [class~="py-12"], .tasks-workspace [class~="py-14"] { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  }
   .compact-safety-form :is(input:not([type="checkbox"]), select) {
     height: 2rem;
     min-width: 0;
