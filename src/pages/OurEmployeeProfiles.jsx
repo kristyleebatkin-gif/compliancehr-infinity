@@ -1,12 +1,11 @@
 import React from 'react';
-import { Users } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import OurProfilesTab from '@/components/profile/OurProfilesTab';
 
 export default function OurEmployeeProfiles() {
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-8">
-      <PageHeader icon={Users} title="Our employee profiles" subtitle="Every employee profile in the organisation, in one place." showAlerts={false} showCompliance={false} showAudit={false} />
+    <div className="mx-auto max-w-6xl space-y-4 p-4 md:p-8 sm:max-lg:space-y-2 sm:max-lg:p-2">
+      <PageHeader title="Our employee profiles" showDivider={false} showAlerts={false} showCompliance={false} showAudit={false} className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl" />
       <OurProfilesTab kind="staff" />
     </div>
   );

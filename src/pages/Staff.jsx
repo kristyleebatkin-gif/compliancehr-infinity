@@ -9,8 +9,9 @@ import { Label } from '@/components/ui/label';
 import StaffProfileCard from '@/components/staff/StaffProfileCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Plus, Search, Users, ShieldCheck, Trophy, Download } from 'lucide-react';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import StaffShortcuts from '@/components/staff/StaffShortcuts';
+import { Plus, Search, Users, Download } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import CertificationOverview from '@/components/staff/CertificationOverview';
 import StaffRecognition from '@/components/staff/StaffRecognition';
@@ -30,6 +31,7 @@ export default function Staff({ embedded = false }) {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [section, setSection] = useState('profiles');
   const [open, setOpen] = useState(false);
   const branding = getCompanyBranding();
   const [saving, setSaving] = useState(false);
@@ -119,14 +121,9 @@ export default function Staff({ embedded = false }) {
   return (
     <div className="mx-auto w-full min-w-0 max-w-6xl space-y-2.5 pb-4 pt-2 md:px-4 [&>div:first-child]:space-y-1.5">
       {!embedded && <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} compactActions className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl [&_p]:mt-0.5" />}
-      <RegisterInsights module="staff" compact wrapSummary />
-
-      <Tabs defaultValue="profiles">
-        <TabsList className="grid h-auto w-full grid-cols-3 gap-1 rounded-xl border border-border/60 p-1 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs [&>button>svg]:shrink-0">
-          <TabsTrigger value="profiles"><Users className="mr-1.5 h-4 w-4" />Staff profiles</TabsTrigger>
-          <TabsTrigger value="certifications"><ShieldCheck className="mr-1.5 h-4 w-4" />Staff certificates</TabsTrigger>
-          <TabsTrigger value="recognition"><Trophy className="mr-1.5 h-4 w-4" />Leaderboard &amp; recognition</TabsTrigger>
-        </TabsList>
+      <Tabs value={section} onValueChange={setSection}>
+        <StaffShortcuts value={section} onChange={setSection} />
+        <RegisterInsights module="staff" compact wrapSummary />
         <TabsContent value="profiles" className="mt-2 space-y-3">
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/70 bg-card p-2 shadow-sm">
             <div className="relative min-w-0 flex-1 basis-48">

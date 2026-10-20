@@ -141,7 +141,7 @@ export default function AppLayout() {
 
       <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-2">
         {NAV_GROUPS.map((group) => {
-          const items = visiblePrimary.filter((item) => group.keys.includes(item.key));
+          const items = visiblePrimary.filter((item) => group.keys.includes(item.key) && !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff')));
           if (!items.length) return null;
           return (
             <div key={group.label} className="mb-2.5">
