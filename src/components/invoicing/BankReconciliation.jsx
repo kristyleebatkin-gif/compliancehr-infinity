@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2, Landmark, CheckCircle2, Trash2, Upload, Split } from 'lucide-react';
+import { Loader2, Landmark, CheckCircle2, Trash2, Upload, Split, BookmarkPlus } from 'lucide-react';
 import { format } from 'date-fns';
+import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule } from '@/lib/bankMatchRules';
 
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`;
 
@@ -17,14 +18,18 @@ const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { minimumFractio
 export default function BankReconciliation({ invoices, onChanged }) {
   const { toast } = useToast();
   const [lines, setLines] = useState(null);
+  const [rules, setRules] = useState([]);
   const [csv, setCsv] = useState('');
   const [busy, setBusy] = useState(null);
 
   const load = () => {
     setLines(null);
-    base44.entities.BankStatementLine.filter({}, { sort: '-statement_date', limit: 200 })
-      .then((p) => setLines(p.items || []))
-      .catch(() => setLines([]));
+    Promise.all([
+      base44.entities.BankStatementLine.filter({}, { sort: '-statement_date', limit: 200 }),
+      base44.entities.BankRule.filter({ direction: 'money_in' }, { limit: 200 }),
+    ])
+      .then(([p, r]) => { setLines(p.items || []); setRules(r.items || []); })
+      .catch(() => { setLines([]); setRules([]); });
   };
 
   useEffect(() => { load(); }, []);
@@ -61,16 +66,30 @@ export default function BankReconciliation({ invoices, onChanged }) {
     toast({ title: `${parsed.length} statement line${parsed.length === 1 ? '' : 's'} imported` });
   };
 
+  // Open invoices as matcher entries, keyed by billed-to name.
+  const entries = (invoices || [])
+    .filter((i) => i.status !== 'Paid' && i.status !== 'Draft')
+    .map((i) => ({ doc: i, name: i.client_name || i.participant_name || '', amount: Number(i.amount || 0) }));
+
   const suggestionFor = (line) => {
-    if (line.matched_invoice_id) return invoices.find((i) => i.id === line.matched_invoice_id) || null;
-    const candidates = invoices.filter(
-      (i) => i.status !== 'Paid' && i.status !== 'Draft' && Math.abs((i.amount || 0) - line.amount) < 0.01,
-    );
-    return candidates.length === 1 ? candidates[0] : null;
+    if (line.matched_invoice_id) return { doc: invoices.find((i) => i.id === line.matched_invoice_id) || null, rule: null, basis: 'linked' };
+    return suggestFor(line, rules, entries);
   };
 
-  const confirmMatch = async (line, inv) => {
+  const doSaveRule = async (line, inv) => {
+    setBusy(`rule-${line.id}`);
+    const name = inv.client_name || inv.participant_name || '';
+    const keyword = describeKeyword(line.description) || name;
+    const me = await base44.auth.me().catch(() => null);
+    await saveRule('money_in', keyword, name, me?.full_name || me?.email || '');
+    setBusy(null);
+    load();
+    toast({ title: 'Bank rule saved', description: `Lines containing "${keyword}" will now be matched to ${name} automatically.` });
+  };
+
+  const confirmMatch = async (line, inv, rule) => {
     setBusy(line.id);
+    if (rule) await recordRuleUse(rule).catch(() => {});
     const me = await base44.auth.me().catch(() => null);
     await base44.entities.Invoice.update(inv.id, {
       status: 'Paid',
@@ -112,7 +131,9 @@ export default function BankReconciliation({ invoices, onChanged }) {
 
   const TONE = (line) => {
     if (line.reconciled) return 'bg-safe/15 text-safe border-transparent';
-    if (suggestionFor(line)) return 'bg-warning/15 text-warning border-transparent';
+    const s = suggestionFor(line);
+    if (s.basis === 'rule') return 'bg-teal/15 text-teal border-transparent';
+    if (s.doc) return 'bg-warning/15 text-warning border-transparent';
     return 'bg-muted text-muted-foreground';
   };
 
@@ -152,7 +173,7 @@ export default function BankReconciliation({ invoices, onChanged }) {
         ) : (
           <div className="mt-4 space-y-2">
             {lines.map((line) => {
-              const inv = suggestionFor(line);
+              const { doc: inv, rule, basis } = suggestionFor(line);
               return (
                 <div key={line.id} className="rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -161,16 +182,23 @@ export default function BankReconciliation({ invoices, onChanged }) {
                       <p className="text-xs text-muted-foreground">
                         {line.statement_date || 'no date'}
                         {line.reconciled && line.reconciled_by ? ` · reconciled by ${line.reconciled_by}` : ''}
-                        {inv ? ` · matches ${inv.invoice_number}` : ''}
+                        {inv ? ` · matches ${inv.invoice_number}${basis === 'name' ? ' (by name)' : basis === 'amount' ? ' (by amount)' : ''}` : ''}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-bold tabular-nums">{money(line.amount)}</p>
-                      <Badge className={TONE(line)}>{line.reconciled ? 'Reconciled' : inv ? 'Match found' : 'No match'}</Badge>
+                      <Badge className={TONE(line)}>{line.reconciled ? 'Reconciled' : basis === 'rule' ? 'Rule match' : basis === 'amount' ? 'Amount match' : basis === 'name' ? 'Name match' : 'No match'}</Badge>
                       {!line.reconciled && inv && (
-                        <Button size="sm" onClick={() => confirmMatch(line, inv)} disabled={busy === line.id}>
-                          {busy === line.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}Match & mark paid
-                        </Button>
+                        <>
+                          <Button size="sm" onClick={() => confirmMatch(line, inv, rule)} disabled={busy === line.id}>
+                            {busy === line.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}Match & mark paid
+                          </Button>
+                          {basis !== 'rule' && (
+                            <Button size="sm" variant="ghost" onClick={() => doSaveRule(line, inv)} disabled={busy === `rule-${line.id}`} title="Remember this match as a bank rule">
+                              {busy === `rule-${line.id}` ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <BookmarkPlus className="h-3.5 w-3.5" />}Save as rule
+                            </Button>
+                          )}
+                        </>
                       )}
                       {!line.reconciled && !inv && line.amount > 0 && invoices.some((i) => i.status !== 'Paid' && i.status !== 'Draft') && (
                         <select
@@ -193,6 +221,20 @@ export default function BankReconciliation({ invoices, onChanged }) {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {rules.length > 0 && (
+          <div className="mt-4 rounded-xl border border-border/60 p-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Bank rules - money in ({rules.length})</p>
+            <div className="space-y-1">
+              {rules.map((r) => (
+                <div key={r.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5 text-xs">
+                  <span><span className="font-mono font-semibold">{r.keyword}</span> → {r.target_name || '(any)'} · used {r.use_count || 0}×</span>
+                  <Button size="sm" variant="ghost" className="h-7 text-destructive" onClick={async () => { await deleteRule(r.id); load(); }}><Trash2 className="h-3 w-3" />Delete</Button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </CardContent>
