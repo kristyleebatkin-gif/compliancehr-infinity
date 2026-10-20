@@ -21,6 +21,8 @@ import RosterExceptions from '@/components/rostering/RosterExceptions';
 import RosterWeeklySignOff from '@/components/rostering/RosterWeeklySignOff';
 import BulkShiftEditor from '@/components/rostering/BulkShiftEditor';
 import PayrollReport from '@/components/rostering/PayrollReport';
+import PayrollHub from '@/components/payroll/PayrollHub';
+import RosterDashboardNavigation from '@/components/rostering/RosterDashboardNavigation';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import ParticipantShiftDetails from '@/components/rostering/ParticipantShiftDetails';
 import CoverageHeatMap from '@/components/rostering/CoverageHeatMap';
@@ -315,19 +317,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="roster"><CalendarRange className="mr-1.5 h-4 w-4" /> Roster board</TabsTrigger>
-          <TabsTrigger value="calendar"><CalendarDays className="mr-1.5 h-4 w-4" /> Calendar</TabsTrigger>
-          <TabsTrigger value="shifts"><CalendarClock className="mr-1.5 h-4 w-4" /> Shift register</TabsTrigger>
-          {!profile && <><TabsTrigger value="approvals"><ClipboardCheck className="mr-1.5 h-4 w-4" /> Approvals</TabsTrigger>
-          <TabsTrigger value="ops"><ClipboardList className="mr-1.5 h-4 w-4" /> Ops overview</TabsTrigger>
-          <TabsTrigger value="coverage"><Flame className="mr-1.5 h-4 w-4" /> Coverage map</TabsTrigger>
-          <TabsTrigger value="payroll"><CalendarClock className="mr-1.5 h-4 w-4" /> Payroll report</TabsTrigger>
-          <TabsTrigger value="patterns"><CalendarDays className="mr-1.5 h-4 w-4" /> Patterns</TabsTrigger>
-          <TabsTrigger value="shift-details"><ClipboardList className="mr-1.5 h-4 w-4" /> Shift details</TabsTrigger>
-          <TabsTrigger value="leave"><CalendarPlus className="mr-1.5 h-4 w-4" /> Leave</TabsTrigger></>}
-          {profileKind !== 'participant' && <TabsTrigger value="availability"><CalendarPlus className="mr-1.5 h-4 w-4" /> Availability</TabsTrigger>}
-        </TabsList>
+        <RosterDashboardNavigation profile={profile} profileKind={profileKind} />
 
         <TabsContent value="roster" className="mt-4 space-y-4">
           <div className="flex flex-wrap items-center gap-2">
@@ -340,13 +330,13 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
             <Button variant="outline" onClick={repeatLastWeek} disabled={saving} title="Copy last week's shifts into this week"><Repeat className="mr-2 h-4 w-4" /> Repeat last week</Button>
             <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
           </div>
+          {!profile && <RosterSuggestions onChanged={refresh} />}
           {loading ? (
             <Loading />
           ) : (
             <RosterBoard weekStart={weekStart} shifts={boardShifts} onAdd={(date) => { setEditingShift(null); setPrefillDate(date); setFormOpen(true); }} onEdit={openEdit} />
           )}
-          {!profile && <><RosterSuggestions onChanged={refresh} />
-          <RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
+          {!profile && <><RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
           <RosterLabourForecast shifts={boardShifts} /></>}
         </TabsContent>
@@ -431,7 +421,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
         </TabsContent>}
 
         <TabsContent value="payroll" className="mt-4">
-          <PayrollReport />
+          <div className="space-y-4"><PayrollHub embedded /><PayrollReport /></div>
         </TabsContent>
 
         <TabsContent value="patterns" className="mt-4">

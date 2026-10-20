@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import PayrollDashboardNavigation from '@/components/payroll/PayrollDashboardNavigation';
 import { Wallet } from 'lucide-react';
 import StaffPayrollTab from '@/components/payroll/StaffPayrollTab';
 import TimesheetsTab from '@/components/payroll/TimesheetsTab';
@@ -21,13 +22,7 @@ export default function PayrollHub({ embedded = false } = {}) {
         />
       )}
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="h-auto w-full flex-wrap justify-start gap-1">
-          <TabsTrigger value="details">Payroll details</TabsTrigger>
-          <TabsTrigger value="timesheets">Timesheets</TabsTrigger>
-          <TabsTrigger value="payslips">Payslips</TabsTrigger>
-          <TabsTrigger value="runs">Pay runs &amp; payments</TabsTrigger>
-          <TabsTrigger value="reports">Reports &amp; exports</TabsTrigger>
-        </TabsList>
+        <PayrollDashboardNavigation />
         <TabsContent value="details" className="mt-4"><StaffPayrollTab /></TabsContent>
         <TabsContent value="timesheets" className="mt-4"><TimesheetsTab /></TabsContent>
         <TabsContent value="payslips" className="mt-4"><PayslipsTab /></TabsContent>

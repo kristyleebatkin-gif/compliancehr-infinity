@@ -7,6 +7,7 @@ import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
 import { findUnassigned, findDoubleBookings, findMissingInstructions, findSkillMismatches } from '@/lib/rosterValidation';
 import RosterRulesPanel from '@/components/rostering/RosterRulesPanel';
+import RosterExceptionTable from '@/components/rostering/RosterExceptionTable';
 
 const label = (s) => `${s.date ? format(new Date(s.date + 'T00:00:00'), 'd MMM') : '?'} · ${s.start_time || '?'}–${s.end_time || '?'} · ${s.participant_name || 'no participant'}${s.location ? ` · ${s.location}` : ''}`;
 
@@ -36,25 +37,7 @@ export default function RosterExceptions({ shifts = [], onEdit }) {
   const skillMismatches = enabled('skill_mismatch') ? findSkillMismatches(shifts, staff, participants) : [];
 
   const group = (icon, title, tone, items, render) => (
-    <div className="rounded-lg border border-border/60 p-3">
-      <div className="mb-2 flex items-center gap-2">
-        {icon}
-        <span className="text-sm font-semibold">{title}</span>
-        <Badge className={`border-transparent ${tone}`}>{items.length}</Badge>
-      </div>
-      {items.length === 0 ? (
-        <p className="text-xs text-foreground/50">Nothing to action.</p>
-      ) : (
-        <ul className="space-y-1">
-          {items.slice(0, 12).map((item, i) => (
-            <li key={i} className="text-xs text-foreground/70">
-              {render(item)}
-            </li>
-          ))}
-          {items.length > 12 && <li className="text-xs text-foreground/40">+ {items.length - 12} more</li>}
-        </ul>
-      )}
-    </div>
+    <RosterExceptionTable icon={icon} title={title} tone={tone} items={items} render={render} />
   );
 
   const quiet = unassigned.length === 0 && doubleBooked.length === 0 && missingInstructions.length === 0 && skillMismatches.length === 0;
@@ -68,7 +51,7 @@ export default function RosterExceptions({ shifts = [], onEdit }) {
       {quiet ? (
         <EmptyState icon={AlertTriangle} title="No roster exceptions" subtitle="Every shift is assigned, booked cleanly, carries instructions and matches staff skills." />
       ) : (
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-3 lg:grid-cols-2">
           {group(<UserX className="h-4 w-4 text-warning" />, 'Unassigned shifts', 'bg-warning/15 text-warning', unassigned,
             (s) => <button className="hover:underline" onClick={() => onEdit?.(s)}>{label(s)}</button>)}
           {group(<Users className="h-4 w-4 text-danger" />, 'Double-bookings', 'bg-danger/15 text-danger', doubleBooked,
