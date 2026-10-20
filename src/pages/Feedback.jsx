@@ -34,6 +34,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
   const [uploading, setUploading] = useState('');
   const [form, setForm] = useState(blank);
   const [users, setUsers] = useState([]);
+  const [tab, setTab] = useState('Feedback');
 
   useEffect(() => {
     base44.entities.User.list().then((u) => setUsers(u)).catch(() => setUsers([]));
@@ -271,11 +272,15 @@ export default function Feedback({ profile, embedded = false } = {}) {
         }
       />}
 
-      <Tabs defaultValue="Feedback">
-        <TabsList>
-          <TabsTrigger value="Feedback">Feedback & Complaints</TabsTrigger>
-          <TabsTrigger value="Surveys">Surveys</TabsTrigger>
-        </TabsList>
+      <Tabs value={tab} onValueChange={setTab}>
+        <div className="flex flex-wrap items-center gap-2">
+          {tab === 'Feedback' && <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Record entry</Button>}
+          <TabsList>
+            <TabsTrigger value="Feedback">Feedback & Complaints</TabsTrigger>
+            <TabsTrigger value="Surveys">Surveys</TabsTrigger>
+          </TabsList>
+          {tab === 'Feedback' && <Button size="sm" variant="outline" className="ml-auto" onClick={exportRegister}><Download className="h-4 w-4" />Export register</Button>}
+        </div>
         <TabsContent value="Feedback" className="mt-4">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
@@ -283,7 +288,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
             <div className="space-y-4">
               <Card><CardContent className="p-3">
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
-                <ResponsiveContainer width="100%" height={140}>
+                <ResponsiveContainer width="100%" height={90}>
                   <BarChart data={chartData} barCategoryGap="20%">
                     <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
                     <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
@@ -293,10 +298,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent></Card>
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
-                <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Record entry</Button>
-              </div>
+
               <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 {[
                   ['Received', items.filter((i) => i.status === 'Received').length, Megaphone, 'from-sky-500 to-cyan-400'],

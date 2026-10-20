@@ -25,7 +25,7 @@ import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import CompanySafeDocuments from '@/components/documents/CompanySafeDocuments';
-import ComplianceUploads from '@/components/safe/ComplianceUploads';
+
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import BulkEditBar from '@/components/documents/BulkEditBar';
@@ -329,7 +329,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
       {!profile && <><div id="vault-business" className="scroll-mt-24 space-y-4 pt-2">
       {['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(me?.role) && <CompanySafeDocuments role={me.role} />}
       <BusinessDocumentsLibrary />
-      <ComplianceUploads docTypes={['NDIS Registration Certificate', 'Public Liability Insurance']} title="Registrations &amp; insurances" description="Upload the provider's NDIS registration certificate and public liability policy of currency, or download the record template for each one. Files are stored in the company safe." />
+
       </div></>}
 
       {!profile && <><div id="vault-vault" className="scroll-mt-24 pt-2">

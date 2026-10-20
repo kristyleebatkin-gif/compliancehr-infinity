@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import TaskAssistantCard from '@/components/tasks/TaskAssistantCard';
 import { Card, CardContent } from '@/components/ui/card';
-import { AlertTriangle, CalendarClock, CheckCircle2, Circle, Clock, ListTodo, Timer, Bot, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { AlertTriangle, CalendarClock, CheckCircle2, Circle, Clock, ListTodo, Timer, TrendingUp, Users } from 'lucide-react';
 import { format } from 'date-fns';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
@@ -110,30 +110,6 @@ function TimeCard({ tasks, avgMin }) {
   );
 }
 
-function AssistantCard() {
-  return (
-    <Card className="overflow-hidden"><CardContent className="p-0">
-      <div className="bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 p-4 text-white">
-        <p className="flex items-center gap-2 text-sm font-bold"><Bot className="h-4 w-4" />AI assistants - your task helpers</p>
-        <p className="mt-1 text-xs opacity-90">Open the AI Assistant from the sidebar and it will work alongside you on any task.</p>
-      </div>
-      <div className="p-4">
-        <ul className="grid gap-1.5 text-xs sm:grid-cols-2">
-          {[
-            'Break a big task into clear steps and a plan',
-            'Draft professional notes, updates and sign-offs',
-            'Write polite reminders and follow-up messages',
-            'Summarise overdue work for your manager',
-            'Explain the policy or checklist behind a task',
-            'Proofread and lift the quality of your writing',
-          ].map((x) => <li key={x} className="flex items-start gap-1.5"><Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand" />{x}</li>)}
-        </ul>
-        <Link to="/assistant" className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-xs font-semibold text-white hover:bg-brand/90">Open AI Assistant</Link>
-      </div>
-    </CardContent></Card>
-  );
-}
-
 export default function TaskDashboard({ tasks, onOpen }) {
   const todayStr = today();
   const open = tasks.filter((t) => ['Open', 'In Progress', 'Overdue'].includes(t.status));
@@ -147,8 +123,9 @@ export default function TaskDashboard({ tasks, onOpen }) {
   const avgMin = timed.length ? Math.round(timed.reduce((s, t) => s + Number(t.time_taken_minutes), 0) / timed.length) : 0;
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+    <div className="grid items-start gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="min-w-0 space-y-4">
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-3">
         <Tile icon={ListTodo} label="Open" value={tasks.filter((t) => t.status === 'Open').length} tone="from-violet-500 to-purple-400" />
         <Tile icon={Clock} label="In progress" value={tasks.filter((t) => t.status === 'In Progress').length} tone="from-sky-500 to-cyan-400" />
         <Tile icon={CalendarClock} label="Due today" value={dueToday.length} tone="from-amber-500 to-orange-400" />
@@ -156,16 +133,15 @@ export default function TaskDashboard({ tasks, onOpen }) {
         <Tile icon={CheckCircle2} label="Completed" value={completedCount} tone="from-emerald-500 to-teal-400" />
         <Tile icon={TrendingUp} label="Avg finish" value={avgMin ? `${avgMin}m` : '-'} tone="from-fuchsia-500 to-pink-400" hint="Across timed tasks" />
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-3">
         <Panel title="Current" icon={Clock} tone="from-violet-500 to-purple-400" tasks={current} onOpen={onOpen} emptyText="No current tasks." />
         <Panel title="Future" icon={CalendarClock} tone="from-sky-500 to-cyan-400" tasks={future} onOpen={onOpen} emptyText="No future tasks scheduled." />
         <Panel title="Past" icon={CheckCircle2} tone="from-emerald-500 to-teal-400" tasks={past} onOpen={onOpen} emptyText="No past tasks." />
       </div>
       <StaffStrip tasks={tasks} />
-      <div className="grid gap-4 md:grid-cols-2">
-        <TimeCard tasks={tasks} avgMin={avgMin} />
-        <AssistantCard />
+      <TimeCard tasks={tasks} avgMin={avgMin} />
       </div>
+      <TaskAssistantCard />
     </div>
   );
 }

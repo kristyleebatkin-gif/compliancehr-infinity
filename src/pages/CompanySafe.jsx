@@ -4,7 +4,7 @@ import { Lock, IdCard, Building2, FolderLock, ShieldCheck } from 'lucide-react';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
 import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
-import BusinessPlanUploads from '@/components/safe/BusinessPlanUploads';
+
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 import SecurityPosture from '@/components/safe/SecurityPosture';
 import LiveSecurityEvidence from '@/components/safe/LiveSecurityEvidence';
@@ -18,8 +18,7 @@ export default function CompanySafe() {
     <BusinessIdentityCard />
     <div className="flex items-center gap-2 text-sm font-bold font-editorial"><Building2 className="h-4 w-4 text-primary" />Important Business Information</div>
     <BusinessDetailsCard />
-    <div className="flex items-center gap-2 text-sm font-bold font-editorial"><Building2 className="h-4 w-4 text-primary" />Business Plans</div>
-    <BusinessPlanUploads />
+    <ComplianceUploads docTypes={['NDIS Registration Certificate', 'Public Liability Insurance']} title="Registrations & insurances" description="Manage the provider's NDIS registration certificate and public liability policy alongside other company documents." />
     <div className="flex items-center gap-2 text-sm font-bold font-editorial"><FolderLock className="h-4 w-4 text-primary" />Compliance &amp; Business Documents</div>
     <ComplianceUploads />
     <div className="flex items-center gap-2 text-sm font-bold font-editorial"><ShieldCheck className="h-4 w-4 text-primary" />Security &amp; Trust</div>

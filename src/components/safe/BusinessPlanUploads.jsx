@@ -15,7 +15,7 @@ export const BUSINESS_PLANS = [
 
 const PLAN_LABELS = BUSINESS_PLANS.map((p) => p.label);
 
-export default function BusinessPlanUploads() {
+export default function BusinessPlanUploads({ showTemplates = true }) {
   const { toast } = useToast();
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
@@ -78,8 +78,8 @@ export default function BusinessPlanUploads() {
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="h-4 w-1.5 rounded-full bg-[#0369a1]" />Business plans</div>
-      <p className="mb-4 text-xs text-muted-foreground">Download a professional blank plan template to complete, or upload the provider's current signed plan. Plans are stored securely in the company safe.</p>
+      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="h-4 w-1.5 rounded-full bg-primary" />Completed business plans</div>
+      <p className="mb-4 text-xs text-muted-foreground">Upload and view the provider's current signed plans in the Document Vault.</p>
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : (
@@ -93,9 +93,9 @@ export default function BusinessPlanUploads() {
                   <span className="flex-1 truncate font-medium">{plan.label}</span>
                 </div>
                 <div className="mt-2 grid grid-cols-2 gap-1.5">
-                  <button onClick={plan.download} className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted">
+                  {showTemplates && <button onClick={plan.download} className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted">
                     <Download className="h-3 w-3" />Download
-                  </button>
+                  </button>}
                   <label className={`inline-flex cursor-pointer items-center justify-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold hover:bg-muted ${uploading === plan.label ? 'pointer-events-none opacity-50' : ''}`}>
                     {uploading === plan.label ? <Loader2 className="h-3 w-3 animate-spin" /> : <UploadCloud className="h-3 w-3" />}
                     {uploaded.length ? 'Add another' : 'Upload'}
