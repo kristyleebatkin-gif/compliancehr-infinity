@@ -122,7 +122,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   };
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-1' : 'mx-auto min-w-0 max-w-6xl space-y-1 p-3 sm:p-3 md:p-5'}>
+    <div className={embedded ? 'min-w-0 space-y-2' : 'mx-auto min-w-0 max-w-6xl space-y-2 p-3 sm:p-3 md:p-5'}>
       {!embedded && <PageHeader
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."
@@ -137,9 +137,9 @@ export default function HrHub({ profile, embedded = false } = {}) {
       />}
 
       <Tabs value={tab} onValueChange={setTab}>
-      {!embedded && isManager && <div className="mt-1"><RegisterInsights module="hr" /></div>}
+      {!embedded && isManager && <div className="mt-2"><RegisterInsights module="hr" /></div>}
 
-      <div className="mt-1 grid gap-1 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-2 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
         {[
           { label: 'Pending leave requests', value: loading ? '…' : summary.pending, icon: CalendarClock },
           { label: 'Currently on leave / approved', value: loading ? '…' : summary.approved, icon: UsersRound },
@@ -153,9 +153,9 @@ export default function HrHub({ profile, embedded = false } = {}) {
         ))}
       </div>
 
-      <div className="mt-1"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
+      <div className="mt-2"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
 
-        <TabsContent value="leave" className="mt-1 space-y-1">
+        <TabsContent value="leave" className="mt-2 space-y-2">
           {embedded && <div className="flex gap-2">
             <Button size="sm" onClick={() => setShowLeaveForm(!showLeaveForm)}><Plus className="mr-2 h-4 w-4" />Log leave request</Button>
             <Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
@@ -193,7 +193,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
                     <div>
                       <p className="font-semibold">{l.staff_name}</p>
                       <p className="text-xs text-muted-foreground">{l.leave_type} - {fmt(l.start_date)} to {fmt(l.end_date)}</p>
-                      {l.coverage_arranged && <p className="mt-1 text-xs text-muted-foreground">Coverage: {l.coverage_arranged}</p>}
+                      {l.coverage_arranged && <p className="mt-2 text-xs text-muted-foreground">Coverage: {l.coverage_arranged}</p>}
                     </div>
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${l.status === 'Approved' ? 'bg-safe/10 text-safe' : l.status === 'Declined' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'}`}>{l.status}</span>
                   </div>
@@ -210,7 +210,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {leavePage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('leave')}>Load more leave requests</Button>}
         </TabsContent>
 
-        <TabsContent value="reviews" className="mt-1 space-y-3">
+        <TabsContent value="reviews" className="mt-2 space-y-3">
           <div className="flex gap-2">
             {isManager && <Button size="sm" onClick={() => setShowReviewForm(!showReviewForm)}><Plus className="mr-2 h-4 w-4" />Schedule review</Button>}
             <Button size="sm" variant="outline" onClick={() => downloadCsv('performance-reviews.csv', [
@@ -246,8 +246,8 @@ export default function HrHub({ profile, embedded = false } = {}) {
                     <div>
                       <p className="font-semibold">{r.staff_name}</p>
                       <p className="text-xs text-muted-foreground">{r.review_type} - {fmt(r.review_date)}{r.reviewer ? ` - by ${r.reviewer}` : ''}</p>
-                      {r.overall_rating ? <p className="mt-1 text-xs">Rating: {r.overall_rating}/5 {r.outcome ? `- ${r.outcome}` : ''}</p> : null}
-                      {r.goals && <p className="mt-1 text-xs text-muted-foreground">Goals: {r.goals}</p>}
+                      {r.overall_rating ? <p className="mt-2 text-xs">Rating: {r.overall_rating}/5 {r.outcome ? `- ${r.outcome}` : ''}</p> : null}
+                      {r.goals && <p className="mt-2 text-xs text-muted-foreground">Goals: {r.goals}</p>}
                     </div>
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${r.status === 'Completed' ? 'bg-safe/10 text-safe' : r.status === 'Cancelled' ? 'bg-muted text-muted-foreground' : 'bg-warning/10 text-warning'}`}>{r.status}</span>
                   </div>
@@ -262,11 +262,11 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {reviewPage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('reviews')}>Load more reviews</Button>}
         </TabsContent>
 
-        {isManager && <TabsContent value="performance" className="mt-1"><AppraisalComplianceDashboard /></TabsContent>}
-        <TabsContent value="paperwork" className="mt-1">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
-        {isManager && <TabsContent value="file-completeness" className="mt-1"><StaffFileCompletenessWidget /></TabsContent>}
-        {isManager && <TabsContent value="templates" className="mt-1"><HrTemplatesLibrary /></TabsContent>}
-        {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-1">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
+        {isManager && <TabsContent value="performance" className="mt-2"><AppraisalComplianceDashboard /></TabsContent>}
+        <TabsContent value="paperwork" className="mt-2">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
+        {isManager && <TabsContent value="file-completeness" className="mt-2"><StaffFileCompletenessWidget /></TabsContent>}
+        {isManager && <TabsContent value="templates" className="mt-2"><HrTemplatesLibrary /></TabsContent>}
+        {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-2">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
       </Tabs>
     </div>
   );
