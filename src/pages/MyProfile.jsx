@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
@@ -17,6 +16,7 @@ import NameTags from '@/pages/NameTags';
 import StaffFillableForms from '@/components/staff/StaffFillableForms';
 import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
 import { logUserAction } from '@/lib/actionLog';
+import MyProfileHero from '@/components/profile/MyProfileHero';
 import { UserRound, Save, CheckCircle2, History } from 'lucide-react';
 
 const STAFF_FIELDS = [
@@ -151,7 +151,7 @@ export default function MyProfile() {
       />
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList>
+        <TabsList className="h-auto flex-wrap justify-start gap-1">
           <TabsTrigger value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
           {!isParticipant && participantProfile && <TabsTrigger value="participant-details">My participant profile</TabsTrigger>}
           {profile && <TabsTrigger value="forms">Fillable Forms</TabsTrigger>}
@@ -165,33 +165,11 @@ export default function MyProfile() {
             <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} />
           ) : (
             <>
-              <Card className="border-border/60">
-                <CardContent className="p-4 space-y-2.5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="text-lg font-semibold font-editorial">{profile.full_name}</div>
-                      <div className="text-sm text-foreground/60">{profile.email}</div>
-                    </div>
-                    <Badge variant="outline">{profile.status || 'Active'}</Badge>
-                  </div>
-                  <div className="grid gap-2 rounded-xl bg-muted/40 p-3 text-sm text-foreground/70">
-                    {isParticipant ? (
-                      <>
-                        {profile.ndis_number && <div>NDIS number: <span className="font-medium">{profile.ndis_number}</span></div>}
-                        {profile.support_type && <div>Support provided: <span className="font-medium">{profile.support_type}</span></div>}
-                        {profile.support_coordinator && <div>Support coordination: <span className="font-medium">{profile.support_coordinator}</span></div>}
-                      </>
-                    ) : (
-                      <>
-                        {profile.position && <div>Position: <span className="font-medium">{profile.position}</span></div>}
-                        {profile.role && <div>Role: <span className="font-medium">{profile.role}</span></div>}
-                        {profile.employee_number && <div>Employee number: <span className="font-medium">{profile.employee_number}</span></div>}
-                      </>
-                    )}
-                  </div>
-                  <p className="text-xs text-foreground/50">Only you and management can see this page. Fields below are yours to keep up to date.</p>
-                </CardContent>
-              </Card>
+              <MyProfileHero
+                record={profile}
+                isParticipant={isParticipant}
+                hint="Only you and management can see this page. Fields below are yours to keep up to date."
+              />
 
               <Card className="border-border/60">
                 <CardContent className="p-4 space-y-3.5">
@@ -221,9 +199,9 @@ export default function MyProfile() {
                   <CardContent className="p-4 space-y-2">
                     <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Activity log</div>
                     <p className="text-xs text-foreground/50">Actions recorded on this profile, latest first.</p>
-                    <div className="space-y-1">
+                    <div className="space-y-2 border-l-2 border-brand/20 pl-4">
                       {profile.change_log.split('\n').filter(Boolean).slice(-12).reverse().map((line, i) => (
-                        <div key={i} className="rounded-lg bg-muted/30 px-3 py-2 text-xs text-foreground/70">{line}</div>
+                        <div key={i} className="relative rounded-lg bg-muted/30 px-3 py-2 text-xs text-foreground/70 before:absolute before:-left-[22px] before:top-1/2 before:h-2 before:w-2 before:-translate-y-1/2 before:rounded-full before:bg-brand/40">{line}</div>
                       ))}
                     </div>
                   </CardContent>
@@ -235,23 +213,11 @@ export default function MyProfile() {
 
         {!isParticipant && participantProfile && (
           <TabsContent value="participant-details" className="mt-3 space-y-4">
-            <Card className="border-border/60">
-              <CardContent className="p-4 space-y-2.5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <div className="text-lg font-semibold font-editorial">{participantProfile.full_name}</div>
-                    <div className="text-sm text-foreground/60">{participantProfile.email}</div>
-                  </div>
-                  <Badge variant="outline">{participantProfile.status || 'Active'}</Badge>
-                </div>
-                <div className="grid gap-2 rounded-xl bg-muted/40 p-3 text-sm text-foreground/70">
-                  {participantProfile.ndis_number && <div>NDIS number: <span className="font-medium">{participantProfile.ndis_number}</span></div>}
-                  {participantProfile.support_type && <div>Support provided: <span className="font-medium">{participantProfile.support_type}</span></div>}
-                  {participantProfile.support_coordinator && <div>Support coordination: <span className="font-medium">{participantProfile.support_coordinator}</span></div>}
-                </div>
-                {!canEditParticipant && <p className="text-xs text-foreground/50">Read-only view. Support team and management can make updates.</p>}
-              </CardContent>
-            </Card>
+            <MyProfileHero
+              record={participantProfile}
+              isParticipant
+              hint={canEditParticipant ? undefined : 'Read-only view. Support team and management can make updates.'}
+            />
             <ParticipantFillableForms participant={participantProfile} />
             {canEditParticipant && (
               <Card className="border-border/60">
