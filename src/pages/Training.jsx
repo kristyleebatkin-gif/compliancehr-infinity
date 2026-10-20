@@ -7,6 +7,7 @@ import SectionCard from '@/components/SectionCard';
 import ScoreRing from '@/components/ScoreRing';
 import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 import LmsLearner from '@/components/training/LmsLearner';
+import TrainingModuleCard from '@/components/training/TrainingModuleCard';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
@@ -194,7 +195,7 @@ export default function Training({ profile, embedded = false } = {}) {
                       {mods.map((m) => {
                         const { status, completion } = statusFor(m.title, completions);
                         return (
-                          <ModuleCard key={m.number} module={m} status={status} completion={completion} onOpen={() => { if (ownLearning) setLearnerNumber(m.number); }} readOnly={!ownLearning} />
+                          <TrainingModuleCard key={m.number} module={m} status={status} completion={completion} onOpen={() => { if (ownLearning) setLearnerNumber(m.number); }} readOnly={!ownLearning} />
                         );
                       })}
                     </div>
@@ -241,40 +242,5 @@ function Chip({ active, tone = 'brand', onClick, children }) {
   const colors = GROUP_TONES[tone] || GROUP_TONES.brand;
   return (
     <button onClick={onClick} className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${active ? colors.active : 'bg-muted text-foreground/60 hover:bg-muted/70'}`}>{children}</button>
-  );
-}
-
-function ModuleCard({ module, status, completion, onOpen, readOnly = false }) {
-  const group = LMS_GROUPS.find((item) => item.name === module.group);
-  const colors = GROUP_TONES[group?.color] || GROUP_TONES.brand;
-  const badge = {
-    'Not Started': { cls: 'bg-muted text-foreground/60', label: 'Not started' },
-    'Current': { cls: 'bg-safe/10 text-safe', label: 'Current' },
-    'Expiring Soon': { cls: 'bg-warning/10 text-warning', label: 'Expiring soon' },
-    'Expired': { cls: 'bg-danger/10 text-danger', label: 'Expired' },
-  }[status];
-  return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-      <div className={`h-1.5 w-full ${colors.number}`} />
-      <div className="flex flex-1 flex-col p-5">
-        <div className="mb-3 flex items-center justify-between">
-          <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-sm ${colors.number}`}>
-            <span className="text-sm font-bold">{module.number}</span>
-          </div>
-          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold ${badge.cls}`}>
-            <span className="h-1.5 w-1.5 rounded-full bg-current" />{badge.label}
-          </span>
-        </div>
-        <div className={`text-[11px] font-bold uppercase tracking-wide ${colors.label}`}>{module.group}</div>
-        <div className="mt-1 text-[15px] font-semibold leading-snug">{module.title}</div>
-        <div className="mt-1 line-clamp-2 text-xs text-foreground/50">{module.description}</div>
-        <div className="mt-3 flex items-center gap-3 text-xs text-foreground/50">
-          <span>{module.duration_hours}h</span><span>·</span>
-          <span>Valid {module.validity_months}m</span>
-          {completion?.expiry_date && <><span>·</span><span>Exp {completion.expiry_date}</span></>}
-        </div>
-        <button onClick={onOpen} disabled={readOnly} className={`mt-auto w-full rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90 disabled:opacity-50 ${colors.button}`}>{readOnly ? 'Learner access only' : 'Open Module'}</button>
-      </div>
-    </div>
   );
 }

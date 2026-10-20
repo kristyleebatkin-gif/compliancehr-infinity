@@ -36,14 +36,14 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
   groups.sort((a, b) => b.rows.length - a.rows.length);
 
   if (pending.length === 0) {
-    return <EmptyState icon={KanbanSquare} title="Board is clear" message="No pending tasks — everything is completed or cancelled." />;
+    return <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs"><CheckCircle2 className="h-4 w-4 text-safe" /><span className="font-semibold">Board is clear</span><span className="text-muted-foreground">No pending tasks.</span></div>;
   }
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-3 shadow-md">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <div className="rounded-xl border border-border/60 bg-card p-2 shadow-sm">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-1.5">
         <div className="flex items-center gap-2 text-sm font-bold">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/10 text-primary">
             <KanbanSquare className="h-4 w-4" />
           </span>
           Task Status Board
@@ -57,7 +57,7 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
             <button
               key={val}
               onClick={() => setGroupBy(val)}
-              className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${groupBy === val ? 'bg-brand text-white shadow-sm' : 'text-foreground/60 hover:text-foreground'}`}
+              className={`flex items-center gap-1 whitespace-nowrap rounded-md px-2 py-1 text-[10px] font-semibold transition-colors ${groupBy === val ? 'bg-primary/10 text-primary shadow-sm' : 'text-foreground/60 hover:text-foreground'}`}
             >
               <Icon className="h-3.5 w-3.5" />
               {label}
@@ -66,34 +66,34 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2">
         {groups.map((g) => (
-          <div key={g.key} className="rounded-xl border border-border/60 bg-muted/30 p-3">
-            <div className="mb-2.5 flex items-center justify-between gap-2">
+          <div key={g.key} className="rounded-lg border border-border/60 bg-muted/30 p-2">
+            <div className="mb-1.5 flex items-center justify-between gap-2">
               <div className="flex min-w-0 items-center gap-2 text-sm font-semibold">
                 <span className={`h-2 w-2 shrink-0 rounded-full ${groupBy === 'department' ? 'bg-fuchsia-500' : 'bg-teal-500'}`} />
                 <span className="truncate">{g.label}</span>
               </div>
               <span className="shrink-0 text-xs font-semibold text-foreground/45">{g.rows.length} task{g.rows.length === 1 ? '' : 's'}</span>
             </div>
-            <div className="-mx-1 flex gap-2.5 overflow-x-auto px-1 pb-1">
+            <div className="grid grid-cols-3 gap-1.5">
               {COLUMNS.map((col) => {
                 const colTasks = g.rows.filter((t) => boardStatus(t) === col);
                 return (
-                  <div key={col} className="w-44 shrink-0 sm:w-52">
-                    <div className={`mb-2 flex items-center justify-between rounded-lg border px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide ${COL_TONE[col]}`}>
+                  <div key={col} className="min-w-0">
+                    <div className={`mb-1 flex items-center justify-between gap-1 rounded-md border px-1.5 py-1 text-[9px] font-bold uppercase tracking-wide ${COL_TONE[col]}`}>
                       <span className="flex items-center gap-1.5"><span className={`h-1.5 w-1.5 rounded-full ${DOT[col]}`} />{col}</span>
                       <span>{colTasks.length}</span>
                     </div>
-                    <div className="max-h-44 space-y-1.5 overflow-y-auto pr-1">
+                    <div className="max-h-32 space-y-1 overflow-y-auto pr-0.5">
                       {colTasks.map((t) => (
                         <button
                           key={t.id}
                           onClick={() => onOpen(t)}
-                          className="block w-full rounded-lg border border-border/60 bg-card p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                          className="block w-full rounded-md border border-border/60 bg-card p-1.5 text-left hover:border-primary/40"
                         >
-                          <div className="text-xs font-semibold leading-snug line-clamp-2">{t.title}</div>
-                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px] font-medium text-foreground/55">
+                          <div className="line-clamp-2 break-words text-[11px] font-semibold leading-snug">{t.title}</div>
+                          <div className="mt-1 flex flex-wrap items-center gap-1 text-[9px] font-medium text-foreground/55">
                             {t.priority === 'Urgent' || t.priority === 'High' ? (
                               <span className="rounded-full bg-danger/10 px-1.5 py-0.5 font-semibold text-danger">{t.priority}</span>
                             ) : (
@@ -111,14 +111,14 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
                             aria-label="Mark task complete"
                             onClick={(e) => { e.stopPropagation(); setStatus(t, 'Completed'); }}
                             onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); setStatus(t, 'Completed'); } }}
-                            className="mt-2 flex items-center gap-1 text-[10px] font-semibold text-safe hover:underline"
+                            className="mt-1 flex items-center gap-1 text-[9px] font-semibold text-safe hover:underline"
                           >
                             <CheckCircle2 className="h-3 w-3" />Mark complete
                           </div>
                         </button>
                       ))}
                       {colTasks.length === 0 && (
-                        <div className="flex h-12 items-center justify-center rounded-lg border border-dashed border-border/60 text-[10px] text-foreground/30">
+                        <div className="flex h-6 items-center justify-center rounded-md border border-dashed border-border/60 text-[10px] text-foreground/30">
                           <Circle className="h-2 w-2" />
                         </div>
                       )}

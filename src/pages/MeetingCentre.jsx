@@ -142,28 +142,26 @@ export default function MeetingCentre() {
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
-        action={(
-          <>
-            <Button size="sm" onClick={openNew}><Plus className="h-4 w-4" />Schedule meeting</Button>
-            <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-4 w-4" />Export register</Button>
-            <Button size="sm" variant="outline" onClick={downloadMinutesTemplate}><FileDown className="h-4 w-4" />Minutes template</Button>
-          </>
-        )}
+
       />
 
-      <RegisterInsights module="meetings" />
-
       <Tabs defaultValue="register">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="register">Meeting register</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar</TabsTrigger>
-        </TabsList>
+        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1.5">
+          <Button size="sm" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
+          <TabsList className="h-8 bg-muted/50 p-0.5">
+            <TabsTrigger value="register" className="px-2 text-[11px]">Meeting register</TabsTrigger>
+            <TabsTrigger value="calendar" className="px-2 text-[11px]">Calendar</TabsTrigger>
+          </TabsList>
+          <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export register</Button>
+          <Button size="sm" variant="outline" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes template</Button>
+        </div>
+        <div className="mt-2"><RegisterInsights module="meetings" /></div>
 
-        <TabsContent value="register" className="mt-4 space-y-4">
+        <TabsContent value="register" className="mt-2 space-y-3">
           {nextMeeting && (
             <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
-              <CardContent className="flex flex-wrap items-center gap-5 p-5">
-                <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-3">
+              <CardContent className="flex flex-wrap items-center gap-3 p-3">
+                <div className="flex w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-white/15 py-2">
                   <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(nextMeeting.date), 'MMM')}</span>
                   <span className="text-2xl font-bold">{format(new Date(nextMeeting.date), 'd')}</span>
                 </div>
@@ -194,7 +192,7 @@ export default function MeetingCentre() {
               { label: 'Open follow-up actions', value: openActions, grad: 'from-amber-500 via-orange-500 to-rose-500' },
               { label: 'Minutes outstanding', value: minutesOutstanding.length, grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
             ].map((s) => (
-              <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
+              <div key={s.label} className={`rounded-xl bg-gradient-to-br p-2.5 text-white shadow-sm ${s.grad}`}>
                 <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
                 <p className="mt-1 text-2xl font-bold tabular-nums">{s.value}</p>
               </div>
@@ -263,7 +261,7 @@ export default function MeetingCentre() {
           </div>
         </TabsContent>
 
-        <TabsContent value="calendar" className="mt-4">
+        <TabsContent value="calendar" className="mt-2">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
