@@ -4,12 +4,38 @@
   "properties": {
     "library": {
       "type": "string",
-      "enum": [
-        "Employee",
-        "Participant",
-        "company-safe"
-      ],
-      "title": "Library"
+      "title": "Library",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            }
+          ]
+        }
+      }
     },
     "document_type": {
       "type": "string",
@@ -81,16 +107,6 @@
         },
         {
           "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
-        },
-        {
-          "user_condition": {
             "role": "Intake Officer"
           }
         },
@@ -98,6 +114,30 @@
           "user_condition": {
             "role": "Auditor"
           }
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_staff_library}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_participant_library}}"
+            }
+          ]
         }
       ]
     },
@@ -127,6 +167,30 @@
           "user_condition": {
             "role": "Intake Officer"
           }
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_staff_library}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_participant_library}}"
+            }
+          ]
         }
       ]
     },
@@ -156,6 +220,30 @@
           "user_condition": {
             "role": "Intake Officer"
           }
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_staff_library}}"
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.library": {
+                "$ne": null
+              }
+            },
+            {
+              "data.library": "{{user.data.personal_participant_library}}"
+            }
+          ]
         }
       ]
     },
