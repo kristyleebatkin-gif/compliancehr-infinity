@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
@@ -231,9 +232,9 @@ export default function Tasks() {
       )}
 
       {editing && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-card p-5 shadow-xl max-h-[90vh] overflow-y-auto">
-            <h3 className="mb-4 text-lg font-semibold">{editing === 'new' ? 'New Task' : 'Edit Task'}</h3>
+        <Dialog open onOpenChange={(open) => { if (!open) setEditing(null); }}>
+          <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl bg-card p-5 sm:max-w-lg">
+            <DialogHeader><DialogTitle>{editing === 'new' ? 'New Task' : 'Edit Task'}</DialogTitle></DialogHeader>
             <form onSubmit={save} className="space-y-3">
               <Field label="Title"><TextInput value={form.title} onChange={(e) => set('title', e.target.value)} required /></Field>
               <div className="grid grid-cols-2 gap-3">
@@ -264,8 +265,8 @@ export default function Tasks() {
               )}
               <div className="flex justify-end gap-2 pt-2"><button type="button" onClick={() => setEditing(null)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button><button type="submit" className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">Save</button></div>
             </form>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       )}
 
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
