@@ -183,9 +183,9 @@ export default function BusinessDetailsCard() {
 
       <Section icon={PenLine} title="Business signature">
         <div className="grid gap-2 sm:grid-cols-3">
+          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
           <BusinessContactSignature value={form.contact_signature || ''} onChange={(value) => setForm((current) => ({ ...current, contact_signature: value }))} disabled={saving} />
-          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
           <Field label="Business contact role" value={form.contact_role} onChange={set('contact_role')} />
           <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
           <Field label="Business contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
