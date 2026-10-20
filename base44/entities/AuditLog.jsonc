@@ -132,28 +132,6 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Auditor"
-              }
-            },
-            {
-              "data.audit_consent": "Audit consent received"
-            }
-          ]
         }
       ]
     },
