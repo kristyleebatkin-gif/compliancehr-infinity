@@ -1,5 +1,6 @@
 import React from 'react';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
+import { getCompanyBranding } from '@/lib/companyBranding';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -10,6 +11,7 @@ function Multiline({ text }) {
 }
 
 export default function InvoicePreview({ invoice, business = {} }) {
+  const branding = getCompanyBranding();
   const lines = parseLineItems(invoice.line_items);
   const subtotal = lines.length
     ? lines.reduce((sum, line) => sum + lineAmount(line), 0)
@@ -18,8 +20,9 @@ export default function InvoicePreview({ invoice, business = {} }) {
   return (
     <div className="rounded-xl border border-border bg-white text-slate-900 shadow-sm">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 bg-slate-900 p-6 text-white">
+      <div className="flex items-start justify-between gap-4 bg-gradient-to-r from-violet-700 via-purple-600 to-fuchsia-600 p-6 text-white">
         <div className="min-w-0">
+          {branding.logoDataUrl && <img src={branding.logoDataUrl} alt="Business logo" className="mb-2 h-12 w-auto rounded-lg bg-white/90 p-1" />}
           <div className="text-lg font-bold">{business.business_name || 'Business name'}</div>
           <div className="mt-1 text-[11px] leading-relaxed text-slate-300">
             {[business.address_line, business.suburb, business.state, business.postcode].filter(Boolean).join(', ') || 'Business address'}
@@ -60,7 +63,7 @@ export default function InvoicePreview({ invoice, business = {} }) {
       {/* Line items */}
       <table className="w-full text-xs">
         <thead>
-          <tr className="bg-slate-900 text-left text-white">
+          <tr className="bg-violet-700 text-left text-white">
             <th className="px-3 py-2 font-semibold">Support item</th>
             <th className="px-3 py-2 font-semibold">Description</th>
             <th className="px-3 py-2 font-semibold">Unit</th>

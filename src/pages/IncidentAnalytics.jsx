@@ -63,20 +63,16 @@ export default function IncidentAnalytics() {
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[{ label: 'Total incidents logged', value: data.total, tone: 'bg-brand/10 text-brand' },
-              { label: 'High / Critical', value: data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0), tone: 'bg-red-600/10 text-red-600' },
-              { label: 'Open / investigating', value: data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0), tone: 'bg-warning/10 text-warning' },
-              { label: 'Locations involved', value: data.byLocation.length, tone: 'bg-teal/10 text-teal' },
+            {[{ label: 'Total incidents logged', value: data.total, grad: 'from-violet-500 via-purple-500 to-fuchsia-500' },
+              { label: 'High / Critical', value: data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0), grad: 'from-red-500 via-rose-500 to-orange-500' },
+              { label: 'Open / investigating', value: data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0), grad: 'from-amber-500 via-orange-500 to-yellow-500' },
+              { label: 'Locations involved', value: data.byLocation.length, grad: 'from-cyan-500 via-teal-500 to-emerald-500' },
             ].map((card) => (
-              <Card key={card.label}>
-                <CardContent className="flex items-center gap-3 p-4">
-                  <div className={`rounded-lg p-2 ${card.tone}`}><Activity className="h-5 w-5" /></div>
-                  <div>
-                    <p className="text-2xl font-bold tabular-nums">{card.value}</p>
-                    <p className="text-sm text-muted-foreground">{card.label}</p>
-                  </div>
-                </CardContent>
-              </Card>
+              <div key={card.label} className={`rounded-2xl bg-gradient-to-br ${card.grad} p-4 text-white shadow-md`}>
+                <div className="w-fit rounded-xl bg-white/20 p-2.5"><Activity className="h-5 w-5" /></div>
+                <p className="mt-3 text-3xl font-bold tabular-nums">{card.value}</p>
+                <p className="text-sm font-medium text-white/85">{card.label}</p>
+              </div>
             ))}
           </div>
 
@@ -142,20 +138,31 @@ export default function IncidentAnalytics() {
             <Card>
               <CardHeader><CardTitle className="text-base">Helpful resources</CardTitle></CardHeader>
               <CardContent className="space-y-2 text-sm">
-                <a href="/incidents" className="block rounded-lg border border-border/60 px-3 py-2 font-medium hover:bg-muted">Incident Clinic — log and manage incidents</a>
-                <a href="/incidents/submit" className="block rounded-lg border border-border/60 px-3 py-2 font-medium hover:bg-muted">Staff incident reporting portal</a>
-                <a href="/risks" className="block rounded-lg border border-border/60 px-3 py-2 font-medium hover:bg-muted">Risk management — assessments and registers</a>
-                <a href="/quality" className="block rounded-lg border border-border/60 px-3 py-2 font-medium hover:bg-muted">Quality &amp; improvement — turn findings into actions</a>
-                <a href="/user-guides" className="block rounded-lg border border-border/60 px-3 py-2 font-medium hover:bg-muted">User guides — incident management how-tos</a>
+                {[
+                  { href: '/incidents', label: 'Incident Clinic — log and manage incidents', tone: 'border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100' },
+                  { href: '/incidents/submit', label: 'Staff incident reporting portal', tone: 'border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100' },
+                  { href: '/risks', label: 'Risk management — assessments and registers', tone: 'border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100' },
+                  { href: '/quality', label: 'Quality & improvement — turn findings into actions', tone: 'border-teal-200 bg-teal-50 text-teal-700 hover:bg-teal-100' },
+                  { href: '/user-guides', label: 'User guides — incident management how-tos', tone: 'border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100' },
+                ].map((l) => (
+                  <a key={l.href} href={l.href} className={`block rounded-xl border px-3.5 py-2.5 font-semibold shadow-sm transition-colors ${l.tone}`}>{l.label}</a>
+                ))}
               </CardContent>
             </Card>
             <Card>
               <CardHeader><CardTitle className="text-base">What good looks like</CardTitle></CardHeader>
-              <CardContent className="space-y-2 text-sm text-muted-foreground">
-                <p><span className="font-semibold text-foreground">Report early, report everything.</span> Low-severity near misses are the cheapest lessons you will ever get.</p>
-                <p><span className="font-semibold text-foreground">Watch the trend, not the single event.</span> A rising monthly line signals workload, environment or communication pressures.</p>
-                <p><span className="font-semibold text-foreground">Close the loop.</span> Every incident should end with an investigation outcome and, where needed, a change to practice.</p>
-                <p><span className="font-semibold text-foreground">Feed the register.</span> The incident register and analytics together are your evidence base for audits and board reporting.</p>
+              <CardContent className="space-y-2.5 text-sm">
+                {[
+                  ['Report early, report everything.', 'Low-severity near misses are the cheapest lessons you will ever get.'],
+                  ['Watch the trend, not the single event.', 'A rising monthly line signals workload, environment or communication pressures.'],
+                  ['Close the loop.', 'Every incident should end with an investigation outcome and, where needed, a change to practice.'],
+                  ['Feed the register.', 'The incident register and analytics together are your evidence base for audits and board reporting.'],
+                ].map(([head, body], i) => (
+                  <div key={i} className="flex gap-3 rounded-xl border border-violet-100 bg-violet-50/60 p-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-500 text-[11px] font-bold text-white">{i + 1}</span>
+                    <p className="text-muted-foreground"><span className="font-semibold text-foreground">{head}</span> {body}</p>
+                  </div>
+                ))}
               </CardContent>
             </Card>
           </div>

@@ -262,10 +262,10 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
           if (loading) return <div className="py-8 text-center text-sm text-foreground/40">Loading...</div>;
           if (hazards.length === 0) return <EmptyState icon={AlertTriangle} title="No hazards reported" subtitle="Click 'Report Hazard' to log a hazard — it will appear here instantly." />;
           return (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border border-border/60">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                  <tr className="border-b border-brand/20 bg-gradient-to-r from-brand/10 via-brand/5 to-transparent text-left text-[11px] font-semibold uppercase tracking-wide text-foreground/60">
                     <th className="px-3 py-2 font-medium">Hazard</th>
                     <th className="px-3 py-2 font-medium">Location / Details</th>
                     <th className="px-3 py-2 font-medium">Date Identified</th>
@@ -374,10 +374,10 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
         ) : filteredRisks.length === 0 ? (
           <EmptyState icon={ShieldAlert} title="No risks match these filters" />
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-border/60">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                <tr className="border-b border-brand/20 bg-gradient-to-r from-brand/10 via-brand/5 to-transparent text-left text-[11px] font-semibold uppercase tracking-wide text-foreground/60">
                   <th className="px-3 py-2 font-medium">Risk</th>
                   <th className="px-3 py-2 font-medium">Category</th>
                   <th className="px-3 py-2 font-medium">Control Measure</th>
@@ -466,10 +466,10 @@ export default function Risks({ profile, profileKind, embedded = false } = {}) {
         ) : risks.length === 0 ? (
           <EmptyState icon={ShieldAlert} title="No risks recorded" />
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-border/60">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/60 text-left text-xs text-foreground/50">
+                <tr className="border-b border-brand/20 bg-gradient-to-r from-brand/10 via-brand/5 to-transparent text-left text-[11px] font-semibold uppercase tracking-wide text-foreground/60">
                   <th className="px-3 py-2 font-medium">Risk</th>
                   <th className="px-3 py-2 font-medium">Category</th>
                   <th className="px-3 py-2 font-medium">Staff Training Controls</th>

@@ -302,6 +302,7 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
         <div className="sticky bottom-0 -mx-6 flex items-center justify-between gap-3 border-t border-border bg-card px-6 py-3">
           <div className="text-sm font-semibold">Total: ${total.toFixed(2)}</div>
           <div className="flex gap-2">
+            <Button variant="outline" onClick={onClose}>Close</Button>
             <PreviewToggle form={form} business={business} />
             <Button onClick={save} disabled={saving || !form.lines.length}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save invoice</Button>
           </div>

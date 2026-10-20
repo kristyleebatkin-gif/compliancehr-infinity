@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
@@ -13,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History } from 'lucide-react';
+import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History, Award } from 'lucide-react';
 import { NewVersionDialog, PolicyHistoryDialog } from '@/components/compliance/PolicyVersions';
 import ReviewFormTemplates from '@/components/compliance/ReviewFormTemplates';
 import BulkEditBar from '@/components/documents/BulkEditBar';
@@ -81,6 +82,72 @@ import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFe
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
 const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
+
+// Tab order: NDIS Standards Map first, then the audit checklist and audit reports.
+const TABS = [
+  ['standards-map', 'NDIS Standards Map'],
+  ['master-checklist', 'Master Checklist'],
+  ['audits', 'Audits'],
+  ['audit-report-list', 'Internal Audit Report List'],
+  ['weekly-audit-reports', 'Weekly Audit Reports'],
+  ['executive-summary', 'Executive Summary'],
+  ['quick-tasks', 'Quick Tasks'],
+  ['task-kanban', 'Task Kanban'],
+  ['issues', 'Compliance Issues'],
+  ['readiness', 'Readiness Dashboard'],
+  ['trend-charts', 'Trend Charts'],
+  ['risk-status', 'Risk & Status Dashboard'],
+  ['kits-drills', 'Kits & Drills Checklists'],
+  ['visitors', 'Visitor Sign In/Out'],
+  ['policies', 'Policies'],
+  ['requirements', 'Legal Requirements'],
+  ['checklists', 'Working Checklists'],
+  ['internal-audits', 'Internal Audit Register'],
+  ['participant-reviews', 'Participant Reviews'],
+  ['consents', 'Consent Register'],
+  ['form-templates', 'Form Templates'],
+  ['cert-renewals', 'Certification Renewals'],
+  ['renewal-calendar', 'Renewal Calendar'],
+  ['staff-compliance', 'Staff Compliance'],
+  ['worker-screening', 'Worker Screening'],
+  ['risk-heatmap', 'Risk Heatmap'],
+  ['onboarding-progress', 'Onboarding Progress'],
+  ['staff-bulk-actions', 'Staff Bulk Actions'],
+  ['activity-feed', 'Activity Feed'],
+];
+
+// Colour-coded tab tones: each tab gets its own gradient highlight.
+const TAB_TONES = {
+  'standards-map': 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
+  'executive-summary': 'data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-400',
+  'quick-tasks': 'data-[state=active]:from-fuchsia-500 data-[state=active]:to-pink-400',
+  'task-kanban': 'data-[state=active]:from-pink-500 data-[state=active]:to-rose-400',
+  'issues': 'data-[state=active]:from-rose-500 data-[state=active]:to-orange-400',
+  'readiness': 'data-[state=active]:from-orange-500 data-[state=active]:to-amber-400',
+  'trend-charts': 'data-[state=active]:from-amber-500 data-[state=active]:to-yellow-400',
+  'risk-status': 'data-[state=active]:from-yellow-500 data-[state=active]:to-lime-400',
+  'master-checklist': 'data-[state=active]:from-lime-500 data-[state=active]:to-green-400',
+  'kits-drills': 'data-[state=active]:from-green-500 data-[state=active]:to-emerald-400',
+  'audits': 'data-[state=active]:from-emerald-500 data-[state=active]:to-teal-400',
+  'visitors': 'data-[state=active]:from-teal-500 data-[state=active]:to-cyan-400',
+  'policies': 'data-[state=active]:from-cyan-500 data-[state=active]:to-sky-400',
+  'requirements': 'data-[state=active]:from-sky-500 data-[state=active]:to-blue-400',
+  'checklists': 'data-[state=active]:from-blue-500 data-[state=active]:to-indigo-400',
+  'audit-report-list': 'data-[state=active]:from-indigo-500 data-[state=active]:to-blue-400',
+  'weekly-audit-reports': 'data-[state=active]:from-blue-400 data-[state=active]:to-cyan-400',
+  'internal-audits': 'data-[state=active]:from-slate-500 data-[state=active]:to-zinc-400',
+  'participant-reviews': 'data-[state=active]:from-purple-500 data-[state=active]:to-indigo-400',
+  'consents': 'data-[state=active]:from-teal-400 data-[state=active]:to-emerald-400',
+  'form-templates': 'data-[state=active]:from-orange-400 data-[state=active]:to-rose-400',
+  'cert-renewals': 'data-[state=active]:from-amber-400 data-[state=active]:to-orange-400',
+  'renewal-calendar': 'data-[state=active]:from-cyan-400 data-[state=active]:to-teal-400',
+  'staff-compliance': 'data-[state=active]:from-violet-400 data-[state=active]:to-purple-400',
+  'worker-screening': 'data-[state=active]:from-sky-400 data-[state=active]:to-indigo-400',
+  'risk-heatmap': 'data-[state=active]:from-red-500 data-[state=active]:to-rose-400',
+  'onboarding-progress': 'data-[state=active]:from-emerald-400 data-[state=active]:to-teal-400',
+  'staff-bulk-actions': 'data-[state=active]:from-fuchsia-400 data-[state=active]:to-purple-400',
+  'activity-feed': 'data-[state=active]:from-zinc-500 data-[state=active]:to-slate-400',
+};
 
 
 export default function ComplianceHub() {
@@ -185,6 +252,7 @@ export default function ComplianceHub() {
             <WeeklyReportPdfButton />
             <BoardReportButton />
             <ComplianceHealthExportButton />
+            <Button asChild variant="outline"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
             <AuditArchiveButton />
             <Button variant="outline" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
@@ -197,38 +265,38 @@ export default function ComplianceHub() {
 
       <RegisterInsights module="compliance" />
 
-      <Tabs defaultValue="quick-tasks">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="executive-summary">Executive Summary</TabsTrigger>
-          <TabsTrigger value="quick-tasks">Quick Tasks</TabsTrigger>
-          <TabsTrigger value="task-kanban">Task Kanban</TabsTrigger>
-          <TabsTrigger value="issues">Compliance Issues</TabsTrigger>
-          <TabsTrigger value="readiness">Readiness Dashboard</TabsTrigger>
-          <TabsTrigger value="trend-charts">Trend Charts</TabsTrigger>
-          <TabsTrigger value="risk-status">Risk &amp; Status Dashboard</TabsTrigger>
-          <TabsTrigger value="master-checklist">Master Checklist</TabsTrigger>
-          <TabsTrigger value="kits-drills">Kits &amp; Drills Checklists</TabsTrigger>
-          <TabsTrigger value="audits">Audits</TabsTrigger>
-          <TabsTrigger value="visitors">Visitor Sign In/Out</TabsTrigger>
-          <TabsTrigger value="policies">Policies</TabsTrigger>
-          <TabsTrigger value="requirements">Legal Requirements</TabsTrigger>
-          <TabsTrigger value="checklists">Working Checklists</TabsTrigger>
-          <TabsTrigger value="audit-report-list">Internal Audit Report List</TabsTrigger>
-          <TabsTrigger value="weekly-audit-reports">Weekly Audit Reports</TabsTrigger>
-          <TabsTrigger value="standards-map">NDIS Standards Map</TabsTrigger>
-          <TabsTrigger value="internal-audits">Internal Audit Register</TabsTrigger>
-          <TabsTrigger value="participant-reviews">Participant Reviews</TabsTrigger>
-          <TabsTrigger value="consents">Consent Register</TabsTrigger>
-          <TabsTrigger value="form-templates">Form Templates</TabsTrigger>
-          <TabsTrigger value="cert-renewals">Certification Renewals</TabsTrigger>
-          <TabsTrigger value="renewal-calendar">Renewal Calendar</TabsTrigger>
-          <TabsTrigger value="staff-compliance">Staff Compliance</TabsTrigger>
-          <TabsTrigger value="worker-screening">Worker Screening</TabsTrigger>
-          <TabsTrigger value="risk-heatmap">Risk Heatmap</TabsTrigger>
-          <TabsTrigger value="onboarding-progress">Onboarding Progress</TabsTrigger>
-          <TabsTrigger value="staff-bulk-actions">Staff Bulk Actions</TabsTrigger>
-          <TabsTrigger value="activity-feed">Activity Feed</TabsTrigger>
+      <Tabs defaultValue="standards-map">
+        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">
+          {TABS.map(([value, label]) => (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
+            >
+              {label}
+            </TabsTrigger>
+          ))}
         </TabsList>
+
+        <TabsContent value="standards-map" className="mt-4">
+          <ControlEvidenceMap />
+        </TabsContent>
+
+        <TabsContent value="master-checklist" className="mt-4">
+          <MasterChecklist />
+        </TabsContent>
+
+        <TabsContent value="audits" className="mt-4">
+          <AuditsTab />
+        </TabsContent>
+
+        <TabsContent value="audit-report-list" className="mt-4">
+          <AuditReportList />
+        </TabsContent>
+
+        <TabsContent value="weekly-audit-reports" className="mt-4">
+          <WeeklyAuditReports />
+        </TabsContent>
 
         <TabsContent value="executive-summary" className="mt-4">
           <ExecutiveSummary />
@@ -259,16 +327,8 @@ export default function ComplianceHub() {
           <RiskStatusDashboard />
         </TabsContent>
 
-        <TabsContent value="master-checklist" className="mt-4">
-          <MasterChecklist />
-        </TabsContent>
-
         <TabsContent value="kits-drills" className="mt-4">
           <KitDrillChecklists />
-        </TabsContent>
-
-        <TabsContent value="audits" className="mt-4">
-          <AuditsTab />
         </TabsContent>
 
         <TabsContent value="visitors" className="mt-4">
@@ -429,18 +489,6 @@ export default function ComplianceHub() {
               ))}
             </div>
           )}
-        </TabsContent>
-
-        <TabsContent value="standards-map" className="mt-4">
-          <ControlEvidenceMap />
-        </TabsContent>
-
-        <TabsContent value="audit-report-list" className="mt-4">
-          <AuditReportList />
-        </TabsContent>
-
-        <TabsContent value="weekly-audit-reports" className="mt-4">
-          <WeeklyAuditReports />
         </TabsContent>
 
         <TabsContent value="internal-audits" className="mt-4">

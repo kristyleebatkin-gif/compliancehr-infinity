@@ -22,13 +22,19 @@ import InvoiceShiftDrill from '@/components/invoicing/InvoiceShiftDrill';
 import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import BankReconciliation from '@/components/invoicing/BankReconciliation';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
-import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
+import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
-import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, FileUp, Loader2 } from 'lucide-react';
+import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
+
+const INV_TAB_TONES = {
+  invoices: 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
+  bank: 'data-[state=active]:from-teal-500 data-[state=active]:to-cyan-400',
+  finance: 'data-[state=active]:from-emerald-500 data-[state=active]:to-green-400',
+};
 
 export default function InvoicingCentre() {
   const { toast } = useToast();
@@ -59,29 +65,6 @@ export default function InvoicingCentre() {
 
   const outstanding = invoices.filter((i) => i.status !== 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
   const paid = invoices.filter((i) => i.status === 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
-  const [uploadingTemplate, setUploadingTemplate] = useState(false);
-
-  const uploadInvoiceTemplate = async (file) => {
-    if (!file) return;
-    setUploadingTemplate(true);
-    try {
-      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      await base44.entities.FormsLibraryDocument.create({
-        library: 'company-safe',
-        document_type: 'Invoice Template',
-        title: file.name,
-        file_name: file.name,
-        file_uri,
-        uploaded_date: format(new Date(), 'yyyy-MM-dd'),
-      });
-      toast({ title: 'Invoice template uploaded', description: 'Stored privately in the Company Safe library.' });
-    } catch (error) {
-      toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
-    } finally {
-      setUploadingTemplate(false);
-    }
-  };
-
   const setStatus = async (inv, status) => {
     const patch = { status };
     if (status === 'Paid') patch.paid_date = format(new Date(), 'yyyy-MM-dd');
@@ -166,11 +149,6 @@ export default function InvoicingCentre() {
         <ModuleAuditChecklistButton />
         <ModuleAuditButton />
         <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
-        <Button variant="outline" onClick={() => downloadInvoiceTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Invoice template</Button>
-        <label className={`inline-flex h-9 cursor-pointer items-center gap-2 rounded-md border border-input bg-transparent px-4 py-2 text-sm font-semibold shadow-sm hover:bg-accent ${uploadingTemplate ? 'pointer-events-none opacity-60' : ''}`}>
-          {uploadingTemplate ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}{uploadingTemplate ? 'Uploading…' : 'Upload template'}
-          <input type="file" className="hidden" accept=".pdf,.doc,.docx,.xlsx" onChange={(e) => { uploadInvoiceTemplate(e.target.files?.[0]); e.target.value = ''; }} />
-        </label>
         <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
         <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
       </div>
@@ -180,21 +158,31 @@ export default function InvoicingCentre() {
       )}
 
       <Tabs defaultValue="invoices">
-        <TabsList>
-          <TabsTrigger value="invoices">Invoices</TabsTrigger>
-          <TabsTrigger value="bank">Bank Reconciliation</TabsTrigger>
-          <TabsTrigger value="finance">Finance Summary</TabsTrigger>
+        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">
+          {Object.entries(INV_TAB_TONES).map(([value, tone]) => (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${tone}`}
+            >
+              {value === 'invoices' ? 'Invoices' : value === 'bank' ? 'Bank Reconciliation' : 'Finance Summary'}
+            </TabsTrigger>
+          ))}
         </TabsList>
 
         <TabsContent value="invoices" className="space-y-6">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {[
-              { label: 'Invoices', value: summary.total },
-              { label: 'Sent', value: summary.sent },
-              { label: 'Paid', value: summary.paid },
-              { label: 'Overdue', value: summary.overdue },
+              { label: 'Invoices', value: summary.total, Icon: FileSpreadsheet, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
+              { label: 'Sent', value: summary.sent, Icon: Send, grad: 'from-sky-500 via-cyan-500 to-teal-500' },
+              { label: 'Paid', value: summary.paid, Icon: BadgeCheck, grad: 'from-emerald-500 via-green-500 to-teal-500' },
+              { label: 'Overdue', value: summary.overdue, Icon: AlertTriangle, grad: 'from-rose-500 via-red-500 to-orange-500' },
             ].map((s) => (
-              <Card key={s.label}><CardContent className="p-4"><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></CardContent></Card>
+              <div key={s.label} className={`rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
+                <div className="w-fit rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
+                <p className="mt-3 text-3xl font-bold tabular-nums">{s.value}</p>
+                <p className="text-sm font-medium text-white/85">{s.label}</p>
+              </div>
             ))}
           </div>
 
