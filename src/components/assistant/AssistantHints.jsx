@@ -12,9 +12,9 @@ const HINTS = [
 
 export default function AssistantHints() {
   return (
-    <div className="rounded-2xl border border-chart-5/25 bg-chart-5/10 p-4">
-      <p className="flex items-center gap-2 text-sm font-bold text-foreground"><Lightbulb className="h-4 w-4 text-chart-5" />Hints &amp; tips for using the AI assistants</p>
-      <ul className="mt-2 grid gap-1.5 text-xs text-foreground/75 sm:grid-cols-2">
+    <div className="rounded-xl border border-chart-5/25 bg-chart-5/10 px-3 py-2">
+      <p className="flex items-center gap-1.5 text-xs font-bold text-foreground"><Lightbulb className="h-3.5 w-3.5 text-chart-5" />Hints &amp; tips for using the AI assistants</p>
+      <ul className="mt-1 grid gap-x-3 gap-y-1 text-[11px] leading-4 text-foreground/75 sm:grid-cols-2">
         {HINTS.map((hint) => <li key={hint} className="flex items-start gap-1.5"><Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-chart-5" />{hint}</li>)}
       </ul>
     </div>
