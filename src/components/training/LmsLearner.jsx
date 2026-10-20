@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import {
@@ -8,6 +8,9 @@ import {
 import { getModuleFull, getModuleByNumber, LMS_ACADEMY_NAME, LMS_PROGRAM_NAME } from '@/lib/lmsCurriculum';
 import { getCompetencyChecklist, COMPETENCY_CHECKLIST_TITLE } from '@/lib/lmsCompetencyChecklists';
 import ProfessionalCertificate from '@/components/training/ProfessionalCertificate';
+import KnowledgeQuiz from '@/components/training/KnowledgeQuiz';
+import LearnerOverview from '@/components/training/LearnerOverview';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { buildCertificatePdfBlob } from '@/lib/certificatePdf';
 
 const STAGES = [
@@ -24,6 +27,8 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
   const competency = getCompetencyChecklist(module.number);
   const supervisorItems = competency ? competency.items : (module.supervisorChecklist || module.supervisor);
   const [stage, setStage] = useState('overview');
+  const contentRef = useRef(null);
+  useEffect(() => { if (contentRef.current) contentRef.current.scrollTop = 0; }, [stage]);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(null);
   const [supervisor, setSupervisor] = useState(supervisorItems.map(() => false));
@@ -166,23 +171,23 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
   const resetQuiz = () => { setAnswers({}); setScore(null); };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">
-      <div className="w-full max-w-2xl rounded-2xl bg-card shadow-xl max-h-[92vh] overflow-y-auto">
-        <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-5 py-4 text-white">
+    <Dialog open onOpenChange={(open) => { if (!open) { if (issued) onCompleted?.(); onClose(); } }}>
+      <DialogContent aria-describedby={undefined} className="flex max-h-[92dvh] w-[calc(100%_-_2rem)] max-w-4xl flex-col gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-4xl sm:rounded-2xl sm:p-0 [&>button]:hidden">
+        <div className="shrink-0 border-b border-primary/20 bg-primary/5 px-4 py-3 text-foreground sm:px-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-cyan-100">Module {module.number} · {module.group}</div>
-              <h3 className="text-lg font-bold">{module.title}</h3>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-primary">Module {module.number} · {module.group}</div>
+              <DialogTitle className="mt-1 break-words text-base font-bold leading-snug sm:text-lg">{module.title}</DialogTitle>
             </div>
-            <button onClick={() => { if (issued) onCompleted?.(); onClose(); }} className="rounded-lg p-1.5 hover:bg-white/15"><X className="h-4 w-4" /></button>
+            <button aria-label="Close training module" onClick={() => { if (issued) onCompleted?.(); onClose(); }} className="shrink-0 rounded-lg p-1.5 text-muted-foreground hover:bg-muted"><X className="h-4 w-4" /></button>
           </div>
-          <div className="mt-3 flex gap-1 overflow-x-auto rounded-lg bg-white/10 p-1 backdrop-blur">
+          <div className="mt-3 flex gap-1 overflow-x-auto rounded-lg border border-border bg-card p-1">
             {STAGES.map((s) => {
               const Icon = s.icon;
               const locked = (s.k === 'supervisor' || s.k === 'certificate') && !passed;
               return (
                 <button key={s.k} disabled={locked} onClick={() => setStage(s.k)}
-                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-medium ${stage === s.k ? 'bg-white text-violet-700 shadow-sm' : 'text-white/70 hover:text-white'} ${locked ? 'opacity-40' : ''}`}>
+                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-medium ${stage === s.k ? 'bg-primary/10 text-primary shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'} ${locked ? 'opacity-40' : ''}`}>
                   {locked ? <Lock className="h-3.5 w-3.5" /> : <Icon className="h-3.5 w-3.5" />}{s.label}
                 </button>
               );
@@ -190,38 +195,8 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
           </div>
         </div>
 
-        <div className="p-5 space-y-4">
-          {stage === 'overview' && (
-            <div className="space-y-4">
-              <div className="rounded-xl bg-gradient-to-r from-violet-100/70 to-cyan-100/70 p-4 text-sm text-foreground/70 dark:from-violet-950/30 dark:to-cyan-950/30">{module.description}</div>
-              <div>
-                <div className="mb-2 text-sm font-semibold">Learning objectives</div>
-                <ul className="space-y-1.5">
-                  {module.objectives.map((o, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-foreground/70">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-safe" />{o}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <div className="mb-2 text-sm font-semibold">Module components</div>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {module.components.map((c) => (
-                    <div key={c} className="flex items-center gap-1.5 rounded-md bg-muted/30 px-2 py-1.5 text-xs text-foreground/60">
-                      <CheckCircle2 className="h-3 w-3 text-brand" />{c}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-3 text-center text-xs text-white">
-                <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 p-3 shadow-md"><div className="text-base font-bold">{module.duration_hours}h</div><div className="text-[11px] text-white/80">Duration</div></div>
-                <div className="rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 p-3 shadow-md"><div className="text-base font-bold">{module.validity_months}m</div><div className="text-[11px] text-white/80">Valid</div></div>
-                <div className="rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 p-3 shadow-md"><div className="text-base font-bold">{module.pass_mark}%</div><div className="text-[11px] text-white/80">Pass mark</div></div>
-              </div>
-              <button onClick={() => setStage('guide')} className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">Start Learner Guide</button>
-            </div>
-          )}
+        <div ref={contentRef} className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 sm:p-5">
+          {stage === 'overview' && <LearnerOverview module={module} onStart={() => setStage('guide')} />}
 
           {stage === 'guide' && (
             <div className="space-y-4">
@@ -240,43 +215,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
             </div>
           )}
 
-          {stage === 'quiz' && (
-            <div className="space-y-4">
-              {module.quiz.map((q, i) => (
-                <div key={i} className="rounded-lg border border-border/60 p-3">
-                  <div className="mb-2 text-sm font-medium">{i + 1}. {q.q}</div>
-                  <div className="grid gap-2">
-                    {q.options.map((o) => (
-                      <button key={o} onClick={() => setAnswers({ ...answers, [i]: o })}
-                        className={`rounded-lg border px-3 py-1.5 text-sm font-medium text-left transition ${answers[i] === o ? 'border-violet-500 bg-violet-500/10 text-violet-700 shadow-sm dark:text-violet-300' : 'border-border hover:bg-muted'}`}>{o}</button>
-                    ))}
-                  </div>
-                  {score !== null && q.explanation && (
-                    <div className="mt-2 rounded-md bg-muted/40 px-3 py-2 text-xs text-foreground/60">
-                      <span className="font-semibold text-foreground/70">{answers[i] === q.answer ? 'Correct' : 'Answer'}:</span> {q.explanation}
-                    </div>
-                  )}
-                </div>
-              ))}
-              {score !== null && (
-                <div className={`flex items-center gap-2 rounded-lg p-3 text-sm ${passed ? 'bg-safe/10 text-safe' : 'bg-danger/10 text-danger'}`}>
-                  {passed ? <CheckCircle2 className="h-5 w-5" /> : <XCircle className="h-5 w-5" />}
-                  <div>
-                    <div className="font-semibold">Score: {score}%</div>
-                    <div className="text-xs">{passed ? 'You passed — continue to supervisor sign-off.' : `You need ${passMark}% to pass. Review the guide and retry.`}</div>
-                  </div>
-                </div>
-              )}
-              {score === null ? (
-                <button onClick={submitQuiz} disabled={Object.keys(answers).length < module.quiz.length}
-                  className="w-full rounded-lg bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50">Submit Quiz</button>
-              ) : passed ? (
-                <button onClick={() => setStage('supervisor')} className="w-full rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">Continue to Supervisor Sign-off</button>
-              ) : (
-                <button onClick={resetQuiz} className="w-full rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white">Retry Quiz</button>
-              )}
-            </div>
-          )}
+          {stage === 'quiz' && <KnowledgeQuiz questions={module.quiz} answers={answers} setAnswers={setAnswers} score={score} passMark={passMark} onSubmit={submitQuiz} onRetry={resetQuiz} onContinue={() => setStage('supervisor')} />}
 
           {stage === 'supervisor' && (
             <div className="space-y-4">
@@ -378,7 +317,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
-import { drawCompanyBranding, drawDocumentFooter, loadCompanyBranding, getCompanyBranding } from '@/lib/companyBranding';
+import { loadCompanyBranding, getCompanyBranding } from '@/lib/companyBranding';
+import certificateTextLayout from '@/lib/certificateTextLayout';
 
 export const NAVY = '#7C3AED';
 export const GOLD = '#EC4899';
@@ -9,117 +10,47 @@ export const SIGNATURE_IMAGE_URL = 'https://media.base44.com/images/public/6ac9f
 function drawCertificatePage(doc, data) {
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
-  const margin = 40;
-
-  doc.setDrawColor(124, 58, 237);
-  doc.setLineWidth(3);
-  doc.rect(margin, margin, pageW - margin * 2, pageH - margin * 2, 'S');
-  doc.setDrawColor(236, 72, 153);
-  doc.setLineWidth(1);
-  doc.rect(margin + 8, margin + 8, pageW - (margin + 8) * 2, pageH - (margin + 8) * 2, 'S');
-
-  let y = 110;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.setTextColor(124, 58, 237);
-  drawCompanyBranding(doc, pageW / 2 - 100, y, { fontSize: 14 });
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(124, 58, 237);
-  doc.text((data.academyName || `${getCompanyBranding().companyName || 'ComplianceHR'} Training Hub`).toUpperCase(), pageW / 2, y + 16, { align: 'center' });
-
-  y += 60;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(26);
-  doc.text('Certificate of Completion', pageW / 2, y, { align: 'center' });
-  doc.setDrawColor(236, 72, 153);
-  doc.line(pageW / 2 - 60, y + 8, pageW / 2 + 60, y + 8);
-
-  y += 44;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(110);
-  doc.text('This certificate is proudly presented to', pageW / 2, y, { align: 'center' });
-  y += 32;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(26);
-  doc.setTextColor(124, 58, 237);
-  doc.text(data.learnerName || 'Learner', pageW / 2, y, { align: 'center' });
-  doc.setDrawColor(236, 72, 153);
-  doc.line(pageW / 2 - 130, y + 8, pageW / 2 + 130, y + 8);
-
-  y += 36;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(110);
-  doc.text('for successfully completing the training module', pageW / 2, y, { align: 'center' });
-  y += 26;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(40);
-  const titleLines = doc.splitTextToSize(data.moduleTitle || 'Training Module', pageW - 160);
-  doc.text(titleLines, pageW / 2, y, { align: 'center' });
-  y += titleLines.length * 18 + 6;
-  doc.setFontSize(9);
-  doc.setTextColor(0, 166, 166);
-  doc.text(`Module ${data.moduleNumber} · ${data.group || ''}`, pageW / 2, y, { align: 'center' });
-
-  y += 24;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(90);
+  const center = pageW / 2;
+  const width = pageW - 152;
+  const branding = getCompanyBranding();
+  const text = (value, top, height, size = 10, weight = 'normal', color = '#282828', x = center, fieldWidth = width) => certificateTextLayout(doc, value, { x, top, height, size, weight, color, width: fieldWidth });
+  doc.setDrawColor(NAVY); doc.setLineWidth(3);
+  doc.rect(40, 40, pageW - 80, pageH - 80, 'S');
+  doc.setDrawColor(GOLD); doc.setLineWidth(1);
+  doc.rect(48, 48, pageW - 96, pageH - 96, 'S');
+  if (branding.logoDataUrl) {
+    const properties = doc.getImageProperties(branding.logoDataUrl);
+    const ratio = Math.min(32 / properties.width, 32 / properties.height);
+    const logoW = properties.width * ratio, logoH = properties.height * ratio;
+    doc.addImage(branding.logoDataUrl, center - logoW / 2, 68 + (32 - logoH) / 2, logoW, logoH);
+  }
+  text(data.companyName || branding.companyName || 'ComplianceHR', 105, 25, 14, 'bold', NAVY);
+  text(data.academyName || 'ComplianceHR Training Hub', 133, 18, 9, 'normal', NAVY);
+  text(data.programName || 'Professional Development Program', 154, 24, 9, 'normal', TEAL_HEX);
+  text('Certificate of Completion', 198, 37, 26, 'bold', NAVY);
+  doc.setDrawColor(GOLD); doc.line(center - 60, 241, center + 60, 241);
+  text('This certificate is proudly presented to', 250, 18, 10, 'normal', '#6E6E6E');
+  text(data.learnerName || 'Learner', 278, 55, 28, 'bold', NAVY);
+  doc.line(center - 130, 341, center + 130, 341);
+  text('for successfully completing the training module', 355, 18, 10, 'normal', '#6E6E6E');
+  text(data.moduleTitle || 'Training Module', 383, 54, 18, 'bold');
+  text(`Module ${data.moduleNumber} · ${data.group || ''}`, 446, 30, 10, 'normal', TEAL_HEX);
   const scoreText = data.score != null ? `Achieved a competency score of ${data.score}%` : 'Competency requirements met';
-  doc.text(`${scoreText} · Valid for ${data.validityMonths || 12} months`, pageW / 2, y, { align: 'center' });
-
-  y += 50;
-  doc.setFontSize(8);
-  doc.setTextColor(140);
-  doc.text('DATE ISSUED', pageW / 2 - 120, y, { align: 'center' });
-  doc.text('VALID UNTIL', pageW / 2 + 120, y, { align: 'center' });
-  const fmt = (d) => {
-    if (!d) return '';
-    const dt = new Date(d);
-    return dt.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
-  };
-  const expiry = data.date ? new Date(new Date(data.date).setMonth(new Date(data.date).getMonth() + (data.validityMonths || 12))) : null;
-  y += 18;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
-  doc.setTextColor(124, 58, 237);
-  doc.text(fmt(data.date), pageW / 2 - 120, y, { align: 'center' });
-  doc.text(fmt(expiry && expiry.toISOString().slice(0, 10)), pageW / 2 + 120, y, { align: 'center' });
-  doc.setDrawColor(120);
-  doc.setLineWidth(0.7);
-  doc.line(pageW / 2 - 180, y + 8, pageW / 2 - 60, y + 8);
-  doc.line(pageW / 2 + 60, y + 8, pageW / 2 + 180, y + 8);
-
-  y += 46;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(140);
-  doc.text('FOUNDER & DIRECTOR', pageW / 2, y + 10, { align: 'center' });
-  doc.setFontSize(9);
-  doc.setTextColor(124, 58, 237);
-  doc.setFont('helvetica', 'bold');
-  doc.text('KRISTY WHELAN', pageW / 2, y - 6, { align: 'center' });
-  doc.setDrawColor(236, 72, 153);
-  doc.setLineWidth(0.7);
-  doc.line(pageW / 2 - 90, y - 12, pageW / 2 + 90, y - 12);
-
-  y += 36;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(140);
-  doc.text(`Certificate No: ${data.certificateNumber || ''}`, pageW / 2, y, { align: 'center' });
-
-  doc.setTextColor(130);
-  doc.setFontSize(7);
-  doc.text(
-    `${data.companyName || 'ComplianceHR'} · ${data.academyName || 'ComplianceHR Training Hub'} · ${data.programName || 'Safeguarding Essentials™'}`,
-    pageW / 2,
-    pageH - 24,
-    { align: 'center' },
-  );
+  text(`${scoreText}\nValid for ${data.validityMonths || 12} months`, 487, 32, 10, 'normal', '#5A5A5A');
+  const fmt = (value) => value ? new Date(value).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const expiry = data.date ? new Date(data.date) : null;
+  if (expiry) expiry.setMonth(expiry.getMonth() + (data.validityMonths || 12));
+  text('DATE ISSUED', 540, 16, 8, 'normal', '#777777', center - 110, 160);
+  text('VALID UNTIL', 540, 16, 8, 'normal', '#777777', center + 110, 160);
+  text(fmt(data.date), 561, 30, 11, 'bold', NAVY, center - 110, 160);
+  text(fmt(expiry), 561, 30, 11, 'bold', NAVY, center + 110, 160);
+  doc.setDrawColor('#AAAAAA'); doc.setLineWidth(0.7);
+  doc.line(center - 190, 600, center - 30, 600); doc.line(center + 30, 600, center + 190, 600);
+  doc.setDrawColor(GOLD); doc.line(center - 90, 642, center + 90, 642);
+  text('KRISTY WHELAN', 650, 20, 11, 'bold', NAVY);
+  text('FOUNDER & DIRECTOR', 675, 15, 8, 'normal', '#777777');
+  text(`Certificate No: ${data.certificateNumber || ''}`, 714, 22, 8, 'normal', '#777777');
+  text(`${data.companyName || 'ComplianceHR'} · ${data.academyName || 'ComplianceHR Training Hub'}\n${data.programName || 'Safeguarding Essentials'}`, 758, 28, 7, 'normal', '#777777');
 }
 
 export async function buildCertificatePdfBlob(data) {

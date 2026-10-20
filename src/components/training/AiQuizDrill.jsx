@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, Sparkles, RotateCcw, CheckCircle2, XCircle, Target } from 'lucide-react';
 import { LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 import ScoreRing from '@/components/ScoreRing';
+import QuizQuestionCard from '@/components/training/QuizQuestionCard';
 
 export default function AiQuizDrill() {
   const [topic, setTopic] = useState(null);
@@ -79,33 +80,7 @@ export default function AiQuizDrill() {
               )}
             </div>
             <div className="mt-4 space-y-4">
-              {questions.map((q, qi) => {
-                const picked = answers[qi];
-                return (
-                  <div key={qi} className="rounded-xl border border-border/60 p-4">
-                    <p className="text-sm font-semibold">{qi + 1}. {q.question}</p>
-                    {score !== null && picked === q.answer && <Badge className="mt-1 bg-safe/10 text-safe">Correct</Badge>}
-                    {score !== null && picked !== q.answer && <Badge className="mt-1 bg-danger/10 text-danger">Incorrect</Badge>}
-                    <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                      {q.options.map((opt, oi) => {
-                        const chosen = picked === oi;
-                        let cls = 'border-border/60 hover:border-brand/50';
-                        if (score === null) cls = chosen ? 'border-brand bg-brand/5' : cls;
-                        else if (oi === q.answer) cls = 'border-safe bg-safe/10';
-                        else if (chosen) cls = 'border-danger bg-danger/10';
-                        return (
-                          <button key={oi} disabled={score !== null} onClick={() => setAnswers({ ...answers, [qi]: oi })} className={`rounded-lg border p-3 text-left text-sm transition ${cls}`}>
-                            <span className="mr-2 text-xs font-bold text-foreground/40">{String.fromCharCode(65 + oi)}</span>{opt}
-                            {score !== null && oi === q.answer && <CheckCircle2 className="ml-2 inline h-4 w-4 text-safe" />}
-                            {score !== null && chosen && oi !== q.answer && <XCircle className="ml-2 inline h-4 w-4 text-danger" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {score !== null && q.explanation && <p className="mt-2 text-xs text-foreground/60"><span className="font-semibold">Why: </span>{q.explanation}</p>}
-                  </div>
-                );
-              })}
+              {questions.map((question, index) => <QuizQuestionCard key={index} number={index + 1} question={question.question} options={question.options} selected={answers[index]} correctAnswer={question.answer} submitted={score !== null} explanation={question.explanation} indexed onChange={(value) => setAnswers((previous) => ({ ...previous, [index]: value }))} />)}
             </div>
           </CardContent>
         </Card>

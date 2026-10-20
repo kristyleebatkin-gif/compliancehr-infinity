@@ -147,13 +147,13 @@ export default function MeetingCentre() {
 
       <Tabs defaultValue="register">
         <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1.5">
-          <Button size="sm" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
+          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
           <TabsList className="h-8 bg-muted/50 p-0.5">
             <TabsTrigger value="register" className="px-2 text-[11px]">Meeting register</TabsTrigger>
             <TabsTrigger value="calendar" className="px-2 text-[11px]">Calendar</TabsTrigger>
           </TabsList>
-          <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export register</Button>
-          <Button size="sm" variant="outline" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes template</Button>
+          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
+          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
         </div>
         <div className="mt-2"><RegisterInsights module="meetings" /></div>
 
