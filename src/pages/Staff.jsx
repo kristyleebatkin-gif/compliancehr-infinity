@@ -119,7 +119,7 @@ export default function Staff() {
   return (
     <div className="mx-auto w-full min-w-0 max-w-6xl space-y-2.5 pb-4 pt-2 md:px-4 [&>div:first-child]:space-y-1.5">
       <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} compactActions className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl [&_p]:mt-0.5" />
-      <RegisterInsights module="staff" />
+      <RegisterInsights module="staff" compact />
 
       <Tabs defaultValue="profiles">
         <TabsList className="grid h-auto w-full grid-cols-3 gap-1 rounded-xl border border-border/60 p-1 [&>button]:min-h-9 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs [&>button>svg]:shrink-0">
