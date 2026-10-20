@@ -63,7 +63,7 @@ function StreamPanel({ stream, stats }) {
   return (
     <Link
       to={stream.to}
-      className="group relative flex min-h-[400px] flex-col items-center justify-center gap-4 overflow-hidden p-6 text-center transition-all hover:brightness-105"
+      className="group relative flex min-h-[320px] flex-col items-center justify-center gap-3 overflow-hidden p-4 text-center transition-all hover:brightness-105 md:min-h-[400px] md:p-6"
       style={{ background: stream.gradient }}
     >
       <div className="pointer-events-none absolute -right-14 -top-14 h-48 w-48 rounded-full bg-white/15 blur-2xl" />
@@ -127,36 +127,36 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
   return (
     <div className="p-3 md:p-4">
       <PageHeader title="Intake Centre" subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles." />
-      <div className="mt-3 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
-        <div className="grid md:grid-cols-2">
+      <div className="mt-3"><RegisterInsights module="intake" compact /></div>
+      <div className="mt-2 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
+        <div className="grid grid-cols-2">
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-500"><StreamPanel stream={STREAMS[0]} stats={stats} /></div>
           <div className="hidden w-px md:block" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-700"><StreamPanel stream={STREAMS[1]} stats={stats} /></div>
         </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-white/10 bg-white/5 px-4 py-2.5" style={{ backdropFilter: 'blur(6px)' }}>
-          <span className="text-xs font-bold uppercase tracking-wider text-white/60">Pipeline</span>
+        <div className="flex items-center gap-3 border-t border-white/10 bg-white/5 px-3 py-1.5" style={{ backdropFilter: 'blur(6px)' }}>
+          <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-white/60">Pipeline</span>
           {total > 0 ? (
             <>
-              <div className="flex h-2 min-w-40 flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="flex h-1.5 min-w-24 flex-1 overflow-hidden rounded-full bg-white/10">
                 {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
                   <span key={s} style={{ flexBasis: `${(merged[s] / total) * 100}%`, backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
                 ))}
               </div>
-              <div className="flex flex-wrap gap-x-3 gap-y-1">
+              <div className="flex flex-wrap gap-x-2.5 gap-y-0.5">
                 {STATUS_ORDER.filter((s) => merged[s]).map((s) => (
-                  <span key={s} className="flex items-center gap-1.5 text-xs font-semibold text-white/75">
-                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
+                  <span key={s} className="flex items-center gap-1 text-[11px] font-semibold text-white/75">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: STATUS_HEX[s] || '#94a3b8' }} />
                     {s} <span className="tabular-nums text-white/50">{merged[s]}</span>
                   </span>
                 ))}
               </div>
             </>
           ) : (
-            <span className="text-xs font-semibold text-white/60">{stats ? 'No cases yet — open a portal above.' : 'Loading pipeline…'}</span>
+            <span className="text-[11px] font-semibold text-white/60">{stats ? 'No cases yet — open a portal above.' : 'Loading pipeline…'}</span>
           )}
         </div>
       </div>
-      <div className="mt-3"><RegisterInsights module="intake" /></div>
     </div>
   );
 }
