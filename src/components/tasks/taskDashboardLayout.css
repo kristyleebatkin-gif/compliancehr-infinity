@@ -1,4 +1,17 @@
 @media (min-width: 640px) and (max-width: 1023px) {
+  .tasks-workspace .task-page-header {
+    min-height: 9rem;
+    padding: 1.5rem;
+  }
+  .tasks-workspace .task-page-header h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+  .tasks-workspace .task-page-header p {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    margin-top: 0.5rem;
+  }
   .tasks-workspace .task-overview-grid > :is(:nth-child(1), :nth-child(3), :nth-child(4)) {
     height: 14rem;
   }

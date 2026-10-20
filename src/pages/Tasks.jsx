@@ -209,7 +209,7 @@ export default function Tasks() {
 
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
-      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar navigationOnly />} />
+      <PageHeader className="task-page-header" title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar navigationOnly />} />
 
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
