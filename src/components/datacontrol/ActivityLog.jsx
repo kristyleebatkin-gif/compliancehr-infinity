@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { Download, History, Loader2, Search } from 'lucide-react';
 import { format } from 'date-fns';
+import ActionReportList from '@/components/datacontrol/ActionReportList';
 
 const LIMIT = 50;
 
@@ -64,6 +65,7 @@ export default function ActivityLog() {
 
   return (
     <div className="space-y-3">
+      <ActionReportList />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Access and action log</div>
         <Button variant="outline" size="sm" onClick={exportCsv} disabled={exporting}>

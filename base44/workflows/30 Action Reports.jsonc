@@ -1,0 +1,50 @@
+{
+  "description": "Generate and privately save a PDF and CSV report for every batch of 30 logged app actions, available from the Document Vault activity log.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "AuditLog"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "thirty_action_reports",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "settle_action_order": {
+          "wait": "PT5S",
+          "then": "generate_batch_report",
+          "x-base44": {
+            "title": "Collect concurrent actions",
+            "description": "Allow simultaneous log entries to settle before assigning batches"
+          }
+        }
+      },
+      {
+        "generate_batch_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "actionBatchReport",
+            "args": {
+              "action_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Save 30-action report",
+            "description": "Generate private PDF and CSV exports when a batch is complete"
+          }
+        }
+      }
+    ]
+  },
+  "name": "30 Action Reports"
+}

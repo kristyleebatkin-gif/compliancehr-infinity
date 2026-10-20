@@ -46,8 +46,9 @@ export function buildInvoicePdf(invoice, business = {}) {
   doc.setTextColor(203, 213, 225);
   const headerLines = [
     [business.address_line, business.suburb, business.state, business.postcode].filter(Boolean).join(', '),
-    [business.phone, business.email, business.website].filter(Boolean).join('  |  '),
+    [business.phone || business.contact_person_phone, business.email, business.website].filter(Boolean).join('  |  '),
     [business.abn && `ABN ${business.abn}`, business.ndis_provider_number && `NDIS Provider ${business.ndis_provider_number}`].filter(Boolean).join('  |  '),
+    [business.contact_person && `Contact: ${business.contact_person}`, business.contact_person_phone && `Contact phone: ${business.contact_person_phone}`].filter(Boolean).join('  |  '),
   ];
   headerLines.forEach((line, i) => {
     if (line) doc.text(line, headerX, 52 + i * 12, { maxWidth: 420 });

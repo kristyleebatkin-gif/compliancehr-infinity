@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
-import { Download, FolderOpen, Loader2, Users, Heart, Building2, ScrollText, Layers, CalendarClock, ClipboardCheck, AlertTriangle, Zap, Ambulance, ShieldPlus, Target, MessageSquare, Boxes, Share2, FileSignature, HeartHandshake, Recycle, Scale, Briefcase, UserCog, Award } from 'lucide-react';
+import { FolderOpen, Users, Heart, Building2, ScrollText, Layers, CalendarClock, ClipboardCheck, AlertTriangle, Zap, Ambulance, ShieldPlus, Target, MessageSquare, Boxes, Share2, FileSignature, HeartHandshake, Recycle, Scale, Briefcase, UserCog, Award } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DocumentSubjectCard from '@/components/documents/DocumentSubjectCard';
+import { companySafeBusinessQuery as safeUploadQuery } from '@/lib/companySafeVault';
 
 /**
  * Documents Dashboard: one colour-coded card per subject/register in the vault,
@@ -46,9 +47,11 @@ export default function DocumentsDashboard({ role, focus }) {
 
   useEffect(() => {
     let alive = true;
-    (async () => {
+    const refresh = async () => {
       const results = await Promise.allSettled(
-        SUBJECTS.filter((s) => s.entity).map((s) => base44.entities[s.entity].count({})),
+        SUBJECTS.filter((s) => s.entity).map(async (s) => s.key === 'business-doc'
+          ? (await base44.entities.CompanyDocument.count({ status: { $ne: 'Archived' } })) + (await base44.entities.FormsLibraryDocument.count(safeUploadQuery))
+          : base44.entities[s.entity].count({})), 
       );
       if (!alive) return;
       const next = {};
@@ -56,8 +59,11 @@ export default function DocumentsDashboard({ role, focus }) {
         next[s.key] = results[i].status === 'fulfilled' ? results[i].value : null;
       });
       setCounts(next);
-    })();
-    return () => { alive = false; };
+    };
+    refresh();
+    const unsubscribeUploads = base44.entities.FormsLibraryDocument.subscribe(refresh);
+    const unsubscribeCompany = base44.entities.CompanyDocument.subscribe(refresh);
+    return () => { alive = false; unsubscribeUploads(); unsubscribeCompany(); };
   }, []);
 
   const open = (subject) => {
@@ -75,9 +81,14 @@ export default function DocumentsDashboard({ role, focus }) {
 
   const exportSubject = async (subject) => {
     if (!subject.entity) return;
-    const rows = await fetchAllRecords(base44.entities[subject.entity]);
+    const rows = subject.key === 'business-doc'
+      ? (await Promise.all([
+        fetchAllRecords(base44.entities.CompanyDocument, { status: { $ne: 'Archived' } }).then((records) => records.map((record) => ({ ...record, title: record.name, document_type: record.category, source: 'CompanyDocument' }))),
+        fetchAllRecords(base44.entities.FormsLibraryDocument, safeUploadQuery).then((records) => records.map((record) => ({ ...record, source: 'FormsLibraryDocument' }))),
+      ])).flat()
+      : await fetchAllRecords(base44.entities[subject.entity]);
     if (!rows.length) return;
-    const columns = Object.keys(rows[0]).map((key) => ({ key, label: key }));
+    const columns = [...new Set(rows.flatMap((row) => Object.keys(row)))].map((key) => ({ key, label: key }));
     downloadCsv(`${subject.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-register.csv`, columns, rows);
   };
 

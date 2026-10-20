@@ -7,6 +7,7 @@ import { safeUrl } from '@/lib/safeUrl';
 import { statusTone } from '@/lib/statusStyles';
 import { Plus, Trash2 } from 'lucide-react';
 import CompanyDocumentDialog, { COMPANY_CATEGORIES } from '@/components/documents/CompanyDocumentDialog';
+import CompanySafeUploads from '@/components/documents/CompanySafeUploads';
 
 export default function CompanySafeDocuments({ role }) {
   const [category, setCategory] = useState('all');
@@ -38,6 +39,7 @@ export default function CompanySafeDocuments({ role }) {
     </div>)}
     {loading && <p role="status" className="text-sm text-muted-foreground">Loading company documents...</p>}
     {page.has_more && <Button variant="outline" size="sm" disabled={loading} onClick={() => load(page.next_cursor)}>Load more</Button>}
+    <CompanySafeUploads />
     <CompanyDocumentDialog open={open} onOpenChange={setOpen} onSaved={() => load()} />
   </section>;
 }

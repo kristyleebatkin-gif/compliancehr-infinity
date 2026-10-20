@@ -23,8 +23,9 @@ export default function QuotePreview({ quote, business = {} }) {
         <div className="min-w-0">
           <div className="text-lg font-bold">{business.business_name || 'Business name'}</div>
           <div className="mt-1 text-[11px] leading-relaxed text-slate-300">{businessAddressLine(business) || 'Business address'}</div>
-          <div className="text-[11px] text-slate-300">{[business.phone, business.email, business.website].filter(Boolean).join('  |  ')}</div>
-          <div className="text-[11px] text-slate-300">{[business.abn && `ABN ${business.abn}`, business.ndis_provider_number && `NDIS Provider ${business.ndis_provider_number}`, business.contact_person && `Contact: ${business.contact_person}`].filter(Boolean).join('  |  ')}</div>
+          <div className="text-[11px] text-slate-300">{[business.phone || business.contact_person_phone, business.email, business.website].filter(Boolean).join('  |  ')}</div>
+          <div className="text-[11px] text-slate-300">{[business.abn && `ABN ${business.abn}`, business.ndis_provider_number && `NDIS Provider ${business.ndis_provider_number}`].filter(Boolean).join('  |  ')}</div>
+          <div className="text-[11px] text-slate-300">{[business.contact_person && `Contact: ${business.contact_person}`, business.contact_person_phone && `Contact phone: ${business.contact_person_phone}`].filter(Boolean).join('  |  ')}</div>
         </div>
         <div className="shrink-0 text-right">
           <div className="text-2xl font-bold tracking-wide">QUOTE</div>

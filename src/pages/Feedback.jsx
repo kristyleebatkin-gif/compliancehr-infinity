@@ -3,15 +3,13 @@ import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+
 import { Badge } from '@/components/ui/badge';
-import { statusTone } from '@/lib/statusStyles';
-import { Textarea } from '@/components/ui/textarea';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import FeedbackEntryDialog from '@/components/feedback/FeedbackEntryDialog';
 import SurveyRegister from '@/components/feedback/SurveyRegister';
 import FeedbackDetailDialog from '@/components/feedback/FeedbackDetailDialog';
 import { changeStatus } from '@/lib/statusLog';
@@ -32,6 +30,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
   const [detail, setDetail] = useState(null);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
   const [uploading, setUploading] = useState('');
   const [form, setForm] = useState(blank);
   const [users, setUsers] = useState([]);
@@ -56,6 +55,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
 
   const save = async () => {
     if (!form.subject.trim()) return;
+    setSaveError('');
     setSaving(true);
     try {
       const payload = {
@@ -99,10 +99,12 @@ export default function Feedback({ profile, embedded = false } = {}) {
           priority: form.type === 'Complaint' ? 'High' : 'Medium',
         }).catch(() => {});
       }
-      setForm(blank);
+      setForm({ ...blank, ...(profile ? { submitted_by: profile.full_name, contact_details: profile.email || profile.phone || '' } : {}) });
       setOpen(false);
       await load();
       toast({ title: 'Entry recorded', description: 'Copied to the communication diary, management alerted and follow-up task created if allocated.' });
+    } catch (error) {
+      setSaveError(error.message || 'Unable to record this entry. Please try again.');
     } finally {
       setSaving(false);
     }
@@ -237,45 +239,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
         action={
           <div className="flex items-center gap-1">
             {tab === 'Feedback' && <Button size="sm" variant="outline" onClick={exportRegister}><Download className="h-3 w-3" />Export register</Button>}
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
-                <DialogHeader><DialogTitle>Record feedback or complaint</DialogTitle></DialogHeader>
-                <div className="grid gap-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-1.5"><Label>Type</Label>
-                      <Select value={form.type} onValueChange={(v) => setForm({ ...form, type: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>{['Feedback', 'Complaint'].map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                      </Select>
-                    </div>
-                    <div className="grid gap-1.5"><Label>Rating (1-5)</Label><Input type="number" min="1" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} /></div>
-                  </div>
-                  <div className="grid gap-1.5"><Label>Subject *</Label><Input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} /></div>
-                  <div className="grid gap-1.5"><Label>Message</Label><Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-1.5"><Label>Submitted by</Label><Input value={form.submitted_by} onChange={(e) => setForm({ ...form, submitted_by: e.target.value })} /></div>
-                    <div className="grid gap-1.5"><Label>Contact details</Label><Input value={form.contact_details} onChange={(e) => setForm({ ...form, contact_details: e.target.value })} /></div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-1.5"><Label>Received via</Label><Input placeholder="Phone, email, in person, form" value={form.received_via} onChange={(e) => setForm({ ...form, received_via: e.target.value })} /></div>
-                    <div className="grid gap-1.5"><Label>Assigned to</Label>
-                      {users.length ? (
-                        <Select value={form.assigned_to || undefined} onValueChange={(v) => setForm({ ...form, assigned_to: v, assigned_email: users.find((u) => u.full_name === v)?.email || '' })}>
-                          <SelectTrigger><SelectValue placeholder="Select a person" /></SelectTrigger>
-                          <SelectContent>{users.map((u) => <SelectItem key={u.id} value={u.full_name}>{u.full_name}</SelectItem>)}</SelectContent>
-                        </Select>
-                      ) : (
-                        <Input value={form.assigned_to} onChange={(e) => setForm({ ...form, assigned_to: e.target.value })} />
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex justify-end gap-2 pt-1">
-                    <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                    <Button onClick={save} disabled={saving || !form.subject.trim()}>{saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}Record entry</Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
+
           </div>
         }
       />}
@@ -325,6 +289,7 @@ export default function Feedback({ profile, embedded = false } = {}) {
         <TabsContent value="Surveys" className="mt-2">
           <SurveyRegister />
         </TabsContent>
+      <FeedbackEntryDialog open={open} onOpenChange={setOpen} form={form} setForm={setForm} users={users} saving={saving} error={saveError} onSave={save} />
       <FeedbackDetailDialog item={detail} onClose={() => setDetail(null)} />
     </Tabs>
   );
