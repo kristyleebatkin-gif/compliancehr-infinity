@@ -124,6 +124,7 @@ export default function TaskDashboard({ tasks, onOpen }) {
 
   return (
     <div className="space-y-3">
+      <TaskAssistantCard compact inline />
       <div className="grid gap-2 sm:grid-cols-3">
         <Panel title="Current" icon={Clock} tone="from-violet-500 to-purple-400" tasks={current} onOpen={onOpen} emptyText="No current tasks." />
         <Panel title="Future" icon={CalendarClock} tone="from-sky-500 to-cyan-400" tasks={future} onOpen={onOpen} emptyText="No future tasks scheduled." />
@@ -133,8 +134,8 @@ export default function TaskDashboard({ tasks, onOpen }) {
         <StaffStrip tasks={tasks} />
         <TimeCard tasks={tasks} avgMin={avgMin} />
       </div>
-      <div className="grid items-start gap-2 md:grid-cols-2">
-        <div className="grid grid-cols-3 gap-2">
+      <div>
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
           <Tile icon={ListTodo} label="Open" value={tasks.filter((t) => t.status === 'Open').length} tone="from-violet-500 to-purple-400" />
           <Tile icon={Clock} label="In progress" value={tasks.filter((t) => t.status === 'In Progress').length} tone="from-sky-500 to-cyan-400" />
           <Tile icon={CalendarClock} label="Due today" value={dueToday.length} tone="from-amber-500 to-orange-400" />
@@ -142,7 +143,6 @@ export default function TaskDashboard({ tasks, onOpen }) {
           <Tile icon={CheckCircle2} label="Completed" value={completedCount} tone="from-emerald-500 to-teal-400" />
           <Tile icon={TrendingUp} label="Avg finish" value={avgMin ? `${avgMin}m` : '-'} tone="from-fuchsia-500 to-pink-400" hint="Across timed tasks" />
         </div>
-        <TaskAssistantCard compact />
       </div>
     </div>
   );

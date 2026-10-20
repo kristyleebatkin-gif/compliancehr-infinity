@@ -6,6 +6,9 @@ import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
+import TaskToolbar from '@/components/tasks/TaskToolbar';
+import TaskSummaryCards from '@/components/tasks/TaskSummaryCards';
+import TaskList from '@/components/tasks/TaskList';
 import TaskProgressChart from '@/components/tasks/TaskProgressChart';
 import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
 import TaskCalendar from '@/components/tasks/TaskCalendar';
@@ -25,6 +28,7 @@ const blank = { title: '', task_type: 'General', assigned_to: '', assigned_email
 export default function Tasks() {
   const { toast } = useToast();
   const [list, setList] = useState([]);
+  const [taskTotals, setTaskTotals] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
@@ -47,12 +51,13 @@ export default function Tasks() {
       const me = await base44.auth.me();
       const seesAll = MANAGEMENT_ROLES.includes(me?.role);
       setMeEmail(me?.email || '');
-      const [page, userPage] = await Promise.all([
-        seesAll
-          ? base44.entities.TodoTask.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 })
-          : base44.entities.TodoTask.filter({ archived: { $ne: true }, assigned_email: me?.email }, { sort: '-due_date', limit: 500 }),
+      const taskQuery = seesAll ? { archived: { $ne: true } } : { archived: { $ne: true }, assigned_email: me?.email };
+      const [page, userPage, totals] = await Promise.all([
+        base44.entities.TodoTask.filter(taskQuery, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list(),
+        base44.entities.TodoTask.aggregate({ query: taskQuery, groupBy: 'status' }),
       ]);
+      setTaskTotals(totals.rows || []);
       setList(page.items || []);
       setUsers(userPage.items || []);
     } catch (e) { console.error(e); }
@@ -193,12 +198,13 @@ export default function Tasks() {
 
   return (
     <div className="mx-auto max-w-5xl p-3 md:p-5 space-y-4">
-      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={exportTasks} disabled={loading || list.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-60"><Download className="h-4 w-4" />Export CSV</button><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
+      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<TaskToolbar view={view} onView={setView} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
 
-      <div className="flex items-center justify-end gap-1.5">
-        <button onClick={() => setView('list')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'list' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>List</button>
-        <button onClick={() => setView('calendar')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'calendar' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>Calendar</button>
-      </div>
+      <TaskSummaryCards totals={taskTotals} loading={loading} />
+
+      <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
+        {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
+      </section>
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
 
@@ -209,59 +215,6 @@ export default function Tasks() {
       {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
 
       <RegisterInsights module="tasks" />
-
-      {view === 'calendar' ? (
-        <TaskCalendar tasks={list} onOpen={openEdit} />
-      ) : (
-        <>
-          <div className="module-filter-bar flex items-center gap-1 overflow-x-auto">
-            {['All', 'My tasks', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
-              <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
-            ))}
-            <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>
-            <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pl-3 text-xs font-medium text-foreground/60">
-              <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} className="h-4 w-4" />
-              Select all
-            </label>
-          </div>
-
-          {loading ? (
-            <div className="py-12 text-center text-sm text-foreground/40">Loading...</div>
-          ) : filtered.length === 0 ? (
-            <EmptyState icon={ListTodo} title="No tasks" message="Create tasks to track compliance actions." />
-          ) : (
-            <div className="space-y-2">
-              {filtered.map((t, idx) => (
-                <div key={t.id} className={`flex items-center gap-2 rounded-xl border px-3 py-2 transition-colors ${selected.includes(t.id) ? 'border-brand bg-brand/5' : 'border-border/60 bg-card'} ${focusIdx === idx ? 'ring-2 ring-brand/60' : ''}`}>
-                  <input type="checkbox" checked={selected.includes(t.id)} onChange={() => toggleSelect(t.id)} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-[hsl(var(--brand))]" />
-                  <button onClick={() => toggle(t)} className="shrink-0">
-                    {t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}
-                  </button>
-                  <div className="min-w-0 flex-1">
-                    <div className={`text-sm font-medium ${t.status === 'Completed' ? 'line-through text-foreground/40' : ''}`}>{t.title}</div>
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/50">
-                      <span className={`rounded-full px-2 py-0.5 font-medium ${t.priority === 'Urgent' || t.priority === 'High' ? 'bg-danger/10 text-danger' : 'bg-muted text-foreground/60'}`}>{t.priority}</span>
-                      <span>{t.task_type}</span>
-                      {t.assigned_to && <span>• {t.assigned_to}</span>}
-                      {t.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{format(new Date(t.due_date), 'EEE d MMM yyyy')}</span>}
-                      {t.completed_date && t.status === 'Completed' && <span>• completed {format(new Date(t.completed_date), 'd MMM yyyy')}</span>}
-                    </div>
-                  </div>
-                  <select value={t.status} onChange={(e) => setStatus(t, e.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">
-                    {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                  <div className="flex gap-1">
-                    <button onClick={() => setSending(t)} title="Send / alert assignee" className="rounded p-1.5 hover:bg-brand/10"><Mail className="h-4 w-4 text-foreground/50" /></button>
-                    <button onClick={() => alertAssignee(t)} title="Send in-app alert" className="rounded p-1.5 hover:bg-brand/10"><Bell className="h-4 w-4 text-foreground/50" /></button>
-                    <button onClick={() => openEdit(t)} aria-label="Edit task" className="rounded p-1.5 hover:bg-brand/10"><Pencil className="h-4 w-4 text-foreground/50" /></button>
-                    <button onClick={() => remove(t)} aria-label="Delete task" className="rounded p-1.5 hover:bg-danger/10"><Trash2 className="h-4 w-4 text-danger" /></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
 
       {selected.length > 0 && (
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">

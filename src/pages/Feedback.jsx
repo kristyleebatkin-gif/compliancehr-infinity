@@ -173,25 +173,25 @@ export default function Feedback({ profile, embedded = false } = {}) {
   const List = ({ type }) => {
     const filtered = items.filter((i) => i.type === type);
     if (filtered.length === 0) {
-      return <Card><CardContent className="p-10 text-center text-muted-foreground">Nothing recorded yet.</CardContent></Card>;
+      return <Card><CardContent className="p-3 text-center text-xs text-muted-foreground">Nothing recorded yet.</CardContent></Card>;
     }
     return (
-      <div className="space-y-3">
+      <div className="space-y-2">
         {filtered.map((i) => (
           <Card key={i.id}>
-            <CardContent className="p-4">
+            <CardContent className="p-2.5 [&_button]:h-6 [&_button]:px-2 [&_button]:text-[10px]">
               <div className="flex items-start justify-between gap-2">
-                <button className="text-left" onClick={() => view(i)}>
-                  <p className="font-medium hover:underline">
+                <button className="min-w-0 flex-1 text-left !h-auto !px-0" onClick={() => view(i)}>
+                  <p className="text-xs font-medium hover:underline">
                     <span className={`mr-2 rounded-full px-2 py-0.5 align-middle text-[10px] font-bold uppercase tracking-wide ${i.type === 'Complaint' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300' : 'bg-teal-100 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300'}`}>{i.type}</span>
                     {i.subject}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-[11px] text-muted-foreground">
                     {i.submitted_by ? `From ${i.submitted_by}` : 'Anonymous'}
                     {i.received_date ? ` · received ${format(new Date(i.received_date), 'd MMM yyyy')}` : ''}
                   </p>
                 </button>
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-1">
                   {i.rating ? <Badge variant="outline"><Eye className="mr-1 h-3 w-3" />{i.rating}/5</Badge> : null}
                   <Select value={i.status} onValueChange={(v) => setStatus(i, v)}>
                     <SelectTrigger className="h-7 w-[170px] text-xs"><SelectValue /></SelectTrigger>
@@ -199,8 +199,8 @@ export default function Feedback({ profile, embedded = false } = {}) {
                   </Select>
                 </div>
               </div>
-              {i.message && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{i.message}</p>}
-              <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+              {i.message && <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{i.message}</p>}
+              <div className="mt-2 flex flex-wrap items-center gap-1 text-[10px] text-muted-foreground">
                 <span className="rounded-full bg-muted px-2 py-0.5">Received {i.received_date ? format(new Date(i.received_date), 'd MMM yyyy') : '-'}</span>
                 {i.viewed_date && <span className="rounded-full bg-muted px-2 py-0.5">Viewed {format(new Date(i.viewed_date), 'd MMM yyyy')}</span>}
                 {i.pending_date && <span className="rounded-full bg-muted px-2 py-0.5">Pending from {format(new Date(i.pending_date), 'd MMM yyyy')}</span>}
@@ -222,11 +222,12 @@ export default function Feedback({ profile, embedded = false } = {}) {
   };
 
   return (
-    <div className="space-y-4">
+    <Tabs value={tab} onValueChange={setTab} className="space-y-3">
       {!embedded && <PageHeader
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         showAlerts={false}
+        beforeAudit={<TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>}
         action={
           <div>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -272,23 +273,19 @@ export default function Feedback({ profile, embedded = false } = {}) {
         }
       />}
 
-      <Tabs value={tab} onValueChange={setTab}>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           {tab === 'Feedback' && <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Record entry</Button>}
-          <TabsList>
-            <TabsTrigger value="Feedback">Feedback & Complaints</TabsTrigger>
-            <TabsTrigger value="Surveys">Surveys</TabsTrigger>
-          </TabsList>
+          {embedded && <TabsList className="h-7 p-0.5"><TabsTrigger value="Feedback" className="px-2 py-0.5 text-[11px]">Feedback & Complaints</TabsTrigger><TabsTrigger value="Surveys" className="px-2 py-0.5 text-[11px]">Surveys</TabsTrigger></TabsList>}
           {tab === 'Feedback' && <Button size="sm" variant="outline" className="ml-auto" onClick={exportRegister}><Download className="h-4 w-4" />Export register</Button>}
         </div>
-        <TabsContent value="Feedback" className="mt-4">
+        <TabsContent value="Feedback" className="mt-2">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
             <div className="space-y-4">
-              <Card><CardContent className="p-3">
-                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
-                <ResponsiveContainer width="100%" height={90}>
+              <Card><CardContent className="p-2">
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
+                <ResponsiveContainer width="100%" height={72}>
                   <BarChart data={chartData} barCategoryGap="20%">
                     <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
                     <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
@@ -299,16 +296,16 @@ export default function Feedback({ profile, embedded = false } = {}) {
                 </ResponsiveContainer>
               </CardContent></Card>
 
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
                   ['Received', items.filter((i) => i.status === 'Received').length, Megaphone, 'from-sky-500 to-cyan-400'],
                   ['Viewed', items.filter((i) => i.status === 'Viewed').length, Eye, 'from-amber-500 to-orange-400'],
                   ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2, 'from-fuchsia-500 to-pink-400'],
                   ['Finalised', items.filter((i) => i.status === 'Finalised').length, CheckCircle2, 'from-emerald-500 to-teal-400'],
                 ].map(([label, value, Icon, tone]) => (
-                  <div key={label} className={`rounded-xl bg-gradient-to-br ${tone} p-3.5 text-white shadow-lg`}>
-                    <div className="flex items-center gap-2"><Icon className="h-4 w-4 opacity-90" /><p className="text-[10px] font-bold uppercase tracking-wide opacity-85">{label}</p></div>
-                    <p className="mt-1.5 text-2xl font-extrabold leading-none">{value}</p>
+                  <div key={label} className={`min-w-0 rounded-lg bg-gradient-to-br ${tone} p-2 text-white shadow-sm`}>
+                    <div className="flex items-start gap-1"><Icon className="h-3 w-3 shrink-0 opacity-90" /><p className="text-[9px] font-bold uppercase leading-tight tracking-wide opacity-85">{label}</p></div>
+                    <p className="mt-1 text-lg font-extrabold leading-none">{value}</p>
                   </div>
                 ))}
               </div>
@@ -319,12 +316,10 @@ export default function Feedback({ profile, embedded = false } = {}) {
             </div>
           )}
         </TabsContent>
-        <TabsContent value="Surveys" className="mt-4">
+        <TabsContent value="Surveys" className="mt-2">
           <SurveyRegister />
         </TabsContent>
-      </Tabs>
-
       <FeedbackDetailDialog item={detail} onClose={() => setDetail(null)} />
-    </div>
+    </Tabs>
   );
 }

@@ -102,9 +102,9 @@ export default function SurveyRegister() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-muted-foreground">Participant and staff satisfaction surveys, with downloadable survey documents and stored forms.</p>
+    <div className="space-y-2">
+      <div className="flex flex-wrap items-center justify-between gap-1.5 [&_button]:h-7 [&_button]:px-2 [&_button]:text-[11px]">
+        <p className="text-xs text-muted-foreground">Participant and staff satisfaction surveys, with downloadable survey documents and stored forms.</p>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
           <Button size="sm" onClick={() => { setEditingId(null); setForm(blank); setOpen(true); }}><Plus className="mr-2 h-4 w-4" />New survey</Button>
@@ -114,30 +114,30 @@ export default function SurveyRegister() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : items.length === 0 ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No surveys yet.</CardContent></Card>
+        <Card><CardContent className="p-3 text-center text-xs text-muted-foreground">No surveys yet.</CardContent></Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-2 md:grid-cols-2">
           {items.map((s) => (
             <Card key={s.id}>
-              <CardContent className="p-4">
+              <CardContent className="p-2.5 [&_button]:h-6 [&_button]:px-2 [&_button]:text-[10px] [&_button_svg]:mr-1 [&_button_svg]:h-3 [&_button_svg]:w-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-semibold">{s.title}</p>
-                    <p className="text-sm text-muted-foreground">{s.type}</p>
+                    <p className="text-xs font-semibold">{s.title}</p>
+                    <p className="text-[10px] text-muted-foreground">{s.type}</p>
                   </div>
                   <Select value={s.status} onValueChange={(v) => setStatus(s, v)}>
                     <SelectTrigger className="h-7 w-[110px] text-xs"><SelectValue /></SelectTrigger>
                     <SelectContent>{FLOW.map((st) => <SelectItem key={st} value={st}>{st}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-1.5 text-[11px] text-muted-foreground">
                   {[s.open_date ? `Opens ${format(new Date(s.open_date), 'd MMM')}` : '', s.close_date ? `Closes ${format(new Date(s.close_date), 'd MMM yyyy')}` : ''].filter(Boolean).join(' · ') || 'No dates set'}
                 </p>
-                <div className="mt-2 flex items-center gap-4 text-sm">
+                <div className="mt-1.5 flex items-center gap-2 text-[11px]">
                   {s.responses != null && <span><span className="font-semibold">{s.responses}</span> responses</span>}
                   {s.avg_rating != null && <span><span className="font-semibold">{s.avg_rating}</span> / 5 avg</span>}
                 </div>
-                <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                <div className="mt-2 flex flex-wrap items-center gap-1">
                   <input type="file" id={`survey-file-${s.id}`} className="hidden" onChange={(e) => uploadForm(s, e.target.files?.[0])} />
                   <Button variant="outline" size="sm" disabled={uploading === s.id} onClick={() => document.getElementById(`survey-file-${s.id}`).click()}>
                     {uploading === s.id ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="mr-2 h-3.5 w-3.5" />}Upload form

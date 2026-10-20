@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Bot, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
-export default function TaskAssistantCard({ compact = false }) {
-  return <Card className="min-w-0 overflow-hidden"><CardContent className="p-0">
+export default function TaskAssistantCard({ compact = false, inline = false }) {
+  return <Card className="min-w-0 overflow-hidden"><CardContent className={inline ? 'grid gap-0 p-0 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]' : 'p-0'}>
     <div className={compact ? 'bg-primary p-2 text-primary-foreground' : 'bg-primary p-3 text-primary-foreground'}>
       <h2 className="flex items-start gap-2 text-sm font-bold"><Bot className="mt-0.5 h-4 w-4 shrink-0" />AI assistants - your task helpers</h2>
       <p className="mt-1 text-xs">Open the AI Assistant from the sidebar and it will work alongside you on any task.</p>
