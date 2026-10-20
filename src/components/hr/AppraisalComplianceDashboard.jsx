@@ -84,7 +84,7 @@ export default function AppraisalComplianceDashboard() {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <div className="rounded-xl border border-border/60 bg-card p-3">
         <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><BarChart3 className="h-4 w-4 text-brand" />Appraisals &amp; compliance dashboard</div>
         <p className="text-xs text-muted-foreground">Every pending staff appraisal with each person's compliance record status beside it, so you can see exactly who is due for a review next.</p>
       </div>
@@ -96,7 +96,7 @@ export default function AppraisalComplianceDashboard() {
           { label: 'Due in next 30 days', value: dueSoon.length, icon: CalendarCheck, tone: 'bg-warning/10 text-warning' },
           { label: 'Active staff with no appraisal scheduled', value: neverScheduled.length, icon: CalendarClock, tone: 'bg-blue-500/10 text-blue-600 dark:text-blue-300' },
         ].map((s) => (
-          <Card key={s.label}><CardContent className="p-3.5">
+          <Card key={s.label}><CardContent className="p-2.5">
             <div className={`mb-2 inline-flex rounded-lg p-2 ${s.tone}`}><s.icon className="h-4 w-4" /></div>
             <p className="text-xl font-bold">{s.value}</p>
             <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>

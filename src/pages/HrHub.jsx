@@ -115,9 +115,9 @@ export default function HrHub({ profile, embedded = false } = {}) {
           { label: 'Reviews scheduled', value: scheduledReviews.length, icon: ClipboardCheck },
           { label: 'Reviews completed', value: reviews.filter((r) => r.status === 'Completed').length, icon: Check },
         ].map((s) => (
-          <Card key={s.label}><CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-blue-50 p-2.5 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><s.icon className="h-5 w-5" /></div>
-            <div><p className="text-2xl font-bold">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></div>
+          <Card key={s.label}><CardContent className="flex items-center gap-2 p-2.5">
+            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><s.icon className="h-4 w-4" /></div>
+            <div><p className="text-lg font-bold leading-6">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></div>
           </CardContent></Card>
         ))}
       </div>
@@ -166,7 +166,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
               {leaves.map((l) => (
-                <Card key={l.id}><CardContent className="p-4">
+                <Card key={l.id}><CardContent className="p-2.5 text-sm">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-semibold">{l.staff_name}</p>
@@ -176,7 +176,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${l.status === 'Approved' ? 'bg-safe/10 text-safe' : l.status === 'Declined' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'}`}>{l.status}</span>
                   </div>
                   {isManager && l.status === 'Pending' && (
-                    <div className="mt-3 flex gap-2">
+                    <div className="module-action-bar mt-1.5 flex gap-1">
                       <Button size="sm" className="bg-safe text-white hover:bg-safe/90" onClick={() => decide(l, 'Approved')}><Check className="mr-1 h-3.5 w-3.5" />Approve</Button>
                       <Button size="sm" variant="outline" className="text-danger" onClick={() => decide(l, 'Declined')}><X className="mr-1 h-3.5 w-3.5" />Decline</Button>
                     </div>
@@ -218,7 +218,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
               {reviews.map((r) => (
-                <Card key={r.id}><CardContent className="p-4">
+                <Card key={r.id}><CardContent className="p-2.5 text-sm">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-semibold">{r.staff_name}</p>
@@ -228,7 +228,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
                     </div>
                     <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${r.status === 'Completed' ? 'bg-safe/10 text-safe' : r.status === 'Cancelled' ? 'bg-muted text-muted-foreground' : 'bg-warning/10 text-warning'}`}>{r.status}</span>
                   </div>
-                  <div className="mt-3 flex gap-2">
+                  <div className="module-action-bar mt-1.5 flex gap-1">
                     {isManager && r.status !== 'Completed' && <Button size="sm" variant="outline" onClick={() => completeReview(r)}>Mark completed</Button>}
                     {isManager && <Button size="sm" variant="ghost" className="text-danger" onClick={() => remove(base44.entities.PerformanceReview, r.id)}><Trash2 className="h-4 w-4" /></Button>}
                   </div>

@@ -10,16 +10,16 @@ import GoalNotes from '@/components/goals/GoalNotes';
 
 export default function GoalProgressCard({ g, compact, isAdmin, ourView, onProgress, onApprove, onDelete }) {
   return <Card className="min-w-0 overflow-hidden rounded-xl border-border/70 shadow-sm">
-    <CardContent className={compact ? 'space-y-3 p-3' : 'space-y-4 p-4'}>
+    <CardContent className={compact ? 'space-y-1.5 p-2' : 'space-y-2 p-2.5'}>
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0 flex-1 basis-48">
           <p className="text-[11px] font-semibold text-primary">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
-          <h3 className="mt-1 break-words text-sm font-bold leading-6 text-foreground">{g.goal}</h3>
+          <h3 className="mt-0.5 break-words text-sm font-bold leading-5 text-foreground">{g.goal}</h3>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">{!g.admin_approved && <Badge variant="outline" className="text-[10px]">Awaiting approval</Badge>}<Badge className={statusTone(g.status)}>{g.status}</Badge></div>
       </div>
-      <div className="rounded-lg bg-muted/40 p-3">
-        <div className="mb-2 flex items-center justify-between gap-3">
+      <div className="rounded-lg bg-muted/40 p-2">
+        <div className="mb-1 flex items-center justify-between gap-2">
           <span className="text-xs font-medium text-muted-foreground">Progress</span>
           {compact ? <span className="text-sm font-bold tabular-nums text-primary">{g.progress || 0}%</span> : <div className="flex items-center gap-1.5"><Input aria-label={`Progress percentage for ${g.goal}`} type="number" min="0" max="100" value={g.progress ?? 0} onChange={(event) => onProgress(g, Number(event.target.value) || 0)} className="h-8 w-20 bg-card text-right text-sm tabular-nums" /><span className="text-xs text-muted-foreground">%</span></div>}
         </div>

@@ -121,8 +121,8 @@ export default function VolunteerDetail({ open, onOpenChange, volunteer, onSaved
               <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="details" className="mt-3 grid gap-3">
-              <div className="grid grid-cols-2 gap-3">
+            <TabsContent value="details" className="mt-2 grid gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <Row label="Volunteer role" value={volunteer.role} />
                 <Row label="Supervisor" value={volunteer.supervisor} />
                 <Row label="Start date" value={volunteer.start_date ? format(new Date(volunteer.start_date), 'd MMM yyyy') : ''} />

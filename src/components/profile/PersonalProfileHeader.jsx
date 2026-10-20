@@ -6,7 +6,7 @@ import { UserRound, Sparkles, History } from 'lucide-react';
 import { profilePalette } from '@/lib/profileColours';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 
-export default function PersonalProfileHeader({ profile, kind }) {
+export default function PersonalProfileHeader({ profile, kind, showIdentity = true }) {
   const [photo, setPhoto] = useState('');
   const [branding, setBranding] = useState(getCompanyBranding());
   const staff = kind === 'staff';
@@ -22,7 +22,7 @@ export default function PersonalProfileHeader({ profile, kind }) {
   const log = String(profile.change_log || '').split('\n').filter(Boolean);
   return (
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-      <div className="relative px-6 py-6 text-primary-foreground" style={{ background: `linear-gradient(120deg, ${primary} 0%, ${accent} 100%)` }}>
+      {showIdentity && <div className="relative px-6 py-6 text-primary-foreground" style={{ background: `linear-gradient(120deg, ${primary} 0%, ${accent} 100%)` }}>
         <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 8%, rgba(255,255,255,0.28), transparent 42%), radial-gradient(circle at 6% 95%, rgba(255,255,255,0.18), transparent 38%)' }} />
         <div className="relative flex flex-wrap items-center gap-5">
           <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-primary-foreground/70 bg-primary-foreground/15 ring-4 ring-primary-foreground/25">{photo ? <Image src={photo} alt={profile.full_name} className="h-full w-full" /> : <UserRound className="h-9 w-9" />}</div>
@@ -33,8 +33,8 @@ export default function PersonalProfileHeader({ profile, kind }) {
           </div>
           {staff && <div className="w-[230px] shrink-0 overflow-hidden rounded-xl bg-card text-card-foreground shadow-lg"><div className="flex items-center gap-2 px-3 py-2" style={{ background: primary }}>{(branding.logoDataUrl || branding.logoUrl) && <Image src={branding.logoDataUrl || branding.logoUrl} alt="Logo" fittingType="fit" className="h-7 w-7 rounded bg-card" />}<p className="truncate text-[11px] font-bold text-primary-foreground">{branding.companyName || 'ComplianceHR'}</p></div><div className="px-3 py-2"><p className="truncate text-sm font-bold">{profile.full_name}</p><p className="text-[10px] text-muted-foreground">{profile.position || 'Support Worker'}</p><p className="mt-1 text-[9px] text-muted-foreground">Employee No. {profile.employee_number || '-'}</p></div></div>}
         </div>
-      </div>
-      <div className="grid gap-5 p-6 md:grid-cols-2">
+      </div>}
+      <div className="grid gap-2 p-3 md:grid-cols-2">
         <div className="rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-4 shadow-sm"><div className="mb-2 flex items-center gap-2 text-sm font-semibold"><Sparkles className="h-4 w-4 text-primary" />About Me</div><p className="whitespace-pre-wrap text-sm text-muted-foreground">{profile.about_me || 'No introduction added yet.'}</p></div>
         <div className="rounded-xl border border-border/60 bg-muted/40 p-4"><div className="mb-2 flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-primary" />Details check &amp; change log</div>{log.length ? <ul className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-border/60 bg-muted/40 p-3">{log.slice(-12).reverse().map((line, i) => <li key={i} className="text-[11px] text-muted-foreground">{line}</li>)}</ul> : <p className="text-xs text-muted-foreground">No changes logged yet.</p>}{profile.last_details_check_date && <p className="mt-1 text-[11px] text-muted-foreground">Last details check requested: {profile.last_details_check_date}</p>}</div>
       </div>

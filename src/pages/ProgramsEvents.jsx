@@ -175,7 +175,7 @@ export default function ProgramsEvents() {
       {!loading && grouped.Upcoming[0] && (() => {
         const spotlight = grouped.Upcoming[0];
         return (
-          <Card className="overflow-hidden border-0 bg-gradient-to-br from-fuchsia-600 via-purple-600 to-violet-700 text-white shadow-lg">
+          <Card className="overflow-hidden border border-primary/20 bg-gradient-to-br from-primary/10 via-accent to-chart-5/10 text-foreground shadow-sm">
             <CardContent className="flex flex-col gap-5 p-6 md:flex-row md:items-center">
               <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-4 backdrop-blur">
                 <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(spotlight.date), 'MMM')}</span>
@@ -186,8 +186,8 @@ export default function ProgramsEvents() {
                   <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide">Next up</span>
                   <p className="text-lg font-bold">{spotlight.title}</p>
                 </div>
-                {spotlight.description && <p className="mt-1 line-clamp-2 text-sm text-white/80">{spotlight.description}</p>}
-                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/80">
+                {spotlight.description && <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{spotlight.description}</p>}
+                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                   {spotlight.start_time && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{spotlight.start_time}{spotlight.end_time ? ` - ${spotlight.end_time}` : ''}</span>}
                   {spotlight.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{spotlight.location}</span>}
                   {spotlight.cost_text && <span className="flex items-center gap-1"><DollarSign className="h-3 w-3" />{spotlight.cost_text}</span>}
@@ -195,7 +195,7 @@ export default function ProgramsEvents() {
               </div>
               <div className="flex shrink-0 flex-wrap gap-2">
                 <Button className="bg-white text-purple-700 hover:bg-purple-50" size="sm" onClick={() => setViewing(spotlight)}><Eye className="mr-1.5 h-3.5 w-3.5" />Details</Button>
-                <Button variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10" size="sm" onClick={() => setInviteFor(spotlight)}><Mail className="mr-1.5 h-3.5 w-3.5" />Invite</Button>
+                <Button variant="outline" className="border-primary/25 bg-card text-primary hover:bg-accent" size="sm" onClick={() => setInviteFor(spotlight)}><Mail className="mr-1.5 h-3.5 w-3.5" />Invite</Button>
               </div>
             </CardContent>
           </Card>

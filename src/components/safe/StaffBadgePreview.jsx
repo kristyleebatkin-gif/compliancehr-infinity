@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 export default function StaffBadgePreview({ branding, staff, compact = false }) {
   return (
     <div className={compact ? 'w-full min-w-0 overflow-hidden rounded-lg border border-border bg-card shadow-sm' : 'w-[268px] shrink-0 overflow-hidden rounded-xl border border-border bg-white shadow-md'}>
-      <div className="flex items-center gap-2.5 bg-white px-4 pb-2.5 pt-3">
+      <div className={compact ? 'flex items-center gap-2 bg-card px-2 py-1.5' : 'flex items-center gap-2.5 bg-white px-4 pb-2.5 pt-3'}>
         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted">
           {branding.logoDataUrl || branding.logoUrl
             ? <img src={branding.logoDataUrl || branding.logoUrl} alt="Logo" className="h-full w-full object-contain" />
@@ -20,14 +20,14 @@ export default function StaffBadgePreview({ branding, staff, compact = false }) 
         <div className="flex-1 bg-[#7c3aed]" />
         <div className="flex-1 bg-[#ec4899]" />
       </div>
-      <div className="flex items-start justify-between gap-2 bg-muted/30 px-4 pb-4 pt-3">
+      <div className={compact ? 'flex items-start justify-between gap-2 bg-muted/30 px-2 py-1.5' : 'flex items-start justify-between gap-2 bg-muted/30 px-4 pb-4 pt-3'}>
         <div className="min-w-0">
           <p className="truncate text-base font-bold text-foreground">{staff?.full_name || 'Staff member'}</p>
           <p className="text-xs text-muted-foreground">{staff?.position || 'Support Worker'}</p>
           <p className="mt-2 text-[10px] text-muted-foreground">Employee No. {staff?.employee_number || '-'}</p>
           <div className="mt-2 h-0.5 w-10 rounded bg-[#7c3aed]" />
         </div>
-        <div className="flex h-16 w-14 shrink-0 items-center justify-center rounded-md border border-dashed border-border bg-white">
+        <div className={compact ? 'flex h-10 w-9 shrink-0 items-center justify-center rounded-md border border-dashed border-border bg-card' : 'flex h-16 w-14 shrink-0 items-center justify-center rounded-md border border-dashed border-border bg-white'}>
           <span className="text-[7px] text-muted-foreground">PHOTO</span>
         </div>
       </div>

@@ -184,7 +184,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
               <div className="grid min-w-0 items-start gap-3 xl:grid-cols-2">
                 {participants.map((p) => (
                   <Card key={p.name} className="min-w-0 rounded-xl border-border/70 shadow-sm">
-                    <CardContent className="p-4">
+                    <CardContent className="p-2.5">
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="flex min-w-0 items-center gap-2.5">
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand"><Users className="h-4 w-4" /></div>

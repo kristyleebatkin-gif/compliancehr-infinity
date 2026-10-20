@@ -24,7 +24,7 @@ export default function CrisisInformation() {
             <p className="text-base font-bold text-danger">In a crisis or urgent situation, call 000 now</p>
             <p className="text-sm text-foreground/70">If a person is in immediate danger, seriously injured, or at immediate risk of harm, do not wait - call Triple Zero (000).</p>
           </div>
-          <a href="tel:000" className="inline-flex items-center gap-1.5 rounded-lg bg-danger px-5 py-2.5 text-base font-bold text-white hover:bg-danger/90"><Phone className="h-5 w-5" />Call 000</a>
+          <a href="tel:000" className="inline-flex items-center gap-1.5 rounded-lg bg-teal px-5 py-2.5 text-base font-bold text-teal-foreground hover:bg-teal/90"><Phone className="h-5 w-5" />Call 000</a>
         </div>
       </div>
 
@@ -36,7 +36,7 @@ export default function CrisisInformation() {
               <p className="text-sm font-semibold">{line.name}</p>
               <p className="text-xs text-muted-foreground">{line.desc}</p>
             </div>
-            <a href={`tel:${line.number.replace(/\s/g, '')}`} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-danger/10 px-3 py-2 text-sm font-bold text-danger hover:bg-danger/20">
+            <a href={`tel:${line.number.replace(/\s/g, '')}`} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-teal/10 px-3 py-2 text-sm font-bold text-teal hover:bg-teal/20">
               <Phone className="h-3.5 w-3.5" />{line.number}
             </a>
           </div>

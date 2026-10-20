@@ -106,7 +106,7 @@ export default function HrPaperworkPanel() {
         <>
           <Card>
             <CardContent className="p-0">
-              <div className="flex items-center gap-2 border-b p-4">
+              <div className="flex items-center gap-2 border-b px-3 py-2 text-sm">
                 <FileSignature className="h-4 w-4 text-brand" />
                 <p className="font-semibold">Employment contracts</p>
                 <span className="text-xs text-muted-foreground">({contracts.length})</span>
@@ -116,7 +116,7 @@ export default function HrPaperworkPanel() {
               ) : (
                 <div className="divide-y">
                   {contracts.map((c) => (
-                    <div key={c.id} className="flex flex-wrap items-center justify-between gap-2 p-3">
+                    <div key={c.id} className="module-action-bar flex flex-wrap items-center justify-between gap-1.5 px-3 py-2 text-sm">
                       <div className="min-w-0">
                         <p className="font-semibold">{c.employee_name}</p>
                         <p className="text-xs text-muted-foreground">{c.position_title} - {c.employment_type} - commenced {fmt(c.commencement_date)}</p>
@@ -138,7 +138,7 @@ export default function HrPaperworkPanel() {
 
           <Card>
             <CardContent className="p-0">
-              <div className="flex items-center gap-2 border-b p-4">
+              <div className="flex items-center gap-2 border-b px-3 py-2 text-sm">
                 <FileText className="h-4 w-4 text-brand" />
                 <p className="font-semibold">Position descriptions</p>
                 <span className="text-xs text-muted-foreground">({pds.length})</span>
@@ -148,7 +148,7 @@ export default function HrPaperworkPanel() {
               ) : (
                 <div className="divide-y">
                   {pds.map((p) => (
-                    <div key={p.id} className="flex flex-wrap items-center justify-between gap-2 p-3">
+                    <div key={p.id} className="module-action-bar flex flex-wrap items-center justify-between gap-1.5 px-3 py-2 text-sm">
                       <div className="min-w-0">
                         <p className="font-semibold">{p.employee_name}</p>
                         <p className="text-xs text-muted-foreground">{p.position_title} - {p.employment_type || ''}</p>

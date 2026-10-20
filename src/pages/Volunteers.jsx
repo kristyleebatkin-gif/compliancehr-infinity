@@ -117,36 +117,36 @@ export default function Volunteers() {
             <table className="w-full min-w-[860px] text-sm">
               <thead>
                 <tr className="border-b bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-3 font-semibold">Volunteer</th>
-                  <th className="px-4 py-3 font-semibold">Role &amp; supervisor</th>
-                  <th className="px-4 py-3 font-semibold">Status</th>
-                  <th className="px-4 py-3 font-semibold">Contact</th>
-                  <th className="px-4 py-3 font-semibold">Availability</th>
-                  <th className="px-4 py-3 font-semibold">Intake form</th>
-                  <th className="px-4 py-3 text-right font-semibold">Actions</th>
+                  <th className="px-2 py-1.5 font-semibold">Volunteer</th>
+                  <th className="px-2 py-1.5 font-semibold">Role &amp; supervisor</th>
+                  <th className="px-2 py-1.5 font-semibold">Status</th>
+                  <th className="px-2 py-1.5 font-semibold">Contact</th>
+                  <th className="px-2 py-1.5 font-semibold">Availability</th>
+                  <th className="px-2 py-1.5 font-semibold">Intake form</th>
+                  <th className="px-2 py-1.5 text-right font-semibold">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {volunteers.map((v) => (
                   <tr key={v.id} className="border-b border-border/50 last:border-0">
-                    <td className="px-4 py-3">
+                    <td className="px-2 py-1.5">
                       <p className="font-medium">{v.full_name}</p>
                       <p className="text-xs text-muted-foreground">{v.start_date ? `Started ${format(new Date(v.start_date), 'd MMM yyyy')}` : 'No start date'}</p>
                     </td>
-                    <td className="px-4 py-3 text-xs">{v.role || '—'}<br /><span className="text-muted-foreground">{v.supervisor ? `Supervisor: ${v.supervisor}` : ''}</span></td>
-                    <td className="px-4 py-3"><Badge className={statusTone(v.status)}>{v.status}</Badge></td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 py-1.5 text-xs">{v.role || '—'}<br /><span className="text-muted-foreground">{v.supervisor ? `Supervisor: ${v.supervisor}` : ''}</span></td>
+                    <td className="px-2 py-1.5"><Badge className={statusTone(v.status)}>{v.status}</Badge></td>
+                    <td className="px-2 py-1.5">
                       <div className="flex gap-1">
                         {v.email && <a href={`mailto:${v.email}`} className="rounded-md border border-input p-1.5 hover:bg-accent" title={`Email ${v.full_name}`}><Mail className="h-3.5 w-3.5" /></a>}
                         {v.phone && <a href={`sms:${v.phone}`} className="rounded-md border border-input p-1.5 hover:bg-accent" title="Text (SMS)"><MessageSquare className="h-3.5 w-3.5" /></a>}
                         {!v.email && !v.phone && <span className="text-xs text-muted-foreground">—</span>}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-xs">{v.availability || (v.weekly_hours != null ? `${v.weekly_hours} hrs/week` : '—')}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 py-1.5 text-xs">{v.availability || (v.weekly_hours != null ? `${v.weekly_hours} hrs/week` : '—')}</td>
+                    <td className="px-2 py-1.5">
                       {v.intake_form_uri ? <Badge variant="secondary" className="text-[10px]"><FileCheck2 className="mr-1 h-3 w-3" />Stored</Badge> : <span className="text-xs text-muted-foreground">Pending</span>}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 py-1.5">
                       <div className="flex justify-end gap-1">
                         <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setViewing(v)}><Eye className="h-3 w-3" />Details</Button>
                         {canManage && <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => { setEditing(v); setFormOpen(true); }}><Pencil className="h-3 w-3" />Edit</Button>}

@@ -83,6 +83,10 @@ export default function SuggestionsHub() {
 
       {review && !loading && (
         <>
+          <div className="relative max-w-sm">
+            <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input placeholder="Search modules..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
+          </div>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
             {[
               ['Modules reviewed', review.moduleCount, 'from-violet-500 via-purple-500 to-fuchsia-500'],
@@ -97,10 +101,6 @@ export default function SuggestionsHub() {
             ))}
           </div>
 
-          <div className="relative max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search modules..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
-          </div>
 
           {modules.length === 0 ? (
             <EmptyState title="No modules match" text="Try a different module name." />

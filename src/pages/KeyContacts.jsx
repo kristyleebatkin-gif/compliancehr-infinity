@@ -125,18 +125,18 @@ export default function KeyContacts({ readOnly = false } = {}) {
       ) : contacts.length === 0 ? (
         <EmptyState icon={ContactIcon} modulePath="/key-contacts" title="No key personnel contacts yet" message="Add your first contact to build the register." />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {contacts.map((c) => (
             <Card key={c.id}>
-              <CardContent className="p-3">
+              <CardContent className="p-2.5">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-semibold">{c.name}</p>
-                    <p className="text-sm text-muted-foreground">{[c.role, c.organisation].filter(Boolean).join(' · ') || 'No role recorded'}</p>
+                    <p className="text-sm font-semibold">{c.name}</p>
+                    <p className="text-xs text-muted-foreground">{[c.role, c.organisation].filter(Boolean).join(' · ') || 'No role recorded'}</p>
                   </div>
                   <Badge className={statusTone(c.category)}>{c.category}</Badge>
                 </div>
-                <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+                <div className="mt-1.5 space-y-0.5 text-xs leading-4 text-muted-foreground">
                   {c.phone && <p className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5 shrink-0" />{c.phone}</p>}
                   {c.mobile && <p className="flex items-center gap-1.5"><MessageSquare className="h-3.5 w-3.5 shrink-0" />Mobile: {c.mobile}</p>}
                   {c.email && <p className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 shrink-0" />{c.email}</p>}
@@ -145,7 +145,7 @@ export default function KeyContacts({ readOnly = false } = {}) {
                   {c.address && <p className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 shrink-0" />{c.address}</p>}
                   {c.notes && <p className="pt-1 text-xs italic">{c.notes}</p>}
                 </div>
-                <div className="mt-3"><ContactButtons c={c} /></div>
+                <div className="module-action-bar mt-1.5"><ContactButtons c={c} /></div>
               </CardContent>
             </Card>
           ))}

@@ -35,11 +35,11 @@ import { expandRecurrence } from '@/lib/rostering';
 
 const StatCard = ({ icon: Icon, label, value, tone }) => (
   <Card>
-    <CardContent className="flex items-center gap-3 p-4">
-      <div className={`rounded-lg p-2 ${tone}`}><Icon className="h-5 w-5" /></div>
-      <div>
-        <p className="text-2xl font-bold">{value}</p>
-        <p className="text-sm text-muted-foreground">{label}</p>
+    <CardContent className="flex items-center gap-2 p-2.5">
+      <div className={`rounded-lg p-1.5 ${tone}`}><Icon className="h-4 w-4" /></div>
+      <div className="min-w-0">
+        <p className="text-lg font-bold leading-6">{value}</p>
+        <p className="text-[11px] leading-4 text-muted-foreground">{label}</p>
       </div>
     </CardContent>
   </Card>
@@ -306,7 +306,7 @@ export default function Rostering({ profile, profileKind, ourView = false, embed
         action={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
       />}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
         <StatCard icon={CalendarClock} label="Shifts this week" value={stats.week} tone="bg-brand/10 text-brand" />
         <StatCard icon={ClipboardCheck} label="Completed this week" value={stats.completed} tone="bg-safe/10 text-safe" />
         <StatCard icon={UserX} label="Unfilled (next 14 days)" value={stats.unfilled} tone="bg-warning/10 text-warning" />

@@ -112,8 +112,7 @@ export default function OurProfilesTab({ kind }) {
       {/* Participants: search sits directly under the header */}
       {isParticipant && searchBox}
 
-      {/* Employees: quick-filter tabs first, then the search below them */}
-      {!isParticipant && <>{filterRow}{searchBox}</>}
+      {!isParticipant && searchBox}
 
       {/* Stat tiles */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -132,8 +131,8 @@ export default function OurProfilesTab({ kind }) {
         ))}
       </div>
 
-      {/* Participants keep their quick filters above the grouped sections */}
-      {isParticipant && filterRow}
+      {/* Profile categories sit below the dashboard. */}
+      {filterRow}
       </>}
 
       {/* Modular grouped sections */}
@@ -157,9 +156,9 @@ export default function OurProfilesTab({ kind }) {
                     const { primary } = profilePalette(r.full_name);
                     return (
                       <Link key={r.id} to={isParticipant ? `/our-participants/${r.id}` : `/our-employees/${r.id}`} className="group">
-                        <div className="flex h-full items-start gap-3 rounded-2xl border border-border/60 bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                        <div className="flex h-full items-start gap-2 rounded-xl border border-border/60 bg-card p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                           <div
-                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
                             style={{ background: `linear-gradient(135deg, ${primary}, ${primary}cc)` }}
                           >
                             {initials(r.full_name)}
@@ -169,7 +168,7 @@ export default function OurProfilesTab({ kind }) {
                               <div className="truncate text-sm font-semibold font-editorial">{r.full_name}</div>
                               <Badge className={`shrink-0 ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
                             </div>
-                            <div className="mt-1.5 flex flex-wrap gap-1">
+                            <div className="mt-1 flex flex-wrap gap-1">
                               {isParticipant
                                 ? (r.support_type && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.support_type}</span>)
                                 : ((r.position || r.role) && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.position || r.role}</span>)}
@@ -178,11 +177,11 @@ export default function OurProfilesTab({ kind }) {
                                 : (r.employee_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">ID {r.employee_number}</span>)}
                               {isParticipant && r.ndis_reference_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">Ref {r.ndis_reference_number}</span>}
                             </div>
-                            <div className="mt-2 space-y-0.5 text-xs text-foreground/50">
+                            <div className="mt-1 space-y-0.5 text-[11px] text-foreground/50">
                               {r.email && <div className="flex items-center gap-1.5 truncate"><Mail className="h-3 w-3 shrink-0" />{r.email}</div>}
                               {r.phone && <div className="flex items-center gap-1.5 truncate"><Phone className="h-3 w-3 shrink-0" />{r.phone}</div>}
                             </div>
-                            <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                            <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
                               Open profile <ChevronRight className="h-3.5 w-3.5" />
                             </div>
                           </div>
