@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +12,18 @@ import { useToast } from '@/components/ui/use-toast';
 import { downloadCsv } from '@/lib/csvExport';
 
 const STAGES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Won', 'Lost'];
+const STAGE_TONES = {
+  New: 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
+  Contacted: 'bg-blue-500/15 text-blue-700 dark:text-blue-300',
+  'Proposal Sent': 'bg-violet-500/15 text-violet-700 dark:text-violet-300',
+  Negotiation: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
+  Won: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300',
+  Lost: 'bg-rose-500/15 text-rose-700 dark:text-rose-300',
+};
+const STAGE_BORDERS = {
+  New: 'border-l-sky-500', Contacted: 'border-l-blue-500', 'Proposal Sent': 'border-l-violet-500',
+  Negotiation: 'border-l-amber-500', Won: 'border-l-emerald-500', Lost: 'border-l-rose-400',
+};
 const OPEN_STAGES = STAGES.slice(0, 4);
 const today = () => new Date().toISOString().slice(0, 10);
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { maximumFractionDigits: 0 })}`;
@@ -126,28 +140,29 @@ export default function CrmHub() {
         icon={Briefcase}
         accent={['#16a34a', '#0d9488']}
         showAlerts={false}
+        showAudit={false}
+        action={(
+          <>
+            <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
+            <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
+            <ModuleAuditChecklistButton />
+            <ModuleAuditButton />
+          </>
+        )}
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: 'Open pipeline value', value: money(pipelineValue) },
-          { label: 'Won revenue', value: money(wonValue), icon: Trophy },
-          { label: 'Win rate', value: closedCount > 0 ? `${Math.round((wonCount / closedCount) * 100)}%` : 'n/a' },
-          { label: 'Follow-ups due', value: followUpsDue.length, icon: Flame },
+          { label: 'Open pipeline value', value: money(pipelineValue), grad: 'from-blue-600 via-violet-600 to-purple-600' },
+          { label: 'Won revenue', value: money(wonValue), grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
+          { label: 'Win rate', value: closedCount > 0 ? `${Math.round((wonCount / closedCount) * 100)}%` : 'n/a', grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
+          { label: 'Follow-ups due', value: followUpsDue.length, grad: 'from-amber-500 via-orange-500 to-rose-500' },
         ].map((s) => (
-          <Card key={s.label}><CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{s.label}</p>
-              {s.icon && <s.icon className="h-4 w-4 text-brand" />}
-            </div>
+          <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
             <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
-          </CardContent></Card>
+          </div>
         ))}
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />Add lead</Button>
-        <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
       </div>
 
       {followUpsDue.length > 0 && (
@@ -198,13 +213,13 @@ export default function CrmHub() {
             const stageLeads = leads.filter((l) => l.stage === stage);
             return (
               <div key={stage} className="space-y-2">
-                <div className="flex items-center justify-between rounded-lg bg-muted/60 px-3 py-2">
+                <div className={`flex items-center justify-between rounded-lg px-3 py-2 font-semibold ${STAGE_TONES[stage]}`}>
                   <p className="text-xs font-bold uppercase tracking-wide">{stage}</p>
-                  <span className="text-xs text-muted-foreground">{stageLeads.length}</span>
+                  <span className="text-xs">{stageLeads.length}</span>
                 </div>
                 {stageLeads.map((l) => (
                   <React.Fragment key={l.id}>
-                  <Card><CardContent className="space-y-2 p-3">
+                  <Card className={`border-l-4 shadow-sm transition hover:shadow-md ${STAGE_BORDERS[l.stage]}`}><CardContent className="space-y-2 p-3">
                     <p className="text-sm font-semibold">{l.business_name}</p>
                     <p className="text-xs text-muted-foreground">{l.contact_name || l.email || l.phone || ''}</p>
                     <div className="flex items-center justify-between">

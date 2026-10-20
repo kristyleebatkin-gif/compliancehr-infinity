@@ -9,6 +9,12 @@ import { KanbanSquare, Plus, Trash2, ChevronLeft, ChevronRight, CircleAlert, Cir
 import { downloadCsv } from '@/lib/csvExport';
 
 const COLUMNS = ['Planning', 'Active', 'On Hold', 'Complete'];
+const COL_TONES = {
+  Planning: 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
+  Active: 'bg-violet-500/15 text-violet-700 dark:text-violet-300',
+  'On Hold': 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
+  Complete: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300',
+};
 const today = () => new Date().toISOString().slice(0, 10);
 
 export default function ProjectsHub() {
@@ -74,18 +80,15 @@ export default function ProjectsHub() {
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: 'Active projects', value: active.length },
-          { label: 'Planning', value: projects.filter((p) => p.status === 'Planning').length },
-          { label: 'Overdue', value: overdue.length, icon: CircleAlert },
-          { label: 'Average progress', value: `${avgProgress}%`, icon: CircleCheck },
+          { label: 'Active projects', value: active.length, grad: 'from-violet-600 via-purple-600 to-fuchsia-600' },
+          { label: 'Planning', value: projects.filter((p) => p.status === 'Planning').length, grad: 'from-sky-500 via-blue-600 to-indigo-600' },
+          { label: 'Overdue', value: overdue.length, grad: 'from-rose-500 via-red-500 to-orange-500' },
+          { label: 'Average progress', value: `${avgProgress}%`, grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
         ].map((s) => (
-          <Card key={s.label}><CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{s.label}</p>
-              {s.icon && <s.icon className="h-4 w-4 text-brand" />}
-            </div>
+          <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
             <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
-          </CardContent></Card>
+          </div>
         ))}
       </div>
 
@@ -130,9 +133,9 @@ export default function ProjectsHub() {
             const colProjects = projects.filter((p) => p.status === col);
             return (
               <div key={col} className="space-y-2">
-                <div className="flex items-center justify-between rounded-lg bg-muted/60 px-3 py-2">
+                <div className={`flex items-center justify-between rounded-lg px-3 py-2 font-semibold ${COL_TONES[col]}`}>
                   <p className="text-xs font-bold uppercase tracking-wide">{col}</p>
-                  <span className="text-xs text-muted-foreground">{colProjects.length}</span>
+                  <span className="text-xs">{colProjects.length}</span>
                 </div>
                 {colProjects.map((p) => {
                   const isOverdue = p.status !== 'Complete' && p.due_date && p.due_date < today();
@@ -146,7 +149,7 @@ export default function ProjectsHub() {
                       {p.due_date && <p className={`text-xs ${isOverdue ? 'font-semibold text-danger' : 'text-muted-foreground'}`}>Due {p.due_date.slice(0, 10)}{isOverdue ? ' - OVERDUE' : ''}</p>}
                       <div className="flex items-center gap-2">
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                          <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${Number(p.progress || 0)}%` }} />
+                          <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 transition-all" style={{ width: `${Number(p.progress || 0)}%` }} />
                         </div>
                         <span className="text-xs font-semibold">{p.progress || 0}%</span>
                       </div>

@@ -24,6 +24,7 @@ import MeetingCalendar from '@/components/meetings/MeetingCalendar';
 import MeetingDetail from '@/components/meetings/MeetingDetail';
 
 const TYPES = ['Compliance Review', 'Governance / Board', 'Staff Meeting', 'Participant Planning', 'Quality & Improvement', 'Incident / Risk Review', 'Other'];
+const STATUS_BORDERS = { Scheduled: 'border-l-sky-500', Completed: 'border-l-emerald-500', Cancelled: 'border-l-rose-400' };
 const STATUSES = ['Scheduled', 'Completed', 'Cancelled'];
 const EMPTY_FORM = {
   title: '', meeting_type: 'Staff Meeting', date: '', time: '', duration: '', location: '', meeting_link: '',
@@ -141,58 +142,16 @@ export default function MeetingCentre() {
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
+        action={(
+          <>
+            <Button size="sm" onClick={openNew}><Plus className="h-4 w-4" />Schedule meeting</Button>
+            <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-4 w-4" />Export register</Button>
+            <Button size="sm" variant="outline" onClick={downloadMinutesTemplate}><FileDown className="h-4 w-4" />Minutes template</Button>
+          </>
+        )}
       />
 
       <RegisterInsights module="meetings" />
-
-      {nextMeeting && (
-        <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
-          <CardContent className="flex flex-wrap items-center gap-5 p-5">
-            <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(nextMeeting.date), 'MMM')}</span>
-              <span className="text-2xl font-bold">{format(new Date(nextMeeting.date), 'd')}</span>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide">Next meeting</span>
-                <p className="text-lg font-bold">{nextMeeting.title}</p>
-              </div>
-              <p className="mt-1 text-sm text-white/80">
-                {format(new Date(nextMeeting.date), 'EEEE d MMM yyyy')}{nextMeeting.time ? ` at ${nextMeeting.time}` : ''}
-                {nextMeeting.location ? ` · ${nextMeeting.location}` : ''}
-                {' '}· in {Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date()))} day{Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date())) === 1 ? '' : 's'}
-              </p>
-            </div>
-            {safeUrl(nextMeeting.meeting_link) && (
-              <a href={safeUrl(nextMeeting.meeting_link)} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-50">
-                <Clock className="h-4 w-4" />Join online
-              </a>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        <Button variant="outline" onClick={downloadMinutesTemplate}><FileDown className="mr-2 h-4 w-4" />Minutes template</Button>
-        <Button variant="outline" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Schedule meeting</Button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          ['Scheduled', String(meetings.filter((m) => m.status === 'Scheduled').length)],
-          ['Completed', String(completedCount)],
-          ['Open follow-up actions', String(openActions)],
-          ['Minutes outstanding', String(minutesOutstanding.length)],
-        ].map(([label, value]) => (
-          <Card key={label}>
-            <CardContent className="p-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
-              <p className="mt-1 text-xl font-bold">{value}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
 
       <Tabs defaultValue="register">
         <TabsList className="flex-wrap">
@@ -200,7 +159,49 @@ export default function MeetingCentre() {
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="register" className="mt-4 space-y-3">
+        <TabsContent value="register" className="mt-4 space-y-6">
+          {nextMeeting && (
+            <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
+              <CardContent className="flex flex-wrap items-center gap-5 p-5">
+                <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-white/15 py-3">
+                  <span className="text-[11px] font-semibold uppercase tracking-wide">{format(new Date(nextMeeting.date), 'MMM')}</span>
+                  <span className="text-2xl font-bold">{format(new Date(nextMeeting.date), 'd')}</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide">Next meeting</span>
+                    <p className="text-lg font-bold">{nextMeeting.title}</p>
+                  </div>
+                  <p className="mt-1 text-sm text-white/80">
+                    {format(new Date(nextMeeting.date), 'EEEE d MMM yyyy')}{nextMeeting.time ? ` at ${nextMeeting.time}` : ''}
+                    {nextMeeting.location ? ` · ${nextMeeting.location}` : ''}
+                    {' '}· in {Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date()))} day{Math.max(0, differenceInCalendarDays(new Date(nextMeeting.date), new Date())) === 1 ? '' : 's'}
+                  </p>
+                </div>
+                {safeUrl(nextMeeting.meeting_link) && (
+                  <a href={safeUrl(nextMeeting.meeting_link)} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-50">
+                    <Clock className="h-4 w-4" />Join online
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              { label: 'Scheduled', value: meetings.filter((m) => m.status === 'Scheduled').length, grad: 'from-sky-500 via-blue-600 to-indigo-600' },
+              { label: 'Completed', value: completedCount, grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
+              { label: 'Open follow-up actions', value: openActions, grad: 'from-amber-500 via-orange-500 to-rose-500' },
+              { label: 'Minutes outstanding', value: minutesOutstanding.length, grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
+            ].map((s) => (
+              <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
+                <p className="mt-1 text-2xl font-bold tabular-nums">{s.value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative min-w-52 flex-1">
               <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -231,13 +232,16 @@ export default function MeetingCentre() {
           ) : (
             <div className="space-y-3">
               {visibleMeetings.map((m) => (
-                <Card key={m.id}>
+                <Card key={m.id} className={`border-l-4 shadow-sm transition hover:shadow-md ${STATUS_BORDERS[m.status] || ''}`}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-2">
                       <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded((prev) => ({ ...prev, [m.id]: !prev[m.id] }))}>
-                        <p className="font-semibold">{m.title}</p>
+                        <p className="flex items-center gap-2 font-semibold">
+                          <span className="shrink-0 rounded-full bg-violet-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-violet-700">{m.meeting_type}</span>
+                          {m.title}
+                        </p>
                         <p className="text-sm text-muted-foreground">
-                          {[m.meeting_type, m.date ? format(new Date(m.date), 'EEE d MMM yyyy') : '', m.time, m.location].filter(Boolean).join(' · ')}
+                          {[m.date ? format(new Date(m.date), 'EEE d MMM yyyy') : '', m.time, m.location].filter(Boolean).join(' · ')}
                         </p>
                         {m.attendees && <p className="mt-0.5 truncate text-xs text-muted-foreground">Attendees: {m.attendees}</p>}
                       </button>
@@ -256,6 +260,7 @@ export default function MeetingCentre() {
               ))}
             </div>
           )}
+          </div>
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4">
