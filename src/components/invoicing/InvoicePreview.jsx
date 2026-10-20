@@ -1,6 +1,7 @@
 import React from 'react';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
 import { getCompanyBranding } from '@/lib/companyBranding';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -102,9 +103,9 @@ export default function InvoicePreview({ invoice, business = {} }) {
       <div className="space-y-3 bg-slate-50 p-5 text-xs">
         <div>
           <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Payment details</div>
-          <Multiline text={invoice.payment_details} />
+          <Multiline text={invoice.payment_details ?? financeDocumentDefaults(business).payment_details} />
         </div>
-        <div><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Payment terms</div><Multiline text={invoice.payment_terms} /></div>
+        <div><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Payment terms</div><Multiline text={invoice.payment_terms ?? financeDocumentDefaults(business).payment_terms} /></div>
         <div><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Notes</div><Multiline text={invoice.notes} /></div>
       </div>
       <div className="border-t border-slate-200 p-3 text-center text-[10px] text-slate-400">

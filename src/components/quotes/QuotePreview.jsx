@@ -1,6 +1,7 @@
 import React from 'react';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
 import { businessAddressLine } from '@/lib/quotePdf';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -93,7 +94,7 @@ export default function QuotePreview({ quote, business = {} }) {
       <div className="space-y-3 bg-slate-50 p-5 text-xs">
         <div>
           <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Quote terms and conditions</div>
-          <Multiline text={quote.terms_conditions || business.quote_terms} />
+          <Multiline text={quote.terms_conditions ?? financeDocumentDefaults(business).terms_conditions} />
         </div>
         <div><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Notes</div><Multiline text={quote.notes} /></div>
         <div>

@@ -1,6 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, getCompanyBranding } from '@/lib/companyBranding';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import financePdfSections from '@/components/invoicing/financePdfSections';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -172,48 +174,12 @@ export function buildInvoicePdf(invoice, business = {}) {
   doc.text(money(subtotal), pageW - margin, y, { align: 'right' });
   y += 30;
 
-  // Payment details + terms
-  if (y > 620) { doc.addPage(); y = 60; }
-  doc.setFillColor(244, 239, 255);
-  const boxTop = y;
-  const paymentLines = (safeText(invoice.payment_details) || '').split('\n').filter(Boolean);
-  const termsLines = (safeText(invoice.payment_terms) || '').split('\n').filter(Boolean);
-  const notesLines = (safeText(invoice.notes) || '').split('\n').filter(Boolean);
-  const boxLines = paymentLines.length + termsLines.length + notesLines.length + 4;
-  doc.roundedRect(margin, boxTop, contentW, boxLines * 12 + 18, 6, 6, 'F');
-  y += 16;
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8.5);
-  doc.setTextColor(15, 23, 42);
-  doc.text('PAYMENT DETAILS', margin + 12, y);
-  y += 12;
-  doc.setFont('helvetica', 'normal');
-  paymentLines.forEach((line) => {
-    doc.text(line, margin + 12, y, { maxWidth: contentW - 24 });
-    y += 12;
-  });
-  if (termsLines.length) {
-    y += 4;
-    doc.setFont('helvetica', 'bold');
-    doc.text('PAYMENT TERMS', margin + 12, y);
-    y += 12;
-    doc.setFont('helvetica', 'normal');
-    termsLines.forEach((line) => {
-      doc.text(line, margin + 12, y, { maxWidth: contentW - 24 });
-      y += 12;
-    });
-  }
-  if (notesLines.length) {
-    y += 4;
-    doc.setFont('helvetica', 'bold');
-    doc.text('NOTES', margin + 12, y);
-    y += 12;
-    doc.setFont('helvetica', 'normal');
-    notesLines.forEach((line) => {
-      doc.text(line, margin + 12, y, { maxWidth: contentW - 24 });
-      y += 12;
-    });
-  }
+  const defaults = financeDocumentDefaults(business);
+  y = financePdfSections(doc, [
+    ['PAYMENT DETAILS', invoice.payment_details ?? defaults.payment_details],
+    ['PAYMENT TERMS AND CONDITIONS', invoice.payment_terms ?? defaults.payment_terms],
+    ['NOTES', invoice.notes],
+  ], y, margin);
 
   drawDocumentFooter(doc, { title: `Invoice ${invoice.invoice_number || ''}` });
   return doc;

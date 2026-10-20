@@ -273,8 +273,8 @@ export default function BusinessDetailsCard() {
       <Section icon={ScrollText} title="Quote terms &amp; conditions (Quote Centre)">
         <div className="grid gap-2 sm:grid-cols-3">
           <Field label="Quote validity (days)" type="number" value={form.quote_validity_days} onChange={set('quote_validity_days')} />
-          <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Input value={form.quote_terms} onChange={set('quote_terms')} /></div>
-          <p className="text-xs text-muted-foreground sm:col-span-3">Used as the default terms on every new quote; individual quotes can override them.</p>
+          <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Textarea rows={4} value={form.quote_terms} onChange={set('quote_terms')} /></div>
+          <p className="text-xs text-muted-foreground sm:col-span-3">Saved as defaults for new quotes and invoices, together with the invoice and payment details above. Individual documents keep their saved terms.</p>
         </div>
       </Section>
 

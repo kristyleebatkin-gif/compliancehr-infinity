@@ -13,6 +13,7 @@ import { archiveQuoteCopy } from '@/lib/quoteArchive';
 import { useToast } from '@/components/ui/use-toast';
 import QuotePreview from '@/components/quotes/QuotePreview';
 import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -27,7 +28,7 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
     if (!open) return;
     setShowPreview(false);
     if (editing) {
-      setForm({ ...editing });
+      setForm({ ...editing, terms_conditions: editing.terms_conditions ?? financeDocumentDefaults(business).terms_conditions });
       setLines(JSON.parse(editing.line_items || '[]'));
     } else {
       const validity = Number(business?.quote_validity_days) || 30;
@@ -35,7 +36,7 @@ export default function QuoteBuilder({ open, onOpenChange, editing, business, on
         client_name: '', client_email: '', client_address: '', biller_type: 'Plan Manager',
         participant_name: '', ndis_number: '', participant_address: '',
         issue_date: today(), expiry_date: format(addDays(new Date(), validity), 'yyyy-MM-dd'),
-        terms_conditions: business?.quote_terms || '', notes: '', status: 'Draft',
+        terms_conditions: financeDocumentDefaults(business).terms_conditions, notes: financeDocumentDefaults(business).notes, status: 'Draft',
       });
       setLines([{ code: '', description: '', unit: 'hour', qty: 1, unit_price: 0 }]);
     }

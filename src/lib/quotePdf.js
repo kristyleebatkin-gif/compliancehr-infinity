@@ -1,6 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, getCompanyBranding } from '@/lib/companyBranding';
 import { lineAmount, parseLineItems } from '@/lib/ndisPriceGuide';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import financePdfSections from '@/components/invoicing/financePdfSections';
 
 const money = (value) => `$${(Number(value) || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -24,7 +26,6 @@ function wrapMultiline(doc, text, x, y, width, lineHeight, fontSize = 8.5) {
   return total;
 }
 
-const DEFAULT_TERMS = 'This quotation is valid for 30 days from the date of issue. Prices are based on the current NDIS Pricing Schedule and may change if the schedule is updated. NDIS supports are GST free. A formal service agreement will be prepared once the quotation is accepted.';
 
 export function businessAddressLine(business = {}) {
   return [business.address_line, business.suburb, business.state, business.postcode].filter(Boolean).join(', ');
@@ -185,21 +186,8 @@ export function buildQuotePdf(quote, business = {}) {
 
   if (y > 560) { doc.addPage(); y = 60; }
 
-  // Terms and conditions
-  doc.setFillColor(244, 239, 255);
-  const termsText = safeText(quote.terms_conditions) || business.quote_terms || DEFAULT_TERMS;
-  doc.setFontSize(8.5);
-  const termsHeight = doc.splitTextToSize(termsText, contentW - 24).length * 11 + 30;
-  doc.roundedRect(margin, y, contentW, termsHeight, 6, 6, 'F');
-  y += 16;
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(15, 23, 42);
-  doc.text('QUOTE TERMS AND CONDITIONS', margin + 12, y);
-  y += 12;
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(51, 65, 85);
-  wrapMultiline(doc, termsText, margin + 12, y, contentW - 24, 11);
-  y += termsHeight - 12;
+  const termsText = quote.terms_conditions ?? financeDocumentDefaults(business).terms_conditions;
+  y = financePdfSections(doc, [['QUOTE TERMS AND CONDITIONS', termsText]], y, margin);
 
   if (y > 640) { doc.addPage(); y = 60; }
 

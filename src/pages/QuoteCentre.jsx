@@ -56,7 +56,12 @@ export default function QuoteCentre() {
 
   useEffect(() => { load(); }, [load]);
 
-  const openNew = () => { setEditing(null); setBuilderOpen(true); };
+  const openNew = async () => {
+    const page = await base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 });
+    setBusiness(page.items?.[0] || {});
+    setEditing(null);
+    setBuilderOpen(true);
+  };
   const openEdit = (q) => { setEditing(q); setBuilderOpen(true); };
 
   const sendQuote = async (q) => {

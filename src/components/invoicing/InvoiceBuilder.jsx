@@ -11,6 +11,7 @@ import { Loader2, Plus, Search, Trash2, Users, Clock, ListPlus, Eye, Save } from
 import { format } from 'date-fns';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
+import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
 import { SUPPORT_ITEMS, PRICE_GUIDE_VERSION, PRICE_GUIDE_NOTE, classifyShift, lineAmount } from '@/lib/ndisPriceGuide';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
@@ -44,15 +45,9 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
         participant_id: '', participant_name: '', ndis_number: '', participant_address: '',
         client_name: '', client_email: '', client_address: '', biller_type: 'Plan Manager',
         issue_date: issue, due_date: due, payment_terms_days: termsDays,
-        payment_terms: terms.payment_terms_note || 'Payment is due within 14 days of the invoice date.',
-        payment_details: [
-          terms.bank_name && `Bank: ${terms.bank_name}`,
-          terms.bsb && `BSB: ${terms.bsb}`,
-          terms.account_number && `Account number: ${terms.account_number}`,
-          terms.account_name && `Account name: ${terms.account_name}`,
-          'Payment reference: please quote the invoice number.',
-        ].filter(Boolean).join('\n') || '',
-        notes: terms.default_invoice_notes || 'NDIS supports are GST free.',
+        payment_terms: financeDocumentDefaults(terms).payment_terms,
+        payment_details: financeDocumentDefaults(terms).payment_details,
+        notes: financeDocumentDefaults(terms).notes,
         lines: [],
       });
     })();
@@ -291,7 +286,7 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
                 </Select>
               </div>
               <div className="grid gap-1.5"><Label>Due date</Label><Input type="date" value={form.due_date} onChange={(e) => setF({ due_date: e.target.value })} /></div>
-              <div className="grid gap-1.5 sm:col-span-2"><Label>Payment terms</Label><Input value={form.payment_terms} onChange={(e) => setF({ payment_terms: e.target.value })} /></div>
+              <div className="grid gap-1.5 sm:col-span-2"><Label>Payment terms and conditions</Label><Textarea rows={5} value={form.payment_terms} onChange={(e) => setF({ payment_terms: e.target.value })} /></div>
               <div className="grid gap-1.5 sm:col-span-3"><Label>Payment details (banking for invoice payment)</Label><Textarea rows={3} value={form.payment_details} onChange={(e) => setF({ payment_details: e.target.value })} /></div>
               <div className="grid gap-1.5 sm:col-span-3"><Label>Notes</Label><Textarea rows={2} value={form.notes} onChange={(e) => setF({ notes: e.target.value })} /></div>
             </div>

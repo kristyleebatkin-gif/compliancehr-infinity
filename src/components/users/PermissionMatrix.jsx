@@ -53,7 +53,6 @@ const SPECIAL_RULES = {
   rostering: 'Staff see their own shifts and availability; coordinators manage the roster',
 };
 
-const RULE_TONE = 'rounded-full bg-violet-500/10 px-2 py-0.5 text-[10px] font-semibold text-violet-700 dark:text-violet-300';
 
 export default function PermissionMatrix() {
   const modules = Object.keys(NAV_PERMISSIONS).filter((k) => MODULE_LABELS[k]);
@@ -65,16 +64,16 @@ export default function PermissionMatrix() {
         Role permission matrix
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[760px] text-left text-[11px]">
+        <table className="permission-matrix w-full text-left text-[10px]">
           <thead>
             <tr className="border-b border-border/60">
-              <th className="py-1.5 pr-2 font-semibold">Module</th>
+              <th className="matrix-module py-1.5 pr-2 font-semibold">Module</th>
               {ROLE_COLUMNS.map(([label]) => (
                 <th key={label} className="px-1.5 py-1.5 text-center">
-                  <span className="inline-block rounded-full bg-muted px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-foreground/70">{label}</span>
+                  <span className="matrix-role block font-bold text-foreground" title={label}>{label}</span>
                 </th>
               ))}
-              <th className="py-1.5 pl-2 font-semibold">Special rules</th>
+
             </tr>
           </thead>
           <tbody>
@@ -95,15 +94,19 @@ export default function PermissionMatrix() {
                       </td>
                     );
                   })}
-                  <td className="py-1.5 pl-2">
-                    {SPECIAL_RULES[m] ? <span className={RULE_TONE}>{SPECIAL_RULES[m]}</span> : <span className="text-foreground/25">-</span>}
-                  </td>
+
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      <details className="mt-2 text-[10px]">
+        <summary className="cursor-pointer font-semibold">Special access rules</summary>
+        <div className="mt-1 grid gap-1 sm:grid-cols-2">
+          {Object.entries(SPECIAL_RULES).map(([key, rule]) => <p key={key}><strong>{MODULE_LABELS[key]}:</strong> {rule}</p>)}
+        </div>
+      </details>
       <p className="mt-2.5 text-xs text-muted-foreground">
         "All roles" modules (dashboard, key contacts, programs, community lookup) are visible to everyone, including participants and auditors.
         Detailed per-record permissions are enforced by row-level security on every module.
