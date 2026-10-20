@@ -13,10 +13,11 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Database, Download, CalendarDays } from 'lucide-react';
+import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Download, CalendarDays } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
+import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
@@ -198,13 +199,12 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
       ) : (
         <>
-      {!profile && <><RegisterInsights module="documents" /><DataControlPanel /></>}
+      {!profile && <><RegisterInsights module="documents" /><DocumentsDashboard /></>}
 
       <Tabs defaultValue="documents">
         <TabsList className="flex-wrap">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
-          {!profile && <TabsTrigger value="data-control"><Database className="mr-1.5 inline h-3.5 w-3.5" />Data Control</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="documents" className="mt-4 space-y-6">
@@ -373,11 +373,9 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         <TabsContent value="expiry-calendar" className="mt-4">
           <ExpiryCalendar docs={docs} pdocs={pdocs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
         </TabsContent>
-
-        <TabsContent value="data-control" className="mt-4">
-          <DataControlPanel />
-        </TabsContent>
       </Tabs>
+
+      {!profile && <DataControlPanel />}
         </>
       )}
     </div>
