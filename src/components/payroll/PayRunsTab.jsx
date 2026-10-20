@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Landmark, Download, Send, CheckCircle2, Plus } from 'lucide-react';
-import { downloadAbaFile } from '@/lib/payrollExports';
+import { Landmark, Download, Send, CheckCircle2, Plus, Users, RefreshCw } from 'lucide-react';
+import { downloadAbaFile, estimatePayg } from '@/lib/payrollExports';
 import { downloadCsv } from '@/lib/csvExport';
-import { money, startOfWeek, round2 } from '@/components/payroll/payrollShared';
+import { money, startOfWeek, round2, loadHolidaySet, buildPayRow, buildPayslipPayload } from '@/components/payroll/payrollShared';
 
 const STATUS_TONE = { Draft: 'bg-warning/15 text-warning border-transparent', 'Sent to bank': 'bg-teal/15 text-teal border-transparent', Paid: 'bg-safe/15 text-safe border-transparent', Cancelled: 'bg-muted text-muted-foreground border-transparent' };
 
@@ -22,6 +22,8 @@ export default function PayRunsTab() {
   const [creating, setCreating] = useState(false);
   const [busy, setBusy] = useState(null);
   const [refs, setRefs] = useState({});
+  const [bulk, setBulk] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   const load = useCallback(async () => {
     const [r, p, d] = await Promise.all([
@@ -67,6 +69,119 @@ export default function PayRunsTab() {
     }
   };
 
+  // Creates a payroll detail record for every staff member who doesn't have one,
+  // pulling pay basics from their staff profile.
+  const syncDetails = async () => {
+    setSyncing(true);
+    const [detailPage, staffPage] = await Promise.all([
+      base44.entities.StaffPayrollDetail.filter({}, { limit: 300 }),
+      base44.entities.StaffProfile.filter({}, { limit: 300 }),
+    ]);
+    const have = new Set((detailPage.items || []).map((d) => d.employee_name));
+    const missing = (staffPage.items || []).filter((p) => p.full_name && !have.has(p.full_name)).map((p) => ({
+      staff_profile_id: p.id || '',
+      employee_name: p.full_name,
+      employee_email: p.email || '',
+      employee_id: p.employee_number || '',
+      employment_type: p.position || 'Casual',
+      hourly_rate: Number(p.hourly_rate) || 0,
+      pay_cycle: 'Fortnightly',
+      super_rate: 11.5,
+    }));
+    if (missing.length) await base44.entities.StaffPayrollDetail.bulkCreate(missing);
+    setSyncing(false);
+    await load();
+    toast({ title: missing.length ? `${missing.length} payroll record${missing.length === 1 ? '' : 's'} synced from staff profiles` : 'All staff already have payroll records' });
+  };
+
+  // One-click bulk payroll: payslips for everyone this week (backfilling any
+  // missing payroll records from staff profiles), then the pay run linking them.
+  const runFullPayroll = async () => {
+    setBulk(true);
+    try {
+      const [holidaySet, shiftPage, detailPage, staffPage] = await Promise.all([
+        loadHolidaySet(),
+        base44.entities.Shift.filter({ date: { $gte: weekStart, $lte: weekEnd } }, { sort: 'date', limit: 500 }),
+        base44.entities.StaffPayrollDetail.filter({}, { limit: 300 }),
+        base44.entities.StaffProfile.filter({}, { limit: 300 }),
+      ]);
+      const byEmployee = new Map();
+      for (const s of shiftPage.items || []) {
+        const name = s.employee_name || '';
+        if (!name) continue;
+        if (!byEmployee.has(name)) byEmployee.set(name, []);
+        byEmployee.get(name).push(s);
+      }
+      const detailByName = new Map((detailPage.items || []).map((d) => [d.employee_name, d]));
+      const profileByName = new Map((staffPage.items || []).map((p) => [p.full_name, p]));
+      const missing = [...byEmployee.keys()].filter((n) => !detailByName.has(n)).map((name) => {
+        const p = profileByName.get(name) || {};
+        return {
+          staff_profile_id: p.id || '',
+          employee_name: name,
+          employee_email: p.email || '',
+          employee_id: p.employee_number || '',
+          employment_type: p.position || 'Casual',
+          hourly_rate: Number(p.hourly_rate) || 0,
+          pay_cycle: 'Weekly',
+          super_rate: 11.5,
+        };
+      });
+      if (missing.length) await base44.entities.StaffPayrollDetail.bulkCreate(missing);
+
+      const slipPage = await base44.entities.Payslip.filter({ pay_period_start: weekStart }, { limit: 200 });
+      const existing = new Set((slipPage.items || []).filter((p) => p.status !== 'Cancelled').map((p) => p.employee_name));
+      const toCreate = [];
+      for (const [name, shifts] of byEmployee) {
+        if (existing.has(name)) continue;
+        const d = detailByName.get(name) || missing.find((m) => m.employee_name === name);
+        if (!d) continue;
+        const { row, pay } = buildPayRow(d, shifts, holidaySet);
+        if (pay.totalPay <= 0) continue;
+        toCreate.push({
+          employee_name: name,
+          employee_user_id: d.employee_user_id || '',
+          staff_profile_id: d.staff_profile_id || '',
+          employee_email: d.employee_email || '',
+          pay_period_start: weekStart,
+          pay_period_end: weekEnd,
+          pay_date: weekEnd,
+          status: 'Draft',
+          ...buildPayslipPayload(d, row, pay, weekStart, weekEnd),
+        });
+      }
+      if (toCreate.length) await base44.entities.Payslip.bulkCreate(toCreate);
+
+      const freshPage = await base44.entities.Payslip.filter({ pay_period_start: weekStart }, { limit: 200 });
+      const inPeriod = (freshPage.items || []).filter((p) => p.status !== 'Cancelled');
+      if (!inPeriod.length) {
+        toast({ title: 'Nothing to pay', description: 'No employee has payable hours in that week.' });
+        return;
+      }
+      const sum = (k) => round2(inPeriod.reduce((t, p) => t + Number(p[k] || 0), 0));
+      const run = await base44.entities.PayRun.create({
+        run_date: new Date().toISOString().slice(0, 10),
+        period_start: weekStart,
+        period_end: weekEnd,
+        pay_date: weekEnd,
+        employee_count: inPeriod.length,
+        total_gross: sum('gross'),
+        total_payg: sum('payg_tax'),
+        total_super: sum('superannuation'),
+        total_net: sum('net'),
+        status: 'Draft',
+      });
+      await base44.entities.Payslip.bulkUpdate(inPeriod.map((p) => ({ id: p.id, pay_run_id: run.id })));
+      toast({
+        title: 'Payroll run complete',
+        description: `${inPeriod.length} payslip${inPeriod.length === 1 ? '' : 's'} in the run${missing.length ? `, ${missing.length} payroll record${missing.length === 1 ? '' : 's'} synced from staff profiles` : ''}, ${money(sum('net'))} net.`,
+      });
+      await load();
+    } finally {
+      setBulk(false);
+    }
+  };
+
   const detailsByEmployee = Object.fromEntries(details.map((d) => [d.employee_name, d]));
 
   const downloadAba = (run) => {
@@ -106,6 +221,12 @@ export default function PayRunsTab() {
           <div className="grid gap-1.5"><Label>Pay week starting</Label><Input type="date" value={weekStart} onChange={(e) => setWeekStart(e.target.value)} /></div>
           <Button onClick={createRun} disabled={creating}>
             {creating ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : <Plus className="h-4 w-4" />}Create pay run
+          </Button>
+          <Button onClick={runFullPayroll} disabled={bulk}>
+            {bulk ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : <Users className="h-4 w-4" />}Run payroll for everyone
+          </Button>
+          <Button variant="outline" onClick={syncDetails} disabled={syncing}>
+            {syncing ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : <RefreshCw className="h-4 w-4" />}Sync payroll details
           </Button>
         </div>
       </CardContent></Card>
