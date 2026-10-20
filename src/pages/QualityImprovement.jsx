@@ -43,6 +43,7 @@ export default function QualityImprovement() {
   const [editing, setEditing] = useState(null);
   const [sending, setSending] = useState('');
   const [defaultType, setDefaultType] = useState('Idea');
+  const [activeTab, setActiveTab] = useState('Idea');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -171,18 +172,17 @@ export default function QualityImprovement() {
         ))}
       </div>
 
-      <Tabs defaultValue="Idea">
-        <TabsList>
-          {TABS.map((t) => <TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}
-        </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <div className="flex flex-wrap items-center gap-2">
+          <TabsList>
+            {TABS.map((t) => <TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}
+          </TabsList>
+          <Button size="sm" onClick={() => openNewFor(TABS.find((t) => t.value === activeTab))}><Plus className="h-4 w-4" />Add {TABS.find((t) => t.value === activeTab).label.toLowerCase().replace(/s$/, '')}</Button>
+          <Button variant="outline" size="sm" onClick={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab))), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)}><Download className="h-4 w-4" />Export</Button>
+        </div>
         {TABS.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="mt-4 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <Button size="sm" onClick={() => openNewFor(tab)}><Plus className="mr-2 h-4 w-4" />Add {tab.label.toLowerCase().replace(/s$/, '')}</Button>
-              <Button variant="outline" size="sm" onClick={() => exportItems(items.filter((i) => matchesTab(i, tab)), `${tab.value.toLowerCase().replace(/ /g, '-')}-register.csv`)}>
-                <Download className="mr-2 h-4 w-4" />Export {tab.label.toLowerCase()}
-              </Button>
-            </div>
+
             {loading ? (
               <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
             ) : items.filter((i) => matchesTab(i, tab)).length === 0 ? (

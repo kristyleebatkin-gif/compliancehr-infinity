@@ -116,6 +116,7 @@ export async function saveCompanyBranding({
     logo_url: payload.logo_url,
   });
   if (response.data?.error) throw new Error(response.data.error);
+  window.dispatchEvent(new CustomEvent('company-identity-saved', { detail: { companyName: payload.provider_name } }));
   let cachedLogoDataUrl = logoDataUrl || '';
   if (!cachedLogoDataUrl && payload.logo_url) {
     try {

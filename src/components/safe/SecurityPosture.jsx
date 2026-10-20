@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, Lock, Users, FileClock, KeyRound, LifeBuoy, Loader2 } from 'lucide-react';
@@ -15,33 +14,6 @@ const GUARANTEES = [
 // Visible security posture (Drata/Vanta trust-centre pattern): the guarantees and
 // the live evidence behind them, shown inside the app rather than hidden in settings.
 export default function SecurityPosture() {
-  const [stats, setStats] = useState(null);
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        const [statusLogs, auditLogs, users] = await Promise.all([
-          base44.entities.StatusLog.count({}),
-          base44.entities.AuditLog.count({}),
-          base44.entities.User.list(),
-        ]);
-        if (alive) setStats({ statusLogs, auditLogs, users: Array.isArray(users) ? users.length : 0 });
-      } catch {
-        if (alive) setStats({ statusLogs: null, auditLogs: null, users: null });
-      }
-    })();
-    return () => { alive = false; };
-  }, []);
-
-  const evidence = stats
-    ? [
-        { label: 'Status-trail entries', value: stats.statusLogs },
-        { label: 'Platform audit-log entries', value: stats.auditLogs },
-        { label: 'Controlled user accounts', value: stats.users },
-      ]
-    : [];
-
   return (
     <div className="space-y-3">
       <Card className="border-safe/40">
@@ -69,23 +41,7 @@ export default function SecurityPosture() {
         ))}
       </div>
 
-      <Card>
-        <CardContent className="p-4">
-          <p className="mb-3 text-sm font-semibold">Live evidence</p>
-          {stats ? (
-            <div className="grid gap-3 sm:grid-cols-3">
-              {evidence.map((e) => (
-                <div key={e.label} className="rounded-xl border border-border/60 p-3">
-                  <p className="text-2xl font-editorial tabular-nums">{e.value === null ? '—' : e.value.toLocaleString()}</p>
-                  <p className="text-xs text-muted-foreground">{e.label}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Collecting evidence…</div>
-          )}
-        </CardContent>
-      </Card>
+
     </div>
   );
 }

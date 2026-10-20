@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2, Save, Landmark, Building2, ScrollText, KeyRound, PenLine, ShieldAlert, Eye } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import BusinessContactSignature from '@/components/safe/BusinessContactSignature';
+import { cacheCompanyBranding } from '@/lib/companyBranding';
 
 const EMPTY = {
   business_name: '', trading_name: '', abn: '', acn: '', ndis_provider_number: '',
@@ -108,6 +110,12 @@ export default function BusinessDetailsCard() {
     })();
   }, []);
 
+  useEffect(() => {
+    const syncName = (event) => setForm((current) => ({ ...current, business_name: event.detail.companyName }));
+    window.addEventListener('company-identity-saved', syncName);
+    return () => window.removeEventListener('company-identity-saved', syncName);
+  }, []);
+
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   const save = async () => {
@@ -117,12 +125,29 @@ export default function BusinessDetailsCard() {
     }
     setSaving(true);
     try {
-      const payload = { ...form, payment_terms_days: Number(form.payment_terms_days) || 14, quote_validity_days: Number(form.quote_validity_days) || 30 };
-      if (recordId) await base44.entities.BusinessDetails.update(recordId, payload);
+      let signature = form.contact_signature || '';
+      if (signature.startsWith('data:image/')) {
+        const blob = await fetch(signature).then((response) => response.blob());
+        const file = new File([blob], 'business-contact-signature.jpg', { type: 'image/jpeg' });
+        const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+        signature = file_uri;
+      }
+      const { id, created_date, updated_date, created_by_id, ...fields } = form;
+      const payload = { ...fields, business_name: form.business_name.trim(), contact_signature: signature, payment_terms_days: Number(form.payment_terms_days) || 14, quote_validity_days: Number(form.quote_validity_days) || 30 };
+      let targetId = recordId;
+      if (!targetId) {
+        const latest = await base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 });
+        targetId = latest.items?.[0]?.id;
+      }
+      if (targetId) await base44.entities.BusinessDetails.update(targetId, payload);
       else {
         const created = await base44.entities.BusinessDetails.create(payload);
-        setRecordId(created.id);
+        targetId = created.id;
       }
+      setRecordId(targetId);
+      setForm((current) => ({ ...current, contact_signature: signature }));
+      cacheCompanyBranding({ companyName: payload.business_name });
+      window.dispatchEvent(new CustomEvent('company-identity-saved', { detail: { companyName: payload.business_name } }));
       toast({ title: 'Business details saved', description: 'Used on invoices, letters, forms and business documents.' });
     } catch (error) {
       toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
@@ -157,9 +182,9 @@ export default function BusinessDetailsCard() {
 
       <Section icon={PenLine} title="Business signature">
         <div className="grid gap-2 sm:grid-cols-3">
-          <Area label="Business contact signature" value={form.contact_signature} onChange={set('contact_signature')} rows={3} />
-          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
           <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
+          <BusinessContactSignature value={form.contact_signature || ''} onChange={(value) => setForm((current) => ({ ...current, contact_signature: value }))} disabled={saving} />
+          <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
           <Field label="Business contact role" value={form.contact_role} onChange={set('contact_role')} />
           <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
           <Field label="Business contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />

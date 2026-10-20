@@ -33,6 +33,14 @@ export default async function(req) {
         document_branding_active: true,
       });
 
+    const businessPage = await base44.asServiceRole.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 });
+    const business = businessPage.items?.[0];
+    if (business) {
+      await base44.asServiceRole.entities.BusinessDetails.update(business.id, { business_name: companyName });
+    } else {
+      await base44.asServiceRole.entities.BusinessDetails.create({ business_name: companyName });
+    }
+
     const providersPage = await base44.asServiceRole.entities.Provider.filter({}, { sort: '-created_date', limit: 500 });
     for (const candidate of (providersPage.items || [])) {
       if (candidate.id !== provider.id && candidate.document_branding_active) {

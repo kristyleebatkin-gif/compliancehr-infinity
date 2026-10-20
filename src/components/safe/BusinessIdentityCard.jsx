@@ -31,6 +31,12 @@ export default function BusinessIdentityCard({ actions = null }) {
     })();
   }, []);
 
+  useEffect(() => {
+    const syncName = (event) => setCompanyName(event.detail.companyName);
+    window.addEventListener('company-identity-saved', syncName);
+    return () => window.removeEventListener('company-identity-saved', syncName);
+  }, []);
+
   const uploadLogo = async (file) => {
     if (!file) return;
     setUploading(true);
