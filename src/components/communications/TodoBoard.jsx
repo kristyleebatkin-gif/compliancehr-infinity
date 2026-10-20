@@ -13,7 +13,7 @@ import { APP_MODULES, loadCommContacts, exportCsv } from '@/lib/commTypes';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
-export default function TodoBoard() {
+export default function TodoBoard({ compact = false }) {
   const { toast } = useToast();
   const [staffList, setStaffList] = useState([]);
   const [items, setItems] = useState([]);
@@ -171,17 +171,17 @@ export default function TodoBoard() {
   const toggleResponsible = (email) => setForm((f) => ({ ...f, responsible: f.responsible.includes(email) ? f.responsible.filter((e) => e !== email) : [...f.responsible, email] }));
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>
-        <Button onClick={() => setOpen(true)}><Plus className="h-4 w-4" />New shared to-do</Button>
+    <div className={compact ? 'space-y-3 rounded-xl border border-primary/25 bg-card p-3 shadow-sm' : 'space-y-4'}>
+      <div className={compact ? 'flex flex-wrap items-center justify-between gap-2 rounded-lg bg-primary/5 p-2.5' : 'flex flex-wrap items-center justify-between gap-2'}>
+        {compact ? <div className="flex min-w-0 items-center gap-2"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><ListTodo className="h-4 w-4" /></span><div><h2 className="text-sm font-semibold">Shared To-do List</h2><p className="text-[11px] text-muted-foreground">Share, complete and sign off team actions.</p></div></div> : <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>}
+        <Button size={compact ? 'sm' : 'default'} onClick={() => setOpen(true)}><Plus className="h-4 w-4" />New shared to-do</Button>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : (
         <>
-          <div className="space-y-2">
+          <div className={compact ? 'max-h-60 space-y-2 overflow-y-auto rounded-lg border border-border bg-primary/5 p-2' : 'space-y-2'}>
             <p className="text-sm font-semibold">Pending ({pending.length})</p>
             {pending.length === 0 ? (
               <p className="text-sm text-muted-foreground">No pending to-dos.</p>
@@ -212,7 +212,7 @@ export default function TodoBoard() {
           </div>
 
           {awaiting.length > 0 && (
-            <div className="space-y-2">
+            <div className={compact ? 'max-h-60 space-y-2 overflow-y-auto rounded-lg border border-border bg-warning/5 p-2' : 'space-y-2'}>
               <p className="text-sm font-semibold">Awaiting manager sign-off ({awaiting.length})</p>
               {awaiting.map((t) => (
                 <div key={t.id} className="rounded-xl border border-amber-300/60 bg-amber-50/60 p-3.5 dark:bg-amber-500/10">
@@ -247,7 +247,7 @@ export default function TodoBoard() {
                   signature: t.signature, shared_by: t.shared_by,
                 })))}><Download className="h-4 w-4" />Export</Button>
               </div>
-              <div className="overflow-x-auto rounded-xl border border-border/60">
+              <div className={compact ? 'max-h-60 overflow-auto rounded-xl border border-border/60' : 'overflow-x-auto rounded-xl border border-border/60'}>
                 <table className="w-full text-sm">
                   <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <tr>

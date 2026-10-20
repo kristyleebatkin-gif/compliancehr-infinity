@@ -195,16 +195,20 @@ export default function Tasks() {
     <div className="mx-auto max-w-5xl p-3 md:p-5 space-y-4">
       <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts, status tracking and the shared to-do board" action={<div className="flex gap-2"><button onClick={exportTasks} disabled={loading || list.length === 0} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-60"><Download className="h-4 w-4" />Export CSV</button><button onClick={runAutomations} disabled={running} className="flex items-center gap-1.5 rounded-lg border border-brand px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/5 disabled:opacity-60"><Zap className="h-4 w-4" />{running ? 'Running...' : 'Run Automations'}</button><button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand/90"><Plus className="h-4 w-4" />New Task</button></div>} />
 
-      {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
-
-      <RegisterInsights module="tasks" />
-
-      <TaskDashboard tasks={list} onOpen={openEdit} />
-
       <div className="flex items-center justify-end gap-1.5">
         <button onClick={() => setView('list')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'list' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>List</button>
         <button onClick={() => setView('calendar')} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${view === 'calendar' ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>Calendar</button>
       </div>
+
+      <TaskDashboard tasks={list} onOpen={openEdit} />
+
+      <TodoBoard compact />
+
+      <TaskProgressChart tasks={list} users={users} />
+
+      {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
+
+      <RegisterInsights module="tasks" />
 
       {view === 'calendar' ? (
         <TaskCalendar tasks={list} onOpen={openEdit} />
@@ -259,8 +263,6 @@ export default function Tasks() {
         </>
       )}
 
-      <TaskProgressChart tasks={list} users={users} />
-
       {selected.length > 0 && (
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">
           <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{selected.length} selected</span>
@@ -314,8 +316,6 @@ export default function Tasks() {
       )}
 
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
-
-      <TodoBoard />
 
       <TaskLeaderboard />
     </div>
