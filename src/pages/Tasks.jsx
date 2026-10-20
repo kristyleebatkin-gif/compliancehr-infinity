@@ -209,12 +209,14 @@ export default function Tasks() {
 
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
-      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
+      <PageHeader title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar navigationOnly />} />
 
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
+      <TaskCompletionReports />
 
+      <TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
       </section>
@@ -280,7 +282,6 @@ export default function Tasks() {
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
 
       <TaskLeaderboard />
-      <TaskCompletionReports />
     </div>
   );
 }

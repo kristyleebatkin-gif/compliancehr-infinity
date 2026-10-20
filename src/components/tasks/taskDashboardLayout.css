@@ -1,18 +1,15 @@
-.tasks-workspace .task-summary-grid { gap: 0.5rem; }
-.tasks-workspace .task-summary-card {
-  min-height: 6.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.75rem;
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tasks-workspace .task-overview-grid > :is(:nth-child(1), :nth-child(3), :nth-child(4)) {
+    height: 14rem;
+  }
+  .tasks-workspace .task-overview-grid > :is(:nth-child(1), :nth-child(3)) [class~="max-h-28"] {
+    max-height: 11rem;
+  }
+  .tasks-workspace .task-overview-grid > :nth-child(4) > div > .grid {
+    gap: 0.625rem;
+  }
+  .tasks-workspace .task-overview-grid > :nth-child(4) > div > .grid > div {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
 }
-.tasks-workspace .task-summary-label { font-size: 0.75rem; line-height: 1rem; }
-.tasks-workspace .task-summary-value { margin-top: 0.75rem; font-size: 1.875rem; line-height: 1; }
-.tasks-workspace .task-register-rows { max-height: 18rem; }
-.tasks-workspace .task-register-row { gap: 0.375rem; padding: 0.25rem 0.5rem; }
-.tasks-workspace .task-register-row p { font-size: 0.6875rem; line-height: 1rem; }
-.tasks-workspace .task-register-row div.text-xs { gap: 0.25rem; font-size: 0.625rem; line-height: 0.875rem; }
-.tasks-workspace .task-register-row select { height: 1.5rem; padding: 0.125rem 0.375rem; font-size: 0.625rem; }
-.tasks-workspace .task-register-row button { padding: 0.25rem; }
-.tasks-workspace .task-register-row button svg { width: 0.875rem; height: 0.875rem; }
-.tasks-workspace .task-register-row input[type="checkbox"] { width: 0.75rem; height: 0.75rem; }
