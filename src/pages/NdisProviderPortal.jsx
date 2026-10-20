@@ -8,6 +8,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import NdisDeadlineTracker from '@/components/ndis/NdisDeadlineTracker';
 import GovernanceControlsRegister from '@/components/ndis/GovernanceControlsRegister';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 const PORTALS = [
   { name: 'myplace Provider Portal', url: 'https://www.myplace.ndis.gov.au', icon: Landmark, desc: 'The NDIA provider portal for claims, payment requests, bulk billing and viewing participant plan information. Sign in with your own PRODA / myplace credentials.' },
@@ -32,12 +33,12 @@ export default function NdisProviderPortal() {
           <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleAlertsButton />
             <ModuleComplianceStrip path="/ndis-portal" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </div>
         </div>
       </div>
 
+      <AutoRegisterInsights placement="header" />
       <div className="rounded-2xl border border-border/60 bg-muted/40 p-5">
         <div className="flex items-start gap-3">
           <div className="rounded-lg bg-warning/10 p-2"><Lock className="h-4 w-4 text-warning" /></div>

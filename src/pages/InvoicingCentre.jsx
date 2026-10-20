@@ -146,8 +146,7 @@ export default function InvoicingCentre() {
 
       <div className="flex flex-wrap items-center gap-2">
         <ModuleComplianceStrip path="/invoicing" />
-        <ModuleAuditChecklistButton />
-        <ModuleAuditButton />
+        <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
         <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
         <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
         <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>

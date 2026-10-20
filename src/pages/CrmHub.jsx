@@ -145,8 +145,7 @@ export default function CrmHub() {
           <>
             <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
             <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </>
         )}
       />

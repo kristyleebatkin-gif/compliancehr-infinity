@@ -205,8 +205,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
           <>
             <Button size="sm" variant={tab === 'documents' ? 'default' : 'outline'} onClick={() => setTab('documents')}><FolderOpen className="h-4 w-4" />Every doc</Button>
             <Button size="sm" variant={tab === 'expiry-calendar' ? 'default' : 'outline'} onClick={() => setTab('expiry-calendar')}><CalendarDays className="h-4 w-4" />Expiry cal</Button>
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </>
         )}
       />}

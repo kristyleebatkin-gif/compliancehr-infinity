@@ -32,8 +32,7 @@ export default function ReferralSupport() {
           <a href="tel:000" className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2.5 text-sm font-bold text-white hover:bg-danger/90"><Phone className="h-4 w-4" />Emergency 000</a>
           <ModuleAlertsButton />
           <ModuleComplianceStrip path="/referrals" />
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
+          <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
         </div>
       </div>
 

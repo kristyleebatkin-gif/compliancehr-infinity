@@ -70,8 +70,7 @@ export default function CommunityCouncil() {
           <div className="flex flex-wrap items-center gap-2">
             <ModuleComplianceStrip path="/community-council" />
             <ModuleAlertsButton />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </div>
         </div>
       </div>

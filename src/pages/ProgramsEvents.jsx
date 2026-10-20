@@ -154,8 +154,7 @@ export default function ProgramsEvents() {
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/programs" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
             {[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
                 <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>

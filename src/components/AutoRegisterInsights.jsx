@@ -9,7 +9,6 @@ const PATH_MODULES = [
   ['/volunteering-placements', 'volunteers'], ['/volunteers', 'volunteers'],
   ['/programs', 'programs'],
   ['/certificates', 'certificates'],
-  ['/procurement', 'suppliers'],
   ['/crm', 'leads'],
   ['/projects', 'projects'],
   ['/feedback', 'feedback'],
@@ -19,7 +18,7 @@ const PATH_MODULES = [
   ['/community-council', 'community'],
 ];
 
-const INLINE_ROUTES = new Set(['/certificates', '/equipment-manuals', '/crm', '/projects', '/feedback', '/programs', '/community-council', '/referrals', '/volunteers', '/volunteering-placements']);
+const INLINE_ROUTES = new Set(['/certificates', '/equipment-manuals', '/crm', '/projects', '/feedback', '/programs', '/community-council', '/referrals', '/volunteers', '/volunteering-placements', '/contacts', '/key-contacts', '/ndis-portal']);
 
 export default function AutoRegisterInsights({ placement = 'layout' }) {
   const { pathname } = useLocation();

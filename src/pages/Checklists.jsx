@@ -82,8 +82,7 @@ export default function Checklists() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <ModuleAuditChecklistButton />
-        <ModuleAuditButton />
+        <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
         <Button variant="outline" onClick={exportRegister} disabled={loading || !lists.length}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New checklist</Button></DialogTrigger>

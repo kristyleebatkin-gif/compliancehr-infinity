@@ -86,7 +86,7 @@ export default function ModuleAuditChecklistButton() {
 
   return (
     <>
-      <Button variant="outline" size="sm" onClick={run} className="shrink-0 rounded-lg border-border/60 bg-card/75 text-[13px] font-semibold shadow-sm hover:bg-muted">
+      <Button variant="outline" size="sm" onClick={run} className="h-7 shrink-0 gap-1 rounded-lg border-border/60 bg-card/75 px-2 text-[11px] font-semibold shadow-sm hover:bg-muted [&_svg]:mr-0 [&_svg]:size-3">
         <ClipboardCheck className="mr-1.5 h-3.5 w-3.5" />
         Audit checklist
       </Button>

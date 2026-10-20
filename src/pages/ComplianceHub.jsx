@@ -261,9 +261,9 @@ export default function ComplianceHub() {
         )}
       />
 
-      <ComplianceGlobalSearch />
-
       <RegisterInsights module="compliance" />
+
+      <ComplianceGlobalSearch />
 
       <Tabs defaultValue="standards-map">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1.5 shadow-sm">

@@ -109,8 +109,7 @@ export default function NdisUpdates() {
         <div className="flex flex-wrap items-center gap-2">
           <ModuleAlertsButton />
           <ModuleComplianceStrip path="/ndis-updates" />
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
+          <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
         </div>
       </div>
 

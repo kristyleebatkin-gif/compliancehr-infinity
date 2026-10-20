@@ -41,8 +41,7 @@ export default function UsersPermissionsHub() {
             Audit this module
           </div>
           <div className="flex flex-wrap gap-2">
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </div>
           <p className="text-xs text-muted-foreground">
             Run a live compliance audit checklist or generate an audit report covering users, roles and module permissions.

@@ -7,7 +7,7 @@ import { Sparkles, RefreshCw, Loader2 } from 'lucide-react';
 // AI as a default layer: a live, number-grounded summary on top of every register
 // (what changed, what needs attention, one suggested next action). Silent on failure
 // so a register never breaks because the insight did.
-export default function RegisterInsights({ module, compact = false, wrapSummary = false }) {
+export default function RegisterInsights({ module, compact = true, wrapSummary = true }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 

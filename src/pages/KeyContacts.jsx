@@ -16,6 +16,7 @@ import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -94,12 +95,12 @@ export default function KeyContacts({ readOnly = false } = {}) {
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
             <ModuleComplianceStrip path="/contacts" />
-            <ModuleAuditChecklistButton />
-            <ModuleAuditButton />
+            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
           </div>
         </div>
       </div>
 
+      <AutoRegisterInsights placement="header" />
       <div className="grid grid-cols-3 gap-3">
         {[
           ['Contacts', contacts.length, 'from-cyan-500 via-sky-500 to-blue-600'],
