@@ -7,6 +7,8 @@ const ROLES = ['admin', 'Provider Administrator', 'Administration', 'Compliance 
 export default function TaskCompletionReports() {
   const [page, setPage] = useState({ items: [] });
   const [allowed, setAllowed] = useState(false);
+  const [canTrack, setCanTrack] = useState(false);
+  const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
@@ -17,8 +19,15 @@ export default function TaskCompletionReports() {
       setPage((previous) => ({ ...next, items: cursor ? [...previous.items, ...next.items] : next.items }));
     } catch (failure) { setError(failure.message); } finally { setLoading(false); }
   }, []);
-  useEffect(() => { base44.auth.me().then((user) => setAllowed(ROLES.includes(user.role))); }, []);
-  useEffect(() => { if (!allowed) return; load(); return base44.entities.TaskCompletionReport.subscribe(() => load()); }, [allowed, load]);
+  useEffect(() => { base44.auth.me().then((user) => { setAllowed(ROLES.includes(user.role)); setCanTrack(['admin', 'Provider Administrator'].includes(user.role)); }); }, []);
+  useEffect(() => {
+    if (!allowed) return;
+    const refresh = () => { load(); if (canTrack) base44.functions.invoke('taskCompletionReports', { mode: 'progress' }).then(({ data }) => setProgress(data)); };
+    refresh();
+    const reports = base44.entities.TaskCompletionReport.subscribe(refresh);
+    const completions = canTrack ? base44.entities.TaskCompletionRecord.subscribe(refresh) : () => {};
+    return () => { reports(); completions(); };
+  }, [allowed, canTrack, load]);
   const download = async (report, kind) => {
     setBusy(`${report.id}-${kind}`); setError('');
     try {
@@ -31,7 +40,7 @@ export default function TaskCompletionReports() {
   };
   if (!allowed) return null;
   return <section aria-label="Saved completed task reports" className="space-y-2 rounded-xl border border-border bg-card p-3">
-    <h3 className="text-sm font-semibold">Saved 30-task completion reports</h3>
+    <h3 className="text-sm font-semibold">Saved 30-task completion reports{progress && <span className="ml-2 text-xs text-muted-foreground">{progress.in_next_batch}/30 toward the next report</span>}</h3>
     <p className="text-xs text-muted-foreground">Each 30 newly completed tasks are saved as PDF and CSV reports, including tasks awaiting sign-off. Reopening or signing off a task does not count it twice.</p>
     {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
     {page.items.map((report) => <div key={report.id} className="flex flex-wrap items-center gap-2 rounded-lg border border-border p-2">

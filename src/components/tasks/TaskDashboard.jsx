@@ -57,12 +57,12 @@ function StaffStrip({ tasks }) {
       <div className="grid max-h-28 grid-cols-1 gap-x-4 gap-y-1.5 overflow-y-auto sm:grid-cols-3">
         {rows.map((r) => (
           <div key={r.name} className="grid grid-cols-2 items-center gap-1">
-            <span className="min-w-0 truncate text-[9px] font-semibold" title={r.name}>{r.name}</span>
+            <span className="min-w-0 truncate text-xs font-semibold" title={r.name}>{r.name}</span>
             <div className="col-span-2 row-start-2 flex h-1.5 overflow-hidden rounded-full bg-muted">
               {r.overdue > 0 && <div className="shrink-0 bg-gradient-to-r from-rose-500 to-red-500" style={{ width: `${(r.overdue / max) * 100}%` }} />}
               <div className="min-w-1 flex-1 bg-gradient-to-r from-violet-500 to-fuchsia-400" style={{ maxWidth: `${((r.open - r.overdue) / max) * 100}%` }} />
             </div>
-            <span className="col-start-2 row-start-1 text-right text-[8px] font-semibold text-foreground/60">{r.open} open{r.overdue ? ` · ${r.overdue} overdue` : ''}</span>
+            <span className="col-start-2 row-start-1 text-right text-[10px] font-semibold text-foreground/60">{r.open} open{r.overdue ? ` · ${r.overdue} overdue` : ''}</span>
           </div>
         ))}
       </div>

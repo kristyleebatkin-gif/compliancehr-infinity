@@ -6,8 +6,13 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
+    // This operation is shared by the workflow and the provider administrator's dashboard counter.
+    if (!['admin', 'Provider Administrator'].includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
     const body = await req.json();
+    if (body.mode === 'progress') {
+      const completed = await base44.entities.TaskCompletionRecord.count({});
+      return Response.json({ completed, in_next_batch: completed % 30, until_next_report: 30 - completed % 30 });
+    }
     const fields = ['task_id', 'title', 'module', 'status', 'task_date', 'task_time', 'due_date', 'responsible', 'assigned_to', 'completed_by', 'completed_date', 'time_taken_minutes', 'signed_off_by', 'signed_off_date', 'signature', 'shared_by', 'how_to_complete', 'resources_needed', 'important_info', 'notes'];
     if (body.mode === 'record') {
       if (typeof body.task_id !== 'string' || !/^[a-f0-9]{24}$/i.test(body.task_id)) return Response.json({ error: 'Valid task_id required' }, { status: 400 });

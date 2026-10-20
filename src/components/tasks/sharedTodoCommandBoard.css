@@ -1,4 +1,4 @@
-.team-command-board{box-sizing:border-box;width:100%;height:560px;padding:22px;background:#102337;border:1px solid #1b4056;border-radius:18px;box-shadow:0 16px 40px rgba(16,35,55,.22);display:flex;flex-direction:column;gap:18px;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf8fc}
+.team-command-board{container-type:inline-size;box-sizing:border-box;width:100%;height:560px;padding:22px;background:#102337;border:1px solid #1b4056;border-radius:18px;box-shadow:0 16px 40px rgba(16,35,55,.22);display:flex;flex-direction:column;gap:18px;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf8fc}
 .team-command-board *{box-sizing:border-box}
 .team-command-board .tcb-top{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;border-bottom:1px solid rgba(237,248,252,.13);padding-bottom:15px}
 .team-command-board .tcb-heading{display:flex;align-items:center;gap:13px;min-width:0}
@@ -46,4 +46,5 @@
 .team-command-board .tcb-finaltask .tcb-meta{gap:5px}
 .team-command-board .tcb-finaltask .tcb-taskfoot{justify-content:space-between;align-items:center}
 .team-command-board .tcb-signed{font-size:10px;color:#b8d3dc;line-height:1.3}
+@container(max-width:700px){.team-command-board .tcb-lanes{grid-template-columns:repeat(3,minmax(220px,1fr));overflow-x:auto}}
 @media(max-width:640px){.team-command-board .tcb-top{flex-wrap:wrap}.team-command-board .tcb-lanes{grid-template-columns:repeat(3,minmax(220px,1fr));overflow-x:auto}.team-command-board{padding:16px}.team-command-board .tcb-actions{flex-wrap:wrap}}
