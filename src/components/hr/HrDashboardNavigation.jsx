@@ -6,9 +6,9 @@ const ITEMS = [
   { key: 'leave', label: 'Leave requests', Icon: CalendarClock, tone: 'from-teal/40 to-teal/20 text-teal', hint: 'Requests and approvals' },
   { key: 'reviews', label: 'Performance reviews', Icon: ClipboardCheck, tone: 'from-primary/40 to-primary/20 text-primary', hint: 'Reviews and development' },
   { key: 'performance', label: 'Appraisal dashboard', Icon: ChartNoAxesCombined, tone: 'from-warning/40 to-warning/20 text-warning', hint: 'Appraisals and compliance' },
-  { key: 'paperwork', label: 'Contracts & PDs', Icon: FileSignature, tone: 'from-brand/40 to-teal/25 text-brand', hint: 'Employment paperwork' },
-  { key: 'file-completeness', label: 'File completeness', Icon: FolderCheck, tone: 'from-safe/40 to-teal/20 text-safe', hint: 'Required employee evidence' },
-  { key: 'templates', label: 'Templates library', Icon: Library, tone: 'from-danger/35 to-warning/20 text-danger', hint: 'HR document templates' },
+  { key: 'paperwork', label: 'Contracts & PDs', Icon: FileSignature, tone: 'from-chart-5/40 to-chart-5/20 text-chart-5', hint: 'Employment paperwork' },
+  { key: 'file-completeness', label: 'File completeness', Icon: FolderCheck, tone: 'from-hr-evidence/40 to-hr-evidence/20 text-hr-evidence', hint: 'Required employee evidence' },
+  { key: 'templates', label: 'Templates library', Icon: Library, tone: 'from-danger/40 to-danger/20 text-danger', hint: 'HR document templates' },
   { key: 'payroll', label: 'Payroll', Icon: Wallet, tone: 'from-safe/40 to-safe/20 text-safe', hint: 'Pay and employee records' },
 ];
 export default function HrDashboardNavigation({ isManager, payrollVisible }) {
