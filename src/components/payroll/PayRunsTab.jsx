@@ -6,12 +6,26 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Landmark, Download, Send, CheckCircle2, Plus, Users, RefreshCw } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Landmark, Download, Send, CheckCircle2, Plus, Users, RefreshCw, ExternalLink } from 'lucide-react';
 import { downloadAbaFile, estimatePayg } from '@/lib/payrollExports';
 import { downloadCsv } from '@/lib/csvExport';
 import { money, startOfWeek, round2, loadHolidaySet, buildPayRow, buildPayslipPayload } from '@/components/payroll/payrollShared';
 
 const STATUS_TONE = { Draft: 'bg-warning/15 text-warning border-transparent', 'Sent to bank': 'bg-teal/15 text-teal border-transparent', Paid: 'bg-safe/15 text-safe border-transparent', Cancelled: 'bg-muted text-muted-foreground border-transparent' };
+
+// Banks that accept ABA payroll files, with their online-banking login pages.
+const BANKS = [
+  { name: 'CommBank', login: 'https://www.commbank.com.au/digital-banking/' },
+  { name: 'Westpac', login: 'https://online.westpac.com.au/esis/login' },
+  { name: 'NAB', login: 'https://ib.nab.com.au/' },
+  { name: 'ANZ', login: 'https://www.anz.com.au/login' },
+  { name: 'Suncorp', login: 'https://internetbanking.suncorp.com.au/' },
+  { name: 'Bank of Queensland', login: 'https://ib.boq.com.au/' },
+  { name: 'Macquarie', login: 'https://online.macquarie.com.au/' },
+  { name: 'ING', login: 'https://secure.ing.com.au/' },
+  { name: 'Other bank', login: '' },
+];
 
 export default function PayRunsTab() {
   const { toast } = useToast();
@@ -24,6 +38,8 @@ export default function PayRunsTab() {
   const [refs, setRefs] = useState({});
   const [bulk, setBulk] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [bank, setBank] = useState('');
+  const bankLogin = BANKS.find((b) => b.name === bank)?.login || '';
 
   const load = useCallback(async () => {
     const [r, p, d] = await Promise.all([
@@ -185,14 +201,18 @@ export default function PayRunsTab() {
   const detailsByEmployee = Object.fromEntries(details.map((d) => [d.employee_name, d]));
 
   const downloadAba = (run) => {
+    if (!bank) {
+      toast({ title: 'Choose your bank first', description: 'State which bank you are paying through before downloading the bank file.' });
+      return;
+    }
     const slips = payslips.filter((p) => p.pay_run_id === run.id && p.status !== 'Cancelled');
     const count = downloadAbaFile(slips, detailsByEmployee, run.pay_date);
     if (!count) {
       toast({ title: 'No bankable payslips', description: 'Employees need BSB and account numbers recorded to build the bank file.' });
       return;
     }
-    toast({ title: 'Bank file downloaded', description: `${count} payment${count === 1 ? '' : 's'} in ABA format, ready to upload to your bank portal.` });
-    base44.entities.PayRun.update(run.id, { aba_generated: true }).catch(() => {});
+    toast({ title: 'Bank file downloaded', description: `${count} payment${count === 1 ? '' : 's'} in ABA format, ready to upload in your ${bank} portal.` });
+    base44.entities.PayRun.update(run.id, { aba_generated: true, bank_name: bank }).catch(() => {});
   };
 
   const markSent = async (run) => {
@@ -215,6 +235,32 @@ export default function PayRunsTab() {
 
   return (
     <div className="space-y-3">
+      <Card><CardContent className="p-4">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Bank &amp; government logins</p>
+        <div className="flex flex-wrap items-end gap-2">
+          <div className="grid gap-1.5">
+            <Label>Bank for the bank file</Label>
+            <Select value={bank} onValueChange={setBank}>
+              <SelectTrigger className="w-56"><SelectValue placeholder="Select your bank" /></SelectTrigger>
+              <SelectContent>
+                {BANKS.map((b) => <SelectItem key={b.name} value={b.name}>{b.name}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          {bankLogin && (
+            <a href={bankLogin} target="_blank" rel="noreferrer">
+              <Button variant="outline"><ExternalLink className="h-4 w-4" />{bank} online login</Button>
+            </a>
+          )}
+          <a href="https://onlineservices.ato.gov.au/" target="_blank" rel="noreferrer">
+            <Button variant="outline"><ExternalLink className="h-4 w-4" />ATO online services</Button>
+          </a>
+          <a href="https://online.qleave.qld.gov.au/" target="_blank" rel="noreferrer">
+            <Button variant="outline"><ExternalLink className="h-4 w-4" />QLeave login</Button>
+          </a>
+        </div>
+      </CardContent></Card>
+
       <Card><CardContent className="p-4">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Create a pay run</p>
         <div className="flex flex-wrap items-end gap-2">
@@ -244,7 +290,7 @@ export default function PayRunsTab() {
                     <div className="rounded-lg bg-teal/10 p-2"><Landmark className="h-4 w-4 text-teal" /></div>
                     <div>
                       <p className="font-semibold">Pay run {run.period_start} to {run.period_end}</p>
-                      <p className="text-xs text-muted-foreground">{run.employee_count} employees · run {run.run_date}{run.bank_reference ? ` · ref ${run.bank_reference}` : ''}</p>
+                      <p className="text-xs text-muted-foreground">{run.employee_count} employees · run {run.run_date}{run.bank_name ? ` · ${run.bank_name}` : ''}{run.bank_reference ? ` · ref ${run.bank_reference}` : ''}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
