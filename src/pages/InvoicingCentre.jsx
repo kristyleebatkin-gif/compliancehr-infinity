@@ -19,6 +19,7 @@ import { useToast } from '@/components/ui/use-toast';
 import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import InvoiceShiftDrill from '@/components/invoicing/InvoiceShiftDrill';
+import InvoiceFileButton from '@/components/invoicing/InvoiceFileButton';
 import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import BankReconciliation from '@/components/invoicing/BankReconciliation';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
@@ -211,6 +212,7 @@ export default function InvoicingCentre() {
                         <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
                         <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
                       </Select>
+                      <InvoiceFileButton invoice={inv} business={business} onChanged={load} />
                       <Button variant="ghost" size="icon" title="Preview" onClick={() => setPreview(inv)}><FileSpreadsheet className="h-4 w-4" /></Button>
                       <Button variant="ghost" size="icon" title="Download PDF" onClick={() => downloadInvoicePdf(inv, business)}><FileDown className="h-4 w-4" /></Button>
                       <Button variant="ghost" size="icon" title="Print" onClick={() => printInvoicePdf(inv, business)}><Printer className="h-4 w-4" /></Button>

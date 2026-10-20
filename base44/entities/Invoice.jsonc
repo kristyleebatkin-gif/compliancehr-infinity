@@ -102,6 +102,23 @@
       "type": "string",
       "format": "date",
       "title": "Paid Date"
+    },
+    "pdf_file_uri": {
+      "type": "string",
+      "title": "Saved Invoice PDF"
+    },
+    "pdf_file_name": {
+      "type": "string",
+      "title": "Saved Invoice Filename"
+    },
+    "pdf_generated_date": {
+      "type": "string",
+      "format": "date",
+      "title": "PDF Generated Date"
+    },
+    "pdf_library_document_id": {
+      "type": "string",
+      "title": "Filed Invoice Document"
     }
   },
   "required": [

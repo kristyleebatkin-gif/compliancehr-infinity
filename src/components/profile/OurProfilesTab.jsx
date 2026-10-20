@@ -8,7 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
 import { useRole, ROLES } from '@/lib/useRole';
-import { managesProfiles, ownProfileQuery, preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
+import { managesProfiles, profileRecordScope, preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
 import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } from 'lucide-react';
 
 // Admin view: every employee or participant profile in the organisation,
@@ -17,7 +17,7 @@ import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } fro
 export default function OurProfilesTab({ kind }) {
   const isParticipant = kind === 'participant';
   const { role, user } = useRole();
-  const selfOnly = !managesProfiles(role);
+  const selfOnly = !managesProfiles(role) && !(isParticipant && role === ROLES.SUPPORT);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default function OurProfilesTab({ kind }) {
         if (!user?.id) return;
         await preparePersonalProfileAccess();
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter(selfOnly ? ownProfileQuery(user) : {}, { sort: 'full_name', limit: 200 });
+        const page = await entity.filter(profileRecordScope(role, user, isParticipant ? 'ParticipantProfile' : 'StaffProfile'), { sort: 'full_name', limit: 200 });
         if (active) setRecords(page.items || []);
       } catch (e) { if (active) setError(e.message || 'Unable to load your profile.'); }
       if (active) setLoading(false);

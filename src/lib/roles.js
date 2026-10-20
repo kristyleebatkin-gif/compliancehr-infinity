@@ -47,7 +47,7 @@ export const NAV_PERMISSIONS = {
   'my-profile': EVERYONE,
   // Management keeps its registers; other employees and participants use their own matching profile.
   'our-staff': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT, ROLES.FINANCE, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, 'user'],
-  'our-participants': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.PARTICIPANT],
+  'our-participants': [...MANAGEMENT_ROLES, 'Team Leader', ROLES.HR, ROLES.SUPPORT, ROLES.PARTICIPANT],
   dashboard: EVERYONE,
   notifications: EVERYONE,
   assistant: EVERYONE,

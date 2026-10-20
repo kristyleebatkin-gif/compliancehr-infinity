@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import AiItemSuggest from '@/components/invoicing/AiItemSuggest';
 import financeDocumentDefaults from '@/components/invoicing/financeDocumentDefaults';
+import invoiceArchive from '@/components/invoicing/invoiceArchive';
 import { SUPPORT_ITEMS, PRICE_GUIDE_VERSION, PRICE_GUIDE_NOTE, classifyShift, lineAmount } from '@/lib/ndisPriceGuide';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
@@ -159,8 +160,13 @@ export default function InvoiceBuilder({ open, onClose, onSaved, invoiceCount = 
       if (shiftIds.length) {
         await base44.entities.Shift.bulkUpdate(shiftIds.map((id) => ({ id, invoiced: true, invoice_id: created.id })));
       }
-      toast({ title: 'Invoice created', description: shiftIds.length ? `${shiftIds.length} rostered shifts marked as invoiced for this participant.` : undefined });
-      onSaved();
+      try {
+        await invoiceArchive(created, business || {});
+        toast({ title: 'Invoice created and PDF filed', description: 'The original PDF is stored privately in the Document Vault and linked to the invoice.' });
+      } catch (error) {
+        toast({ title: 'Invoice created, PDF filing incomplete', description: `${error.message} Use Save PDF or Retry filing on this invoice; do not create it again.`, variant: 'destructive' });
+      }
+      await onSaved();
       onClose();
     } finally {
       setSaving(false);
