@@ -19,16 +19,12 @@ import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
 import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
-import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
 import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
-import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import VaultUploads from '@/components/documents/VaultUploads';
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
-import ReviewSchedulesPanel from '@/components/documents/ReviewSchedulesPanel';
-import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_META, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES } from '@/lib/participantDocuments';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -199,7 +195,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
       ) : (
         <>
-      {!profile && <><RegisterInsights module="documents" /><DocumentsDashboard /></>}
+      {!profile && <RegisterInsights module="documents" />}
 
       <Tabs defaultValue="documents">
         <TabsList className="flex-wrap">
@@ -208,7 +204,7 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </TabsList>
 
         <TabsContent value="documents" className="mt-4 space-y-6">
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
+      <div id="staff-docs" className="flex scroll-mt-24 flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
         <span className="text-sm font-bold font-editorial text-foreground/80">Every document on file</span>
         <span className="flex-1" />
         <div className="flex items-center gap-2">
@@ -308,64 +304,9 @@ export default function Documents({ profile, profileKind, embedded = false } = {
         </>
       )}
 
-      {pdocs.length > 0 && (
-        <div className="pt-2">
-          <div className="mb-3 flex items-center gap-2.5">
-            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
-            <span className="text-sm font-bold font-editorial text-foreground/80">Participant documents</span>
-            <Badge variant="outline" className="tabular-nums">{pdocs.length}</Badge>
-            <span className="text-xs text-muted-foreground">Also managed in each participant profile.</span>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {pdocs.map((d) => {
-              const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
-              return (
-                <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="truncate font-semibold">{d.title || d.document_type}</p>
-                        <p className="text-sm text-muted-foreground">{d.participant_name || 'Unassigned'} · {d.document_type}</p>
-                      </div>
-                      <Badge className={expiryTone(d.expiry_date)}>{d.review_outcome || d.status || 'Received'}</Badge>
-                    </div>
-                    <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                      <span className={expired ? 'font-semibold text-destructive' : ''}>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
-                      {(d.file_uri || d.file_url) && (
-                        <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {!profile && <DocumentsDashboard />}
 
-      <div className="flex items-center gap-2.5 pt-2">
-        <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm"><FolderOpen className="h-4 w-4 text-white" /></span>
-        <span className="text-sm font-bold font-editorial text-foreground/80">Forms &amp; document libraries</span>
-        <span className="h-1 w-8 rounded-full bg-brand" />
-      </div>
-      <div id="vault-participant" className="scroll-mt-24">
-      <AttachedFormsLibrary
-        title="Participant Forms Library"
-        subtitle="Official participant service forms - download templates or upload completed records"
-        libraryKey="Participant"
-        sections={PARTICIPANT_FILE_SECTIONS}
-        formFiles={PARTICIPANT_FORM_FILES}
-        formCodes={Object.fromEntries(Object.entries(PARTICIPANT_FORM_META).map(([key, meta]) => [key, meta.code]))}
-        definitions={PARTICIPANT_FORM_DEFINITIONS}
-      />
-      </div>
-      {!profile && <><div id="vault-business" className="scroll-mt-24">
-      <BusinessDocumentsLibrary />
-      </div>
-      <div id="vault-review-schedules" className="scroll-mt-24">
-      <ReviewSchedulesPanel />
-      </div>
-      <div id="vault-vault" className="scroll-mt-24">
+      {!profile && <><div id="vault-vault" className="scroll-mt-24 pt-2">
       <VaultUploads />
       </div></>}
         </TabsContent>

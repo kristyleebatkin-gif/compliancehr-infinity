@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Download, FolderOpen, Loader2, Users, Heart, ClipboardList, Building2, ScrollText, Layers, CalendarClock, ClipboardCheck, AlertTriangle, Zap, Ambulance, ShieldPlus } from 'lucide-react';
+import { Download, FolderOpen, Loader2, Users, Heart, Building2, ScrollText, Layers, CalendarClock, ClipboardCheck, AlertTriangle, Zap, Ambulance, ShieldPlus, Target, MessageSquare, Boxes, Share2, FileSignature, HeartHandshake, Recycle, Scale, Briefcase, UserCog, Award } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { cn } from '@/lib/utils';
 
@@ -12,18 +12,29 @@ import { cn } from '@/lib/utils';
  * with a live overview count and a full CSV export for each.
  */
 const SUBJECTS = [
+  { key: 'staff', title: 'Staff Documents', icon: Users, colour: '#2563eb', soft: '#eff6ff', blurb: 'Employee contracts, checks, badges and compliance files', entity: 'EmployeeDocument', anchor: 'staff-docs' },
   { key: 'participants', title: 'Participants', icon: Heart, colour: '#db2777', soft: '#fdf2f8', blurb: 'Participant documents, plans and uploaded records', entity: 'ParticipantDocument', link: '/participants' },
-  { key: 'staff', title: 'Staff Documents', icon: Users, colour: '#2563eb', soft: '#eff6ff', blurb: 'Employee contracts, checks and compliance files', entity: 'EmployeeDocument', link: '/our-employees' },
-  { key: 'participant-forms', title: 'Participant Forms', icon: FolderOpen, colour: '#9333ea', soft: '#faf5ff', blurb: 'Official participant service forms and completed uploads', anchor: 'vault-participant' },
-  { key: 'business', title: 'Business Plans', icon: Building2, colour: '#0891b2', soft: '#ecfeff', blurb: 'Business, strategic and operational plan templates', anchor: 'vault-business' },
-  { key: 'policies', title: 'Policies & Procedures', icon: ScrollText, colour: '#4f46e5', soft: '#eef2ff', blurb: 'NDIS policy and procedure manual, all volumes', anchor: 'vault-business' },
-  { key: 'registers', title: 'Registers', icon: Layers, colour: '#0d9488', soft: '#f0fdfa', blurb: 'Blank register templates for every compliance log', anchor: 'vault-business' },
+  { key: 'participant-forms', title: 'Participant Forms', icon: FolderOpen, colour: '#9333ea', soft: '#faf5ff', blurb: 'Official participant forms, branded downloads and completed uploads', link: '/participants' },
+  { key: 'goals', title: 'Goal Progress', icon: Target, colour: '#0d9488', soft: '#f0fdfa', blurb: 'Participant goals, progress notes and reports', entity: 'Goal', link: '/goals' },
+  { key: 'business-doc', title: 'Business Documents', icon: Briefcase, colour: '#0891b2', soft: '#ecfeff', blurb: 'Company safe documents, certificates and registrations', entity: 'CompanyDocument', link: '/company-safe' },
+  { key: 'business', title: 'Business Plans', icon: Building2, colour: '#0369a1', soft: '#eff6ff', blurb: 'Business, strategic and operational plan templates', link: '/company-safe' },
+  { key: 'policies', title: 'Policies & Procedures', icon: ScrollText, colour: '#4f46e5', soft: '#eef2ff', blurb: 'NDIS policy and procedure manual, every volume', link: '/company-safe' },
+  { key: 'registers', title: 'Registers', icon: Layers, colour: '#7c3aed', soft: '#faf5ff', blurb: 'Blank register templates for every compliance log', link: '/company-safe' },
+  { key: 'waste', title: 'Waste Management', icon: Recycle, colour: '#16a34a', soft: '#f0fdf4', blurb: 'Waste management plan and clinical waste handling templates', link: '/company-safe' },
+  { key: 'delegation', title: 'Delegation', icon: UserCog, colour: '#b45309', soft: '#fffbeb', blurb: 'Delegation of authority register and authorisation templates', link: '/company-safe' },
+  { key: 'conflict', title: 'Conflict of Interest', icon: Scale, colour: '#be123c', soft: '#fff1f2', blurb: 'Conflict of interest register and policy templates', link: '/company-safe' },
+  { key: 'consents', title: 'Consents', icon: FileSignature, colour: '#9333ea', soft: '#faf5ff', blurb: 'Information sharing consents and audit consents', entity: 'InformationSharingConsent', link: '/compliance' },
+  { key: 'advocate', title: 'Act as Advocate', icon: HeartHandshake, colour: '#db2777', soft: '#fdf2f8', blurb: 'Authority to act as advocate and nominee forms', link: '/participants' },
+  { key: 'quality', title: 'Quality & Improvement', icon: Award, colour: '#4338ca', soft: '#eef2ff', blurb: 'Quality items, improvement actions and reviews', entity: 'QualityItem', link: '/quality' },
+  { key: 'feedback', title: 'Feedback', icon: MessageSquare, colour: '#e11d48', soft: '#fff1f2', blurb: 'Feedback, complaints and satisfaction surveys', entity: 'Feedback', link: '/feedback' },
+  { key: 'assets', title: 'Asset Management', icon: Boxes, colour: '#ca8a04', soft: '#fefce8', blurb: 'Asset register, maintenance and compliance reviews', entity: 'Asset', link: '/assets' },
+  { key: 'referral', title: 'Referral', icon: Share2, colour: '#0ea5e9', soft: '#f0f9ff', blurb: 'Referrals, community services and support letters', entity: 'Referral', link: '/referrals' },
   { key: 'meetings', title: 'Meetings', icon: CalendarClock, colour: '#6366f1', soft: '#eef2ff', blurb: 'Meeting records, minutes, actions and attendance', entity: 'Meeting', link: '/meetings' },
   { key: 'audit', title: 'Audit', icon: ClipboardCheck, colour: '#4f46e5', soft: '#eef2ff', blurb: 'Internal audits, NDIS audits and audit actions', entity: 'Audit', link: '/compliance' },
   { key: 'risk', title: 'Risk', icon: AlertTriangle, colour: '#ea580c', soft: '#fff7ed', blurb: 'Risk register, assessments and treatments', entity: 'Risk', link: '/risks' },
   { key: 'incident', title: 'Incident', icon: Zap, colour: '#dc2626', soft: '#fef2f2', blurb: 'Incident reports, investigations and follow-ups', entity: 'Incident', link: '/incidents' },
   { key: 'emergency', title: 'Emergency', icon: Ambulance, colour: '#b91c1c', soft: '#fef2f2', blurb: 'Emergency documents, drills and resources', entity: 'EmergencyDocument', link: '/emergency-response' },
-  { key: 'infection', title: 'Infection Control', icon: ShieldPlus, colour: '#16a34a', soft: '#f0fdf4', blurb: 'Infection control checklists and standards evidence', entity: 'Checklist', link: '/checklists' },
+  { key: 'infection', title: 'Infection Control', icon: ShieldPlus, colour: '#15803d', soft: '#f0fdf4', blurb: 'Infection control checklists and standards evidence', entity: 'Checklist', link: '/checklists' },
 ];
 
 export default function DocumentsDashboard() {
@@ -113,7 +124,7 @@ export default function DocumentsDashboard() {
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/50 pt-3">
                   <span className="text-xs font-semibold" style={{ color: subject.colour }}>
-                    {subject.anchor ? 'Open library' : subject.entity ? 'Open module' : ''}
+                    {subject.anchor ? 'Open section' : 'Open module'}
                   </span>
                   {subject.entity && (
                     <Button

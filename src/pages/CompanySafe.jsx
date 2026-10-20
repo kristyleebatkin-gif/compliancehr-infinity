@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Trash2, Lock, IdCard, Building2, FolderLock, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
+import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
 import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
@@ -70,6 +71,7 @@ export default function CompanySafe() {
         <div className="space-y-4">
           <BusinessIdentityCard actions={<DialogTrigger asChild><Button className="gradient-brand text-white hover:opacity-90"><Plus className="mr-2 h-4 w-4" /> Add document</Button></DialogTrigger>} />
           <SectionLabel icon={FolderLock} tint="bg-brand">Business Documents</SectionLabel>
+          <BusinessDocumentsLibrary />
           <ComplianceUploads />
           <SectionLabel icon={ShieldCheck} tint="bg-safe">Security &amp; Trust</SectionLabel>
           <SecurityPosture />
