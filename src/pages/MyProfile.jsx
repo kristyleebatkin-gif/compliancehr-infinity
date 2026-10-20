@@ -4,20 +4,18 @@ import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import PersonalProfileForm from '@/components/profile/PersonalProfileForm';
+import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
+import OurProfileData from '@/components/profile/OurProfileData';
 import PersonalProfileHeader from '@/components/profile/PersonalProfileHeader';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
-import StaffFillableForms from '@/components/staff/StaffFillableForms';
-import ParticipantFillableForms from '@/components/participants/ParticipantFillableForms';
+
 import { logUserAction } from '@/lib/actionLog';
-import { UserRound, Save, CheckCircle2 } from 'lucide-react';
+import { UserRound, BriefcaseBusiness } from 'lucide-react';
 
 const STAFF_FIELDS = [
   ['phone', 'Phone', 'input'],
@@ -150,103 +148,21 @@ export default function MyProfile() {
         showAlerts={false} showCompliance={false} showAudit={false}
       />
 
-      <Tabs value={tab} onValueChange={setTab}>
-        <TabsList>
-          <TabsTrigger value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
-          {!isParticipant && participantProfile && <TabsTrigger value="participant-details">My participant profile</TabsTrigger>}
-          {profile && <TabsTrigger value="forms">Fillable Forms</TabsTrigger>}
-          <TabsTrigger value="work">My Work</TabsTrigger>
-          <TabsTrigger value="documents">My Documents</TabsTrigger>
-          {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
-        </TabsList>
-
-        <TabsContent value="details" className="mt-3 space-y-4">
-          {!profile ? (
-            <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} />
-          ) : (
-            <>
-              <PersonalProfileHeader profile={profile} kind={isParticipant ? 'participant' : 'staff'} />
-
-              <Card className="rounded-2xl border-border/60 shadow-none">
-                <CardContent className="p-5 space-y-4">
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {fields.map(([key, label, kind]) => (
-                      <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
-                        <Label>{label}</Label>
-                        {kind === 'textarea' ? (
-                          <Textarea rows={3} value={form[key] || ''} onChange={(e) => setField(key, e.target.value)} />
-                        ) : (
-                          <Input value={form[key] || ''} onChange={(e) => setField(key, e.target.value)} />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button onClick={save} disabled={saving} className="gap-2">
-                      <Save className="h-4 w-4" />{saving ? 'Saving...' : 'Save changes'}
-                    </Button>
-                    {saved && <span className="flex items-center gap-1.5 text-sm font-medium text-safe"><CheckCircle2 className="h-4 w-4" />Saved</span>}
-                  </div>
-                </CardContent>
-              </Card>
-
-
-            </>
-          )}
-        </TabsContent>
-
-        {!isParticipant && participantProfile && (
-          <TabsContent value="participant-details" className="mt-3 space-y-4">
-            <PersonalProfileHeader profile={participantProfile} kind="participant" />
-            {!canEditParticipant && <p className="text-xs text-foreground/50">Read-only view. Support team and management can make updates.</p>}
-            <ParticipantFillableForms participant={participantProfile} />
-            {canEditParticipant && (
-              <Card className="rounded-2xl border-border/60 shadow-none">
-                <CardContent className="p-5 space-y-4">
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {PARTICIPANT_FIELDS.map(([key, label, kind]) => (
-                      <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
-                        <Label>{label}</Label>
-                        {kind === 'textarea' ? (
-                          <Textarea rows={3} value={participantForm[key] || ''} onChange={(e) => setParticipantField(key, e.target.value)} />
-                        ) : (
-                          <Input value={participantForm[key] || ''} onChange={(e) => setParticipantField(key, e.target.value)} />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button onClick={saveParticipant} disabled={saving} className="gap-2">
-                      <Save className="h-4 w-4" />{saving ? 'Saving...' : 'Save changes'}
-                    </Button>
-                    {saved && <span className="flex items-center gap-1.5 text-sm font-medium text-safe"><CheckCircle2 className="h-4 w-4" />Saved</span>}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-        )}
-
-        <TabsContent value="forms" className="mt-3">
-          {isParticipant
-            ? <ParticipantFillableForms participant={profile} />
-            : <StaffFillableForms staff={profile} />}
-        </TabsContent>
-
-        <TabsContent value="work" className="mt-3">
-          <StaffHome embedded />
-        </TabsContent>
-
-        <TabsContent value="documents" className="mt-3">
-          <MyDocuments embedded />
-        </TabsContent>
-
-        {!isParticipant && (
-          <TabsContent value="name-tags" className="mt-3">
-            <NameTags embedded />
-          </TabsContent>
-        )}
-      </Tabs>
+      {!isParticipant && participantProfile && <div className="flex flex-wrap gap-2">
+        <Button variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>
+        <Button variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My participant profile</Button>
+      </div>}
+      {!(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
+        const secondary = tab === 'participant-details' && participantProfile;
+        const person = secondary || profile;
+        const kind = secondary || isParticipant ? 'participant' : 'staff';
+        return <OurProfileWorkspace key={person.id} profile={person} kind={kind} onUpdated={load} ourView={false} personal
+          header={<PersonalProfileHeader profile={person} kind={kind} />}
+          details={<OurProfileData profile={person} kind={kind} initialTab={tab === 'forms' ? 'forms' : 'details'} detailsContent={<PersonalProfileForm fields={secondary ? PARTICIPANT_FIELDS : fields} form={secondary ? participantForm : form} onChange={secondary ? setParticipantField : setField} onSave={secondary ? saveParticipant : save} saving={saving} saved={saved} readOnly={!!secondary && !canEditParticipant} />} />}
+          moduleOverrides={{ documents: <MyDocuments embedded />, 'name-tag': <NameTags embedded /> }}
+          extraModules={[{ key: 'work', label: 'My Work', Icon: BriefcaseBusiness, content: <StaffHome embedded /> }]}
+        />;
+      })()}
     </div>
   );
 }

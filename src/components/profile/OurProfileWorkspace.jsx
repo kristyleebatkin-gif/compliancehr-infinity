@@ -6,15 +6,17 @@ import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import OurProfileData from '@/components/profile/OurProfileData';
 import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipantProfiles';
 
-export default function OurProfileWorkspace({ profile, kind, header, onUpdated }) {
+export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false }) {
   const [params, setParams] = useSearchParams();
-  const modules = OurProfileModuleList({ kind, profile, ourView: true,
-    details: <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
+  const modules = [...OurProfileModuleList({ kind, profile, ourView,
+    details: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
-  });
-  const selected = modules.find((module) => module.key === params.get('module')) || modules[0];
+  }), ...extraModules].map((module) => ({ ...module, content: moduleOverrides[module.key] || module.content }));
+  const legacy = personal ? ({ work: 'work', documents: 'documents', 'name-tags': 'name-tag' }[params.get('tab')]) : null;
+  const selected = modules.find((module) => module.key === (params.get('module') || legacy)) || modules[0];
   const selectModule = (key) => {
     const next = new URLSearchParams(params);
+    if (personal && next.get('tab') !== 'participant-details') next.delete('tab');
     if (key === 'details') next.delete('module');
     else next.set('module', key);
     setParams(next, { replace: true });

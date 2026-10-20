@@ -8,18 +8,18 @@ import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ExportRow from '@/components/profile/ExportRow';
 
-export default function OurProfileData({ profile, kind, onUpdated }) {
+export default function OurProfileData({ profile, kind, onUpdated, detailsContent, initialTab = 'details' }) {
   const participant = kind === 'participant';
   return (
-    <Tabs defaultValue="details" className="space-y-4">
+    <Tabs defaultValue={initialTab} className="space-y-4">
       <TabsList className="justify-start">
         <TabsTrigger value="details">Details</TabsTrigger>
         <TabsTrigger value="forms">Fillable Forms</TabsTrigger>
         <TabsTrigger value="files">File Checklist</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="space-y-4">
-        <ExportRow kind={kind} person={profile} section="details" />
-        {participant ? <ParticipantDetailsTab participant={profile} onUpdated={onUpdated} /> : <StaffDetailsTab staff={profile} onUpdated={onUpdated} />}
+        {detailsContent || <><ExportRow kind={kind} person={profile} section="details" />
+        {participant ? <ParticipantDetailsTab participant={profile} onUpdated={onUpdated} /> : <StaffDetailsTab staff={profile} onUpdated={onUpdated} />}</>}
       </TabsContent>
       <TabsContent value="forms">
         {participant ? <ParticipantFillableForms participant={profile} /> : <StaffFillableForms staff={profile} />}
