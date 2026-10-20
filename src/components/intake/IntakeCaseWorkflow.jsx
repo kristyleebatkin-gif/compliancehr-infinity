@@ -5,7 +5,7 @@ import { useRole } from '@/lib/useRole';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Download } from 'lucide-react';
+import { Download, Search } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { routeDocument } from '@/lib/documentRouting';
@@ -28,7 +28,7 @@ import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
 import IntakeCaseDocuments from '@/components/intake/IntakeCaseDocuments';
 import IntakeOnlineFormDialog from '@/components/intake/IntakeOnlineFormDialog';
 import IntakeAcknowledgementDialog from '@/components/intake/IntakeAcknowledgementDialog';
-import { TERMINAL_STATUSES } from '@/components/intake/intakeDisplay';
+import { STATUS_CLASS, STATUS_ORDER, TERMINAL_STATUSES } from '@/components/intake/intakeDisplay';
 import { downloadBlankFormPdf } from '@/lib/formsLibraryPdf';
 import { SPECIAL_DOCUMENT_BUILDERS } from '@/lib/intakeSpecialDocuments';
 import { EMPLOYEE_FORM_CODES, EMPLOYEE_FORM_FILES } from '@/lib/employeeDocuments';
@@ -209,6 +209,8 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
   const { toast } = useToast();
   const [cases, setCases] = useState([]);
   const [exporting, setExporting] = useState(false);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
   const caseQuery = { intake_type: intakeType, ...(profile ? { $or: [{ related_profile_id: profile.id }, ...(profile.email ? [{ email: profile.email }] : [])] } : {}) };
 
   const exportRegister = async () => {
@@ -268,6 +270,19 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
   const activeDocs = documents.filter((doc) => doc.intake_case_id === activeCaseId);
+
+  const statusCounts = useMemo(() => {
+    const counts = { All: cases.length };
+    cases.forEach((record) => { counts[record.status] = (counts[record.status] || 0) + 1; });
+    return counts;
+  }, [cases]);
+
+  const visibleCases = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    return cases.filter((record) =>
+      (statusFilter === 'All' || record.status === statusFilter)
+      && (!term || `${record.applicant_name} ${record.case_number} ${record.email || ''}`.toLowerCase().includes(term)));
+  }, [cases, statusFilter, search]);
 
   const load = useCallback(async (preferredId = '') => {
     const casePage = await base44.entities.IntakeCase.filter(caseQuery, { sort: '-created_date', limit: 200 });
@@ -963,12 +978,35 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-sm text-foreground/60">
-          <span className="font-semibold text-foreground">{cases.length}</span> {intakeType} intake cases
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {['All', ...STATUS_ORDER.filter((s) => statusCounts[s] && s !== 'All')].map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setStatusFilter(s)}
+              className={`rounded-full px-3 py-1 text-xs font-bold transition-all ${
+                statusFilter === s
+                  ? `${STATUS_CLASS[s] || 'bg-primary text-primary-foreground'} shadow-sm`
+                  : 'border border-border bg-card text-foreground/60 hover:bg-muted'
+              }`}
+            >
+              {s === 'All' ? 'All cases' : s}
+              <span className="ml-1.5 tabular-nums opacity-70">{statusCounts[s] || 0}</span>
+            </button>
+          ))}
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search name or case number..."
+              className="h-9 w-52 rounded-md border border-input bg-transparent pl-8 pr-3 text-sm shadow-sm outline-none placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring"
+            />
+          </div>
           <Button variant="outline" onClick={exportRegister} disabled={exporting}>
             <Download className="mr-2 h-4 w-4" /> {exporting ? 'Exporting...' : 'Export Register (CSV)'}
           </Button>
@@ -978,10 +1016,10 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
       </div>
 
       {cases.length === 0 && !showNew ? (
-        <Card><CardContent className="p-10 text-center text-muted-foreground">No {intakeType} intake cases yet.</CardContent></Card>
+        <Card><CardContent className="p-8 text-center text-muted-foreground">No {intakeType} intake cases yet.</CardContent></Card>
       ) : (
-        <div className="grid gap-5 lg:grid-cols-[19rem_minmax(0,1fr)]">
-          <IntakeCaseList cases={cases} activeCaseId={activeCaseId} onSelect={setActiveCaseId} />
+        <div className="grid gap-4 lg:grid-cols-[19rem_minmax(0,1fr)]">
+          <IntakeCaseList cases={visibleCases} activeCaseId={activeCaseId} onSelect={setActiveCaseId} />
 
           {activeCase && (
             <div className="space-y-4">

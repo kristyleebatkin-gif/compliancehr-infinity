@@ -28,17 +28,32 @@ export default function IntakeCaseDocuments({
   onRemove,
   canCompleteOnline,
 }) {
+  const checks = readiness.documentChecks;
+  const doneCount = checks.filter((c) => c.complete).length;
+  const pct = checks.length ? Math.round((doneCount / checks.length) * 100) : 0;
+
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <div className="space-y-2">
-        <div className="text-xs font-bold uppercase tracking-wide text-foreground/45">Required documents</div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="text-xs font-bold uppercase tracking-wide text-foreground/45">Required documents</div>
+          {checks.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">{doneCount}/{checks.length} complete</span>
+              <span className="hidden h-1.5 w-24 overflow-hidden rounded-full bg-muted sm:block">
+                <span className="block h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600" style={{ width: `${pct}%` }} />
+              </span>
+            </div>
+          )}
+        </div>
         {readiness.documentChecks.length === 0 ? (
           <p className="text-sm text-muted-foreground">No document requirements for this case.</p>
         ) : (
           readiness.documentChecks.map((check) => {
             const doc = docForCheck(check.label);
             return (
-              <div key={check.label} className="flex flex-col gap-2 rounded-lg border border-border bg-card p-3 sm:flex-row sm:items-center sm:justify-between">
+              <div key={check.label} className="relative flex flex-col gap-2 overflow-hidden rounded-xl border border-border/60 bg-card py-2.5 pl-4 pr-3 sm:flex-row sm:items-center sm:justify-between">
+                <span className="absolute inset-y-0 left-0 w-1.5" style={{ backgroundColor: check.complete ? '#10b981' : '#f59e0b' }} />
                 <div className="flex min-w-0 items-start gap-2">
                   {check.complete
                     ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />

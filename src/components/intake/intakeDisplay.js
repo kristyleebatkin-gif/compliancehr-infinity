@@ -14,3 +14,15 @@ export const STATUS_CLASS = {
   Declined: 'bg-rose-100 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300',
   Withdrawn: 'bg-muted text-muted-foreground',
 };
+
+export const STATUS_ORDER = ['Draft', 'Information Required', 'Ready for Review', 'Approved', 'Converted to Profile', 'Declined', 'Withdrawn'];
+
+export const STATUS_HEX = {
+  Draft: '#8b5cf6',
+  'Information Required': '#f59e0b',
+  'Ready for Review': '#3b82f6',
+  Approved: '#10b981',
+  'Converted to Profile': '#059669',
+  Declined: '#f43f5e',
+  Withdrawn: '#94a3b8',
+};

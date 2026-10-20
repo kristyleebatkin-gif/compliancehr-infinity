@@ -7,6 +7,18 @@ import { downloadCsv } from '@/lib/csvExport';
 
 const fmt = (d) => (d ? String(d).slice(0, 16).replace('T', ' ') : '');
 
+const STAGE_COLOUR = {
+  'Case opened': '#8b5cf6',
+  Referral: '#3b82f6',
+  Consent: '#10b981',
+  Acknowledgement: '#f59e0b',
+  'Referee check': '#0ea5e9',
+  Document: '#ec4899',
+  Review: '#6366f1',
+  Status: '#64748b',
+  Conversion: '#059669',
+};
+
 /**
  * Participant journey: every action recorded on a participant intake case —
  * consents, audit consent, acknowledgements, referee checks, documents and
@@ -52,7 +64,7 @@ export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
 
   return (
     <Card>
-      <CardContent className="p-5">
+      <CardContent className="p-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Route className="h-4 w-4" /></span>
@@ -64,15 +76,19 @@ export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
         {ordered.length === 0 ? (
           <p className="py-3 text-center text-sm text-muted-foreground">No actions recorded yet.</p>
         ) : (
-          <ol className="space-y-2">
-            {ordered.map((row, i) => (
-              <li key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 rounded-lg border border-border/60 bg-muted/30 px-3 py-2 text-sm">
-                <Badge variant="secondary" className="shrink-0 text-[10px] uppercase tracking-wide">{row.stage}</Badge>
+          <ol className="relative space-y-1.5 border-l-2 border-violet-200 pl-4 dark:border-violet-900">
+            {ordered.map((row, i) => {
+              const dot = STAGE_COLOUR[row.stage] || '#94a3b8';
+              return (
+              <li key={i} className="relative flex flex-wrap items-baseline gap-x-2 gap-y-0.5 rounded-lg border border-border/60 bg-muted/30 px-3 py-1.5 text-sm">
+                <span className="absolute -left-[1.3rem] top-3 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-card" style={{ backgroundColor: dot }} />
+                <span className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide" style={{ backgroundColor: `${dot}1f`, color: dot }}>{row.stage}</span>
                 <span className="font-semibold">{row.action}</span>
                 {row.detail && <span className="text-xs text-muted-foreground">{row.detail}</span>}
                 {row.when && <span className="ml-auto text-xs tabular-nums text-muted-foreground">{row.when}</span>}
               </li>
-            ))}
+              );
+            })}
           </ol>
         )}
       </CardContent>

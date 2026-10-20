@@ -25,33 +25,34 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
               )}
             </div>
           </div>
+          <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-bold">Readiness {readiness.score}%</span>
           <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-semibold">{activeCase.status}</span>
         </div>
       </div>
 
-      <div className="grid gap-3 rounded-xl border border-border/60 bg-card p-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-        <div><span className="text-foreground/45">DOB</span><div className="font-medium">{activeCase.date_of_birth ? format(new Date(activeCase.date_of_birth), 'd MMM yyyy') : 'Not provided'}</div></div>
-        <div><span className="text-foreground/45">Email</span><div className="font-medium">{activeCase.email || 'Not provided'}</div></div>
-        <div><span className="text-foreground/45">Phone</span><div className="font-medium">{activeCase.phone || 'Not provided'}</div></div>
-        <div><span className="text-foreground/45">Address</span><div className="font-medium">{activeCase.address || 'Not provided'}</div></div>
+      <div className="grid gap-x-3 gap-y-2.5 rounded-xl border border-border/60 bg-card p-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">DOB</span><div className="font-medium">{activeCase.date_of_birth ? format(new Date(activeCase.date_of_birth), 'd MMM yyyy') : 'Not provided'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Email</span><div className="font-medium">{activeCase.email || 'Not provided'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Phone</span><div className="font-medium">{activeCase.phone || 'Not provided'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Address</span><div className="font-medium">{activeCase.address || 'Not provided'}</div></div>
         {intakeType === 'Participant' ? (
           <>
-            <div><span className="text-foreground/45">NDIS number</span><div className="font-medium">{activeCase.ndis_number || 'Not provided'}</div></div>
-            <div><span className="text-foreground/45">Plan type</span><div className="font-medium">{activeCase.plan_type || 'Not set'}</div></div>
+            <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">NDIS number</span><div className="font-medium">{activeCase.ndis_number || 'Not provided'}</div></div>
+            <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Plan type</span><div className="font-medium">{activeCase.plan_type || 'Not set'}</div></div>
           </>
         ) : (
           <>
-            <div><span className="text-foreground/45">Role</span><div className="font-medium">{activeCase.employee_role || 'Not set'}</div></div>
-            <div><span className="text-foreground/45">Preferred name</span><div className="font-medium">{activeCase.preferred_name || 'Not provided'}</div></div>
-            <div><span className="text-foreground/45">Proposed start date</span><div className="font-medium">{activeCase.target_start_date ? format(new Date(activeCase.target_start_date), 'd MMM yyyy') : 'Not set'}</div></div>
+            <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Role</span><div className="font-medium">{activeCase.employee_role || 'Not set'}</div></div>
+            <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Preferred name</span><div className="font-medium">{activeCase.preferred_name || 'Not provided'}</div></div>
+            <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Proposed start date</span><div className="font-medium">{activeCase.target_start_date ? format(new Date(activeCase.target_start_date), 'd MMM yyyy') : 'Not set'}</div></div>
           </>
         )}
-        <div><span className="text-foreground/45">Eligibility / service fit</span><div className="font-medium">{activeCase.service_fit || 'Pending'}</div></div>
-        <div><span className="text-foreground/45">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
-        <div><span className="text-foreground/45">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
-        <div><span className="text-foreground/45">Date completed</span><div className="font-medium">{activeCase.date_completed ? format(new Date(activeCase.date_completed), 'd MMM yyyy') : 'Not recorded'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Eligibility / service fit</span><div className="font-medium">{activeCase.service_fit || 'Pending'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
+        <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Date completed</span><div className="font-medium">{activeCase.date_completed ? format(new Date(activeCase.date_completed), 'd MMM yyyy') : 'Not recorded'}</div></div>
         <div className="sm:col-span-2 lg:col-span-3">
-          <span className="text-foreground/45">Consent and acknowledgement log</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Consent and acknowledgement log</span>
           <div className="font-medium">
             Privacy consent: {activeCase.privacy_consent_by
               ? `${activeCase.privacy_consent_by}, ${activeCase.privacy_consent_date || ''}${activeCase.privacy_consent_time ? ` ${activeCase.privacy_consent_time}` : ''}`
@@ -80,10 +81,10 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
           </Button>
         )}
         {activeCase.status === 'Ready for Review' && (
-          <Button size="sm" onClick={onApprove} disabled={busy}>Approve intake</Button>
+          <Button size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700" onClick={onApprove} disabled={busy}>Approve intake</Button>
         )}
         {activeCase.status === 'Approved' && (
-          <Button size="sm" onClick={onConvert} disabled={busy}>
+          <Button size="sm" className="bg-gradient-to-r from-violet-600 to-pink-600 text-white hover:from-violet-700 hover:to-pink-700" onClick={onConvert} disabled={busy}>
             <UserCheck className="mr-1.5 h-4 w-4" /> Convert to {intakeType} profile
           </Button>
         )}
