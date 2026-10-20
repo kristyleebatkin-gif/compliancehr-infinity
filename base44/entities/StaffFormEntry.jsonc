@@ -4,7 +4,33 @@
   "properties": {
     "staff_id": {
       "type": "string",
-      "title": "Staff"
+      "title": "Staff",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        }
+      }
     },
     "staff_name": {
       "type": "string",
@@ -72,6 +98,18 @@
           "user_condition": {
             "role": "Compliance Manager"
           }
+        },
+        {
+          "$and": [
+            {
+              "data.staff_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.staff_id": "{{user.data.personal_staff_profile_id}}"
+            }
+          ]
         }
       ]
     },
@@ -103,9 +141,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
+          "$and": [
+            {
+              "data.staff_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.staff_id": "{{user.data.personal_staff_profile_id}}"
+            }
+          ]
         }
       ]
     },
@@ -130,6 +175,18 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "$and": [
+            {
+              "data.staff_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.staff_id": "{{user.data.personal_staff_profile_id}}"
+            }
+          ]
         }
       ]
     },
