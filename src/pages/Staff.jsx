@@ -118,7 +118,7 @@ export default function Staff() {
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-6xl space-y-2.5 pb-4 pt-2 md:px-4 [&>div:first-child]:space-y-1.5">
-      <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl [&_p]:mt-0.5" />
+      <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} compactActions className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl [&_p]:mt-0.5" />
       <RegisterInsights module="staff" />
 
       <Tabs defaultValue="profiles">

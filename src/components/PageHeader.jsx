@@ -7,7 +7,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, compactActions = false }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   // Header band uses the logo's brand gradient; the module accent stays as a thin identity strip.
@@ -48,10 +48,14 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       </div>
     </div>
       {(showCompliance || showAudit || action) && (
-        <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-border/60 bg-card p-2 shadow-sm">
+        <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
           {showCompliance && <ModuleComplianceStrip path={seg} />}
-          {showAudit && <ModuleAuditChecklistButton />}
-          {showAudit && <ModuleAuditButton />}
+          {showAudit && (compactActions ? (
+            <div className="flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3">
+              <ModuleAuditChecklistButton />
+              <ModuleAuditButton />
+            </div>
+          ) : <><ModuleAuditChecklistButton /><ModuleAuditButton /></>)}
           {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
         </div>
       )}
