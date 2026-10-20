@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
-import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -142,22 +141,25 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-3 md:p-4 space-y-3.5">
-      <PageHeader
-        icon={UserRound}
-        title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
-        subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
-        showAlerts={false} showCompliance={false} showAudit={false}
-      />
+    <div className="mx-auto max-w-5xl space-y-4 p-3 md:p-5" style={{ background: 'linear-gradient(180deg, #eef1fb 0%, rgba(238, 241, 251, 0) 360px)' }}>
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-indigo-500/80">My Profile</p>
+        <h1 className="font-editorial text-2xl font-bold tracking-tight text-foreground/90">
+          {tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
+        </h1>
+        <p className="mt-0.5 text-sm text-foreground/55">
+          {tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
+        </p>
+      </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="h-auto flex-wrap justify-start gap-1">
-          <TabsTrigger value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
-          {!isParticipant && participantProfile && <TabsTrigger value="participant-details">My participant profile</TabsTrigger>}
-          {profile && <TabsTrigger value="forms">Fillable Forms</TabsTrigger>}
-          <TabsTrigger value="work">My Work</TabsTrigger>
-          <TabsTrigger value="documents">My Documents</TabsTrigger>
-          {!isParticipant && <TabsTrigger value="name-tags">Name Tags</TabsTrigger>}
+        <TabsList className="h-auto flex-wrap justify-start gap-1 rounded-full bg-white/80 p-1 shadow-sm ring-1 ring-indigo-100">
+          <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="details">{isParticipant ? 'My participant profile' : 'My employee profile'}</TabsTrigger>
+          {!isParticipant && participantProfile && <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="participant-details">My participant profile</TabsTrigger>}
+          {profile && <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="forms">Fillable Forms</TabsTrigger>}
+          <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="work">My Work</TabsTrigger>
+          <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="documents">My Documents</TabsTrigger>
+          {!isParticipant && <TabsTrigger className="rounded-full px-3.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white" value="name-tags">Name Tags</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="details" className="mt-3 space-y-4">
@@ -171,8 +173,9 @@ export default function MyProfile() {
                 hint="Only you and management can see this page. Fields below are yours to keep up to date."
               />
 
-              <Card className="border-border/60">
+              <Card className="border-indigo-100 shadow-sm">
                 <CardContent className="p-4 space-y-3.5">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-indigo-600/80">Your details</div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {fields.map(([key, label, kind]) => (
                       <div key={key} className={kind === 'textarea' ? 'sm:col-span-2' : ''}>
@@ -195,13 +198,13 @@ export default function MyProfile() {
               </Card>
 
               {profile.change_log && (
-                <Card className="border-border/60">
+                <Card className="border-indigo-100 shadow-sm">
                   <CardContent className="p-4 space-y-2">
-                    <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Activity log</div>
+                    <div className="flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-indigo-600" />Activity log</div>
                     <p className="text-xs text-foreground/50">Actions recorded on this profile, latest first.</p>
-                    <div className="space-y-2 border-l-2 border-brand/20 pl-4">
+                    <div className="space-y-2 border-l-2 border-indigo-200 pl-4">
                       {profile.change_log.split('\n').filter(Boolean).slice(-12).reverse().map((line, i) => (
-                        <div key={i} className="relative rounded-lg bg-muted/30 px-3 py-2 text-xs text-foreground/70 before:absolute before:-left-[22px] before:top-1/2 before:h-2 before:w-2 before:-translate-y-1/2 before:rounded-full before:bg-brand/40">{line}</div>
+                        <div key={i} className="relative rounded-lg bg-indigo-50/60 px-3 py-2 text-xs text-foreground/70 before:absolute before:-left-[22px] before:top-1/2 before:h-2 before:w-2 before:-translate-y-1/2 before:rounded-full before:bg-indigo-400">{line}</div>
                       ))}
                     </div>
                   </CardContent>
@@ -220,7 +223,7 @@ export default function MyProfile() {
             />
             <ParticipantFillableForms participant={participantProfile} />
             {canEditParticipant && (
-              <Card className="border-border/60">
+              <Card className="border-indigo-100 shadow-sm">
                 <CardContent className="p-4 space-y-3.5">
                   <div className="grid gap-3 sm:grid-cols-2">
                     {PARTICIPANT_FIELDS.map(([key, label, kind]) => (
