@@ -8,6 +8,7 @@ import ScoreRing from '@/components/ScoreRing';
 import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 import LmsLearner from '@/components/training/LmsLearner';
 import TrainingModuleCard from '@/components/training/TrainingModuleCard';
+import TrainingSubjectHeading from '@/components/training/TrainingSubjectHeading';
 import TrainingCalendar from '@/components/training/TrainingCalendar';
 import TrainingTemplates from '@/components/training/TrainingTemplates';
 import TrainingLadder from '@/components/training/TrainingLadder';
@@ -187,10 +188,7 @@ export default function Training({ profile, embedded = false } = {}) {
               {Object.entries(grouped).map(([group, mods]) => {
                 return (
                   <div key={group}>
-                    <div className="mb-3 flex items-center gap-2">
-                      <h2 className="text-sm font-semibold text-foreground/70">{group}</h2>
-                      <span className="text-xs text-foreground/40">{mods.length} modules</span>
-                    </div>
+                    <TrainingSubjectHeading title={group} group={group} count={mods.length} />
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {mods.map((m) => {
                         const { status, completion } = statusFor(m.title, completions);

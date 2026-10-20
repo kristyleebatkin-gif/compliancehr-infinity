@@ -12,6 +12,9 @@ import KnowledgeQuiz from '@/components/training/KnowledgeQuiz';
 import LearnerOverview from '@/components/training/LearnerOverview';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { buildCertificatePdfBlob } from '@/lib/certificatePdf';
+import { Checkbox } from '@/components/ui/checkbox';
+import TrainingSubjectHeading from '@/components/training/TrainingSubjectHeading';
+import trainingTones from '@/components/training/trainingTones';
 
 const STAGES = [
   { k: 'overview', label: 'Overview', icon: Info },
@@ -24,6 +27,7 @@ const STAGES = [
 export default function LmsLearner({ moduleNumber, user, onCompleted, onClose }) {
   const { toast } = useToast();
   const module = getModuleFull(getModuleByNumber(moduleNumber));
+  const tone = trainingTones(module.group);
   const competency = getCompetencyChecklist(module.number);
   const supervisorItems = competency ? competency.items : (module.supervisorChecklist || module.supervisor);
   const [stage, setStage] = useState('overview');
@@ -173,11 +177,11 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
   return (
     <Dialog open onOpenChange={(open) => { if (!open) { if (issued) onCompleted?.(); onClose(); } }}>
       <DialogContent aria-describedby={undefined} className="flex max-h-[92dvh] w-[calc(100%_-_2rem)] max-w-4xl flex-col gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-4xl sm:rounded-2xl sm:p-0 [&>button]:hidden">
-        <div className="shrink-0 border-b border-primary/20 bg-primary/5 px-4 py-3 text-foreground sm:px-5">
+        <div className={`shrink-0 border-b-4 px-4 py-3 text-foreground sm:px-5 ${tone.border} ${tone.surface}`}>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-[10px] font-semibold uppercase tracking-wide text-primary">Module {module.number} · {module.group}</div>
-              <DialogTitle className="mt-1 break-words text-base font-bold leading-snug sm:text-lg">{module.title}</DialogTitle>
+              <div className={`text-[10px] font-bold uppercase tracking-wider ${tone.text}`}>Module {module.number} · {module.group}</div>
+              <DialogTitle className="mt-1 break-words font-heading text-lg font-extrabold leading-snug tracking-tight sm:text-xl">{module.title}</DialogTitle>
             </div>
             <button aria-label="Close training module" onClick={() => { if (issued) onCompleted?.(); onClose(); }} className="shrink-0 rounded-lg p-1.5 text-muted-foreground hover:bg-muted"><X className="h-4 w-4" /></button>
           </div>
@@ -202,7 +206,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
             <div className="space-y-4">
               <div className="rounded-lg bg-muted/40 p-4 text-sm leading-relaxed text-foreground/70">{module.guide}</div>
               <div>
-                <div className="mb-2 text-sm font-semibold">Workplace scenarios</div>
+                <TrainingSubjectHeading title="Workplace scenarios" group={module.group} />
                 <div className="space-y-2">
                   {module.scenarios.map((s, i) => (
                     <div key={i} className="rounded-lg border border-border/60 p-3 text-sm text-foreground/70">
@@ -222,7 +226,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
               {competency && (
                 <div className="rounded-lg border border-brand/20 bg-brand/5 px-4 py-2.5">
                   <div className="text-[11px] font-semibold uppercase tracking-wide text-brand">Compliance NQ™ Safeguarding Essentials™</div>
-                  <div className="text-sm font-semibold">{COMPETENCY_CHECKLIST_TITLE}</div>
+                  <h3 className="font-heading text-sm font-bold tracking-tight text-primary">{COMPETENCY_CHECKLIST_TITLE}</h3>
                   <div className="text-xs text-foreground/50">Module {module.number} — {competency.module}</div>
                 </div>
               )}
@@ -242,7 +246,11 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
               </div>
               <div className="rounded-lg border border-border/60 overflow-hidden">
                 <div className="grid grid-cols-[1fr_auto] gap-2 bg-muted/50 px-3 py-2 text-xs font-semibold text-foreground/60">
-                  <div>Competency</div><div className="text-right">Achieved</div>
+                  <div>Competency</div>
+                  <label className="flex cursor-pointer items-center gap-2 text-primary">
+                    Check all
+                    <Checkbox aria-label="Check all supervisor competencies" checked={supervisorDone ? true : supervisor.some(Boolean) ? 'indeterminate' : false} onCheckedChange={(checked) => setSupervisor(supervisorItems.map(() => checked === true))} />
+                  </label>
                 </div>
                 <div className="divide-y divide-border/40">
                   {supervisorItems.map((s, i) => (

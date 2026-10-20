@@ -137,25 +137,25 @@ export default function MeetingCentre() {
 
   return (
     <div className="space-y-4">
+      <Tabs defaultValue="register" className="space-y-4">
       <PageHeader
         icon={CalendarDays}
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
-
-      />
-
-      <Tabs defaultValue="register">
-        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1.5">
-          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
-          <TabsList className="h-8 bg-muted/50 p-0.5">
-            <TabsTrigger value="register" className="px-2 text-[11px]">Meeting register</TabsTrigger>
-            <TabsTrigger value="calendar" className="px-2 text-[11px]">Calendar</TabsTrigger>
+        beforeAudit={<>
+          <Button size="sm" variant="outline" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
+          <TabsList className="h-7 bg-muted/50 p-0.5">
+            <TabsTrigger value="register" className="text-[11px]">Meeting register</TabsTrigger>
+            <TabsTrigger value="calendar" className="text-[11px]">Calendar</TabsTrigger>
           </TabsList>
-          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
-          <Button size="sm" className="h-8 gap-1 px-2 text-[11px]" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
-        </div>
-        <div className="mt-2"><RegisterInsights module="meetings" /></div>
+        </>}
+        action={<>
+          <Button size="sm" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
+          <Button size="sm" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
+        </>}
+      />
+      <RegisterInsights module="meetings" />
 
         <TabsContent value="register" className="mt-2 space-y-3">
           {nextMeeting && (
@@ -268,7 +268,6 @@ export default function MeetingCentre() {
             <MeetingCalendar meetings={meetings} />
           )}
         </TabsContent>
-      </Tabs>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[92vh] overflow-y-auto">
@@ -318,6 +317,7 @@ export default function MeetingCentre() {
           </div>
         </DialogContent>
       </Dialog>
+      </Tabs>
     </div>
   );
 }

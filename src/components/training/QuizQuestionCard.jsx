@@ -4,9 +4,9 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 export default function QuizQuestionCard({ number, question, options, selected, correctAnswer, submitted, explanation, onChange, indexed = false }) {
   const correct = selected === correctAnswer;
   return <section className="min-w-0 overflow-hidden rounded-xl border border-border bg-card">
-    <div className="border-b border-border bg-primary/5 px-4 py-3">
+    <div className="border-b border-primary/20 border-l-4 border-l-primary bg-gradient-to-r from-primary/10 to-teal/5 px-4 py-3">
       <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-primary">Question {number}</p>
-      <h4 className="break-words text-sm font-semibold leading-relaxed text-foreground">{question}</h4>
+      <h4 className="break-words font-heading text-sm font-bold leading-relaxed tracking-tight text-foreground">{question}</h4>
     </div>
     <div className="p-4">
       <p id={`quiz-answer-${number}`} className="mb-2 text-xs font-medium text-muted-foreground">{submitted ? 'Your answer' : 'Choose one answer'}</p>

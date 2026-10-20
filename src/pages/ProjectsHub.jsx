@@ -76,6 +76,11 @@ export default function ProjectsHub() {
         icon={KanbanSquare}
         accent={['#6366f1', '#4f46e5']}
         showAlerts={false}
+        beforeAudit={<Button size="sm" variant="outline" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>}
+        action={<Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
+          { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
+          { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
+        ], projects)}>Export CSV</Button>}
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -92,13 +97,7 @@ export default function ProjectsHub() {
         ))}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-2 h-4 w-4" />New project</Button>
-        <Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
-          { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
-          { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
-        ], projects)}>Export CSV</Button>
-      </div>
+
 
       {showForm && (
         <Card><CardContent className="p-4">
