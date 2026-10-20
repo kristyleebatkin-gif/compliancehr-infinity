@@ -1,0 +1,137 @@
+{
+  "type": "object",
+  "name": "BankStatementLine",
+  "properties": {
+    "statement_date": {
+      "type": "string",
+      "title": "Statement Date",
+      "format": "date"
+    },
+    "description": {
+      "type": "string",
+      "title": "Line Description"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount ($, positive = money in)"
+    },
+    "matched_invoice_id": {
+      "type": "string",
+      "title": "Matched Invoice"
+    },
+    "reconciled": {
+      "type": "boolean",
+      "title": "Reconciled",
+      "default": false
+    },
+    "reconciled_at": {
+      "type": "string",
+      "title": "Reconciled At",
+      "format": "date-time"
+    },
+    "reconciled_by": {
+      "type": "string",
+      "title": "Reconciled By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "amount"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Finance & Accounts Officer"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    }
+  }
+}

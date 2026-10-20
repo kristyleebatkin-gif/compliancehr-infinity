@@ -20,6 +20,7 @@ import InvoiceBuilder from '@/components/invoicing/InvoiceBuilder';
 import InvoicePreview from '@/components/invoicing/InvoicePreview';
 import InvoiceShiftDrill from '@/components/invoicing/InvoiceShiftDrill';
 import AgedReceivables from '@/components/invoicing/AgedReceivables';
+import BankReconciliation from '@/components/invoicing/BankReconciliation';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64, downloadInvoiceTemplatePdf } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
@@ -181,6 +182,7 @@ export default function InvoicingCentre() {
       <Tabs defaultValue="invoices">
         <TabsList>
           <TabsTrigger value="invoices">Invoices</TabsTrigger>
+          <TabsTrigger value="bank">Bank Reconciliation</TabsTrigger>
           <TabsTrigger value="finance">Finance Summary</TabsTrigger>
         </TabsList>
 

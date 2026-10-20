@@ -124,6 +124,75 @@ export default async function(req) {
       }
     }
 
+    // Participant reviews: each review recurs every 10 weeks. Managers are
+    // alerted once per cycle when a participant's next review falls within
+    // 10 weeks (70 days) or is overdue, with the alert time and date stamped.
+    let participantReviewAlerts = 0;
+    const reviews = await service.entities.ParticipantReview.list();
+    const reviewAlertsList = [];
+    const reviewUpdates = [];
+    for (const rv of reviews || []) {
+      if (rv.status === 'Completed') continue;
+      const due = rv.next_review_due || rv.review_date;
+      if (!due) continue;
+      const daysUntil = Math.ceil((new Date(`${due}T00:00:00`).getTime() - now) / day);
+      const isOverdue = daysUntil < 0;
+      const isDue = daysUntil <= 70;
+      const patch = { review_10wk_checked_at: new Date().toISOString() };
+      if (isOverdue && rv.status !== 'Overdue') patch.status = 'Overdue';
+      if (isDue && !rv.review_10wk_alert_sent) {
+        patch.review_10wk_alert_sent = true;
+        patch.review_10wk_alert_at = new Date().toISOString();
+        reviewAlertsList.push({
+          participant: rv.participant_name || 'Unknown participant',
+          type: rv.review_type || 'Scheduled',
+          due,
+          state: isOverdue ? 'overdue' : `due in ${daysUntil} days`,
+        });
+      }
+      if (Object.keys(patch).length > 1) reviewUpdates.push({ id: rv.id, ...patch });
+    }
+    if (reviewUpdates.length) await service.entities.ParticipantReview.bulkUpdate(reviewUpdates);
+    if (reviewAlertsList.length) {
+      const users1 = await service.entities.User.list();
+      const mgrs1 = (users1 || []).filter((u) => MANAGER_ROLES.includes(u.role) && u.email);
+      const listHtml1 = reviewAlertsList.slice(0, 25).map((r) =>
+        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.participant}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.type}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.due}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.state}</td></tr>`
+      ).join('');
+      await Promise.allSettled(mgrs1.map((m) => Promise.all([
+        service.entities.Notification.create({
+          type: 'Review Reminder',
+          recipient: m.email,
+          recipient_id: m.id,
+          message: `${reviewAlertsList.length} participant review(s) are due within 10 weeks or overdue. Schedule and record each review on the participant's profile.`,
+          action_url: '/participants',
+        }),
+        service.integrations.Core.SendEmail({
+          to: m.email,
+          subject: `Participant reviews due: ${reviewAlertsList.length} review(s) within 10 weeks`,
+          html: `<p>Hi ${m.full_name || 'there'},</p><p>The following participant reviews are due within 10 weeks or overdue (reviews recur every 10 weeks):</p>` +
+            `<table style="border-collapse:collapse;width:100%;font-size:13px;">` +
+            `<tr><th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Participant</th>` +
+            `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Review type</th>` +
+            `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Due</th>` +
+            `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Status</th></tr>${listHtml1}</table>` +
+            `<p>Schedule and record each review on the participant's profile.</p>`,
+        }),
+      ])));
+      await service.entities.AuditLog.create({
+        action: 'Participant 10-week review alert sent',
+        entity_type: 'ParticipantReview',
+        record_title: `${reviewAlertsList.length} review(s) due within 10 weeks or overdue`,
+        performed_by: 'Review Aging Alerts (automated)',
+        details: reviewAlertsList.map((r) => `${r.participant} (${r.type}, ${r.due}, ${r.state})`).join('; '),
+        timestamp: new Date().toISOString(),
+      });
+      participantReviewAlerts = reviewAlertsList.length;
+    }
+
     // Notify managers (in-app + email), once per scan run
     let notified = 0;
     if (dueItems.length) {
@@ -175,7 +244,7 @@ export default async function(req) {
       });
     }
 
-    return Response.json({ ok: true, scanned: perEntityCounts, due_count: dueItems.length, notified });
+    return Response.json({ ok: true, scanned: perEntityCounts, due_count: dueItems.length, notified, drill_alerts: drillAlerts, participant_review_alerts: participantReviewAlerts });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
