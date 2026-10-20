@@ -18,6 +18,22 @@ export default async function(req) {
     const body = await req.json();
     const eventType = body.event_type === 'Sign Out' ? 'Sign Out' : 'View';
     const route = eventType === 'Sign Out' ? '/sign-out' : String(body.route || '');
+    // Health-check diagnostic ping from the System Health panel.
+    if (body.action === 'health-check') {
+      await base44.asServiceRole.entities.AuditLog.create({
+        action: 'Health Check',
+        entity_type: 'System Diagnostics',
+        record_title: 'Automations & backend services check',
+        route: '/help',
+        performed_by: user.full_name || user.email || 'Authenticated user',
+        performed_by_user_id: user.id,
+        performed_by_email: user.email || '',
+        performed_by_role: user.role || '',
+        details: 'System health check verified backend connectivity',
+        timestamp: new Date().toISOString(),
+      });
+      return Response.json({ success: true });
+    }
     if (eventType === 'View' && !ALLOWED_ROUTES.some((allowed) => route === allowed || route.startsWith(`${allowed}/`))) {
       return Response.json({ error: 'Unsupported app route' }, { status: 400 });
     }
