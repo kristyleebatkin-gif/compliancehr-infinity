@@ -118,6 +118,23 @@
         {
           "$and": [
             {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "data.document_type": {
+                "$in": [
+                  "Invoice",
+                  "Quote"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
               "data.library": {
                 "$ne": null
               }
@@ -167,6 +184,23 @@
           "user_condition": {
             "role": "Intake Officer"
           }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "data.document_type": {
+                "$in": [
+                  "Invoice",
+                  "Quote"
+                ]
+              }
+            }
+          ]
         },
         {
           "$and": [
