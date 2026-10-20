@@ -69,7 +69,7 @@ export default function OurProfilesTab({ kind }) {
   const Icon = isParticipant ? Heart : Users;
 
   const searchBox = (
-    <div className={isParticipant ? 'relative sm:w-72' : 'relative sm:w-72 sm:max-lg:w-56 sm:max-lg:[&_input]:h-7 sm:max-lg:[&_input]:text-xs'}>
+    <div className="relative sm:w-72 sm:max-lg:w-56 sm:max-lg:[&_input]:h-7 sm:max-lg:[&_input]:text-xs">
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input className="pl-9" placeholder={`Search ${isParticipant ? 'participants' : 'employees'} by name, email or number`} value={search} onChange={(e) => setSearch(e.target.value)} />
     </div>

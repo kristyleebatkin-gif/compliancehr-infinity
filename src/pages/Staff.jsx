@@ -27,7 +27,7 @@ const ROLES = ['Support Worker', 'Team Leader', 'Compliance Manager', 'Administr
 const STATUSES = ['Active', 'On Leave', 'Inactive'];
 
 
-export default function Staff({ embedded = false }) {
+export default function Staff({ embedded = false, onProgress }) {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -122,7 +122,7 @@ export default function Staff({ embedded = false }) {
     <div className="mx-auto w-full min-w-0 max-w-6xl space-y-2.5 pb-4 pt-2 md:px-4 [&>div:first-child]:space-y-1.5">
       {!embedded && <PageHeader icon={Users} title="Employee Profiles" subtitle="All of your employees' information, documents and forms in one profile." showAlerts={false} compactActions className="rounded-xl p-3 sm:p-3 [&_h1]:text-xl [&_p]:mt-0.5" />}
       <Tabs value={section} onValueChange={setSection}>
-        <StaffShortcuts value={section} onChange={setSection} />
+        <StaffShortcuts value={section} onChange={setSection} onProgress={onProgress} />
         <RegisterInsights module="staff" compact wrapSummary />
         <TabsContent value="profiles" className="mt-2 space-y-3">
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/70 bg-card p-2 shadow-sm">

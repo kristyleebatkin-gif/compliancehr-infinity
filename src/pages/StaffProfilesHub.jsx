@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { Users, TrendingUp } from 'lucide-react';
+import { Users } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -22,9 +22,9 @@ export default function StaffProfilesHub({ initialTab = 'profiles' }) {
     setParams(next, { replace: true });
   };
   return <div className="compact-module compact-tabs mx-auto w-full min-w-0 max-w-6xl space-y-3 p-2">
-    <PageHeader icon={Users} title="Staff Profiles" subtitle="Employee records, documents, intake progress and compliance in one place." showAlerts={false} action={selected === 'profiles' && progress ? <Button variant="outline" size="sm" onClick={() => selectTab('progress')}><TrendingUp />Staff progress &amp; compliance</Button> : selected === 'progress' && profiles ? <Button variant="outline" size="sm" onClick={() => selectTab('profiles')}><Users />Back to staff profiles</Button> : null} />
+    <PageHeader icon={Users} title="Staff Profiles" subtitle="Employee records, documents, intake progress and compliance in one place." showAlerts={false} action={selected === 'progress' && profiles ? <Button variant="outline" size="sm" onClick={() => selectTab('profiles')}><Users />Back to staff profiles</Button> : null} />
     <Tabs value={selected} onValueChange={selectTab}>
-      {profiles && <TabsContent value="profiles"><Staff embedded /></TabsContent>}
+      {profiles && <TabsContent value="profiles"><Staff embedded onProgress={progress ? () => selectTab('progress') : undefined} /></TabsContent>}
       {progress && <TabsContent value="progress"><StaffProgressDashboard embedded /></TabsContent>}
     </Tabs>
   </div>;
