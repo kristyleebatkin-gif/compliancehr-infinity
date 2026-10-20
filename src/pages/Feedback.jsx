@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,8 @@ import FeedbackDetailDialog from '@/components/feedback/FeedbackDetailDialog';
 import { changeStatus } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
-import { Download, Eye, FileDown, Loader2, Megaphone, Plus, Trash2, UploadCloud } from 'lucide-react';
+import { CheckCircle2, Download, Eye, FileDown, Loader2, Megaphone, Plus, Trash2, UploadCloud } from 'lucide-react';
+import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 import { format } from 'date-fns';
 
 const STATUSES = ['Received', 'Viewed', 'Pending Further Action', 'Finalised'];
@@ -57,11 +58,43 @@ export default function Feedback({ profile, embedded = false } = {}) {
         received_date: new Date().toISOString(),
         status_log: `${format(new Date(), 'd MMM yyyy HH:mm')} - Recorded as Received`,
       };
-      await base44.entities.Feedback.create(payload);
+      const saved = await base44.entities.Feedback.create(payload);
+      // Copy into the person's communication diary so it shows in their profile.
+      await base44.entities.CommunicationEntry.create({
+        entry_kind: form.type,
+        person_type: 'General',
+        subject: `${form.type}: ${form.subject}`,
+        body: form.message,
+        entry_date: new Date().toISOString().slice(0, 10),
+        sender_name: form.submitted_by || 'Anonymous',
+        module: 'Feedback & Surveys',
+      }).catch(() => {});
+      // Alert management so they can review and follow up.
+      await base44.entities.Notification.create({
+        type: form.type === 'Complaint' ? 'Complaint Received' : 'Feedback Received',
+        recipient: 'Management',
+        message: `${form.type} from ${form.submitted_by || 'Anonymous'}: ${form.subject}`,
+        read: false,
+        linked_entity_type: 'Feedback',
+        linked_entity_id: saved?.id,
+      }).catch(() => {});
+      // Follow-up task when someone is allocated, so it lands in the task register.
+      if (form.assigned_to) {
+        await base44.entities.TodoTask.create({
+          title: `Follow up ${form.type.toLowerCase()}: ${form.subject}`,
+          task_type: form.type === 'Complaint' ? 'Complaint Follow-up' : 'Feedback Follow-up',
+          module: 'Feedback & Surveys',
+          assigned_to: form.assigned_to,
+          linked_entity_type: 'Feedback',
+          linked_entity_id: saved?.id,
+          status: 'Open',
+          priority: form.type === 'Complaint' ? 'High' : 'Medium',
+        }).catch(() => {});
+      }
       setForm(blank);
       setOpen(false);
       await load();
-      toast({ title: 'Entry recorded' });
+      toast({ title: 'Entry recorded', description: 'Copied to the communication diary, management alerted and follow-up task created if allocated.' });
     } finally {
       setSaving(false);
     }
@@ -115,6 +148,21 @@ export default function Feedback({ profile, embedded = false } = {}) {
     toast({ title: 'Feedback register exported' });
   };
 
+  const chartData = useMemo(() => {
+    const out = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date();
+      d.setMonth(d.getMonth() - i);
+      const key = format(d, 'yyyy-MM');
+      out.push({
+        m: format(d, 'MMM'),
+        Feedback: items.filter((x) => (x.received_date || '').slice(0, 7) === key && x.type === 'Feedback').length,
+        Complaint: items.filter((x) => (x.received_date || '').slice(0, 7) === key && x.type === 'Complaint').length,
+      });
+    }
+    return out;
+  }, [items]);
+
   const List = ({ type }) => {
     const filtered = items.filter((i) => i.type === type);
     if (filtered.length === 0) {
@@ -127,7 +175,10 @@ export default function Feedback({ profile, embedded = false } = {}) {
             <CardContent className="p-4">
               <div className="flex items-start justify-between gap-2">
                 <button className="text-left" onClick={() => view(i)}>
-                  <p className="font-medium hover:underline">{i.subject}</p>
+                  <p className="font-medium hover:underline">
+                    <span className={`mr-2 rounded-full px-2 py-0.5 align-middle text-[10px] font-bold uppercase tracking-wide ${i.type === 'Complaint' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300' : 'bg-teal-100 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300'}`}>{i.type}</span>
+                    {i.subject}
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     {i.submitted_by ? `From ${i.submitted_by}` : 'Anonymous'}
                     {i.received_date ? ` · received ${format(new Date(i.received_date), 'd MMM yyyy')}` : ''}
@@ -219,14 +270,31 @@ export default function Feedback({ profile, embedded = false } = {}) {
                 <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
                 <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Record entry</Button>
               </div>
-              <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-                {[['Received', items.filter((i) => i.status === 'Received').length, Megaphone], ['Viewed', items.filter((i) => i.status === 'Viewed').length, Eye], ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2], ['Finalised', items.filter((i) => i.status === 'Finalised').length, Download]].map(([label, value, Icon]) => (
-                  <Card key={label}><CardContent className="p-3">
-                    <div className="flex items-center gap-2"><Icon className="h-4 w-4 text-muted-foreground" /><p className="text-xs text-muted-foreground">{label}</p></div>
-                    <p className="mt-1 text-xl font-bold">{value}</p>
-                  </CardContent></Card>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                {[
+                  ['Received', items.filter((i) => i.status === 'Received').length, Megaphone, 'from-sky-500 to-cyan-400'],
+                  ['Viewed', items.filter((i) => i.status === 'Viewed').length, Eye, 'from-amber-500 to-orange-400'],
+                  ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2, 'from-fuchsia-500 to-pink-400'],
+                  ['Finalised', items.filter((i) => i.status === 'Finalised').length, CheckCircle2, 'from-emerald-500 to-teal-400'],
+                ].map(([label, value, Icon, tone]) => (
+                  <div key={label} className={`rounded-xl bg-gradient-to-br ${tone} p-3.5 text-white shadow-lg`}>
+                    <div className="flex items-center gap-2"><Icon className="h-4 w-4 opacity-90" /><p className="text-[10px] font-bold uppercase tracking-wide opacity-85">{label}</p></div>
+                    <p className="mt-1.5 text-2xl font-extrabold leading-none">{value}</p>
+                  </div>
                 ))}
               </div>
+              <Card><CardContent className="p-4">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/60">Live view - feedback &amp; complaints received, last 6 months</p>
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={chartData} barCategoryGap="20%">
+                    <XAxis dataKey="m" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip cursor={{ fill: 'hsl(var(--muted) / 0.5)' }} />
+                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                    <Bar dataKey="Feedback" stackId="a" fill="#0d9488" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Complaint" stackId="a" fill="#e11d48" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent></Card>
               <div className="space-y-4">
                 <List type="Feedback" />
                 <List type="Complaint" />

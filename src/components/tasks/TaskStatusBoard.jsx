@@ -85,7 +85,7 @@ export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
                       <span className="flex items-center gap-1.5"><span className={`h-1.5 w-1.5 rounded-full ${DOT[col]}`} />{col}</span>
                       <span>{colTasks.length}</span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
                       {colTasks.map((t) => (
                         <button
                           key={t.id}

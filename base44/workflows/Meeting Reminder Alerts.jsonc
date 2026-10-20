@@ -1,0 +1,44 @@
+{
+  "name": "Meeting Reminder Alerts",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "meeting_reminder_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_meeting_reminders": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "meetingReminders"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send meeting reminders",
+            "description": "24h and 12h attendee reminders"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "10 * * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "description": "Sends 24-hour and 12-hour reminder emails to meeting attendees, with dedupe so nobody gets a reminder twice"
+}

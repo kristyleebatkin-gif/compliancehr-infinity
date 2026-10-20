@@ -36,12 +36,21 @@ export default function Tasks() {
   const [sending, setSending] = useState(null);
   const [focusIdx, setFocusIdx] = useState(-1);
   const [view, setView] = useState('list');
+  const [meEmail, setMeEmail] = useState('');
+
+  // Management roles see the full register; everyone else sees only their own tasks.
+  const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Administration', 'Compliance Manager', 'Team Leader', 'Finance & Accounts Officer', 'Human Resources Manager', 'Rostering Coordinator', 'Quality & Improvement Manager', 'CRM & Marketing Officer', 'Intake Officer'];
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
+      const me = await base44.auth.me();
+      const seesAll = MANAGEMENT_ROLES.includes(me?.role);
+      setMeEmail(me?.email || '');
       const [page, userPage] = await Promise.all([
-        base44.entities.TodoTask.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 }),
+        seesAll
+          ? base44.entities.TodoTask.filter({ archived: { $ne: true } }, { sort: '-due_date', limit: 500 })
+          : base44.entities.TodoTask.filter({ archived: { $ne: true }, assigned_email: me?.email }, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list(),
       ]);
       setList(page.items || []);
@@ -142,7 +151,9 @@ export default function Tasks() {
     setRunning(false);
   };
 
-  const filtered = filter === 'All' ? list : list.filter((t) => t.status === filter);
+  const filtered = filter === 'All' ? list
+    : filter === 'My tasks' ? list.filter((t) => t.assigned_email === meEmail)
+    : list.filter((t) => t.status === filter);
 
   // Keyboard-first triage: N new, J/K next/previous, Enter open, Escape close.
   useEffect(() => {
@@ -202,7 +213,7 @@ export default function Tasks() {
       ) : (
         <>
           <div className="flex items-center gap-1 overflow-x-auto">
-            {['All', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
+            {['All', 'My tasks', 'Pending', 'Open', 'In Progress', 'Completed', 'Overdue'].map((s) => (
               <button key={s} onClick={() => setFilter(s)} className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${filter === s ? 'bg-brand text-white' : 'bg-card border border-border/60 text-foreground/60 hover:bg-brand/5'}`}>{s}</button>
             ))}
             <span className="mr-3 hidden shrink-0 text-[11px] text-foreground/40 md:inline">N new · J/K navigate · Enter open</span>

@@ -5,7 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Briefcase, Plus, Trash2, Flame, Trophy } from 'lucide-react';
+import { Briefcase, Plus, Trash2, Flame, Trophy, Bell, UserPlus } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import { downloadCsv } from '@/lib/csvExport';
 
 const STAGES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Won', 'Lost'];
@@ -14,15 +15,23 @@ const today = () => new Date().toISOString().slice(0, 10);
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { maximumFractionDigits: 0 })}`;
 
 export default function CrmHub() {
+  const { toast } = useToast();
   const [leads, setLeads] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [allocating, setAllocating] = useState(null); // lead id with the allocate panel open
+  const [allocForm, setAllocForm] = useState({ name: '', email: '', due_date: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
-    const page = await base44.entities.Lead.filter({}, { sort: '-created_date', limit: 200 });
+    const [page, userPage] = await Promise.all([
+      base44.entities.Lead.filter({}, { sort: '-created_date', limit: 200 }),
+      base44.entities.User.list(),
+    ]);
     setLeads(page.items || []);
+    setUsers(userPage.items || []);
     setLoading(false);
   }, []);
 
@@ -47,6 +56,46 @@ export default function CrmHub() {
     });
     setSaving(false);
     setShowForm(false);
+    load();
+  };
+
+  // Attach a follow-up to a lead: creates a task for the allocated person,
+  // alerts them in-app and by email, and records the allocation on the lead.
+  const allocateFollowUp = async (lead) => {
+    if (!allocForm.name) { toast({ title: 'Choose who to allocate' }); return; }
+    const due = allocForm.due_date || lead.follow_up_date || today();
+    const task = await base44.entities.TodoTask.create({
+      title: `Follow up lead: ${lead.business_name}`,
+      task_type: 'Lead Follow-up',
+      module: 'CRM & Leads',
+      assigned_to: allocForm.name,
+      assigned_email: allocForm.email || '',
+      due_date: due,
+      status: 'Open',
+      priority: 'Medium',
+      linked_entity_type: 'Lead',
+      linked_entity_id: lead.id,
+      notes: `Follow up the enquiry from ${lead.contact_name || lead.business_name}${lead.phone ? ` on ${lead.phone}` : ''}${lead.email ? `, ${lead.email}` : ''}. Stage: ${lead.stage}.`,
+    });
+    await base44.entities.Lead.update(lead.id, { follow_up_allocated_to: allocForm.name, follow_up_task_id: task?.id || '' });
+    await base44.entities.Notification.create({
+      type: 'Lead Follow-up',
+      recipient: allocForm.name,
+      message: `Lead follow-up allocated: ${lead.business_name} (due ${due})`,
+      read: false,
+      linked_entity_type: 'Lead',
+      linked_entity_id: lead.id,
+    }).catch(() => {});
+    if (allocForm.email) {
+      await base44.functions.invoke('sendAppEmail', {
+        to: allocForm.email,
+        subject: `Lead follow-up allocated: ${lead.business_name}`,
+        body: `Hi ${allocForm.name},\n\nYou have been allocated a follow-up for the lead "${lead.business_name}"${lead.contact_name ? ` (contact: ${lead.contact_name})` : ''}, due ${due}.\n\nOpen the Tasks module to track it, and update your progress as you go.\n\nThank you.`,
+      }).catch(() => {});
+    }
+    setAllocating(null);
+    setAllocForm({ name: '', email: '', due_date: '' });
+    toast({ title: 'Follow-up allocated', description: 'Task created, person alerted, and the lead updated.' });
     load();
   };
 
@@ -154,13 +203,17 @@ export default function CrmHub() {
                   <span className="text-xs text-muted-foreground">{stageLeads.length}</span>
                 </div>
                 {stageLeads.map((l) => (
-                  <Card key={l.id}><CardContent className="space-y-2 p-3">
+                  <React.Fragment key={l.id}>
+                  <Card><CardContent className="space-y-2 p-3">
                     <p className="text-sm font-semibold">{l.business_name}</p>
                     <p className="text-xs text-muted-foreground">{l.contact_name || l.email || l.phone || ''}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-safe">{l.value ? money(l.value) : ''}</span>
                       {l.follow_up_date && <span className="text-[11px] text-muted-foreground">Follow up {l.follow_up_date.slice(0, 10)}</span>}
                     </div>
+                    {l.follow_up_allocated_to && (
+                      <p className="text-[11px] font-semibold text-brand">Follow-up: {l.follow_up_allocated_to}</p>
+                    )}
                     <div className="flex items-center gap-1.5">
                       <select
                         className="h-7 flex-1 rounded-md border border-input bg-transparent px-1.5 text-xs"
@@ -169,11 +222,33 @@ export default function CrmHub() {
                       >
                         {STAGES.map((s) => <option key={s} value={s}>{s}</option>)}
                       </select>
+                      <Button size="sm" variant="ghost" className="h-7 px-2" onClick={() => { setAllocating(allocating === l.id ? null : l.id); setAllocForm({ name: l.follow_up_allocated_to || '', email: '', due_date: l.follow_up_date || '' }); }}>
+                        <UserPlus className="h-3.5 w-3.5 text-brand" />
+                      </Button>
                       <Button size="sm" variant="ghost" className="h-7 px-2 text-danger" onClick={async () => { await base44.entities.Lead.delete(l.id); load(); }}>
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </CardContent></Card>
+                  {allocating === l.id && (
+                    <Card className="border-brand/40 bg-brand/5"><CardContent className="space-y-2 p-3">
+                      <p className="flex items-center gap-1.5 text-xs font-bold"><Bell className="h-3.5 w-3.5 text-brand" />Allocate follow-up</p>
+                      <select
+                        className="h-8 w-full rounded-md border border-input bg-card px-2 text-xs"
+                        value={allocForm.name}
+                        onChange={(e) => { const u = users.find((x) => x.full_name === e.target.value); setAllocForm({ ...allocForm, name: e.target.value, email: u?.email || '' }); }}
+                      >
+                        <option value="">Choose a person...</option>
+                        {users.map((u) => <option key={u.id} value={u.full_name}>{u.full_name || u.email}</option>)}
+                      </select>
+                      <Input className="h-8 text-xs" type="date" value={allocForm.due_date} onChange={(e) => setAllocForm({ ...allocForm, due_date: e.target.value })} />
+                      <div className="flex gap-2">
+                        <Button size="sm" onClick={() => allocateFollowUp(l)}>Allocate &amp; alert</Button>
+                        <Button size="sm" variant="outline" onClick={() => setAllocating(null)}>Cancel</Button>
+                      </div>
+                    </CardContent></Card>
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
             );

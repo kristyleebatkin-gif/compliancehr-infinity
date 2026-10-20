@@ -22,8 +22,9 @@ export default function TaskLeaderboard() {
       const year = new Date().getFullYear();
       const seasonStart = `${year}-01-01`;
       const seasonEnd = `${year}-12-01`;
+      // Both Completed and Finalised tasks earn leaderboard points.
       const taskPage = await base44.entities.TodoTask.filter(
-        { status: 'Finalised', completed_date: { $gte: seasonStart, $lte: seasonEnd } },
+        { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } },
         { limit: 1000, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title'] }
       );
       setTasks(taskPage.items || []);
@@ -142,7 +143,7 @@ export default function TaskLeaderboard() {
       <div className="rounded-2xl border border-border/60 bg-card p-5">
         <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><Trophy className="h-4 w-4 text-warning" />Employee task completion leaderboard - Season {season.year}</p>
         {season.board.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No points yet this season - finalise a shared to-do with people responsible to put them on the board.</p>
+          <p className="text-sm text-muted-foreground">No points yet this season - complete or finalise a task with people responsible to put them on the board.</p>
         ) : (
           <div className="space-y-2">
             {season.board.map((entry, index) => {

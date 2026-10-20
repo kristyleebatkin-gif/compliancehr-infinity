@@ -72,6 +72,14 @@
       "type": "string",
       "format": "date",
       "title": "Won Date"
+    },
+    "follow_up_allocated_to": {
+      "type": "string",
+      "title": "Follow-up Allocated To"
+    },
+    "follow_up_task_id": {
+      "type": "string",
+      "title": "Follow-up Task ID"
     }
   },
   "required": [
