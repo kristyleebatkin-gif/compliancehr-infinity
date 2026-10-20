@@ -4,6 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
 import ProfileAuditTrail from '@/components/profile/ProfileAuditTrail';
+import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import { STAFF_PROFILE_SECTIONS as SECTIONS } from '@/lib/staffProfileFields';
 import { Loader2, Save } from 'lucide-react';
 
@@ -37,6 +38,7 @@ export default function StaffDetailsTab({ staff, onUpdated }) {
 
   return (
     <div className="space-y-6">
+      <ProfileAuditConsentCard profile={staff} kind="staff" onUpdated={onUpdated} />
       {SECTIONS.map((section) => <ProfileFieldsSection key={section.title} section={section} form={form} onChange={set} prefix={`staff-${staff.id}`} />)}
 
       <ProfileAuditTrail changeLog={staff.change_log} />

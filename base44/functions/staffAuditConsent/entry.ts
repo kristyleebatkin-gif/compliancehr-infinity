@@ -37,6 +37,7 @@ export default async function(req) {
       audit_consent_recorded_by: recordedBy,
       audit_consent_recorded_date: recordedDate,
       audit_consent_recorded_time: recordedTime,
+      change_log: [`${recordedDate} ${recordedTime} | Audit consent: ${previous} → ${consent}. Logged by ${recordedBy}.${reason ? ` Reason: ${reason}` : ''}`, profile.change_log].filter(Boolean).join('\n'),
     });
 
     await service.entities.AuditLog.create({
@@ -48,7 +49,7 @@ export default async function(req) {
       performed_by_user_id: user.id || '',
       performed_by_email: user.email || '',
       performed_by_role: user.role || '',
-      profile_type: 'staff',
+      profile_type: 'employee',
       audit_consent: consent,
       previous_audit_consent: previous,
       recorded_by: recordedBy,

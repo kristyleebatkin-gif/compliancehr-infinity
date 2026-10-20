@@ -1,5 +1,6 @@
 import React from 'react';
 import AttachedFormsLibrary from '@/components/documents/AttachedFormsLibrary';
+import '@/components/profile/profileSectionLayout.css';
 import { Button } from '@/components/ui/button';
 import { Download, FolderCheck } from 'lucide-react';
 import { PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, participantFormInfo } from '@/lib/participantDocuments';
@@ -25,7 +26,7 @@ export default function ParticipantDocumentsTab({ participant }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="participant-documents-compact space-y-6 sm:max-lg:space-y-1.5">
       <AttachedFormsLibrary
         title="Completed participant documents"
         subtitle="Download official templates or upload the completed copies held on this participant's record"

@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { NAV_PERMISSIONS, canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
-import { businessDateTime } from '@/lib/intakeCases';
-import { KeyRound, Loader2, ShieldCheck, ShieldOff } from 'lucide-react';
+import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
+import { KeyRound, Loader2 } from 'lucide-react';
 
 const PERMISSION_LABELS = {
   dashboard: 'Dashboard',
@@ -51,12 +51,11 @@ const APP_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Adm
 
 export default function StaffAccessTab({ staff, onUpdated }) {
   const { toast } = useToast();
-  const { user, isAdmin } = useRole();
+  const { isAdmin } = useRole();
   const [username, setUsername] = useState(staff.username || '');
   const [appRole, setAppRole] = useState(staff.app_role || 'user');
   const [saving, setSaving] = useState(false);
-  const [consentReason, setConsentReason] = useState('');
-  const [consentBusy, setConsentBusy] = useState(false);
+
 
   useEffect(() => { setUsername(staff.username || ''); }, [staff.id, staff.username]);
 
@@ -73,29 +72,7 @@ export default function StaffAccessTab({ staff, onUpdated }) {
     }
   };
 
-  const recordConsent = async (consent) => {
-    setConsentBusy(true);
-    try {
-      const { date, time } = businessDateTime();
-      await base44.functions.invoke('staffAuditConsent', {
-        staff_id: staff.id,
-        consent,
-        reason: consentReason,
-        recorded_by: user?.full_name || user?.email || '',
-        recorded_date: date,
-        recorded_time: time,
-      });
-      toast({ title: `Audit consent logged: ${consent}` });
-      setConsentReason('');
-      onUpdated();
-    } catch (error) {
-      toast({ title: 'Could not log consent', description: error.message, variant: 'destructive' });
-    } finally {
-      setConsentBusy(false);
-    }
-  };
 
-  const consent = staff.audit_consent || 'Audit declined';
   const permissions = Object.entries(PERMISSION_LABELS).filter(([navKey]) => canAccessNav(appRole, navKey));
 
   return (
@@ -139,32 +116,7 @@ export default function StaffAccessTab({ staff, onUpdated }) {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            {consent === 'Audit consent received'
-              ? <ShieldCheck className="h-4 w-4 text-safe" />
-              : <ShieldOff className="h-4 w-4 text-muted-foreground" />}
-            <span className="text-sm font-semibold">Audit consent</span>
-            <Badge className={statusTone(consent === 'Audit consent received' ? 'Current' : 'Expired')}>{consent}</Badge>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <Input className="w-56" placeholder="Reason (logged with consent)" value={consentReason} onChange={(e) => setConsentReason(e.target.value)} />
-            <Button size="sm" disabled={consentBusy || consent === 'Audit consent received'} onClick={() => recordConsent('Audit consent received')}>
-              {consentBusy && <Loader2 className="h-3 w-3 animate-spin" />}Record consent received
-            </Button>
-            <Button size="sm" variant="outline" disabled={consentBusy || consent === 'Audit declined'} onClick={() => recordConsent('Audit declined')}>
-              Record declined
-            </Button>
-          </div>
-        </div>
-        {(staff.audit_consent_recorded_by || staff.audit_consent_recorded_date) && (
-          <p className="mt-1 text-xs text-muted-foreground">
-            Recorded by {staff.audit_consent_recorded_by || 'unknown'} on {staff.audit_consent_recorded_date || '-'}{staff.audit_consent_recorded_time ? ` at ${staff.audit_consent_recorded_time}` : ''}
-          </p>
-        )}
-        <p className="mt-2 text-xs text-muted-foreground">Consent changes are logged to the audit trail with who changed them, when and why.</p>
-      </div>
+      <ProfileAuditConsentCard profile={staff} kind="staff" onUpdated={onUpdated} />
     </div>
   );
 }

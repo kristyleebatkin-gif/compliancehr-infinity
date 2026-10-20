@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { CONSENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { auDate, auTime } from '../../shared/reminders.ts';
+import { recordParticipantAuthorisation } from '../../shared/participantAuthorisation.ts';
 
 const CONSENT_VALUES = new Set(['Audit consent received', 'Audit declined']);
 
@@ -17,13 +18,14 @@ export default async function(req) {
     const participantId = String(body.participant_id || '');
     const consent = String(body.consent || '');
     const reason = String(body.reason || '').trim();
-    if (!participantId || !CONSENT_VALUES.has(consent)) {
+    if (!participantId || (body.consent_type && !['audit', 'sharing', 'advocacy'].includes(body.consent_type)) || ((!body.consent_type || body.consent_type === 'audit') && !CONSENT_VALUES.has(consent))) {
       return Response.json({ error: 'participant_id and a valid consent value are required' }, { status: 400 });
     }
 
     const service = base44.asServiceRole;
     const profile = await service.entities.ParticipantProfile.get(participantId);
     if (!profile) return Response.json({ error: 'Participant not found' }, { status: 404 });
+    if (['sharing', 'advocacy'].includes(body.consent_type)) return await recordParticipantAuthorisation(base44, user, body, profile);
 
     const previous = profile.audit_consent || 'Audit declined';
     // Attribution is derived from the authenticated caller and the server clock,
@@ -37,6 +39,7 @@ export default async function(req) {
       audit_consent_recorded_by: recordedBy,
       audit_consent_recorded_date: recordedDate,
       audit_consent_recorded_time: recordedTime,
+      change_log: [`${recordedDate} ${recordedTime} | Audit consent: ${previous} → ${consent}. Logged by ${recordedBy}.${reason ? ` Reason: ${reason}` : ''}`, profile.change_log].filter(Boolean).join('\n'),
     });
 
     await service.entities.AuditLog.create({

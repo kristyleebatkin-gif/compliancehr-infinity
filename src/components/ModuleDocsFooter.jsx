@@ -149,7 +149,7 @@ export default function ModuleDocsFooter() {
   };
 
   return (
-    <div className={cn('mx-auto max-w-6xl px-4 pb-10 pt-6 md:px-8', cfg.entity === 'EmployeeDocument' && 'employee-documents-footer')}>
+    <div className={cn('mx-auto max-w-6xl px-4 pb-10 pt-6 md:px-8', ['EmployeeDocument', 'ParticipantDocument'].includes(cfg.entity) && 'employee-documents-footer')}>
       <section className="rounded-2xl border border-border/60 bg-card/80 shadow-panel backdrop-blur">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4">
           <div className="flex items-center gap-3">

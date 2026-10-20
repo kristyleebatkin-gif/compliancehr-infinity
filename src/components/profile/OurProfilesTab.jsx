@@ -71,7 +71,7 @@ export default function OurProfilesTab({ kind }) {
   const searchBox = (
     <div className="relative sm:w-72 sm:max-lg:w-56 sm:max-lg:[&_input]:h-7 sm:max-lg:[&_input]:text-xs">
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-      <Input className="pl-9" placeholder={`Search ${isParticipant ? 'participants' : 'employees'} by name, email or number`} value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Input className="gradient-brand-soft border-primary/40 pl-9" placeholder={`Search ${isParticipant ? 'participants' : 'employees'} by name, email or number`} value={search} onChange={(e) => setSearch(e.target.value)} />
     </div>
   );
   const filterRow = (
@@ -96,7 +96,7 @@ export default function OurProfilesTab({ kind }) {
   }
 
   return (
-    <div className={isParticipant ? 'space-y-5' : 'space-y-5 sm:max-lg:space-y-2'}>
+    <div className="space-y-5 sm:max-lg:space-y-1.5">
       {selfOnly && records[0] && (
         <div className="flex items-center gap-4 rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 p-5 text-white shadow-md">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-lg font-bold">{initials(records[0].full_name)}</div>
@@ -139,7 +139,7 @@ export default function OurProfilesTab({ kind }) {
       {visible.length === 0 ? (
         <EmptyState icon={Icon} title="No matches" message="Try a different search term or filter." modulePath={isParticipant ? 'participants' : 'staff'} />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 sm:max-lg:space-y-1.5">
           {groups
             .map(([key, list]) => [key, list.filter((r) => visible.includes(r))])
             .filter(([, list]) => list.length > 0)

@@ -149,6 +149,7 @@ export default function Participants() {
         icon={Heart}
         title="Participant Profiles"
         subtitle="People you support and their details."
+        beforeAudit={<Button size="sm" onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Add participant</Button>}
         action={(
           <div className="flex flex-wrap items-center gap-2">
         <Button size="sm" variant="outline" onClick={exportRegister} disabled={loading || people.length === 0}><Download className="h-4 w-4" />Export register</Button>
@@ -186,7 +187,6 @@ export default function Participants() {
           </DialogContent>
         </Dialog>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button size="sm"><Plus className="h-4 w-4" />Add participant</Button></DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">
             <DialogHeader><DialogTitle>New participant</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -233,9 +233,9 @@ export default function Participants() {
           onSelectAll={() => setSelected(new Set(people.map((p) => p.id)))}
         />
       )}
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input className="pl-9" placeholder="Search participants" value={search} onChange={(e) => setSearch(e.target.value)} />
+      <div className="relative max-w-sm sm:max-lg:max-w-56">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
+        <Input className="gradient-brand-soft border-primary/40 pl-9 sm:max-lg:h-7 sm:max-lg:text-xs" placeholder="Search participants" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
       {loading ? (

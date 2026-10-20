@@ -125,10 +125,10 @@ export default function Staff({ embedded = false, onProgress }) {
         <StaffShortcuts value={section} onChange={setSection} onProgress={onProgress} />
         <RegisterInsights module="staff" compact wrapSummary />
         <TabsContent value="profiles" className="mt-2 space-y-3">
-          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/70 bg-card p-2 shadow-sm">
-            <div className="relative min-w-0 flex-1 basis-48">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input className="bg-background pl-9" aria-label="Search staff by name" placeholder="Search staff by name" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <div className="gradient-brand-soft flex flex-wrap items-center gap-2 rounded-xl border border-primary/30 p-2 shadow-sm">
+            <div className="relative min-w-0 flex-1 basis-48 sm:max-lg:max-w-56">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
+              <Input className="border-primary/40 bg-card pl-9 sm:max-lg:h-7 sm:max-lg:text-xs" aria-label="Search staff by name" placeholder="Search staff by name" value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <Button variant="outline" onClick={exportRegister} disabled={loading || staff.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
             <Dialog open={open} onOpenChange={setOpen}>

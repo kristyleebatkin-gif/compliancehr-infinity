@@ -23,6 +23,7 @@ import TeamSection from '@/components/profile/TeamSection';
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipantProfiles';
 import { useRole } from '@/lib/useRole';
+import '@/components/profile/profileSectionLayout.css';
 
 export default function StaffProfileSections({ staff, onUpdated, header, showTeam = true, ourView = false }) {
   const { isAdmin } = useRole();
@@ -63,7 +64,7 @@ export default function StaffProfileSections({ staff, onUpdated, header, showTea
     <>
       {header}
       <StaffRiskAlertStrip staff={staff} />
-      <Tabs defaultValue="details">
+      <Tabs defaultValue="details" className="profile-sections">
         <TabsList className="h-auto flex-wrap justify-start gap-1">
           {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key} id={key === 'risk' ? 'risk-tab' : undefined}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
         </TabsList>

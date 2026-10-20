@@ -14,7 +14,7 @@ export default function ParticipantDetail() {
   const { profile: participant, loading, error, refresh } = useProfileRecord('ParticipantProfile', id);
   if (loading || error || !participant) return <ProfileLoadState loading={loading} error={error} backTo="/participants" label="Participant Profiles" />;
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 sm:max-lg:space-y-1.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to="/participants"><ArrowLeft className="h-4 w-4" />Participant Profiles</Link></Button>
         <div className="flex flex-wrap items-center gap-2">

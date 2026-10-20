@@ -18,6 +18,7 @@ import ParticipantReviewsTab from '@/components/participants/ParticipantReviewsT
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import GoalProgress from '@/pages/GoalProgress';
 import { useRole } from '@/lib/useRole';
+import '@/components/profile/profileSectionLayout.css';
 
 export default function ParticipantProfileSections({ participant, onUpdated, header, ourView = false }) {
   const { isAdmin } = useRole();
@@ -48,7 +49,7 @@ export default function ParticipantProfileSections({ participant, onUpdated, hea
   return (
     <>
       {header}
-      <Tabs defaultValue="details">
+      <Tabs defaultValue="details" className="profile-sections">
         <TabsList className="h-auto flex-wrap justify-start gap-1">
           {tabs.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="mr-1 inline h-3.5 w-3.5" />{label}</TabsTrigger>)}
         </TabsList>
