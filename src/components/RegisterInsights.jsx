@@ -7,7 +7,7 @@ import { Sparkles, RefreshCw, Loader2 } from 'lucide-react';
 // AI as a default layer: a live, number-grounded summary on top of every register
 // (what changed, what needs attention, one suggested next action). Silent on failure
 // so a register never breaks because the insight did.
-export default function RegisterInsights({ module, compact = false }) {
+export default function RegisterInsights({ module, compact = false, wrapSummary = false }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -38,11 +38,11 @@ export default function RegisterInsights({ module, compact = false }) {
   const { insights } = data;
 
   return (
-    <div className={`flex items-center gap-2 rounded-xl border border-brand/25 bg-gradient-brand-soft ${compact ? 'px-2.5 py-1' : 'flex-wrap px-3.5 py-2'} shadow-sm`}>
+    <div className={`flex items-center gap-2 rounded-xl border border-brand/25 bg-gradient-brand-soft ${compact ? 'px-2.5 py-1' : 'flex-wrap px-3.5 py-2'} ${wrapSummary ? 'flex-wrap' : ''} shadow-sm`}>
       <span className={`gradient-brand flex shrink-0 items-center justify-center rounded-md shadow-sm ${compact ? 'h-5 w-5' : 'h-6 w-6'}`}><Sparkles className={compact ? 'h-3 w-3 text-white' : 'h-3.5 w-3.5 text-white'} /></span>
-      <p className={`min-w-0 flex-1 truncate text-foreground ${compact ? 'text-xs font-medium' : 'text-sm font-medium'}`} title={insights.summary}>{insights.summary}</p>
+      <p className={`min-w-0 text-foreground ${wrapSummary ? 'flex-[1_1_16rem] whitespace-normal break-words leading-snug' : 'flex-1 truncate'} ${compact ? 'text-xs font-medium' : 'text-sm font-medium'}`} title={insights.summary}>{insights.summary}</p>
       {compact ? (
-        <span className="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold tabular-nums text-foreground/60">
+        <span className={`flex items-center gap-1.5 text-[11px] font-semibold tabular-nums text-foreground/60 ${wrapSummary ? 'max-w-full flex-wrap' : 'shrink-0'}`}>
           {data.total} records · {data.open} open
           {data.overdue > 0 && <span className="text-warning">{data.overdue} overdue</span>}
           {data.expiring > 0 && <span className="text-danger">{data.expiring} due 30d</span>}
