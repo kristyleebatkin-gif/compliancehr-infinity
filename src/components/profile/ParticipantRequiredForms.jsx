@@ -17,5 +17,9 @@ export default function ParticipantRequiredForms({ profile }) {
     {sections.map((section) => <EmployeeProfileSection key={section.title} title={section.title} tone={section.tone}>
       {section.forms.filter((title) => INTAKE_REQUIREMENTS.Participant.includes(title)).map((title) => <ParticipantIntakeFormSection key={title} profile={profile} title={title} />)}
     </EmployeeProfileSection>)}
+    {/* One space holding every required document in a single list. */}
+    <EmployeeProfileSection title="All Required Documents (one space)" tone="red">
+      {INTAKE_REQUIREMENTS.Participant.map((title) => <ParticipantIntakeFormSection key={`all-${title}`} profile={profile} title={title} />)}
+    </EmployeeProfileSection>
   </div>;
 }
