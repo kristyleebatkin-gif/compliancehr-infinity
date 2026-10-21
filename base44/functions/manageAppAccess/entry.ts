@@ -10,8 +10,13 @@ export default async function(req) {
     const body = await req.json();
     const service = base44.asServiceRole;
     if (body.action === 'list') {
-      const users = await service.entities.User.list();
-      return Response.json({ users: users.map((u) => ({ id: u.id, full_name: u.full_name, email: u.email, role: u.role, created_date: u.created_date, account_status: u.account_status, access_approved: hasApprovedAccess(u), approved_by: u.approved_by, requested_role: u.requested_role })) });
+      const records = await service.entities.User.list();
+      const isPending = (u) => !hasApprovedAccess(u) && !['Rejected', 'Suspended', 'Archived'].includes(u.account_status) && u.role !== 'Archived';
+      const summary = (u) => ({ id: u.id, full_name: u.full_name, email: u.email, role: u.role, created_date: u.created_date, account_status: u.account_status, access_approved: hasApprovedAccess(u), approved_by: u.approved_by, requested_role: u.requested_role });
+      const search = String(body.search || '').slice(0, 254).toLowerCase();
+      const pendingUsers = records.filter(isPending).map(summary).sort((a, b) => String(a.created_date).localeCompare(String(b.created_date)));
+      const users = records.filter((u) => !isPending(u) && `${u.full_name || ''} ${u.email || ''}`.toLowerCase().includes(search)).map(summary);
+      return Response.json({ users, pending_users: pendingUsers, pending_count: pendingUsers.length });
     }
     if (body.action === 'invite') {
       const email = String(body.email || '').trim();

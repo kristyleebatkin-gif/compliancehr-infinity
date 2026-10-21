@@ -9,6 +9,8 @@
         "admin",
         "user",
         "Provider Administrator",
+        "Management",
+        "Employee",
         "Compliance Manager",
         "Administration",
         "Team Leader",
@@ -33,10 +35,30 @@
         "Pending Approval",
         "Active",
         "Rejected",
+        "Suspended",
         "Archived"
       ],
-      "default": "Active",
-      "title": "Account Status"
+      "default": "Pending Approval",
+      "title": "Account Status",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      }
+    },
+    "access_approved": {
+      "type": "boolean",
+      "default": false,
+      "title": "Access Approved",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      }
     },
     "requested_role": {
       "type": "string",
