@@ -3,7 +3,7 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeFeedback from '@/components/employee/EmployeeFeedback';
 export default withEmployeeView(Feedback, EmployeeFeedback);
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import FeedbackToolbar from '@/components/feedback/FeedbackToolbar';
 import { Button } from '@/components/ui/button';
 
@@ -229,13 +229,23 @@ function Feedback({ profile, embedded = false } = {}) {
 
   return (
     <Tabs value={tab} onValueChange={setTab} className="feedback-workspace min-w-0 space-y-3">
-      {!embedded && <PageHeader
+      <ModuleShell
+        embedded={embedded}
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
-        showAlerts={false}
-        action={<FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} />}
-      />}
-
+        icon={Megaphone}
+        moduleKey="feedback"
+        insightModule="feedback"
+        actions={<FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} />}
+        small={[
+          ['Received', items.filter((i) => i.status === 'Received').length],
+          ['Viewed', items.filter((i) => i.status === 'Viewed').length],
+          ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length],
+          ['Finalised', items.filter((i) => i.status === 'Finalised').length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
+        ))}
+      >
         {embedded && <FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} embedded />}
         <TabsContent value="Feedback" className="mt-2">
           {loading ? (
@@ -255,19 +265,6 @@ function Feedback({ profile, embedded = false } = {}) {
                 </ResponsiveContainer>
               </CardContent></Card>
 
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {[
-                  ['Received', items.filter((i) => i.status === 'Received').length, Megaphone, 'from-sky-500 to-cyan-400'],
-                  ['Viewed', items.filter((i) => i.status === 'Viewed').length, Eye, 'from-amber-500 to-orange-400'],
-                  ['Pending further action', items.filter((i) => i.status === 'Pending Further Action').length, Loader2, 'from-fuchsia-500 to-pink-400'],
-                  ['Finalised', items.filter((i) => i.status === 'Finalised').length, CheckCircle2, 'from-emerald-500 to-teal-400'],
-                ].map(([label, value, Icon, tone]) => (
-                  <div key={label} className={`flex min-h-24 min-w-0 flex-col justify-between rounded-xl bg-gradient-to-br ${tone} p-3 text-white shadow-sm`}>
-                    <div className="flex items-start gap-2"><Icon className="h-4 w-4 shrink-0 opacity-90" /><p className="text-[11px] font-bold uppercase leading-tight tracking-wide opacity-85">{label}</p></div>
-                    <p className="mt-3 text-3xl font-extrabold leading-none">{value}</p>
-                  </div>
-                ))}
-              </div>
               <div className="space-y-2">
                 <List type="Feedback" />
                 <List type="Complaint" />
@@ -278,6 +275,7 @@ function Feedback({ profile, embedded = false } = {}) {
         <TabsContent value="Surveys" className="mt-2">
           <SurveyRegister />
         </TabsContent>
+      </ModuleShell>
       <FeedbackEntryDialog open={open} onOpenChange={setOpen} form={form} setForm={setForm} users={users} saving={saving} error={saveError} onSave={save} />
       <FeedbackDetailDialog item={detail} onClose={() => setDetail(null)} />
     </Tabs>

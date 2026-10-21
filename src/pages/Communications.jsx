@@ -5,7 +5,7 @@ export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
 import { useRole, ROLES } from '@/lib/useRole';
 import AlertsCentre from '@/components/communications/AlertsCentre';
@@ -84,16 +84,17 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="space-y-4">
-      {!embedded && !participantOnly && <PageHeader
+      <Tabs defaultValue="diary">
+        <ModuleShell
+          embedded={embedded || participantOnly}
           title="Communication Centre"
           subtitle={employeeSelf
             ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
             : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
-          accent={['#4f46e5', '#22d3ee']}
-        />}
-
-      <Tabs defaultValue="diary">
-        <CommunicationNavigation tabs={shown} />
+          icon={MessagesSquare}
+          moduleKey="communications"
+          tabs={<CommunicationNavigation tabs={shown} />}
+        >
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
         <TabsContent value="diary">
@@ -117,6 +118,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
+        </ModuleShell>
       </Tabs>
     </div>
   );

@@ -6,7 +6,9 @@ import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { recordStatusLog, currentUserName } from '@/lib/statusLog';
 import { useToast } from '@/components/ui/use-toast';
-import PageHeader, { HeaderUnderRow } from '@/components/PageHeader';
+import { HeaderUnderRow } from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
@@ -69,6 +71,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   const [ratingFilter, setRatingFilter] = useState(searchParams.get('rating') === 'high-critical' ? 'High / Critical' : 'All');
   const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
   const [issueFilter, setIssueFilter] = useState('All');
+  const [query, setQuery] = useState('');
 
   const load = async () => {
     setLoading(true);
@@ -189,41 +192,55 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       || (statusFilter === 'Open' ? isOpenRisk(risk) : risk.status === statusFilter);
     const folderMatches = issueFilter === 'All'
       || (issueFilter === 'Issues and Concerns' ? risk.source_entity_type === 'Issue or Concern Report' : true);
-    return ratingMatches && statusMatches && folderMatches;
+    const searchMatches = !query.trim() || [risk.title, risk.risk_id, risk.category, risk.owner, risk.status].some((f) => (f || '').toLowerCase().includes(query.trim().toLowerCase()));
+    return ratingMatches && statusMatches && folderMatches && searchMatches;
   });
+
+  const btn = 'flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-white/80 disabled:opacity-50';
+  const actionRow = can('risks') && (
+    <>
+      <button onClick={openNew} className={btn}><Plus className="h-4 w-4" />Add Risk Report</button>
+      <button onClick={() => openReport('hazard')} className={btn}><AlertTriangle className="h-4 w-4" />Report Hazard</button>
+      <button onClick={() => openReport('nearmiss')} className={btn}><FileWarning className="h-4 w-4" />Report Near Miss</button>
+      <button onClick={() => downloadTake5AssessmentPdf()} className={btn}><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
+      <button onClick={() => downloadRiskAssessmentTemplatePdf()} className={btn}><FileDown className="h-4 w-4" />Risk Assessment Template</button>
+      <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className={btn}><Download className="h-4 w-4" />Download PDF</button>
+    </>
+  );
+  const tiles = RATINGS.map((r) => (
+    <div key={r}>
+      <div className="text-2xl font-bold tabular-nums">{counts[r]}</div>
+      <div className="text-xs font-medium">{r} Risk Report</div>
+    </div>
+  ));
 
   return (
     <div className="safety-workspace mx-auto min-w-0 max-w-6xl space-y-4">
-      {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
-
-      <RegisterInsights module="risks" />
-      {profileKind === 'participant' && profile && <ParticipantAssessmentRecords participant={profile} />}
-      {can('risks') && (
-        <HeaderUnderRow>
-          <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk Report</button>
-          <button onClick={() => openReport('hazard')} className="flex items-center gap-1.5 rounded-lg bg-warning/15 px-3.5 py-2 text-sm font-semibold text-warning hover:bg-warning/25"><AlertTriangle className="h-4 w-4" />Report Hazard</button>
-          <button onClick={() => openReport('nearmiss')} className="flex items-center gap-1.5 rounded-lg bg-safe/15 px-3.5 py-2 text-sm font-semibold text-safe hover:bg-safe/25"><FileWarning className="h-4 w-4" />Report Near Miss</button>
-          <button onClick={() => downloadTake5AssessmentPdf()} className="flex items-center gap-1.5 rounded-lg bg-yellow-100 px-3.5 py-2 text-sm font-semibold text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-500/15 dark:text-yellow-300 dark:hover:bg-yellow-500/25"><FileDown className="h-4 w-4" />Take 5 Risk Assessment</button>
-          <button onClick={() => downloadRiskAssessmentTemplatePdf()} className="flex items-center gap-1.5 rounded-lg bg-danger/10 px-3.5 py-2 text-sm font-semibold text-danger hover:bg-danger/20"><FileDown className="h-4 w-4" />Risk Assessment Template</button>
-          <button onClick={() => downloadRiskReport(risks)} disabled={loading || risks.length === 0} className="flex items-center gap-1.5 rounded-lg bg-muted px-3.5 py-2 text-sm font-semibold text-foreground hover:bg-muted/70 disabled:opacity-50"><Download className="h-4 w-4" />Download PDF</button>
-        </HeaderUnderRow>
+      {embedded ? (
+        <>
+          <RegisterInsights module="risks" />
+          {actionRow && <HeaderUnderRow>{actionRow}</HeaderUnderRow>}
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">{tiles}</div>
+        </>
+      ) : (
+        <ModuleShell
+          title="Risk Management"
+          subtitle={`${risks.length} risk reports in register`}
+          icon={ShieldAlert}
+          moduleKey="risks"
+          insightModule="risks"
+          search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search risks…" />}
+          actions={actionRow || undefined}
+          small={tiles}
+        />
       )}
+      {profileKind === 'participant' && profile && <ParticipantAssessmentRecords participant={profile} />}
 
       <CommonRiskLibrary onAdded={load} />
 
       <TakeFiveRegister />
       <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />
       <SafetyRegisterExports risks={risks} />
-
-      {/* Summary */}
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        {RATINGS.map((r) => (
-          <div key={r} className={`rounded-xl border border-border/60 p-4 ${ratingColor[r]}`}>
-            <div className="text-2xl font-bold font-display">{counts[r]}</div>
-            <div className="text-xs font-medium opacity-80">{r} Risk Report</div>
-          </div>
-        ))}
-      </div>
 
       {/* Changeable status dashboard */}
       <StatusDashboard

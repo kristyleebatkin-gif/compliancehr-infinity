@@ -3,7 +3,7 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeRoster from '@/components/employee/EmployeeRoster';
 export default withEmployeeView(Rostering, EmployeeRoster);
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -304,24 +304,25 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
 
   return (
     <div className="space-y-4">
-      {!embedded && <PageHeader
-        icon={CalendarRange}
-        title="Rostering"
-        subtitle="Roster board, shift register, timesheet approvals and staff availability."
-        showAlerts={false}
-        action={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
-      />}
-
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard icon={CalendarClock} label="Shifts this week" value={stats.week} tone="bg-brand/10 text-brand" />
-        <StatCard icon={ClipboardCheck} label="Completed this week" value={stats.completed} tone="bg-safe/10 text-safe" />
-        <StatCard icon={UserX} label="Unfilled (next 14 days)" value={stats.unfilled} tone="bg-warning/10 text-warning" />
-        <StatCard icon={ClipboardCheck} label="Awaiting approval" value={stats.pending} tone="bg-teal/10 text-teal" />
-        <StatCard icon={CalendarClock} label="Awaiting confirmation" value={stats.awaitingConfirmation} tone="bg-brand/10 text-brand" />
-      </div>
-
       <Tabs value={tab} onValueChange={setTab}>
-        <RosterDashboardNavigation profile={profile} profileKind={profileKind} />
+        <ModuleShell
+          embedded={embedded}
+          icon={CalendarRange}
+          title="Rostering"
+          subtitle="Roster board, shift register, timesheet approvals and staff availability."
+          moduleKey="rostering"
+          tabs={<RosterDashboardNavigation profile={profile} profileKind={profileKind} />}
+          actions={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
+          small={[
+            ['Shifts this week', stats.week],
+            ['Completed this week', stats.completed],
+            ['Unfilled (next 14 days)', stats.unfilled],
+            ['Awaiting approval', stats.pending],
+            ['Awaiting confirmation', stats.awaitingConfirmation],
+          ].map(([label, value]) => (
+            <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+          ))}
+        >
 
         <TabsContent value="roster" className="mt-4 space-y-4">
           <RosterWeekToolbar weekStart={weekStart} onWeekChange={setWeekStart} onRepeat={repeatLastWeek} onSchedule={() => openNew()} saving={saving} />
@@ -426,6 +427,7 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
         <TabsContent value="shift-details" className="mt-4">
           <ParticipantShiftDetails />
         </TabsContent>
+        </ModuleShell>
       </Tabs>
 
       <ShiftForm open={formOpen} onOpenChange={setFormOpen} shift={editingShift} prefillDate={prefillDate} onSave={saveShift} saving={saving} />
