@@ -17,7 +17,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <StaffBadgePreview branding={branding} staff={profile} compact />
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
-      <EmployeeProfileSection title="Résumé" tone="teal"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
+      <EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <EmployeeRemainingSections key={profile.id} profile={profile} />
     </div>
     <aside className="min-w-0 space-y-2">

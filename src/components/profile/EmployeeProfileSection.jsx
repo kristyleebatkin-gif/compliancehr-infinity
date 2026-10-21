@@ -6,6 +6,7 @@ const tones = {
   pink: 'border-chart-5/50 bg-chart-5/10', red: 'border-danger/50 bg-danger/10',
   slate: 'border-foreground/40 bg-foreground/5', neutral: 'border-border bg-card',
   teal: 'border-[hsl(var(--hr-evidence)/0.5)] bg-[hsl(var(--hr-evidence)/0.1)]',
+  yellow: 'border-[hsl(var(--profile-lemon))] bg-[hsl(var(--profile-lemon))]',
 };
 export default function EmployeeProfileSection({ title, children, tone = 'neutral' }) {
   const [activated, setActivated] = useState(false);

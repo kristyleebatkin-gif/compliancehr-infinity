@@ -35,7 +35,7 @@
 .my-profile-pastels [data-profile-tone="green"], .my-profile-pastels [data-profile-tone="teal"] { --profile-tone: var(--profile-mint); }
 .my-profile-pastels [data-profile-tone="orange"] { --profile-tone: var(--profile-peach); }
 .my-profile-pastels [data-profile-tone="pink"], .my-profile-pastels [data-profile-tone="red"] { --profile-tone: var(--profile-rose); }
-.my-profile-pastels [data-profile-tone="slate"] { --profile-tone: var(--profile-lemon); }
+.my-profile-pastels [data-profile-tone="slate"], .my-profile-pastels [data-profile-tone="yellow"] { --profile-tone: var(--profile-lemon); }
 .my-profile-pastels [data-profile-tone="neutral"] { background: hsl(var(--card) / .8); }
 .my-profile-pastels button.bg-primary {
   background: hsl(var(--profile-lilac));
