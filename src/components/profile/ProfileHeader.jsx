@@ -73,10 +73,9 @@ export default function ProfileHeader({ profile, kind, onUpdated, compact = fals
           <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-bold">{isStaff ? profile.full_name : 'Participant Profile'}</h1>
+              <h1 className="text-2xl font-bold">{profile.full_name}</h1>
               <Badge className="border-0 bg-white/20 text-white">{profile.status}</Badge>
             </div>
-            {!isStaff && <p className="mt-1 text-lg font-semibold">{profile.full_name}</p>}
             <p className="text-sm text-white/85">{title}</p>
             <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-medium">
               {isStaff && (profile.employee_number

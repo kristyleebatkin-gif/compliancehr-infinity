@@ -51,7 +51,7 @@ export default function VolunteerApplications() {
   const newCount = apps.filter((a) => a.status === 'Received').length;
 
   return (
-    <Card>
+    <Card className="volunteer-applications">
       <CardContent className="p-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">

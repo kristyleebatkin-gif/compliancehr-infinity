@@ -41,9 +41,9 @@ export default function VolunteerForm({ open, onOpenChange, editing, onSaved }) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-2xl">
+      <DialogContent className="volunteer-dialog max-h-[92vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader><DialogTitle>{editing ? 'Edit volunteer' : 'New volunteer intake'}</DialogTitle></DialogHeader>
-        <div className="grid gap-4">
+        <div className="volunteer-form-fields grid gap-4">
           <div className="rounded-xl border border-border/60 p-3">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/50">Personal &amp; contact details</p>
             <div className="grid gap-2 sm:grid-cols-2">

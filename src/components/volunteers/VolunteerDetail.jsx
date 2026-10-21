@@ -14,7 +14,7 @@ import { BLANK_INTAKE_FORMS, VOLUNTEER_DOC_TYPES, VOLUNTEER_TRAINING_MODULES } f
 
 function Row({ label, value }) {
   if (!value) return null;
-  return <div className="text-sm"><span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</span><p>{value}</p></div>;
+  return <div className="volunteer-detail-field text-sm"><span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</span><p>{value}</p></div>;
 }
 
 export default function VolunteerDetail({ open, onOpenChange, volunteer, onSaved }) {
@@ -108,7 +108,7 @@ export default function VolunteerDetail({ open, onOpenChange, volunteer, onSaved
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-2xl">
+      <DialogContent className="volunteer-dialog max-h-[92vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">{volunteer?.full_name}<Badge className={statusTone(volunteer?.status)}>{volunteer?.status}</Badge></DialogTitle>
         </DialogHeader>

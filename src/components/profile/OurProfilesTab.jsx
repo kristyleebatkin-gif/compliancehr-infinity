@@ -32,7 +32,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
   const search = directory ? searchValue : localSearch;
   const group = directory ? groupValue : localGroup;
   const setGroup = directory ? onGroupChange : setLocalGroup;
-  const directoryPage = useEmployeeDirectoryPage({ enabled: directory, scoped, search, group });
+  const directoryPage = useEmployeeDirectoryPage({ enabled: directory, scoped, search, group, kind });
   const records = directory ? directoryPage.data?.pages.flatMap(page => page.items || []) || [] : storedRecords;
   const loading = directory ? directoryPage.isPending : storedLoading;
   const error = directory ? directoryPage.error : storedError;
@@ -131,7 +131,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       )}
       {!selfOnly && <>
       {/* Participants: search sits directly under the header */}
-      {isParticipant && searchBox}
+      {isParticipant && !directory && searchBox}
 
       {!isParticipant && !directory && searchBox}
 
@@ -153,7 +153,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       </div>}
 
       {/* Profile categories sit below the dashboard. */}
-      {directory ? <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} /> : filterRow}
+      {directory ? (!isParticipant && <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} />) : filterRow}
       </>}
 
       {/* Modular grouped sections */}
@@ -215,7 +215,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
             ))}
         </div>
       )}
-      {directory && directoryPage.hasNextPage && <Button variant="outline" disabled={directoryPage.isFetchingNextPage} onClick={() => directoryPage.fetchNextPage()}>{directoryPage.isFetchingNextPage ? 'Loading…' : 'Load more employees'}</Button>}
+      {directory && directoryPage.hasNextPage && <Button variant="outline" disabled={directoryPage.isFetchingNextPage} onClick={() => directoryPage.fetchNextPage()}>{directoryPage.isFetchingNextPage ? 'Loading…' : `Load more ${isParticipant ? 'participants' : 'employees'}`}</Button>}
     </div>
   );
 }

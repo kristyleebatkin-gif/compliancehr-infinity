@@ -20,6 +20,8 @@ import VolunteerApplications from '@/components/volunteers/VolunteerApplications
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import VolunteerRegisterCard from '@/components/volunteers/VolunteerRegisterCard';
+import '@/components/volunteers/volunteerWorkspace.css';
 
 export default function Volunteers() {
   const { toast } = useToast();
@@ -88,17 +90,17 @@ export default function Volunteers() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="volunteer-workspace space-y-4">
       <PageHeader
         title="Volunteering & Student Placement"
         subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
         icon={HeartHandshake}
         accent={['#0891b2', '#0d9488']}
+        afterAudit={!isVolunteer && canManage && <Button size="sm" variant="outline" className="volunteer-export" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="h-4 w-4" />Export register</Button>}
         action={!isVolunteer && canManage && (
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="h-4 w-4" />Add volunteer</Button>
-            <Button size="sm" variant="outline" onClick={() => setInviteOpen(true)}><UserPlus className="h-4 w-4" />Invite volunteer</Button>
-            <Button size="sm" variant="outline" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="h-4 w-4" />Export register</Button>
+            <Button size="sm" className="volunteer-add" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="h-4 w-4" />Add volunteer</Button>
+            <Button size="sm" variant="outline" className="volunteer-invite" onClick={() => setInviteOpen(true)}><UserPlus className="h-4 w-4" />Invite volunteer</Button>
           </div>
         )}
       />
@@ -112,7 +114,11 @@ export default function Volunteers() {
       ) : volunteers.length === 0 ? (
         <Card><CardContent className="p-10 text-center text-muted-foreground">No volunteers on the register yet. Add your first volunteer above.</CardContent></Card>
       ) : (
-        <Card>
+        <>
+        <div className="grid gap-2 sm:grid-cols-2 lg:hidden">
+          {volunteers.map(v => <VolunteerRegisterCard key={v.id} volunteer={v} canManage={canManage} onView={() => setViewing(v)} onEdit={() => { setEditing(v); setFormOpen(true); }} onDelete={async () => { await base44.entities.Volunteer.delete(v.id); await load(); }} />)}
+        </div>
+        <Card className="hidden lg:block">
           <CardContent className="overflow-x-auto p-0">
             <table className="w-full min-w-[860px] text-sm">
               <thead>
@@ -159,6 +165,7 @@ export default function Volunteers() {
             </table>
           </CardContent>
         </Card>
+        </>
       )}
 
       <VolunteerForm open={formOpen} onOpenChange={setFormOpen} editing={editing} onSaved={load} />

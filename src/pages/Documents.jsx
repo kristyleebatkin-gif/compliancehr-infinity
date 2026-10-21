@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import DocumentVaultEntry from '@/components/documents/DocumentVaultEntry';
-import ParticipantDocumentRegister from '@/components/documents/ParticipantDocumentRegister';
 export default function DocumentsPage(props) { return <DocumentVaultEntry Vault={Documents} {...props} />; }
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
@@ -216,7 +215,6 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         <div className="space-y-4">
           {myProfile && <p className="text-sm font-semibold">{myProfile.full_name} · {documentType || 'All participant documents, plans & registers'}</p>}
           <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
-          {myProfile && <ParticipantDocumentRegister key={`${myProfile.id}:${documentType}`} participant={myProfile} documentType={documentType} includeDocuments={false} vault />}
         </div>
       ) : (
         <>
