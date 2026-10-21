@@ -8,25 +8,14 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
   return (
     <>
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-        <div className="gradient-brand relative flex flex-wrap items-center gap-3 px-5 py-4 text-white">
-          <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 15%, rgba(255,255,255,0.22), transparent 55%)' }} />
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 text-sm font-bold">
+        <div className="app-page-header relative flex items-center gap-3 rounded-none px-4" style={{ background: 'var(--header-gradient)' }}>
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 text-sm font-bold">
             {activeCase.applicant_name?.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-bold">{activeCase.applicant_name}</h3>
-            <div className="mt-1 flex flex-wrap gap-2 text-[11px] font-medium">
-              <span className="rounded-full bg-white/20 px-2.5 py-0.5">{activeCase.case_number}</span>
-              {intakeType === 'Employee' && (
-                <span className="rounded-full bg-white/20 px-2.5 py-0.5">Employee ID: {activeCase.employee_id_number || 'Generated at conversion'}</span>
-              )}
-              {activeCase.date_of_birth && (
-                <span className="rounded-full bg-white/20 px-2.5 py-0.5">DOB {format(new Date(activeCase.date_of_birth), 'd MMM yyyy')}</span>
-              )}
-            </div>
+            <h3>{activeCase.applicant_name}</h3>
+            <p>{activeCase.case_number} · {activeCase.status} · Readiness {readiness.score}%</p>
           </div>
-          <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-bold">Readiness {readiness.score}%</span>
-          <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-semibold">{activeCase.status}</span>
         </div>
       </div>
 

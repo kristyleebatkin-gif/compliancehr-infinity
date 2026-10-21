@@ -126,12 +126,11 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
   return (
     <div className={`space-y-5 sm:max-lg:space-y-1.5 ${directory ? 'employee-directory-profile-list' : ''}`}>
       {selfOnly && records[0] && (
-        <div className="flex items-center gap-4 rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 p-5 text-white shadow-md">
+        <div className="app-page-header flex items-center gap-4 px-4" style={{ background: 'var(--header-gradient)' }}>
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-lg font-bold">{initials(records[0].full_name)}</div>
           <div className="min-w-0">
-            <p className="truncate font-display text-xl font-bold">{records[0].full_name}</p>
-            <p className="text-sm text-white/80">{isParticipant ? (records[0].support_type || 'Participant') : (records[0].position || records[0].role || 'Employee')}</p>
-            <p className="truncate text-xs text-white/70">{records[0].email}</p>
+            <h2>{records[0].full_name}</h2>
+            <p>{isParticipant ? (records[0].support_type || 'Participant') : (records[0].position || records[0].role || 'Employee')} · {records[0].email}</p>
           </div>
           <Badge className="ml-auto shrink-0 border-0 bg-white/20 text-white">{records[0].status || 'Active'}</Badge>
         </div>
