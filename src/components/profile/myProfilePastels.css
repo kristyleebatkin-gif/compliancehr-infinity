@@ -3,8 +3,9 @@
   --section-header-gradient: var(--header-gradient);
 }
 .my-profile-pastels .my-profile-heading :is(h1, p, .text-white),
-.my-profile-pastels .gradient-brand :is(.text-primary-foreground, .text-white),
-.my-profile-pastels .gradient-brand.text-primary-foreground {
+.my-profile-pastels .gradient-brand :is(.text-primary-foreground, .text-white, [class*="text-white/"]),
+.my-profile-pastels .gradient-brand.text-primary-foreground,
+.my-profile-pastels .gradient-brand.text-white {
   color: hsl(var(--foreground));
 }
 .my-profile-pastels .my-profile-heading p { color: hsl(var(--muted-foreground)); }
