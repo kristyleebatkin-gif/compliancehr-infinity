@@ -7,6 +7,19 @@ html body .my-profile-pastels .app-section-card-header {
   box-shadow: none !important;
   outline: 0 !important;
 }
+/* Section headers are all the same compact size (as Staff Information). */
+html body .my-profile-pastels .app-section-card-header {
+  height: auto !important;
+  min-height: 1.75rem !important;
+  max-height: none !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  font-size: 0.75rem !important;
+}
+html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span) {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
 html body .my-profile-pastels :is([data-dashboard-tab], .app-section-card-header),
 html body .my-profile-pastels :is([data-dashboard-tab], .app-section-card-header) :is(h1, h2, h3, h4, p, span, button, a, svg) {
   color: #000 !important;

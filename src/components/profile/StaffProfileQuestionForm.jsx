@@ -9,7 +9,7 @@ export default function StaffProfileQuestionForm({ profile, title }) {
   const { answers, loading, ready, saving, error, saved, change, save, retry } = useStaffProfileQuestions(profile, title);
   const fields = EMPLOYEE_FORM_DEFINITIONS[title].fields;
   return <details className="min-w-0 rounded-xl border border-border bg-card p-2">
-    <summary className="cursor-pointer text-xs font-semibold">{title}</summary>
+    <summary className="app-section-card-header flex cursor-pointer items-center rounded-lg px-3 text-xs font-semibold">{title}</summary>
     <div className="mt-2">
     {loading ? <p role="status" className="flex items-center gap-2 text-xs text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Loading answers…</p> : <>
       {error && <p role="alert" className="mb-2 text-xs text-destructive">{error}{!ready && <Button variant="outline" size="sm" onClick={retry}>Retry</Button>}</p>}
