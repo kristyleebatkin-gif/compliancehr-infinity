@@ -13,7 +13,7 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import ParticipantSummaryPanels from '@/components/profile/ParticipantSummaryPanels';
 import ProfileQuickSquares from '@/components/profile/ProfileQuickSquares';
-import ProfileComplianceRequirements from '@/components/profile/ProfileComplianceRequirements';
+import ComplianceSchedulesDashboard from '@/components/profile/ComplianceSchedulesDashboard';
 import StaffAuthorisationCard from '@/components/profile/StaffAuthorisationCard';
 
 /* Layout, forms back in their original location: the left column holds Intake
@@ -43,7 +43,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
-      <ProfileComplianceRequirements />
+      <ComplianceSchedulesDashboard />
     </aside>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;
