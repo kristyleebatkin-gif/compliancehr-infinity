@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfileAboutMeEditor from '@/components/profile/ProfileAboutMeEditor';
 import ProfileDetailsCheck from '@/components/profile/ProfileDetailsCheck';
+import ProfileLoggedSections from '@/components/profile/ProfileLoggedSections';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import EmployeeRecordNotice from '@/components/profile/EmployeeRecordNotice';
@@ -26,8 +27,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><StaffCommPanel staff={profile} /></EmployeeProfileSection>
-      <ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} compact />
-      <ProfileDetailsCheck profile={profile} />
+      <ProfileLoggedSections profile={profile} />
     </aside>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;

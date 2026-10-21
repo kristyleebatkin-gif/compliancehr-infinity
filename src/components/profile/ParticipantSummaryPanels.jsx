@@ -3,7 +3,8 @@ import ParticipantDetailsTab from '@/components/participants/ParticipantDetailsT
 import ParticipantAuthorisationCard from '@/components/participants/ParticipantAuthorisationCard';
 import ProfileAboutMeEditor from '@/components/profile/ProfileAboutMeEditor';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
-import ProfileDetailsCheck from '@/components/profile/ProfileDetailsCheck';
+import ProfileLoggedSections from '@/components/profile/ProfileLoggedSections';
+import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ParticipantRequiredForms from '@/components/profile/ParticipantRequiredForms';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
@@ -20,8 +21,8 @@ export default function ParticipantSummaryPanels({ profile, onUpdated }) {
       <ParticipantAuthorisationCard participant={profile} type="sharing" onUpdated={onUpdated} />
       <ParticipantAuthorisationCard participant={profile} type="advocacy" onUpdated={onUpdated} />
       <ParticipantAuthorisationCard participant={profile} type="medication" onUpdated={onUpdated} />
-      <ProfileAuditConsentCard profile={profile} kind="participant" onUpdated={onUpdated} compact />
-      <ProfileDetailsCheck profile={profile} />
+      <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><ProfileCommDiary participant={profile} /></EmployeeProfileSection>
+      <ProfileLoggedSections profile={profile} />
     </aside>
     <p className="min-w-0 rounded-lg border border-border bg-muted/30 px-2 py-1 text-[10px] text-muted-foreground md:col-span-2">Saved details, required intake forms and readiness belong to this participant. Consent decisions include who recorded them and when; consent is never assumed.</p>
   </div>;
