@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
 import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
+import { loadEmployeeForm, syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 export default function useStaffProfileQuestions(profile, title, definitionOverride) {
   const definition = definitionOverride || EMPLOYEE_FORM_DEFINITIONS[title];
   const [answers, setAnswers] = useState({}), [entry, setEntry] = useState(null);
@@ -22,8 +23,10 @@ export default function useStaffProfileQuestions(profile, title, definitionOverr
       const defaults = { 'Employee full name': profile.full_name || '', 'Date of birth': profile.date_of_birth || '', 'Residential address': profile.address || '', Phone: profile.phone || '', Email: profile.email || '', 'Emergency contact 1 name': profile.emergency_contact || '', 'Emergency contact 1 phone': profile.emergency_contact_phone || '', 'Employee ID number': profile.employee_number || '', Position: profile.position || '', 'Position title': profile.position || '', 'Employee role': profile.role || '', 'Commencement date': profile.start_date || '', 'Supervisor name': profile.supervisor || '', 'Rego number': profile.car_rego || '', 'Qualifications and certificates': profile.skills || '' };
       const onlineAnswers = submissions.items[0]?.data ? JSON.parse(submissions.items[0].data).answers || {} : {};
       const known = Object.fromEntries(definition.fields.filter((field) => defaults[field.label] !== undefined).map((field) => [field.label, defaults[field.label]]));
-      setAnswers({ ...known, ...onlineAnswers, ...(existing?.answers ? JSON.parse(existing.answers) : {}) });
-      setEntry(existing); setReady(true);
+      const shared = await loadEmployeeForm({ profileId: profile.id, title });
+      const bridgeDefaults = Object.fromEntries(definition.fields.filter((field) => shared.defaults?.[field.label] !== undefined).map((field) => [field.label, shared.defaults[field.label]]));
+      setAnswers({ ...known, ...bridgeDefaults, ...onlineAnswers, ...(existing?.answers ? JSON.parse(existing.answers) : {}), ...shared.answers });
+      setEntry(shared.entry || existing); setReady(true);
     } catch (failure) { setError(failure.message); }
     finally { setLoading(false); }
   }, [profile.id, title, definition]);
@@ -36,7 +39,9 @@ export default function useStaffProfileQuestions(profile, title, definitionOverr
       const payload = { staff_name: profile.full_name, form_code: definition.code || (title === 'Staff Information Form' ? 'CM-FORM-004' : title === 'Staff Onboarding Form' ? 'CM-FORM-005' : title), answers: JSON.stringify(answers), completed_by: user.full_name || user.email, completed_date: new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' }) };
       if (payload.answers.length > 100000) throw new Error('Please shorten long answers before saving.');
       const record = entry ? await base44.entities.StaffFormEntry.update(entry.id, payload) : await base44.entities.StaffFormEntry.create({ ...payload, staff_id: profile.id, form_type: title });
-      setEntry({ ...entry, ...payload, ...record }); setSaved(true);
+      setEntry({ ...entry, ...payload, ...record });
+      await syncEmployeeRecord('StaffFormEntry', record.id);
+      setSaved(true);
       if (["Driver's Licence Details", 'Car Registration Details', 'Medicare Card Details'].includes(title) && profile.email?.toLowerCase() === user.email?.toLowerCase()) await base44.functions.invoke('profileIdentityExpiryReminders', {});
     } catch (failure) { setError(failure.message); }
     finally { setSaving(false); }

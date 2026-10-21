@@ -21,6 +21,7 @@ import { Plus } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
 import IntakeCaseForm, { SUPPORT_OPTIONS, IntakeReadinessPanel } from '@/components/intake/IntakeCaseForm';
 import personalStaffIntakeClient from '@/lib/personalStaffIntakeClient';
+import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
 import ParticipantJourneyPanel from '@/components/intake/ParticipantJourneyPanel';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
@@ -430,6 +431,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
     setBusy(true);
     try {
       await caseApi.update(activeCase.id, updates);
+      if (intakeType === 'Employee') await syncEmployeeRecord('IntakeCase', activeCase.id);
       setCases((current) => current.map((record) => (
         record.id === activeCase.id ? { ...record, ...updates } : record
       )));
@@ -643,6 +645,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
         converted_date: date,
         outstanding_actions: '',
       });
+      if (intakeType === 'Employee') await syncEmployeeRecord('IntakeCase', activeCase.id);
       try {
         await base44.entities.AuditLog.create({
           action: 'Create',

@@ -28,9 +28,14 @@ export default function useOnlineDocument(options) {
       const draft = drafts.items[0] || null;
       const shared = libraryKey.startsWith('staff-') || intakeCase?.intake_type === 'Employee'
         ? await loadEmployeeForm({ profileId: libraryKey.startsWith('staff-') ? libraryKey.slice(6) : undefined, intakeCaseId: intakeCase?.id, title }) : null;
-      const prefill = { ...initialAnswers, ...shared?.defaults, ...shared?.answers };
+      const defaults = Object.fromEntries((definition.fields || []).filter((field) => shared?.defaults?.[field.label] !== undefined).map((field) => [field.label, shared.defaults[field.label]]));
+      const prefill = { ...initialAnswers, ...defaults, ...shared?.answers };
       const data = draft ? readOnlineDocument(draft, prefill) : blankOnlineDocument(prefill);
-      if (shared) data.answers = { ...data.answers, ...shared.answers };
+      if (draft && shared) data.answers = { ...defaults, ...data.answers };
+      if (shared) {
+        data.answers = { ...data.answers, ...shared.answers };
+        if (Array.isArray(shared.answers.__rows)) data.tableRows = shared.answers.__rows;
+      }
       setUser(me); setRecords(saved.items); setPage(saved); setRecord(draft); setModel(data); baseline.current = JSON.stringify(data);
       if (draft) setNotice('Your saved draft has been restored.');
     })().catch((e) => { if (active) setError(e.message); }).finally(() => { if (active) setLoading(false); });

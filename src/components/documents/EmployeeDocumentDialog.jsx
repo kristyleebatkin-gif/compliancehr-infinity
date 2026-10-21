@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { logUserAction } from '@/lib/actionLog';
+import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,9 +19,11 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!open) return;
+    setError('');
     if (editing) {
       setForm({
         title: initial.title || '', employee_name: initial.employee_name || '', document_type: initial.document_type || 'Other',
@@ -47,17 +50,24 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
 
   const save = async () => {
     if (!form.title.trim()) return;
-    setSaving(true);
+    setSaving(true); setError('');
     try {
       let savedId = initial?.id || '';
-      if (editing) await base44.entities.EmployeeDocument.update(initial.id, form);
+      const matches = await base44.entities.StaffProfile.filter({ full_name: form.employee_name }, { limit: 2 });
+      const employeeId = initial?.employee_id && initial.employee_name === form.employee_name ? initial.employee_id : matches.items.length === 1 ? matches.items[0].id : '';
+      if (!employeeId) throw new Error('Select an employee with a unique staff profile before filing this document.');
+      const payload = { ...form, employee_id: employeeId };
+      if (editing) await base44.entities.EmployeeDocument.update(initial.id, payload);
       else {
-        const saved = await base44.entities.EmployeeDocument.create(form);
+        const saved = await base44.entities.EmployeeDocument.create(payload);
         savedId = saved?.id || savedId;
       }
+      await syncEmployeeRecord('EmployeeDocument', savedId);
       logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim(), record_id: savedId, person: { profile_type: 'employee', profile_id: form.employee_id, profile_name: form.employee_name } });
       onOpenChange(false);
       onDone?.();
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setSaving(false);
     }
@@ -110,7 +120,8 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
             {editing && initial?.file_uri && !form.file_uri && <p className="text-xs text-muted-foreground">Keeping the existing file.</p>}
           </div>
           <div className="grid gap-1.5"><Label>Notes</Label><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
-          <Button onClick={save} disabled={saving || !form.title.trim()}>{editing ? 'Save changes' : 'Save document'}</Button>
+          {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
+          <Button onClick={save} disabled={saving || uploading || !form.title.trim()}>{editing ? 'Save changes' : 'Save document'}</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import { format } from 'date-fns';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
@@ -102,6 +103,7 @@ export default function MyProfile() {
         : null;
       const change_log = entry ? [record.change_log, entry].filter(Boolean).join('\n') : record.change_log;
       await base44.entities[entityName].update(record.id, { ...formData, change_log });
+      if (entityName === 'StaffProfile') await syncEmployeeRecord('StaffProfile', record.id);
       if (entry) {
         await logUserAction('Profile Updated', entityName, {
           record_id: record.id,

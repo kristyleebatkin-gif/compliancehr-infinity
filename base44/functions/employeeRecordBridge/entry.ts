@@ -1,19 +1,22 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { employeeFields, canonicalEmployeeForm, parseAnswers, eachPage, updateChanged } from '../../shared/employeeRecordFields.ts';
 import { fileEmployeeDocument } from '../../shared/employeeDocumentBridge.ts';
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasApprovedAccess(user) || user.role === 'Participant') return Response.json({ error: 'Staff access required' }, { status: 403 });
     const body = await req.json();
     const allowed = ['StaffProfile', 'IntakeCase', 'StaffFormEntry', 'FormSubmission', 'EmployeeDocument', 'FormsLibraryDocument', 'IntakeDocument'];
     if (!['load', 'sync'].includes(body.action) || (body.action === 'sync' && (!allowed.includes(body.source) || typeof body.id !== 'string'))) return Response.json({ error: 'Invalid request' }, { status: 400 });
     const entities = base44.asServiceRole.entities;
     const source = body.action === 'sync' ? await entities[body.source].get(body.id) : null;
     let profileId = body.profile_id || (body.source === 'StaffProfile' ? source.id : source?.staff_id || source?.employee_id || source?.profile_id || (source?.library?.startsWith('staff-') ? source.library.slice(6) : ''));
-    const caseId = body.intake_case_id || (body.source === 'IntakeCase' ? source.id : source?.intake_case_id);
+    let caseId = body.intake_case_id || (body.source === 'IntakeCase' ? source.id : source?.intake_case_id);
+    if (caseId?.startsWith('profile-')) { profileId = profileId || caseId.slice(8); caseId = null; }
     let intake = caseId ? await entities.IntakeCase.get(caseId) : null;
     if (intake && intake.intake_type !== 'Employee') return Response.json({ error: 'Not an employee intake' }, { status: 400 });
     profileId = profileId || intake?.related_profile_id;
@@ -45,7 +48,8 @@ export default async function(req) {
     }
     const profileValues = {}, intakeValues = {};
     const isForm = ['StaffFormEntry', 'FormSubmission'].includes(body.source);
-    const answers = isForm ? (body.source === 'StaffFormEntry' ? parseAnswers(source.answers) : parseAnswers(source.data).answers || {}) : {};
+    const online = body.source === 'FormSubmission' ? parseAnswers(source.data) : null;
+    const answers = isForm ? (online ? { ...online.answers, __rows: online.tableRows || [] } : parseAnswers(source.answers)) : {};
     for (const [field, intakeField, labels] of employeeFields) {
       const answer = labels.find((label) => Object.hasOwn(answers, label));
       const value = body.source === 'StaffProfile' ? source[field] : body.source === 'IntakeCase' ? source[intakeField] : answer ? answers[answer] : undefined;
