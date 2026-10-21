@@ -8,12 +8,12 @@ import { Input } from '@/components/ui/input';
 import { statusTone } from '@/lib/statusStyles';
 import GoalNotes from '@/components/goals/GoalNotes';
 
-export default function GoalProgressCard({ g, compact, isAdmin, ourView, onProgress, onApprove, onDelete }) {
+export default function GoalProgressCard({ g, compact, isAdmin, ourView, onProgress, onApprove, onDelete, notesContent }) {
   return <Card className="min-w-0 overflow-hidden rounded-xl border-border/70 shadow-sm">
     <CardContent className={compact ? 'space-y-1 p-1.5' : 'space-y-1.5 p-2'}>
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0 flex-1 basis-48">
-          <p className="text-[11px] font-semibold text-primary">{g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
+          <p className="text-[11px] font-semibold text-primary">{g.staff_name || g.participant_name}{g.category ? ` · ${g.category}` : ''}</p>
           <h3 className="mt-0.5 break-words text-sm font-bold leading-5 text-foreground">{g.goal}</h3>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">{!g.admin_approved && <Badge variant="outline" className="text-[10px]">Awaiting approval</Badge>}<Badge className={statusTone(g.status)}>{g.status}</Badge></div>
@@ -34,7 +34,7 @@ export default function GoalProgressCard({ g, compact, isAdmin, ourView, onProgr
           {isAdmin && !g.admin_approved && <Button variant="outline" size="sm" className="h-8" onClick={() => onApprove(g)}>Approve</Button>}
           <Button aria-label={`Delete goal: ${g.goal}`} variant="ghost" size="icon" className="h-8 w-8" onClick={() => onDelete(g)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
         </div>
-        <GoalNotes goal={g} participantName={g.participant_name} readOnly={ourView} />
+        {notesContent === undefined ? <GoalNotes goal={g} participantName={g.participant_name} readOnly={ourView} /> : notesContent}
       </>}
     </CardContent>
   </Card>;

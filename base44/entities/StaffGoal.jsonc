@@ -1,0 +1,282 @@
+{
+  "name": "StaffGoal",
+  "type": "object",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "title": "Employee Profile",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "staff_name": {
+      "type": "string",
+      "title": "Employee",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "staff_email": {
+      "type": "string",
+      "format": "email",
+      "title": "Employee Email",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "goal": {
+      "type": "string",
+      "title": "Goal"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "progress": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0,
+      "title": "Progress (%)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "In Progress",
+        "Achieved",
+        "On Hold"
+      ],
+      "default": "In Progress",
+      "title": "Status"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+    },
+    "support_needed": {
+      "type": "string",
+      "title": "Support Needed"
+    }
+  },
+  "required": [
+    "staff_id",
+    "staff_name",
+    "staff_email",
+    "goal"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.staff_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.staff_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.staff_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.staff_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -20,10 +20,12 @@ import GoalCard from '@/components/goals/GoalProgressCard';
 import GoalInsights from '@/components/goals/GoalInsights';
 import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
+import StaffGoals from '@/components/goals/StaffGoals';
 
 export default function GoalProgress({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
+  const [activeTab, setActiveTab] = useState(profileKind === 'staff' ? 'staff' : 'all');
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -68,7 +70,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
     ], rows);
   };
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { if (activeTab !== 'staff') load(); }, [load, activeTab]);
 
   const save = async () => {
     if (!form.participant_name.trim() || !form.goal.trim()) return;
@@ -117,7 +119,7 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
       {!embedded && <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />}
 
       <RegisterInsights module="goals" />
-      <div className="flex flex-wrap items-center justify-end gap-2 rounded-xl border border-border/70 bg-card p-3 shadow-sm">
+      {activeTab !== 'staff' && <div className="flex flex-wrap items-center justify-end gap-2 rounded-xl border border-border/70 bg-card p-3 shadow-sm">
         <Button variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button disabled={role === ROLES.PARTICIPANT}><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
@@ -153,15 +155,16 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+      </div>}
 
-      {loading ? (
+      {loading && activeTab !== 'staff' ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : (
-        <Tabs defaultValue="all">
-          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 rounded-xl border border-border/60 p-1 sm:grid-cols-3 xl:grid-cols-5 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs">
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 rounded-xl border border-border/60 p-1 sm:grid-cols-3 xl:grid-cols-6 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs">
             <TabsTrigger value="all">All goals</TabsTrigger>
             <TabsTrigger value="participants">Progress by participant</TabsTrigger>
+            {role !== ROLES.PARTICIPANT && <TabsTrigger value="staff">Progress by staff</TabsTrigger>}
             <TabsTrigger value="insights">Insights</TabsTrigger>
             <TabsTrigger value="coach">AI goal coach</TabsTrigger>
             <TabsTrigger value="funding">Funding outcomes</TabsTrigger>
@@ -207,6 +210,10 @@ export default function GoalProgress({ profile, profileKind, ourView = false, em
               </div>
             )}
           </TabsContent>
+
+          {role !== ROLES.PARTICIPANT && <TabsContent value="staff" className="mt-4">
+            <StaffGoals profile={profileKind === 'staff' ? profile : undefined} />
+          </TabsContent>}
 
           <TabsContent value="insights" className="mt-4">
             <GoalInsights goals={goals} />
