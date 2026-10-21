@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import SectionCard from '@/components/SectionCard';
-import EmptyState from '@/components/EmptyState';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { AlertTriangle, FileSearch, ShieldAlert, Clock } from 'lucide-react';
 import { format, subMonths, startOfMonth, isBefore } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
@@ -23,6 +22,7 @@ export default function SafetyTrendsDashboard() {
   const [openIncidentsCount, setOpenIncidents] = useState(0);
   const [activeRisksCount, setActiveRisks] = useState(0);
   const [loading, setLoading] = useState(true);
+  const colour = moduleKeyColour('incidents');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -83,11 +83,7 @@ export default function SafetyTrendsDashboard() {
   const incLabel = (id) => incidents.find((x) => x.id === id)?.title || 'Unlinked';
 
   return (
-    <SectionCard
-      className="safety-live-dashboard"
-      title="Safety Live Dashboard"
-      description="Current incident trends and pending investigations — updates in real time as records change"
-    >
+    <div className="safety-live-dashboard rounded-2xl border p-3.5 sm:p-4" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
@@ -95,15 +91,14 @@ export default function SafetyTrendsDashboard() {
       ) : (
         <div className="space-y-4">
           <div className="safety-summary-grid grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <SafetyMetricTile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="warning" />
-            <SafetyMetricTile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="primary" />
-            <SafetyMetricTile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="danger" />
-            <SafetyMetricTile icon={ShieldAlert} label="Active risks" value={activeRisksCount} tone="teal" />
+            <SafetyMetricTile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} colour={moduleKeyColour('incidents')} />
+            <SafetyMetricTile icon={FileSearch} label="Pending investigations" value={pendingInv.length} colour={moduleKeyColour('incidents')} />
+            <SafetyMetricTile icon={Clock} label="Investigations overdue" value={overdueInv.length} colour={moduleKeyColour('incidents')} />
+            <SafetyMetricTile icon={ShieldAlert} label="Active risks" value={activeRisksCount} colour={moduleKeyColour('risks')} />
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">
-            <div className="safety-chart-panel relative overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-rose-50 p-4 shadow-lg shadow-amber-500/5 dark:border-amber-900 dark:from-amber-950/25 dark:via-card dark:to-rose-950/20 lg:col-span-2">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-500 via-rose-500 to-red-500" />
+            <div className="safety-chart-panel relative overflow-hidden rounded-xl border bg-card p-4 lg:col-span-2" style={{ borderColor: `${colour}99`, boxShadow: `inset 0 4px 0 ${colour}` }}>
               <h4 className="mb-3 text-sm font-semibold">Incident frequency and severity by month — last 6 months</h4>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={trend} margin={{ top: 4, right: 8, bottom: 0, left: -24 }}>
@@ -124,8 +119,7 @@ export default function SafetyTrendsDashboard() {
               </div>
             </div>
 
-            <div className="safety-investigations-panel relative overflow-hidden rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500" />
+            <div className="safety-investigations-panel relative overflow-hidden rounded-xl border bg-card p-4" style={{ borderColor: `${colour}99`, boxShadow: `inset 0 4px 0 ${colour}` }}>
               <h4 className="relative mb-3 text-sm font-semibold">Pending investigations</h4>
               {pendingInv.length === 0 ? (
                 <p className="text-xs text-muted-foreground">No pending investigations.</p>
@@ -153,6 +147,6 @@ export default function SafetyTrendsDashboard() {
           <div className="safety-heatmap-panel"><SafetyHeatmap /></div>
         </div>
       )}
-    </SectionCard>
+    </div>
   );
 }
