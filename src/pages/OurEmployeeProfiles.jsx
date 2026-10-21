@@ -8,7 +8,7 @@ import OurProfilesTab from '@/components/profile/OurProfilesTab';
 import { lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRole } from '@/lib/useRole';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 const StaffProgressDashboard = lazy(() => import('@/pages/StaffProgressDashboard'));
 
 export default function OurEmployeeProfiles({ basePath = '/our-employees', scoped = true, title = 'Our employee profiles' }) {
