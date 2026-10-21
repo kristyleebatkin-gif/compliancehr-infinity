@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import PageHeader from '@/components/PageHeader';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
@@ -21,6 +22,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
   }
   return (
     <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+      <PageHeader title={participant.full_name || 'Participant profile'} subtitle="Participant profile, plan, support team, documents and safeguards in one place." />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel}</Link></Button>
         <div className="flex flex-wrap items-center gap-2">

@@ -9,6 +9,7 @@ import IncidentFollowUp from '@/components/incidents/IncidentFollowUp';
 import IncidentImprovementLink from '@/components/incidents/IncidentImprovementLink';
 import IncidentPhotos from '@/components/incidents/IncidentPhotos';
 import { ArrowLeft, Pencil, Trash2, Search } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import RecordResponseEditor from '@/components/safety/RecordResponseEditor';
@@ -48,16 +49,14 @@ export default function IncidentDetail() {
     <div className="safety-workspace mx-auto min-w-0 max-w-4xl space-y-4">
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> {user?.role === 'Employee' ? 'My Incidents' : 'All Incidents'}</Link>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="gradient-brand flex-1 rounded-2xl p-4 text-primary-foreground">
-          <h1 className="text-2xl font-bold font-display">{item.title}</h1>
-          {item.incident_id && <p className="text-sm text-primary-foreground">{item.incident_id}</p>}
-        </div>
-        {canReview && <div className="flex gap-2">
+      <PageHeader
+        title={item.title}
+        subtitle={item.incident_id ? `Incident ${item.incident_id}: full record, regulatory tracking and follow-up.` : undefined}
+        action={canReview && <>
           <Link to={`/incidents/${item.id}/edit`} className="flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium hover:bg-muted"><Pencil className="h-4 w-4" /> Edit</Link>
           <button onClick={handleDelete} className="flex items-center gap-1.5 rounded-lg border border-danger/30 px-3.5 py-2 text-sm font-medium text-danger hover:bg-danger/5"><Trash2 className="h-4 w-4" /> Delete</button>
-        </div>}
-      </div>
+        </>}
+      />
 
       <div className="flex flex-wrap gap-2">
         <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${sevTone}`}>Severity: {item.severity}</span>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import PageHeader from '@/components/PageHeader';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
@@ -21,6 +22,7 @@ export default function OurEmployeeDetail({ backTo = '/our-employees', backLabel
   }
   return (
     <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+      <PageHeader title={employee.full_name || 'Employee profile'} subtitle="Employee profile, compliance documents, training and performance in one place." />
       <div className="flex items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel}</Link></Button>
         <PortalInviteButton kind="staff" profile={employee} />
