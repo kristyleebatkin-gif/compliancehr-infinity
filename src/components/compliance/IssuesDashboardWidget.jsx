@@ -44,7 +44,7 @@ export default function IssuesDashboardWidget() {
   ];
 
   return (
-    <Card className="compliance-issues-widget overflow-hidden" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
+    <Card className="compliance-issues-widget overflow-hidden">
       <CardContent className="space-y-4 pt-6">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {tiles.map((t) => (

@@ -46,11 +46,11 @@ export default function MorningBrief() {
   const colour = moduleKeyColour('dashboard');
 
   return (
-    <Card className="morning-brief shadow-panel" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
+    <Card className="morning-brief shadow-panel">
       <CardContent className="p-4">
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg text-white" style={{ background: colour }}><Coffee className="h-4 w-4" /></div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted text-foreground"><Coffee className="h-4 w-4" /></div>
             <div>
               <div className="font-bold font-display">Morning brief</div>
               <div className="text-[11px] text-foreground/45">{brief.date_label}</div>
