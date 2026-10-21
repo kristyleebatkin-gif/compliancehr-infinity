@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
 import { Button } from '@/components/ui/button';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { CheckCircle2, FileWarning, Loader2 } from 'lucide-react';
 
 const EMPLOYEE_ROLES = [
@@ -296,7 +297,7 @@ export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, up
   const done = readiness.checks.length - readiness.missing.length;
   return (
     <aside className="min-w-0 h-fit overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
-      <div className="app-section-card-header flex min-h-[2cm] flex-col justify-center border-b border-border bg-accent px-4 py-3 text-foreground">
+      <div className="flex min-h-[2cm] flex-col justify-center border-b border-border px-4 py-3 text-black" style={{ backgroundColor: moduleKeyColour('intake') }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex min-w-0 flex-wrap items-center gap-2"><span className="text-sm font-bold">Intake readiness</span><span className="rounded-full border border-border bg-card px-2 py-1 text-xs font-semibold">Required documents {readiness.documentChecks.filter(check => check.complete).length}/{readiness.documentChecks.length}</span></div>
           <span className="text-xl font-extrabold">{readiness.score}%</span>

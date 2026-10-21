@@ -34,7 +34,7 @@ export default function IntakeCaseDocuments({
   const pct = checks.length ? Math.round((doneCount / checks.length) * 100) : 0;
 
   return (
-    <div className={showReadiness ? 'grid min-w-0 items-start gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)]' : 'space-y-4'}>
+    <div className={showReadiness ? 'grid min-w-0 items-start gap-4 md:grid-cols-[45%_45%] md:justify-between' : 'space-y-4'}>
       <details className="min-w-0 space-y-2 break-words">
         <summary className="cursor-pointer rounded-lg border border-border bg-muted/30 px-3 py-2 text-foreground">
           <span className="text-xs font-bold uppercase tracking-wide">Required documents</span>
@@ -42,7 +42,7 @@ export default function IntakeCaseDocuments({
             <div className="mt-1 flex min-w-0 flex-wrap items-center gap-2">
               <span className="rounded-full bg-safe/15 px-2 py-0.5 text-xs font-bold text-foreground">{doneCount}/{checks.length} complete</span>
               <span className="hidden h-1.5 w-24 overflow-hidden rounded-full bg-muted sm:block">
-                <span className="block h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600" style={{ width: `${pct}%` }} />
+                <span className="block h-full rounded-full bg-emerald-500" style={{ width: `${pct}%` }} />
               </span>
             </div>
           )}
@@ -60,7 +60,7 @@ export default function IntakeCaseDocuments({
                     ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                     : <FileWarning className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />}
                   <div className="min-w-0">
-                    <div className={`text-sm ${check.complete ? 'text-foreground/70' : 'font-medium'}`}>{check.label}</div>
+                    <div className={`text-sm text-black ${check.complete ? '' : 'font-medium'}`}>{check.label}</div>
                     {doc && <div className="text-xs text-foreground/45">{doc.file_name}</div>}
                     {UPLOAD_ONLY_DOC_TYPES.has(check.label) && !check.complete && (
                       <p className="text-[10px] text-muted-foreground">please upload</p>

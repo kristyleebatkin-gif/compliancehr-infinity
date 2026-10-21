@@ -14,8 +14,8 @@ export default function ProfileRegisterLinks({ profile, kind }) {
     ['Support plan in Document Vault', profileVaultUrl(profile, kind, 'Participant Support Plan')],
     ['NDIS plan in Document Vault', profileVaultUrl(profile, kind, 'NDIS Plan')],
   ] : [];
+  if (!links.length) return null;
   return <nav aria-label="Linked profile registers and plans" className="flex flex-wrap gap-2">
     {links.map(([label, to]) => <Button key={label} variant="outline" size="sm" asChild><Link to={to}>{label}</Link></Button>)}
-    <Button variant="outline" size="sm" asChild><Link to={profileVaultUrl(profile, kind)}>Document Vault for {profile.full_name}</Link></Button>
   </nav>;
 }
