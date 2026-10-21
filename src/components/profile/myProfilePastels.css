@@ -41,6 +41,14 @@ html body .my-profile-pastels .profile-uniform-box :is(summary, div, section, sp
   background: transparent !important;
   background-image: none !important;
 }
+/* Solid bright colour per box. */
+html body .my-profile-pastels .profile-uniform-box { color: #000 !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #a78bfa !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="journey"] { background: #2dd4bf !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { background: #38bdf8 !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: #f472b6 !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: #4ade80 !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: #fb923c !important; }
 /* Left-hand forms stretch so the column ends level with the logs on the right. */
 html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
   flex: 1 1 auto;
