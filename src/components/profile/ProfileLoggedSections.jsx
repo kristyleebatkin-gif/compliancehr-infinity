@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
+import ProfileAllLogs from '@/components/profile/ProfileAllLogs';
 
 const CONSENT = /(?:audit consent|consent to share information|consent to act as an advocate|medication consent):/i;
 
@@ -26,5 +27,6 @@ export default function ProfileLoggedSections({ profile }) {
     <EmployeeProfileSection title="Logged Audit Consent" tone="pink" uniform><LogList lines={lines.filter((l) => CONSENT.test(l))} empty="No audit consent changes logged yet." /></EmployeeProfileSection>
     <EmployeeProfileSection title="Logged Detail Changes" tone="green" uniform><LogList lines={lines.filter((l) => !CONSENT.test(l))} empty="No detail changes logged yet." /></EmployeeProfileSection>
     <EmployeeProfileSection title="Logged Acknowledgements" tone="orange" uniform><Acknowledgements profile={profile} /></EmployeeProfileSection>
+    <ProfileAllLogs profile={profile} />
   </>;
 }
