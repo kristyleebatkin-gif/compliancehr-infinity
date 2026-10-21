@@ -13,8 +13,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
-import PageHeader from '@/components/PageHeader';
-import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
 
@@ -28,6 +28,8 @@ export default function KeyContacts({ readOnly = false } = {}) {
   const [editing, setEditing] = useState(null);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(BLANK);
+  const [query, setQuery] = useState('');
+  const shown = contacts.filter((c) => !query.trim() || [c.name, c.organisation, c.role, c.email].some((v) => (v || '').toLowerCase().includes(query.trim().toLowerCase())));
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -82,39 +84,36 @@ export default function KeyContacts({ readOnly = false } = {}) {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={ContactIcon}
         title="Key Personnel Contacts"
         subtitle="Key people, their roles, hours and contact details, with direct email, text and phone access."
-      />
-
-      <AutoRegisterInsights placement="header" />
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          ['Contacts', contacts.length, 'from-cyan-500 via-sky-500 to-blue-600'],
-          ['Emergency', contacts.filter((c) => c.category === 'Emergency').length, 'from-rose-500 via-red-500 to-orange-500'],
-          ['Medical', contacts.filter((c) => c.category === 'Medical').length, 'from-emerald-500 via-teal-500 to-cyan-600'],
-        ].map(([label, value, grad]) => (
-          <div key={label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${grad}`}>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{label}</p>
+        moduleKey="key-contacts"
+        insightModule="contacts"
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search contacts…" />}
+        actions={<>
+          {!readOnly && <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>}
+          <Button variant="outline" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+          {readOnly && <p className="text-xs text-muted-foreground">View only — key personnel contacts are managed in Staff and Participant profiles.</p>}
+        </>}
+        small={[
+          ['Contacts', contacts.length],
+          ['Emergency', contacts.filter((c) => c.category === 'Emergency').length],
+          ['Medical', contacts.filter((c) => c.category === 'Medical').length],
+        ].map(([label, value]) => (
+          <div key={label}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
             <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
           </div>
         ))}
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        {!readOnly && <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>}
-        <Button variant="outline" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        {readOnly && <p className="text-xs text-muted-foreground">View only — key personnel contacts are managed in Staff and Participant profiles.</p>}
-      </div>
-
+      >
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : contacts.length === 0 ? (
         <EmptyState icon={ContactIcon} modulePath="/key-contacts" title="No key personnel contacts yet" message="Add your first contact to build the register." />
       ) : (
         <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
-          {contacts.map((c) => (
+          {shown.map((c) => (
             <Card key={c.id}>
               <CardContent className="p-2.5">
                 <div className="flex items-start justify-between gap-2">
@@ -139,6 +138,7 @@ export default function KeyContacts({ readOnly = false } = {}) {
           ))}
         </div>
       )}
+      </ModuleShell>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-lg">

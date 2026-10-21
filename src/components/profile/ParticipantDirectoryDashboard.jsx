@@ -1,7 +1,5 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { preparePersonalProfileAccess, profileRecordScope } from '@/lib/personalProfileAccess';
@@ -11,7 +9,7 @@ const STATUSES = [
   { label: 'On Hold', tone: 'var(--chart-5)' },
   { label: 'Inactive', tone: 'var(--warning)' },
 ];
-export default function ParticipantDirectoryDashboard({ scoped, search, onSearch, selected, onSelect }) {
+export default function ParticipantDirectoryDashboard({ scoped, selected, onSelect }) {
   const { user, role } = useRole();
   const summary = useQuery({
     queryKey: ['participant-status-summary', scoped, role, user?.id], enabled: !!user?.id,
@@ -22,10 +20,7 @@ export default function ParticipantDirectoryDashboard({ scoped, search, onSearch
     },
   });
   return <section aria-label="Participant status dashboard" className="space-y-2">
-    <div className="grid items-stretch gap-2 sm:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
-      <div className="flex items-center rounded-xl border border-primary/25 bg-card p-2">
-        <div className="relative w-full"><Search className="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" /><Input type="search" aria-label="Search participants" placeholder="Search participants…" className="pl-7" value={search} onChange={event => onSearch(event.target.value)} /></div>
-      </div>
+    <div className="grid items-stretch gap-2 sm:grid-cols-3">
       {STATUSES.map(({ label, tone }, index) => <button type="button" key={label} aria-pressed={selected === label} onClick={() => onSelect(selected === label ? 'all' : label)} className="employee-directory-tile rounded-xl p-3 text-left" style={{ '--directory-tone': tone }}>
         <span className="block text-2xl font-extrabold tabular-nums">{summary.isPending ? '…' : summary.error ? '—' : summary.data?.[index] ?? 0}</span><span className="text-xs font-bold">{label}</span>
       </button>)}
