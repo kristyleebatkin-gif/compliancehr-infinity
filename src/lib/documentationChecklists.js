@@ -47,6 +47,19 @@ export const DOCUMENTATION_SECTIONS = [
       { key: 'comp-master', title: 'Master compliance checklist reviewed', cadence: '12-monthly', note: 'Whole checklist walked through end to end.' },
     ],
   },
+  {
+    key: 'business-docs',
+    title: 'Business Insurance, Documents & Plans',
+    applies: 'both',
+    tone: 'pink',
+    items: [
+      { key: 'biz-insurance', title: 'Business insurance register current', cadence: '12-monthly', note: 'Public liability, professional indemnity and vehicle insurance valid, with certificates of currency filed.' },
+      { key: 'biz-docs', title: 'Business documents register current', cadence: '12-monthly', note: 'Business documents structured, filed and kept current for continuity.' },
+      { key: 'biz-strategic', title: 'Strategic plan reviewed', cadence: '12-monthly', note: 'Strategic plan kept current and available to managers.' },
+      { key: 'biz-plan', title: 'Business plan reviewed', cadence: '12-monthly', note: 'Business plan kept current and available to managers.' },
+      { key: 'biz-operational', title: 'Operational plan reviewed', cadence: '12-monthly', note: 'Operational plan kept current and available to managers.' },
+    ],
+  },
 
   // ===== Employee (staff) =====
   {
