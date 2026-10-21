@@ -11,7 +11,7 @@ export default async function(req) {
     const entities = base44.asServiceRole.entities;
     if (cursor != null && (typeof cursor !== 'string' || cursor.length > 4000)) return Response.json({ error: 'Invalid page.' }, { status: 400 });
     if (action === 'participants') return Response.json(await entities.ParticipantProfile.filter({ admin_approved: true }, { sort: 'full_name', fields: ['id', 'full_name'], limit: 50, cursor }));
-    if (!['list', 'create', 'progress', 'notesList', 'notesCreate'].includes(action)) return Response.json({ error: 'Unsupported goal action.' }, { status: 400 });
+    if (!['list', 'create', 'progress', 'notesList', 'notesCount', 'notesCreate'].includes(action)) return Response.json({ error: 'Unsupported goal action.' }, { status: 400 });
     const person = await approvedEmployeeParticipant(base44, participant_id);
     if (action === 'list') return Response.json(await entities.Goal.filter({ participant_name: person.full_name }, { sort: '-created_date', limit: 25, cursor }));
     const boundedText = (value, max) => typeof value === 'string' && value.length <= max;
@@ -32,8 +32,10 @@ export default async function(req) {
       return Response.json({ success: true });
     }
     if (action === 'notesList') return Response.json(await entities.GoalProgressNote.filter({ goal_id: goal.id }, { sort: '-created_date', limit: 50, cursor }));
+    if (action === 'notesCount') return Response.json({ count: await entities.GoalProgressNote.count({ goal_id: goal.id }) });
     if (!['Progress Note', 'Progress Report'].includes(values.entry_type) || !boundedText(values.notes || '', 8000) || !boundedText(values.file_uri || '', 2000) || !boundedText(values.file_name || '', 300) || (!values.notes?.trim() && !values.file_uri)) return Response.json({ error: 'Check the progress entry.' }, { status: 400 });
-    const note = await entities.GoalProgressNote.create({ goal_id: goal.id, participant_name: person.full_name, entry_type: values.entry_type, notes: values.notes || '', file_uri: values.file_uri || undefined, file_name: values.file_name || undefined, recorded_by: user.full_name || user.email, recorded_date: new Date().toISOString().slice(0, 10) });
+    const participantUsers = person.email ? await entities.User.filter({ email: person.email }) : [];
+    const note = await entities.GoalProgressNote.create({ goal_id: goal.id, participant_name: person.full_name, participant_user_id: participantUsers.length === 1 ? participantUsers[0].id : undefined, entry_type: values.entry_type, notes: values.notes || '', file_uri: values.file_uri || undefined, file_name: values.file_name || undefined, recorded_by: user.full_name || user.email, recorded_date: new Date().toISOString().slice(0, 10) });
     return Response.json({ note });
   } catch (error) {
     return Response.json({ error: error.message || 'Goal access could not be checked.' }, { status: 403 });

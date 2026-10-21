@@ -17,6 +17,7 @@ export default function IssueSubmitPortal() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(null);
   const [me, setMe] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     base44.auth.me().then(setMe).catch(() => {});
@@ -27,7 +28,7 @@ export default function IssueSubmitPortal() {
   const submit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.issue) return;
-    setSubmitting(true);
+    setSubmitting(true); setError('');
     try {
       const record = {
         ...form,
@@ -38,6 +39,8 @@ export default function IssueSubmitPortal() {
       const created = await base44.entities.IssueConcernBarrier.create(record);
       setSubmitted(created);
       setForm(blank);
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setSubmitting(false);
     }
@@ -65,10 +68,12 @@ export default function IssueSubmitPortal() {
     <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Report an Issue, Concern or Barrier"
+        showCompliance={me?.role !== 'Employee'} showAudit={me?.role !== 'Employee'} showAlerts={me?.role !== 'Employee'}
         subtitle="A simple form for staff to raise anything getting in the way of good support. Every submission goes to management for follow-up."
       />
 
       <form onSubmit={submit} className="space-y-4 rounded-2xl border border-border bg-card p-5 md:p-6">
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <Field label="Who or what is this about?">
           <TextInput value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="e.g. Participant name, a workplace, or a process" required />
         </Field>

@@ -19,7 +19,8 @@ export default function ProfileAuditConsentCard({ profile, kind, onUpdated }) {
     try {
       const response = await base44.functions.invoke(kind === 'staff' ? 'staffAuditConsent' : 'participantAuditConsent', { [kind === 'staff' ? 'staff_id' : 'participant_id']: profile.id, consent: value, reason });
       if (response.data?.error) throw new Error(response.data.error);
-      await onUpdated();
+      const updated = await base44.entities[kind === 'staff' ? 'StaffProfile' : 'ParticipantProfile'].get(profile.id);
+      await onUpdated?.(updated);
       setReason('');
       toast({ title: 'Audit consent recorded' });
     } catch (error) { toast({ title: 'Could not record consent', description: error.message, variant: 'destructive' }); }

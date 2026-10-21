@@ -81,6 +81,7 @@ export default function RiskSubmitPortal() {
     <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Report a Risk"
+        showCompliance={me?.role !== 'Employee'} showAudit={me?.role !== 'Employee'} showAlerts={me?.role !== 'Employee'}
         subtitle="A simple form for staff to report a risk, hazard or near miss. Every submission goes straight to the Risk Register for assessment."
       />
 

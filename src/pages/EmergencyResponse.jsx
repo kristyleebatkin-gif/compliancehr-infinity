@@ -94,7 +94,8 @@ export default function EmergencyResponse({ embedded = false } = {}) {
       {!embedded && <PageHeader
         icon={Siren}
         title="Emergency Response"
-        subtitle="Fire and evacuation readiness, safety checks, emergency documents, visitors and resources."
+        showCompliance={!employee} showAudit={!employee} showAlerts={!employee}
+        subtitle={employee ? 'Your emergency drill and safety-check records.' : 'Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.'}
         action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
       />}
 
@@ -136,7 +137,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
           {!employee && <TabsTrigger value="visitors">Visitor log</TabsTrigger>}
           <TabsTrigger value="resources">Resources &amp; links</TabsTrigger>
           <TabsTrigger value="alerts">Live alerts &amp; warnings</TabsTrigger>
-          <TabsTrigger value="capture">Field capture</TabsTrigger>
+          {!employee && <TabsTrigger value="capture">Field capture</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="drills" className="mt-4 space-y-4">
@@ -208,7 +209,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         {!employee && <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>}
         <TabsContent value="resources" className="mt-4"><EmergencyResources /></TabsContent>
         <TabsContent value="alerts" className="mt-4"><LiveAlerts /></TabsContent>
-        <TabsContent value="capture" className="mt-4"><OfflineFieldCapture /></TabsContent>
+        {!employee && <TabsContent value="capture" className="mt-4"><OfflineFieldCapture /></TabsContent>}
       </Tabs>
     </div>
   );

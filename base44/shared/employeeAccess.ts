@@ -1,6 +1,7 @@
 import { hasApprovedAccess } from './appAccess.ts';
 
 export async function requireEmployee(base44) {
+  if (!await base44.auth.isAuthenticated()) throw new Error('Sign in to continue.');
   const user = await base44.auth.me();
   if (!user?.email || user.role !== 'Employee' || !hasApprovedAccess(user)) throw new Error('Active Employee access is required.');
   return user;

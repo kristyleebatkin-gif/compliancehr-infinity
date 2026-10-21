@@ -15,20 +15,28 @@ const TYPES = ['Progress Note', 'Progress Report'];
 export default function GoalNotes({ goal, participantName, readOnly = false, api = base44.entities.GoalProgressNote }) {
   const { toast } = useToast();
   const [entries, setEntries] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [nextCursor, setNextCursor] = useState(null);
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [file, setFile] = useState(null);
   const [form, setForm] = useState({ entry_type: 'Progress Note', notes: '' });
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (cursor = null) => {
     if (!goal?.id) return;
-    setLoading(true);
+    setLoading(true); setError('');
     try {
-      const page = await api.filter({ goal_id: goal.id }, { sort: '-created_date', limit: 50 });
-      setEntries(page.items);
-    } catch (error) {
-      console.error(error);
+      const [page, count] = await Promise.all([
+        api.filter({ goal_id: goal.id }, { sort: '-created_date', limit: 50, cursor }),
+        api.count({ goal_id: goal.id }),
+      ]);
+      setEntries((current) => cursor ? [...current, ...page.items] : page.items);
+      setTotal(count);
+      setNextCursor(page.has_more ? page.next_cursor : null);
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setLoading(false);
     }
@@ -99,7 +107,7 @@ export default function GoalNotes({ goal, participantName, readOnly = false, api
     <div className="rounded-xl border border-border/60 bg-muted/30 p-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2 text-xs font-semibold text-muted-foreground">
-          <FileText className="h-3.5 w-3.5" /> Progress notes &amp; reports ({entries.length})
+          <FileText className="h-3.5 w-3.5" /> Progress notes &amp; reports ({total})
         </div>
         {!readOnly && (
           <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setOpen(true)}>
@@ -108,6 +116,7 @@ export default function GoalNotes({ goal, participantName, readOnly = false, api
         )}
       </div>
 
+      {error && <p role="alert" className="mt-2 text-xs text-destructive">{error}<Button variant="outline" size="sm" onClick={() => load()}>Retry</Button></p>}
       {loading ? (
         <div className="py-3 text-center"><Loader2 className="mx-auto h-4 w-4 animate-spin text-muted-foreground" /></div>
       ) : entries.length === 0 ? (
@@ -144,6 +153,7 @@ export default function GoalNotes({ goal, participantName, readOnly = false, api
         </div>
       )}
 
+      {nextCursor && <Button variant="outline" size="sm" disabled={loading} onClick={() => load(nextCursor)}>Load more progress entries</Button>}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader><DialogTitle>Add progress entry</DialogTitle></DialogHeader>
@@ -156,7 +166,7 @@ export default function GoalNotes({ goal, participantName, readOnly = false, api
             </div>
             <div className="grid gap-1.5"><Label>Notes</Label><Textarea rows={4} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Progress observed, barriers, next steps..." /></div>
             <div className="grid gap-1.5">
-              <Label>Attach report or note (optional)</Label>
+              <Label>Attach report or note (optional, stored privately)</Label>
               <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border px-3 py-2.5 text-sm font-medium text-foreground/70 hover:bg-muted">
                 {file ? file.name : <><UploadCloud className="h-4 w-4" />Choose file (PDF, Word, image...)</>}
                 <input type="file" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />

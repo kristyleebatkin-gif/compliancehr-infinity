@@ -15,7 +15,7 @@ import { ROLES } from '@/lib/roles';
 export default function IncidentDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { role } = useRole();
+  const { role, user } = useRole();
   const canReview = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER].includes(role);
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ export default function IncidentDetail() {
 
   return (
     <div className="compact-module mx-auto max-w-4xl p-3 space-y-3">
-      <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> All Incidents</Link>
+      <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> {user?.role === 'Employee' ? 'My Incidents' : 'All Incidents'}</Link>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="gradient-brand flex-1 rounded-2xl p-4 text-primary-foreground">
@@ -116,7 +116,7 @@ export default function IncidentDetail() {
 
       {/* Investigation & Follow-up */}
       {canReview && <IncidentFollowUp incident={item} />}
-      <IncidentImprovementLink incident={item} canEdit={canReview} />
+      {user?.role !== 'Employee' && <IncidentImprovementLink incident={item} canEdit={canReview} />}
     </div>
   );
 }

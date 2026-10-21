@@ -81,6 +81,7 @@ export default function StaffIncidentPortal() {
     <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Report an Incident"
+        showCompliance={me?.role !== 'Employee'} showAudit={me?.role !== 'Employee'} showAlerts={me?.role !== 'Employee'}
         subtitle="A simple form for staff to report what happened. Every submission goes straight to the Incident register for follow-up."
       />
 
