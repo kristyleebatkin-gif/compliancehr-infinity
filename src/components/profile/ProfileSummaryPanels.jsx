@@ -3,6 +3,7 @@ import ProfileAboutMeEditor from '@/components/profile/ProfileAboutMeEditor';
 import ProfileDetailsCheck from '@/components/profile/ProfileDetailsCheck';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
+import EmployeeRecordNotice from '@/components/profile/EmployeeRecordNotice';
 import StaffProfileQuestionForm from '@/components/profile/StaffProfileQuestionForm';
 import EmployeeJourney from '@/components/profile/EmployeeJourney';
 import EmployeeRemainingSections from '@/components/profile/EmployeeRemainingSections';
@@ -22,6 +23,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><StaffCommPanel staff={profile} /></EmployeeProfileSection>
       <ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} compact />
+      <EmployeeRecordNotice />
       <ProfileDetailsCheck profile={profile} />
     </aside>
   </div>;
