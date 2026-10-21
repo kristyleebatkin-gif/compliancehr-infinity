@@ -61,6 +61,7 @@ export default function IncidentLog() {
 
   return (
     <SectionCard
+      collapsible
       title="Incident Log"
       description="Past incident reports filtered by date and severity"
       action={

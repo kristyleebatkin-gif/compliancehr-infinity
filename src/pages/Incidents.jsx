@@ -207,7 +207,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   };
 
   return (
-    <div className="compact-module mx-auto max-w-7xl px-3 py-3 space-y-3">
+    <div className="safety-workspace mx-auto min-w-0 max-w-7xl space-y-4">
       {!embedded && <PageHeader
         title="Incident Clinic"
         subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
@@ -250,6 +250,8 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
       {/* Incident Register */}
       <SectionCard
         id="incident-register"
+        collapsible
+        defaultOpen
         title="Incident Register"
         description="All reported incidents"
         action={
@@ -358,6 +360,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
 
       {/* Investigation Register */}
       {canReview && <SectionCard
+        collapsible
         title="Investigation Register"
         description="All incident investigations"
         action={

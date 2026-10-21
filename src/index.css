@@ -28,7 +28,7 @@
     --header-foreground: 0 0% 100%;
     --payroll: 160 84% 32%;
     --header-blue: 221 83% 53%;
-    --header-pink: 330 81% 60%;
+    --header-pink: 330 81% 44%;
     --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(var(--brand)) 52%, hsl(var(--header-pink)) 100%);
     --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .16), hsl(var(--brand) / .18) 52%, hsl(var(--header-pink) / .14));
     --brand: 262 83% 58%;
@@ -93,7 +93,7 @@
     --header-foreground: 0 0% 100%;
     --payroll: 160 70% 55%;
     --header-blue: 221 83% 53%;
-    --header-pink: 330 81% 60%;
+    --header-pink: 330 81% 44%;
     --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(262 83% 58%) 52%, hsl(var(--header-pink)) 100%);
     --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .2), hsl(var(--brand) / .22) 52%, hsl(var(--header-pink) / .18));
     --brand: 262 83% 66%;

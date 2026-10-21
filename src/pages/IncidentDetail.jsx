@@ -11,6 +11,7 @@ import IncidentPhotos from '@/components/incidents/IncidentPhotos';
 import { ArrowLeft, Pencil, Trash2, Search } from 'lucide-react';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
+import RecordResponseEditor from '@/components/safety/RecordResponseEditor';
 
 export default function IncidentDetail() {
   const { id } = useParams();
@@ -44,7 +45,7 @@ export default function IncidentDetail() {
   const followUpLate = item.five_day_follow_up_due && !item.five_day_follow_up_submitted && item.five_day_follow_up_due < new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="compact-module mx-auto max-w-4xl p-3 space-y-3">
+    <div className="safety-workspace mx-auto min-w-0 max-w-4xl space-y-4">
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> {user?.role === 'Employee' ? 'My Incidents' : 'All Incidents'}</Link>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -99,20 +100,7 @@ export default function IncidentDetail() {
         {item.reportability_decision_reasons && <p className="mt-4 whitespace-pre-wrap text-sm text-foreground/70">{item.reportability_decision_reasons}</p>}
       </SectionCard>}
 
-      {item.description && (
-        <SectionCard title="Description">
-          <p className="whitespace-pre-wrap text-sm text-foreground/70">{item.description}</p>
-        </SectionCard>
-      )}
-
-      {item.immediate_actions && (
-        <SectionCard title="Immediate Actions Taken">
-          <p className="whitespace-pre-wrap text-sm text-foreground/70">{item.immediate_actions}</p>
-        </SectionCard>
-      )}
-      {item.hazards_identified && <SectionCard title="Risks / Hazards Identified"><p className="whitespace-pre-wrap text-sm text-foreground/70">{item.hazards_identified}</p></SectionCard>}
-      {item.risk_assessment && <SectionCard title="Risk Assessment"><p className="whitespace-pre-wrap text-sm text-foreground/70">{item.risk_assessment}</p></SectionCard>}
-      {item.control_measures && <SectionCard title="Control Measures"><p className="whitespace-pre-wrap text-sm text-foreground/70">{item.control_measures}</p></SectionCard>}
+      {[['description', 'Description'], ['immediate_actions', 'Immediate Actions Taken'], ['hazards_identified', 'Risks / Hazards Identified'], ['risk_assessment', 'Risk Assessment'], ['control_measures', 'Control Measures']].map(([field, label]) => (item[field] || canReview) && <SectionCard key={field} title={label}><RecordResponseEditor entity="Incident" record={item} field={field} label={label} canEdit={canReview} onSaved={load} /></SectionCard>)}
 
       {/* Investigation & Follow-up */}
       {canReview && <IncidentFollowUp incident={item} />}

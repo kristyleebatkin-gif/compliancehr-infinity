@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import SectionCard from '@/components/SectionCard';
+import Container from '@/components/safety/TakeFiveContainer';
 import EmptyState from '@/components/EmptyState';
 import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
 import { ClipboardCheck, Plus, Download } from 'lucide-react';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import { downloadCsv } from '@/lib/csvExport';
 import { TAKE5_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
+import TakeFiveRecords from '@/components/safety/TakeFiveRecords';
+import { useRole } from '@/lib/useRole';
 
 const blank = (meetingType = '', meeting = {}, kind = 'take-five') => ({
   assessment_id: `${kind === 'risk-assessment' ? 'RA' : 'T5'}-${Date.now().toString().slice(-8)}`,
@@ -33,6 +35,9 @@ const blank = (meetingType = '', meeting = {}, kind = 'take-five') => ({
 
 export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCreateButton = true, openRequest = 0, embedded = false }) {
   const { toast } = useToast();
+  const { user } = useRole();
+  const canEdit = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Support Worker'].includes(user?.role);
+  const [editingId, setEditingId] = useState(null);
   const [items, setItems] = useState([]);
   const [form, setForm] = useState(null);
   const [formKind, setFormKind] = useState('take-five');
@@ -49,12 +54,14 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
   useEffect(() => { load(); }, [toolboxOnly]);
   useEffect(() => {
     if (openRequest > 0) {
+      setEditingId(null);
       setFormKind('take-five');
       setForm(blank(toolboxOnly ? 'Toolbox Meeting' : '', meeting));
     }
   }, [meeting, openRequest, toolboxOnly]);
 
   const openForm = (kind) => {
+    setEditingId(null);
     setFormKind(kind);
     setForm(blank(toolboxOnly ? 'Toolbox Meeting' : '', meeting, kind));
   };
@@ -63,14 +70,16 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
     event.preventDefault();
     setSaving(true);
     try {
-      const record = await base44.entities.TakeFive.create(form);
-      const result = await recordSafetyEvent('TakeFive', record.id);
+      const payload = Object.fromEntries(Object.keys(blank()).map((key) => [key, form[key]]));
+      const record = editingId ? await base44.entities.TakeFive.update(editingId, payload) : await base44.entities.TakeFive.create(payload);
+      const result = await recordSafetyEvent('TakeFive', record.id, editingId ? { notify: false } : undefined);
       toast({
-        title: formKind === 'risk-assessment' ? 'Risk assessment recorded' : 'Take Five assessment recorded',
-        description: result.email_failures?.length ? `${result.email_failures.length} administrator email(s) failed.` : 'Administrators were notified and emailed.',
+        title: editingId ? 'Assessment responses updated' : formKind === 'risk-assessment' ? 'Risk assessment recorded' : 'Take Five assessment recorded',
+        description: result.email_failures?.length ? `${result.email_failures.length} administrator email(s) failed.` : editingId ? 'Your changes have been saved.' : 'Administrators were notified and emailed.',
         variant: result.email_failures?.length ? 'destructive' : undefined,
       });
       setForm(null);
+      setEditingId(null);
       load();
     } catch (error) {
       toast({ title: 'Unable to save Take Five', description: error.message, variant: 'destructive' });
@@ -85,25 +94,11 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
     toast({ title: 'Take Five register exported' });
   };
 
-  const Container = embedded
-    ? ({ title, description, action, children }) => (
-      <div className="border-b border-border/60 py-5">
-        <div className="mb-3 flex items-start justify-between gap-3">
-          <div>
-            <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-            <p className="text-xs text-foreground/50">{description}</p>
-          </div>
-          {action}
-        </div>
-        {children}
-      </div>
-    )
-    : SectionCard;
 
   return (
-    <Container title={toolboxOnly ? 'Toolbox Take Five Risk Assessment Log' : 'Take Five Assessment Register'} description="Complete a quick pre-task risk assessment; saving updates the register and alerts administrators." action={<div className="flex flex-wrap items-center gap-2">{showCreateButton && !form && (<><button onClick={() => openForm('take-five')} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3 py-1.5 text-xs font-semibold text-slate-900 hover:bg-yellow-500"><Plus className="h-3.5 w-3.5" />New Take Five</button><button onClick={() => openForm('risk-assessment')} className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"><Plus className="h-3.5 w-3.5" />New Risk Assessment</button></>)}<button onClick={exportRegister} className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold hover:bg-muted"><Download className="h-3.5 w-3.5 text-brand" />Export CSV</button></div>}>
+    <Container embedded={embedded} title={toolboxOnly ? 'Toolbox Take Five Risk Assessment Log' : 'Take Five Assessment Register'} description="Complete a quick pre-task risk assessment; saving updates the register and alerts administrators." action={<div className="flex flex-wrap items-center gap-2">{showCreateButton && !form && (<><button onClick={() => openForm('take-five')} className="flex items-center gap-1.5 rounded-lg bg-yellow-400 px-3 py-1.5 text-xs font-semibold text-slate-900 hover:bg-yellow-500"><Plus className="h-3.5 w-3.5" />New Take Five</button><button onClick={() => openForm('risk-assessment')} className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"><Plus className="h-3.5 w-3.5" />New Risk Assessment</button></>)}<button onClick={exportRegister} className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold hover:bg-muted"><Download className="h-3.5 w-3.5 text-brand" />Export CSV</button></div>}>
       {form && <form onSubmit={save} className={`mb-5 space-y-3 rounded-xl border p-4 ${formKind === 'risk-assessment' ? 'border-red-400/60 bg-red-50/40 dark:border-red-500/30 dark:bg-red-500/10' : 'border-yellow-400/60 bg-yellow-50/40 dark:border-yellow-500/30 dark:bg-yellow-500/10'}`}>
-        <h3 className="font-semibold">{formKind === 'risk-assessment' ? 'New Risk Assessment' : 'New Take Five'}</h3>
+        <h3 className="font-semibold">{editingId ? 'Edit assessment responses' : formKind === 'risk-assessment' ? 'New Risk Assessment' : 'New Take Five'}</h3>
         <div className="grid gap-3 sm:grid-cols-2">
           {toolboxOnly && <Field label="Meeting ID"><TextInput value={form.meeting_id} onChange={(e) => set('meeting_id', e.target.value)} /></Field>}
           {toolboxOnly && <Field label="Meeting Title"><TextInput value={form.meeting_title} onChange={(e) => set('meeting_title', e.target.value)} /></Field>}
@@ -129,7 +124,7 @@ export default function TakeFiveRegister({ toolboxOnly = false, meeting, showCre
         </div>
         <div className="flex justify-end gap-2"><button type="button" onClick={() => setForm(null)} className="rounded-lg border border-border px-4 py-2 text-sm">Cancel</button><button type="submit" disabled={saving} className={`rounded-lg px-4 py-2 text-sm font-semibold disabled:opacity-60 ${formKind === 'risk-assessment' ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-yellow-400 text-slate-900 hover:bg-yellow-500'}`}>{saving ? 'Saving...' : formKind === 'risk-assessment' ? 'Save Risk Assessment' : 'Save Take Five'}</button></div>
       </form>}
-      {items.length === 0 ? <EmptyState icon={ClipboardCheck} title="No Take Five assessments recorded" /> : <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="border-b border-border/60 text-left text-xs text-foreground/50"><th className="px-3 py-2">Task</th><th className="px-3 py-2">Worker</th><th className="px-3 py-2">Date</th><th className="px-3 py-2">Risk</th><th className="px-3 py-2">Safe to proceed</th></tr></thead><tbody>{items.map((item) => <tr key={item.id} className="border-b border-border/40"><td className="px-3 py-2.5 font-medium">{item.task}</td><td className="px-3 py-2.5">{item.worker_name || '—'}</td><td className="px-3 py-2.5">{item.assessment_date}</td><td className="px-3 py-2.5">{item.risk_rating}</td><td className="px-3 py-2.5">{item.safe_to_proceed ? 'Yes' : 'No'}</td></tr>)}</tbody></table></div>}
+      {items.length === 0 ? <EmptyState icon={ClipboardCheck} title="No Take Five assessments recorded" /> : <TakeFiveRecords items={items} onEdit={canEdit ? (item) => { setEditingId(item.id); setFormKind(item.assessment_id?.startsWith('RA-') ? 'risk-assessment' : 'take-five'); setForm({ ...blank(), ...item }); } : undefined} />}
     </Container>
   );
 }

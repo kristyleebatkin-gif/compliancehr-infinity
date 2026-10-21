@@ -193,7 +193,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   });
 
   return (
-    <div className="compact-module mx-auto max-w-6xl p-3 space-y-3">
+    <div className="safety-workspace mx-auto min-w-0 max-w-6xl space-y-4">
       {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
 
       <RegisterInsights module="risks" />
@@ -256,6 +256,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
 
       {/* Hazard Register - live updates as hazards are entered */}
       <SectionCard
+        collapsible
         title="Hazard Register"
         description="Hazards reported via the Report Hazard button"
         action={
@@ -356,6 +357,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       {/* Risk register */}
       <SectionCard
         id="risk-register"
+        collapsible
         title="Risk Register"
         description={`Displaying ${filteredRisks.length} of ${risks.length} risk reports`}
         action={(
@@ -460,6 +462,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
 
       {/* Staff Training & Compliance Controls */}
       <SectionCard
+        collapsible
         title="Staff Training & Compliance Controls"
         description="Training and compliance controls recorded against each risk"
         action={

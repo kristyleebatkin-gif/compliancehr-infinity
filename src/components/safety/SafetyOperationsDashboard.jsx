@@ -4,9 +4,12 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AlertTriangle, FileSearch, ClipboardList, ChevronRight, CircleAlert, Filter } from 'lucide-react';
+import { AlertTriangle, FileSearch, ClipboardList, CircleAlert, Filter } from 'lucide-react';
 import { isOpenIncident } from '@/lib/safetyFilters';
 import { format } from 'date-fns';
+import SectionCard from '@/components/SectionCard';
+import Tile from '@/components/safety/SafetyOperationTile';
+import Row from '@/components/safety/SafetyOperationRow';
 
 // Shift buckets derived from the incident's time_occurred (same convention as the SafetyHeatmap)
 const SHIFT_BUCKETS = [
@@ -37,23 +40,6 @@ const severityTone = {
   High: 'border-transparent bg-orange-500/10 text-orange-600 dark:text-orange-300',
   Critical: 'border-transparent bg-destructive/10 text-destructive',
 };
-
-const Tile = ({ icon: Icon, label, count, urgent, to, tone }) => (
-  <Card>
-    <CardContent className="p-4">
-      <Link to={to} className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${tone}`}><Icon className="h-5 w-5" /></span>
-          <div>
-            <p className="text-xs font-semibold text-foreground/50">{label}</p>
-            <p className="text-2xl font-bold leading-none">{count}</p>
-          </div>
-        </div>
-        {urgent > 0 && <Badge className="border-transparent bg-destructive/10 text-destructive">{urgent} urgent</Badge>}
-      </Link>
-    </CardContent>
-  </Card>
-);
 
 export default function SafetyOperationsDashboard() {
   const [incidents, setIncidents] = useState([]);
@@ -103,26 +89,9 @@ export default function SafetyOperationsDashboard() {
     );
   }
 
-  const Row = ({ to, primary, secondary, badge, alert }) => (
-    <Link to={to} className={`flex items-center justify-between gap-2 rounded-lg border border-border/60 p-2.5 hover:bg-accent ${alert ? 'bg-destructive/5 ring-1 ring-destructive/30' : ''}`}>
-      <div className="min-w-0">
-        <p className="truncate text-sm font-medium">{primary}</p>
-        <p className="truncate text-[11px] text-muted-foreground">{secondary}</p>
-      </div>
-      <div className="flex shrink-0 items-center gap-1.5">
-        {badge}
-        <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
-      </div>
-    </Link>
-  );
-
   return (
-    <Card>
-      <CardContent className="p-4 space-y-4">
-        <div>
-          <h3 className="text-base font-bold">Safety Operations Dashboard</h3>
-          <p className="text-xs text-muted-foreground">Everything in the safety section that needs attention right now</p>
-        </div>
+    <SectionCard title="Safety Operations Dashboard" description="Everything in the safety section that needs attention right now" className="safety-operations-dashboard">
+      <div className="space-y-5">
 
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 bg-muted/40 p-2.5">
           <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-foreground/50"><Filter className="h-3.5 w-3.5" /> Filter incidents</span>
@@ -147,14 +116,14 @@ export default function SafetyOperationsDashboard() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300" />
-          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300" />
-          <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="bg-teal-100 text-teal-600 dark:bg-teal-500/15 dark:text-teal-300" />
+          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="danger" />
+          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="primary" />
+          <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="teal" />
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-3">
-          <div className="space-y-2">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-foreground/50">Active incidents</p>
+        <div className="safety-operations-lists grid items-start gap-4 lg:grid-cols-3">
+          <details open className="space-y-2">
+            <summary>Active incidents</summary>
             {filteredIncidents.length === 0 ? <p className="text-xs text-muted-foreground">{incidents.length === 0 ? 'No active incidents.' : 'No incidents match the selected filters.'}</p> : filteredIncidents.slice(0, 5).map((inc) => (
               <Row
                 key={inc.id}
@@ -166,10 +135,10 @@ export default function SafetyOperationsDashboard() {
               />
             ))}
             {filteredIncidents.length > 5 && <Link to="/incidents" className="text-xs font-semibold text-brand hover:underline">View all {filteredIncidents.length} →</Link>}
-          </div>
+          </details>
 
-          <div className="space-y-2">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-foreground/50">Current investigations</p>
+          <details open className="space-y-2">
+            <summary>Current investigations</summary>
             {investigations.length === 0 ? <p className="text-xs text-muted-foreground">No open investigations.</p> : investigations.slice(0, 5).map((inv) => (
               <Row
                 key={inv.id}
@@ -181,10 +150,10 @@ export default function SafetyOperationsDashboard() {
               />
             ))}
             {investigations.length > 5 && <Link to="/incidents" className="text-xs font-semibold text-brand hover:underline">View all {investigations.length} →</Link>}
-          </div>
+          </details>
 
-          <div className="space-y-2">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-foreground/50">Pending checklists</p>
+          <details open className="space-y-2">
+            <summary>Pending checklists</summary>
             {checklists.length === 0 ? <p className="text-xs text-muted-foreground">All checklists complete.</p> : checklists.slice(0, 5).map((c) => {
               const done = (c.items || []).filter((i) => i.done).length;
               return (
@@ -199,9 +168,9 @@ export default function SafetyOperationsDashboard() {
               );
             })}
             {checklists.length > 5 && <Link to="/checklists" className="text-xs font-semibold text-brand hover:underline">View all {checklists.length} →</Link>}
-          </div>
+          </details>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </SectionCard>
   );
 }

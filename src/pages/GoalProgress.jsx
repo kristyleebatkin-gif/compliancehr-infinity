@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Plus, Target, Users, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { useRole } from '@/lib/useRole';
@@ -118,14 +118,12 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
   };
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-4' : 'mx-auto w-full min-w-0 max-w-6xl space-y-4 p-3 md:p-4'}>
-      {!embedded && <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} />}
+    <div className={embedded ? 'goals-workspace min-w-0 space-y-2' : 'goals-workspace mx-auto w-full min-w-0 max-w-6xl space-y-2'}>
+      {!embedded && <PageHeader icon={Target} title="Goal Progress" subtitle="Participant goals, progress notes and reports." showAlerts={false} beforeAudit={activeTab !== 'staff' && <Button className="goals-header-action" disabled={role === ROLES.PARTICIPANT} onClick={() => setOpen(true)}><Plus />New goal</Button>} afterAudit={activeTab !== 'staff' && <Button className="goals-header-action" variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download />Export register</Button>} />}
 
       <RegisterInsights module="goals" />
-      {activeTab !== 'staff' && <div className="flex flex-wrap items-center justify-end gap-2 rounded-xl border border-border/70 bg-card p-3 shadow-sm">
-        <Button variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button disabled={role === ROLES.PARTICIPANT}><Plus className="mr-2 h-4 w-4" /> New goal</Button></DialogTrigger>
+      {embedded && activeTab !== 'staff' && <div className="module-action-bar flex flex-wrap gap-1"><Button className="goals-header-action" disabled={role === ROLES.PARTICIPANT} onClick={() => setOpen(true)}><Plus />New goal</Button><Button className="goals-header-action" variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download />Export register</Button></div>}
+      {activeTab !== 'staff' && <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="max-h-[85dvh] overflow-y-auto">
             <DialogHeader><DialogTitle>New goal</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -157,8 +155,7 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
               <Button onClick={save} disabled={saving}>Save goal</Button>
             </div>
           </DialogContent>
-        </Dialog>
-      </div>}
+        </Dialog>}
 
       {loading && activeTab !== 'staff' ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
@@ -177,7 +174,7 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
             {goals.length === 0 ? (
               <EmptyState icon={Target} modulePath="/goals" title="No goals recorded yet" message="Add your first goal to start tracking progress." />
             ) : (
-              <div className="grid min-w-0 items-start gap-3 xl:grid-cols-2">
+              <div className="grid min-w-0 items-start gap-2 md:grid-cols-2">
                 {goals.map((g) => <GoalCard key={g.id} g={g} isAdmin={isAdmin} ourView={ourView} onProgress={setProgress} onApprove={approveGoal} onDelete={deleteGoal} />)}
               </div>
             )}
@@ -187,7 +184,7 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
             {participants.length === 0 ? (
               <EmptyState icon={Target} modulePath="/goals" title="No goals recorded yet" message="Add your first goal to start tracking progress." />
             ) : (
-              <div className="grid min-w-0 items-start gap-3 xl:grid-cols-2">
+              <div className="grid min-w-0 items-start gap-2 md:grid-cols-2">
                 {participants.map((p) => (
                   <Card key={p.name} className="min-w-0 rounded-xl border-border/70 shadow-sm">
                     <CardContent className="p-2.5">

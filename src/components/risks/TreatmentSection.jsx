@@ -34,6 +34,7 @@ export default function TreatmentSection({ type, title, description, field, risk
 
   return (
     <SectionCard
+      collapsible
       title={title}
       description={description}
       action={

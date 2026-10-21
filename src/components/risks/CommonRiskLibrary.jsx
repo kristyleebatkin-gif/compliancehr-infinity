@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import SectionCard from '@/components/SectionCard';
-import { AlertTriangle, Phone, Plus, Users } from 'lucide-react';
+import { AlertTriangle, Phone, Users } from 'lucide-react';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
+import EditableSafetyText from '@/components/safety/EditableSafetyText';
+import CommonRiskEntry from '@/components/risks/CommonRiskEntry';
 
 // Common risks for each group in an NDIS disability support business.
 // "Add" writes the risk straight into the Risk Register so nothing is missed.
@@ -61,7 +63,7 @@ export const COMMON_RISK_GROUPS = [
       { title: 'Allergy and anaphylaxis', category: 'Clinical', likelihood: 'Possible', consequence: 'Severe', description: 'Severe allergic reaction to food, stings or medications.\nWhat to do: know the allergy plan, carry the adrenaline auto-injector, call 000 immediately for anaphylaxis.' },
       { title: 'Playground and play-equipment falls', category: 'Participant', likelihood: 'Likely', consequence: 'Minor', description: 'Falls from heights during play.\nWhat to do: supervise, soft-fall surfaces, age-appropriate equipment, first aid for injuries.' },
       { title: 'Driveway and road safety', category: 'Participant', likelihood: 'Possible', consequence: 'Severe', description: 'Children near vehicles at home or during outings.\nWhat to do: hold hands near roads, separate play from driveways, reverse-parking checks, child restraints always.' },
-      { title: 'Drowning and water play', category: 'Participant', likelihood: 'Unlikely', consequence: 'Severe', description: 'Pools, baths, dams and buckets are a drowning risk for children.\nWhat to do: constant within-arm&apos;s-reach supervision, fenced pools, empty buckets, know CPR. Call 000 immediately.' },
+      { title: 'Drowning and water play', category: 'Participant', likelihood: 'Unlikely', consequence: 'Severe', description: 'Pools, baths, dams and buckets are a drowning risk for children.\nWhat to do: constant within-arm\'s-reach supervision, fenced pools, empty buckets, know CPR. Call 000 immediately.' },
       { title: 'Child-safe supervision gaps', category: 'Compliance', likelihood: 'Unlikely', consequence: 'Severe', description: 'A child left unsupervised or with an unscreened adult.\nWhat to do: follow the child-safe policy, verified worker screening, never leave a child alone, hand over to a documented adult only.' },
       { title: 'Sleep and nap safety', category: 'Participant', likelihood: 'Unlikely', consequence: 'Severe', description: 'Unsafe sleep environments increase risk for young children.\nWhat to do: follow safe sleep guidance, correct cot setup, regular checks, no soft bedding.' },
     ],
@@ -104,38 +106,20 @@ export default function CommonRiskLibrary({ onAdded }) {
       <div className="rounded-2xl border border-red-300 bg-red-50 p-5 dark:border-red-500/30 dark:bg-red-500/10">
         <p className="flex items-center gap-2 text-sm font-bold text-red-700 dark:text-red-300"><AlertTriangle className="h-4 w-4" />Risk management - what to do</p>
         <ul className="mt-2 space-y-1 text-sm text-red-700/90 dark:text-red-300/90">
-          <li>Serious or emergency risk: call <a href="tel:000" className="inline-flex items-center gap-1 font-bold underline"><Phone className="inline h-3 w-3" />000</a> immediately, then contact provider admin or management.</li>
-          <li>Every shift, do a quick hazard scan of the environment and the people you support - if a hazard or risk is missing from the register, report it the same day with the Report Hazard button above.</li>
-          <li>Common risks for each group are listed below - add any that apply to your work so they are assessed, controlled and reviewed.</li>
-          <li>Controlled risks are reviewed on their review date; anything High or Critical is escalated to management straight away.</li>
+          {['Serious or emergency risk: call 000 immediately, then contact provider admin or management.', 'Every shift, do a quick hazard scan of the environment and the people you support - if a hazard or risk is missing from the register, report it the same day with the Report Hazard button above.', 'Common risks for each group are listed below - add any that apply to your work so they are assessed, controlled and reviewed.', 'Controlled risks are reviewed on their review date; anything High or Critical is escalated to management straight away.'].map((text, index) => <li key={index}><EditableSafetyText module="risks" guidanceKey={`procedure-${index}`} defaultText={text} /></li>)}
+          <li><a href="tel:000" className="inline-flex items-center gap-1 font-bold underline"><Phone className="h-3 w-3" />Call 000</a></li>
         </ul>
       </div>
 
-      <SectionCard title="Common Risks &amp; Hazards Library" description="Pre-written risks for support workers, the office team, participants and children. Add any that apply - they land in the Risk Register ready for assessment and controls.">
+      <SectionCard collapsible title="Common Risks &amp; Hazards Library" description="Pre-written risks for support workers, the office team, participants and children. Add any that apply - they land in the Risk Register ready for assessment and controls.">
         <div className="grid gap-4 md:grid-cols-2">
           {COMMON_RISK_GROUPS.map((group) => (
-            <div key={group.group} className="rounded-xl border border-border/60 p-4">
-              <p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Users className={`h-4 w-4 ${group.tone.split(' ')[1]}`} />{group.group}</p>
+            <details key={group.group} className={`self-start rounded-xl border border-border/60 p-4 ${group.tone}`}>
+              <summary className="mb-2 cursor-pointer text-sm font-semibold">{group.group}</summary>
               <div className="space-y-2">
-                {group.risks.map((risk) => (
-                  <div key={risk.title} className="rounded-lg bg-muted/40 p-2.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="text-xs font-semibold">{risk.title}</p>
-                        <p className="mt-0.5 line-clamp-2 text-[11px] text-muted-foreground">{risk.description.split('\n')[0]}</p>
-                      </div>
-                      <button
-                        onClick={() => add(group.group, risk)}
-                        disabled={adding === `${group.group}-${risk.title}`}
-                        className="flex shrink-0 items-center gap-1 rounded-lg bg-brand/10 px-2 py-1 text-[11px] font-semibold text-brand hover:bg-brand/20 disabled:opacity-50"
-                      >
-                        <Plus className="h-3 w-3" />{adding === `${group.group}-${risk.title}` ? 'Adding...' : 'Add'}
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                {group.risks.map((risk) => <CommonRiskEntry key={risk.title} group={group.group} risk={risk} adding={adding} onAdd={add} />)}
               </div>
-            </div>
+            </details>
           ))}
         </div>
       </SectionCard>

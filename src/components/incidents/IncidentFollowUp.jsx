@@ -6,6 +6,8 @@ import EmptyState from '@/components/EmptyState';
 import { Field } from '@/components/Field';
 import { Plus, CheckCircle2, Circle, Trash2, ListChecks, FileSearch, X } from 'lucide-react';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
+import InvestigationResponseFields from '@/components/incidents/InvestigationResponseFields';
+import IncidentActionEditor from '@/components/incidents/IncidentActionEditor';
 
 const STATUS_OPTIONS = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
 const PRIORITY_OPTIONS = ['Low', 'Medium', 'High', 'Urgent'];
@@ -62,8 +64,8 @@ export default function IncidentFollowUp({ incident }) {
       if (field === 'status' && (value === 'Completed' || value === 'Closed')) {
         await base44.entities.AuditLog.create({ action: 'Update', entity_type: 'Investigation', record_id: inv.id, record_title: inv.title, performed_by: 'ComplianceHR Infinity', details: `Investigation marked ${value}` }).catch((error) => console.error(error));
       }
+      setInvestigations((current) => current.map((item) => item.id === inv.id ? { ...item, [field]: value } : item));
       toast({ title: 'Investigation updated' });
-      load();
     } catch (err) { toast({ title: 'Failed', description: err.message, variant: 'destructive' }); }
   };
 
@@ -155,45 +157,7 @@ export default function IncidentFollowUp({ incident }) {
                     {['Pending', 'In Progress', 'Findings Draft', 'Completed', 'Closed'].map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
-                {inv.root_cause && <div className="mt-3 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Root Cause:</span> <span className="text-foreground/70">{inv.root_cause}</span></div>}
-                {inv.findings && <div className="mt-2 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Findings:</span> <span className="text-foreground/70">{inv.findings}</span></div>}
-                {inv.recommendations && <div className="mt-2 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Recommendations:</span> <span className="text-foreground/70">{inv.recommendations}</span></div>}
-                {inv.hazards_identified && <div className="mt-2 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Risks / Hazards:</span> <span className="text-foreground/70">{inv.hazards_identified}</span></div>}
-                {inv.risk_assessment && <div className="mt-2 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Risk Assessment:</span> <span className="text-foreground/70">{inv.risk_assessment}</span></div>}
-                {inv.control_measures && <div className="mt-2 rounded-lg bg-muted/40 p-2.5 text-xs"><span className="font-semibold">Control Measures:</span> <span className="text-foreground/70">{inv.control_measures}</span></div>}
-                {!closed && (inv.status === 'In Progress' || inv.status === 'Findings Draft' || inv.status === 'Pending') && (
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    <input
-                      placeholder="Root cause summary"
-                      defaultValue={inv.root_cause || ''}
-                      onBlur={(e) => e.target.value !== (inv.root_cause || '') && updateInvestigation(inv, 'root_cause', e.target.value)}
-                      className="rounded-lg border border-input bg-background px-2.5 py-1.5 text-xs focus:border-brand focus:ring-1 focus:ring-brand outline-none"
-                    />
-                    <input
-                      placeholder="Findings summary"
-                      defaultValue={inv.findings || ''}
-                      onBlur={(e) => e.target.value !== (inv.findings || '') && updateInvestigation(inv, 'findings', e.target.value)}
-                      className="rounded-lg border border-input bg-background px-2.5 py-1.5 text-xs focus:border-brand focus:ring-1 focus:ring-brand outline-none"
-                    />
-                    <input
-                      placeholder="Recommendations"
-                      defaultValue={inv.recommendations || ''}
-                      onBlur={(e) => e.target.value !== (inv.recommendations || '') && updateInvestigation(inv, 'recommendations', e.target.value)}
-                      className="rounded-lg border border-input bg-background px-2.5 py-1.5 text-xs focus:border-brand focus:ring-1 focus:ring-brand outline-none"
-                    />
-                    {[
-                      ['incident_summary', 'Incident summary'],
-                      ['evidence_reviewed', 'Evidence reviewed'],
-                      ['persons_interviewed', 'Persons interviewed'],
-                      ['hazards_identified', 'Risks / hazards identified'],
-                      ['risk_assessment', 'Risk assessment'],
-                      ['control_measures', 'Control measures'],
-                      ['corrective_actions', 'Corrective actions'],
-                    ].map(([field, placeholder]) => (
-                      <textarea key={field} placeholder={placeholder} defaultValue={inv[field] || ''} onBlur={(e) => e.target.value !== (inv[field] || '') && updateInvestigation(inv, field, e.target.value)} rows={2} className="rounded-lg border border-input bg-background px-2.5 py-1.5 text-xs focus:border-brand focus:ring-1 focus:ring-brand outline-none" />
-                    ))}
-                  </div>
-                )}
+                <InvestigationResponseFields investigation={inv} onUpdate={updateInvestigation} />
               </div>
             ))}
           </div>
@@ -262,7 +226,8 @@ export default function IncidentFollowUp({ incident }) {
                       <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${a.priority === 'Urgent' ? 'bg-danger/10 text-danger' : a.priority === 'High' ? 'bg-warning/10 text-warning' : 'bg-muted text-foreground/60'}`}>{a.priority}</span>
                       <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${done ? 'bg-safe/10 text-safe' : a.status === 'In Progress' ? 'bg-brand/10 text-brand' : 'bg-muted text-foreground/60'}`}>{a.status}</span>
                     </div>
-                    {a.notes && <div className="mt-1 text-xs text-foreground/50">{a.notes}</div>}
+                    {a.notes && <div className="mt-1 whitespace-pre-wrap text-xs text-foreground/70">{a.notes}</div>}
+                    <IncidentActionEditor action={a} onSaved={load} />
                   </div>
                   {!closed && (
                     <button onClick={() => deleteAction(a)} aria-label="Delete action" className="shrink-0 rounded p-1 text-foreground/30 hover:bg-danger/5 hover:text-danger">

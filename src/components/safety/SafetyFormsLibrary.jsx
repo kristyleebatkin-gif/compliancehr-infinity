@@ -51,7 +51,7 @@ export default function SafetyFormsLibrary({ types = SAFETY_DOCUMENTS.map((docum
   };
 
   return (
-    <SectionCard title="Safety Forms, Uploads & Downloads" description="Download fillable templates or upload completed records. Uploaded records are logged immediately in the appropriate register.">
+    <SectionCard collapsible title="Safety Forms, Uploads & Downloads" description="Download fillable templates or upload completed records. Uploaded records are logged immediately in the appropriate register.">
       <div className="grid gap-3 md:grid-cols-2">
         {forms.map((form) => {
           const completed = documents.filter((document) => document.document_type === form.type);

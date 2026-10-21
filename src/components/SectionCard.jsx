@@ -1,33 +1,37 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { moduleColour } from '@/lib/moduleColours';
 
-export default function SectionCard({ title, description, action, children, className, ...props }) {
+export default function SectionCard({ title, description, action, children, className, collapsible = false, defaultOpen = false, ...props }) {
+  const contentId = useId();
+  const [expanded, setExpanded] = useState(!collapsible || defaultOpen || (props.id && window.location.hash === `#${props.id}`));
+  const panelTone = /investigation|policy/i.test(title || '') ? 'primary' : /incident|hazard|eliminat/i.test(title || '') ? 'danger' : /risk|assessment|isolate/i.test(title || '') ? 'hr-evidence' : /training|compliance|checklist/i.test(title || '') ? 'chart-2' : 'primary';
   const accent = moduleColour(title || 'ComplianceHR');
   const secondary = moduleColour(title || 'ComplianceHR', 2);
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
+        'dashboard-panel relative overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
         className
       )}
-      style={{ boxShadow: `0 1px 2px rgba(15, 23, 42, 0.04), 0 14px 34px -20px ${accent}55` }}
+      style={{ '--panel-tone': `var(--${panelTone})`, boxShadow: `0 1px 2px rgba(15, 23, 42, 0.04), 0 14px 34px -20px ${accent}55` }}
       {...props}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: `linear-gradient(90deg, ${accent}, ${secondary}80, transparent)` }} />
       <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-[0.07] blur-xl" style={{ backgroundColor: secondary }} />
       {(title || action) && (
-        <div className="relative flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-4 py-2.5 sm:px-4" style={{ background: 'var(--section-header-gradient)' }}>
+        <div className="dashboard-panel-header relative flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-4 py-2.5 sm:px-4" style={{ background: 'var(--section-header-gradient)' }}>
           <div className="absolute inset-y-0 left-0 w-[4px] rounded-r" style={{ background: `linear-gradient(180deg, ${accent}, ${secondary})` }} />
           <div className="pointer-events-none absolute inset-y-0 left-4 w-24 opacity-25" style={{ background: `linear-gradient(90deg, ${secondary}30, transparent)` }} />
           <div className="pl-1.5">
-            {title && <div className="text-sm font-extrabold uppercase tracking-wide" style={{ color: 'hsl(var(--foreground))' }}>{title}</div>}
-            {description && <div className="mt-0.5 text-xs font-medium text-foreground/55">{description}</div>}
+            {title && (collapsible ? <button type="button" aria-expanded={expanded} aria-controls={contentId} onClick={() => setExpanded((value) => !value)} className="flex items-start gap-2 text-left text-sm font-extrabold text-foreground"><ChevronDown className={`mt-0.5 h-4 w-4 shrink-0 transition-transform ${expanded ? '' : '-rotate-90'}`} /><span data-panel-title>{title}</span></button> : <div data-panel-title className="break-words text-sm font-extrabold uppercase tracking-wide text-foreground">{title}</div>)}
+            {description && <p className="mt-0.5 break-words text-xs font-medium text-muted-foreground">{description}</p>}
           </div>
           {action}
         </div>
       )}
-      <div className="p-3.5 sm:p-4" style={{ background: `linear-gradient(180deg, ${accent}0a, transparent 36%)` }}>{children}</div>
+      <div id={contentId} hidden={collapsible && !expanded} className="dashboard-panel-body p-3.5 sm:p-4" style={{ background: `linear-gradient(180deg, ${accent}0a, transparent 36%)` }}>{children}</div>
     </div>
   );
 }

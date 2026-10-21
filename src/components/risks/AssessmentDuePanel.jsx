@@ -1,7 +1,8 @@
 import React from 'react';
+import SectionCard from '@/components/SectionCard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, CalendarClock } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 const DAY = 86400000;
 const addMonths = (dateStr, months) => {
@@ -33,9 +34,7 @@ export default function AssessmentDuePanel({ risks, canEdit, onUpdate, onEdit })
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><CalendarClock className="h-4 w-4 text-brand" />Assessment due tracker</div>
-      <p className="mb-4 text-xs text-muted-foreground">Individual risk assessments are due every 3 months and home risk assessments every month. Overdue assessments raise a reminder task automatically (daily automation).</p>
+    <SectionCard collapsible title="Assessment due tracker" description="Individual risk assessments are due every 3 months and home risk assessments every month. Overdue assessments raise a reminder task automatically (daily automation).">
       {scheduled.length === 0 ? (
         <p className="text-sm text-muted-foreground">No scheduled assessments yet. Set an assessment schedule on a risk (edit a risk in the register) and it will appear here.</p>
       ) : (
@@ -45,7 +44,7 @@ export default function AssessmentDuePanel({ risks, canEdit, onUpdate, onEdit })
             return (
               <div key={r.id} className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 px-3 py-2">
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{r.title}</p>
+                  <p className="break-words text-sm font-semibold">{r.title}</p>
                   <p className="text-[11px] text-muted-foreground">
                     {r.assessment_type} assessment · every {r.assessment_type === 'Home' ? 'month' : '3 months'} · last assessed {r.last_assessed_date || 'never'}
                   </p>
@@ -62,6 +61,6 @@ export default function AssessmentDuePanel({ risks, canEdit, onUpdate, onEdit })
           })}
         </div>
       )}
-    </div>
+    </SectionCard>
   );
 }

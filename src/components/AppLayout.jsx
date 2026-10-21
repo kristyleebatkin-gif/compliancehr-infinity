@@ -1,3 +1,4 @@
+import '@/components/dashboard/dashboardWorkspace.css';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
@@ -406,7 +407,7 @@ export default function AppLayout() {
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />
-          <div className="min-w-0 px-3 md:px-0">
+          <div className="app-dashboard-canvas min-w-0">
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>

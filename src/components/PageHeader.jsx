@@ -7,7 +7,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, compactActions = true, showDivider = true, actionClassName }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, afterAudit, compactActions = true, showDivider = true, actionClassName }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   // Header band uses the logo's brand gradient; the module accent stays as a thin identity strip.
@@ -31,7 +31,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       <div className="pointer-events-none absolute left-0 top-0 h-full w-32" style={{ background: `linear-gradient(90deg, ${primary}14, transparent)` }} />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full" style={{ background: `linear-gradient(90deg, ${moduleAccent}, ${moduleAccent}00)` }} />
       <div className="pointer-events-none absolute left-0 top-0 h-[2px] w-2/3" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.7), transparent)' }} />
-      <div className="relative flex items-start gap-3">
+      <div className="relative flex min-w-0 w-full items-start gap-3">
         {Icon && (
           <div
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-white shadow-md ring-1 ring-white/30 transition-transform duration-200 hover:scale-105 sm:h-10 sm:w-10"
@@ -40,7 +40,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
             <Icon className="h-5 w-5" />
           </div>
         )}
-        <div>
+        <div className="min-w-0 flex-1">
           {showDivider && <div className="mb-1.5 h-0.5 w-10 rounded-full bg-white/60 shadow-sm" />}
           <h1 className="font-display text-xl font-bold tracking-tight text-header-foreground sm:text-2xl">{title}</h1>
           {subtitle && <p className="mt-1 max-w-3xl break-words text-[13px] font-medium leading-5 text-header-foreground">{subtitle}</p>}
@@ -57,6 +57,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
               <ModuleAuditButton />
             </div>
           ) : <><ModuleAuditChecklistButton /><ModuleAuditButton /></>)}
+          {afterAudit}
           {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>{action}</div>}
         </div>
       )}

@@ -47,11 +47,11 @@ export default function StatusDashboard({
               <div key={s} className={`rounded-full px-3 py-1 text-xs font-semibold ${TONE[s] || CLOSED_TONE}`}>{s}: {counts[s]}</div>
             ))}
           </div>
-          <div className="grid gap-2 sm:grid-cols-2">
+          <details className="rounded-xl border border-border bg-card p-3"><summary className="cursor-pointer text-sm font-semibold">View and update records</summary><div className="mt-3 grid gap-2 sm:grid-cols-2">
             {records.map((r) => (
               <div key={r.id} className="flex items-center justify-between gap-2 rounded-xl border border-border/60 p-3">
                 <div className="min-w-0">
-                  <div className="truncate text-sm font-medium">{r.title || 'Untitled'}</div>
+                  <div className="break-words text-sm font-semibold">{r.title || 'Untitled'}</div>
                   {subField && r[subField] && <div className="text-[11px] text-foreground/40">{r[subField]}</div>}
                 </div>
                 <select
@@ -64,7 +64,7 @@ export default function StatusDashboard({
                 </select>
               </div>
             ))}
-          </div>
+          </div></details>
         </>
       )}
     </SectionCard>
