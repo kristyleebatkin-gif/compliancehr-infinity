@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
@@ -6,6 +6,10 @@ import { useRole } from '@/lib/useRole';
 import { Button } from '@/components/ui/button';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 import { sectionsFor, CADENCE_MONTHS, addMonths, itemStatus } from '@/lib/documentationChecklists';
+import { buildDocumentationChecklistPdf, buildDocumentationAuditReportPdf } from '@/lib/documentationAuditPdf';
+import { Download, FileUp, ClipboardCheck } from 'lucide-react';
+
+const today = () => new Date().toISOString().slice(0, 10);
 
 function nowDateTime() {
   const d = new Date();
@@ -101,6 +105,67 @@ export default function DocumentationChecklist({ profile, kind }) {
     }
   };
 
+  const [busyAction, setBusyAction] = useState('');
+  const vaultEntity = kind === 'participant' ? base44.entities.ParticipantDocument : base44.entities.EmployeeDocument;
+
+  const savePdfToVault = async (doc, filename, title) => {
+    doc.save(filename);
+    const blob = doc.output('blob');
+    const file = new File([blob], filename, { type: 'application/pdf' });
+    const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+    const vaultData = kind === 'participant'
+      ? { title, participant_id: profile.id, participant_name: profile.full_name, document_type: 'Participant File Audit Checklist', status: 'Completed', file_uri, file_name: filename, uploaded_date: today(), submission_method: 'Online', notes: 'Generated from the Documentation & Compliance Checklist.' }
+      : { title, employee_id: profile.id, employee_name: profile.full_name, employee_email: profile.email || '', document_type: 'Other', status: 'Current', file_uri, file_name: filename, issue_date: today(), notes: 'Generated from the Documentation & Compliance Checklist.' };
+    await vaultEntity.create(vaultData);
+  };
+
+  const downloadChecklist = async () => {
+    setBusyAction('checklist');
+    try {
+      const filename = `documentation-audit-checklist-${today()}.pdf`;
+      const doc = buildDocumentationChecklistPdf({ profile, kind, sections, latestByKey, generatedBy: user?.full_name || user?.email || '' });
+      await savePdfToVault(doc, filename, `Documentation & Compliance Audit Checklist (${today()})`);
+      toast({ title: 'Audit checklist downloaded', description: 'A copy was saved to the document vault.' });
+    } catch (error) {
+      toast({ title: 'Unable to generate the audit checklist', description: error.message, variant: 'destructive' });
+    } finally {
+      setBusyAction('');
+    }
+  };
+
+  const generateReport = async () => {
+    setBusyAction('report');
+    try {
+      const filename = `documentation-audit-report-${today()}.pdf`;
+      const doc = buildDocumentationAuditReportPdf({ profile, kind, sections, latestByKey, generatedBy: user?.full_name || user?.email || '' });
+      await savePdfToVault(doc, filename, `Documentation & Compliance Audit Report (${today()})`);
+      toast({ title: 'Audit report generated', description: 'Downloaded and saved to the document vault.' });
+    } catch (error) {
+      toast({ title: 'Unable to generate the audit report', description: error.message, variant: 'destructive' });
+    } finally {
+      setBusyAction('');
+    }
+  };
+
+  const uploadCompleted = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    setBusyAction('upload');
+    try {
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      const vaultData = kind === 'participant'
+        ? { title: file.name.replace(/\.[^.]+$/, ''), participant_id: profile.id, participant_name: profile.full_name, document_type: 'Participant File Audit Checklist', status: 'Received', file_uri, file_name: file.name, uploaded_date: today(), submission_method: 'Upload', notes: 'Completed audit checklist uploaded from the Documentation tab.' }
+        : { title: file.name.replace(/\.[^.]+$/, ''), employee_id: profile.id, employee_name: profile.full_name, employee_email: profile.email || '', document_type: 'Other', status: 'Current', file_uri, file_name: file.name, issue_date: today(), notes: 'Completed audit checklist uploaded from the Documentation tab.' };
+      await vaultEntity.create(vaultData);
+      toast({ title: 'Completed checklist uploaded', description: 'Saved to the document vault (stored privately).' });
+    } catch (error) {
+      toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
+    } finally {
+      setBusyAction('');
+    }
+  };
+
   if (query.isLoading) return <div role="status" className="py-8 text-sm text-muted-foreground">Loading documentation checklist…</div>;
   if (query.isError) return <div role="alert" className="rounded-xl border border-destructive/30 p-4 text-sm text-destructive">Unable to load the documentation checklist: {query.error.message}</div>;
 
@@ -112,6 +177,17 @@ export default function DocumentationChecklist({ profile, kind }) {
         {stats.overdue > 0 && <span className="rounded-full bg-danger/15 px-2.5 py-1 text-danger">{stats.overdue} overdue</span>}
         {stats.notLogged > 0 && <span className="rounded-full bg-warning/15 px-2.5 py-1 text-warning">{stats.notLogged} not yet logged</span>}
         <span className="ml-auto text-[11px] font-medium text-muted-foreground">Every item is logged and recorded with who, when and next due.</span>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 rounded-xl bg-card p-2 text-xs shadow-sm">
+        <span className="font-semibold">Audit checklist</span>
+        <Button size="sm" variant="outline" disabled={busyAction !== ''} onClick={downloadChecklist}><Download /> {busyAction === 'checklist' ? 'Preparing…' : 'Download checklist (PDF)'}</Button>
+        <Button size="sm" variant="outline" disabled={busyAction !== ''} onClick={generateReport}><ClipboardCheck /> {busyAction === 'report' ? 'Generating…' : 'Generate audit report (PDF)'}</Button>
+        <label className="inline-flex min-h-8 cursor-pointer items-center gap-1 rounded-md border border-input bg-transparent px-3 text-xs font-medium shadow-sm hover:bg-accent">
+          <FileUp className="h-3.5 w-3.5" /> {busyAction === 'upload' ? 'Uploading…' : 'Upload completed checklist'}
+          <input type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.docx" className="hidden" disabled={busyAction !== ''} onChange={uploadCompleted} />
+        </label>
+        <span className="text-[11px] text-muted-foreground">The checklist and audit report are saved to the document vault automatically.</span>
       </div>
 
       {sections.map((section) => {
