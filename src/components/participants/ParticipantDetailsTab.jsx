@@ -8,11 +8,15 @@ import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
 import ProfileAuditTrail from '@/components/profile/ProfileAuditTrail';
 import { PARTICIPANT_PROFILE_SECTIONS as SECTIONS } from '@/lib/participantProfileFields';
 import { Loader2 } from 'lucide-react';
+import { useRole } from '@/lib/useRole';
+import ParticipantReadOnlyDetails from '@/components/profile/ParticipantReadOnlyDetails';
 
 
 
 export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const { toast } = useToast();
+  const { isAdmin, role, user } = useRole();
+  const canEdit = isAdmin || (role === 'Participant' && participant.email === user?.email);
   const [form, setForm] = useState(participant);
   const [saving, setSaving] = useState(false);
 
@@ -21,6 +25,7 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
   const set = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
   const save = async () => {
+    if (!canEdit) return;
     setSaving(true);
     try {
       const fields = SECTIONS.flatMap((section) => section.fields).filter((field) => !field.readOnly);
@@ -38,6 +43,8 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
   };
 
 
+
+  if (!canEdit) return <ParticipantReadOnlyDetails participant={participant} />;
 
   return (
     <div className="space-y-6">

@@ -44,7 +44,7 @@ export default function ParticipantApprovalToggle({ participant, onUpdate }) {
       {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : approved
         ? <ShieldCheck className="h-4 w-4 text-green-600" />
         : <ShieldOff className="h-4 w-4" />}
-      {approved ? 'Approved for staff' : 'Approve for staff'}
+      {approved ? 'Remove approval' : 'Approve for all employees'}
     </Button>
   );
 }
