@@ -393,7 +393,7 @@ export const PARTICIPANT_FORM_DEFINITIONS = Object.fromEntries(
 );
 
 export const PARTICIPANT_FILE_SECTIONS = [
-  { name: '1. Handbooks, Intake & Lifecycle', icon: ClipboardList, docs: ['Participant Handbook', 'Participant Easy Read Handbook', 'Participant Intake Form', 'Participant Intake Assessment', 'Referral Form', 'Authority to Act as Advocate', 'Home Risk Assessment', 'Participant Exit Form'] },
+  { name: '1. Handbooks, Intake & Lifecycle', icon: ClipboardList, docs: ['Participant Intake Form', 'Participant Intake Assessment', 'Participant Handbook', 'Participant Easy Read Handbook', 'Referral Form', 'Authority to Act as Advocate', 'Home Risk Assessment', 'Participant Exit Form'] },
   { name: '2. NDIS, Agreements & Planning', icon: FileText, docs: ['NDIS Plan', 'Service Agreement', 'Individual Risk Assessment', 'Participant Consent for Audits', 'Consent to Share Information', 'Participant Support Plan', 'Participant File Audit Checklist', 'Provider Declaration'] },
   { name: '3. Service Delivery & Safeguards', icon: Megaphone, docs: ['Progress Reports', 'Progress Notes', 'Incident Reports', 'Behaviour Support Plan', 'Restrictive Practices Record'] },
   { name: '4. Medication & Mealtime Support', icon: Heart, docs: ['Medication Evaluation', 'SAM Medication Assessment', 'Medication Administration Record', 'Medication Consent', 'Medication Record Sheet', 'Mealtime Management Plan'] },

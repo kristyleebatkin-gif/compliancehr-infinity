@@ -5,8 +5,8 @@ import { logUserAction } from '@/lib/actionLog';
 export const INTAKE_REQUIREMENTS = {
   Participant: [
     'Participant Intake Form',
-    'Participant Handbook',
     'Participant Intake Assessment',
+    'Participant Handbook',
     'Referral Form',
     'NDIS Plan',
     'Service Agreement',

@@ -15,8 +15,7 @@ import ResetPassword from '@/pages/ResetPassword';
 
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
-import Staff from '@/pages/Staff';
-import StaffDetail from '@/pages/StaffDetail';
+import LegacyProfileRedirect from '@/components/profile/LegacyProfileRedirect';
 import ComplianceHub from '@/pages/ComplianceHub';
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import DailyBriefing from '@/pages/DailyBriefing';
@@ -28,14 +27,11 @@ import Incidents from '@/pages/Incidents';
 import IncidentDetail from '@/pages/IncidentDetail';
 import IncidentForm from '@/pages/IncidentForm';
 import IncidentAnalytics from '@/pages/IncidentAnalytics';
-import StaffProfilesHub from '@/pages/StaffProfilesHub';
 import StaffIncidentPortal from '@/pages/StaffIncidentPortal';
 import RiskSubmitPortal from '@/pages/RiskSubmitPortal';
 import IssueSubmitPortal from '@/pages/IssueSubmitPortal';
 import FeedbackSubmitPortal from '@/pages/FeedbackSubmitPortal';
 import Certificates from '@/pages/Certificates';
-import Participants from '@/pages/Participants';
-import ParticipantDetail from '@/pages/ParticipantDetail';
 import Risks from '@/pages/Risks';
 
 import Feedback from '@/pages/Feedback';
@@ -133,8 +129,8 @@ const AuthenticatedApp = () => {
           <Route path="/our-participants/:id" element={<RoleGate navKey="our-participants"><OurParticipantDetail /></RoleGate>} />
           <Route path="/my-documents" element={<Navigate to="/my-profile?tab=documents" replace />} />
           <Route path="/name-tags" element={<Navigate to="/my-profile?tab=name-tags" replace />} />
-          <Route path="/staff" element={<RoleGate navKey="staff"><StaffProfilesHub /></RoleGate>} />
-          <Route path="/staff/:id" element={<RoleGate navKey="staff"><StaffDetail /></RoleGate>} />
+          <Route path="/staff" element={<LegacyProfileRedirect kind="staff" />} />
+          <Route path="/staff/:id" element={<LegacyProfileRedirect kind="staff" />} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
@@ -149,12 +145,12 @@ const AuthenticatedApp = () => {
           <Route path="/feedback/submit" element={<RoleGate navKey="risks"><FeedbackSubmitPortal /></RoleGate>} />
           <Route path="/incidents/new" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
           <Route path="/incident-analytics" element={<RoleGate navKey="incident-analytics"><IncidentAnalytics /></RoleGate>} />
-          <Route path="/staff-progress" element={<RoleGate navKey="staff-progress"><StaffProfilesHub initialTab="progress" /></RoleGate>} />
+          <Route path="/staff-progress" element={<RoleGate navKey="staff-progress"><LegacyProfileRedirect kind="staff" progress /></RoleGate>} />
           <Route path="/incidents/:id" element={<RoleGate navKey="incidents"><IncidentDetail /></RoleGate>} />
           <Route path="/incidents/:id/edit" element={<RoleGate navKey="incidents"><IncidentForm /></RoleGate>} />
           <Route path="/certificates" element={<RoleGate navKey="certificates"><Certificates /></RoleGate>} />
-          <Route path="/participants" element={<RoleGate navKey="participants"><Participants /></RoleGate>} />
-          <Route path="/participants/:id" element={<RoleGate navKey="participants"><ParticipantDetail /></RoleGate>} />
+          <Route path="/participants" element={<LegacyProfileRedirect kind="participant" />} />
+          <Route path="/participants/:id" element={<LegacyProfileRedirect kind="participant" />} />
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
 
           <Route path="/feedback" element={<RoleGate navKey="feedback"><Feedback /></RoleGate>} />

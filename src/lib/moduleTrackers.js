@@ -46,10 +46,10 @@ export const MODULE_TRACKERS = {
     { label: 'Safety checks overdue', entity: 'SafetyCheck', base: { next_due_date: { $lt: '' } }, dynamic: 'overdue' },
     { label: 'Emergency documents past review', entity: 'EmergencyDocument', base: { next_review_date: { $lt: '' } }, dynamic: 'overdue' },
   ],
-  '/participants': [
+  '/our-participants': [
     { label: 'Progress notes overdue', entity: 'ParticipantProfile', base: { progress_notes_due_date: { $lt: '' } }, dynamic: 'overdue' },
   ],
-  '/staff': [
+  '/our-employees': [
     { label: 'Certificates expired', entity: 'Certificate', base: { expiry_date: { $lt: '' } }, dynamic: 'overdue' },
     { label: 'Staff documents expiring soon', entity: 'EmployeeDocument', base: { expiry_date: { $gte: '', $lte: '' }, status: { $ne: 'Archived' } }, dynamic: 'soon', soon: 30 },
   ],

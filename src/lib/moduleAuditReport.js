@@ -19,8 +19,8 @@ const minusDays = (days) => D(new Date(Date.now() - days * 86400000));
 
 // Which data each module screen audits.
 export const MODULE_AUDIT_ENTITIES = {
-  '/staff': [['StaffProfile', 'Staff profiles'], ['EmployeeDocument', 'Employee documents']],
-  '/participants': [['ParticipantProfile', 'Participant profiles'], ['Goal', 'Goals']],
+  '/our-employees': [['StaffProfile', 'Staff profiles'], ['EmployeeDocument', 'Employee documents']],
+  '/our-participants': [['ParticipantProfile', 'Participant profiles'], ['Goal', 'Goals']],
   '/documents': [['EmployeeDocument', 'Employee documents'], ['CompanyDocument', 'Company documents']],
   '/compliance': [['Checklist', 'Checklists'], ['ComplianceChecklistEntry', 'Completed checklists'], ['Audit', 'Audits']],
   '/checklists': [['Checklist', 'Checklists'], ['ComplianceChecklistEntry', 'Completed checklists']],
@@ -158,8 +158,8 @@ export async function gatherModuleAudit(path) {
   // Participant / staff file checklists: live coverage of every listed
   // document, gathered when the audited module owns that checklist.
   let fileChecklist = null;
-  if (path === '/participants') fileChecklist = await gatherParticipantFileChecklist();
-  else if (path === '/staff') fileChecklist = await gatherStaffFileChecklist();
+  if (path === '/our-participants') fileChecklist = await gatherParticipantFileChecklist();
+  else if (path === '/our-employees') fileChecklist = await gatherStaffFileChecklist();
 
   return { path, entities, trackers: await gatherTrackers(path), recentRecords, docs, formsCounts, priorAudits, fileChecklist };
 }

@@ -12,19 +12,16 @@ import {
 export const MODULE_DIRECTORY = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, blurb: 'Live overview of compliance, safety and work across the organisation.' },
   { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, blurb: 'Your profile, work, documents and name tag in one place.' },
-  { key: 'our-staff', label: 'Our employee profiles', path: '/our-employees', icon: Users, blurb: 'Every employee profile in the organisation, in one place.' },
-  { key: 'our-participants', label: 'Our participant profiles', path: '/our-participants', icon: Heart, blurb: 'Every participant profile in the organisation, in one place.' },
+  { key: 'our-staff', label: 'Our employee profiles', path: '/our-employees', icon: Users, blurb: 'Main employee records, documents, screening, forms, progress and connected modules.' },
+  { key: 'our-participants', label: 'Our participant profiles', path: '/our-participants', icon: Heart, blurb: 'Main participant records, plans, documents, forms, goals and connected modules.' },
   { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, blurb: 'Participant and employee intake forms, reviews and conversions.' },
   { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, blurb: 'Document register, central routing, uploads and vault exports.' },
   { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, blurb: 'Submitted forms, business details, branding and completed documents.' },
-  { key: 'staff', label: 'Staff Profiles', path: '/staff', icon: Users, blurb: 'Employee records, screening, forms, communication logs and safety.' },
-  { key: 'participants', label: 'Participant Profiles', path: '/participants', icon: Heart, blurb: 'Participant plans, support teams, goals, forms and documents.' },
   { key: 'visual-boards', label: 'Visual Boards', path: '/visual-boards', icon: LayoutPanelTop, blurb: 'Accessible routines, communication boards, sign prompts and translators.' },
   { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
   { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
   { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
   { key: 'incident-analytics', label: 'Incident Analytics', path: '/incident-analytics', icon: Activity, blurb: 'Charts of incident trends by category and by staff, to target support where it is needed.' },
-  { key: 'staff-progress', label: 'Staff Profiles', path: '/staff-progress', icon: TrendingUp, blurb: 'Staff profile, intake progress and compliance tasks in the unified staff workspace.' },
   { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
   { key: 'compliance', label: 'Compliance & Report Centre', path: '/compliance', icon: ShieldCheck, blurb: 'Checklists, audits, file matrices, expiry scans and full business audit exports.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
@@ -62,8 +59,8 @@ export const MODULE_DIRECTORY = [
 
 // Sidebar sections: every module key appears in exactly one group.
 export const NAV_GROUPS = [
-  { label: 'Overview', keys: ['dashboard', 'my-profile', 'our-staff', 'our-participants'] },
-  { label: 'People', keys: ['staff', 'staff-progress', 'participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
+  { label: 'Overview', keys: ['dashboard', 'my-profile'] },
+  { label: 'People', keys: ['our-staff', 'our-participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
   { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },

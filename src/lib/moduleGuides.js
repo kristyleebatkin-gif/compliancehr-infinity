@@ -42,7 +42,7 @@ export const moduleGuides = {
       'Keep banking and payment terms current so quotes and invoices are correct.',
     ],
   },
-  '/staff': {
+  '/our-employees': {
     title: 'Staff Profiles',
     purpose: 'Every employee record, from onboarding through exit.',
     steps: [
@@ -53,7 +53,7 @@ export const moduleGuides = {
       'Keep the change log current; archive (never delete) on exit.',
     ],
   },
-  '/participants': {
+  '/our-participants': {
     title: 'Participant Profiles',
     purpose: 'The living record of each participant and their supports.',
     steps: [

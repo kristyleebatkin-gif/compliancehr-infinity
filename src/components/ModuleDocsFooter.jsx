@@ -12,7 +12,7 @@ import '@/components/employeeDocumentsCompact.css';
 // document set show nothing, so the list stays accurate to the module.
 const MODULE_DOCS = [
   {
-    match: '/staff',
+    match: '/our-employees',
     title: 'Employee Documents',
     subtitle: 'Latest employee documents filed in the Document Vault.',
     entity: 'EmployeeDocument',
@@ -25,7 +25,7 @@ const MODULE_DOCS = [
     dateLabel: 'Expiry',
   },
   {
-    match: '/participants',
+    match: '/our-participants',
     title: 'Participant Documents',
     subtitle: 'Latest participant documents filed in the Document Vault.',
     entity: 'ParticipantDocument',
@@ -123,12 +123,14 @@ export default function ModuleDocsFooter() {
     let alive = true;
     if (!cfg) return;
     setLoading(true);
-    base44.entities[cfg.entity].filter(cfg.query, { sort: cfg.sort, limit: 8 })
+    const profileId = pathname.split('/')[2];
+    const scope = profileId && cfg.entity === 'EmployeeDocument' ? { employee_id: profileId } : profileId && cfg.entity === 'ParticipantDocument' ? { participant_id: profileId } : {};
+    base44.entities[cfg.entity].filter({ ...cfg.query, ...scope }, { sort: cfg.sort, limit: 8 })
       .then((page) => { if (alive) setItems(page.items || []); })
       .catch(() => { if (alive) setItems([]); })
       .finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
-  }, [cfg?.match]);
+  }, [cfg?.match, pathname]);
 
   if (!cfg) return null;
 

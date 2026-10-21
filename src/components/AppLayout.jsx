@@ -22,8 +22,8 @@ import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
-  { label: 'Participants', path: '/participants', key: 'participants', icon: Heart },
-  { label: 'Employees', path: '/staff', key: 'staff', icon: Users },
+  { label: 'Participants', path: '/our-participants', key: 'our-participants', icon: Heart },
+  { label: 'Employees', path: '/our-employees', key: 'our-staff', icon: Users },
   { label: 'Training', path: '/training', key: 'training', icon: GraduationCap },
   { label: 'Compliance', path: '/compliance', key: 'compliance', icon: ShieldCheck },
 ];

@@ -13,8 +13,8 @@ export default function ModuleDocsButton() {
   if (seg === '/documents') return null;
 
   let focus = '';
-  if (seg === '/staff') focus = 'employee';
-  else if (seg === '/participants') focus = 'participant';
+  if (seg === '/our-employees' || seg === '/staff') focus = 'employee';
+  else if (seg === '/our-participants' || seg === '/participants') focus = 'participant';
   else if (seg === '/company-safe') focus = 'business';
   else if (pathname.startsWith('/intake/participant')) focus = 'participant';
   else if (pathname.startsWith('/intake/employee')) focus = 'employee';
