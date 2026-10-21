@@ -7,6 +7,14 @@ html body .my-profile-pastels .app-section-card-header {
   box-shadow: none !important;
   outline: 0 !important;
 }
+/* No borders on section wrappers or header rows. */
+html body .my-profile-pastels details,
+html body .my-profile-pastels details > summary,
+html body .my-profile-pastels [data-dashboard-tab] * {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
 /* Section headers are all the same compact size (as Staff Information). */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
