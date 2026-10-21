@@ -3,6 +3,7 @@
 // (participant, employee or the company safe). Upload sites call this once
 // after saving the document; failures never block the upload itself.
 import { base44 } from '@/api/base44Client';
+import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -28,6 +29,7 @@ async function resolvePerson(library) {
 export async function routeDocument(doc, options = {}) {
   if (!doc?.id) return;
   try {
+    if (doc.library?.startsWith('staff-') || (options.source === 'IntakeDocument' && doc.intake_type === 'Employee' && doc.profile_id)) await syncEmployeeRecord(options.source || 'FormsLibraryDocument', doc.id);
     const fromLibrary = options.person_name ? {} : await resolvePerson(doc.library);
     const personName = options.person_name || fromLibrary.person_name || '';
     const personType = options.person_type || fromLibrary.person_type || 'Company';

@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import ProfileFieldsSection from '@/components/profile/ProfileFieldsSection';
+import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import ProfileAuditTrail from '@/components/profile/ProfileAuditTrail';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import { STAFF_PROFILE_SECTIONS as SECTIONS } from '@/lib/staffProfileFields';
@@ -26,7 +27,10 @@ export default function StaffDetailsTab({ staff, onUpdated }) {
       const payload = Object.fromEntries(fields
         .filter((field) => (form[field.key] ?? '') !== (staff[field.key] ?? ''))
         .map((field) => [field.key, field.type === 'number' ? (form[field.key] === '' ? null : Number(form[field.key])) : form[field.key] ?? '']));
-      if (Object.keys(payload).length) await base44.entities.StaffProfile.update(staff.id, payload);
+      if (Object.keys(payload).length) {
+        await base44.entities.StaffProfile.update(staff.id, payload);
+        await syncEmployeeRecord('StaffProfile', staff.id);
+      }
       toast({ title: 'Profile saved' });
       onUpdated();
     } catch (error) {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { loadCompanyBranding } from '@/lib/companyBranding';
+import { loadEmployeeForm, syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import { blankOnlineDocument, documentFormKey, readOnlineDocument, saveOnlineDocumentDraft, fileOnlineDocument } from '@/lib/onlineDocumentStorage';
 
 export default function useOnlineDocument(options) {
@@ -25,7 +26,11 @@ export default function useOnlineDocument(options) {
       ]);
       if (!active) return;
       const draft = drafts.items[0] || null;
-      const data = draft ? readOnlineDocument(draft, initialAnswers) : blankOnlineDocument(initialAnswers);
+      const shared = libraryKey.startsWith('staff-') || intakeCase?.intake_type === 'Employee'
+        ? await loadEmployeeForm({ profileId: libraryKey.startsWith('staff-') ? libraryKey.slice(6) : undefined, intakeCaseId: intakeCase?.id, title }) : null;
+      const prefill = { ...initialAnswers, ...shared?.defaults, ...shared?.answers };
+      const data = draft ? readOnlineDocument(draft, prefill) : blankOnlineDocument(prefill);
+      if (shared) data.answers = { ...data.answers, ...shared.answers };
       setUser(me); setRecords(saved.items); setPage(saved); setRecord(draft); setModel(data); baseline.current = JSON.stringify(data);
       if (draft) setNotice('Your saved draft has been restored.');
     })().catch((e) => { if (active) setError(e.message); }).finally(() => { if (active) setLoading(false); });
@@ -43,6 +48,7 @@ export default function useOnlineDocument(options) {
     try {
       if (complete && (!model.name.trim() || !model.confirmed || !(model.signature || '').startsWith('data:image/'))) throw new Error('Add your name, sign in the signature pad and confirm the declaration before completing this document.');
       const draft = await saveOnlineDocumentDraft({ record, title, libraryKey, intakeCase, model, user });
+      if (libraryKey.startsWith('staff-') || intakeCase?.intake_type === 'Employee') await syncEmployeeRecord('FormSubmission', draft.id);
       setRecord(draft); baseline.current = JSON.stringify(model);
       setRecords((items) => [draft, ...items.filter((item) => item.id !== draft.id)]);
       if (complete) {

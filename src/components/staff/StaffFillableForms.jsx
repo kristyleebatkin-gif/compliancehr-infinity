@@ -12,6 +12,7 @@ import { autofillStaffValue, buildStaffAutofilledAnswers } from '@/lib/staffAuto
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
 import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
+import { loadEmployeeForm, syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 
 export default function StaffFillableForms({ staff }) {
   const { toast } = useToast();
@@ -38,7 +39,10 @@ export default function StaffFillableForms({ staff }) {
       if (existing?.answers) {
         try { saved = JSON.parse(existing.answers); } catch { saved = {}; }
       }
-      setAnswers({ ...base, ...saved });
+      const shared = await loadEmployeeForm({ profileId: staff.id, title: formKey });
+      const defaults = Object.fromEntries(definition.fields.filter((field) => shared.defaults?.[field.label] !== undefined).map((field) => [field.label, shared.defaults[field.label]]));
+      setAnswers({ ...base, ...defaults, ...saved, ...shared.answers });
+      setEntry(shared.entry || existing);
     } catch (error) {
       console.error(error);
     } finally {
@@ -64,12 +68,9 @@ export default function StaffFillableForms({ staff }) {
         completed_by: user?.full_name || user?.email || '',
         completed_date: new Date().toISOString().slice(0, 10),
       };
-      if (entry) {
-        await base44.entities.StaffFormEntry.update(entry.id, payload);
-      } else {
-        const created = await base44.entities.StaffFormEntry.create({ ...payload, staff_id: staff.id, form_type: formKey });
-        setEntry(created);
-      }
+      const savedEntry = entry ? await base44.entities.StaffFormEntry.update(entry.id, payload) : await base44.entities.StaffFormEntry.create({ ...payload, staff_id: staff.id, form_type: formKey });
+      setEntry(savedEntry);
+      await syncEmployeeRecord('StaffFormEntry', savedEntry.id);
       toast({ title: `${definition.key} saved` });
     } catch (error) {
       toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
