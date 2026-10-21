@@ -14,10 +14,11 @@ import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } fro
 // Admin view: every employee or participant profile in the organisation,
 // grouped into modular sections with search and quick filters. Staff and
 // participants see only their own profile in their matching module.
-export default function OurProfilesTab({ kind }) {
+export default function OurProfilesTab({ kind, basePath, scoped = true }) {
   const isParticipant = kind === 'participant';
+  const profilePath = basePath || (isParticipant ? '/our-participants' : '/our-employees');
   const { role, user } = useRole();
-  const selfOnly = !managesProfiles(role) && !(isParticipant && role === ROLES.SUPPORT);
+  const selfOnly = scoped && !managesProfiles(role) && !(isParticipant && role === ROLES.SUPPORT);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -32,15 +33,16 @@ export default function OurProfilesTab({ kind }) {
     (async () => {
       try {
         if (!user?.id) return;
-        await preparePersonalProfileAccess();
+        if (scoped) await preparePersonalProfileAccess();
         const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const page = await entity.filter(profileRecordScope(role, user, isParticipant ? 'ParticipantProfile' : 'StaffProfile'), { sort: 'full_name', limit: 200 });
+        const query = scoped ? profileRecordScope(role, user, isParticipant ? 'ParticipantProfile' : 'StaffProfile') : {};
+        const page = await entity.filter(query, { sort: 'full_name', limit: 200 });
         if (active) setRecords(page.items || []);
       } catch (e) { if (active) setError(e.message || 'Unable to load your profile.'); }
       if (active) setLoading(false);
     })();
     return () => { active = false; };
-  }, [isParticipant, selfOnly, role, user?.id, user?.email]);
+  }, [isParticipant, selfOnly, scoped, role, user?.id, user?.email]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
@@ -155,7 +157,7 @@ export default function OurProfilesTab({ kind }) {
                   {list.map((r) => {
                     const { primary } = profilePalette(r.full_name);
                     return (
-                      <Link key={r.id} to={isParticipant ? `/our-participants/${r.id}` : `/our-employees/${r.id}`} className="group">
+                      <Link key={r.id} to={`${profilePath}/${r.id}`} className="group">
                         <div className="flex h-full items-start gap-2 rounded-xl border border-border/60 bg-card p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                           <div
                             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
