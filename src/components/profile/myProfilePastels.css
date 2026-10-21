@@ -36,6 +36,11 @@ html body .my-profile-pastels .profile-uniform-box {
   overflow-y: auto !important;
   box-sizing: border-box;
 }
+/* Left-hand forms stretch so the column ends level with the logs on the right. */
+html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
+  flex: 1 1 auto;
+}
+html body .my-profile-pastels .profile-left-fill > details[open] { flex-grow: 0; }
 /* White border around each of those boxes (overrides the no-border rules above). */
 html body .my-profile-pastels .profile-uniform-box.profile-uniform-box.profile-uniform-box {
   border: 3px solid #fff !important;
