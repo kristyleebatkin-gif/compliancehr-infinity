@@ -66,10 +66,18 @@ export function cacheCompanyBranding(branding) {
 }
 
 export async function loadCompanyBranding() {
-  const [providerPage, businessPage] = await Promise.all([
-    base44.entities.Provider.filter({ document_branding_active: true }, { sort: '-created_date', limit: 1 }),
-    base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
-  ]);
+  let providerPage = { items: [] };
+  let businessPage = { items: [] };
+  // Branding lookups must never fail an export: roles without Provider or
+  // Business Details read access fall back to the cached branding.
+  try {
+    [providerPage, businessPage] = await Promise.all([
+      base44.entities.Provider.filter({ document_branding_active: true }, { sort: '-created_date', limit: 1 }),
+      base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+    ]);
+  } catch {
+    return { ...getCompanyBranding(), providerId: '' };
+  }
   let provider = providerPage.items?.[0] || null;
   if (!provider) {
     const fallback = await base44.entities.Provider.list({ sort: '-created_date', limit: 1 });
