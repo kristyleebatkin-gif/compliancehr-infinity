@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
-import { requireEmployee, employeeRosterIdentity } from '../../shared/employeeAccess.ts';
+import { requireEmployee, employeeRosterIdentity, employeeDocumentScope } from '../../shared/employeeAccess.ts';
 const TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Staff Badge', 'Other'];
 export default async function(req) {
   try {
@@ -16,7 +16,7 @@ export default async function(req) {
       const options = { sort: '-created_date', limit: 25, cursor };
       if (view === 'feedback') return Response.json(await entities.Feedback.filter({ $or: [{ created_by_id: user.id }, { assigned_email: user.email }] }, options));
       if (view === 'complaints') return Response.json(await entities.Complaint.filter({ $or: [{ created_by_id: user.id }, { complainant_name: staff.full_name, complainant_relationship: 'Staff' }] }, options));
-      if (view === 'documents') return Response.json(await entities.EmployeeDocument.filter({ $and: [{ status: { $ne: 'Archived' } }, { $or: [{ employee_id: staff.id }, { employee_id: { $in: [null, ''] }, employee_name: staff.full_name }, { created_by_id: user.id }] }] }, options));
+      if (view === 'documents') return Response.json(await entities.EmployeeDocument.filter(employeeDocumentScope(staff, user), options));
       if (view === 'certificates') return Response.json(await entities.Certificate.filter({ $or: [{ staff_id: staff.id }, { staff_id: { $in: [null, ''] }, staff_name: staff.full_name }] }, options));
       if (view === 'training') return Response.json(await entities.TrainingCompletion.filter({ $or: [{ learner_id: user.id }, { employee_id: staff.id }, { employee_id: { $in: [null, ''] }, learner_id: { $in: [null, ''] }, employee_name: staff.full_name }, { created_by_id: user.id }] }, { ...options, sort: '-completed_date', limit: 200 }));
       if (view === 'tasks') {

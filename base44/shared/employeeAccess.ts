@@ -14,6 +14,9 @@ export async function approvedEmployeeParticipant(base44, id) {
   if (matches !== 1) throw new Error('Duplicate participant names need administrator review before these records can be shared.');
   return person;
 }
+export function employeeDocumentScope(staff, user) {
+  return { $and: [{ status: { $ne: 'Archived' } }, { $or: [{ employee_id: staff.id }, { employee_id: { $in: [null, ''] }, employee_name: staff.full_name }, { created_by_id: user.id }] }] };
+}
 export async function employeeRosterIdentity(base44, user) {
   const page = await base44.asServiceRole.entities.StaffProfile.filter({ email: user.email }, { limit: 2, fields: ['id', 'full_name'] });
   if (page.items.length !== 1 || !page.items[0].full_name) throw new Error('Ask an administrator to link one employee profile to your account.');

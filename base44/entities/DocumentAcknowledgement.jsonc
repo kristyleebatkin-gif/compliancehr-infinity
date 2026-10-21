@@ -1,0 +1,76 @@
+{
+  "name": "DocumentAcknowledgement",
+  "type": "object",
+  "properties": {
+    "document_entity": {
+      "type": "string",
+      "enum": [
+        "EmployeeDocument",
+        "ParticipantDocument",
+        "FormSubmission"
+      ]
+    },
+    "document_id": {
+      "type": "string"
+    },
+    "document_title": {
+      "type": "string"
+    },
+    "version_key": {
+      "type": "string"
+    },
+    "document_revision": {
+      "type": "string"
+    },
+    "acknowledged_by_user_id": {
+      "type": "string"
+    },
+    "acknowledged_by_name": {
+      "type": "string"
+    },
+    "acknowledged_by_email": {
+      "type": "string"
+    },
+    "acknowledged_by_role": {
+      "type": "string"
+    },
+    "acknowledged_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "declaration": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_entity",
+    "document_id",
+    "document_title",
+    "version_key",
+    "acknowledged_by_user_id",
+    "acknowledged_at",
+    "declaration"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

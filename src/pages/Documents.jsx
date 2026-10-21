@@ -32,6 +32,7 @@ import { isVaultManager, isVaultProvider } from '@/components/documents/vaultAcc
 
 import ParticipantVault from '@/components/documents/ParticipantVault';
 import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialog';
+import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 
@@ -325,6 +326,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
                     {canEditDoc(d) && <Button variant="ghost" size="icon" onClick={() => remove(d)}><Trash2 className="h-4 w-4 text-destructive" /></Button>}
                   </div>
                 </div>
+                <div className="mt-2"><DocumentAcknowledgements entity="EmployeeDocument" documentId={d.id} title={d.title} /></div>
               </CardContent>
             </Card>
             );

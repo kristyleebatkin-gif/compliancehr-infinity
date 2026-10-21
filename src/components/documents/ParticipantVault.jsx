@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Eye, FolderOpen, Download, Pencil, Trash2, Plus } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import ParticipantDocumentDialog from '@/components/documents/ParticipantDocumentDialog';
+import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import { format } from 'date-fns';
 import { safeUrl } from '@/lib/safeUrl';
 import { logUserAction } from '@/lib/actionLog';
@@ -75,6 +76,7 @@ export default function ParticipantVault({ docs, loading, viewDoc, me, profile, 
                     <Button variant="ghost" size="icon" title="Delete document" onClick={() => removeDoc(d)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                   </div>
                 </div>
+                <div className="mt-2"><DocumentAcknowledgements entity="ParticipantDocument" documentId={d.id} title={d.title || d.document_type} /></div>
               </CardContent>
             </Card>
           ))}
