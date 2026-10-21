@@ -23,7 +23,7 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
-      {search && <div className="rounded-xl border border-border/60 bg-white p-2 shadow-sm">{search}</div>}
+      {search && <div>{search}</div>}
       {insight}
       {insightModule && <RegisterInsights module={insightModule} />}
       {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border [&>*]:p-3">{small}</div>}
