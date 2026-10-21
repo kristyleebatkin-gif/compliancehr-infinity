@@ -1,0 +1,31 @@
+import React from 'react';
+import EmployeeAlerts from '@/components/employee/EmployeeAlerts';
+import EmployeeCommunicationList from '@/components/employee/EmployeeCommunicationList';
+import EmployeeCommunicationInbox from '@/components/employee/EmployeeCommunicationInbox';
+import EmployeeMessageForm from '@/components/employee/EmployeeMessageForm';
+import EmployeeVideoCalls from '@/components/employee/EmployeeVideoCalls';
+import EmployeeCommunicationNotes from '@/components/employee/EmployeeCommunicationNotes';
+import EmployeeTeamMessages from '@/components/employee/EmployeeTeamMessages';
+import EmployeeComplaints from '@/components/employee/EmployeeComplaints';
+import EmployeePersonalRecords from '@/components/employee/EmployeePersonalRecords';
+import TemplateLibrary from '@/components/communications/TemplateLibrary';
+import AiCompose from '@/components/communications/AiCompose';
+export default function EmployeeCommunicationContent({ view }) {
+  if (view === 'alerts') return <EmployeeAlerts />;
+  if (view === 'logs') return <EmployeeCommunicationList view="logs" />;
+  if (view === 'diary') return <EmployeeCommunicationInbox diary />;
+  if (view === 'inbox') return <EmployeeCommunicationInbox />;
+  if (view === 'templates') return <TemplateLibrary />;
+  if (view === 'email') return <EmployeeMessageForm mode="email" />;
+  if (view === 'bulk') return <EmployeeMessageForm />;
+  if (view === 'video') return <EmployeeVideoCalls />;
+  if (view === 'banter') return <EmployeeTeamMessages />;
+  if (view === 'shoutouts') return <EmployeeTeamMessages shoutout />;
+  if (view === 'feed') return <div className="space-y-4"><h3 className="text-sm font-semibold">Team announcements</h3><EmployeeCommunicationList view="feed" /><h3 className="text-sm font-semibold">Team shoutouts</h3><EmployeeCommunicationList view="shoutouts" /></div>;
+  if (view === 'complaints') return <EmployeeComplaints />;
+  if (view === 'todo') return <EmployeePersonalRecords view="tasks" />;
+  if (view === 'shift-notes') return <EmployeeCommunicationNotes />;
+  if (view === 'employee-log') return <EmployeeCommunicationNotes employeeLog />;
+  if (view === 'ai') return <AiCompose employeeMode />;
+  return null;
+}

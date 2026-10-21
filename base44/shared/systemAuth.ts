@@ -50,6 +50,7 @@ export async function appContactEmails(base44: any): Promise<Set<string>> {
     base44.asServiceRole.entities.StaffProfile.filter({}, { limit: 1000, fields: ['email'] }),
     base44.asServiceRole.entities.ParticipantProfile.filter({}, { limit: 1000, fields: ['email'] }),
     base44.asServiceRole.entities.Contact.filter({}, { limit: 1000, fields: ['email'] }),
+    base44.asServiceRole.entities.KeyBusinessContact.filter({ archived: { $ne: true } }, { limit: 1000, fields: ['email'] }),
   ]);
   for (const result of results) {
     if (result.status !== 'fulfilled') continue;

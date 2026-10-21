@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EmployeeMessageForm from '@/components/employee/EmployeeMessageForm';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,7 +13,7 @@ const TYPES = ['Professional email', 'Family update', 'Shift note', 'Incident fo
 const TONES = ['Professional', 'Warm', 'Friendly', 'Firm but kind', 'Apologetic', 'Celebratory', 'Brief'];
 const LENGTHS = ['Short', 'Medium', 'Long'];
 
-export default function AiCompose() {
+export default function AiCompose({ employeeMode = false }) {
   const { toast } = useToast();
   const [messageType, setMessageType] = useState('Professional email');
   const [tone, setTone] = useState('Professional');
@@ -122,15 +123,16 @@ export default function AiCompose() {
             <Textarea rows={10} value={draft.message} onChange={(e) => setDraft({ ...draft, message: e.target.value })} className="text-sm" />
             <div className="mt-3 flex flex-wrap items-end gap-2">
               <Button size="sm" variant="outline" onClick={copyDraft}><Copy className="mr-2 h-4 w-4" />Copy draft</Button>
-              <div className="grid gap-1.5">
+              {!employeeMode && <><div className="grid gap-1.5">
                 <Label className="text-xs">Send as email to</Label>
                 <Input className="w-full sm:w-64" value={sendTo} onChange={(e) => setSendTo(e.target.value)} placeholder="recipient@email.com" />
               </div>
               <Button size="sm" onClick={sendDraft} disabled={sending}>
                 {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
                 Send email
-              </Button>
+              </Button></>}
             </div>
+            {employeeMode && <EmployeeMessageForm key={`${draft.subject}-${draft.message}`} mode="email" initialSubject={draft.subject || 'Message'} initialBody={draft.message} />}
             <p className="mt-2 text-xs text-muted-foreground">You can edit the draft above before copying or sending.</p>
           </CardContent>
         </Card>

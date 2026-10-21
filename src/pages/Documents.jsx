@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeDocuments from '@/components/employee/EmployeeDocuments';
+export default withEmployeeView(Documents, EmployeeDocuments);
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
@@ -43,7 +46,7 @@ const expiryTone = (expiry) => {
   return 'bg-safe/10 text-safe';
 };
 
-export default function Documents({ profile, profileKind, embedded = false } = {}) {
+function Documents({ profile, profileKind, embedded = false } = {}) {
   const { search } = useLocation();
   const focus = new URLSearchParams(search).get('focus');
   const [docs, setDocs] = useState([]);

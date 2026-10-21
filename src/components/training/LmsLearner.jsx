@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import employeeTrainingClient from '@/lib/employeeTrainingClient';
 import { useToast } from '@/components/ui/use-toast';
 import {
   X, BookOpen, ClipboardCheck, Award, ShieldCheck, Info,
@@ -88,7 +89,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
       }
       const staffProfileId = staffProfile?.id || '';
       const finalLearnerName = staffProfile?.full_name || learnerName.trim() || user?.full_name || 'Learner';
-      const completion = await base44.entities.TrainingCompletion.create({
+      const completion = await (user?.role === 'Employee' ? employeeTrainingClient.completion : base44.entities.TrainingCompletion).create({
         employee_id: learnerType === 'Employee' ? staffProfileId : '',
         employee_name: finalLearnerName,
         learner_type: learnerType,
@@ -103,7 +104,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
         certificate_number: certNum,
         status: 'Completed',
       });
-      const certRecord = await base44.entities.Certificate.create({
+      const certRecord = await (user?.role === 'Employee' ? employeeTrainingClient.certificate : base44.entities.Certificate).create({
         certificate_number: certNum,
         staff_id: learnerType === 'Employee' ? staffProfileId : '',
         staff_name: finalLearnerName,
@@ -131,11 +132,17 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
           programName: LMS_PROGRAM_NAME,
         });
         const file = new File([blob], `${module.title.replace(/[^a-zA-Z0-9]/g, '_')}_${certNum}.pdf`, { type: 'application/pdf' });
-        const { file_url } = await base44.integrations.Core.UploadPublicFile({ file });
-        await base44.entities.Certificate.update(certRecord.id, { file_url });
+        if (user?.role === 'Employee') {
+          const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+          await employeeTrainingClient.attach(certRecord.id, file_uri);
+        } else {
+          const { file_url } = await base44.integrations.Core.UploadPublicFile({ file });
+          await base44.entities.Certificate.update(certRecord.id, { file_url });
+        }
       } catch (e) {
         console.error('Certificate file upload failed', e);
       }
+      if (user?.role !== 'Employee') {
       await base44.entities.Register.create({
         register_type: 'Training Register',
         entry_title: `${module.title} — ${finalLearnerName}`,
@@ -163,6 +170,7 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
         record_title: `${module.title} — ${finalLearnerName}`,
         performed_by: finalLearnerName,
       });
+      }
       setIssued(true);
       toast({ title: 'Certificate issued!', description: `${module.title} — ${certNum}` });
     } catch (err) {

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
+export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -50,7 +53,7 @@ const TABS = [
 // send email, and the diary entries linked to them. Participants see their own diary only.
 const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log'];
 
-export default function Communications({ profile, profileKind, embedded = false } = {}) {
+function Communications({ profile, profileKind, embedded = false } = {}) {
   const { role, user } = useRole();
   const employeeSelf = role === ROLES.SUPPORT || role === ROLES.VOLUNTEER;
   const participantOnly = role === ROLES.PARTICIPANT;

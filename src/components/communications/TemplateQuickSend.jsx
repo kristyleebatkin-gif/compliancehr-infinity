@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeTemplateSendDialog from '@/components/employee/EmployeeTemplateSendDialog';
+export default withEmployeeView(TemplateQuickSend, EmployeeTemplateSendDialog);
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -10,7 +13,7 @@ import { loadCommContacts } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
 import ContactPicker from './ContactPicker';
 
-export default function TemplateQuickSend({ open, onOpenChange, subject, body }) {
+function TemplateQuickSend({ open, onOpenChange, subject, body }) {
   const { toast } = useToast();
   const [contacts, setContacts] = useState([]);
   const [selected, setSelected] = useState([]);

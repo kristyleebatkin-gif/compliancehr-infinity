@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeFeedback from '@/components/employee/EmployeeFeedback';
+export default withEmployeeView(Feedback, EmployeeFeedback);
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import FeedbackToolbar from '@/components/feedback/FeedbackToolbar';
@@ -23,7 +26,7 @@ const STATUSES = ['Received', 'Viewed', 'Pending Further Action', 'Finalised'];
 const STATUS_DATE = { Viewed: 'viewed_date', 'Pending Further Action': 'pending_date', Finalised: 'finalised_date' };
 const blank = { type: 'Feedback', subject: '', message: '', submitted_by: '', contact_details: '', received_via: '', rating: '', assigned_to: '', assigned_email: '', outcome: '', status: 'Received' };
 
-export default function Feedback({ profile, embedded = false } = {}) {
+function Feedback({ profile, embedded = false } = {}) {
   const { toast } = useToast();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeDocuments from '@/components/employee/EmployeeDocuments';
+export default withEmployeeView(MyDocuments, EmployeeDocuments);
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
@@ -22,7 +25,7 @@ const tone = (expiry) => {
 
 // My Documents module: a staff member's or participant's own documents plus
 // private documents others hold that contain their information.
-export default function MyDocuments({ embedded = false } = {}) {
+function MyDocuments({ embedded = false } = {}) {
   const [me, setMe] = useState(null);
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);

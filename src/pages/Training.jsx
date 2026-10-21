@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import EmployeePersonalRecords from '@/components/employee/EmployeePersonalRecords';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import PageHeader from '@/components/PageHeader';
@@ -35,32 +36,34 @@ function statusFor(title, completions) {
 
 export default function Training({ profile, embedded = false } = {}) {
   const { user } = useAuth();
-  const completionQuery = profile ? { $or: [{ employee_id: profile.id }, { learner_id: profile.id }, { employee_name: profile.full_name }, { learner_name: profile.full_name }] } : {};
+  const employee = user?.role === 'Employee';
+  const completionQuery = employee ? { $or: [{ learner_id: user.id }, { created_by_id: user.id }] } : profile ? { $or: [{ employee_id: profile.id }, { learner_id: profile.id }, { employee_name: profile.full_name }, { learner_name: profile.full_name }] } : {};
   const ownLearning = !profile || profile.email === user?.email;
   const [completions, setCompletions] = useState([]);
   const [allCompletions, setAllCompletions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [activeGroup, setActiveGroup] = useState('All');
   const [learnerNumber, setLearnerNumber] = useState(null);
   const [view, setView] = useState('modules');
   const [progressOpen, setProgressOpen] = useState(false);
 
   const load = async () => {
-    setLoading(true);
+    setLoading(true); setLoadError('');
     try {
-      const allPage = await base44.entities.TrainingCompletion.filter(
+      const allPage = employee ? (await base44.functions.invoke('employeePersonalRecords', { action: 'list', view: 'training' })).data : await base44.entities.TrainingCompletion.filter(
         completionQuery,
         { sort: '-completed_date', limit: 200, fields: ['learner_name', 'learner_type', 'module_title', 'completed_date', 'expiry_date', 'score', 'status'] },
       );
       setAllCompletions(allPage.items || []);
       const identity = user?.id || '';
       const name = user?.full_name || '';
-      const minePage = await base44.entities.TrainingCompletion.filter(
+      const minePage = employee ? allPage : await base44.entities.TrainingCompletion.filter(
         profile ? completionQuery : { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] },
         { sort: '-completed_date', limit: 200 },
       );
       setCompletions(minePage.items || []);
-    } catch (e) { console.error(e); }
+    } catch (e) { setLoadError(e.response?.data?.error || e.message); }
     setLoading(false);
   };
   useEffect(() => { load(); }, [user?.id, profile?.id, profile?.full_name]);
@@ -101,15 +104,17 @@ export default function Training({ profile, embedded = false } = {}) {
     <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
       {!embedded && <PageHeader
         title="Training Hub"
+        showAudit={!employee} showCompliance={!employee} showAlerts={!employee}
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
-        action={<Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
+        action={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
       />}
 
-      <RegisterInsights module="training" />
+      {loadError && <p role="alert" className="text-sm text-destructive">{loadError}<Button variant="outline" onClick={load}>Retry</Button></p>}
+      {!employee && <RegisterInsights module="training" />}
 
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
-      <TrainingNavigation view={view} onChange={setView} />
+      <TrainingNavigation view={view} onChange={setView} personalOnly={employee} />
 
       <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/25 via-card to-teal/25 shadow-sm">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
@@ -193,6 +198,7 @@ export default function Training({ profile, embedded = false } = {}) {
         </>
       )}
 
+      {employee && <section className="space-y-3"><h2 className="text-sm font-semibold">My certificates</h2><EmployeePersonalRecords view="certificates" /></section>}
       {learnerNumber && (
         <LmsLearner moduleNumber={learnerNumber} user={user} onCompleted={() => { setLearnerNumber(null); load(); }} onClose={() => setLearnerNumber(null)} />
       )}

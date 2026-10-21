@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeTasks from '@/components/employee/EmployeeTasks';
+export default withEmployeeView(ProfileTodoList, EmployeeTasks);
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -7,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ListTodo, Loader2 } from 'lucide-react';
 
-export default function ProfileTodoList({ staff, person }) {
+function ProfileTodoList({ staff, person }) {
   staff = staff || person;
   const { toast } = useToast();
   const [tasks, setTasks] = useState([]);

@@ -20,6 +20,7 @@ export default function FeedbackSubmitPortal() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [me, setMe] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     base44.auth.me().then(setMe).catch(() => {});
@@ -30,7 +31,7 @@ export default function FeedbackSubmitPortal() {
   const submit = async (e) => {
     e.preventDefault();
     if (!form.subject || !form.message) return;
-    setSubmitting(true);
+    setSubmitting(true); setError('');
     try {
       await base44.entities.Feedback.create({
         ...form,
@@ -42,6 +43,8 @@ export default function FeedbackSubmitPortal() {
       });
       setSubmitted(true);
       setForm(blank);
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setSubmitting(false);
     }
@@ -69,10 +72,12 @@ export default function FeedbackSubmitPortal() {
     <div className="mx-auto max-w-2xl p-3 md:p-5 space-y-4">
       <PageHeader
         title="Share Feedback or a Complaint"
+        showCompliance={me?.role !== 'Employee'} showAudit={me?.role !== 'Employee'} showAlerts={me?.role !== 'Employee'}
         subtitle="Tell us what is working well, or raise a complaint. Every submission goes to the Feedback & Complaints register for review."
       />
 
       <form onSubmit={submit} className="space-y-4 rounded-2xl border border-border bg-card p-5 md:p-6">
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Type"><Select value={form.type} onChange={(e) => set('type', e.target.value)}>{TYPES.map((t) => <option key={t}>{t}</option>)}</Select></Field>
           <Field label="Rating (optional)"><Select value={form.rating} onChange={(e) => set('rating', e.target.value)}><option value="">No rating</option>{RATINGS.map((r) => <option key={r} value={r}>{r} / 5</option>)}</Select></Field>

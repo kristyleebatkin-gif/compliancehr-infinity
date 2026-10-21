@@ -1,4 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeDiary from '@/components/employee/EmployeeDiary';
+export default withEmployeeView(StaffCommPanel, EmployeeDiary);
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +11,7 @@ import ReplyDialog from './ReplyDialog';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
-export default function StaffCommPanel({ staff }) {
+function StaffCommPanel({ staff }) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [replyTarget, setReplyTarget] = useState(null);
