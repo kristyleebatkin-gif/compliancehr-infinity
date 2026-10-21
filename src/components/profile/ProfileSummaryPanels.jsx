@@ -43,8 +43,8 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
-      <ComplianceSchedulesDashboard />
     </aside>
+    <div className="min-w-0 md:col-span-2"><ComplianceSchedulesDashboard /></div>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;
   return <div className="grid items-start gap-3 p-3 md:grid-cols-2">

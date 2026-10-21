@@ -331,6 +331,15 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
     load().catch((error) => setProfileError(error.message)).finally(() => setProfileLoading(false));
   }, [intakeType, profile?.id, profileView]);
 
+  // Live readiness: the moment the intake case or any of its documents change
+  // (from anywhere in the app), the readiness panel re-reads current status.
+  useEffect(() => {
+    if (!profileView) return undefined;
+    const caseUnsub = base44.entities.IntakeCase.subscribe(() => load());
+    const docUnsub = base44.entities.IntakeDocument.subscribe(() => load());
+    return () => { caseUnsub(); docUnsub(); };
+  }, [profileView, load]);
+
   // Load the company name and logo from Company Safe so generated
   // intake forms are branded in the header.
   useEffect(() => { loadCompanyBranding().catch(() => {}); }, []);

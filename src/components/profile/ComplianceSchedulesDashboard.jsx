@@ -67,21 +67,21 @@ export default function ComplianceSchedulesDashboard() {
   return <EmployeeProfileSection title="NDIS Compliance Schedule & Registers Dashboard" tone="red" defaultOpen>
     <div className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {CADENCES.map((cadence) => <div key={cadence.title} className={`rounded-lg ${cadence.tone} p-2`}>
-          <p className="text-[11px] font-bold text-black">{cadence.title}</p>
-          <ul className="mt-1 space-y-1">{cadence.items.map((item) => <Chip key={item}>{item}</Chip>)}</ul>
+        {CADENCES.map((cadence) => <div key={cadence.title} className={`rounded-lg ${cadence.tone} p-3`}>
+          <p className="text-xs font-bold text-black">{cadence.title}</p>
+          <ul className="mt-1.5 space-y-1.5">{cadence.items.map((item) => <Chip key={item}>{item}</Chip>)}</ul>
         </div>)}
       </div>
 
-      <div className="rounded-lg bg-chart-1/10 p-2">
-        <p className="text-[11px] font-bold text-black">Registers That Must Be Kept</p>
-        <ul className="mt-1 space-y-1">{REGISTERS.map((item) => <Chip key={item}>{item}</Chip>)}</ul>
+      <div className="rounded-lg bg-chart-1/10 p-3">
+        <p className="text-xs font-bold text-black">Registers That Must Be Kept</p>
+        <ul className="mt-1.5 space-y-1.5">{REGISTERS.map((item) => <Chip key={item}>{item}</Chip>)}</ul>
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-2">
-        <div className="rounded-lg bg-chart-2/10 p-2">
-          <p className="text-[11px] font-bold text-black">Actions, Workload & Manager Copies</p>
-          <ul className="mt-1 space-y-1">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="rounded-lg bg-chart-2/10 p-3">
+          <p className="text-xs font-bold text-black">Actions, Workload & Manager Copies</p>
+          <ul className="mt-1.5 space-y-1.5">
             <Chip>Compliance tasks sent as to-do tasks and allocated to staff — workload shared, completion is recorded evidence</Chip>
             <Chip>Every action recorded on completion as evidence and corrective action</Chip>
             <Chip>All meetings documented (minutes, attendees, actions)</Chip>
@@ -89,26 +89,26 @@ export default function ComplianceSchedulesDashboard() {
             <Chip>Built (2026-10-22): every incident, risk (any rating) and feedback is auto-routed to a manager copy the moment it is recorded</Chip>
           </ul>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="rounded-lg bg-brand/10 p-2">
-            <p className="text-[11px] font-bold text-black">NDIS Registration Audits</p>
-            <ul className="mt-1 space-y-1">
+        <div className="flex flex-col gap-3">
+          <div className="rounded-lg bg-brand/10 p-3">
+            <p className="text-xs font-bold text-black">NDIS Registration Audits</p>
+            <ul className="mt-1.5 space-y-1.5">
               <Chip>Evidence pack and registration groups kept audit-ready</Chip>
               <Chip>Drawing on the safety checks, drills, audits, registers and business documents above</Chip>
             </ul>
           </div>
-          <div className="rounded-lg bg-chart-4/10 p-2">
-            <p className="text-[11px] font-bold text-black">Where These Live</p>
+          <div className="rounded-lg bg-chart-4/10 p-3">
+            <p className="text-xs font-bold text-black">Where These Live</p>
             <ul className="mt-1 flex flex-wrap gap-1">
               {WHERE_LIVE.map((link) => <li key={link.to}>
-                <Link to={link.to} className="inline-block break-words rounded-md bg-white px-2 py-1 text-[11px] leading-snug text-brand underline-offset-2 hover:underline">{link.label}</Link>
+                <Link to={link.to} className="inline-block break-words rounded-md bg-white px-2.5 py-1.5 text-xs leading-snug text-brand underline-offset-2 hover:underline">{link.label}</Link>
               </li>)}
             </ul>
           </div>
         </div>
       </div>
 
-      <p className="text-[10px] leading-snug text-black">Evidence for every check, drill, audit and corrective action is stored with the record it belongs to, ready for NDIS registration audits.</p>
+      <p className="text-xs leading-snug text-black">Evidence for every check, drill, audit and corrective action is stored with the record it belongs to, ready for NDIS registration audits.</p>
     </div>
   </EmployeeProfileSection>;
 }
