@@ -8,8 +8,9 @@ import useStaffProfileQuestions from '@/components/profile/useStaffProfileQuesti
 export default function StaffProfileQuestionForm({ profile, title }) {
   const { answers, loading, ready, saving, error, saved, change, save, retry } = useStaffProfileQuestions(profile, title);
   const fields = EMPLOYEE_FORM_DEFINITIONS[title].fields;
-  return <section className="min-w-0 rounded-xl border border-border bg-card p-2">
-    <h2 className="mb-2 text-xs font-semibold">{title}</h2>
+  return <details className="min-w-0 rounded-xl border border-border bg-card p-2">
+    <summary className="cursor-pointer text-xs font-semibold">{title}</summary>
+    <div className="mt-2">
     {loading ? <p role="status" className="flex items-center gap-2 text-xs text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Loading answers…</p> : <>
       {error && <p role="alert" className="mb-2 text-xs text-destructive">{error}{!ready && <Button variant="outline" size="sm" onClick={retry}>Retry</Button>}</p>}
       {ready && <form onSubmit={save}>
@@ -17,5 +18,6 @@ export default function StaffProfileQuestionForm({ profile, title }) {
         <div className="mt-2 flex flex-wrap items-center justify-end gap-2">{saved && <span role="status" className="text-xs text-safe">Answers saved</span>}<Button type="submit" size="sm" variant="outline" className="h-7 px-2 text-[11px]" disabled={saving}>{saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save answers</Button></div>
       </form>}
     </>}
-  </section>;
+    </div>
+  </details>;
 }
