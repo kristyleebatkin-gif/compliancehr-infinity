@@ -57,11 +57,11 @@ export default function AllModulesHub() {
               data-dashboard-module
               style={{ '--module-color': color, '--module-accent': accent }}
             >
-              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${accent})` }} />
+              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
               <div className="flex items-start gap-2">
                 <div
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white transition-transform group-hover:scale-110"
-                  style={{ background: `linear-gradient(135deg, ${color}, ${color}dd)`, boxShadow: `0 8px 20px -8px ${color}aa` }}
+                  style={{ background: color, boxShadow: `0 8px 20px -8px ${color}aa` }}
                 >
                   <Icon className="h-4 w-4" />
                 </div>

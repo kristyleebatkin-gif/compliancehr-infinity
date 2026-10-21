@@ -7,6 +7,7 @@ import { AlertTriangle, FileSearch, ShieldAlert, Clock } from 'lucide-react';
 import { format, subMonths, startOfMonth, isBefore } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import SafetyHeatmap from '@/components/safety/SafetyHeatmap';
+import SafetyMetricTile from '@/components/safety/SafetyMetricTile';
 
 const SEVERITY_KEYS = ['Low', 'Medium', 'High', 'Critical'];
 const SEVERITY_COLORS = { Low: '#22c55e', Medium: '#6366f1', High: '#f59e0b', Critical: '#dc2626' };
@@ -14,20 +15,6 @@ const SEVERITY_COLORS = { Low: '#22c55e', Medium: '#6366f1', High: '#f59e0b', Cr
 const PENDING_INV_STATUSES = ['Pending', 'In Progress', 'Findings Draft'];
 const OPEN_INC_STATUSES = ['Reported', 'Under Investigation', 'Action Required'];
 const ACTIVE_RISK_STATUSES = ['Identified', 'Assessed', 'Treating', 'Monitored'];
-
-const Tile = ({ icon: Icon, label, value, tone }) => (
-  <div
-    className="safety-summary-tile relative overflow-hidden rounded-xl border p-4 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
-    style={{ borderColor: `${tone}55`, background: `linear-gradient(135deg, ${tone}26, hsl(var(--card)) 75%)`, boxShadow: `0 8px 24px -14px ${tone}77` }}
-  >
-    <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${tone}, ${tone}99)` }} />
-    <div className="relative mb-2 flex items-center gap-2">
-      <div className="flex items-center justify-center rounded-lg p-1.5 text-white shadow-md" style={{ background: `linear-gradient(135deg, ${tone}, ${tone}bb)` }}><Icon className="h-4 w-4" /></div>
-      <span className="text-xs font-semibold text-foreground/60">{label}</span>
-    </div>
-    <p className="relative text-3xl font-extrabold leading-none" style={{ color: tone }}>{value}</p>
-  </div>
-);
 
 export default function SafetyTrendsDashboard() {
   const [incidents, setIncidents] = useState([]);
@@ -108,10 +95,10 @@ export default function SafetyTrendsDashboard() {
       ) : (
         <div className="space-y-4">
           <div className="safety-summary-grid grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <Tile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="#f59e0b" />
-            <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="#7c3aed" />
-            <Tile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="#dc2626" />
-            <Tile icon={ShieldAlert} label="Active risks" value={activeRisksCount} tone="#0d9488" />
+            <SafetyMetricTile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="warning" />
+            <SafetyMetricTile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="primary" />
+            <SafetyMetricTile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="danger" />
+            <SafetyMetricTile icon={ShieldAlert} label="Active risks" value={activeRisksCount} tone="teal" />
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">

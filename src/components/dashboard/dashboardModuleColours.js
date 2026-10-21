@@ -1,10 +1,9 @@
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { MODULE_COLOURS } from '@/lib/moduleColours';
+import { moduleColour } from '@/lib/moduleColours';
 
-// Stable, evenly distributed pairs from the existing app palette, dashboard only.
+// One fixed semantic colour for every module, shared across its tile.
 export default function dashboardModuleColours(key) {
-  const index = Math.max(0, MODULE_DIRECTORY.findIndex(module => module.key === key));
-  const primary = index % MODULE_COLOURS.length;
-  const offset = 3 + Math.floor(index / MODULE_COLOURS.length);
-  return { colour: MODULE_COLOURS[primary], accent: MODULE_COLOURS[(primary + offset) % MODULE_COLOURS.length] };
+  const module = MODULE_DIRECTORY.find(module => module.key === key);
+  const colour = moduleColour(module?.label || key);
+  return { colour, accent: colour };
 }
