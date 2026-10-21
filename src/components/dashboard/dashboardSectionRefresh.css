@@ -1,0 +1,89 @@
+/* Only the home dashboard receives these presentation refinements. */
+.bright-dashboard .management-review-report > button {
+  min-height: 2rem;
+  height: auto;
+  padding: .375rem .625rem;
+  font-size: .6875rem;
+  background: hsl(var(--primary) / .06);
+  border-color: hsl(var(--primary) / .2);
+  color: hsl(var(--foreground));
+}
+.bright-dashboard .morning-brief {
+  border-color: hsl(var(--warning) / .35);
+  border-top: 3px solid hsl(var(--warning));
+  background: linear-gradient(115deg, hsl(var(--warning) / .2), hsl(var(--card)) 48%, hsl(var(--primary) / .13));
+  box-shadow: 0 8px 26px -20px hsl(var(--warning) / .65);
+}
+.bright-dashboard .morning-brief-metric,
+.bright-dashboard .compliance-issue-tile {
+  --metric-tone: var(--primary);
+  border: 1px solid hsl(var(--metric-tone) / .3);
+  background: linear-gradient(135deg, hsl(var(--metric-tone) / .18), hsl(var(--metric-tone) / .07));
+  color: hsl(var(--metric-tone));
+  box-shadow: inset 0 3px 0 hsl(var(--metric-tone) / .75), 0 2px 4px hsl(var(--foreground) / .025);
+}
+.bright-dashboard .morning-brief-metric:nth-child(1),
+.bright-dashboard .compliance-issue-tile:nth-child(1) { --metric-tone: var(--warning); }
+.bright-dashboard .morning-brief-metric:nth-child(2),
+.bright-dashboard .compliance-issue-tile:nth-child(3) { --metric-tone: var(--danger); }
+.bright-dashboard .morning-brief-metric:nth-child(3) { --metric-tone: var(--chart-5); }
+.bright-dashboard .morning-brief-metric:nth-child(4) { --metric-tone: var(--primary); }
+.bright-dashboard .morning-brief-metric:nth-child(5),
+.bright-dashboard .compliance-issue-tile:nth-child(2) { --metric-tone: var(--teal); }
+.bright-dashboard .morning-brief-metric:nth-child(6),
+.bright-dashboard .compliance-issue-tile:nth-child(4) { --metric-tone: var(--safe); }
+.bright-dashboard .morning-brief-metric > div:last-child { color: hsl(var(--foreground) / .85); }
+.bright-dashboard .morning-brief-metric > div:nth-child(2) { font-size: 1.5rem; font-weight: 800; }
+.bright-dashboard .morning-brief-list { border-color: hsl(var(--primary) / .16); background: hsl(var(--card) / .85); }
+.bright-dashboard .compliance-issues-widget { border-color: hsl(var(--primary) / .22); box-shadow: 0 6px 24px -20px hsl(var(--primary) / .6); }
+.bright-dashboard .compliance-issues-widget > div:first-child { background: linear-gradient(110deg, hsl(var(--primary) / .12), hsl(var(--teal) / .1)); border-bottom: 1px solid hsl(var(--primary) / .15); }
+.bright-dashboard .compliance-issue-tile > div:first-child { color: hsl(var(--foreground) / .85); }
+.bright-dashboard .compliance-issue-tile > div:first-child svg { color: hsl(var(--metric-tone)); }
+.bright-dashboard .safety-live-dashboard {
+  border-color: hsl(var(--border));
+  box-shadow: 0 8px 28px -22px hsl(var(--foreground) / .3) !important;
+  transform: none;
+}
+.bright-dashboard .safety-live-dashboard > div:first-child { background: hsl(var(--primary)) !important; height: 3px; }
+.bright-dashboard .safety-live-dashboard > div:nth-child(2) { display: none; }
+.bright-dashboard .safety-live-dashboard > div[class*="border-b"] {
+  padding: 1rem;
+  background: linear-gradient(110deg, hsl(var(--primary) / .08), hsl(var(--card)) 75%) !important;
+}
+.bright-dashboard .safety-live-dashboard > div[class*="border-b"] > div:first-child,
+.bright-dashboard .safety-live-dashboard > div[class*="border-b"] > div:nth-child(2) { display: none; }
+.bright-dashboard .safety-live-dashboard > div[class*="border-b"] .uppercase { text-transform: none; letter-spacing: -.015em; font-size: 1rem; }
+.bright-dashboard .safety-live-dashboard > div:last-child { background: hsl(var(--muted) / .35) !important; }
+.bright-dashboard .safety-summary-tile {
+  --safety-tone: var(--warning);
+  border-color: hsl(var(--border)) !important;
+  background: hsl(var(--card)) !important;
+  box-shadow: 0 1px 3px hsl(var(--foreground) / .04) !important;
+  padding: 1rem;
+  transform: none;
+}
+.bright-dashboard .safety-summary-tile:nth-child(2) { --safety-tone: var(--primary); }
+.bright-dashboard .safety-summary-tile:nth-child(3) { --safety-tone: var(--danger); }
+.bright-dashboard .safety-summary-tile:nth-child(4) { --safety-tone: var(--hr-evidence); }
+.bright-dashboard .safety-summary-tile > div:first-child { display: none; }
+.bright-dashboard .safety-summary-tile > div:nth-child(2) { align-items: flex-start; gap: .625rem; min-height: 2.25rem; }
+.bright-dashboard .safety-summary-tile > div:nth-child(2) > div {
+  background: hsl(var(--safety-tone) / .12) !important;
+  color: hsl(var(--safety-tone));
+  border: 1px solid hsl(var(--safety-tone) / .2);
+  box-shadow: none;
+}
+.bright-dashboard .safety-summary-tile > div:nth-child(2) > span { color: hsl(var(--muted-foreground)); line-height: 1.4; }
+.bright-dashboard .safety-summary-tile > p { color: hsl(var(--foreground)) !important; font-size: 1.875rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+.bright-dashboard :is(.safety-chart-panel, .safety-investigations-panel) {
+  background: hsl(var(--card));
+  border-color: hsl(var(--border));
+  box-shadow: 0 1px 3px hsl(var(--foreground) / .03);
+}
+.bright-dashboard :is(.safety-chart-panel, .safety-investigations-panel) > div:first-child { height: 2px; background: hsl(var(--primary) / .6); }
+.bright-dashboard .safety-chart-panel .recharts-cartesian-axis-tick text { fill: hsl(var(--muted-foreground)); }
+.bright-dashboard .safety-chart-panel .recharts-default-tooltip { background: hsl(var(--popover)) !important; border: 1px solid hsl(var(--border)) !important; border-radius: .75rem; box-shadow: 0 6px 20px hsl(var(--foreground) / .08); color: hsl(var(--popover-foreground)); }
+.bright-dashboard .safety-heatmap-panel > div { background: hsl(var(--card)); border-color: hsl(var(--border)); }
+@media (min-width: 768px) {
+  .bright-dashboard .safety-summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

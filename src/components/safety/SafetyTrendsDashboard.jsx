@@ -17,7 +17,7 @@ const ACTIVE_RISK_STATUSES = ['Identified', 'Assessed', 'Treating', 'Monitored']
 
 const Tile = ({ icon: Icon, label, value, tone }) => (
   <div
-    className="relative overflow-hidden rounded-xl border p-4 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+    className="safety-summary-tile relative overflow-hidden rounded-xl border p-4 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
     style={{ borderColor: `${tone}55`, background: `linear-gradient(135deg, ${tone}26, hsl(var(--card)) 75%)`, boxShadow: `0 8px 24px -14px ${tone}77` }}
   >
     <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${tone}, ${tone}99)` }} />
@@ -97,6 +97,7 @@ export default function SafetyTrendsDashboard() {
 
   return (
     <SectionCard
+      className="safety-live-dashboard"
       title="Safety Live Dashboard"
       description="Current incident trends and pending investigations — updates in real time as records change"
     >
@@ -106,7 +107,7 @@ export default function SafetyTrendsDashboard() {
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="safety-summary-grid grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Tile icon={AlertTriangle} label="Open incidents" value={openIncidentsCount} tone="#f59e0b" />
             <Tile icon={FileSearch} label="Pending investigations" value={pendingInv.length} tone="#7c3aed" />
             <Tile icon={Clock} label="Investigations overdue" value={overdueInv.length} tone="#dc2626" />
@@ -114,7 +115,7 @@ export default function SafetyTrendsDashboard() {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">
-            <div className="relative overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-rose-50 p-4 shadow-lg shadow-amber-500/5 dark:border-amber-900 dark:from-amber-950/25 dark:via-card dark:to-rose-950/20 lg:col-span-2">
+            <div className="safety-chart-panel relative overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-rose-50 p-4 shadow-lg shadow-amber-500/5 dark:border-amber-900 dark:from-amber-950/25 dark:via-card dark:to-rose-950/20 lg:col-span-2">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-500 via-rose-500 to-red-500" />
               <h4 className="mb-3 text-sm font-semibold">Incident frequency and severity by month — last 6 months</h4>
               <ResponsiveContainer width="100%" height={200}>
@@ -136,7 +137,7 @@ export default function SafetyTrendsDashboard() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20">
+            <div className="safety-investigations-panel relative overflow-hidden rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-4 shadow-lg shadow-violet-500/5 dark:border-violet-900 dark:from-violet-950/25 dark:via-card dark:to-cyan-950/20">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500" />
               <h4 className="relative mb-3 text-sm font-semibold">Pending investigations</h4>
               {pendingInv.length === 0 ? (
@@ -162,7 +163,7 @@ export default function SafetyTrendsDashboard() {
             </div>
           </div>
 
-          <SafetyHeatmap />
+          <div className="safety-heatmap-panel"><SafetyHeatmap /></div>
         </div>
       )}
     </SectionCard>

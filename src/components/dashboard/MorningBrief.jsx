@@ -19,7 +19,7 @@ export default function MorningBrief() {
 
   if (loading) {
     return (
-      <Card className="gradient-brand-soft">
+      <Card className="morning-brief gradient-brand-soft">
         <CardContent className="flex items-center gap-2 p-4 text-sm text-foreground/60">
           <Coffee className="h-4 w-4 text-brand" /> Preparing your morning brief…
         </CardContent>
@@ -44,7 +44,7 @@ export default function MorningBrief() {
   ];
 
   return (
-    <Card className="gradient-brand-soft shadow-panel">
+    <Card className="morning-brief gradient-brand-soft shadow-panel">
       <CardContent className="p-4">
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export default function MorningBrief() {
           {metrics.map((m) => {
             const Icon = m.icon;
             return (
-              <Link key={m.label} to={m.to} className={`rounded-xl border border-border/60 bg-card p-3 shadow-sm transition-transform hover:-translate-y-0.5 ${m.tone}`}>
+              <Link key={m.label} to={m.to} className={`morning-brief-metric rounded-xl border border-border/60 bg-card p-3 shadow-sm transition-transform hover:-translate-y-0.5 ${m.tone}`}>
                 <Icon className="h-4 w-4" />
                 <div className="mt-1.5 text-xl font-bold leading-none text-foreground">{m.value}</div>
                 <div className="mt-1 text-[11px] font-medium leading-tight text-foreground/55">{m.label}</div>
@@ -69,7 +69,7 @@ export default function MorningBrief() {
         </div>
         <div className="mt-4 grid gap-3 md:grid-cols-3">
           {lists.map((list) => (
-            <div key={list.title} className="rounded-xl border border-border/60 bg-card p-3">
+            <div key={list.title} className="morning-brief-list rounded-xl border border-border/60 bg-card p-3">
               <div className={`text-[11px] font-bold uppercase tracking-wider ${list.tone}`}>{list.title}</div>
               {list.items.length ? (
                 <ul className="mt-1.5 space-y-1">

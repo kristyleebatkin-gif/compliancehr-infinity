@@ -1,5 +1,7 @@
 import React from 'react';
 import '@/components/dashboard/brightDashboard.css';
+import '@/components/dashboard/dashboardSectionRefresh.css';
+import ManagementReviewReport from '@/components/dashboard/ManagementReviewReport';
 import { useRole } from '@/lib/useRole';
 import { ROLES, canAccessNav } from '@/lib/roles';
 import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
@@ -59,6 +61,8 @@ export default function Dashboard() {
       <AllModulesHub />
 
       <DashboardQuickStart />
+
+      {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
 
       {canAccessNav(role, 'compliance') && <MorningBrief />}
 
