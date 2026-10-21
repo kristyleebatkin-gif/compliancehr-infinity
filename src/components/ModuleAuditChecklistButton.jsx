@@ -4,8 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { MODULE_AUDIT_ENTITIES, gatherModuleAudit } from '@/lib/moduleAuditReport';
+import { MODULE_AUDIT_ENTITIES, gatherModuleAudit, resolveAuditModule } from '@/lib/moduleAuditReport';
 import { buildModuleAuditChecklist, buildCorrectiveActions } from '@/lib/moduleAuditChecklists';
 import { downloadAuditChecklistPdf, printAuditChecklist } from '@/lib/auditChecklistPdf';
 import { ClipboardCheck, Download, Loader2, Printer } from 'lucide-react';
@@ -23,7 +22,7 @@ export default function ModuleAuditChecklistButton() {
   const { pathname } = useLocation();
   const { toast } = useToast();
   const seg = `/${pathname.split('/')[1] || ''}`;
-  const module = MODULE_DIRECTORY.find((m) => m.path === seg);
+  const module = resolveAuditModule(seg);
   const inScope = module && MODULE_AUDIT_ENTITIES[seg];
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);

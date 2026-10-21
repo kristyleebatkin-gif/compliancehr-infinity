@@ -13,9 +13,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, Pencil, Contact as ContactIcon, Mail, MessageSquare, Phone, Clock, MapPin, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import PageHeader from '@/components/PageHeader';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
 const CATEGORIES = ['Medical', 'Emergency', 'Government', 'Business', 'Supplier', 'Family', 'Other'];
@@ -84,21 +82,11 @@ export default function KeyContacts({ readOnly = false } = {}) {
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><ContactIcon className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Key Personnel Contacts</h1>
-              <p className="text-sm text-white/75">Key people, their roles, hours and contact details — reach them directly by email, text or phone.</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <ModuleComplianceStrip path="/contacts" />
-            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        icon={ContactIcon}
+        title="Key Personnel Contacts"
+        subtitle="Key people, their roles, hours and contact details, with direct email, text and phone access."
+      />
 
       <AutoRegisterInsights placement="header" />
       <div className="grid grid-cols-3 gap-3">

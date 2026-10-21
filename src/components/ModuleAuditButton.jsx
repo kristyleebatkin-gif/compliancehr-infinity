@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { MODULE_AUDIT_ENTITIES, gatherModuleAudit, downloadModuleAuditReport } from '@/lib/moduleAuditReport';
+import { MODULE_AUDIT_ENTITIES, gatherModuleAudit, downloadModuleAuditReport, resolveAuditModule } from '@/lib/moduleAuditReport';
 import { base44 } from '@/api/base44Client';
 import { Download, Loader2 } from 'lucide-react';
 
@@ -14,7 +13,7 @@ export default function ModuleAuditButton() {
   const { toast } = useToast();
   const [busy, setBusy] = useState(false);
   const seg = `/${pathname.split('/')[1] || ''}`;
-  const module = MODULE_DIRECTORY.find((m) => m.path === seg);
+  const module = resolveAuditModule(seg);
   const inScope = module && MODULE_AUDIT_ENTITIES[seg];
 
   const run = async () => {

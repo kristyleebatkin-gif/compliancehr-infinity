@@ -427,25 +427,32 @@
     color: hsl(var(--header-foreground)) !important;
   }
   .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
-  /* Header standard: keep 2cm sizing and existing brand colours unless explicitly requested. */
+  /* ===== LOCKED HEADER STANDARD — change only on explicit request from the app owner =====
+     Every module header: exactly 3cm tall, app gradient, black outer border, white text with a
+     black outline, standard body font (as Key Personnel), short professional description. */
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
     min-height: 3cm !important;
     height: 3cm !important;
+    max-height: 3cm !important;
     padding-top: .25rem !important;
     padding-bottom: .25rem !important;
     align-content: center;
-    color: hsl(var(--foreground));
+    overflow: hidden;
+    color: #fff;
     border: 2px solid #000 !important;
     font-family: var(--font-body) !important;
   }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .gradient-brand) :is(h1, h2, h3, h4, p, span, button) {
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .gradient-brand) :is(h1, h2, h3, h4, p, span, button, a, svg) {
     font-family: var(--font-body) !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    color: #fff !important;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 3px rgba(0, 0, 0, 0.9) !important;
   }
   .app-readable .app-page-header h1 { font-size: 1.5rem; font-weight: 700; line-height: 2rem; letter-spacing: -0.025em; }
-  .app-readable .app-page-header p { font-size: 0.875rem; font-weight: 600; line-height: 1.25rem; }
-  .app-readable .app-page-header { color: hsl(var(--header-foreground)); }
+  .app-readable .app-page-header p {
+    font-size: 0.875rem; font-weight: 600; line-height: 1.25rem; margin-top: 0.125rem;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], button, span) {
     color: hsl(var(--header-foreground)) !important;
     opacity: 1;

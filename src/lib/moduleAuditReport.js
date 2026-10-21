@@ -64,6 +64,26 @@ export const MODULE_AUDIT_ENTITIES = {
 MODULE_AUDIT_ENTITIES['/key-contacts'] = MODULE_AUDIT_ENTITIES['/contacts'];
 MODULE_AUDIT_ENTITIES['/volunteering-placements'] = MODULE_AUDIT_ENTITIES['/volunteers'];
 MODULE_AUDIT_ENTITIES['/community-referral'] = MODULE_AUDIT_ENTITIES['/referrals'];
+// Every module screen gets an audit scope (standard header: tracker, audit report, audit checklist).
+['/dashboard', '/my-profile', '/my-payroll', '/briefing', '/auditor-portal', '/assistant', '/suggestions', '/help', '/user-guides', '/notifications', '/review-due']
+  .forEach((p) => { MODULE_AUDIT_ENTITIES[p] = MODULE_AUDIT_ENTITIES['/compliance']; });
+MODULE_AUDIT_ENTITIES['/incident-analytics'] = MODULE_AUDIT_ENTITIES['/incidents'];
+MODULE_AUDIT_ENTITIES['/shared-to-do'] = MODULE_AUDIT_ENTITIES['/tasks'];
+
+const EXTRA_MODULES = {
+  '/contacts': { label: 'Key Personnel Contacts', blurb: 'Key people, their roles, hours and contact details, with direct email, text and phone access.' },
+  '/briefing': { label: 'Daily Briefing', blurb: 'Your daily summary of priorities, deadlines and compliance alerts.' },
+  '/my-payroll': { label: 'My Payroll', blurb: 'Your payslips, pay details and payroll history in one secure place.' },
+  '/shared-to-do': { label: 'Shared To-Do', blurb: 'Shared team to-do tracking with sign-off and review status.' },
+  '/review-due': { label: 'Review Due Board', blurb: 'Documents, policies and registers due for review, ordered by urgency.' },
+  '/notifications': { label: 'Notifications', blurb: 'Alerts and reminders raised for you across every module.' },
+};
+// Module (label, blurb) for a route segment, including routes that differ from the directory path.
+export const resolveAuditModule = (seg) => {
+  const found = MODULE_DIRECTORY.find((m) => m.path === seg);
+  if (found) return found;
+  return EXTRA_MODULES[seg] ? { path: seg, ...EXTRA_MODULES[seg] } : null;
+};
 
 const COL = {
   green: [22, 163, 74],

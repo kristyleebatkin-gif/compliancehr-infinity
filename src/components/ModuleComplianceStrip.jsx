@@ -17,7 +17,9 @@ function LiveDot({ tone }) {
   );
 }
 
-export default function ModuleComplianceStrip({ path }) {
+export default function ModuleComplianceStrip({ path: requested }) {
+  // Every module shows a live tracker; modules without their own registers use the organisation-wide one.
+  const path = MODULE_TRACKERS[requested] ? requested : '/compliance';
   const items = MODULE_TRACKERS[path];
   const [counts, setCounts] = useState(null);
 
@@ -31,7 +33,7 @@ export default function ModuleComplianceStrip({ path }) {
   if (!items) return null;
   if (!counts) {
     return (
-      <span className="hidden items-center gap-1.5 rounded-full border border-border/60 bg-card px-2.5 py-1 text-[10px] font-semibold text-foreground/40 lg:flex">
+      <span className="flex items-center gap-1.5 rounded-full border border-border/60 bg-card px-2.5 py-1 text-[10px] font-semibold text-foreground/40">
         <ShieldCheck className="h-3 w-3 animate-pulse" />Checking tracker…
       </span>
     );
@@ -46,7 +48,7 @@ export default function ModuleComplianceStrip({ path }) {
     );
   }
   return (
-    <div className="hidden items-center gap-1.5 sm:flex">
+    <div className="flex flex-wrap items-center gap-1.5">
       {alerts.map((a) => (
         <span key={a.label} title={a.label} className={PILL[a.mode === 'soon' ? 'soon' : 'overdue']}>
           <LiveDot tone={a.mode === 'soon' ? 'soon' : 'overdue'} />

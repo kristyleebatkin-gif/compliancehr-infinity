@@ -15,6 +15,7 @@ import MorningBrief from '@/components/dashboard/MorningBrief';
 import IssuesDashboardWidget from '@/components/compliance/IssuesDashboardWidget';
 import { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
 import LiveDashboards from '@/components/dashboard/LiveDashboards';
+import PageHeader from '@/components/PageHeader';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
 const HEADINGS = {
@@ -32,32 +33,11 @@ export default function Dashboard() {
 
   return (
     <div className="bright-dashboard mx-auto max-w-6xl p-3 md:p-4 space-y-3">
-      <div className="relative overflow-hidden rounded-3xl gradient-brand p-5 text-white shadow-2xl shadow-violet-500/25 md:p-6">
-        <div className="absolute -right-12 -top-20 h-56 w-56 rounded-full bg-violet-200/20 blur-sm" />
-        <div className="absolute left-[42%] top-[-5rem] h-40 w-40 rounded-full bg-cyan-300/20 blur-xl" />
-        <div className="absolute -bottom-20 right-28 h-44 w-44 rounded-full bg-teal-200/20" />
-        <div className="absolute -bottom-24 -left-12 h-48 w-48 rounded-full bg-violet-900/25" />
-        <div className="relative mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[11px] font-semibold shadow-sm backdrop-blur">
-          <Sparkles className="h-3.5 w-3.5 text-cyan-100" />
-          Your ComplianceHR Infinity workspace
-        </div>
-        <h1 className="relative font-display text-2xl font-extrabold tracking-tight text-white md:text-3xl">
-          {firstName ? `Welcome, ${firstName}` : heading.title}
-        </h1>
-        <p className="relative mt-2 max-w-3xl text-sm leading-5 text-white/85">{heading.sub}</p>
-        <div className="relative mt-4 flex flex-wrap gap-2">
-          {[
-            [ShieldCheck, heading.title],
-            [Activity, 'Live compliance overview'],
-            [Zap, 'Quick access to every module'],
-          ].map(([Icon, label]) => (
-            <div key={label} className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-slate-950/15 px-3 py-2 text-xs font-semibold text-white/90 backdrop-blur-sm">
-              <Icon className="h-4 w-4 text-cyan-100" />
-              {label}
-            </div>
-          ))}
-        </div>
-      </div>
+      <PageHeader
+        icon={ShieldCheck}
+        title={firstName ? `Welcome, ${firstName}` : heading.title}
+        subtitle={heading.sub}
+      />
 
       <AllModulesHub />
 

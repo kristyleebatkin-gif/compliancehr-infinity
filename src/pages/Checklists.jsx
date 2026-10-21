@@ -12,8 +12,7 @@ import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import PageHeader from '@/components/PageHeader';
 
 export default function Checklists() {
   const [lists, setLists] = useState([]);
@@ -81,8 +80,8 @@ export default function Checklists() {
 
   return (
     <div className="space-y-4">
+      <PageHeader icon={ClipboardList} title="Checklists" subtitle="Reusable compliance checklists with due dates, progress tracking and PDF export." />
       <div className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
         <Button variant="outline" onClick={exportRegister} disabled={loading || !lists.length}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New checklist</Button></DialogTrigger>
