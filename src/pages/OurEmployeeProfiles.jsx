@@ -27,7 +27,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
   };
   return (
     <div className="employee-directory mx-auto max-w-6xl space-y-4 p-4 md:p-8 sm:max-lg:space-y-2 sm:max-lg:p-2">
-      <PageHeader title={title} showDivider={false} showAlerts={false} showCompliance={false} showAudit={false} />
+      <PageHeader title={title} showDivider={false} />
       <div aria-hidden="true" className="h-1.5 w-full rounded-full bg-primary-foreground" />
       <Tabs value={tab} onValueChange={selectTab} className="space-y-4">
         <EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} />
