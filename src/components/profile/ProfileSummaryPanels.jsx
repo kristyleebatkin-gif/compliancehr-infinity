@@ -17,13 +17,13 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
   if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} />;
   if (staffQuestions) return <div className="grid items-stretch gap-3 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)]">
     <div className="profile-left-fill flex min-w-0 flex-col gap-3">
-      <StaffBadgePreview branding={branding} staff={profile} compact />
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
       <EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <EmployeeRemainingSections key={profile.id} profile={profile} />
+      <StaffBadgePreview branding={branding} staff={profile} compact />
     </div>
-    <aside className="min-w-0 space-y-2">
+    <aside className="flex min-w-0 flex-col gap-3">
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
