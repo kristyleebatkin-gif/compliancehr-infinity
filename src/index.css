@@ -437,10 +437,10 @@
     align-content: center;
     color: hsl(var(--foreground));
     border: 2px solid #000 !important;
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif !important;
+    font-family: var(--font-body) !important;
   }
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .gradient-brand) :is(h1, h2, h3, h4, p, span, button) {
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif !important;
+    font-family: var(--font-body) !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   }
   .app-readable .app-page-header h1 { font-size: 1.5rem; font-weight: 700; line-height: 2rem; letter-spacing: -0.025em; }
