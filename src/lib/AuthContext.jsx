@@ -77,12 +77,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const checkUserAuth = async () => {
+  const checkUserAuth = async ({ background = false } = {}) => {
     try {
       // Now check if the user is authenticated
-      setIsLoadingAuth(true);
+      if (!background) setIsLoadingAuth(true);
       const currentUser = await base44.auth.me();
       setUser(currentUser);
+      setAuthError(null);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);
       setAuthChecked(true);
@@ -104,7 +105,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-    const refresh = () => { if (document.visibilityState === 'visible') checkUserAuth(); };
+    const refresh = () => { if (document.visibilityState === 'visible') checkUserAuth({ background: true }); };
     const timer = setInterval(refresh, 60000);
     window.addEventListener('focus', refresh);
     return () => { clearInterval(timer); window.removeEventListener('focus', refresh); };

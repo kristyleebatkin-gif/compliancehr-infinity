@@ -9,7 +9,8 @@ import PersonalProfileForm from '@/components/profile/PersonalProfileForm';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import OurProfileData from '@/components/profile/OurProfileData';
 import PersonalProfileHeader from '@/components/profile/PersonalProfileHeader';
-import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
+import loadPersonalProfile from '@/lib/loadPersonalProfile';
+import { useAuth } from '@/lib/AuthContext';
 import { loadProfileWithTimeout } from '@/lib/profileLoading';
 import ProfileLoadError from '@/components/profile/ProfileLoadError';
 
@@ -43,6 +44,7 @@ const PARTICIPANT_FIELDS = [
 ];
 
 export default function MyProfile() {
+  const { user: account } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -61,18 +63,7 @@ export default function MyProfile() {
     setLoading(true);
     setLoadError(null);
     try {
-      const { user, prof, pProf } = await loadProfileWithTimeout(async () => {
-        await preparePersonalProfileAccess();
-        const user = await base44.auth.me();
-        if (!user?.email) throw new Error('Your account could not be loaded. Please sign in again.');
-        const participant = user.role === 'Participant';
-        const entity = participant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const [page, participantPage] = await Promise.all([
-          entity.filter({ email: user.email }, { limit: 1 }),
-          participant ? Promise.resolve({ items: [] }) : base44.entities.ParticipantProfile.filter({ email: user.email }, { limit: 1 }),
-        ]);
-        return { user, prof: page.items?.[0] || null, pProf: participantPage.items?.[0] || null };
-      });
+      const { user, prof, pProf } = await loadProfileWithTimeout(() => loadPersonalProfile(account));
       setMe(user);
       setProfile(prof);
       setParticipantProfile(pProf);
@@ -87,7 +78,7 @@ export default function MyProfile() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [account?.id, account?.email, account?.role, account?.full_name]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -160,7 +151,7 @@ export default function MyProfile() {
       {loadError ? <ProfileLoadError error={loadError} onRetry={load} /> : !(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
         const secondary = tab === 'participant-details' && participantProfile;
         const person = secondary || profile;
-        const kind = secondary || isParticipant ? 'participant' : 'staff';
+        const kind = (secondary || isParticipant) ? 'participant' : 'staff';
         return <OurProfileWorkspace key={person.id} profile={person} kind={kind} onUpdated={load} ourView={false} personal
           header={<PersonalProfileHeader profile={person} kind={kind} showIdentity={kind !== 'staff'} />}
           details={<OurProfileData profile={person} kind={kind} initialTab={tab === 'forms' ? 'forms' : 'details'} detailsContent={<PersonalProfileForm fields={secondary ? PARTICIPANT_FIELDS : fields} form={secondary ? participantForm : form} onChange={secondary ? setParticipantField : setField} onSave={secondary ? saveParticipant : save} saving={saving} saved={saved} readOnly={!!secondary && !canEditParticipant} />} />}
