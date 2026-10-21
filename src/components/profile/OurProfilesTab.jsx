@@ -160,7 +160,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       </div>}
 
       {/* Profile categories sit below the dashboard. */}
-      {directory ? (!isParticipant && <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} total={total} />) : filterRow}
+      {directory ? null : filterRow}
       </>}
 
       {/* Modular grouped sections */}
@@ -173,10 +173,11 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
             .filter(([, list]) => list.length > 0)
             .map(([key, list]) => (
               <section key={key} data-profile-role={key}>
-                <div className="app-section-card-header mb-2.5 flex items-center gap-2 rounded-xl px-4">
+                <div className="mb-2.5 flex items-center gap-2">
                   <span className="h-3 w-3 shrink-0 rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${profilePalette(key).primary}, ${profilePalette(key).accent})` }} />
-                  <h3 className="font-display text-sm font-bold uppercase tracking-wide">{key}</h3>
-                  <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs font-semibold">{list.length}</span>
+                  <h3 className="font-display text-sm font-bold uppercase tracking-wide text-foreground/70">{key}</h3>
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-foreground/60">{list.length}</span>
+                  <div className="h-px flex-1 bg-border/60" />
                 </div>
                 <div className="profile-card-grid grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {list.map((r) => {

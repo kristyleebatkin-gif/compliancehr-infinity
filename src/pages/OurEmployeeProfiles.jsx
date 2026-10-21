@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import EmployeeDirectorySummary from '@/components/profile/EmployeeDirectorySummary';
+import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
 import EmployeeDirectoryToolbar from '@/components/profile/EmployeeDirectoryToolbar';
 import useEmployeeDirectorySummary from '@/components/profile/useEmployeeDirectorySummary';
 import '@/components/profile/employeeDirectory.css';
@@ -30,6 +31,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
       <div aria-hidden="true" className="h-1.5 w-full rounded-full bg-primary-foreground" />
       <Tabs value={tab} onValueChange={selectTab} className="space-y-4">
         <EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} />
+        {tab === 'profiles' && <EmployeeCategoryTiles categories={summary.data?.categories || []} selected={category} onSelect={setCategory} total={summary.data?.total} />}
         <EmployeeDirectoryToolbar search={search} onSearch={setSearch} progressAllowed={progressAllowed} />
         <div aria-hidden="true" className="h-1.5 w-full rounded-full bg-primary-foreground" />
         <TabsContent value="profiles"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></TabsContent>
