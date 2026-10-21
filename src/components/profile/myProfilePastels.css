@@ -36,6 +36,11 @@ html body .my-profile-pastels .profile-uniform-box {
   overflow-y: auto !important;
   box-sizing: border-box;
 }
+/* White border around each of those boxes (overrides the no-border rules above). */
+html body .my-profile-pastels .profile-uniform-box.profile-uniform-box.profile-uniform-box {
+  border: 3px solid #fff !important;
+  border-color: #fff !important;
+}
 /* Section headers are all the same compact size (as Staff Information). */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
