@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { Button } from '@/components/ui/button';
 import { ListChecks, AlertTriangle, Clock, CheckCircle2, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
@@ -9,6 +10,7 @@ import { format } from 'date-fns';
 export default function IssuesDashboardWidget() {
   const [stats, setStats] = useState(null);
   const [overdue, setOverdue] = useState([]);
+  const colour = moduleKeyColour('compliance');
 
   useEffect(() => {
     let cancelled = false;
@@ -35,24 +37,20 @@ export default function IssuesDashboardWidget() {
   }
 
   const tiles = [
-    { label: 'Open', value: stats.open, icon: ListChecks, cls: 'text-amber-600' },
-    { label: 'In progress', value: stats.progress, icon: Clock, cls: 'text-blue-600' },
-    { label: 'Overdue', value: stats.overdue, icon: AlertTriangle, cls: 'text-red-600' },
-    { label: 'Resolved', value: stats.resolved, icon: CheckCircle2, cls: 'text-emerald-600' },
+    { label: 'Open', value: stats.open, icon: ListChecks },
+    { label: 'In progress', value: stats.progress, icon: Clock },
+    { label: 'Overdue', value: stats.overdue, icon: AlertTriangle },
+    { label: 'Resolved', value: stats.resolved, icon: CheckCircle2 },
   ];
 
   return (
-    <Card className="compliance-issues-widget overflow-hidden">
-      <CardHeader>
-        <CardTitle className="font-display text-lg">Compliance issues</CardTitle>
-        <CardDescription>Open concerns from the Compliance Issues register and anything past its target date.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <Card className="compliance-issues-widget overflow-hidden" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
+      <CardContent className="space-y-4 pt-6">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {tiles.map((t) => (
-            <div key={t.label} className="compliance-issue-tile rounded-xl border border-border/60 bg-muted/30 p-3">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground"><t.icon className="h-3.5 w-3.5" /> {t.label}</div>
-              <div className={`mt-1 text-2xl font-bold tabular-nums ${t.cls}`}>{t.value}</div>
+            <div key={t.label} className="compliance-issue-tile rounded-xl border bg-card/80 p-3" style={{ borderColor: `${colour}66` }}>
+              <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: colour }}><t.icon className="h-3.5 w-3.5" /> {t.label}</div>
+              <div className="mt-1 text-2xl font-bold tabular-nums" style={{ color: colour }}>{t.value}</div>
             </div>
           ))}
         </div>
