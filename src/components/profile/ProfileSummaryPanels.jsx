@@ -19,7 +19,6 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
       <EmployeeProfileSection title="Résumé" tone="teal"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <EmployeeRemainingSections key={profile.id} profile={profile} />
-      <EmployeeRecordNotice />
     </div>
     <aside className="min-w-0 space-y-2">
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
@@ -28,6 +27,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <ProfileDetailsCheck profile={profile} />
     </aside>
+    <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;
   return <div className="grid items-start gap-3 p-3 md:grid-cols-2">
     <div className="min-w-0 space-y-3"><ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} /><ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} /></div>
