@@ -25,6 +25,15 @@ Reference list shown on every employee and participant profile via the
 - Continuous improvement register
 - Sign in and out register
 
+## Actions, workload and manager copies (owner-confirmed, 2026-10-22)
+- Compliance tasks are sent as **to-do tasks** and **allocated to staff**, so the
+  workload is shared and completion is itself recorded evidence.
+- Every action taken is recorded on completion as evidence and corrective action.
+- **All meetings must be documented** (minutes, attendees, actions).
+- **Managers receive a copy of all**: incidents, risks, issues, concerns, tasks,
+  corrective actions, feedback and follow-ups. Most need a follow-up review
+  completed and recorded.
+
 ## NDIS registration audits
 Evidence pack and registration groups kept audit-ready, drawing on the
 safety checks, drills, audits, registers and business documents above.

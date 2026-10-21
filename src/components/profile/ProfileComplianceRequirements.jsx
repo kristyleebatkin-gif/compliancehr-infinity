@@ -47,6 +47,22 @@ const GROUPS = [
     ],
   },
   {
+    heading: 'Actions & Workload (allocated to-do lists)',
+    items: [
+      'Compliance tasks sent as to-do tasks and allocated to staff',
+      'All actions recorded on completion as evidence and corrective actions',
+      'Shared workload: every staff member carries their allocation',
+    ],
+  },
+  {
+    heading: 'Meetings & Manager Copies',
+    items: [
+      'Every meeting documented (minutes, attendees, actions)',
+      'Managers receive a copy of all incidents, risks, issues, concerns, tasks, corrective actions, feedback and follow-ups',
+      'Follow-up review completed and recorded for records needing review',
+    ],
+  },
+  {
     heading: 'Business Documents (on file, kept current)',
     items: [
       'Business structure documentation',
