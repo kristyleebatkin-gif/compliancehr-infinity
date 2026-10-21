@@ -81,6 +81,13 @@ html body .my-profile-pastels .profile-left-fill > details {
   overflow-y: auto !important;
   box-sizing: border-box;
 }
+/* Staff badge preview at the bottom of the left column matches the box size too. */
+html body .my-profile-pastels .profile-left-fill > :not(details) {
+  height: 9.5rem !important;
+  flex: 0 0 auto !important;
+  overflow-y: auto !important;
+  box-sizing: border-box;
+}
 /* White border around each of those boxes (overrides the no-border rules above). */
 html body .my-profile-pastels .profile-uniform-box.profile-uniform-box.profile-uniform-box {
   border: 3px solid #fff !important;
