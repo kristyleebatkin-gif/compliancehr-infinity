@@ -115,7 +115,7 @@ export default function DocumentationChecklist({ profile, kind }) {
     const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
     const vaultData = kind === 'participant'
       ? { title, participant_id: profile.id, participant_name: profile.full_name, document_type: 'Participant File Audit Checklist', status: 'Completed', file_uri, file_name: filename, uploaded_date: today(), submission_method: 'Online', notes: 'Generated from the Documentation & Compliance Checklist.' }
-      : { title, employee_id: profile.id, employee_name: profile.full_name, employee_email: profile.email || '', document_type: 'Other', status: 'Current', file_uri, file_name: filename, issue_date: today(), notes: 'Generated from the Documentation & Compliance Checklist.' };
+      : { title, employee_id: profile.id, employee_name: profile.full_name, ...(profile.email ? { employee_email: profile.email } : {}), document_type: 'Other', status: 'Current', file_uri, file_name: filename, issue_date: today(), notes: 'Generated from the Documentation & Compliance Checklist.' };
     await vaultEntity.create(vaultData);
   };
 
@@ -156,7 +156,7 @@ export default function DocumentationChecklist({ profile, kind }) {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const vaultData = kind === 'participant'
         ? { title: file.name.replace(/\.[^.]+$/, ''), participant_id: profile.id, participant_name: profile.full_name, document_type: 'Participant File Audit Checklist', status: 'Received', file_uri, file_name: file.name, uploaded_date: today(), submission_method: 'Upload', notes: 'Completed audit checklist uploaded from the Documentation tab.' }
-        : { title: file.name.replace(/\.[^.]+$/, ''), employee_id: profile.id, employee_name: profile.full_name, employee_email: profile.email || '', document_type: 'Other', status: 'Current', file_uri, file_name: file.name, issue_date: today(), notes: 'Completed audit checklist uploaded from the Documentation tab.' };
+        : { title: file.name.replace(/\.[^.]+$/, ''), employee_id: profile.id, employee_name: profile.full_name, ...(profile.email ? { employee_email: profile.email } : {}), document_type: 'Other', status: 'Current', file_uri, file_name: file.name, issue_date: today(), notes: 'Completed audit checklist uploaded from the Documentation tab.' };
       await vaultEntity.create(vaultData);
       toast({ title: 'Completed checklist uploaded', description: 'Saved to the document vault (stored privately).' });
     } catch (error) {
