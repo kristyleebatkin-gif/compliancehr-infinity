@@ -65,19 +65,19 @@ export default function Dashboard() {
 
       {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
 
-      {canAccessNav(role, 'compliance') && <MorningBrief />}
+      {canAccessNav(role, 'compliance') && <ComplianceDashboardFrame><MorningBrief /></ComplianceDashboardFrame>}
 
       {canAccessNav(role, 'compliance') && <ComplianceDashboardFrame><IssuesDashboardWidget /></ComplianceDashboardFrame>}
 
       {role === ROLES.PARTICIPANT
-        ? <ParticipantDashboard />
+        ? <ComplianceDashboardFrame><ParticipantDashboard /></ComplianceDashboardFrame>
         : (role === ROLES.SUPPORT)
-          ? <StaffDashboard />
+          ? <ComplianceDashboardFrame><StaffDashboard /></ComplianceDashboardFrame>
           : <AdminDashboard />}
 
-      {OVERVIEW_ROLES.includes(role) && <LiveDashboards />}
+      {OVERVIEW_ROLES.includes(role) && <ComplianceDashboardFrame><LiveDashboards /></ComplianceDashboardFrame>}
 
-      {canAccessNav(role, 'safety-insights') && <SafetyTrendsDashboard />}
+      {canAccessNav(role, 'safety-insights') && <ComplianceDashboardFrame><SafetyTrendsDashboard /></ComplianceDashboardFrame>}
     </div>
   );
 }

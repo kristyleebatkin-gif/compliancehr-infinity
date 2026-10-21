@@ -15,15 +15,15 @@ import ProviderKpiWidget from '@/components/ndis/ProviderKpiWidget';
 export default function AdminDashboard() {
   return (
     <>
-      <AttentionPanel />
+      <ComplianceDashboardFrame><AttentionPanel /></ComplianceDashboardFrame>
 
       <ComplianceDashboardFrame><ComplianceStatusBoard /></ComplianceDashboardFrame>
 
-      <IncidentExpiryChart />
+      <ComplianceDashboardFrame><IncidentExpiryChart /></ComplianceDashboardFrame>
 
-      <ExpiryReviewFeed />
+      <ComplianceDashboardFrame><ExpiryReviewFeed /></ComplianceDashboardFrame>
 
-      <DeadlineCalendar />
+      <ComplianceDashboardFrame><DeadlineCalendar /></ComplianceDashboardFrame>
 
       <ComplianceDashboardFrame><ComplianceCompletionSummary /></ComplianceDashboardFrame>
 
@@ -31,9 +31,9 @@ export default function AdminDashboard() {
 
       <ComplianceDashboardFrame><ComplianceHealthDashboard /></ComplianceDashboardFrame>
 
-      <ProviderKpiWidget />
+      <ComplianceDashboardFrame><ProviderKpiWidget /></ComplianceDashboardFrame>
 
-      <DashboardCharts />
+      <ComplianceDashboardFrame><DashboardCharts /></ComplianceDashboardFrame>
     </>
   );
 }
