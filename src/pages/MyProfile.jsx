@@ -103,7 +103,7 @@ export default function MyProfile() {
         : null;
       const change_log = entry ? [record.change_log, entry].filter(Boolean).join('\n') : record.change_log;
       await base44.entities[entityName].update(record.id, { ...formData, change_log });
-      if (entityName === 'StaffProfile') await syncEmployeeRecord('StaffProfile', record.id);
+      if (entityName === 'StaffProfile') await syncEmployeeRecord('StaffProfile', record.id, labels.filter(([key]) => (formData[key] || '') !== (record[key] || '')).map(([key]) => key));
       if (entry) {
         await logUserAction('Profile Updated', entityName, {
           record_id: record.id,

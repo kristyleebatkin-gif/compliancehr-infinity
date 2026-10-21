@@ -29,7 +29,7 @@ export default function StaffDetailsTab({ staff, onUpdated }) {
         .map((field) => [field.key, field.type === 'number' ? (form[field.key] === '' ? null : Number(form[field.key])) : form[field.key] ?? '']));
       if (Object.keys(payload).length) {
         await base44.entities.StaffProfile.update(staff.id, payload);
-        await syncEmployeeRecord('StaffProfile', staff.id);
+        await syncEmployeeRecord('StaffProfile', staff.id, Object.keys(payload));
       }
       toast({ title: 'Profile saved' });
       onUpdated();

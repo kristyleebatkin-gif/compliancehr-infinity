@@ -2,7 +2,7 @@ import { updateChanged } from './employeeRecordFields.ts';
 const known = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Staff Badge'];
 export async function fileEmployeeDocument(entities, profile, cases, source, sourceType) {
   if (!source.file_uri) return;
-  const title = source.document_type || source.title || 'Supporting document';
+  const title = (source.document_type === 'Other' ? source.title : source.document_type) || source.title || 'Supporting document';
   const date = source.uploaded_date || new Date().toISOString().slice(0, 10);
   const upsert = async (entity, query, values) => {
     const page = await entity.filter(query, { limit: 1 });

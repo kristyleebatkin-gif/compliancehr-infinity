@@ -17,6 +17,7 @@ export const employeeFields = [
   ['skills', 'qualifications_certificates', ['Qualifications and certificates']],
 ];
 export const canonicalEmployeeForm = (title) => ({ "Driver's License": "Driver's Licence Details", 'Car Registration': 'Car Registration Details', 'Medicare Card': 'Medicare Card Details' }[title] || title);
+export const employeeFormTitles = (title) => [...new Set([title, ...["Driver's License", 'Car Registration', 'Medicare Card'].filter((alias) => canonicalEmployeeForm(alias) === title)])];
 export const parseAnswers = (value) => typeof value === 'string' ? JSON.parse(value || '{}') : value || {};
 export async function eachPage(entity, query, visit) {
   let cursor;

@@ -431,7 +431,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
     setBusy(true);
     try {
       await caseApi.update(activeCase.id, updates);
-      if (intakeType === 'Employee') await syncEmployeeRecord('IntakeCase', activeCase.id);
+      if (intakeType === 'Employee') await syncEmployeeRecord('IntakeCase', activeCase.id, Object.keys(updates));
       setCases((current) => current.map((record) => (
         record.id === activeCase.id ? { ...record, ...updates } : record
       )));

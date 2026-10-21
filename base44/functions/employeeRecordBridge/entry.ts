@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
-import { employeeFields, canonicalEmployeeForm, parseAnswers, eachPage, updateChanged } from '../../shared/employeeRecordFields.ts';
+import { employeeFields, canonicalEmployeeForm, employeeFormTitles, parseAnswers, eachPage, updateChanged } from '../../shared/employeeRecordFields.ts';
 import { fileEmployeeDocument } from '../../shared/employeeDocumentBridge.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 
@@ -34,9 +34,9 @@ export default async function(req) {
     if (body.action === 'load') {
       if (!title || title.length > 200) return Response.json({ error: 'Choose a form' }, { status: 400 });
       const forms = [];
-      if (profile) await eachPage(entities.StaffFormEntry, { staff_id: profile.id }, (item) => { if (canonicalEmployeeForm(item.form_type) === title) forms.push({ ...item, values: parseAnswers(item.answers) }); });
+      if (profile) await eachPage(entities.StaffFormEntry, { staff_id: profile.id, form_type: { $in: employeeFormTitles(title) } }, (item) => { forms.push({ ...item, values: parseAnswers(item.answers) }); });
       const queries = [...(profile ? [{ employee_id: profile.id, online_document: true }] : []), ...cases.map((item) => ({ intake_case_id: item.id, online_document: true }))];
-      for (const query of queries) await eachPage(entities.FormSubmission, query, (item) => { if (canonicalEmployeeForm(item.form_title) === title) forms.push({ ...item, values: parseAnswers(item.data).answers || {} }); });
+      for (const query of queries) await eachPage(entities.FormSubmission, { ...query, form_title: { $in: employeeFormTitles(title) } }, (item) => { forms.push({ ...item, values: parseAnswers(item.data).answers || {} }); });
       const answers = Object.assign({}, ...forms.sort((a, b) => String(a.updated_date).localeCompare(String(b.updated_date))).map((item) => item.values));
       for (const [field, intakeField, labels] of employeeFields) {
         const value = profile?.[field] ?? intake?.[intakeField];
@@ -51,6 +51,8 @@ export default async function(req) {
     const online = body.source === 'FormSubmission' ? parseAnswers(source.data) : null;
     const answers = isForm ? (online ? { ...online.answers, __rows: online.tableRows || [] } : parseAnswers(source.answers)) : {};
     for (const [field, intakeField, labels] of employeeFields) {
+      if (Array.isArray(body.changed_fields) && body.source === 'StaffProfile' && !body.changed_fields.includes(field)) continue;
+      if (Array.isArray(body.changed_fields) && body.source === 'IntakeCase' && !body.changed_fields.includes(intakeField)) continue;
       const answer = labels.find((label) => Object.hasOwn(answers, label));
       const value = body.source === 'StaffProfile' ? source[field] : body.source === 'IntakeCase' ? source[intakeField] : answer ? answers[answer] : undefined;
       if (value !== undefined && typeof value === 'string') { profileValues[field] = value; intakeValues[intakeField] = value; }
