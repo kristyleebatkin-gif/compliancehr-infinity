@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { downloadCsv } from '@/lib/csvExport';
+import { exportProfileLogsPdf } from '@/lib/profileLogsPdf';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 
 const CONSENT = /(?:audit consent|consent to share information|consent to act as an advocate|medication consent):/i;
@@ -30,10 +31,15 @@ export default function ProfileAllLogs({ profile }) {
   } catch { journeySteps = []; }
   const rows = [...changes, ...journeySteps, ...acks];
   const exportCsv = () => downloadCsv(`${(profile.full_name || 'profile').replace(/\s+/g, '-')}-all-logs.csv`, COLUMNS, rows);
+  const [exportingPdf, setExportingPdf] = React.useState(false);
+  const exportPdf = async () => { setExportingPdf(true); try { await exportProfileLogsPdf(profile.full_name, rows); } finally { setExportingPdf(false); } };
   return <EmployeeProfileSection title="All Logs (Exportable)" tone="journey" uniform>
     <div className="mb-1 flex items-center justify-between gap-2">
       <span className="text-[11px] text-black">{rows.length} logged {rows.length === 1 ? 'entry' : 'entries'}</span>
-      <Button size="sm" variant="outline" className="h-6 bg-white px-2 text-[11px] text-black" onClick={exportCsv} disabled={!rows.length}><Download className="h-3 w-3" />Export CSV</Button>
+      <span className="flex items-center gap-1">
+        <Button size="sm" variant="outline" className="h-6 bg-white px-2 text-[11px] text-black" onClick={exportPdf} disabled={!rows.length || exportingPdf}><Download className="h-3 w-3" />{exportingPdf ? 'Preparing…' : 'Export PDF'}</Button>
+        <Button size="sm" variant="outline" className="h-6 bg-white px-2 text-[11px] text-black" onClick={exportCsv} disabled={!rows.length}><Download className="h-3 w-3" />Export CSV</Button>
+      </span>
     </div>
     {rows.length ? <ul className="space-y-1">{rows.map((r, i) => <li key={i} className="break-words rounded-md bg-white px-2 py-1 text-[11px] leading-relaxed text-black"><b>{r.type}:</b> {r.entry}</li>)}</ul> : <p className="text-[11px] text-black">No logged entries yet.</p>}
   </EmployeeProfileSection>;
