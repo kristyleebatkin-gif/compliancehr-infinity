@@ -39,7 +39,7 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
         title={title}
         subtitle={subtitle}
         icon={icon}
-        beforeAudit={tabs && <div className="min-w-0 flex-1 basis-full md:basis-auto [&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
+        beforeAudit={tabs && <div className="order-last min-w-0 basis-full [&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
         under={rows}
       />
       {children}
