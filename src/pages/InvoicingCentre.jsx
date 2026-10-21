@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import InvoiceNavigation from '@/components/invoicing/InvoiceNavigation';
 import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
@@ -130,18 +130,17 @@ export default function InvoicingCentre() {
 
   return (
     <div className="finance-workspace space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={FileSpreadsheet}
         title="Invoicing Centre"
         subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
-        showAlerts={false}
-        beforeAudit={<>
-          <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
-          <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
+        moduleKey="invoicing"
+        insightModule="invoicing"
+        actions={<>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
         </>}
       />
-
-      <RegisterInsights module="invoicing" />
 
       <AgedReceivables invoices={invoices} onChanged={load} />
 

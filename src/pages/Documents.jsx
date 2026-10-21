@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
 import { logUserAction } from '@/lib/actionLog';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -202,13 +202,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="vault-workspace compact-module space-y-2">
-      {!embedded && <PageHeader
+      {!embedded && <ModuleShell
         icon={FolderOpen}
         title="Document Vault"
         subtitle="Every Document, Expiry Tracking and Data Control."
-        showAlerts={false}
-        
-        showDivider={false}
+        moduleKey="documents"
+        insightModule={!profile && !isParticipant ? 'documents' : undefined}
       />}
 
       {isParticipant ? (
@@ -218,7 +217,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </div>
       ) : (
         <>
-      {!profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
+      {embedded && !profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="vault-document-tabs flex w-fit flex-nowrap justify-start">

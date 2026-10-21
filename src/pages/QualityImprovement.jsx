@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -151,27 +151,21 @@ export default function QualityImprovement() {
 
   return (
     <div className="compact-module space-y-2">
-      <PageHeader
+      <ModuleShell
+        icon={Lightbulb}
         title="Quality & Improvement"
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
-        showAlerts={false}
-      />
-
-      <RegisterInsights module="quality" />
-
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-        {[
-          ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length, 'from-violet-500 via-purple-500 to-fuchsia-500'],
-          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length, 'from-sky-500 via-blue-600 to-indigo-600'],
-          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length, 'from-amber-500 via-orange-500 to-rose-500'],
-          ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length, 'from-emerald-500 via-teal-500 to-cyan-600'],
-        ].map(([label, value, grad]) => (
-          <div key={label} className={`rounded-2xl bg-gradient-to-br p-3.5 text-white shadow-md ${grad}`}>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{label}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
-          </div>
+        moduleKey="quality"
+        insightModule="quality"
+        small={[
+          ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length],
+          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length],
+          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length],
+          ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
-      </div>
+      />
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <QualityToolbar tabs={TABS} activeTab={activeTab} onAdd={openNewFor} onExport={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab))), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)} />
