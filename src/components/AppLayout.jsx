@@ -412,7 +412,7 @@ export default function AppLayout() {
               <Outlet />
             </ErrorBoundary>
           </div>
-          <ModuleDocsFooter />
+          {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
         </main>
 
         {/* Bottom nav (mobile) */}

@@ -5,43 +5,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, TrendingUp, UserRound } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import StaffHome from '@/pages/StaffHome';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
+import ProgressChart from '@/components/profile/StaffProgressChart';
 import StaffComplianceFlags from '@/components/dashboard/StaffComplianceFlags';
 
 const INTAKE_COMPLETED = ['Approved', 'Converted to Profile'];
 const INTAKE_PENDING = ['Draft', 'Information Required', 'Ready for Review'];
 const TASK_COMPLETED = ['Completed', 'Finalised'];
 const TASK_PENDING = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Overdue'];
-
-const tickStyle = { fontSize: 12, fontWeight: 600 };
-
-function ProgressChart({ title, data, pendingLabel }) {
-  return (
-    <Card className="shadow-panel">
-      <CardContent className="p-5">
-        <h2 className="font-display text-lg font-bold">{title}</h2>
-        <p className="mb-3 text-xs font-medium text-muted-foreground">Completed versus {pendingLabel.toLowerCase()} for each staff member</p>
-        {data.length === 0 ? (
-          <p className="py-10 text-center text-sm text-muted-foreground">No data yet.</p>
-        ) : (
-          <div style={{ height: Math.max(220, data.length * 44 + 60) }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} layout="vertical" margin={{ top: 4, right: 24, left: 8, bottom: 4 }} barSize={20}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
-                <XAxis type="number" allowDecimals={false} tick={tickStyle} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="name" width={140} tick={tickStyle} axisLine={false} tickLine={false} />
-                <Tooltip cursor={{ fill: 'rgba(124, 58, 237, 0.06)' }} />
-                <Legend iconType="circle" wrapperStyle={{ fontSize: 12, fontWeight: 600 }} />
-                <Bar dataKey="completed" name="Completed" stackId="a" fill="#16a34a" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="pending" name={pendingLabel} stackId="a" fill="#ca8a04" radius={[4, 4, 4, 4]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
 
 export default function StaffProgressDashboard({ embedded = false, search = '' }) {
   const [rows, setRows] = useState([]);
@@ -91,10 +61,10 @@ export default function StaffProgressDashboard({ embedded = false, search = '' }
   }), { intakeCompleted: 0, intakePending: 0, tasksCompleted: 0, tasksPending: 0 });
 
   const statCards = [
-    { label: 'Intake forms completed', value: totals.intakeCompleted, colour: '#16a34a' },
-    { label: 'Intake forms pending', value: totals.intakePending, colour: '#ca8a04' },
-    { label: 'Compliance tasks completed', value: totals.tasksCompleted, colour: '#16a34a' },
-    { label: 'Compliance tasks pending', value: totals.tasksPending, colour: '#ca8a04' },
+    { label: 'Intake forms completed', value: totals.intakeCompleted, colour: 'hsl(var(--safe))' },
+    { label: 'Intake forms pending', value: totals.intakePending, colour: 'hsl(var(--warning))' },
+    { label: 'Compliance tasks completed', value: totals.tasksCompleted, colour: 'hsl(var(--safe))' },
+    { label: 'Compliance tasks pending', value: totals.tasksPending, colour: 'hsl(var(--warning))' },
   ];
 
   return (
@@ -105,10 +75,10 @@ export default function StaffProgressDashboard({ embedded = false, search = '' }
       />}
 
       <Tabs defaultValue="progress">
-        <TabsList>
+        {!embedded && <TabsList>
           <TabsTrigger value="progress"><TrendingUp className="mr-1.5 h-4 w-4" />Staff progress</TabsTrigger>
           <TabsTrigger value="profile"><UserRound className="mr-1.5 h-4 w-4" />My profile</TabsTrigger>
-        </TabsList>
+        </TabsList>}
         <TabsContent value="progress" className="space-y-4">
       {loading ? (
         <div className="flex items-center justify-center gap-2 py-16 text-sm text-muted-foreground">
@@ -154,9 +124,9 @@ export default function StaffProgressDashboard({ embedded = false, search = '' }
         </>
       )}
         </TabsContent>
-        <TabsContent value="profile">
+        {!embedded && <TabsContent value="profile">
           <StaffHome embedded />
-        </TabsContent>
+        </TabsContent>}
       </Tabs>
     </div>
   );

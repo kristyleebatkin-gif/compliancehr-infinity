@@ -1,3 +1,16 @@
+.app-readable .employee-directory-toolbar [data-dashboard-tabs][role="tablist"] {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.app-readable .employee-directory-toolbar [data-dashboard-tab] {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
 .employee-directory .employee-directory-tile {
   border: 1px solid hsl(var(--directory-tone) / .55);
   background: linear-gradient(125deg, hsl(var(--directory-tone) / .82), hsl(var(--directory-tone) / .58)), hsl(var(--card));
