@@ -8,6 +8,11 @@ html body .my-profile-pastels .app-section-card-header {
   outline: 0 !important;
 }
 /* No borders on section wrappers or header rows. */
+html body .my-profile-pastels [data-dashboard-tabs],
+html body .my-profile-pastels .employee-directory-tile,
+html body .my-profile-pastels .employee-directory-my-profile,
+html body .my-profile-pastels .staff-compliance-summary,
+html body .my-profile-pastels [data-profile-tone],
 html body .my-profile-pastels details,
 html body .my-profile-pastels details > summary,
 html body .my-profile-pastels [data-dashboard-tab] * {
