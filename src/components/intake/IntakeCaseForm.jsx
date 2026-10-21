@@ -295,10 +295,10 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
 export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, uploadingDoc, busy, onUpload, onView, allowResumeUpload = false }) {
   const done = readiness.checks.length - readiness.missing.length;
   return (
-    <aside className="h-fit overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
-      <div className="border-b border-border bg-accent px-4 py-3 text-foreground">
+    <aside className="min-w-0 h-fit overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
+      <div className="app-section-card-header flex min-h-[2cm] flex-col justify-center border-b border-border bg-accent px-4 py-3 text-foreground">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-bold">Intake readiness</span>
+          <div className="flex min-w-0 flex-wrap items-center gap-2"><span className="text-sm font-bold">Intake readiness</span><span className="rounded-full border border-border bg-card px-2 py-1 text-xs font-semibold">Required documents {readiness.documentChecks.filter(check => check.complete).length}/{readiness.documentChecks.length}</span></div>
           <span className="text-xl font-extrabold">{readiness.score}%</span>
         </div>
         <div className="mt-2 h-2 overflow-hidden rounded-full bg-primary/15">
@@ -310,7 +310,7 @@ export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, up
         </div>
       </div>
       <div className="p-4">
-        <p className="text-[10px] leading-relaxed text-foreground/45">
+        <p className="text-[10px] leading-relaxed text-muted-foreground">
           Readiness supports NDIS onboarding controls and conditional safeguards. It does not replace provider-specific legal advice or an external certification audit.
         </p>
         {[
@@ -318,13 +318,13 @@ export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, up
           ['Required documents', readiness.documentChecks],
         ].map(([heading, checks]) => (
           <div key={heading} className="mt-4 space-y-1.5">
-            <div className="text-[10px] font-bold uppercase tracking-wide text-foreground/45">{heading}</div>
+            <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{heading}</div>
             {checks.map((check) => (
               <div key={check.label} className="flex items-start gap-2 text-xs">
                 {check.complete
                   ? <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />
                   : <FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />}
-                <span className={check.complete ? 'text-foreground/65' : 'font-medium'}>{check.label}</span>
+                <span className={check.complete ? 'text-foreground' : 'font-medium'}>{check.label}</span>
               </div>
             ))}
           </div>

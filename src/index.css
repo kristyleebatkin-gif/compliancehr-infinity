@@ -423,4 +423,26 @@
   .app-readable .app-page-header { background: var(--header-gradient) !important; }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) { background: var(--section-header-gradient) !important; }
   .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
+  /* Consistent physical spacing and minimum header height across the workspace. */
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
+    box-sizing: border-box;
+    min-height: 2cm;
+    height: auto;
+    color: hsl(var(--foreground));
+  }
+  .app-readable .app-page-header { color: hsl(var(--header-foreground)); }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title]) {
+    color: hsl(var(--foreground));
+    opacity: 1;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+  .bright-dashboard > :not([hidden]) ~ :not([hidden]),
+  .bright-dashboard .compliance-dashboard-compact > :not([hidden]) ~ :not([hidden]) {
+    margin-top: .5cm !important;
+  }
+  .bright-dashboard .grid { gap: .5cm !important; }
+  .bright-dashboard :is(.dashboard-panel, [data-dashboard-module]) :is(p, .text-muted-foreground) {
+    opacity: 1;
+  }
 }

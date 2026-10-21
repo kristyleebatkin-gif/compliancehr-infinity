@@ -34,13 +34,13 @@ export default function IntakeCaseDocuments({
   const pct = checks.length ? Math.round((doneCount / checks.length) * 100) : 0;
 
   return (
-    <div className={showReadiness ? 'grid items-start gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,0.7fr)]' : 'space-y-4'}>
-      <details className="space-y-2">
+    <div className={showReadiness ? 'grid min-w-0 items-start gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)]' : 'space-y-4'}>
+      <details className="min-w-0 space-y-2 break-words">
         <summary className="cursor-pointer rounded-lg border border-border bg-muted/30 px-3 py-2 text-foreground">
           <span className="text-xs font-bold uppercase tracking-wide">Required documents</span>
           {checks.length > 0 && (
-            <div className="flex items-center gap-2">
-              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">{doneCount}/{checks.length} complete</span>
+            <div className="mt-1 flex min-w-0 flex-wrap items-center gap-2">
+              <span className="rounded-full bg-safe/15 px-2 py-0.5 text-xs font-bold text-foreground">{doneCount}/{checks.length} complete</span>
               <span className="hidden h-1.5 w-24 overflow-hidden rounded-full bg-muted sm:block">
                 <span className="block h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600" style={{ width: `${pct}%` }} />
               </span>
@@ -53,7 +53,7 @@ export default function IntakeCaseDocuments({
           readiness.documentChecks.map((check) => {
             const doc = docForCheck(check.label);
             return (
-              <div key={check.label} className="relative flex flex-col gap-2 overflow-hidden rounded-xl border border-border/60 bg-card py-2.5 pl-4 pr-3 sm:flex-row sm:items-center sm:justify-between">
+              <div key={check.label} className="relative flex min-w-0 flex-col gap-2 overflow-hidden rounded-xl border border-border/60 bg-card py-2.5 pl-4 pr-3">
                 <span className="absolute inset-y-0 left-0 w-1.5" style={{ backgroundColor: check.complete ? '#10b981' : '#f59e0b' }} />
                 <div className="flex min-w-0 items-start gap-2">
                   {check.complete
@@ -67,7 +67,7 @@ export default function IntakeCaseDocuments({
                     )}
                   </div>
                 </div>
-                <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
+                <div className="flex min-w-0 flex-wrap items-center gap-2 [&_button]:h-auto [&_button]:min-h-8 [&_button]:max-w-full [&_button]:whitespace-normal [&_button]:text-left [&_span]:max-w-full [&_span]:whitespace-normal">
                   {doc && (
                     <Button variant="outline" size="sm" onClick={() => onView(doc)}>View</Button>
                   )}

@@ -2,10 +2,10 @@
 .app-dashboard-canvas { padding: 1cm; }
 .app-dashboard-canvas > :is(div, section) { padding: 0; }
 .app-dashboard-canvas .dashboard-panel { min-width: 0; }
-.app-dashboard-canvas [role="tabpanel"] > .dashboard-panel { margin-block: 1cm; }
+.app-dashboard-canvas [role="tabpanel"] > .dashboard-panel { margin-block: .5cm; }
 .app-dashboard-canvas .module-action-bar :is(button, a) { height: auto; min-height: 1.75rem; white-space: normal; text-align: left; }
 .app-dashboard-canvas :is(.app-page-header, .dashboard-panel-header) .truncate { white-space: normal; overflow: visible; text-overflow: clip; }
-.app-dashboard-canvas > :is(div, section) > .dashboard-panel { margin-block: 1cm; }
+.app-dashboard-canvas > :is(div, section) > .dashboard-panel { margin-block: .5cm; }
 .app-dashboard-canvas :is(.app-page-header, .dashboard-panel-header) :is(h1, h2, h3, h4, p, [data-panel-title]) {
   white-space: normal; overflow: visible; overflow-wrap: anywhere; text-overflow: clip; -webkit-line-clamp: unset;
 }
