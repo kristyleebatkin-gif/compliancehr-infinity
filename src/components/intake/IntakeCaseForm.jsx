@@ -297,17 +297,17 @@ export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, up
   const done = readiness.checks.length - readiness.missing.length;
   return (
     <aside className="h-fit overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
-      <div className="gradient-brand px-4 py-3 text-white">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-border bg-accent px-4 py-3 text-foreground">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-bold">Intake readiness</span>
           <span className="text-xl font-extrabold">{readiness.score}%</span>
         </div>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/30">
-          <div className="h-full rounded-full bg-white transition-all" style={{ width: `${readiness.score}%` }} />
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-primary/15">
+          <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${readiness.score}%` }} />
         </div>
-        <div className="mt-2 flex flex-wrap gap-1.5 text-[10px] font-semibold">
-          <span className="rounded-full bg-white/20 px-2 py-0.5">{done} of {readiness.checks.length} complete</span>
-          <span className="rounded-full bg-white/20 px-2 py-0.5">{readiness.missing.length} outstanding</span>
+        <div className="mt-2 flex flex-wrap gap-1.5 text-xs font-semibold">
+          <span className="rounded-full border border-border bg-card px-2 py-0.5">{done} of {readiness.checks.length} complete</span>
+          <span className="rounded-full border border-border bg-card px-2 py-0.5">{readiness.missing.length} outstanding</span>
         </div>
       </div>
       <div className="p-4">

@@ -35,9 +35,9 @@ export default function IntakeCaseDocuments({
 
   return (
     <div className={showReadiness ? 'grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]' : 'space-y-4'}>
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <div className="text-xs font-bold uppercase tracking-wide text-foreground/45">Required documents</div>
+      <details className="space-y-2">
+        <summary className="cursor-pointer rounded-lg border border-border bg-muted/30 px-3 py-2 text-foreground">
+          <span className="text-xs font-bold uppercase tracking-wide">Required documents</span>
           {checks.length > 0 && (
             <div className="flex items-center gap-2">
               <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">{doneCount}/{checks.length} complete</span>
@@ -46,7 +46,7 @@ export default function IntakeCaseDocuments({
               </span>
             </div>
           )}
-        </div>
+        </summary>
         {readiness.documentChecks.length === 0 ? (
           <p className="text-sm text-muted-foreground">No document requirements for this case.</p>
         ) : (
@@ -137,7 +137,7 @@ export default function IntakeCaseDocuments({
             );
           })
         )}
-      </div>
+      </details>
 
       {showReadiness && <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={onUpload} onView={onView} />}
     </div>
