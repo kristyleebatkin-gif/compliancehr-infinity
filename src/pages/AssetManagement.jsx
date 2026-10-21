@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Plus, Trash2, Boxes, Wrench, Download } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
@@ -62,13 +62,13 @@ export default function AssetManagement() {
 
   return (
     <div className="compact-module space-y-3">
-      <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules." />
+      <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules."
+        beforeAudit={<Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add asset</Button>}
+        afterAudit={<Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>}
+      />
 
       <RegisterInsights module="assets" />
-      <div className="flex flex-wrap items-center gap-2">
-        <Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add asset</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>New asset</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -105,7 +105,6 @@ export default function AssetManagement() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

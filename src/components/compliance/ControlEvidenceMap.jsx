@@ -27,8 +27,8 @@ export default function ControlEvidenceMap() {
   }, [entities]);
 
   return (
-    <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">
+    <div className="space-y-2">
+      <p className="text-xs text-muted-foreground">
         Every checklist item maps to its NDIS Practice Standards control and its evidence registers, counted live.
       </p>
       {NDIS_CORE_STANDARDS.map((s) => {
@@ -37,9 +37,9 @@ export default function ControlEvidenceMap() {
         const started = all.some((n) => n > 0);
         return (
           <Card key={s.standard} className="shadow-panel">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="font-editorial text-lg font-semibold text-foreground">{s.standard}</h3>
+            <CardContent className="p-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-heading text-sm font-semibold leading-snug text-foreground">{s.standard}</h3>
                 {ready ? (
                   <Badge className="bg-safe/10 text-safe border border-safe/30"><CheckCircle2 className="mr-1 h-3 w-3" />Evidence in place</Badge>
                 ) : started ? (
@@ -48,15 +48,15 @@ export default function ControlEvidenceMap() {
                   <Badge className="bg-danger/10 text-danger border border-danger/30"><AlertTriangle className="mr-1 h-3 w-3" />No evidence yet</Badge>
                 )}
               </div>
-              <div className="mt-3 space-y-2">
+              <div className="mt-2 space-y-1">
                 {s.controls.map((c) => (
-                  <div key={c.control} className="rounded-xl border border-border/60 bg-muted/30 p-3">
-                    <p className="text-sm font-semibold text-foreground">{c.control}</p>
-                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                  <div key={c.control} className="rounded-lg border border-border/60 bg-muted/30 p-2">
+                    <p className="text-xs font-semibold leading-snug text-foreground">{c.control}</p>
+                    <div className="mt-1 flex flex-wrap gap-1">
                       {c.evidence.map((e) => {
                         const n = counts[e.entity];
                         return (
-                          <span key={e.label} className="rounded-full border border-border/60 bg-card px-2.5 py-0.5 text-xs font-medium tabular-nums text-foreground/70">
+                          <span key={e.label} className="rounded-full border border-border/60 bg-card px-2 py-0.5 text-[11px] font-medium tabular-nums text-foreground/70">
                             {e.label}: {n === undefined ? '…' : n}
                           </span>
                         );

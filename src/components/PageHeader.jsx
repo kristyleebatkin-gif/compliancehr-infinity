@@ -7,7 +7,7 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, afterAudit, compactActions = true, showDivider = true, actionClassName }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon, className, accent, showAlerts = true, showCompliance = true, showAudit = true, under, beforeAudit, afterAudit, compactActions = true, showDivider = true, actionClassName, auditClassName }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   // Header band uses the logo's brand gradient; the module accent stays as a thin identity strip.
@@ -47,12 +47,12 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         </div>
       </div>
     </div>
-      {(showCompliance || showAudit || action) && (
+      {(showCompliance || showAudit || beforeAudit || afterAudit || action) && (
         <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
           {showCompliance && <ModuleComplianceStrip path={seg} />}
           {beforeAudit}
           {showAudit && (compactActions ? (
-            <div className="flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3">
+            <div className={cn('flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3', auditClassName)}>
               <ModuleAuditChecklistButton />
               <ModuleAuditButton />
             </div>
@@ -61,6 +61,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
           {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>{action}</div>}
         </div>
       )}
+      {under}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
     </div>
   );

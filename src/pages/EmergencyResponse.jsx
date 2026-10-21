@@ -5,17 +5,16 @@ import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Siren, Flame, ClipboardCheck, FileText, Users, AlertTriangle, Download } from 'lucide-react';
+import EmergencyDrillDialog from '@/components/emergency/EmergencyDrillDialog';
+import EmergencyDownloads from '@/components/emergency/EmergencyDownloads';
+import { Plus, Trash2, Siren, Flame, ClipboardCheck, FileText, AlertTriangle, Download } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
-import { format, addMonths, isBefore, addDays } from 'date-fns';
+import { format, isBefore, addDays } from 'date-fns';
 import SafetyChecksLog from '@/components/emergency/SafetyChecksLog';
 import EmergencyDocumentsLibrary from '@/components/emergency/EmergencyDocumentsLibrary';
 import VisitorLogTable from '@/components/emergency/VisitorLogTable';
@@ -24,7 +23,6 @@ import LiveAlerts from '@/components/emergency/LiveAlerts';
 import EmergencyQuickDial from '@/components/emergency/EmergencyQuickDial';
 import OfflineFieldCapture from '@/components/safety/OfflineFieldCapture';
 
-const TYPES = ['Fire Evacuation', 'Fire Drill', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
 
 export default function EmergencyResponse({ embedded = false } = {}) {
   const { user } = useRole();
@@ -35,6 +33,8 @@ export default function EmergencyResponse({ embedded = false } = {}) {
   const [docCount, setDocCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [documentOpen, setDocumentOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('drills');
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ title: '', drill_type: 'Fire Evacuation', date: '', location: '', attendees_count: '', outcome: 'Completed', notes: '' });
 
@@ -96,9 +96,14 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         title="Emergency Response"
         showCompliance={!employee} showAudit={!employee} showAlerts={!employee}
         subtitle={employee ? 'Your emergency drill and safety-check records.' : 'Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.'}
-        action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
+        beforeAudit={<><Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>{!employee && <Button variant="outline" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}</>}
+        afterAudit={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
+        under={!employee && <EmergencyDownloads />}
       />}
 
+      {embedded && <div className="module-action-bar flex flex-wrap gap-1"><Button onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Log drill</Button>{!employee && <Button variant="outline" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="h-4 w-4" />Add doc</Button>}</div>}
+      {embedded && !employee && <EmergencyDownloads />}
+      <EmergencyDrillDialog open={open} onOpenChange={setOpen} form={form} onChange={setForm} saving={saving} onSave={save} />
       {!employee && <RegisterInsights module="emergency" />}
 
       {!employee && <EmergencyQuickDial />}
@@ -129,8 +134,8 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         <Card><CardContent className="p-3 text-sm text-warning">{dueSoonChecks} check{dueSoonChecks === 1 ? '' : 's'} due within 30 days - see the Safety checks tab.</CardContent></Card>
       )}
 
-      <Tabs defaultValue="drills">
-        <TabsList className="flex-wrap">
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid h-auto grid-cols-2 gap-2 bg-transparent p-0 sm:grid-cols-3 lg:grid-cols-4 [&>button]:h-auto [&>button]:min-h-12 [&>button]:whitespace-normal [&>button]:border [&>button]:border-border [&>button]:bg-card [&>button]:px-3 [&>button]:py-2 [&>button]:text-left">
           <TabsTrigger value="drills">Drills &amp; evacuations</TabsTrigger>
           <TabsTrigger value="checks">Safety checks log</TabsTrigger>
           {!employee && <TabsTrigger value="documents">Documents &amp; plans</TabsTrigger>}
@@ -141,39 +146,6 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         </TabsList>
 
         <TabsContent value="drills" className="mt-4 space-y-4">
-          <div className="flex justify-end">
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild><Button size="sm"><Plus className="mr-2 h-4 w-4" />Log drill</Button></DialogTrigger>
-              <DialogContent>
-                <DialogHeader><DialogTitle>New emergency drill</DialogTitle></DialogHeader>
-                <div className="grid gap-3">
-                  <div className="grid gap-1.5"><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-1.5"><Label>Drill type</Label>
-                      <Select value={form.drill_type} onValueChange={(v) => setForm({ ...form, drill_type: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>{TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                      </Select>
-                    </div>
-                    <div className="grid gap-1.5"><Label>Date</Label><Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="grid gap-1.5"><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
-                    <div className="grid gap-1.5"><Label>Participants</Label><Input type="number" value={form.attendees_count} onChange={(e) => setForm({ ...form, attendees_count: e.target.value })} /></div>
-                    <div className="grid gap-1.5"><Label>Outcome</Label>
-                      <Select value={form.outcome} onValueChange={(v) => setForm({ ...form, outcome: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>{['Completed', 'Partial', 'Issues Found'].map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}</SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  <div className="grid gap-1.5"><Label>Notes</Label><Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
-                  <Button onClick={save} disabled={saving || !form.title.trim()}>Log drill</Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </div>
-
           {loading ? (
             <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : drills.length === 0 ? (
@@ -205,7 +177,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         </TabsContent>
 
         <TabsContent value="checks" className="mt-4"><SafetyChecksLog scope={scope} /></TabsContent>
-        {!employee && <TabsContent value="documents" className="mt-4"><EmergencyDocumentsLibrary /></TabsContent>}
+        {!employee && <TabsContent value="documents" className="mt-4"><EmergencyDocumentsLibrary open={documentOpen} onOpenChange={setDocumentOpen} onChanged={load} /></TabsContent>}
         {!employee && <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>}
         <TabsContent value="resources" className="mt-4"><EmergencyResources /></TabsContent>
         <TabsContent value="alerts" className="mt-4"><LiveAlerts /></TabsContent>
