@@ -19,7 +19,7 @@ export default function EmployeeJourneyForm({ profile, onUpdated }) {
       const rows = [{ field: 'Employment start date', value: value.start_date }, { field: 'Induction date', value: value.induction_date }, { field: 'Last saved by', value: entry.completed_by }, { field: 'Last saved at', value: entry.updated_date || entry.completed_date }];
       for (const item of value.milestones) {
         rows.push({ field: 'Milestone', value: `${item.type}: ${item.title || 'Untitled'}` });
-        for (const key of ['planned_date', 'completed_date', 'next_due_date', 'responsible', 'notes']) rows.push({ field: key.replaceAll('_', ' '), value: item[key] });
+        for (const key of ['planned_date', 'completed_date', 'next_due_date', 'responsible', 'notes', 'report']) rows.push({ field: key.replaceAll('_', ' '), value: item[key] });
         rows.push({ field: 'Supporting documents', value: (item.documents || []).map((document) => document.name).join('; ') });
       }
       await profileRecordExport('Employee Journey', profile, rows, format);
@@ -29,7 +29,7 @@ export default function EmployeeJourneyForm({ profile, onUpdated }) {
   if (state.loading) return <p role="status" className="flex items-center gap-1 text-xs"><Loader2 className="h-3 w-3 animate-spin" />Loading journey…</p>;
   if (!value) return <div role="alert" className="text-xs text-destructive">{state.error}<Button type="button" variant="outline" size="sm" onClick={state.retry}>Retry</Button></div>;
   return <form onSubmit={state.save} className="mt-2 space-y-2">
-    <p className="text-[11px] text-muted-foreground">Record scheduled, completed and renewal dates for each activity. These milestones supplement existing module records; documents can be downloaded individually.</p>
+    <p className="text-[11px] text-muted-foreground">Documents the workplace cycle — intake, induction, buddy shift, training, more buddy shift, then repeat. Every step records its dates, comments, report and who ran it; training is logged as its own step. Add milestones for repeat cycles.</p>
     <fieldset disabled={state.saving || busy || exporting} className="min-w-0 space-y-2">
       <div className="grid gap-2 sm:grid-cols-2">{[['start_date', 'Employment start date'], ['induction_date', 'Induction date']].map(([key, label]) => <label key={key} htmlFor={`${id}-${key}`} className="space-y-1 text-[11px]">{label}<Input id={`${id}-${key}`} type="date" disabled={!state.canEditDates || !state.canEdit} value={value[key]} className="h-8 text-xs" onChange={(event) => change({ ...value, [key]: event.target.value })} /></label>)}</div>
       {value.milestones.map((milestone, index) => <JourneyMilestone key={milestone.id} milestone={milestone} index={index} readOnly={!state.canEdit} change={(key, next) => update(milestone.id, key, next)} remove={() => { if (window.confirm('Remove this milestone? This takes effect when you save the journey.')) change({ ...value, milestones: value.milestones.filter((item) => item.id !== milestone.id) }); }}><JourneyDocuments documents={milestone.documents || []} readOnly={!state.canEdit} onChange={(documents) => update(milestone.id, 'documents', documents)} onBusy={setBusy} /></JourneyMilestone>)}

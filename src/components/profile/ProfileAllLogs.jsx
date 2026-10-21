@@ -14,10 +14,21 @@ export default function ProfileAllLogs({ profile }) {
     queryKey: ['profile-acknowledgements', profile.id],
     queryFn: async () => (await base44.functions.invoke('profileAcknowledgements', { email: profile.email })).data,
   });
+  const journey = useQuery({
+    queryKey: ['profile-journey-actions', profile.id],
+    queryFn: async () => (await base44.entities.StaffFormEntry.filter({ staff_id: profile.id, form_type: 'Employee Journey' }, { sort: '-updated_date', limit: 1 })).items[0] || null,
+  });
   const changes = String(profile.change_log || '').split('\n').filter(Boolean).reverse()
     .map((entry) => ({ type: CONSENT.test(entry) ? 'Audit Consent' : 'Detail Change', entry }));
   const acks = (data?.items || []).map((r) => ({ type: 'Acknowledgement', entry: `${new Date(r.acknowledged_at).toLocaleString()} · ${r.acknowledged_by_name} (${r.acknowledged_by_role || 'user'}) acknowledged "${r.document_title}"` }));
-  const rows = [...changes, ...acks];
+  let journeySteps = [];
+  try {
+    const saved = journey.data?.answers ? JSON.parse(journey.data.answers) : null;
+    journeySteps = (saved?.milestones || [])
+      .filter((m) => m.completed_date || m.planned_date || m.notes || m.report || m.title)
+      .map((m) => ({ type: 'Journey Step', entry: `${m.completed_date || m.planned_date || 'No date'} · ${m.responsible || 'Unassigned'} — ${m.type || 'Step'}${m.title ? `: ${m.title}` : ''}${m.notes ? ` — ${m.notes}` : ''}${m.report ? ` — Report: ${m.report}` : ''}` }));
+  } catch { journeySteps = []; }
+  const rows = [...changes, ...journeySteps, ...acks];
   const exportCsv = () => downloadCsv(`${(profile.full_name || 'profile').replace(/\s+/g, '-')}-all-logs.csv`, COLUMNS, rows);
   return <EmployeeProfileSection title="All Logs (Exportable)" tone="journey" uniform>
     <div className="mb-1 flex items-center justify-between gap-2">

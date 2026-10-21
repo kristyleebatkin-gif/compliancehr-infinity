@@ -3,7 +3,10 @@ import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
 
-export const journeyMilestone = (type = 'Training') => ({ id: crypto.randomUUID(), type, title: '', planned_date: '', completed_date: '', next_due_date: '', responsible: '', notes: '', documents: [] });
+export const journeyMilestone = (type = 'Training') => ({ id: crypto.randomUUID(), type, title: '', planned_date: '', completed_date: '', next_due_date: '', responsible: '', notes: '', report: '', documents: [] });
+/* Workplace cycle every staff journey documents: intake, induction, buddy
+   shift, training, more buddy shift — then the cycle repeats with more steps. */
+export const JOURNEY_CYCLE = ['Intake', 'Induction', 'Buddy shift', 'Training', 'More buddy shift'];
 
 export default function useEmployeeJourney(profile, onUpdated) {
   const { user } = useRole();
@@ -21,7 +24,10 @@ export default function useEmployeeJourney(profile, onUpdated) {
       const record = page.items[0] || null;
       const data = record?.answers ? JSON.parse(record.answers) : {};
       setEntry(record);
-      setValue({ start_date: profile.start_date || '', induction_date: profile.induction_date || '', milestones: data.milestones || ['Buddy shift', 'Training', 'Performance appraisal'].map((type) => journeyMilestone(type)) });
+      const milestones = data.milestones?.length ? [...data.milestones] : JOURNEY_CYCLE.map((type) => journeyMilestone(type));
+      const seen = new Set(milestones.map((item) => item.type));
+      for (const type of JOURNEY_CYCLE) if (!seen.has(type)) milestones.push(journeyMilestone(type));
+      setValue({ start_date: profile.start_date || '', induction_date: profile.induction_date || '', milestones });
     } catch (failure) { setError(failure.message); }
     finally { setLoading(false); }
   }, [profile.id, ownProfile]);
