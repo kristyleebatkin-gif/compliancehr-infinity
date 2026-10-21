@@ -16,7 +16,7 @@ export const EMPLOYEE_PROFILE_FORMS = {
 };
 export const EMPLOYEE_PROFILE_SECTION_FORMS = [
   { title: 'Skills, Assessments & Training Plan', forms: ['Skill Assessment Form', 'Training Record', 'Staff Training Plan'] },
-  { title: 'Safety Checks & Risk Assessments', forms: ['Take Five Safety Check', 'Staff Safety Check', 'Staff Risk Assessment', 'Car Safety Check Form'] },
+  { title: 'Safety Checks & Risk Assessments', forms: ['Take Five Safety Check', 'Staff Safety Check', 'Staff Risk Assessment', 'Car Safety Check Form', 'Car Registration Details'] },
   { title: 'Performance, Appraisals & Goals', forms: ['Performance Review Schedule', 'Performance Review Form'] },
   { title: 'Yellow Card, Blue Card & Screening', forms: ['Yellow Card Details', 'Blue Card Details', 'NDIS Worker Screening Clearance'] },
   { title: 'Employment Documents & Declarations', forms: ['Employment Contract', 'Position Description', 'Staff Commitment Declaration Form', 'Secondary Employment Form'] },
