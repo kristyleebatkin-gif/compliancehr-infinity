@@ -144,11 +144,11 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       {/* Standalone directories keep their own summary; the employee page owns its header tiles. */}
       {!directory && <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
-          { label: 'Total profiles', value: records.length, Icon: Users, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
-          { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
-          { label: isParticipant ? 'On hold / inactive' : 'On leave / inactive', value: attentionCount, Icon: Clock, grad: 'from-amber-500 via-orange-500 to-rose-500' },
+          { label: 'Total profiles', value: records.length, Icon: Users, grad: 'bg-indigo-500' },
+          { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'bg-emerald-500' },
+          { label: isParticipant ? 'On hold / inactive' : 'On leave / inactive', value: attentionCount, Icon: Clock, grad: 'bg-amber-500' },
         ].map((s) => (
-          <div key={s.label} className={`flex items-center gap-3 rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
+          <div key={s.label} className={`flex items-center gap-3 rounded-2xl ${s.grad} p-4 text-white shadow-md`}>
             <div className="rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
             <div>
               <div className="font-display text-2xl font-extrabold tabular-nums">{s.value}</div>

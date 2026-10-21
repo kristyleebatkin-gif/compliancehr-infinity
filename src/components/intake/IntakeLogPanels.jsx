@@ -3,7 +3,7 @@ import { CalendarCheck, Users } from 'lucide-react';
 import { Field, TextArea, TextInput, DateInput } from '@/components/Field';
 import { Button } from '@/components/ui/button';
 
-const LOG_ROW = 'rounded-md border border-border/60 bg-gradient-to-r from-blue-50/70 to-pink-50/70 px-2.5 py-1.5 font-medium dark:from-blue-950/20 dark:to-pink-950/20';
+const LOG_ROW = 'rounded-md border border-border/60 bg-white px-2.5 py-1.5 font-medium';
 
 /**
  * Referee check (and, for employee intake, buddy shift) logs for an intake
@@ -14,7 +14,7 @@ export default function IntakeLogPanels({ intakeType, activeCase, refereeCheck, 
   return (
     <>
       <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
-        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-blue-50 via-violet-50 to-pink-50 px-4 py-3 dark:from-blue-950/30 dark:via-violet-950/30 dark:to-pink-950/30">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-white px-4 py-3">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Users className="h-4 w-4" /></span>
           <h4 className="text-sm font-bold">Referee checks (office personnel)</h4>
         </div>
@@ -49,7 +49,7 @@ export default function IntakeLogPanels({ intakeType, activeCase, refereeCheck, 
       </div>
 
       {intakeType !== 'Participant' && (<div className="overflow-hidden rounded-xl border border-border/60 bg-card">
-        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-pink-50 via-violet-50 to-blue-50 px-4 py-3 dark:from-pink-950/30 dark:via-violet-950/30 dark:to-blue-950/30">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-white px-4 py-3">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><CalendarCheck className="h-4 w-4" /></span>
           <h4 className="text-sm font-bold">Buddy shift log</h4>
         </div>
