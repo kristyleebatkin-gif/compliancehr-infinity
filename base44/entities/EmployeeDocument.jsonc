@@ -14,6 +14,11 @@
       "type": "string",
       "title": "Employee Name"
     },
+    "employee_email": {
+      "type": "string",
+      "format": "email",
+      "title": "Employee Email"
+    },
     "document_type": {
       "type": "string",
       "enum": [
@@ -139,6 +144,9 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
+        },
+        {
+          "data.employee_email": "{{user.email}}"
         },
         {
           "created_by_id": "{{user.id}}"

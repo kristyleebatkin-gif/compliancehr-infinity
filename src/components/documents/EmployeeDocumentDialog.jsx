@@ -58,7 +58,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
       const matches = await base44.entities.StaffProfile.filter({ full_name: form.employee_name }, { limit: 2 });
       const employeeId = initial?.employee_id && initial.employee_name === form.employee_name ? initial.employee_id : matches.items.length === 1 ? matches.items[0].id : '';
       if (!employeeId) throw new Error('Select an employee with a unique staff profile before filing this document.');
-      const payload = { ...form, employee_id: employeeId };
+      const payload = { ...form, employee_id: employeeId, employee_email: matches.items[0]?.email || initial?.employee_email || '' };
       if (editing) await base44.entities.EmployeeDocument.update(initial.id, payload);
       else {
         const saved = await base44.entities.EmployeeDocument.create(payload);

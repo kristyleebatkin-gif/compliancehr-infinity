@@ -55,6 +55,7 @@ export default function StaffBadgeCreator() {
       const saved = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${selected.full_name}`,
         employee_name: selected.full_name,
+        employee_email: selected.email || '',
         document_type: 'Staff Badge',
         status: 'Current',
         file_uri,

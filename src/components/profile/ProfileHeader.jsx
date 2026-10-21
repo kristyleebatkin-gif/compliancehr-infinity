@@ -51,6 +51,7 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
       const saved = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${profile.full_name}`,
         employee_name: profile.full_name,
+        employee_email: profile.email || '',
         document_type: 'Staff Badge',
         status: 'Current',
         file_uri,

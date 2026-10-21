@@ -37,7 +37,7 @@ function MyDocuments({ embedded = false } = {}) {
       setMe(user);
       const page = user.role === 'Participant'
         ? await base44.entities.ParticipantDocument.filter({ participant_user_id: user.id }, { sort: '-created_date', limit: 50 })
-        : await base44.entities.EmployeeDocument.filter({ employee_name: user.full_name, status: { $ne: 'Archived' } }, { sort: '-created_date', limit: 50 });
+        : await base44.entities.EmployeeDocument.filter({ $or: [{ employee_email: user.email }, { employee_name: user.full_name }], status: { $ne: 'Archived' } }, { sort: '-created_date', limit: 50 });
       setDocs(page.items || []);
     } catch (e) { console.error(e); }
     setLoading(false);

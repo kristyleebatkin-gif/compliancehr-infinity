@@ -56,10 +56,18 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
       if (editing) {
         await base44.entities.ParticipantDocument.update(initial.id, form);
       } else {
+        // Link the document to the PARTICIPANT's portal account (matched by the
+        // profile email) so it appears in their private My Documents, never to
+        // the staff member uploading it.
+        let participantUserId = '';
+        try {
+          const users = await base44.entities.User.list();
+          participantUserId = users.find((u) => String(u.email || '').toLowerCase() === String(profile?.email || '').toLowerCase())?.id || '';
+        } catch (e) { console.error(e); }
         const saved = await base44.entities.ParticipantDocument.create({
           participant_id: profile?.id || '',
           participant_name: profile?.full_name || me?.full_name || '',
-          participant_user_id: me?.id || '',
+          participant_user_id: participantUserId,
           admin_approved: profile?.admin_approved === true,
           document_type: form.document_type,
           title: form.title.trim() || form.document_type,

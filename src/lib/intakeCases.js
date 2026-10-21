@@ -384,6 +384,7 @@ export async function mirrorIntakeDocumentsToProfile(intakeCase, profile) {
             title: type,
             employee_id: profile.id,
             employee_name: profile.full_name,
+            employee_email: profile.email || '',
             document_type: EMPLOYEE_MIRROR_MAP[type] || 'Other',
             file_uri: doc.file_uri,
             status: 'Current',

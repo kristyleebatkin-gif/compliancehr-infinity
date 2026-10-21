@@ -21,6 +21,15 @@ export default async function(req) {
     const now = new Date().toISOString();
     await entities.User.update(user.id, { role: invite.portal_role, account_status: 'Active', access_approved: true, approved_by: inviter.full_name || inviter.email, approved_by_user_id: inviter.id, approved_date: now.slice(0, 10), approved_time: now.slice(11, 19) });
     await entities.ProfilePortalInvitation.update(invite.id, { status: 'Accepted' });
+    // Backfill the person's existing documents so everything held about them
+    // becomes visible in their private My Documents from day one.
+    try {
+      if (invite.kind === 'participant') {
+        await entities.ParticipantDocument.updateMany({ participant_id: profile.id }, { $set: { participant_user_id: user.id } });
+      } else {
+        await entities.EmployeeDocument.updateMany({ employee_id: profile.id }, { $set: { employee_email: user.email } });
+      }
+    } catch (e) { console.error('Document link backfill failed', e); }
     return Response.json({ changed: true });
   } catch (error) {
     return Response.json({ error: error.message || 'Unable to link your profile invitation.' }, { status: 500 });
