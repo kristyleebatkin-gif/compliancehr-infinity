@@ -43,7 +43,7 @@ html body .my-profile-pastels .profile-uniform-box :is(summary, div, section, sp
 }
 /* Solid bright colour per box. */
 html body .my-profile-pastels .profile-uniform-box { color: #000 !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #a78bfa !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #fff !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="journey"] { background: #2dd4bf !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { background: #38bdf8 !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: #f472b6 !important; }
