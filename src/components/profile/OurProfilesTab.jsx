@@ -70,8 +70,15 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       if (!map.has(key)) map.set(key, []);
       map.get(key).push(r);
     });
-    return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-  }, [records, isParticipant]);
+    const sectionOrder = ['Support Worker', 'Administration', 'Team Leader', 'Management', 'Compliance Manager'];
+    return [...map.entries()].sort((a, b) => {
+      if (directory && !isParticipant) {
+        const rank = (key) => sectionOrder.includes(key) ? sectionOrder.indexOf(key) : sectionOrder.length;
+        return rank(a[0]) - rank(b[0]) || a[0].localeCompare(b[0]);
+      }
+      return a[0].localeCompare(b[0]);
+    });
+  }, [records, isParticipant, directory]);
 
   const visible = useMemo(() => {
     if (directory) return records;
@@ -160,12 +167,12 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       {visible.length === 0 ? (
         <EmptyState icon={Icon} title="No matches" message="Try a different search term or filter." modulePath={isParticipant ? 'participants' : 'staff'} />
       ) : (
-        <div className="profile-groups space-y-4 sm:max-lg:space-y-1.5">
+        <div className={`profile-groups space-y-4 sm:max-lg:space-y-1.5 ${directory && !isParticipant && group === 'all' ? 'employee-paired-sections' : ''}`}>
           {groups
             .map(([key, list]) => [key, list.filter((r) => visible.includes(r))])
             .filter(([, list]) => list.length > 0)
             .map(([key, list]) => (
-              <section key={key}>
+              <section key={key} data-profile-role={key}>
                 <div className="mb-2.5 flex items-center gap-2">
                   <span className="h-3 w-3 shrink-0 rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${profilePalette(key).primary}, ${profilePalette(key).accent})` }} />
                   <h3 className="font-display text-sm font-bold uppercase tracking-wide text-foreground/70">{key}</h3>

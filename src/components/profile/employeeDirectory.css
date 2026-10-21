@@ -53,9 +53,26 @@
 .employee-directory .profile-card-grid {
   gap: .5cm !important;
 }
-.employee-directory .app-page-header { min-height: 7rem; padding: 1.5rem; }
+.employee-directory .app-page-header { min-height: 7rem; padding: 1.5rem; border: 1px solid black; }
 .employee-directory .app-page-header h1 { font-size: 1.875rem; line-height: 1.2; }
 @media (min-width: 640px) {
+  .employee-directory .employee-paired-sections {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .5cm;
+    align-items: start;
+  }
+  .employee-directory .employee-paired-sections > section {
+    min-width: 0;
+    grid-column: 1 / -1;
+    margin-top: 0 !important;
+  }
+  .employee-directory .employee-paired-sections > [data-profile-role="Support Worker"] { grid-row: 1; }
+  .employee-directory .employee-paired-sections > [data-profile-role="Administration"] { grid-column: 1; grid-row: 2; }
+  .employee-directory .employee-paired-sections > [data-profile-role="Team Leader"] { grid-column: 2; grid-row: 2; }
+  .employee-directory .employee-paired-sections > [data-profile-role="Management"] { grid-column: 1; grid-row: 3; }
+  .employee-directory .employee-paired-sections > [data-profile-role="Compliance Manager"] { grid-column: 2; grid-row: 3; }
+  .employee-directory .employee-paired-sections > :is([data-profile-role="Administration"], [data-profile-role="Team Leader"], [data-profile-role="Management"], [data-profile-role="Compliance Manager"]) .profile-card-grid { grid-template-columns: minmax(0, 1fr); }
   .employee-directory .profile-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .employee-directory .app-page-header { min-height: 8rem; padding: 1.75rem; }
 }
