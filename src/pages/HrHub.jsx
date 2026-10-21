@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +15,6 @@ import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDas
 import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
 import HrTemplatesLibrary from '@/components/hr/HrTemplatesLibrary';
 import PayrollHub from '@/components/payroll/PayrollHub';
-import RegisterInsights from '@/components/RegisterInsights';
 import HrDashboardNavigation from '@/components/hr/HrDashboardNavigation';
 import HrEmployeeFiles from '@/components/hr/HrEmployeeFiles';
 import MyPayroll from '@/components/payroll/MyPayroll';
@@ -35,6 +35,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const [summary, setSummary] = useState({ pending: 0, approved: 0, scheduled: 0, completed: 0 });
   const [leavePage, setLeavePage] = useState({});
   const [reviewPage, setReviewPage] = useState({});
+  const [query, setQuery] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -121,39 +122,43 @@ export default function HrHub({ profile, embedded = false } = {}) {
     setLoading(false);
   };
 
+  const needle = query.trim().toLowerCase();
+  const matches = (row) => !needle || [row.staff_name, row.leave_type, row.review_type, row.status, row.reviewer].some((f) => (f || '').toLowerCase().includes(needle));
+  const shownLeaves = leaves.filter(matches);
+  const shownReviews = reviews.filter(matches);
+  const tiles = [
+    ['Pending leave requests', summary.pending],
+    ['Currently on leave / approved', summary.approved],
+    ['Reviews scheduled', summary.scheduled],
+    ['Reviews completed', summary.completed],
+  ].map(([label, value]) => (
+    <div key={label}>
+      <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
+      <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p>
+    </div>
+  ));
+
   return (
     <div className={embedded ? 'min-w-0 space-y-2' : 'mx-auto min-w-0 max-w-6xl space-y-2 p-3 sm:p-3 md:p-5'}>
-      {!embedded && <PageHeader
+      <Tabs value={tab} onValueChange={setTab}>
+      <ModuleShell
+        embedded={embedded}
         title="HR Hub"
         subtitle="Leave management, performance reviews and workforce records in one place."
         icon={UsersRound}
-        accent={['#2563eb', '#0891b2']}
-        beforeAudit={<Button size="sm" onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}><Plus className="h-4 w-4" />Log Leave Request</Button>}
-        actionClassName="ml-auto"
-        action={<Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
-          { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
-          { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
-        ], leaves)}>Export CSV</Button>}
-      />}
-
-      <Tabs value={tab} onValueChange={setTab}>
-      {!embedded && isManager && <div className="mt-2"><RegisterInsights module="hr" /></div>}
-
-      <div className="mt-2 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: 'Pending leave requests', value: loading ? '…' : summary.pending, icon: CalendarClock },
-          { label: 'Currently on leave / approved', value: loading ? '…' : summary.approved, icon: UsersRound },
-          { label: 'Reviews scheduled', value: loading ? '…' : summary.scheduled, icon: ClipboardCheck },
-          { label: 'Reviews completed', value: loading ? '…' : summary.completed, icon: Check },
-        ].map((s) => (
-          <Card key={s.label}><CardContent className="flex items-center gap-2 p-2.5">
-            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><s.icon className="h-4 w-4" /></div>
-            <div><p className="text-lg font-bold leading-6">{s.value}</p><p className="text-xs text-muted-foreground">{s.label}</p></div>
-          </CardContent></Card>
-        ))}
-      </div>
-
-      <div className="mt-2"><HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} /></div>
+        moduleKey="human-resources"
+        insightModule={isManager ? 'hr' : undefined}
+        tabs={<HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />}
+        actions={<>
+          <Button size="sm" onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}><Plus className="h-4 w-4" />Log Leave Request</Button>
+          <Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
+            { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
+            { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
+          ], leaves)}>Export CSV</Button>
+        </>}
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave and reviews…" />}
+        small={tiles}
+      >
 
         <TabsContent value="leave" className="mt-4 space-y-2">
           {embedded && <div className="flex gap-2">
@@ -187,7 +192,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No leave requests yet.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
-              {leaves.map((l) => (
+              {shownLeaves.map((l) => (
                 <Card key={l.id}><CardContent className="p-2.5 text-sm">
                   <div className="flex items-start justify-between gap-2">
                     <div>
@@ -240,7 +245,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No reviews scheduled yet.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
-              {reviews.map((r) => (
+              {shownReviews.map((r) => (
                 <Card key={r.id}><CardContent className="p-2.5 text-sm">
                   <div className="flex items-start justify-between gap-2">
                     <div>
@@ -267,6 +272,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
         {isManager && <TabsContent value="file-completeness" className="mt-2"><StaffFileCompletenessWidget /></TabsContent>}
         {isManager && <TabsContent value="templates" className="mt-2"><HrTemplatesLibrary /></TabsContent>}
         {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-2">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
+      </ModuleShell>
       </Tabs>
     </div>
   );

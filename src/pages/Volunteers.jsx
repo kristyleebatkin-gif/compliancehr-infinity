@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Trash2, HeartHandshake, Pencil, Eye, Mail, MessageSquare, Download, FileCheck2, UserPlus, Loader2 } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import { useRole } from '@/lib/useRole';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,7 +20,6 @@ import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton'
 import VolunteerApplications from '@/components/volunteers/VolunteerApplications';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
-import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import VolunteerRegisterCard from '@/components/volunteers/VolunteerRegisterCard';
 import '@/components/volunteers/volunteerWorkspace.css';
 
@@ -37,6 +37,8 @@ export default function Volunteers() {
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviting, setInviting] = useState(false);
+  const [query, setQuery] = useState('');
+  const shown = volunteers.filter((v) => !query.trim() || [v.full_name, v.role, v.email, v.supervisor, v.status].some((f) => (f || '').toLowerCase().includes(query.trim().toLowerCase())));
 
   const sendInvite = async () => {
     if (!inviteEmail.trim() || !inviteEmail.trim().includes('@')) {
@@ -91,22 +93,29 @@ export default function Volunteers() {
 
   return (
     <div className="volunteer-workspace space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Volunteering & Student Placement"
         subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
         icon={HeartHandshake}
-        accent={['#0891b2', '#0d9488']}
-        afterAudit={!isVolunteer && canManage && <Button size="sm" variant="outline" className="volunteer-export" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="h-4 w-4" />Export register</Button>}
-        action={!isVolunteer && canManage && (
-          <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" className="volunteer-add" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="h-4 w-4" />Add volunteer</Button>
-            <Button size="sm" variant="outline" className="volunteer-invite" onClick={() => setInviteOpen(true)}><UserPlus className="h-4 w-4" />Invite volunteer</Button>
+        moduleKey="volunteering-placements"
+        insightModule={isVolunteer ? undefined : 'volunteers'}
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search volunteers…" />}
+        actions={!isVolunteer && canManage && <>
+          <Button size="sm" className="volunteer-add" onClick={() => { setEditing(null); setFormOpen(true); }}><Plus className="h-4 w-4" />Add volunteer</Button>
+          <Button size="sm" variant="outline" className="volunteer-invite" onClick={() => setInviteOpen(true)}><UserPlus className="h-4 w-4" />Invite volunteer</Button>
+          <Button size="sm" variant="outline" className="volunteer-export" onClick={exportRegister} disabled={exporting || loading || volunteers.length === 0}><Download className="h-4 w-4" />Export register</Button>
+        </>}
+        small={[
+          ['Volunteers', volunteers.length],
+          ['Active', volunteers.filter((v) => v.status === 'Active').length],
+          ['Intake form pending', volunteers.filter((v) => !v.intake_form_uri).length],
+        ].map(([label, value]) => (
+          <div key={label}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
+            <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p>
           </div>
-        )}
-      />
-
-      {!isVolunteer && <AutoRegisterInsights placement="header" />}
-
+        ))}
+      >
       {canManage && <VolunteerApplications />}
 
       {loading ? (
@@ -116,7 +125,7 @@ export default function Volunteers() {
       ) : (
         <>
         <div className="grid gap-2 sm:grid-cols-2 lg:hidden">
-          {volunteers.map(v => <VolunteerRegisterCard key={v.id} volunteer={v} canManage={canManage} onView={() => setViewing(v)} onEdit={() => { setEditing(v); setFormOpen(true); }} onDelete={async () => { await base44.entities.Volunteer.delete(v.id); await load(); }} />)}
+          {shown.map(v => <VolunteerRegisterCard key={v.id} volunteer={v} canManage={canManage} onView={() => setViewing(v)} onEdit={() => { setEditing(v); setFormOpen(true); }} onDelete={async () => { await base44.entities.Volunteer.delete(v.id); await load(); }} />)}
         </div>
         <Card className="hidden lg:block">
           <CardContent className="overflow-x-auto p-0">
@@ -133,7 +142,7 @@ export default function Volunteers() {
                 </tr>
               </thead>
               <tbody>
-                {volunteers.map((v) => (
+                {shown.map((v) => (
                   <tr key={v.id} className="border-b border-border/50 last:border-0">
                     <td className="px-2 py-1.5">
                       <p className="font-medium">{v.full_name}</p>
@@ -167,6 +176,7 @@ export default function Volunteers() {
         </Card>
         </>
       )}
+      </ModuleShell>
 
       <VolunteerForm open={formOpen} onOpenChange={setFormOpen} editing={editing} onSaved={load} />
       <VolunteerDetail open={Boolean(viewing)} onOpenChange={(v) => !v && setViewing(null)} volunteer={viewing} onSaved={load} />
