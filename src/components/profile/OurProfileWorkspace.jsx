@@ -26,7 +26,10 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
       {header}
       <Tabs value={selected.key} onValueChange={selectModule} className={`${personal ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
-        {modules.map(({ key, label, Icon }) => <TabsTrigger key={key} value={key}><Icon className="h-3.5 w-3.5" />{label}</TabsTrigger>)}
+        {modules.map((module, index) => {
+          const Icon = module.Icon;
+          return <TabsTrigger key={module.key} value={module.key} data-module-index={index}><Icon className="h-3.5 w-3.5" />{module.label}</TabsTrigger>;
+        })}
       </TabsList>
       <TabsContent key={`${profile.id}-${selected.key}`} value={selected.key} className="min-w-0 [&>div]:p-0">
         <Suspense fallback={<div role="status" className="flex items-center justify-center gap-2 py-12 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" />Loading {selected.label}...</div>}>
