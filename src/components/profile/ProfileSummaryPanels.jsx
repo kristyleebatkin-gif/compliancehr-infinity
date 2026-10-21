@@ -13,6 +13,7 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import ParticipantSummaryPanels from '@/components/profile/ParticipantSummaryPanels';
 import ProfileQuickSquares from '@/components/profile/ProfileQuickSquares';
+import StaffAuthorisationCard from '@/components/profile/StaffAuthorisationCard';
 
 /* Layout: logs and name tag on the left; the right column holds the three quick
    squares (timesheets/alerts/availability, emergency info, intake readiness),
@@ -30,6 +31,9 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
       <div className="profile-left-fill flex min-w-0 flex-col gap-3">
+        <StaffAuthorisationCard staff={profile} type="medication" onUpdated={onUpdated} />
+        <StaffAuthorisationCard staff={profile} type="sharing" onUpdated={onUpdated} />
+        <StaffAuthorisationCard staff={profile} type="advocacy" onUpdated={onUpdated} />
         <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
         <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
         <EmployeeRemainingSections key={profile.id} profile={profile} afterHalves={<EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>} />

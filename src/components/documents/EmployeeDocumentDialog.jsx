@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { UploadCloud } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Staff Badge', 'Other'];
 const STATUSES = ['Current', 'Expiring Soon', 'Expired', 'Archived'];
@@ -19,6 +20,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -64,6 +66,14 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
       }
       await syncEmployeeRecord('EmployeeDocument', savedId);
       logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Employee Document', { record_title: form.title.trim(), record_id: savedId, person: { profile_type: 'employee', profile_id: form.employee_id, profile_name: form.employee_name } });
+      if (!editing && form.file_uri) {
+        try {
+          const extract = await base44.functions.invoke('consentDocumentExtract', { entity_type: 'staff', profile_id: employeeId, document_id: savedId, file_uri: form.file_uri });
+          if (extract.data?.ok && (extract.data.consent_types?.length || extract.data.filled_fields?.length)) {
+            toast({ title: 'Uploaded document reviewed', description: `Extracted into the profile: ${[...(extract.data.consent_types || []), ...(extract.data.filled_fields || [])].join(', ')}` });
+          }
+        } catch (e) { console.error(e); }
+      }
       onOpenChange(false);
       onDone?.();
     } catch (failure) {

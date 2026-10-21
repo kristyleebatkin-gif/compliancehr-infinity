@@ -27,7 +27,7 @@ export default function ParticipantAuthorisationCard({ participant, type, onUpda
     } catch (e) { setError(e.message); }
     finally { setBusy(false); }
   };
-  return <details className="space-y-2 rounded-xl border border-border bg-card p-3">
+  return <details open className="min-w-0 space-y-2 rounded-xl border border-border bg-card p-3">
     <summary className="cursor-pointer text-sm font-semibold">{title} <Badge variant="outline">{saved.status || 'Not recorded'}</Badge></summary>
     <p className="text-xs text-muted-foreground">{saved.recorded_date ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (Sydney time)` : 'No consent decision logged. Consent must not be assumed.'}</p>
     {editable ? <><div className="grid gap-2 sm:grid-cols-2">

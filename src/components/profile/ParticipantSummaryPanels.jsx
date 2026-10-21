@@ -27,7 +27,7 @@ export default function ParticipantSummaryPanels({ profile, onUpdated, personal 
       <div className="profile-left-fill flex min-w-0 flex-col gap-3">
         <ParticipantIntakeFormSection profile={profile} title="Participant Intake Form" tone="yellow" />
         <ParticipantIntakeFormSection profile={profile} title="Participant Intake Assessment" tone="purple" />
-        <EmployeeProfileSection title="Required Documents" tone="green"><ParticipantRequiredForms key={profile.id} profile={profile} /></EmployeeProfileSection>
+        <EmployeeProfileSection title="Required Documents" tone="green" defaultOpen><ParticipantRequiredForms key={profile.id} profile={profile} /></EmployeeProfileSection>
         <EmployeeProfileSection title="Participant Details" tone="orange"><ParticipantDetailsTab participant={profile} onUpdated={onUpdated} compact hideConsents /></EmployeeProfileSection>
         <ParticipantAuthorisationCard participant={profile} type="sharing" onUpdated={onUpdated} />
         <ParticipantAuthorisationCard participant={profile} type="advocacy" onUpdated={onUpdated} />

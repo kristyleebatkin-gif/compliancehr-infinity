@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { UploadCloud } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const DOC_TYPES = [
   'NDIS Plan', 'Service Agreement', 'Participant Support Plan', 'Personal Emergency Form', 'Participant Consent',
@@ -21,6 +22,7 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!open) return;
@@ -73,6 +75,14 @@ export default function ParticipantDocumentDialog({ open, onOpenChange, me, prof
         savedId = saved?.id || savedId;
       }
       logUserAction(editing ? 'Document Updated' : 'Document Uploaded', 'Participant Document', { record_title: form.title.trim() || form.document_type, record_id: savedId, person: { profile_type: 'participant', profile_id: profile?.id || initial?.participant_id, profile_name: profile?.full_name || me?.full_name } });
+      if (!editing && form.file_uri) {
+        try {
+          const extract = await base44.functions.invoke('consentDocumentExtract', { entity_type: 'participant', profile_id: profile?.id || initial?.participant_id || '', document_id: savedId, file_uri: form.file_uri });
+          if (extract.data?.ok && (extract.data.consent_types?.length || extract.data.filled_fields?.length)) {
+            toast({ title: 'Uploaded document reviewed', description: `Extracted into the profile: ${[...(extract.data.consent_types || []), ...(extract.data.filled_fields || [])].join(', ')}` });
+          }
+        } catch (e) { console.error(e); }
+      }
       onOpenChange(false);
       onDone?.();
     } finally {
