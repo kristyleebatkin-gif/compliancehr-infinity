@@ -2,6 +2,8 @@ import React from 'react';
 import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, FileWarning, Loader2 } from 'lucide-react';
+import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
+import IntakeResumeUpload from '@/components/intake/IntakeResumeUpload';
 
 const EMPLOYEE_ROLES = [
   'Support Worker (JR)',
@@ -291,7 +293,7 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
   );
 }
 
-export function IntakeReadinessPanel({ readiness }) {
+export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, uploadingDoc, busy, onUpload, onView, allowResumeUpload = false }) {
   const done = readiness.checks.length - readiness.missing.length;
   return (
     <aside className="h-fit overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
@@ -309,6 +311,10 @@ export function IntakeReadinessPanel({ readiness }) {
         </div>
       </div>
       <div className="p-4">
+        {activeCase && <div className="mb-3 space-y-3">
+          <IntakeReadinessExport activeCase={activeCase} readiness={readiness} />
+          <IntakeResumeUpload activeCase={activeCase} document={resumeDocument} uploadingDoc={uploadingDoc} busy={busy} onUpload={onUpload} onView={onView} allowUpload={allowResumeUpload} />
+        </div>}
         <p className="text-[10px] leading-relaxed text-foreground/45">
           Readiness supports NDIS onboarding controls and conditional safeguards. It does not replace provider-specific legal advice or an external certification audit.
         </p>

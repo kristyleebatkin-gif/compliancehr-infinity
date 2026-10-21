@@ -4,6 +4,7 @@ import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
+import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
 import { base44 } from '@/api/base44Client';
 import { STATUS_HEX, STATUS_ORDER } from '@/components/intake/intakeDisplay';
 import { Heart, Users, ArrowRight } from 'lucide-react';
@@ -90,6 +91,7 @@ function StreamPanel({ stream, stats }) {
 
 export default function IntakeCentre({ embedded = false, profile, profileKind } = {}) {
   const [stats, setStats] = useState(null);
+  const [statsError, setStatsError] = useState('');
 
   useEffect(() => {
     let live = true;
@@ -103,7 +105,7 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
         const toMap = (rows = []) => Object.fromEntries(rows.map((r) => [r.status, r.count]));
         setStats({ p: toMap(p.rows), e: toMap(e.rows) });
       } catch {
-        if (live) setStats({ p: {}, e: {} });
+        if (live) setStatsError('Unable to load readiness totals. Reload to try again.');
       }
     })();
     return () => { live = false; };
@@ -128,6 +130,7 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
     <div className="p-3 md:p-4">
       <PageHeader title="Intake Centre" subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles." />
       <div className="mt-3"><RegisterInsights module="intake" compact /></div>
+      <div className="mt-2 flex justify-end"><IntakeReadinessExport stats={stats} loadError={statsError} /></div>
       <div className="mt-2 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
         <div className="relative grid grid-cols-2">
           <span className="pointer-events-none absolute bottom-0 left-1/2 top-0 w-px" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />

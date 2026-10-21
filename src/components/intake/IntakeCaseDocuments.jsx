@@ -139,7 +139,7 @@ export default function IntakeCaseDocuments({
         )}
       </div>
 
-      {showReadiness && <IntakeReadinessPanel readiness={readiness} />}
+      {showReadiness && <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={onUpload} onView={onView} />}
     </div>
   );
 }
