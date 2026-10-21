@@ -23,7 +23,7 @@ export default function StaffProfilesHub({ initialTab = 'profiles' }) {
   };
   if (selected === 'profiles') return <Staff />;
   return <div className="compact-module compact-tabs mx-auto w-full min-w-0 max-w-6xl space-y-3 p-2">
-    <PageHeader icon={Users} title="Staff Profiles" subtitle="Employee records, documents, intake progress and compliance in one place." showAlerts={false} action={selected === 'progress' && profiles ? <Button variant="outline" size="sm" onClick={() => selectTab('profiles')}><Users />Back to staff profiles</Button> : null} />
+    <PageHeader icon={Users} title="Staff Profiles" subtitle="Employee records, documents, intake progress and compliance in one place." showAlerts={false} action={selected === 'progress' && profiles ? <Button variant="outline" size="sm" onClick={() => selectTab('profiles')}><Users />Back to Staff Profiles</Button> : null} />
     <Tabs value={selected} onValueChange={selectTab}>
       {progress && <TabsContent value="progress"><StaffProgressDashboard embedded /></TabsContent>}
     </Tabs>
