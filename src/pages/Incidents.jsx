@@ -5,7 +5,8 @@ export default withEmployeeView(Incidents, EmployeeIncidents);
 import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import RegisterInsights from '@/components/RegisterInsights';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
@@ -208,21 +209,22 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="safety-workspace mx-auto min-w-0 max-w-7xl space-y-4">
-      {!embedded && <PageHeader
+      <ModuleShell
+        embedded={embedded}
         title="Incident Clinic"
         subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
-        action={
-          <div className="flex flex-wrap items-center gap-2">
-            {canReview && <Button size="sm" onClick={() => { setEditingInvestigation(null); setInvForm(blankInv); setShowInv(true); }} className="bg-warning text-warning-foreground hover:bg-warning/90 border-warning"><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
-            <Link to={profile ? `/incidents/new?${profileKind === 'participant' ? 'participantId' : 'staffId'}=${encodeURIComponent(profile.id)}` : '/incidents/new'}>
-              <Button size="sm" className="bg-safe text-safe-foreground hover:bg-safe/90 border-safe"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
-            </Link>
-            {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0} className="bg-teal text-teal-foreground hover:bg-teal/90 border-teal"><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
-          </div>
-        }
-      />}
-
-      <RegisterInsights module="incidents" />
+        moduleKey="incidents"
+        insightModule="incidents"
+        search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search incidents..." />}
+        actions={<>
+          {canReview && <Button size="sm" onClick={() => { setEditingInvestigation(null); setInvForm(blankInv); setShowInv(true); }}><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
+          <Link to={profile ? `/incidents/new?${profileKind === 'participant' ? 'participantId' : 'staffId'}=${encodeURIComponent(profile.id)}` : '/incidents/new'}>
+            <Button size="sm"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
+          </Link>
+          {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
+        </>}
+      >
+      {embedded && <RegisterInsights module="incidents" />}
 
       <HealthMedicationResponse />
 
@@ -262,15 +264,6 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
         }
       >
         <div className="module-filter-bar mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative max-w-sm flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search incidents..."
-              className="w-full rounded-lg border border-input bg-card pl-9 pr-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40"
-            />
-          </div>
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex rounded-lg border border-border/60 bg-card p-0.5">
               <button onClick={() => setView('list')} className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-semibold transition ${view === 'list' ? 'bg-brand text-white' : 'text-foreground/60 hover:bg-muted'}`}><LayoutGrid className="h-3.5 w-3.5" />List</button>
@@ -481,6 +474,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
           </div>
         </div>
       )}
+      </ModuleShell>
     </div>
   );
 }

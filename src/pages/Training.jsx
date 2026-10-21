@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import EmployeePersonalRecords from '@/components/employee/EmployeePersonalRecords';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
-import PageHeader from '@/components/PageHeader';
-import RegisterInsights from '@/components/RegisterInsights';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import SectionCard from '@/components/SectionCard';
 import ScoreRing from '@/components/ScoreRing';
 import { LMS_ACADEMY_NAME, LMS_PROGRAM_NAME, LMS_MODULES } from '@/lib/lmsCurriculum';
@@ -47,6 +47,7 @@ export default function Training({ profile, embedded = false } = {}) {
   const [learnerNumber, setLearnerNumber] = useState(null);
   const [view, setView] = useState('modules');
   const [progressOpen, setProgressOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
   const load = async () => {
     setLoading(true); setLoadError('');
@@ -92,7 +93,8 @@ export default function Training({ profile, embedded = false } = {}) {
 
   const progressPct = Math.round((stats.completed / stats.total) * 100);
 
-  const visible = activeGroup === 'All' ? LMS_MODULES : LMS_MODULES.filter((m) => m.group === activeGroup);
+  const visible = (activeGroup === 'All' ? LMS_MODULES : LMS_MODULES.filter((m) => m.group === activeGroup))
+    .filter((m) => !query.trim() || m.title.toLowerCase().includes(query.trim().toLowerCase()));
 
   const grouped = useMemo(() => {
     const map = {};
@@ -102,19 +104,19 @@ export default function Training({ profile, embedded = false } = {}) {
 
   return (
     <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
-      {!embedded && <PageHeader
+      <ModuleShell
+        embedded={embedded}
         title="Training Hub"
-        showAlerts={!employee}
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
-        action={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
-      />}
-
+        moduleKey="training"
+        tabs={<TrainingNavigation view={view} onChange={setView} personalOnly={employee} />}
+        actions={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
+        search={<ModuleSearchBar value={query} onChange={(q) => { setQuery(q); if (q.trim()) setView('modules'); }} placeholder="Search training modules..." />}
+        insightModule={employee ? undefined : 'training'}
+      >
       {loadError && <p role="alert" className="text-sm text-destructive">{loadError}<Button variant="outline" onClick={load}>Retry</Button></p>}
-      {!employee && <RegisterInsights module="training" />}
 
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
-
-      <TrainingNavigation view={view} onChange={setView} personalOnly={employee} />
 
       <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/25 via-card to-teal/25 shadow-sm">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500" />
@@ -202,6 +204,7 @@ export default function Training({ profile, embedded = false } = {}) {
       {learnerNumber && (
         <LmsLearner moduleNumber={learnerNumber} user={user} onCompleted={() => { setLearnerNumber(null); load(); }} onClose={() => setLearnerNumber(null)} />
       )}
+      </ModuleShell>
     </div>
   );
 }
