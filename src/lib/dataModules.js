@@ -4,7 +4,7 @@
 export const DATA_MODULES = [
   ['StaffProfile', 'Staff Profiles'],
   ['EmployeeDocument', 'Employee Documents'],
-  ['Task', 'Tasks'],
+  ['TodoTask', 'Tasks'],
   ['Policy', 'Policies'],
   ['LegalRequirement', 'Legal Requirements'],
   ['TrainingModule', 'Training Modules'],
