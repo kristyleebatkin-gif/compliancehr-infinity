@@ -17,13 +17,13 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
       <EmployeeRemainingSections key={profile.id} profile={profile} />
+      <EmployeeRecordNotice />
     </div>
     <aside className="min-w-0 space-y-2">
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><StaffCommPanel staff={profile} /></EmployeeProfileSection>
       <ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} compact />
-      <EmployeeRecordNotice />
       <ProfileDetailsCheck profile={profile} />
     </aside>
   </div>;
