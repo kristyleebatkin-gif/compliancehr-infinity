@@ -9,6 +9,7 @@ import ParticipantJourneyBox from '@/components/profile/ParticipantJourneyBox';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 import ParticipantIntakeFormSection from '@/components/profile/ParticipantIntakeFormSection';
 import ProfileQuickSquares from '@/components/profile/ProfileQuickSquares';
+import ProfileComplianceRequirements from '@/components/profile/ProfileComplianceRequirements';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 
 /* Participant profile mirror of the employee design, forms back in their
@@ -37,6 +38,7 @@ export default function ParticipantSummaryPanels({ profile, onUpdated, personal 
       <ProfileAboutMeEditor profile={profile} kind="participant" onUpdated={onUpdated} compact />
       <ParticipantJourneyBox profile={profile} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><ProfileCommDiary participant={profile} /></EmployeeProfileSection>
+      <ProfileComplianceRequirements />
     </aside>
     <p className="min-w-0 rounded-lg border border-border bg-muted/30 px-2 py-1 text-[10px] text-muted-foreground md:col-span-2">Saved details, required intake forms and readiness belong to this participant. Consent decisions include who recorded them and when; consent is never assumed. See PROFILE_PERMISSIONS.md for who can view and edit each part.</p>
   </div>;
