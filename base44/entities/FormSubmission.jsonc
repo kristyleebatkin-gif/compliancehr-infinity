@@ -1,6 +1,6 @@
 {
-  "type": "object",
   "name": "FormSubmission",
+  "type": "object",
   "properties": {
     "form_template_id": {
       "type": "string",
@@ -29,18 +29,18 @@
     },
     "submitted_date": {
       "type": "string",
-      "title": "Submitted Date",
-      "format": "date"
+      "format": "date",
+      "title": "Submitted Date"
     },
     "submission_method": {
       "type": "string",
-      "title": "Submission Method",
       "enum": [
         "Online",
         "Upload",
         "Imported"
       ],
-      "default": "Online"
+      "default": "Online",
+      "title": "Submission Method"
     },
     "submitted_document_url": {
       "type": "string",
@@ -48,7 +48,38 @@
     },
     "participant_id": {
       "type": "string",
-      "title": "Related Participant"
+      "title": "Related Participant",
+      "rls": {
+        "update": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        }
+      }
     },
     "employee_id": {
       "type": "string",
@@ -64,14 +95,14 @@
     },
     "status": {
       "type": "string",
-      "title": "Status",
       "enum": [
         "Draft",
         "Submitted",
         "Reviewed",
         "Actioned"
       ],
-      "default": "Submitted"
+      "default": "Submitted",
+      "title": "Status"
     },
     "review_notes": {
       "type": "string",
@@ -79,19 +110,19 @@
     },
     "reviewed_date": {
       "type": "string",
-      "title": "Reviewed Date",
-      "format": "date"
+      "format": "date",
+      "title": "Reviewed Date"
     },
     "review_outcome": {
       "type": "string",
-      "title": "Review Outcome",
       "enum": [
         "Pending Review",
         "Approved",
         "Changes Required",
         "Rejected"
       ],
-      "default": "Pending Review"
+      "default": "Pending Review",
+      "title": "Review Outcome"
     },
     "submission_summary": {
       "type": "string",
@@ -132,6 +163,11 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Compliance Manager"
           }
         },
@@ -146,9 +182,19 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.participant_id": "{{user.data.personal_participant_profile_id}}"
+            }
+          ]
         },
         {
           "$and": [
@@ -197,6 +243,11 @@
           }
         },
         {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
           "$and": [
             {
               "data.status": "Draft"
@@ -213,6 +264,23 @@
             },
             {
               "data.online_document": true
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "data.participant_id": {
+                "$ne": null
+              }
+            },
+            {
+              "data.participant_id": "{{user.data.personal_participant_profile_id}}"
             }
           ]
         },
@@ -271,23 +339,6 @@
           "$and": [
             {
               "user_condition": {
-                "role": "Participant"
-              }
-            },
-            {
-              "data.category": {
-                "$nin": [
-                  "Participant Intake",
-                  "Employee Intake"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
                 "role": "Auditor"
               }
             },
@@ -320,6 +371,11 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Compliance Manager"
           }
         },
@@ -334,9 +390,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            }
+          ]
         },
         {
           "$and": [
@@ -360,6 +423,11 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
           }
         },
         {
