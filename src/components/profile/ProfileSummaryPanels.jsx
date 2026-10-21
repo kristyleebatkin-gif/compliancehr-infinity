@@ -12,21 +12,28 @@ import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection'
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import ParticipantSummaryPanels from '@/components/profile/ParticipantSummaryPanels';
+import ProfileQuickSquares from '@/components/profile/ProfileQuickSquares';
 
-export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff' }) {
-  if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} />;
+/* Layout: logs and name tag on the left; the right column holds the three quick
+   squares (timesheets/alerts/availability, emergency info, intake readiness),
+   then About Me, Journey and Communication Logs moved down, then all forms. */
+export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff', personal = false }) {
+  if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} personal={personal} />;
   if (staffQuestions) return <div className="grid items-stretch gap-3 p-3 md:grid-cols-2">
-    <div className="profile-left-fill flex min-w-0 flex-col gap-3">
+    <div className="flex min-w-0 flex-col gap-3">
       <StaffBadgePreview branding={branding} staff={profile} compact />
-      <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
-      <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
-      <EmployeeRemainingSections key={profile.id} profile={profile} afterHalves={<EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>} />
+      <ProfileLoggedSections profile={profile} />
     </div>
     <aside className="flex min-w-0 flex-col gap-3">
+      <ProfileQuickSquares profile={profile} kind={kind} personal={personal} />
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
-      <ProfileLoggedSections profile={profile} />
+      <div className="profile-left-fill flex min-w-0 flex-col gap-3">
+        <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
+        <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
+        <EmployeeRemainingSections key={profile.id} profile={profile} afterHalves={<EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>} />
+      </div>
     </aside>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;

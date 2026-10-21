@@ -49,6 +49,7 @@ html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { b
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: #f472b6 !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: #4ade80 !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: #fb923c !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] { background: #a78bfa !important; }
 /* Left-hand forms: solid bright colour each, repeating, with the white outline. */
 html body .my-profile-pastels .profile-left-fill > details {
   color: #000 !important;

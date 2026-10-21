@@ -25,7 +25,7 @@ export default function PersonalProfileHeader({ profile, kind, onUpdated, showId
         </div>
         <div className="flex flex-wrap items-center gap-2 p-3 text-xs font-medium">{facts.map((fact, i) => <span key={i} className="max-w-full break-words rounded-full bg-primary/10 px-2.5 py-1 text-foreground">{fact}</span>)}</div>
       </>}
-      <ProfileSummaryPanels profile={profile} kind={kind} branding={branding} onUpdated={onUpdated} staffQuestions={staff} />
+      <ProfileSummaryPanels profile={profile} kind={kind} branding={branding} onUpdated={onUpdated} staffQuestions={staff} personal />
     </div>
   );
 }
