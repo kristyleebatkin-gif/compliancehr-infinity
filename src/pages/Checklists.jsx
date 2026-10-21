@@ -12,9 +12,11 @@ import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 import { downloadChecklistPdf } from '@/lib/checklistsPdf';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 
 export default function Checklists() {
+  const [query, setQuery] = useState('');
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -80,8 +82,16 @@ export default function Checklists() {
 
   return (
     <div className="space-y-4">
-      <PageHeader icon={ClipboardList} title="Checklists" subtitle="Reusable compliance checklists with due dates, progress tracking and PDF export." />
-      <div className="flex flex-wrap items-center gap-2">
+      <ModuleShell
+        icon={ClipboardList}
+        title="Checklists"
+        subtitle="Reusable compliance checklists with due dates, progress tracking and PDF export."
+        moduleKey="compliance"
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search checklists…" />}
+        small={[['Checklists', lists.length], ['Complete', lists.filter((l) => progress(l.items) === 100).length], ['Open', lists.filter((l) => progress(l.items) < 100).length]].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
+        ))}
+        actions={<>
         <Button variant="outline" onClick={exportRegister} disabled={loading || !lists.length}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> New checklist</Button></DialogTrigger>
@@ -97,15 +107,15 @@ export default function Checklists() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
-
+        </>}
+      >
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : lists.length === 0 ? (
         <EmptyState icon={ClipboardList} modulePath="/checklists" title="No checklists yet" message="Create your first checklist to start tracking." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
-          {lists.map((list) => {
+          {lists.filter((l) => !query.trim() || [l.title, l.category].some((f) => (f || '').toLowerCase().includes(query.trim().toLowerCase()))).map((list) => {
             const pct = progress(list.items);
             return (
               <Card key={list.id}>
@@ -156,6 +166,7 @@ export default function Checklists() {
           })}
         </div>
       )}
+      </ModuleShell>
     </div>
   );
 }

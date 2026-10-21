@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import { Link } from 'react-router-dom';
-import PageHeader from '@/components/PageHeader';
-import RegisterInsights from '@/components/RegisterInsights';
+import ModuleShell from '@/components/module/ModuleShell';
+import { ClipboardList } from 'lucide-react';
 import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
 import { base44 } from '@/api/base44Client';
 import { STATUS_HEX, STATUS_ORDER } from '@/components/intake/intakeDisplay';
@@ -128,9 +128,17 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
 
   return (
     <div className="p-3 md:p-4">
-      <PageHeader title="Intake Centre" subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles." />
-      <div className="mt-2 flex justify-end"><IntakeReadinessExport stats={stats} loadError={statsError} /></div>
-      <div className="mt-3"><RegisterInsights module="intake" compact /></div>
+      <ModuleShell
+        title="Intake Centre"
+        subtitle="Two onboarding portals: choose a stream to open cases, collect evidence, review readiness and create approved profiles."
+        icon={ClipboardList}
+        moduleKey="intake"
+        insightModule="intake"
+        actions={<IntakeReadinessExport stats={stats} loadError={statsError} />}
+        small={[['Participant cases', Object.values(stats?.p || {}).reduce((t, n) => t + n, 0)], ['Employee cases', Object.values(stats?.e || {}).reduce((t, n) => t + n, 0)]].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{stats ? value : '…'}</p></div>
+        ))}
+      />
       <div className="mt-2 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
         <div className="relative grid grid-cols-2">
           <span className="pointer-events-none absolute bottom-0 left-1/2 top-0 w-px" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />

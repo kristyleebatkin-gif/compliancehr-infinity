@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
-import RegisterInsights from '@/components/RegisterInsights';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,7 @@ const CATEGORIES = ['Vehicle', 'Equipment', 'IT', 'Furniture', 'Safety', 'Other'
 const condTone = (c) => (c === 'Excellent' || c === 'Good' ? 'outline' : c === 'Fair' ? 'secondary' : 'destructive');
 
 export default function AssetManagement() {
+  const [query, setQuery] = useState('');
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -62,12 +63,21 @@ export default function AssetManagement() {
 
   return (
     <div className="compact-module space-y-3">
-      <PageHeader icon={Boxes} title="Asset Management" subtitle="Vehicles, equipment and their service schedules."
-        beforeAudit={<Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add asset</Button>}
-        afterAudit={<Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>}
-      />
-
-      <RegisterInsights module="assets" />
+      <ModuleShell
+        icon={Boxes}
+        title="Asset Management"
+        subtitle="Vehicles, equipment and their service schedules."
+        moduleKey="assets"
+        insightModule="assets"
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search assets…" />}
+        actions={<>
+          <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Add asset</Button>
+          <Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>
+        </>}
+        small={[['Assets', assets.length], ['In use', assets.filter((a) => a.status === 'In Use').length], ['In maintenance', assets.filter((a) => a.status === 'In Maintenance').length]].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
+        ))}
+      >
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent>
             <DialogHeader><DialogTitle>New asset</DialogTitle></DialogHeader>
@@ -112,7 +122,7 @@ export default function AssetManagement() {
         <EmptyState icon={Boxes} modulePath="/assets" title="No assets recorded yet" message="Add your first asset to start the register." />
       ) : (
         <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
-          {assets.map((a) => (
+          {assets.filter((a) => !query.trim() || [a.name, a.category, a.serial_number, a.location, a.status].some((f) => (f || '').toLowerCase().includes(query.trim().toLowerCase()))).map((a) => (
             <Card key={a.id}>
               <CardContent className="p-2">
                 <div className="flex items-start justify-between gap-2">
@@ -138,6 +148,7 @@ export default function AssetManagement() {
           ))}
         </div>
       )}
+      </ModuleShell>
     </div>
   );
 }

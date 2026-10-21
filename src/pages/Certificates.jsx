@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { recordStatusLog, currentUserName } from '@/lib/statusLog';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import StatusBadge from '@/components/StatusBadge';
 import { Button } from '@/components/ui/button';
 import { Plus, Award, Pencil, Trash2, Download } from 'lucide-react';
@@ -9,6 +10,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 
 export default function Certificates() {
+  const [query, setQuery] = useState('');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -96,15 +98,25 @@ export default function Certificates() {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-4">
-      <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry" showAlerts={false}
-        beforeAudit={<Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" />Issue Certificate</Button>}
-        auditClassName="ml-auto"
-        afterAudit={<Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [
-          { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
-          { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
-          { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
-          { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
-        ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>}
+      <ModuleShell
+        title="Certificates"
+        subtitle="Track staff training certificates and expiry"
+        icon={Award}
+        moduleKey="certificates"
+        insightModule="certificates"
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search certificates…" />}
+        actions={<>
+          <Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" />Issue Certificate</Button>
+          <Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [
+            { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
+            { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
+            { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
+            { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
+          ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
+        </>}
+        small={[['Certificates', items.length], ['Current', items.filter((c) => c.status === 'Current').length], ['Expiring / expired', items.filter((c) => c.status === 'Expiring Soon' || c.status === 'Expired').length]].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
+        ))}
       />
 
       {showForm && (
@@ -166,7 +178,7 @@ export default function Certificates() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {items.map(c => (
+                {items.filter((c) => !query.trim() || [c.staff_name, c.module_title, c.certificate_number, c.status].some((f) => (f || '').toLowerCase().includes(query.trim().toLowerCase()))).map(c => (
                   <tr key={c.id} className="hover:bg-muted/50">
                     <td className="px-4 py-3.5"><input type="checkbox" className="h-4 w-4 cursor-pointer rounded border-border accent-[hsl(var(--primary))]" checked={selected.includes(c.id)} onChange={(e) => toggleSelect(c.id, e.target.checked)} /></td>
                     <td className="px-5 py-3.5 text-sm font-medium text-foreground">{c.staff_name}</td>
