@@ -15,8 +15,8 @@ function Ring({ percent }) {
   const c = 2 * Math.PI * r;
   const dash = (percent / 100) * c;
   return (
-    <div className="relative h-[132px] w-[132px] shrink-0">
-      <svg width={size} height={size} className="-rotate-90">
+    <div className="compliance-progress-ring relative h-[132px] w-[132px] shrink-0">
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={stroke} className="stroke-violet-500/15" />
         <circle
           cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={stroke} strokeLinecap="round"

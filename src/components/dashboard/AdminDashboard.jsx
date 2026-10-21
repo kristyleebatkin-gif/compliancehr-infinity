@@ -1,4 +1,5 @@
 import React from 'react';
+import ComplianceDashboardFrame from '@/components/dashboard/ComplianceDashboardFrame';
 import DashboardCharts from './DashboardCharts';
 import AttentionPanel from './AttentionPanel';
 import ComplianceCompletionSummary from './ComplianceCompletionSummary';
@@ -16,7 +17,7 @@ export default function AdminDashboard() {
     <>
       <AttentionPanel />
 
-      <ComplianceStatusBoard />
+      <ComplianceDashboardFrame><ComplianceStatusBoard /></ComplianceDashboardFrame>
 
       <IncidentExpiryChart />
 
@@ -24,11 +25,11 @@ export default function AdminDashboard() {
 
       <DeadlineCalendar />
 
-      <ComplianceCompletionSummary />
+      <ComplianceDashboardFrame><ComplianceCompletionSummary /></ComplianceDashboardFrame>
 
-      <DepartmentComplianceSummary />
+      <ComplianceDashboardFrame><DepartmentComplianceSummary /></ComplianceDashboardFrame>
 
-      <ComplianceHealthDashboard />
+      <ComplianceDashboardFrame><ComplianceHealthDashboard /></ComplianceDashboardFrame>
 
       <ProviderKpiWidget />
 

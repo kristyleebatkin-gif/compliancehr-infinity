@@ -2,6 +2,7 @@ import React from 'react';
 import '@/components/dashboard/brightDashboard.css';
 import '@/components/dashboard/dashboardSectionRefresh.css';
 import ManagementReviewReport from '@/components/dashboard/ManagementReviewReport';
+import ComplianceDashboardFrame from '@/components/dashboard/ComplianceDashboardFrame';
 import { useRole } from '@/lib/useRole';
 import { ROLES, canAccessNav } from '@/lib/roles';
 import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
@@ -66,7 +67,7 @@ export default function Dashboard() {
 
       {canAccessNav(role, 'compliance') && <MorningBrief />}
 
-      {canAccessNav(role, 'compliance') && <IssuesDashboardWidget />}
+      {canAccessNav(role, 'compliance') && <ComplianceDashboardFrame><IssuesDashboardWidget /></ComplianceDashboardFrame>}
 
       {role === ROLES.PARTICIPANT
         ? <ParticipantDashboard />
