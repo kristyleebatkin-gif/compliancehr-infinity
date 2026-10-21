@@ -6,38 +6,21 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, UserPlus } from 'lucide-react';
-
-const STAFF_APP_ROLES = [
-  'Support Worker',
-  'Team Leader',
-  'Administration',
-  'Compliance Manager',
-  'Provider Administrator',
-  'Finance & Accounts Officer',
-  'Human Resources Manager',
-  'Rostering Coordinator',
-  'Quality & Improvement Manager',
-  'CRM & Marketing Officer',
-  'Intake Officer',
-  'Auditor',
-  'Volunteer',
-];
 
 export default function PortalInviteButton({ kind, profile }) {
   const { isAdmin } = useRole();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('Support Worker');
+  const [role, setRole] = useState('Employee');
   const [busy, setBusy] = useState(false);
 
   if (!isAdmin) return null;
 
   const openDialog = () => {
     setEmail(profile?.email || '');
-    setRole(kind === 'participant' ? 'Participant' : (profile?.app_role && STAFF_APP_ROLES.includes(profile.app_role) ? profile.app_role : 'Support Worker'));
+    setRole(kind === 'participant' ? 'Participant' : 'Employee');
     setOpen(true);
   };
 
@@ -48,7 +31,8 @@ export default function PortalInviteButton({ kind, profile }) {
     }
     setBusy(true);
     try {
-      await base44.users.inviteUser(email.trim(), kind === 'participant' ? 'Participant' : role);
+      const { data } = await base44.functions.invoke('manageAppAccess', { action: 'invite', email: email.trim(), kind, profile_id: profile?.id });
+      if (data.error) throw new Error(data.error);
       toast({
         title: 'Invitation sent',
         description: `${email.trim()} sets a password from the email, then sees only their own data.`,
@@ -86,22 +70,10 @@ export default function PortalInviteButton({ kind, profile }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                disabled={busy}
+                disabled={busy || !!profile}
               />
             </div>
-            {kind !== 'participant' && (
-              <div className="space-y-2">
-                <Label>Portal role</Label>
-                <Select value={role} onValueChange={setRole} disabled={busy}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {STAFF_APP_ROLES.map((r) => (
-                      <SelectItem key={r} value={r}>{r}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
+            <p className="text-xs text-muted-foreground">Portal access: {role}. New accounts invited from this profile are linked by their sign-in email. Existing active accounts keep their current role; suspended or rejected accounts still need management review.</p>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={busy}>Cancel</Button>

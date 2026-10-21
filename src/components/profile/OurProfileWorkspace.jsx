@@ -8,7 +8,7 @@ import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipan
 
 export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false, matchEmployeeLayout = false }) {
   const [params, setParams] = useSearchParams();
-  const employeeTiles = kind === 'staff' && (personal || matchEmployeeLayout);
+  const employeeTiles = kind === 'participant' || (kind === 'staff' && (personal || matchEmployeeLayout));
   const modules = [...OurProfileModuleList({ kind, profile, ourView,
     details: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
@@ -29,7 +29,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
   return (
     <>
       {header}
-      <Tabs value={selected.key} onValueChange={selectModule} className={`${personal || matchEmployeeLayout ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
+      <Tabs value={selected.key} onValueChange={selectModule} className={`${personal || matchEmployeeLayout || kind === 'participant' ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map((module, index) => {
           const Icon = module.Icon;

@@ -14,7 +14,7 @@ export default function ProfileAuditConsentCard({ profile, kind, onUpdated, comp
   const { toast } = useToast();
   const [reason, setReason] = useState('');
   const [busy, setBusy] = useState(false);
-  const editable = ['admin', 'Provider Administrator', 'Management', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(user?.role);
+  const editable = ['admin', 'Provider Administrator', 'Management', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(user?.role) || (kind === 'participant' && user?.role === 'Participant' && profile.email === user?.email);
   const consent = profile.audit_consent;
   const record = async (value) => {
     setBusy(true);

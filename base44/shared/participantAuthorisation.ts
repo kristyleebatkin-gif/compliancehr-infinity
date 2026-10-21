@@ -2,8 +2,8 @@ import { auDate, auTime } from './reminders.ts';
 
 export async function recordParticipantAuthorisation(base44, user, body, profile) {
   const type = body.consent_type;
-  const title = type === 'sharing' ? 'Consent to share information' : 'Consent to act as an advocate';
-  if (!['sharing', 'advocacy'].includes(type) || !['Consent received', 'Declined', 'Withdrawn'].includes(body.status)) {
+  const title = ({ sharing: 'Consent to share information', advocacy: 'Consent to act as an advocate', medication: 'Medication consent' })[type];
+  if (!['sharing', 'advocacy', 'medication'].includes(type) || !['Consent received', 'Declined', 'Withdrawn'].includes(body.status)) {
     return Response.json({ error: 'A valid consent type and status are required' }, { status: 400 });
   }
   const fields = {};

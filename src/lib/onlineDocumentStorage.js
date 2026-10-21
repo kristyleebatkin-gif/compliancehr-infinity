@@ -14,7 +14,7 @@ export async function saveOnlineDocumentDraft({ record, title, libraryKey, intak
     form_title: title,
     category: intakeCase ? `${intakeCase.intake_type} Intake` : `${libraryKey} Forms Library`,
     ...(intakeCase ? { intake_case_id: intakeCase.id } : {}),
-    ...(libraryKey.startsWith('participant-') ? { participant_id: libraryKey.slice(12) } : {}),
+    ...(libraryKey.startsWith('participant-') ? { participant_id: libraryKey.slice(12) } : intakeCase?.intake_type === 'Participant' && intakeCase.related_profile_id ? { participant_id: intakeCase.related_profile_id } : {}),
     ...(libraryKey.startsWith('staff-') ? { employee_id: libraryKey.slice(6) } : intakeCase?.intake_type === 'Employee' && intakeCase.related_profile_id ? { employee_id: intakeCase.related_profile_id } : {}),
     submitted_by: user.full_name || user.email,
     saved_by_user_id: user.id,

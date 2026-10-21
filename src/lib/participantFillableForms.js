@@ -1,5 +1,6 @@
 import { PARTICIPANT_FORM_DEFINITIONS } from '@/lib/participantDocuments';
 import { normaliseFormFields } from '@/lib/formQuestionModel';
+import { INTAKE_REQUIREMENTS } from '@/lib/intakeCases';
 
 /**
  * Participant fillable forms available on the participant profile.
@@ -28,7 +29,7 @@ const PARTICIPANT_CONSENT_FORM = {
   ],
 };
 
-export const PARTICIPANT_FILLABLE_FORMS = [
+export const PARTICIPANT_FILLABLE_FORMS = [...new Set([...INTAKE_REQUIREMENTS.Participant,
   'Participant Consent Form',
   'Authority to Act as Advocate',
   'Participant Money Register',
@@ -44,7 +45,7 @@ export const PARTICIPANT_FILLABLE_FORMS = [
   'Incident Reports',
   'Feedback and Complaints',
   'Participant File Audit Checklist',
-].map((key) => ({
+])].filter((key) => key === 'Participant Consent Form' || PARTICIPANT_FORM_DEFINITIONS[key]?.fields?.length || PARTICIPANT_FORM_DEFINITIONS[key]?.columns?.length).map((key) => ({
   key,
   code: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.code : (PARTICIPANT_FORM_DEFINITIONS[key]?.code || ''),
   label: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.label : (PARTICIPANT_FORM_DEFINITIONS[key]?.label || key),

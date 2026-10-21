@@ -10,10 +10,11 @@ import { PARTICIPANT_PROFILE_SECTIONS as SECTIONS } from '@/lib/participantProfi
 import { Loader2 } from 'lucide-react';
 import { useRole } from '@/lib/useRole';
 import ParticipantReadOnlyDetails from '@/components/profile/ParticipantReadOnlyDetails';
+import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 
 
 
-export default function ParticipantDetailsTab({ participant, onUpdated }) {
+export default function ParticipantDetailsTab({ participant, onUpdated, compact = false, hideConsents = false }) {
   const { toast } = useToast();
   const { isAdmin, role, user } = useRole();
   const canEdit = isAdmin || (role === 'Participant' && participant.email === user?.email);
@@ -47,12 +48,11 @@ export default function ParticipantDetailsTab({ participant, onUpdated }) {
   if (!canEdit) return <ParticipantReadOnlyDetails participant={participant} />;
 
   return (
-    <div className="space-y-6">
-      <ProfileAuditConsentCard profile={participant} kind="participant" onUpdated={onUpdated} />
-      <ParticipantAuthorisationCard participant={participant} type="sharing" onUpdated={onUpdated} />
-      <ParticipantAuthorisationCard participant={participant} type="advocacy" onUpdated={onUpdated} />
+    <div className={compact ? 'space-y-3' : 'space-y-6'}>
+      {!hideConsents && <><ProfileAuditConsentCard profile={participant} kind="participant" onUpdated={onUpdated} />
+      {['sharing', 'advocacy', 'medication'].map((type) => <ParticipantAuthorisationCard key={type} participant={participant} type={type} onUpdated={onUpdated} />)}</>}
 
-      {SECTIONS.map((section) => <ProfileFieldsSection key={section.title} section={section} form={form} onChange={set} prefix={`participant-${participant.id}`} />)}
+      {SECTIONS.map((section, index) => compact ? <EmployeeProfileSection key={section.title} title={section.title} tone={['purple', 'blue', 'green', 'orange', 'pink', 'yellow'][index]}><ProfileFieldsSection section={{ ...section, fields: section.fields.map((field) => field.key === 'email' && !isAdmin ? { ...field, readOnly: true } : field) }} form={form} onChange={set} prefix={`participant-${participant.id}`} /></EmployeeProfileSection> : <ProfileFieldsSection key={section.title} section={{ ...section, fields: section.fields.map((field) => field.key === 'email' && !isAdmin ? { ...field, readOnly: true } : field) }} form={form} onChange={set} prefix={`participant-${participant.id}`} />)}
 
       <ProfileAuditTrail changeLog={participant.change_log} />
 

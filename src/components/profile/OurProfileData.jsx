@@ -13,9 +13,9 @@ import AllEmployeeForms from '@/components/profile/AllEmployeeForms';
 export default function OurProfileData({ profile, kind, onUpdated, detailsContent, initialTab = 'details', personal = false, contentOnly = false }) {
   const participant = kind === 'participant';
   const staffIntake = personal && !participant;
-  if (contentOnly && staffIntake) {
-    if (initialTab === 'forms') return <AllEmployeeForms profile={profile} />;
-    return <IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView={initialTab === 'files' ? 'readiness' : 'documents'} />;
+  if (contentOnly) {
+    if (initialTab === 'forms') return participant ? <ParticipantFillableForms participant={profile} /> : <AllEmployeeForms profile={profile} />;
+    return <IntakeCaseWorkflow intakeType={participant ? 'Participant' : 'Employee'} profile={profile} profileView={initialTab === 'files' ? 'readiness' : 'documents'} />;
   }
   return (
     <Tabs defaultValue={initialTab} className="space-y-4">

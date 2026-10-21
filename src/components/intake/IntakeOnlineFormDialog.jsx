@@ -5,6 +5,6 @@ export default function IntakeOnlineFormDialog({ open, onOpenChange, onlineForm,
   if (!onlineForm || !activeCase) return null;
   return <OnlineDocumentDialog key={`${activeCase.id}:${onlineForm.docType}`} open={open} onOpenChange={onOpenChange}
     title={onlineForm.docType} code={code} definition={onlineForm.definition}
-    libraryKey={intakeType} intakeCase={activeCase} initialAnswers={onlineForm.answers}
+    libraryKey={intakeType === 'Participant' && activeCase.related_profile_id ? `participant-${activeCase.related_profile_id}` : intakeType} intakeCase={activeCase} initialAnswers={onlineForm.answers}
     requireAll onFinalize={onSubmit} />;
 }

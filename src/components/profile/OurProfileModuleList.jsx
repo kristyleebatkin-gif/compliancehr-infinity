@@ -19,6 +19,8 @@ const Training = lazy(() => import('@/pages/Training'));
 const Feedback = lazy(() => import('@/pages/Feedback'));
 const NameTags = lazy(() => import('@/pages/NameTags'));
 const Documents = lazy(() => import('@/pages/Documents'));
+const ProfileCommDiary = lazy(() => import('@/components/communications/ProfileCommDiary'));
+const IntakeCaseWorkflow = lazy(() => import('@/components/intake/IntakeCaseWorkflow'));
 
 export default function OurProfileModuleList({ kind, profile, details, approvedParticipants, ourView = false }) {
   const employee = kind === 'staff';
@@ -33,9 +35,9 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     ...(employee && approvedParticipants ? [{ key: 'participants', label: 'Approved Participant Profiles', Icon: Heart, content: approvedParticipants }] : []),
     { key: 'personnel', label: 'Key Personnel', Icon: Contact, content: <KeyContacts {...contactProps} /> },
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
-    { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: <IntakeCentre {...props} /> },
+    { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: employee ? <IntakeCentre {...props} /> : <IntakeCaseWorkflow intakeType="Participant" profile={profile} profileView="documents" /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
-    ...(employee ? [{ key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> }] : []),
+    { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
     { key: 'roster', label: 'Rostering', Icon: CalendarClock, content: <Rostering {...ourProps} /> },
     { key: 'community', label: 'Community', Icon: MapPin, content: <CommunityCouncil {...props} /> },
     { key: 'programs', label: 'Programs', Icon: CalendarDays, content: <ProgramsEvents {...props} /> },
@@ -44,7 +46,7 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     { key: 'emergency', label: 'Emergency Response', Icon: Siren, content: <EmergencyResponse {...props} /> },
     { key: 'ndis', label: 'NDIS Updates', Icon: Newspaper, content: <NdisUpdates {...props} /> },
     ...(employee ? [{ key: 'receipts', label: 'Receipt Hub', Icon: Receipt, content: <ReceiptHub {...props} /> }] : []),
-    { key: 'communications', label: 'Communication Centre', Icon: MessagesSquare, content: <Communications {...props} /> },
+    { key: 'communications', label: employee ? 'Communication Centre' : 'Communication Log', Icon: MessagesSquare, content: employee ? <Communications {...props} /> : <ProfileCommDiary participant={profile} /> },
     ...(employee ? [{ key: 'training', label: 'Training Centre', Icon: GraduationCap, content: <Training {...props} /> }] : []),
     { key: 'feedback', label: 'Feedback', Icon: ThumbsUp, content: <Feedback {...props} /> },
     ...(employee ? [{ key: 'name-tag', label: 'Staff Name Tag', Icon: IdCard, content: <NameTags {...props} /> }] : []),

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { appParams } from '@/lib/app-params';
+import { hasApprovedAccess } from '@/lib/roles';
 
 const AuthContext = createContext();
 
@@ -81,7 +82,11 @@ export const AuthProvider = ({ children }) => {
     try {
       // Now check if the user is authenticated
       if (!background) setIsLoadingAuth(true);
-      const currentUser = await base44.auth.me();
+      let currentUser = await base44.auth.me();
+      if (!hasApprovedAccess(currentUser) && !['Rejected', 'Suspended', 'Archived'].includes(currentUser.account_status)) {
+        const { data } = await base44.functions.invoke('acceptProfileInvitation', {});
+        if (data.changed) currentUser = await base44.auth.me();
+      }
       setUser(currentUser);
       setAuthError(null);
       setIsAuthenticated(true);

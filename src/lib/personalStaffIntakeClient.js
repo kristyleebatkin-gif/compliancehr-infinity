@@ -1,9 +1,9 @@
 import { base44 } from '@/api/base44Client';
 
-export default function personalStaffIntakeClient(profile) {
+export default function personalStaffIntakeClient(profile, intakeType = 'Employee') {
   let snapshot;
   const invoke = async (action, payload = {}) => {
-    const { data } = await base44.functions.invoke('myStaffIntakeDocuments', { action, profile_id: profile.id, ...payload });
+    const { data } = await base44.functions.invoke('myStaffIntakeDocuments', { action, profile_id: profile.id, intake_type: intakeType, ...payload });
     if (data.error) throw new Error(data.error);
     return data;
   };

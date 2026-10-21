@@ -106,7 +106,9 @@ export default function ParticipantFillableForms({ participant }) {
         uploaded_date: new Date().toISOString().slice(0, 10),
         uploaded_by: user?.full_name || user?.email || '',
       });
-      routeDocument(record, { person_name: participant.full_name, person_type: 'Participant' });
+      const { data } = await base44.functions.invoke('myStaffIntakeDocuments', { action: 'attach', intake_type: 'Participant', profile_id: participant.id, document: { document_type: formKey, file_name: file.name, file_uri } });
+      if (data.error) throw new Error(data.error);
+      await routeDocument(record, { person_name: participant.full_name, person_type: 'Participant' });
       toast({ title: `${formKey} uploaded to this participant's record` });
     } catch (error) {
       toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });

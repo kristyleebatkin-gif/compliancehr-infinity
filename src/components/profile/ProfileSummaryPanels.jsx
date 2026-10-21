@@ -10,8 +10,10 @@ import EmployeeRemainingSections from '@/components/profile/EmployeeRemainingSec
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
+import ParticipantSummaryPanels from '@/components/profile/ParticipantSummaryPanels';
 
 export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff' }) {
+  if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} />;
   if (staffQuestions) return <div className="grid items-start gap-3 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)]">
     <div className="min-w-0 space-y-3">
       <StaffBadgePreview branding={branding} staff={profile} compact />

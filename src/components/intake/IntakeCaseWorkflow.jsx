@@ -209,7 +209,7 @@ function mapStaffRole(employeeRole) {
 
 export default function IntakeCaseWorkflow({ intakeType, profile, profileView }) {
   const { user } = useRole();
-  const personalClient = useMemo(() => profileView ? personalStaffIntakeClient(profile) : null, [profileView, profile?.id]);
+  const personalClient = useMemo(() => profileView ? personalStaffIntakeClient(profile, intakeType) : null, [profileView, profile?.id, intakeType]);
   const caseApi = personalClient?.cases || base44.entities.IntakeCase;
   const documentApi = personalClient?.documents || base44.entities.IntakeDocument;
   const [profileLoading, setProfileLoading] = useState(!!profileView);
@@ -992,7 +992,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
     }
   };
 
-  if (profileView && profileLoading) return <div role="status" className="py-8 text-sm text-muted-foreground">Loading employee intake…</div>;
+  if (profileView && profileLoading) return <div role="status" className="py-8 text-sm text-muted-foreground">Loading {intakeType.toLowerCase()} intake…</div>;
   if (profileView && profileError) return <div role="alert" className="rounded-xl border border-destructive/30 p-4 text-sm text-destructive">{profileError}<Button variant="outline" className="ml-3" onClick={() => { setProfileError(''); setProfileLoading(true); load().catch((error) => setProfileError(error.message)).finally(() => setProfileLoading(false)); }}>Retry</Button></div>;
 
   if (profileView === 'resume') return activeCase
@@ -1057,7 +1057,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
               />}
 
 
-              {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} allowResumeUpload resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} /> : <IntakeCaseDocuments
+              {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} allowResumeUpload={intakeType === 'Employee'} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} /> : <IntakeCaseDocuments
                 showReadiness={!profileView}
                 activeCase={profileView ? { ...activeCase, status: 'Draft' } : activeCase}
                 intakeType={intakeType}

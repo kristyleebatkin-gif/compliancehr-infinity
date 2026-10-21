@@ -8,6 +8,7 @@ import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
+import '@/components/profile/myProfilePastels.css';
 
 export default function OurParticipantDetail({ backTo = '/our-participants', backLabel = 'Our participant profiles', scoped = true }) {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
     return <ProfileLoadState loading={loading} error={error} backTo={backTo} label={backLabel} onRetry={refresh} />;
   }
   return (
-    <div className="space-y-4">
+    <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel}</Link></Button>
         <div className="flex flex-wrap items-center gap-2">

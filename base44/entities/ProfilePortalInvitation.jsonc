@@ -1,0 +1,86 @@
+{
+  "name": "ProfilePortalInvitation",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "profile_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "staff",
+        "participant"
+      ]
+    },
+    "portal_role": {
+      "type": "string",
+      "enum": [
+        "Employee",
+        "Participant"
+      ]
+    },
+    "invited_by_id": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Accepted"
+      ],
+      "default": "Pending"
+    }
+  },
+  "required": [
+    "email",
+    "profile_id",
+    "kind",
+    "portal_role",
+    "invited_by_id",
+    "expires_at"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "collaborator_role": "editor"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "collaborator_role": "editor"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "collaborator_role": "editor"
+      }
+    }
+  }
+}

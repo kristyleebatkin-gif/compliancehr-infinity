@@ -19,9 +19,22 @@ export default async function(req) {
       return Response.json({ users, pending_users: pendingUsers, pending_count: pendingUsers.length });
     }
     if (body.action === 'invite') {
-      const email = String(body.email || '').trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return Response.json({ error: 'Enter a valid email address.' }, { status: 400 });
+      let email = String(body.email || '').trim();
+      let profile;
+      if (body.profile_id) {
+        if (!['staff', 'participant'].includes(body.kind) || typeof body.profile_id !== 'string') return Response.json({ error: 'Choose a valid profile.' }, { status: 400 });
+        profile = await service.entities[body.kind === 'participant' ? 'ParticipantProfile' : 'StaffProfile'].get(body.profile_id);
+        if (!profile) return Response.json({ error: 'Profile not found.' }, { status: 404 });
+        email = String(profile.email || '').trim();
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return Response.json({ error: 'Save a valid email address on the profile first.' }, { status: 400 });
       await service.users.inviteUser(email, 'user');
+      if (profile) {
+        const previous = await service.entities.ProfilePortalInvitation.filter({ email, profile_id: profile.id, status: 'Pending' }, { limit: 1 });
+        const invitation = { email, profile_id: profile.id, kind: body.kind, portal_role: body.kind === 'participant' ? 'Participant' : 'Employee', invited_by_id: actor.id, expires_at: new Date(Date.now() + 7 * 86400000).toISOString(), status: 'Pending' };
+        if (previous.items[0]) await service.entities.ProfilePortalInvitation.update(previous.items[0].id, invitation);
+        else await service.entities.ProfilePortalInvitation.create(invitation);
+      }
       return Response.json({ ok: true });
     }
     if (!['approve', 'reject', 'suspend', 'role'].includes(body.action) || typeof body.user_id !== 'string') return Response.json({ error: 'Invalid access decision.' }, { status: 400 });
