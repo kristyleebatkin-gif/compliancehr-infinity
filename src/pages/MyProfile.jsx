@@ -153,7 +153,10 @@ export default function MyProfile() {
         const person = secondary || profile;
         const kind = (secondary || isParticipant) ? 'participant' : 'staff';
         return <OurProfileWorkspace key={person.id} profile={person} kind={kind} onUpdated={load} ourView={false} personal
-          header={<PersonalProfileHeader profile={person} kind={kind} showIdentity={kind !== 'staff'} />}
+          header={<PersonalProfileHeader profile={person} kind={kind} showIdentity={kind !== 'staff'} onUpdated={(updated) => {
+            if (secondary) { setParticipantProfile(updated); setParticipantForm((current) => ({ ...current, about_me: updated.about_me || '' })); }
+            else { setProfile(updated); setForm((current) => ({ ...current, about_me: updated.about_me || '' })); }
+          }} />}
           details={<OurProfileData profile={person} kind={kind} initialTab={tab === 'forms' ? 'forms' : 'details'} detailsContent={<PersonalProfileForm fields={secondary ? PARTICIPANT_FIELDS : fields} form={secondary ? participantForm : form} onChange={secondary ? setParticipantField : setField} onSave={secondary ? saveParticipant : save} saving={saving} saved={saved} readOnly={!!secondary && !canEditParticipant} />} />}
           moduleOverrides={{ documents: <MyDocuments embedded />, 'name-tag': <NameTags embedded /> }}
           extraModules={[{ key: 'work', label: 'My Work', Icon: BriefcaseBusiness, content: <StaffHome embedded /> }]}
