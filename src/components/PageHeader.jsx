@@ -42,7 +42,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         )}
         <div className="min-w-0 flex-1">
           {showDivider && <div className="mb-1.5 h-0.5 w-10 rounded-full bg-white/60 shadow-sm" />}
-          <h1 className="font-display text-xl font-bold tracking-tight text-header-foreground sm:text-2xl">{title}</h1>
+          <h1 className="text-xl font-bold tracking-tight text-header-foreground sm:text-2xl">{title}</h1>
           {subtitle && <p className="mt-1 max-w-3xl break-words text-[13px] font-medium leading-5 text-header-foreground">{subtitle}</p>}
         </div>
       </div>
