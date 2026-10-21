@@ -4,7 +4,6 @@ import '@/components/profile/profileSectionLayout.css';
 import { FolderCheck } from 'lucide-react';
 import { PARTICIPANT_FILE_SECTIONS, PARTICIPANT_FORM_DEFINITIONS, PARTICIPANT_FORM_FILES, participantFormInfo } from '@/lib/participantDocuments';
 import { PARTICIPANT_FILLABLE_DEFINITIONS } from '@/lib/participantFillableForms';
-import ParticipantDocumentRegister from '@/components/documents/ParticipantDocumentRegister';
 
 export default function ParticipantDocumentsTab({ participant }) {
   const definitions = { ...PARTICIPANT_FORM_DEFINITIONS, ...PARTICIPANT_FILLABLE_DEFINITIONS };
@@ -24,7 +23,6 @@ export default function ParticipantDocumentsTab({ participant }) {
         defaultOpen
       />
 
-      <ParticipantDocumentRegister participant={participant} />
     </div>
   );
 }

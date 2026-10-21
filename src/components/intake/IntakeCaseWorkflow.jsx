@@ -1056,11 +1056,11 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
                 onUpdateCase={updateCase}
                 underHeader={<IntakeCaseHeaderTools activeCase={activeCase} readiness={readiness} intakeType={intakeType} docs={activeDocs} />}
               />}
-              {profileView && <IntakeCaseHeaderTools activeCase={activeCase} readiness={readiness} intakeType={intakeType} docs={activeDocs} />}
+              {profileView && <IntakeCaseHeaderTools activeCase={activeCase} readiness={readiness} intakeType={intakeType} docs={activeDocs} showJourney={profileView === 'overview'} journeyFirst={profileView === 'overview'} />}
 
 
               {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} allowResumeUpload={intakeType === 'Employee'} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} /> : <IntakeCaseDocuments
-                showReadiness={!profileView || (intakeType === 'Employee' && profileView === 'documents')}
+                showReadiness={!profileView || profileView === 'documents' || profileView === 'overview'}
                 activeCase={profileView ? { ...activeCase, status: 'Draft' } : activeCase}
                 intakeType={intakeType}
                 readiness={readiness}
