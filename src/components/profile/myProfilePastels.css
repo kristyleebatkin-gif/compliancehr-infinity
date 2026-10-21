@@ -1,1 +1,27 @@
-/* Profile pages use the standard app header and the fixed module colours. */
+/* My Profile: no large gradient blocks — section headers and tabs are flat/white. The page header (.app-page-header) is frozen and unchanged. */
+html body .my-profile-pastels .app-section-card-header,
+html body .my-profile-pastels .dashboard-panel-header {
+  background: #fff !important;
+  background-image: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span, button, a, svg),
+html body .my-profile-pastels .dashboard-panel-header :is(h1, h2, h3, h4, p, span, button, a, svg) {
+  color: #000 !important;
+  text-shadow: none !important;
+}
+html body .my-profile-pastels [data-dashboard-tab] {
+  background-image: none !important;
+  background: hsl(var(--dashboard-tone, var(--primary)) / 0.28) !important;
+}
+html body .my-profile-pastels [data-dashboard-tab][data-state="active"],
+html body .my-profile-pastels [data-dashboard-tab][aria-pressed="true"] {
+  background: hsl(var(--dashboard-tone, var(--primary)) / 0.55) !important;
+}
+html body .my-profile-pastels [class*="bg-gradient"] {
+  background-image: none !important;
+}
