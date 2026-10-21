@@ -8,18 +8,17 @@ import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText, Search, Copy } from 'lucide-react';
+import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pencil, FileText, Search, Copy, BadgeCheck, TrendingUp, CalendarClock } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/ui/input';
 import { format, addDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
-import { SUPPORT_ITEMS, lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
+import { lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
 import { downloadQuotePdf, downloadQuoteTemplatePdf, printQuotePdf, quotePdfBase64, quotePdfFilename } from '@/lib/quotePdf';
 import QuoteBuilder from '@/components/quotes/QuoteBuilder';
 import QuotePreview from '@/components/quotes/QuotePreview';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import PageHeader from '@/components/PageHeader';
+import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 
@@ -162,43 +161,25 @@ export default function QuoteCentre() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="relative overflow-hidden rounded-2xl gradient-brand p-6 text-white shadow-lg">
-        <div className="pointer-events-none absolute -right-12 -top-20 h-56 w-56 rounded-full bg-white/15 blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-16 left-24 h-36 w-36 rounded-full bg-fuchsia-300/25 blur-2xl" />
-        <div className="pointer-events-none absolute -right-20 top-0 h-full w-44 rotate-12" style={{ background: 'linear-gradient(90deg, transparent 15%, rgba(255,255,255,0.14) 50%, transparent 85%)' }} />
-        <div className="relative flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-xl bg-white/10 p-3"><ClipboardList className="h-7 w-7" /></div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Quote Centre</h1>
-              <p className="text-sm text-white/75">NDIS support quotations with price guide items, business details and terms from Company Safe.</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <ModuleComplianceStrip path="/quotes" />
-            <ModuleAlertsButton />
-            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
-            {[['Quotes', String(quotes.length)], ['Quoted value', money(totalValue)], ['Accepted', money(acceptedValue)], ['Win rate', `${winRate}%`], ['Expiring soon', String(expiringSoon)]].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-white/10 px-3 py-2 text-center backdrop-blur">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/75">{label}</p>
-                <p className="text-sm font-bold">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
+    <div className="finance-workspace quotes-workspace space-y-4">
+      <PageHeader title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} beforeAudit={<ModuleAlertsButton />} />
+      <FinanceMetricCards entries={[
+        { label: 'Quotes', value: String(quotes.length), Icon: ClipboardList, tone: 'primary' },
+        { label: 'Quoted value', value: money(totalValue), Icon: FileText, tone: 'evidence' },
+        { label: 'Accepted', value: money(acceptedValue), Icon: BadgeCheck, tone: 'safe' },
+        { label: 'Win rate', value: `${winRate}%`, Icon: TrendingUp, tone: 'pink' },
+        { label: 'Expiring soon', value: String(expiringSoon), Icon: CalendarClock, tone: 'warning' },
+      ]} />
       <RegisterInsights module="quotes" />
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="quote-actions flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>
         <Button variant="outline" disabled={loading} onClick={() => downloadQuoteTemplatePdf(business)}><FileDown className="mr-2 h-4 w-4" />Quote template</Button>
         <Button variant="outline" onClick={exportRegister} disabled={exporting || loading || quotes.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
         <p className="text-[11px] text-muted-foreground">{PRICE_GUIDE_VERSION}. Business name, address, contact details and quote terms are pulled live from Company Safe.</p>
       </div>
 
-      <div className="module-filter-bar flex flex-wrap items-center">
+      <div className="quote-filters module-filter-bar flex flex-wrap items-center">
         <div className="relative min-w-52 flex-1">
           <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search quote number, client, participant or NDIS number..." value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -224,7 +205,7 @@ export default function QuoteCentre() {
             const lines = parseLineItems(q.line_items);
             const total = lines.length ? lines.reduce((sum, l) => sum + lineAmount(l), 0) : (Number(q.total) || 0);
             return (
-              <Card key={q.id}>
+              <Card key={q.id} className={`quote-record ${q.status === 'Accepted' ? 'finance-tone-safe' : q.status === 'Sent' ? 'finance-tone-evidence' : q.status === 'Declined' || q.status === 'Expired' ? 'finance-tone-danger' : 'finance-tone-primary'}`}>
                 <CardContent className="px-3 py-2">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">

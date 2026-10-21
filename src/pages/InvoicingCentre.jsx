@@ -2,13 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
+import InvoiceNavigation from '@/components/invoicing/InvoiceNavigation';
+import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -26,17 +25,12 @@ import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
-import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
+import { Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 
 const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
 
-const INV_TAB_TONES = {
-  invoices: 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
-  bank: 'data-[state=active]:from-teal-500 data-[state=active]:to-cyan-400',
-  finance: 'data-[state=active]:from-emerald-500 data-[state=active]:to-green-400',
-};
 
 export default function InvoicingCentre() {
   const { toast } = useToast();
@@ -135,60 +129,36 @@ export default function InvoicingCentre() {
   }), [invoices]);
 
   return (
-    <div className="space-y-4">
+    <div className="finance-workspace space-y-4">
       <PageHeader
         icon={FileSpreadsheet}
         title="Invoicing Centre"
         subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
         showAlerts={false}
-        showCompliance={false}
-        showAudit={false}
+        beforeAudit={<>
+          <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
+          <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
+        </>}
       />
 
       <RegisterInsights module="invoicing" />
 
-      <div className="flex flex-wrap items-center gap-2">
-        <ModuleComplianceStrip path="/invoicing" />
-        <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
-        <Button onClick={() => setBuilderOpen(true)}><Plus className="mr-2 h-4 w-4" />Generate invoice</Button>
-        <Button variant="outline" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
-        <Button variant="outline" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
-      </div>
+      <AgedReceivables invoices={invoices} onChanged={load} />
 
       {!business.business_name && !loading && (
         <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
       )}
 
       <Tabs defaultValue="invoices">
-        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
-          {Object.entries(INV_TAB_TONES).map(([value, tone]) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${tone}`}
-            >
-              {value === 'invoices' ? 'Invoices' : value === 'bank' ? 'Bank Reconciliation' : 'Finance Summary'}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <InvoiceNavigation onGenerate={() => setBuilderOpen(true)} />
 
         <TabsContent value="invoices" className="space-y-4">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {[
-              { label: 'Invoices', value: summary.total, Icon: FileSpreadsheet, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
-              { label: 'Sent', value: summary.sent, Icon: Send, grad: 'from-sky-500 via-cyan-500 to-teal-500' },
-              { label: 'Paid', value: summary.paid, Icon: BadgeCheck, grad: 'from-emerald-500 via-green-500 to-teal-500' },
-              { label: 'Overdue', value: summary.overdue, Icon: AlertTriangle, grad: 'from-rose-500 via-red-500 to-orange-500' },
-            ].map((s) => (
-              <div key={s.label} className={`rounded-2xl bg-gradient-to-br ${s.grad} p-4 text-white shadow-md`}>
-                <div className="w-fit rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
-                <p className="mt-3 text-3xl font-bold tabular-nums">{s.value}</p>
-                <p className="text-sm font-medium text-white/85">{s.label}</p>
-              </div>
-            ))}
-          </div>
-
-          <AgedReceivables invoices={invoices} onChanged={load} />
+          <FinanceMetricCards entries={[
+            { label: 'Invoices', value: summary.total, Icon: FileSpreadsheet, tone: 'primary' },
+            { label: 'Sent', value: summary.sent, Icon: Send, tone: 'evidence' },
+            { label: 'Paid', value: summary.paid, Icon: BadgeCheck, tone: 'safe' },
+            { label: 'Overdue', value: summary.overdue, Icon: AlertTriangle, tone: 'danger' },
+          ]} />
 
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
@@ -228,6 +198,7 @@ export default function InvoicingCentre() {
           )}
         </TabsContent>
 
+        <TabsContent value="bank"><BankReconciliation invoices={invoices} onChanged={load} /></TabsContent>
         <TabsContent value="finance">
           <FinanceSummary />
         </TabsContent>
