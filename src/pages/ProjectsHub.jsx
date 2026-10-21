@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -71,32 +71,27 @@ export default function ProjectsHub() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Projects Hub"
         subtitle="Business improvement projects, growth initiatives and internal builds - tracked from planning to complete."
         icon={KanbanSquare}
-        accent={['#6366f1', '#4f46e5']}
-        showAlerts={false}
-        beforeAudit={<Button size="sm" variant="outline" className="bright-pink-action" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>}
-        action={<Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
-          { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
-          { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
-        ], projects)}>Export CSV</Button>}
-      />
-
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: 'Active projects', value: active.length, grad: 'from-violet-600 via-purple-600 to-fuchsia-600' },
-          { label: 'Planning', value: projects.filter((p) => p.status === 'Planning').length, grad: 'from-sky-500 via-blue-600 to-indigo-600' },
-          { label: 'Overdue', value: overdue.length, grad: 'from-rose-500 via-red-500 to-orange-500' },
-          { label: 'Average progress', value: `${avgProgress}%`, grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
-        ].map((s) => (
-          <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
-            <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
-          </div>
+        moduleKey="projects"
+        actions={<>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => downloadCsv('projects.csv', [
+            { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
+            { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
+          ], projects)}>Export CSV</Button>
+        </>}
+        small={[
+          ['Active projects', active.length],
+          ['Planning', projects.filter((p) => p.status === 'Planning').length],
+          ['Overdue', overdue.length],
+          ['Average progress', `${avgProgress}%`],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
-      </div>
+      />
 
 
 

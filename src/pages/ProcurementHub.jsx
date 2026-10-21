@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -97,29 +97,29 @@ export default function ProcurementHub() {
 
   return (
     <div className="finance-workspace procurement-workspace space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Procurement"
         subtitle="Suppliers, purchase orders and spend tracking - from order to receipt, with full audit traceability."
         icon={ShoppingCart}
-        accent={['#ca8a04', '#ea580c']}
-        beforeAudit={<>
-          <Button size="sm" className="border border-warning/30 bg-warning/15 text-foreground hover:bg-warning/25" onClick={() => { setTab('orders'); setShowPoForm(!showPoForm); }}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
-          <Button size="sm" variant="outline" onClick={() => downloadCsv('purchase-orders.csv', [
+        moduleKey="procurement"
+        insightModule="suppliers"
+        small={[
+          ['Spend received', money(totalSpend)],
+          ['Committed (submitted + approved)', money(committed)],
+          ['Open orders', orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length],
+          ['Active suppliers', suppliers.filter((s) => s.status === 'Active').length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+        ))}
+        actions={<>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => { setTab('orders'); setShowPoForm(!showPoForm); }}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => downloadCsv('purchase-orders.csv', [
             { label: 'PO number', key: 'po_number' }, { label: 'Supplier', key: 'supplier_name' }, { label: 'Items', key: 'items' },
             { label: 'Total', key: 'total' }, { label: 'Order date', key: 'order_date' }, { label: 'Required by', key: 'required_by_date' },
             { label: 'Status', key: 'status' }, { label: 'Received', key: 'received_date' },
           ], orders)}>Export CSV</Button>
         </>}
       />
-
-      <RegisterInsights module="suppliers" />
-
-      <FinanceMetricCards entries={[
-        { label: 'Spend received', value: money(totalSpend), Icon: PackageCheck, tone: 'safe' },
-        { label: 'Committed (submitted + approved)', value: money(committed), Icon: Truck, tone: 'warning' },
-        { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length, Icon: ShoppingCart, tone: 'primary' },
-        { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length, Icon: Truck, tone: 'evidence' },
-      ]} />
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>

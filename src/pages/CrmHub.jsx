@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import { Card, CardContent } from '@/components/ui/card';
@@ -134,34 +134,24 @@ export default function CrmHub() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         title="CRM & Leads"
         subtitle="Track every enquiry through the sales pipeline: enquiries, proposals, wins and follow-ups."
         icon={Briefcase}
-        accent={['#16a34a', '#0d9488']}
-        showAlerts={false}
-        
-        action={(
-          <>
-            <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
-            <Button size="sm" variant="outline" onClick={exportLeads}>Export CSV</Button>
-          </>
-        )}
-      />
-
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: 'Open pipeline value', value: money(pipelineValue), grad: 'from-blue-600 via-violet-600 to-purple-600' },
-          { label: 'Won revenue', value: money(wonValue), grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
-          { label: 'Win rate', value: closedCount > 0 ? `${Math.round((wonCount / closedCount) * 100)}%` : 'n/a', grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
-          { label: 'Follow-ups due', value: followUpsDue.length, grad: 'from-amber-500 via-orange-500 to-rose-500' },
-        ].map((s) => (
-          <div key={s.label} className={`rounded-2xl bg-gradient-to-br p-4 text-white shadow-md ${s.grad}`}>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
-            <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
-          </div>
+        moduleKey="crm"
+        actions={<>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={exportLeads}>Export CSV</Button>
+        </>}
+        small={[
+          ['Open pipeline value', money(pipelineValue)],
+          ['Won revenue', money(wonValue)],
+          ['Win rate', closedCount > 0 ? `${Math.round((wonCount / closedCount) * 100)}%` : 'n/a'],
+          ['Follow-ups due', followUpsDue.length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
-      </div>
+      />
 
       {followUpsDue.length > 0 && (
         <Card className="border-warning/40 bg-warning/5"><CardContent className="p-4">

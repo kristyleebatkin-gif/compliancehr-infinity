@@ -7,7 +7,8 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
+import { ListTodo } from 'lucide-react';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 
@@ -212,7 +213,15 @@ function Tasks() {
 
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
-      <PageHeader className="task-page-header" title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" beforeAudit={<TaskToolbar navigationOnly />} under={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
+      <ModuleShell
+        title="Task Dashboard"
+        subtitle="Current, past and future tasks with allocation, alerts and status tracking"
+        icon={ListTodo}
+        moduleKey="tasks"
+        insightModule="tasks"
+        tabs={<TaskToolbar navigationOnly />}
+        actions={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />}
+      />
 
       {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
@@ -226,8 +235,6 @@ function Tasks() {
       <TaskProgressChart tasks={list} users={users} />
 
       {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
-
-      <RegisterInsights module="tasks" />
 
       {selected.length > 0 && (
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">
