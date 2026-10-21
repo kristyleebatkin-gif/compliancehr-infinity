@@ -4,28 +4,35 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Trophy, Award, Send } from 'lucide-react';
-import { characterFor, VOUCHERS, JOKES, FUN_FACTS, TEAM_STRATEGIES, COMPETITION_HISTORY } from '@/lib/commTypes';
+import { characterFor } from '@/lib/commTypes';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import useTaskCompetitionSettings from '@/components/tasks/useTaskCompetitionSettings';
+import CompetitionSettingsDialog from '@/components/tasks/CompetitionSettingsDialog';
+import CompetitionBanterEntry from '@/components/tasks/CompetitionBanterEntry';
+import '@/components/tasks/taskCompetition.css';
+import '@/components/dashboard/brightActions.css';
 import { generateTaskCertificate } from '@/lib/taskCertificatePdf';
 
-const SEASON_END_MONTH = 11; // December (0-based)
-const SEASON_END_DAY = 1;
 
 export default function TaskLeaderboard() {
   const [tasks, setTasks] = useState([]);
   const [banter, setBanter] = useState([]);
   const [banterText, setBanterText] = useState('');
   const [now, setNow] = useState(new Date());
+  const { settings, loading: settingsLoading, error: settingsError, save: saveSettings } = useTaskCompetitionSettings();
+  const [revision, setRevision] = useState(0);
+  useEffect(() => base44.entities.TodoTask.subscribe(() => setRevision((value) => value + 1)), []);
 
   useEffect(() => {
     (async () => {
       // Season window is applied on the server so only this season's tasks transfer.
-      const year = new Date().getFullYear();
-      const seasonStart = `${year}-01-01`;
-      const seasonEnd = `${year}-12-01`;
+      const seasonStart = settings.season_start;
+      const seasonEnd = format(new Date(settings.season_end), 'yyyy-MM-dd');
       // Both Completed and Finalised tasks earn leaderboard points.
       const taskPage = await base44.entities.TodoTask.filter(
         { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } },
-        { limit: 1000, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title'] }
+        { limit: 1000, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module'] }
       );
       setTasks(taskPage.items || []);
       try {
@@ -33,7 +40,7 @@ export default function TaskLeaderboard() {
         setBanter(banterPage.items || []);
       } catch { /* ignore */ }
     })();
-  }, []);
+  }, [settings.season_start, settings.season_end, revision]);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
@@ -41,9 +48,9 @@ export default function TaskLeaderboard() {
   }, []);
 
   const season = useMemo(() => {
-    const year = new Date().getFullYear();
-    const start = new Date(year, 0, 1);
-    const end = new Date(year, SEASON_END_MONTH, SEASON_END_DAY, 12, 0, 0);
+    const year = new Date(`${settings.season_start}T00:00:00`).getFullYear();
+    const start = new Date(`${settings.season_start}T00:00:00`);
+    const end = new Date(settings.season_end);
     const seasonTasks = tasks.filter((t) => {
       const completed = t.completed_date ? new Date(`${t.completed_date}T12:00:00`) : null;
       return completed && completed >= start && completed <= end;
@@ -62,18 +69,18 @@ export default function TaskLeaderboard() {
       });
     });
     return { year, seasonTasks, board: [...scores.values()].sort((a, b) => b.points - a.points) };
-  }, [tasks]);
+  }, [tasks, settings.season_start, settings.season_end]);
 
-  const endAt = new Date(season.year, SEASON_END_MONTH, SEASON_END_DAY, 12, 0, 0);
+  const endAt = new Date(settings.season_end);
   const diff = Math.max(0, endAt - now);
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
   const minutes = Math.floor((diff % 3600000) / 60000);
   const seconds = Math.floor((diff % 60000) / 1000);
 
-  const week = Math.floor(((now - new Date(season.year, 0, 1)) / 86400000) / 7);
-  const joke = JOKES[week % JOKES.length];
-  const funFact = FUN_FACTS[week % FUN_FACTS.length];
+  const week = Math.max(0, Math.floor(((now - new Date(`${settings.season_start}T00:00:00`)) / 86400000) / 7));
+  const joke = settings.jokes[week % settings.jokes.length] || '';
+  const funFact = settings.fun_facts[week % settings.fun_facts.length] || '';
 
   const fastestOverall = season.seasonTasks.filter((t) => Number(t.time_taken_minutes) > 0)
     .sort((a, b) => a.time_taken_minutes - b.time_taken_minutes)[0];
@@ -81,7 +88,7 @@ export default function TaskLeaderboard() {
     .sort((a, b) => b.time_taken_minutes - a.time_taken_minutes)[0];
 
   const certificate = (entry, rank) => {
-    const voucher = VOUCHERS.find((v) => v.rank === rank);
+    const voucher = settings.vouchers.find((v) => v.rank === rank);
     generateTaskCertificate({
       staffName: entry.name,
       rank,
@@ -113,42 +120,46 @@ export default function TaskLeaderboard() {
   };
 
   return (
-    <div className="space-y-4">
+    <details open className="task-competition">
+      <summary>Task competition & leaderboard</summary>
+      <div className="competition-content space-y-4">
+      <div className="flex justify-end"><CompetitionSettingsDialog settings={settings} onSave={saveSettings} loading={settingsLoading} /></div>
+      {settingsError && <p role="alert" className="text-sm text-destructive">Unable to load competition settings: {settingsError.message}</p>}
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-2xl border border-border/60 bg-card p-5 text-center">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Season {season.year} ends 1 Dec, 12pm</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Season {season.year} ends {format(endAt, 'd MMM, h:mma')}</p>
           <p className="mt-1 font-mono text-3xl font-bold text-brand" suppressHydrationWarning>
             {days}d {hours}h {minutes}m {seconds}s
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">Points reset fresh on 1 January each year and the competition finishes on 1 December at midday.</p>
+          <p className="mt-1 text-xs text-muted-foreground">{settings.season_note}</p>
           <div className="mt-3 grid gap-2 text-left text-xs text-muted-foreground">
             <p><span className="font-semibold text-foreground/70">Weekly joke:</span> {joke}</p>
             <p><span className="font-semibold text-foreground/70">Fun fact:</span> {funFact}</p>
           </div>
         </div>
         <div className="rounded-2xl border border-border/60 bg-card p-5">
-          <p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Award className="h-4 w-4 text-brand" />Prizes &amp; certificate</p>
+          <p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Award className="h-4 w-4 text-brand" />{settings.prizes_title}</p>
           <ul className="space-y-1.5 text-sm">
-            {VOUCHERS.map((v) => (
+            {settings.vouchers.map((v) => (
               <li key={v.rank} className="flex items-center justify-between rounded-lg bg-muted/40 px-3 py-2">
                 <span>{v.rank === 1 ? '🥇 1st place' : v.rank === 2 ? '🥈 2nd place' : '🥉 3rd place'}</span>
                 <span className="font-semibold">{v.label}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-xs text-muted-foreground">Leaders get their voucher plus a company certificate showing total tasks completed and their fastest and slowest task, module and time.</p>
+          <p className="mt-2 text-xs text-muted-foreground">{settings.prizes_note}</p>
         </div>
       </div>
 
       <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><Trophy className="h-4 w-4 text-warning" />Employee task completion leaderboard - Season {season.year}</p>
+        <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><Trophy className="h-4 w-4 text-warning" />{settings.leaderboard_title} - Season {season.year}</p>
         {season.board.length === 0 ? (
           <p className="text-sm text-muted-foreground">No points yet this season - complete or finalise a task with people responsible to put them on the board.</p>
         ) : (
           <div className="space-y-2">
             {season.board.map((entry, index) => {
               const rank = index + 1;
-              const voucher = VOUCHERS.find((v) => v.rank === rank);
+              const voucher = settings.vouchers.find((v) => v.rank === rank);
               const character = characterFor(entry.name);
               return (
                 <div key={entry.name} className={`flex flex-wrap items-center justify-between gap-2 rounded-xl border p-3 ${rank <= 3 ? 'border-warning/40 bg-warning/5' : 'border-border/60'}`}>
@@ -170,39 +181,38 @@ export default function TaskLeaderboard() {
           </div>
         )}
         <div className="mt-3 grid gap-1.5 rounded-lg bg-muted/40 p-3 text-xs text-muted-foreground">
-          <p><span className="font-semibold text-foreground/70">Fastest task this season:</span> {fastestOverall ? `"${fastestOverall.title}" (${fastestOverall.module || 'General'}, ${fastestOverall.time_taken_minutes} min)` : 'No timed tasks yet'}</p>
-          <p><span className="font-semibold text-foreground/70">Slowest task this season:</span> {slowestOverall ? `"${slowestOverall.title}" (${slowestOverall.module || 'General'}, ${slowestOverall.time_taken_minutes} min)` : 'No timed tasks yet'}</p>
+          <p><span className="font-semibold text-foreground/70">Fastest task this season:</span> {fastestOverall ? <Link className="font-semibold text-primary underline" to={`/tasks?task=${fastestOverall.id}`}>{fastestOverall.title} ({fastestOverall.module || 'General'}, {fastestOverall.time_taken_minutes} min) · Edit task</Link> : 'No timed tasks yet'}</p>
+          <p><span className="font-semibold text-foreground/70">Slowest task this season:</span> {slowestOverall ? <Link className="font-semibold text-primary underline" to={`/tasks?task=${slowestOverall.id}`}>{slowestOverall.title} ({slowestOverall.module || 'General'}, {slowestOverall.time_taken_minutes} min) · Edit task</Link> : 'No timed tasks yet'}</p>
         </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-2xl border border-border/60 bg-card p-5">
-          <p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Send className="h-4 w-4 text-brand" />Sledge board (keep it kind!)</p>
+          <p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Send className="h-4 w-4 text-brand" />{settings.banter_title}</p>
           <div className="flex gap-2">
             <Input placeholder="A friendly sledge for the team..." value={banterText} onChange={(e) => setBanterText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendBanter()} />
             <Button size="sm" onClick={sendBanter} disabled={!banterText.trim()}>Post</Button>
           </div>
           <div className="mt-3 space-y-1.5">
             {banter.length === 0 ? <p className="text-xs text-muted-foreground">No banter yet - be the first.</p> : banter.map((b) => (
-              <p key={b.id} className="rounded-lg bg-muted/40 px-3 py-2 text-xs">
-                <span className="font-semibold">{b.sender_name || 'Anon'}:</span> {b.body}
-              </p>
+              <CompetitionBanterEntry key={b.id} entry={b} onSaved={async () => { const page = await base44.entities.CommunicationEntry.filter({ entry_kind: 'Team Banter' }, { sort: '-created_date', limit: 20 }); setBanter(page.items || []); }} />
             ))}
           </div>
         </div>
         <div className="rounded-2xl border border-border/60 bg-card p-5">
-          <p className="mb-2 text-sm font-semibold">Team building strategies</p>
+          <p className="mb-2 text-sm font-semibold">{settings.strategies_title}</p>
           <ul className="mb-4 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            {TEAM_STRATEGIES.map((s) => <li key={s}>{s}</li>)}
+            {settings.team_strategies.map((s) => <li key={s}>{s}</li>)}
           </ul>
-          <p className="mb-2 text-sm font-semibold">History of past competitions</p>
+          <p className="mb-2 text-sm font-semibold">{settings.history_title}</p>
           <div className="space-y-1.5 text-xs text-muted-foreground">
-            {COMPETITION_HISTORY.map((h) => (
+            {settings.history.map((h) => (
               <p key={h.season} className="rounded-lg bg-muted/40 px-3 py-2"><span className="font-semibold text-foreground/70">{h.season}:</span> {h.note}</p>
             ))}
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </details>
   );
 }

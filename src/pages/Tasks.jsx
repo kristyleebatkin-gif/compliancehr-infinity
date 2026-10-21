@@ -12,7 +12,7 @@ import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
 import TaskDashboard from '@/components/tasks/TaskDashboard';
-import TaskCompletionReports from '@/components/tasks/TaskCompletionReports';
+import TaskCompletionFields from '@/components/tasks/TaskCompletionFields';
 import TaskToolbar from '@/components/tasks/TaskToolbar';
 import TaskSummaryCards from '@/components/tasks/TaskSummaryCards';
 import TaskList from '@/components/tasks/TaskList';
@@ -22,6 +22,7 @@ import TaskCalendar from '@/components/tasks/TaskCalendar';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import '@/components/tasks/taskDashboardLayout.css';
+import '@/components/dashboard/brightActions.css';
 import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download, Archive, X } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
@@ -109,6 +110,8 @@ function Tasks() {
     const payload = {
       ...form,
       estimated_hours: form.estimated_hours === '' ? undefined : Number(form.estimated_hours),
+      time_taken_minutes: form.time_taken_minutes === '' || form.time_taken_minutes == null ? undefined : Number(form.time_taken_minutes),
+      responsible: (form.responsible || []).map((name) => name.trim()).filter(Boolean),
       completed_date: form.status === 'Completed' ? (form.completed_date || new Date().toISOString().slice(0, 10)) : form.completed_date,
     };
     const previous = editing === 'new' ? null : list.find((t) => t.id === editing);
@@ -209,15 +212,13 @@ function Tasks() {
 
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
-      <PageHeader className="task-page-header" title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar navigationOnly />} />
+      <PageHeader className="task-page-header" title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" beforeAudit={<TaskToolbar navigationOnly />} under={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />} />
 
       {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />
-      <TaskCompletionReports />
 
-      <TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />
       <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
         {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
       </section>
@@ -262,9 +263,10 @@ function Tasks() {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <Field label="Due Date"><DateInput value={form.due_date || ''} onChange={(e) => set('due_date', e.target.value)} /></Field>
                 <Field label="Estimated hours"><TextInput type="number" value={form.estimated_hours ?? ''} onChange={(e) => set('estimated_hours', e.target.value)} /></Field>
-                <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
+                <Field label="Status"><Select value={form.status} onChange={(e) => set('status', e.target.value)}>{form.status && !STATUSES.includes(form.status) && <option value={form.status}>{form.status}</option>}{STATUSES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
               </div>
-              {form.status === 'Completed' && <Field label="Completed date"><DateInput value={form.completed_date || ''} onChange={(e) => set('completed_date', e.target.value)} /></Field>}
+              {['Completed', 'Finalised'].includes(form.status) && <Field label="Completed date"><DateInput value={form.completed_date || ''} onChange={(e) => set('completed_date', e.target.value)} /></Field>}
+              <TaskCompletionFields form={form} onChange={set} />
               <Field label="Linked entity type (e.g. Incident, Policy)"><TextInput value={form.linked_entity_type || ''} onChange={(e) => set('linked_entity_type', e.target.value)} /></Field>
               <Field label="Linked entity ID"><TextInput value={form.linked_entity_id || ''} onChange={(e) => set('linked_entity_id', e.target.value)} /></Field>
               <Field label="Notes"><TextArea value={form.notes || ''} onChange={(e) => set('notes', e.target.value)} /></Field>

@@ -1,0 +1,3 @@
+.bright-pink-action { border: 1px solid hsl(var(--header-pink) / .7); background: linear-gradient(110deg, hsl(var(--chart-5) / .85), hsl(var(--header-pink) / .5)); color: hsl(var(--foreground)); font-weight: 800; box-shadow: 0 5px 15px -10px hsl(var(--chart-5) / .8); }
+.bright-pink-action:hover { background: hsl(var(--chart-5) / .7); color: hsl(var(--foreground)); }
+.dark .bright-pink-action { background: hsl(var(--chart-5) / .3); }

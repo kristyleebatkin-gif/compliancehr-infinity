@@ -1,0 +1,98 @@
+{
+  "name": "TaskCompetitionSettings",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "season_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "season_end": {
+      "type": "string"
+    },
+    "season_note": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "leaderboard_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "prizes_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "prizes_note": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "banter_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "strategies_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "history_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "vouchers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rank": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "jokes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fun_facts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "team_strategies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "season": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "key",
+    "season_start",
+    "season_end"
+  ]
+}

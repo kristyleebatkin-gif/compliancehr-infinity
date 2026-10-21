@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { KanbanSquare, Plus, Trash2, ChevronLeft, ChevronRight, CircleAlert, CircleCheck } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import '@/components/dashboard/brightActions.css';
 
 const COLUMNS = ['Planning', 'Active', 'On Hold', 'Complete'];
 const COL_TONES = {
@@ -76,7 +77,7 @@ export default function ProjectsHub() {
         icon={KanbanSquare}
         accent={['#6366f1', '#4f46e5']}
         showAlerts={false}
-        beforeAudit={<Button size="sm" variant="outline" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>}
+        beforeAudit={<Button size="sm" variant="outline" className="bright-pink-action" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>}
         action={<Button size="sm" variant="outline" onClick={() => downloadCsv('projects.csv', [
           { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
           { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
