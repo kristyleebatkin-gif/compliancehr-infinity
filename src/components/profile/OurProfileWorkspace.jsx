@@ -30,7 +30,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
   return (
     <>
       {header}
-      <ProfileRegisterLinks profile={profile} kind={kind} />
+      {kind !== 'participant' && <ProfileRegisterLinks profile={profile} kind={kind} />}
       <Tabs value={selected.key} onValueChange={selectModule} className={`${personal || matchEmployeeLayout || kind === 'participant' ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map((module, index) => {
