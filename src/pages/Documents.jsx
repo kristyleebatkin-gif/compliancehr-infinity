@@ -16,15 +16,13 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Pencil, FolderOpen, RefreshCw, Eye, Download, CalendarDays } from 'lucide-react';
+import { Trash2, Pencil, FolderOpen, Eye, CalendarDays } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
+import StaffDocumentToolbar from '@/components/documents/StaffDocumentToolbar';
 import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
 import { format, differenceInCalendarDays } from 'date-fns';
-import BulkUploadDocuments from '@/components/documents/BulkUploadDocuments';
 import VaultUploads from '@/components/documents/VaultUploads';
 import '@/components/documents/vaultWorkspace.css';
 import { isVaultManager, isVaultProvider } from '@/components/documents/vaultAccess';
@@ -212,12 +210,6 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         showAlerts={false}
         showAudit={false}
         showDivider={false}
-        action={(
-          <>
-            <span className="text-xs font-bold text-foreground">Audit this module</span>
-            <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
-          </>
-        )}
       />}
 
       {isParticipant ? (
@@ -228,31 +220,18 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </div>
       ) : (
         <>
-      {!profile && <RegisterInsights module="documents" />}
-
-      {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
+      {!profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex-wrap">
+        <TabsList className="vault-document-tabs flex w-fit flex-nowrap justify-start">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
         </TabsList>
 
+        {!profile && <div className="mt-2"><DocumentsDashboard role={me?.role} focus={focus} /></div>}
+
         <TabsContent value="documents" className="mt-2 space-y-2">
-      <div id="staff-docs" className="flex scroll-mt-24 flex-wrap items-center gap-2 rounded-2xl border border-brand/25 bg-gradient-brand-soft px-4 py-3">
-        <span className="text-sm font-bold font-editorial text-foreground/80">Staff Documents</span>
-        <span className="flex-1" />
-        <div className="flex items-center gap-2">
-          {scanMsg && <span className="text-sm text-muted-foreground">{scanMsg}</span>}
-          {!profile && <Button variant="outline" onClick={runScan} disabled={scanning}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${scanning ? 'animate-spin' : ''}`} /> Scan expiries
-          </Button>}
-          <Button variant="outline" onClick={exportAll}>
-            <Download className="mr-2 h-4 w-4" /> Bulk export all documents
-          </Button>
-        </div>
-        {!profile && <BulkUploadDocuments staff={staff} onDone={load} />}
-        <Button onClick={() => { setEditing(null); setOpen(true); }}><Plus className="mr-2 h-4 w-4" /> Add document</Button>
+      <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
         <EmployeeDocumentDialog
           open={open}
           onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}
@@ -263,7 +242,6 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           initial={editing}
           onDone={load}
         />
-      </div>
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

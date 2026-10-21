@@ -7,7 +7,7 @@ import { Sparkles, RefreshCw, Loader2 } from 'lucide-react';
 // AI as a default layer: a live, number-grounded summary on top of every register
 // (what changed, what needs attention, one suggested next action). Silent on failure
 // so a register never breaks because the insight did.
-export default function RegisterInsights({ module, compact = true, wrapSummary = true }) {
+export default function RegisterInsights({ module, compact = true, wrapSummary = true, recordsClassName }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -43,7 +43,7 @@ export default function RegisterInsights({ module, compact = true, wrapSummary =
       <p className={`min-w-0 text-foreground ${wrapSummary ? 'flex-[1_1_16rem] whitespace-normal break-words leading-snug' : 'flex-1 truncate'} ${compact ? 'text-xs font-medium' : 'text-sm font-medium'}`} title={insights.summary}>{insights.summary}</p>
       {compact ? (
         <span className={`flex items-center gap-1.5 text-[11px] font-semibold tabular-nums text-foreground/60 ${wrapSummary ? 'max-w-full flex-wrap' : 'shrink-0'}`}>
-          {data.total} records · {data.open} open
+          {recordsClassName ? <span className={recordsClassName}>{data.total} records</span> : `${data.total} records`} · {data.open} open
           {data.overdue > 0 && <span className="text-warning">{data.overdue} overdue</span>}
           {data.expiring > 0 && <span className="text-danger">{data.expiring} due 30d</span>}
         </span>
