@@ -10,6 +10,7 @@
       "type": "string",
       "enum": [
         "Fire Evacuation",
+        "Fire Drill",
         "Lockdown",
         "Medical Emergency",
         "Natural Disaster",
@@ -91,6 +92,18 @@
           "user_condition": {
             "role": "Participant"
           }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Employee"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            }
+          ]
         }
       ]
     },
@@ -130,6 +143,11 @@
           "user_condition": {
             "role": "Participant"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Employee"
+          }
         }
       ]
     },
@@ -159,6 +177,18 @@
           "user_condition": {
             "role": "Team Leader"
           }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Employee"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            }
+          ]
         }
       ]
     },
@@ -178,6 +208,18 @@
           "user_condition": {
             "role": "Compliance Manager"
           }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Employee"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            }
+          ]
         }
       ]
     }
