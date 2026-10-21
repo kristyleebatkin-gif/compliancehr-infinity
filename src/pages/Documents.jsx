@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import withEmployeeView from '@/components/withEmployeeView';
-import EmployeeDocuments from '@/components/employee/EmployeeDocuments';
-export default withEmployeeView(Documents, EmployeeDocuments);
+import DocumentVaultEntry from '@/components/documents/DocumentVaultEntry';
+import ParticipantDocumentRegister from '@/components/documents/ParticipantDocumentRegister';
+export default function DocumentsPage(props) { return <DocumentVaultEntry Vault={Documents} {...props} />; }
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
@@ -50,6 +50,7 @@ const expiryTone = (expiry) => {
 function Documents({ profile, profileKind, embedded = false } = {}) {
   const { search } = useLocation();
   const focus = new URLSearchParams(search).get('focus');
+  const documentType = new URLSearchParams(search).get('document_type') || '';
   const [docs, setDocs] = useState([]);
   const [myDocs, setMyDocs] = useState([]);
   const [me, setMe] = useState(null);
@@ -78,7 +79,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       setMe(meUser);
       if (profile) {
         if (profileKind === 'participant') {
-          const page = await base44.entities.ParticipantDocument.filter({ participant_id: profile.id }, { sort: '-created_date', limit: 50 });
+          const page = await base44.entities.ParticipantDocument.filter({ participant_id: profile.id, ...(documentType ? { document_type: documentType } : {}) }, { sort: '-created_date', limit: 50 });
           setMyDocs(page.items || []);
           setMyProfile(profile);
         } else {
@@ -125,7 +126,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
     } finally {
       setLoading(false);
     }
-  }, [profile?.id, profile?.full_name, profileKind]);
+  }, [profile?.id, profile?.full_name, profileKind, documentType]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -220,7 +221,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       />}
 
       {isParticipant ? (
-        <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
+        <div className="space-y-4">
+          {myProfile && <p className="text-sm font-semibold">{myProfile.full_name} · {documentType || 'All participant documents, plans & registers'}</p>}
+          <ParticipantVault docs={myDocs} loading={loading} viewDoc={viewDoc} me={me} profile={myProfile} onDone={load} />
+          {myProfile && <ParticipantDocumentRegister key={`${myProfile.id}:${documentType}`} participant={myProfile} documentType={documentType} includeDocuments={false} vault />}
+        </div>
       ) : (
         <>
       {!profile && <RegisterInsights module="documents" />}

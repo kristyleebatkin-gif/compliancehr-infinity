@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import OurProfileData from '@/components/profile/OurProfileData';
 import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipantProfiles';
+import ProfileRegisterLinks from '@/components/profile/ProfileRegisterLinks';
 
 export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false, matchEmployeeLayout = false }) {
   const [params, setParams] = useSearchParams();
@@ -29,6 +30,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
   return (
     <>
       {header}
+      <ProfileRegisterLinks profile={profile} kind={kind} />
       <Tabs value={selected.key} onValueChange={selectModule} className={`${personal || matchEmployeeLayout || kind === 'participant' ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map((module, index) => {

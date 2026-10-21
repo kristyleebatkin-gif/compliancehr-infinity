@@ -20,6 +20,7 @@ import TemplatePicker from '@/components/TemplatePicker';
 import { MITIGATION_TEMPLATES, mergeTemplateField } from '@/lib/incidentRiskTemplates';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
 import AssessmentDuePanel from '@/components/risks/AssessmentDuePanel';
+import ParticipantAssessmentRecords from '@/components/participants/ParticipantAssessmentRecords';
 import CommonRiskLibrary from '@/components/risks/CommonRiskLibrary';
 import TakeFiveRegister from '@/components/safety/TakeFiveRegister';
 import SafetyFormsLibrary from '@/components/safety/SafetyFormsLibrary';
@@ -196,6 +197,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       {!embedded && <PageHeader title="Risk Management" subtitle={`${risks.length} risk reports in register`} accent={['#0d9488', '#22d3ee']} />}
 
       <RegisterInsights module="risks" />
+      {profileKind === 'participant' && profile && <ParticipantAssessmentRecords participant={profile} />}
       {can('risks') && (
         <HeaderUnderRow>
           <button onClick={openNew} className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand/20"><Plus className="h-4 w-4" />Add Risk Report</button>

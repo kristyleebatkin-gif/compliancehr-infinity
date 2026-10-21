@@ -45,6 +45,7 @@ export const PARTICIPANT_FILLABLE_FORMS = [...new Set([...INTAKE_REQUIREMENTS.Pa
   'Incident Reports',
   'Feedback and Complaints',
   'Participant File Audit Checklist',
+  ...Object.keys(PARTICIPANT_FORM_DEFINITIONS),
 ])].filter((key) => key === 'Participant Consent Form' || PARTICIPANT_FORM_DEFINITIONS[key]?.fields?.length || PARTICIPANT_FORM_DEFINITIONS[key]?.columns?.length).map((key) => ({
   key,
   code: key === 'Participant Consent Form' ? PARTICIPANT_CONSENT_FORM.code : (PARTICIPANT_FORM_DEFINITIONS[key]?.code || ''),
@@ -53,3 +54,5 @@ export const PARTICIPANT_FILLABLE_FORMS = [...new Set([...INTAKE_REQUIREMENTS.Pa
   columns: PARTICIPANT_FORM_DEFINITIONS[key]?.columns,
   rows: PARTICIPANT_FORM_DEFINITIONS[key]?.rows,
 }));
+
+export const PARTICIPANT_FILLABLE_DEFINITIONS = Object.fromEntries(PARTICIPANT_FILLABLE_FORMS.map((form) => [form.key, form]));

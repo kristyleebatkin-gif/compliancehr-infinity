@@ -21,6 +21,7 @@ const NameTags = lazy(() => import('@/pages/NameTags'));
 const Documents = lazy(() => import('@/pages/Documents'));
 const ProfileCommDiary = lazy(() => import('@/components/communications/ProfileCommDiary'));
 const IntakeCaseWorkflow = lazy(() => import('@/components/intake/IntakeCaseWorkflow'));
+const ParticipantDocumentRegister = lazy(() => import('@/components/documents/ParticipantDocumentRegister'));
 
 export default function OurProfileModuleList({ kind, profile, details, approvedParticipants, ourView = false }) {
   const employee = kind === 'staff';
@@ -38,6 +39,10 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: employee ? <IntakeCentre {...props} /> : <IntakeCaseWorkflow intakeType="Participant" profile={profile} profileView="documents" /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
     { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
+    ...(!employee ? [
+      { key: 'progress-notes', label: 'Progress Notes', Icon: ClipboardList, content: <ParticipantDocumentRegister participant={profile} documentType="Progress Notes" /> },
+      { key: 'progress-reports', label: 'Progress Reports', Icon: ClipboardList, content: <ParticipantDocumentRegister participant={profile} documentType="Progress Reports" /> },
+    ] : []),
     { key: 'roster', label: 'Rostering', Icon: CalendarClock, content: <Rostering {...ourProps} /> },
     { key: 'community', label: 'Community', Icon: MapPin, content: <CommunityCouncil {...props} /> },
     { key: 'programs', label: 'Programs', Icon: CalendarDays, content: <ProgramsEvents {...props} /> },

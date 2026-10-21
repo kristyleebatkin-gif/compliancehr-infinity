@@ -12,10 +12,17 @@ import { buildAutofilledAnswers, autofillParticipantValue } from '@/lib/particip
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
 import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
+import OnlineDocumentRegister from '@/components/documents/OnlineDocumentRegister';
+import { Link, useSearchParams } from 'react-router-dom';
+import { profileVaultUrl, participantModuleUrl } from '@/lib/profileDocumentLinks';
 
 export default function ParticipantFillableForms({ participant }) {
   const { toast } = useToast();
-  const [formKey, setFormKey] = useState(PARTICIPANT_FILLABLE_FORMS[0].key);
+  const [params, setParams] = useSearchParams();
+  const requestedForm = params.get('form');
+  const [formKey, setFormKey] = useState(PARTICIPANT_FILLABLE_FORMS.some((form) => form.key === requestedForm) ? requestedForm : PARTICIPANT_FILLABLE_FORMS[0].key);
+  useEffect(() => { if (PARTICIPANT_FILLABLE_FORMS.some((form) => form.key === requestedForm)) setFormKey(requestedForm); }, [requestedForm]);
+  const chooseForm = (value) => { setFormKey(value); const next = new URLSearchParams(params); next.set('form', value); setParams(next, { replace: true }); };
   const [answers, setAnswers] = useState({});
   const [entry, setEntry] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -86,7 +93,8 @@ export default function ParticipantFillableForms({ participant }) {
       fields: definition.fields,
       values: answers,
       columns: definition.columns,
-      rows: definition.rows,
+      rows: answers.__rows?.length || definition.rows,
+      tableValues: answers.__rows || [],
       completedBy: answers._completedBy || '',
     });
   };
@@ -122,7 +130,7 @@ export default function ParticipantFillableForms({ participant }) {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="w-full max-w-sm space-y-1.5">
           <Label>Form</Label>
-          <Select value={formKey} onValueChange={setFormKey}>
+          <Select value={formKey} onValueChange={chooseForm}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
               {PARTICIPANT_FILLABLE_FORMS.map((f) => (
@@ -132,6 +140,9 @@ export default function ParticipantFillableForms({ participant }) {
           </Select>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Button size="sm" variant="outline" asChild><Link to={profileVaultUrl(participant, 'participant', formKey)}>View this form in Document Vault</Link></Button>
+          {/Risk Assessment/.test(formKey) && <Button size="sm" variant="outline" asChild><Link to={participantModuleUrl(participant, 'risks')}>Risk register</Link></Button>}
+          {/^Progress/.test(formKey) && <Button size="sm" variant="outline" asChild><Link to={participantModuleUrl(participant, formKey === 'Progress Notes' ? 'progress-notes' : 'progress-reports')}>Progress register</Link></Button>}
           <Button size="sm" variant="outline" onClick={autofill}><Sparkles className="h-3.5 w-3.5" />Auto-fill details</Button>
           <Button size="sm" variant="outline" onClick={download}><Download className="h-3.5 w-3.5" />Download PDF</Button>
           <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-input bg-transparent px-3 h-8 text-xs font-semibold hover:bg-accent">
@@ -149,6 +160,7 @@ export default function ParticipantFillableForms({ participant }) {
       ) : (
         <div className="mt-5">
           <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />
+          <OnlineDocumentRegister columns={definition.columns} rows={answers.__rows || []} onChange={(rows) => setAnswers((current) => ({ ...current, __rows: rows }))} disabled={saving} />
         </div>
       )}
     </div>

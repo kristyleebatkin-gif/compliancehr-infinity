@@ -9,12 +9,14 @@ import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ExportRow from '@/components/profile/ExportRow';
 import AllEmployeeForms from '@/components/profile/AllEmployeeForms';
+import ParticipantProfileFileChecklist from '@/components/profile/ParticipantProfileFileChecklist';
 
 export default function OurProfileData({ profile, kind, onUpdated, detailsContent, initialTab = 'details', personal = false, contentOnly = false }) {
   const participant = kind === 'participant';
   const staffIntake = personal && !participant;
   if (contentOnly) {
     if (initialTab === 'forms') return participant ? <ParticipantFillableForms participant={profile} /> : <AllEmployeeForms profile={profile} />;
+    if (participant && initialTab === 'files') return <ParticipantProfileFileChecklist participant={profile} />;
     return <IntakeCaseWorkflow intakeType={participant ? 'Participant' : 'Employee'} profile={profile} profileView={initialTab === 'files' ? 'readiness' : 'documents'} />;
   }
   return (
