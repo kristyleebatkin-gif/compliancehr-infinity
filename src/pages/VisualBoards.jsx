@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, Clock as ClockIcon, CloudSun, Hand, Languages, ListChecks, MessageSquareText, MessagesSquare } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
+import ModuleSearchBar from '@/components/module/ModuleSearchBar';
+import VisualBoardsInsight from '@/components/visual/VisualBoardsInsight';
 import VisualClock from '@/components/visual/VisualClock';
 import VisualRoutine from '@/components/visual/VisualRoutine';
 import SpeechPad from '@/components/visual/SpeechPad';
@@ -11,8 +13,16 @@ import WeatherBoard from '@/components/visual/WeatherBoard';
 import DayDateBoard from '@/components/visual/DayDateBoard';
 import TranslatorPanel from '@/components/visual/TranslatorPanel';
 
+const BOARDS = [['clock', 'Clock'], ['routine', 'Visual Routine'], ['communication', 'Communication'], ['weather', 'Weather'], ['daydate', 'Day & Date'], ['speech', 'Speech'], ['signs', 'Sign Prompts'], ['translator', 'Translator']];
+
 export default function VisualBoards({ embedded = false } = {}) {
   const [tab, setTab] = useState('clock');
+  const [query, setQuery] = useState('');
+  const search = (q) => {
+    setQuery(q);
+    const hit = BOARDS.find(([, label]) => q.trim() && label.toLowerCase().includes(q.trim().toLowerCase()));
+    if (hit) setTab(hit[0]);
+  };
 
   return (
     <Tabs value={tab} onValueChange={setTab}>
@@ -21,6 +31,8 @@ export default function VisualBoards({ embedded = false } = {}) {
         title="Visual Boards"
         subtitle="Communication supports: clock, visual routine, speech, signs, a full communication board, weather, day and date, and a translator."
         moduleKey="visual-boards"
+        search={<ModuleSearchBar value={query} onChange={search} placeholder="Search boards (clock, routine, weather, translator…)" />}
+        insight={<VisualBoardsInsight tab={tab} />}
         tabs={<TabsList>
           <TabsTrigger value="clock"><ClockIcon className="mr-1 inline h-3.5 w-3.5" />Clock</TabsTrigger>
           <TabsTrigger value="routine"><ListChecks className="mr-1 inline h-3.5 w-3.5" />Visual Routine</TabsTrigger>

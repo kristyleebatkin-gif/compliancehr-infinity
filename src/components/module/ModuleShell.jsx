@@ -19,12 +19,13 @@ const WHITE_ROW = 'flex flex-wrap items-center gap-1.5 rounded-xl border border-
  *  Then   the module's tab content (`children`).
  * Put `tabs` (a <TabsList>) and `children` (<TabsContent>s) inside a <Tabs> root.
  */
-export default function ModuleShell({ embedded = false, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, small, medium, large = [], children }) {
+export default function ModuleShell({ embedded = false, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, small, medium, large = [], children }) {
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
       {actions && <div className={`module-shell-actions module-action-bar ${WHITE_ROW}`}>{actions}</div>}
       {search && <div className="rounded-xl border border-border/60 bg-white p-2 shadow-sm">{search}</div>}
+      {insight}
       {insightModule && <RegisterInsights module={insightModule} />}
       {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border [&>*]:p-3">{small}</div>}
       {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border [&>*]:p-4">{medium}</div>}
@@ -32,8 +33,9 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
   );
   if (embedded) return <div className="space-y-2.5">{tabs}{children}</div>;
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-2.5" style={{ '--module-colour': colour }}>
       <PageHeader
+        auditClassName="module-audit-buttons ml-auto"
         title={title}
         subtitle={subtitle}
         icon={icon}

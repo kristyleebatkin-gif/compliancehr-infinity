@@ -18,3 +18,19 @@
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--module-colour) 45%, white);
 }
+
+/* Audit Checklist + Audit Report: top right, full module colour, white border to separate them. */
+.module-audit-buttons {
+  gap: 0.5cm !important;
+  margin-left: auto;
+}
+.module-audit-buttons > button {
+  background: var(--module-colour) !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--module-colour) 40%, white);
+  font-weight: 700;
+}
+.module-audit-buttons > button:hover {
+  filter: brightness(1.1);
+}
