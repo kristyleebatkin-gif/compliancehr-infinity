@@ -6,7 +6,7 @@ const TAB_MODULES = {
   routine: 'goals',
   communication: 'our-staff',
   weather: 'invoicing',
-  daydate: 'meetings',
+  daydate: 'documents',
   speech: 'our-participants',
   signs: 'training',
   translator: 'ndis-provider',
