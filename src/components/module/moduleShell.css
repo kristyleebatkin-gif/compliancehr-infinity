@@ -1,0 +1,14 @@
+/* Standard module layout: white rows under the header, buttons tinted in the module's fixed colour. */
+.module-shell-actions :is(button, a):not([role="tab"]) {
+  background: color-mix(in srgb, var(--module-colour) 14%, white);
+  border: 1px solid color-mix(in srgb, var(--module-colour) 55%, white);
+  color: color-mix(in srgb, var(--module-colour) 80%, black);
+  font-weight: 600;
+}
+.module-shell-actions :is(button, a):not([role="tab"]):hover {
+  background: color-mix(in srgb, var(--module-colour) 26%, white);
+}
+.module-shell-tiles > * {
+  border-color: color-mix(in srgb, var(--module-colour) 45%, white);
+  background: color-mix(in srgb, var(--module-colour) 8%, white);
+}
