@@ -25,7 +25,7 @@ export default function PersonalProfileHeader({ profile, kind, onUpdated, showId
 
         </div>
       </div>}
-      <ProfileSummaryPanels profile={profile} kind={kind} branding={branding} onUpdated={onUpdated} />
+      <ProfileSummaryPanels profile={profile} kind={kind} branding={branding} onUpdated={onUpdated} staffQuestions={staff} />
     </div>
   );
 }
