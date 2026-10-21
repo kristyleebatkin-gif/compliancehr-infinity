@@ -10,7 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { BookOpen, Download, History, Loader2, Plus, Search, Trash2, UploadCloud, FileText, Pencil, Eye } from 'lucide-react';
+import { BookOpen, Download, Loader2, Search, Trash2, UploadCloud, FileText, Pencil, Eye } from 'lucide-react';
+import EquipmentManualActions from '@/components/equipment/EquipmentManualActions';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
@@ -22,7 +23,7 @@ const EMPTY_FORM = {
   manual_url: '', operating_instructions: '', maintenance_schedule: '', safety_notes: '', review_date: '', notes: '',
 };
 
-export default function EquipmentManuals() {
+export default function EquipmentManuals({ actionTargets }) {
   const { toast } = useToast();
   const [manuals, setManuals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -125,9 +126,7 @@ export default function EquipmentManuals() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add manual</Button>
-        <Button variant="outline" onClick={exportRegister} disabled={loading || manuals.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-        <Button variant="outline" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
+        <EquipmentManualActions targets={actionTargets} onAdd={openNew} onExport={exportRegister} onAccess={exportAccess} exportDisabled={loading || manuals.length === 0} />
         <div className="relative min-w-52 flex-1">
           <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-8" placeholder="Search equipment, manufacturer or model..." value={search} onChange={(e) => setSearch(e.target.value)} />

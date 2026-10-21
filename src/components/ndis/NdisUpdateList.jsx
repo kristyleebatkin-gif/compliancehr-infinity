@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { ExternalLink, Loader2, Mail } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { isAfter, subDays, parseISO } from 'date-fns';
 
 const sourceTone = (s) => (s === 'NDIS Commission' ? 'bg-warning/10 text-warning' : s === 'NDIS Agency' ? 'bg-brand/10 text-brand' : 'bg-muted text-foreground/70');
@@ -11,7 +11,7 @@ export default function NdisUpdateList({ items, loading, emptyText }) {
     return <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
   if (!items.length) {
-    return <Card><CardContent className="p-10 text-center text-muted-foreground">{emptyText || 'No items yet - use "Refresh from NDIS" to fetch the latest.'}</CardContent></Card>;
+    return <Card><CardContent className="p-10 text-center text-muted-foreground">{emptyText || 'No items yet - use "Refresh updates" to fetch the latest.'}</CardContent></Card>;
   }
   return (
     <div className="grid gap-3">
@@ -20,7 +20,7 @@ export default function NdisUpdateList({ items, loading, emptyText }) {
         try { isNew = item.published_date && isAfter(parseISO(item.published_date), subDays(new Date(), 14)); } catch { isNew = false; }
         const safeUrl = item.url && /^https?:\/\//i.test(item.url) ? item.url : null;
         return (
-          <Card key={item.id || i}>
+          <Card key={item.id || i} className={`ndis-panel ${item.source === 'NDIS Commission' ? 'ndis-accent-evidence' : 'ndis-accent-primary'}`}>
             <CardContent className="p-4">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div className="min-w-0">
@@ -28,7 +28,7 @@ export default function NdisUpdateList({ items, loading, emptyText }) {
                     <Badge className={`text-[10px] ${sourceTone(item.source)}`}>{item.source || 'NDIS'}</Badge>
                     <Badge variant="secondary" className="text-[10px]">{item.news_type || 'News'}</Badge>
                     {item.category && <Badge variant="outline" className="text-[10px]">{item.category}</Badge>}
-                    {isNew && <Badge className="bg-success/10 text-success text-[10px]">New</Badge>}
+                    {isNew && <Badge className="bg-safe/10 text-safe text-[10px]">New</Badge>}
                   </div>
                   <p className="mt-2 font-semibold leading-snug">
                     {safeUrl ? <a href={safeUrl} target="_blank" rel="noreferrer" className="hover:text-brand hover:underline">{item.title}</a> : item.title}

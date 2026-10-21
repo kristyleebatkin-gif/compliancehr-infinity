@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import PageHeader from '@/components/PageHeader';
+import NdisNewsToolbar from '@/components/ndis/NdisNewsToolbar';
+import NdisNewsDashboard from '@/components/ndis/NdisNewsDashboard';
+import '@/components/ndis/ndisWorkspace.css';
 import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
-import { Input } from '@/components/ui/input';
-import { Newspaper, RefreshCw, ExternalLink, Mail, Search } from 'lucide-react';
+import { Newspaper, ExternalLink, Mail } from 'lucide-react';
 
 const TYPE_FILTERS = ['News', 'Update', 'Consultation'];
 
@@ -90,40 +91,16 @@ export default function NdisUpdates() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border border-border/60 gradient-brand p-6 text-white shadow-lg">
-        <div className="flex items-center gap-4">
-          <div className="rounded-xl bg-white/10 p-3"><Newspaper className="h-7 w-7" /></div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">NDIS Updates &amp; News</h1>
-            <p className="text-sm text-white/75">Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters.</p>
-          </div>
-        </div>
+    <div className="ndis-workspace space-y-4">
+      <PageHeader title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} showCompliance={false} showAudit={false} />
+      <div className="module-action-bar flex flex-wrap items-center gap-1 rounded-xl border border-primary/20 bg-card p-2 shadow-sm">
+        <ModuleAlertsButton />
+        <ModuleComplianceStrip path="/ndis-updates" />
+        <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
       </div>
-
-      <div className="flex flex-col items-start gap-2">
-        <Button onClick={refresh} disabled={refreshing} className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15">
-          {refreshing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
-          {refreshing ? 'Checking NDIS...' : 'Refresh from NDIS'}
-        </Button>
-        <div className="flex flex-wrap items-center gap-2">
-          <ModuleAlertsButton />
-          <ModuleComplianceStrip path="/ndis-updates" />
-          <span className="inline-flex shrink-0 items-center gap-1"><ModuleAuditChecklistButton /><ModuleAuditButton /></span>
-        </div>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Card><CardContent className="p-5"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Updates tracked</p><p className="text-3xl font-bold text-brand">{stats.total}</p></CardContent></Card>
-        <Card><CardContent className="p-5"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Published last 30 days</p><p className="text-3xl font-bold text-brand">{stats.recent}</p></CardContent></Card>
-        <Card><CardContent className="p-5"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">In library by type</p><div className="mt-1 flex flex-wrap gap-1.5">{['News', 'Update', 'Newsletter', 'Consultation'].map((t) => <Badge key={t} variant="secondary" className="text-[10px]">{t} · {stats.byType[t] || 0}</Badge>)}</div></CardContent></Card>
-      </div>
-
-      <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="flex flex-wrap">
-          <TabsTrigger value="updates">Updates &amp; News</TabsTrigger>
-          <TabsTrigger value="newsletters">Newsletters</TabsTrigger>
-        </TabsList>
+      <Tabs value={tab} onValueChange={setTab} className="space-y-4">
+        <NdisNewsToolbar refresh={refresh} refreshing={refreshing} search={search} onSearch={setSearch} />
+        <NdisNewsDashboard stats={stats} />
         <TabsContent value="updates">
           <div className="module-filter-bar mb-2 flex flex-wrap items-center">
             <p className="text-sm font-semibold">Filter by type</p>
@@ -134,23 +111,20 @@ export default function NdisUpdates() {
                 {TYPE_FILTERS.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
               </SelectContent>
             </Select>
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search updates..." className="pl-8" />
-            </div>
+
           </div>
           <NdisUpdateList items={items} loading={loading} />
         </TabsContent>
         <TabsContent value="newsletters">
           <div className="mb-3 grid gap-3 md:grid-cols-2">
-            <Card>
+            <Card className="ndis-panel ndis-accent-evidence">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2.5"><div className="rounded-lg bg-brand/10 p-2"><Mail className="h-4 w-4 text-brand" /></div><p className="font-semibold">NDIS Commission newsletters</p></div>
                 <p className="mt-2 text-xs text-muted-foreground">Quarterly provider newsletters, alerts and bulletins from the NDIS Quality and Safeguards Commission.</p>
                 <a href="https://www.ndiscommission.gov.au/newsletters" target="_blank" rel="noreferrer" className="mt-3 inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-3 text-xs font-semibold text-brand hover:bg-brand/5"><ExternalLink className="h-3 w-3" />Open newsletter page</a>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="ndis-panel ndis-accent-primary">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2.5"><div className="rounded-lg bg-brand/10 p-2"><Mail className="h-4 w-4 text-brand" /></div><p className="font-semibold">NDIA provider eNews &amp; bulletins</p></div>
                 <p className="mt-2 text-xs text-muted-foreground">Provider bulletins and eNews from the National Disability Insurance Agency, including pricing announcements.</p>
@@ -158,7 +132,7 @@ export default function NdisUpdates() {
               </CardContent>
             </Card>
           </div>
-          <NdisUpdateList items={items} loading={loading} emptyText="No newsletters fetched yet - use Refresh from NDIS." />
+          <NdisUpdateList items={items} loading={loading} emptyText="No newsletters fetched yet - use Refresh updates." />
         </TabsContent>
       </Tabs>
     </div>
