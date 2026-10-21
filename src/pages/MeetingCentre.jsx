@@ -11,10 +11,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { ChevronDown, Copy, Download, FileDown, Plus, Trash2, CalendarDays, Pencil, Search, Clock } from 'lucide-react';
+import { ChevronDown, Copy, Download, FileDown, Trash2, CalendarDays, Pencil, Search, Clock } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { format, differenceInCalendarDays } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
@@ -22,7 +22,11 @@ import { downloadMinutesTemplate } from '@/lib/meetingPdf';
 import { AGENDA_TEMPLATES } from '@/lib/meetingAgendaTemplates';
 import MeetingCalendar from '@/components/meetings/MeetingCalendar';
 import MeetingDetail from '@/components/meetings/MeetingDetail';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
+import MeetingNavigation from '@/components/meetings/MeetingNavigation';
+import MeetingSearchFilters from '@/components/meetings/MeetingSearchFilters';
+import MeetingMinutesOutstanding from '@/components/meetings/MeetingMinutesOutstanding';
+import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
+import '@/components/dashboard/operationsWorkspace.css';
 
 const TYPES = ['Compliance Review', 'Governance / Board', 'Staff Meeting', 'Participant Planning', 'Quality & Improvement', 'Incident / Risk Review', 'Other'];
 const STATUS_BORDERS = { Scheduled: 'border-l-sky-500', Completed: 'border-l-emerald-500', Cancelled: 'border-l-rose-400' };
@@ -137,31 +141,25 @@ export default function MeetingCentre() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="finance-workspace meeting-workspace space-y-4">
       <Tabs defaultValue="register" className="space-y-4">
       <PageHeader
         icon={CalendarDays}
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
         showAlerts={false}
-        showCompliance={false}
         showDivider={false}
-        beforeAudit={<div className="flex flex-wrap items-center gap-1">
-          <TabsList className="h-7 w-auto bg-muted/50 p-0.5">
-            <TabsTrigger value="register" className="text-[11px]">Meeting register</TabsTrigger>
-            <TabsTrigger value="calendar" className="text-[11px]">Calendar</TabsTrigger>
-          </TabsList>
-          <ModuleComplianceStrip path="/meetings" />
-          <Button size="sm" variant="outline" onClick={openNew}><Plus className="h-3.5 w-3.5" />Schedule meeting</Button>
-        </div>}
+        under={<MeetingNavigation onSchedule={openNew} />}
         action={<>
           <Button size="sm" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
           <Button size="sm" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
         </>}
       />
+      <MeetingSearchFilters search={search} onSearch={setSearch} typeFilter={typeFilter} onTypeFilter={setTypeFilter} types={TYPES} />
       <RegisterInsights module="meetings" />
 
         <TabsContent value="register" className="mt-2 space-y-3">
+          <MeetingMinutesOutstanding meetings={minutesOutstanding} />
           {nextMeeting && (
             <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
               <CardContent className="flex flex-wrap items-center gap-3 p-3">
@@ -189,42 +187,14 @@ export default function MeetingCentre() {
             </Card>
           )}
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { label: 'Scheduled', value: meetings.filter((m) => m.status === 'Scheduled').length, grad: 'from-sky-500 via-blue-600 to-indigo-600' },
-              { label: 'Completed', value: completedCount, grad: 'from-emerald-500 via-teal-500 to-cyan-600' },
-              { label: 'Open follow-up actions', value: openActions, grad: 'from-amber-500 via-orange-500 to-rose-500' },
-              { label: 'Minutes outstanding', value: minutesOutstanding.length, grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
-            ].map((s) => (
-              <div key={s.label} className={`rounded-xl bg-gradient-to-br p-2.5 text-white shadow-sm ${s.grad}`}>
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-white/85">{s.label}</p>
-                <p className="mt-1 text-2xl font-bold tabular-nums">{s.value}</p>
-              </div>
-            ))}
-          </div>
+          <FinanceMetricCards entries={[
+            { label: 'Scheduled', value: meetings.filter((m) => m.status === 'Scheduled').length, tone: 'primary' },
+            { label: 'Completed', value: completedCount, tone: 'safe' },
+            { label: 'Open follow-up actions', value: openActions, tone: 'warning' },
+            { label: 'Minutes outstanding', value: minutesOutstanding.length, tone: 'pink' },
+          ]} />
 
           <div className="space-y-3">
-          <div className="module-filter-bar flex flex-wrap items-center">
-            <div className="relative min-w-52 flex-1">
-              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input className="pl-8" placeholder="Search meetings, chair or attendees..." value={search} onChange={(e) => setSearch(e.target.value)} />
-            </div>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-52"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All meeting types</SelectItem>
-                {TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {minutesOutstanding.length > 0 && (
-            <div className="rounded-xl border border-warning/30 bg-warning/10 p-3 text-sm">
-              <p className="font-bold text-warning">Minutes outstanding ({minutesOutstanding.length})</p>
-              <p className="mt-1 text-xs text-foreground/70">{minutesOutstanding.map((m) => `${m.title}${m.date ? ` (${format(new Date(m.date), 'd MMM')})` : ''}`).join(' · ')} - open a meeting below to record its minutes.</p>
-            </div>
-          )}
-
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : meetings.length === 0 ? (
@@ -234,7 +204,7 @@ export default function MeetingCentre() {
           ) : (
             <div className="space-y-3">
               {visibleMeetings.map((m) => (
-                <Card key={m.id} className={`border-l-4 shadow-sm transition hover:shadow-md ${STATUS_BORDERS[m.status] || ''}`}>
+                <Card key={m.id} className={`meeting-record border-l-4 shadow-sm transition hover:shadow-md ${STATUS_BORDERS[m.status] || ''}`}>
                   <CardContent className="px-3 py-2">
                     <div className="flex items-start justify-between gap-2">
                       <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded((prev) => ({ ...prev, [m.id]: !prev[m.id] }))}>

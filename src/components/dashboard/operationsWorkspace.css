@@ -1,0 +1,9 @@
+.procurement-workspace .procurement-order { background: linear-gradient(125deg, hsl(var(--warning) / .1), hsl(var(--card)) 65%); border-radius: 1rem; box-shadow: 0 6px 20px -16px hsl(var(--warning) / .55); }
+.procurement-workspace .procurement-supplier { background: linear-gradient(125deg, hsl(var(--hr-evidence) / .1), hsl(var(--card)) 65%); border-color: hsl(var(--hr-evidence) / .25); border-radius: 1rem; }
+.meeting-workspace .meeting-pink { border-color: hsl(var(--chart-5) / .5); background: linear-gradient(115deg, hsl(var(--chart-5) / .23), hsl(var(--profile-rose) / .8)); color: hsl(var(--foreground)); box-shadow: 0 5px 18px -14px hsl(var(--chart-5) / .55); }
+.meeting-workspace button.meeting-pink:hover { background: hsl(var(--chart-5) / .3); }
+.meeting-workspace .meeting-navigation [role="tab"] { border: 1px solid hsl(var(--primary) / .25); background: hsl(var(--primary) / .1); color: hsl(var(--foreground)); }
+.meeting-workspace .meeting-navigation [role="tab"][data-state="active"] { background: hsl(var(--primary) / .23); box-shadow: inset 0 0 0 1px hsl(var(--primary) / .4); color: hsl(var(--foreground)); }
+.meeting-workspace .meeting-record { background: linear-gradient(115deg, hsl(var(--primary) / .07), hsl(var(--card)) 65%); border-radius: 1rem; }
+.meeting-workspace .operations-search { border: 1px solid hsl(var(--hr-evidence) / .3); border-radius: .85rem; padding: .65rem; background: linear-gradient(110deg, hsl(var(--hr-evidence) / .1), hsl(var(--card))); }
+@media (max-width: 639px) { .meeting-workspace .meeting-navigation [role="tablist"] { flex-basis: 100%; } .meeting-workspace .meeting-record > div > div:first-child { flex-wrap: wrap; } }

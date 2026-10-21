@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck, GitCompareArrows } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck } from 'lucide-react';
+import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
+import '@/components/dashboard/operationsWorkspace.css';
 import ThreeWayMatch from '@/components/procurement/ThreeWayMatch';
 import ExpenseReconciliation from '@/components/procurement/ExpenseReconciliation';
 import RegisterInsights from '@/components/RegisterInsights';
@@ -94,32 +96,30 @@ export default function ProcurementHub() {
   const committed = orders.filter((o) => ['Submitted', 'Approved'].includes(o.status)).reduce((t, o) => t + Number(o.total || 0), 0);
 
   return (
-    <div className="space-y-4">
+    <div className="finance-workspace procurement-workspace space-y-4">
       <PageHeader
         title="Procurement"
         subtitle="Suppliers, purchase orders and spend tracking - from order to receipt, with full audit traceability."
         icon={ShoppingCart}
         accent={['#ca8a04', '#ea580c']}
+        beforeAudit={<>
+          <Button size="sm" className="border border-warning/30 bg-warning/15 text-foreground hover:bg-warning/25" onClick={() => { setTab('orders'); setShowPoForm(!showPoForm); }}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
+          <Button size="sm" variant="outline" onClick={() => downloadCsv('purchase-orders.csv', [
+            { label: 'PO number', key: 'po_number' }, { label: 'Supplier', key: 'supplier_name' }, { label: 'Items', key: 'items' },
+            { label: 'Total', key: 'total' }, { label: 'Order date', key: 'order_date' }, { label: 'Required by', key: 'required_by_date' },
+            { label: 'Status', key: 'status' }, { label: 'Received', key: 'received_date' },
+          ], orders)}>Export CSV</Button>
+        </>}
       />
 
       <RegisterInsights module="suppliers" />
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {[
-          { label: 'Spend received', value: money(totalSpend), icon: PackageCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
-          { label: 'Committed (submitted + approved)', value: money(committed), icon: Truck, grad: 'from-amber-500 via-orange-500 to-rose-500' },
-          { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length, icon: ShoppingCart, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
-          { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length, icon: Truck, grad: 'from-sky-500 via-blue-500 to-indigo-500' },
-        ].map((s) => (
-          <div key={s.label} className={`min-w-0 rounded-xl bg-gradient-to-br ${s.grad} p-2.5 text-white shadow-sm`}>
-            <div className="flex items-center gap-2">
-              <s.icon className="h-4 w-4 shrink-0" />
-              <p className="min-w-0 break-words text-base font-bold tabular-nums">{s.value}</p>
-            </div>
-            <p className="mt-1 text-[10px] font-semibold leading-snug text-white">{s.label}</p>
-          </div>
-        ))}
-      </div>
+      <FinanceMetricCards entries={[
+        { label: 'Spend received', value: money(totalSpend), Icon: PackageCheck, tone: 'safe' },
+        { label: 'Committed (submitted + approved)', value: money(committed), Icon: Truck, tone: 'warning' },
+        { label: 'Open orders', value: orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length, Icon: ShoppingCart, tone: 'primary' },
+        { label: 'Active suppliers', value: suppliers.filter((s) => s.status === 'Active').length, Icon: Truck, tone: 'evidence' },
+      ]} />
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>
@@ -130,14 +130,7 @@ export default function ProcurementHub() {
         </TabsList>
 
         <TabsContent value="orders" className="mt-4 space-y-3">
-          <div className="flex gap-2">
-            <Button size="sm" onClick={() => setShowPoForm(!showPoForm)}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
-            <Button size="sm" variant="outline" onClick={() => downloadCsv('purchase-orders.csv', [
-              { label: 'PO number', key: 'po_number' }, { label: 'Supplier', key: 'supplier_name' }, { label: 'Items', key: 'items' },
-              { label: 'Total', key: 'total' }, { label: 'Order date', key: 'order_date' }, { label: 'Required by', key: 'required_by_date' },
-              { label: 'Status', key: 'status' }, { label: 'Received', key: 'received_date' },
-            ], orders)}>Export CSV</Button>
-          </div>
+
           {showPoForm && (
             <Card><CardContent className="p-4">
               <form className="grid gap-3 md:grid-cols-2" onSubmit={savePo}>
@@ -164,7 +157,7 @@ export default function ProcurementHub() {
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {orders.map((o) => (
-                <Card key={o.id} className={`border-l-4 ${o.status === 'Received' ? 'border-l-emerald-500' : o.status === 'Approved' ? 'border-l-violet-500' : o.status === 'Submitted' ? 'border-l-amber-400' : 'border-l-slate-300'}`}><CardContent className="p-3">
+                <Card key={o.id} className={`procurement-order border-l-4 ${o.status === 'Received' ? 'border-l-emerald-500' : o.status === 'Approved' ? 'border-l-violet-500' : o.status === 'Submitted' ? 'border-l-amber-400' : 'border-l-slate-300'}`}><CardContent className="p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-semibold">{o.po_number}</p>
@@ -227,7 +220,7 @@ export default function ProcurementHub() {
               {suppliers.map((s) => {
                 const spend = orders.filter((o) => o.supplier_name === s.name && o.status === 'Received').reduce((t, o) => t + Number(o.total || 0), 0);
                 return (
-                  <Card key={s.id}><CardContent className="p-3">
+                  <Card key={s.id} className="procurement-supplier"><CardContent className="p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div><p className="font-semibold">{s.name}</p><p className="text-xs text-muted-foreground">{s.category}</p></div>
                       <span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${s.status === 'Active' ? 'bg-safe/10 text-safe' : 'bg-muted text-muted-foreground'}`}>{s.status}</span>
