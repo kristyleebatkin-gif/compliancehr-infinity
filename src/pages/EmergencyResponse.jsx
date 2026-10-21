@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRole } from '@/lib/useRole';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -91,20 +91,24 @@ export default function EmergencyResponse({ embedded = false } = {}) {
 
   return (
     <div className="space-y-4">
-      {!embedded && <PageHeader
+      {!embedded && <ModuleShell
         icon={Siren}
         title="Emergency Response"
-        showAlerts={!employee}
+        moduleKey="emergency-response"
         subtitle={employee ? 'Your emergency drill and safety-check records.' : 'Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.'}
-        beforeAudit={<><Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>{!employee && <Button variant="outline" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}</>}
-        afterAudit={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
-        under={!employee && <EmergencyDownloads />}
+        insightModule={!employee ? 'emergency' : undefined}
+        actions={<>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>
+          {!employee && <Button variant="outline" className="border-border bg-white text-black" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>
+        </>}
+        insight={!employee ? <EmergencyDownloads /> : undefined}
       />}
 
       {embedded && <div className="module-action-bar flex flex-wrap gap-1"><Button onClick={() => setOpen(true)}><Plus className="h-4 w-4" />Log drill</Button>{!employee && <Button variant="outline" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="h-4 w-4" />Add doc</Button>}</div>}
       {embedded && !employee && <EmergencyDownloads />}
       <EmergencyDrillDialog open={open} onOpenChange={setOpen} form={form} onChange={setForm} saving={saving} onSave={save} />
-      {!employee && <RegisterInsights module="emergency" />}
+      {embedded && !employee && <RegisterInsights module="emergency" />}
 
       {!employee && <EmergencyQuickDial />}
 

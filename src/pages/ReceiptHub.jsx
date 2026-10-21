@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useToast } from '@/components/ui/use-toast';
 import { Download, History, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, CheckCircle2, FileText } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
@@ -122,27 +122,25 @@ export default function ReceiptHub({ profile } = {}) {
 
   return (
     <div className="finance-workspace space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={ReceiptIcon}
         title="Receipt Hub"
         subtitle="Scan, store, reconcile and reimburse receipts with full records."
-        showAlerts={false}
-        action={(
-          <div className="flex flex-wrap gap-2">
-            <FinanceMetricCards compact entries={[
-              { label: 'Receipts', value: String(receipts.length), tone: 'evidence' },
-              { label: 'Unreconciled', value: money(unrecTotal), tone: 'warning' },
-              { label: 'To reimburse', value: money(reimburseTotal), tone: 'pink' },
-            ]} />
-            <Button variant="outline" className="bg-white/95" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-            <Button variant="outline" className="bg-white/95" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
-          </div>
-        )}
+        moduleKey="receipts"
+        insightModule="receipts"
+        actions={<>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
+        </>}
+        search={<ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />}
+        small={[
+          ['Receipts', String(receipts.length)],
+          ['Unreconciled', money(unrecTotal)],
+          ['To reimburse', money(reimburseTotal)],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+        ))}
       />
-
-      <ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />
-
-      <RegisterInsights module="receipts" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>

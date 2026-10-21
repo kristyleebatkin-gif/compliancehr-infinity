@@ -17,7 +17,7 @@ import { lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPrice
 import { downloadQuotePdf, downloadQuoteTemplatePdf, printQuotePdf, quotePdfBase64, quotePdfFilename } from '@/lib/quotePdf';
 import QuoteBuilder from '@/components/quotes/QuoteBuilder';
 import QuotePreview from '@/components/quotes/QuotePreview';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { loadCompanyBranding } from '@/lib/companyBranding';
@@ -162,7 +162,7 @@ export default function QuoteCentre() {
 
   return (
     <div className="finance-workspace quotes-workspace space-y-4">
-      <PageHeader title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} beforeAudit={<ModuleAlertsButton />} />
+      <ModuleShell title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} moduleKey="quotes" insightModule="quotes" actions={<ModuleAlertsButton />} />
       <FinanceMetricCards entries={[
         { label: 'Quotes', value: String(quotes.length), Icon: ClipboardList, tone: 'primary' },
         { label: 'Quoted value', value: money(totalValue), Icon: FileText, tone: 'evidence' },
@@ -170,7 +170,6 @@ export default function QuoteCentre() {
         { label: 'Win rate', value: `${winRate}%`, Icon: TrendingUp, tone: 'pink' },
         { label: 'Expiring soon', value: String(expiringSoon), Icon: CalendarClock, tone: 'warning' },
       ]} />
-      <RegisterInsights module="quotes" />
 
       <div className="quote-actions flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />New quote</Button>

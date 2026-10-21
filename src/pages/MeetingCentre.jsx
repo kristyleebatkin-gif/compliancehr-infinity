@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -143,20 +143,19 @@ export default function MeetingCentre() {
   return (
     <div className="finance-workspace meeting-workspace space-y-4">
       <Tabs defaultValue="register" className="space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={CalendarDays}
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."
-        showAlerts={false}
-        showDivider={false}
-        under={<MeetingNavigation onSchedule={openNew} />}
-        action={<>
-          <Button size="sm" variant="outline" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
-          <Button size="sm" variant="outline" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
+        moduleKey="meetings"
+        insightModule="meetings"
+        tabs={<MeetingNavigation onSchedule={openNew} />}
+        actions={<>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-black" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
         </>}
+        search={<MeetingSearchFilters search={search} onSearch={setSearch} typeFilter={typeFilter} onTypeFilter={setTypeFilter} types={TYPES} />}
       />
-      <MeetingSearchFilters search={search} onSearch={setSearch} typeFilter={typeFilter} onTypeFilter={setTypeFilter} types={TYPES} />
-      <RegisterInsights module="meetings" />
 
         <TabsContent value="register" className="mt-2 space-y-3">
           <MeetingMinutesOutstanding meetings={minutesOutstanding} />
