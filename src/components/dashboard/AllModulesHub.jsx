@@ -55,7 +55,7 @@ export default function AllModulesHub() {
               to={module.path}
               className="group relative flex min-h-28 flex-col overflow-hidden rounded-xl border p-2.5 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
               data-dashboard-module
-              style={{ '--module-color': color, '--module-accent': accent }}
+              style={{ '--module-color': color, '--module-accent': accent, borderColor: `${color}99`, background: `linear-gradient(125deg, ${color}59, ${color}1f)` }}
             >
               <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
               <div className="flex items-start gap-2">

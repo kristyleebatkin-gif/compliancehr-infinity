@@ -1,29 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, BookOpen, LayoutGrid, ShieldAlert } from 'lucide-react';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 
 const STEPS = [
   {
     icon: LayoutGrid,
-    colour: '#2563eb',
+    colour: moduleKeyColour('dashboard'),
     title: 'Choose a module',
     text: 'Use the role-based sidebar or dashboard tiles to open the area you need.',
   },
   {
     icon: BookOpen,
-    colour: '#7c3aed',
+    colour: moduleKeyColour('documents'),
     title: 'Add or update records',
     text: 'Follow the on-screen workflow, review any pre-filled details, then save or submit.',
   },
   {
     icon: Bell,
-    colour: '#ec4899',
+    colour: moduleKeyColour('communications'),
     title: 'Check notifications',
     text: 'Review the bell for expiries, appraisals, audit reminders, escalations and updates.',
   },
   {
     icon: ShieldAlert,
-    colour: '#dc2626',
+    colour: moduleKeyColour('incidents'),
     title: 'Report safety issues',
     text: 'Log incidents, hazards and risks promptly from their dashboard modules.',
   },
