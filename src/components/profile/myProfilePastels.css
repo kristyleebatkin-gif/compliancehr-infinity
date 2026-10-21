@@ -1,7 +1,7 @@
-/* My Profile: each tab and section header is a solid pastel colour (set per item by useSubjectPastels), no outline, black text. Page header is untouched. */
+/* My Profile: every tab and section header uses one solid pastel colour, no borders, black text. Page header is untouched. */
 html body .my-profile-pastels [data-dashboard-tab],
 html body .my-profile-pastels .app-section-card-header {
-  background: var(--subject-pastel, #e9d5ff) !important;
+  background: #e9d5ff !important;
   background-image: none !important;
   border: 0 !important;
   box-shadow: none !important;
