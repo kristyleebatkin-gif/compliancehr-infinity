@@ -1,6 +1,7 @@
 .my-profile-pastels {
   --header-gradient: linear-gradient(115deg, hsl(var(--profile-sky)), hsl(var(--profile-lilac)), hsl(var(--profile-rose)));
   --section-header-gradient: var(--header-gradient);
+  --header-foreground: var(--foreground);
 }
 .my-profile-pastels .my-profile-heading :is(h1, p, .text-white),
 .my-profile-pastels .gradient-brand :is(.text-primary-foreground, .text-white, [class*="text-white/"]),

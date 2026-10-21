@@ -23,7 +23,7 @@ import IntakeCaseForm, { SUPPORT_OPTIONS, IntakeReadinessPanel } from '@/compone
 import personalStaffIntakeClient from '@/lib/personalStaffIntakeClient';
 import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
-import ParticipantJourneyPanel from '@/components/intake/ParticipantJourneyPanel';
+import IntakeCaseHeaderTools from '@/components/intake/IntakeCaseHeaderTools';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
 import IntakeBulkImport from '@/components/intake/IntakeBulkImport';
 import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
@@ -1054,7 +1054,9 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
                 onApprove={approve}
                 onConvert={convertToProfile}
                 onUpdateCase={updateCase}
+                underHeader={<IntakeCaseHeaderTools activeCase={activeCase} readiness={readiness} intakeType={intakeType} docs={activeDocs} />}
               />}
+              {profileView && <IntakeCaseHeaderTools activeCase={activeCase} readiness={readiness} intakeType={intakeType} docs={activeDocs} />}
 
 
               {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} allowResumeUpload={intakeType === 'Employee'} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} /> : <IntakeCaseDocuments
@@ -1074,8 +1076,6 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
                 onRemove={removeDocument}
                 canCompleteOnline={(label) => canCompleteIntakeFormOnline(intakeType, label)}
               />}
-
-              {intakeType === 'Participant' && <ParticipantJourneyPanel activeCase={activeCase} docs={activeDocs} />}
 
               {!profileView && <IntakeLogPanels
                 intakeType={intakeType}

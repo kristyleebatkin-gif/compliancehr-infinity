@@ -2,7 +2,6 @@ import React from 'react';
 import { Field, TextArea, TextInput, Select, DateInput, Checkbox } from '@/components/Field';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, FileWarning, Loader2 } from 'lucide-react';
-import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
 
 const EMPLOYEE_ROLES = [
   'Support Worker (JR)',
@@ -56,7 +55,7 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
           <Field label="Cultural background"><TextInput value={form.cultural_background} onChange={(e) => setValue('cultural_background', e.target.value)} /></Field>
           <Field label="Guardian / nominee name"><TextInput value={form.guardian_name} onChange={(e) => setValue('guardian_name', e.target.value)} /></Field>
           <Field label="Guardian / nominee contact"><TextInput value={form.guardian_contact} onChange={(e) => setValue('guardian_contact', e.target.value)} /></Field>
-          <Checkbox checked={form.guardian_consent} onChange={(e) => setValue('guardian_consent', e.target.checked)} label="Guardian consent obtained" />
+          <details className="space-y-2 rounded-xl border border-border bg-card p-3"><summary className="cursor-pointer text-sm font-semibold">Guardian consent</summary><Checkbox checked={form.guardian_consent} onChange={(e) => setValue('guardian_consent', e.target.checked)} label="Guardian consent obtained" /></details>
           <Field label="GP name"><TextInput value={form.gp_name} onChange={(e) => setValue('gp_name', e.target.value)} /></Field>
           <Field label="GP contact"><TextInput value={form.gp_contact} onChange={(e) => setValue('gp_contact', e.target.value)} /></Field>
           <Field label="Medicare card number"><TextInput value={form.medicare_card_number} onChange={(e) => setValue('medicare_card_number', e.target.value)} /></Field>
@@ -100,12 +99,15 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
           <Field label="Representative relationship"><TextInput value={form.representative_relationship} onChange={(e) => setValue('representative_relationship', e.target.value)} /></Field>
           <Field label="Representative phone"><TextInput type="tel" value={form.representative_phone} onChange={(e) => setValue('representative_phone', e.target.value)} /></Field>
           <Field label="Representative email"><TextInput type="email" value={form.representative_email} onChange={(e) => setValue('representative_email', e.target.value)} /></Field>
-          <Field label="Names of any person for consent to share"><TextInput value={form.consent_to_share_persons} onChange={(e) => setValue('consent_to_share_persons', e.target.value)} /></Field>
-          <Checkbox
-            checked={form.information_sharing_consent === 'Consent provided'}
-            onChange={(e) => setValue('information_sharing_consent', e.target.checked ? 'Consent provided' : 'Consent declined')}
-            label="Consent to share information with providers, coordinators and nominees"
-          />
+          <details className="space-y-3 rounded-xl border border-border bg-card p-3 sm:col-span-2">
+            <summary className="cursor-pointer text-sm font-semibold">Information sharing consent · {form.information_sharing_consent || 'Not recorded'}</summary>
+            <Field label="Names of any person for consent to share"><TextInput value={form.consent_to_share_persons} onChange={(e) => setValue('consent_to_share_persons', e.target.value)} /></Field>
+            <Checkbox
+              checked={form.information_sharing_consent === 'Consent provided'}
+              onChange={(e) => setValue('information_sharing_consent', e.target.checked ? 'Consent provided' : 'Consent declined')}
+              label="Consent to share information with providers, coordinators and nominees"
+            />
+          </details>
           <Field label="Transport needs" className="sm:col-span-2"><TextArea value={form.transport_needs} onChange={(e) => setValue('transport_needs', e.target.value)} /></Field>
           <Field label="NDIS plan goals" className="sm:col-span-2"><TextArea value={form.ndis_plan_goals} onChange={(e) => setValue('ndis_plan_goals', e.target.value)} /></Field>
           <Field label="Preferred workers description" className="sm:col-span-2"><TextArea value={form.preferred_workers_description} onChange={(e) => setValue('preferred_workers_description', e.target.value)} /></Field>
@@ -199,13 +201,10 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
             <Checkbox checked={form.own_vehicle} onChange={(e) => setValue('own_vehicle', e.target.checked)} label="Own vehicle" />
             <Checkbox checked={form.first_aid_current} onChange={(e) => setValue('first_aid_current', e.target.checked)} label="First aid certificate current" />
           </div>
-          <Field label="Employee recognition dashboard consent" className="sm:col-span-2">
-            <Checkbox
-              checked={form.recognition_dashboard_consent}
-              onChange={(e) => setValue('recognition_dashboard_consent', e.target.checked)}
-              label="Yes - the employee consents to being displayed on the recognition dashboard"
-            />
-          </Field>
+          <details className="space-y-2 rounded-xl border border-border bg-card p-3 sm:col-span-2">
+            <summary className="cursor-pointer text-sm font-semibold">Employee recognition dashboard consent</summary>
+            <Checkbox checked={form.recognition_dashboard_consent} onChange={(e) => setValue('recognition_dashboard_consent', e.target.checked)} label="Yes - the employee consents to being displayed on the recognition dashboard" />
+          </details>
         </>
       )}
       <div className={GROUP_CARD}>
@@ -269,7 +268,8 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
         </Select>
       </Field>
       <Field label="Notes"><TextArea value={form.notes} onChange={(e) => setValue('notes', e.target.value)} /></Field>
-      <div className="space-y-2 sm:col-span-2">
+      <details className="space-y-2 rounded-xl border border-border bg-card p-3 sm:col-span-2">
+        <summary className="cursor-pointer text-sm font-semibold">Consents · {form.privacy_consent ? 'Privacy consent recorded' : 'Privacy consent required'}</summary>
         <Checkbox
           checked={form.privacy_consent}
           onChange={(e) => setValue('privacy_consent', e.target.checked)}
@@ -281,7 +281,7 @@ export default function IntakeCaseForm({ intakeType, form, setValue, toggleSuppo
           label="Consent to NDIS Audit - this profile may be included in NDIS audit records (declining is also recorded)"
         />
         <p className="text-xs text-muted-foreground">Either choice is recorded against the intake case with the date, time and the person who recorded it.</p>
-      </div>
+      </details>
       <div className="flex items-center justify-end gap-2 sm:col-span-2">
         <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
         <Button type="submit" disabled={busy}>
@@ -310,9 +310,6 @@ export function IntakeReadinessPanel({ readiness, activeCase, resumeDocument, up
         </div>
       </div>
       <div className="p-4">
-        {activeCase && <div className="mb-3 space-y-3">
-          <IntakeReadinessExport activeCase={activeCase} readiness={readiness} />
-        </div>}
         <p className="text-[10px] leading-relaxed text-foreground/45">
           Readiness supports NDIS onboarding controls and conditional safeguards. It does not replace provider-specific legal advice or an external certification audit.
         </p>

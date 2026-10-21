@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { UserCheck } from 'lucide-react';
 import { TERMINAL_STATUSES } from './intakeDisplay';
 
-export default function IntakeCaseDetail({ activeCase, intakeType, readiness, busy, onMoveToReview, onApprove, onConvert, onUpdateCase }) {
+export default function IntakeCaseDetail({ activeCase, intakeType, readiness, busy, onMoveToReview, onApprove, onConvert, onUpdateCase, underHeader }) {
   return (
     <>
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
@@ -30,6 +30,8 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
         </div>
       </div>
 
+      {underHeader}
+
       <div className="grid gap-x-3 gap-y-2.5 rounded-xl border border-border/60 bg-card p-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
         <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">DOB</span><div className="font-medium">{activeCase.date_of_birth ? format(new Date(activeCase.date_of_birth), 'd MMM yyyy') : 'Not provided'}</div></div>
         <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Email</span><div className="font-medium">{activeCase.email || 'Not provided'}</div></div>
@@ -51,8 +53,8 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
         <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Referral source</span><div className="font-medium">{activeCase.referral_source || 'Not provided'}</div></div>
         <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Intake owner</span><div className="font-medium">{activeCase.assigned_to || 'Unassigned'}</div></div>
         <div><span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Date completed</span><div className="font-medium">{activeCase.date_completed ? format(new Date(activeCase.date_completed), 'd MMM yyyy') : 'Not recorded'}</div></div>
-        <div className="sm:col-span-2 lg:col-span-3">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-indigo-500 dark:text-indigo-300">Consent and acknowledgement log</span>
+        <details className="rounded-lg border border-border p-3 sm:col-span-2 lg:col-span-3">
+          <summary className="cursor-pointer text-sm font-semibold text-foreground">Consent and acknowledgement log</summary>
           <div className="font-medium">
             Privacy consent: {activeCase.privacy_consent_by
               ? `${activeCase.privacy_consent_by}, ${activeCase.privacy_consent_date || ''}${activeCase.privacy_consent_time ? ` ${activeCase.privacy_consent_time}` : ''}`
@@ -65,7 +67,7 @@ export default function IntakeCaseDetail({ activeCase, intakeType, readiness, bu
           {(activeCase.acknowledgement_log || '').split('\n').filter(Boolean).map((entry, index) => (
             <div key={index} className="text-xs text-foreground/60">{entry}</div>
           ))}
-        </div>
+        </details>
       </div>
 
       {activeCase.outstanding_actions && (

@@ -16,10 +16,10 @@ import OnlineDocumentRegister from '@/components/documents/OnlineDocumentRegiste
 import { Link, useSearchParams } from 'react-router-dom';
 import { profileVaultUrl, participantModuleUrl } from '@/lib/profileDocumentLinks';
 
-export default function ParticipantFillableForms({ participant }) {
+export default function ParticipantFillableForms({ participant, formType }) {
   const { toast } = useToast();
   const [params, setParams] = useSearchParams();
-  const requestedForm = params.get('form');
+  const requestedForm = formType || params.get('form');
   const [formKey, setFormKey] = useState(PARTICIPANT_FILLABLE_FORMS.some((form) => form.key === requestedForm) ? requestedForm : PARTICIPANT_FILLABLE_FORMS[0].key);
   useEffect(() => { if (PARTICIPANT_FILLABLE_FORMS.some((form) => form.key === requestedForm)) setFormKey(requestedForm); }, [requestedForm]);
   const chooseForm = (value) => { setFormKey(value); const next = new URLSearchParams(params); next.set('form', value); setParams(next, { replace: true }); };
@@ -128,7 +128,7 @@ export default function ParticipantFillableForms({ participant }) {
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div className="w-full max-w-sm space-y-1.5">
+        {!formType && <div className="w-full max-w-sm space-y-1.5">
           <Label>Form</Label>
           <Select value={formKey} onValueChange={chooseForm}>
             <SelectTrigger><SelectValue /></SelectTrigger>
@@ -138,7 +138,7 @@ export default function ParticipantFillableForms({ participant }) {
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </div>}
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="outline" asChild><Link to={profileVaultUrl(participant, 'participant', formKey)}>View this form in Document Vault</Link></Button>
           {/Risk Assessment/.test(formKey) && <Button size="sm" variant="outline" asChild><Link to={participantModuleUrl(participant, 'risks')}>Risk register</Link></Button>}

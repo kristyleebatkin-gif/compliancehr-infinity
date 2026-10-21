@@ -17,7 +17,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
   return (
     <div className="space-y-2.5">
     <div
-      className={cn('relative overflow-hidden rounded-2xl p-3.5 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 sm:p-4 md:flex-row md:items-center md:justify-between md:gap-4', className)}
+      className={cn('app-page-header relative overflow-hidden rounded-2xl p-3.5 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 sm:p-4 md:flex-row md:items-center md:justify-between md:gap-4', className)}
       style={{
         background: 'var(--header-gradient)',
         boxShadow: '0 10px 30px -16px rgba(124, 58, 237, 0.45), 0 2px 5px rgba(15, 23, 42, 0.05)'
@@ -42,8 +42,8 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         )}
         <div>
           {showDivider && <div className="mb-1.5 h-0.5 w-10 rounded-full bg-white/60 shadow-sm" />}
-          <h1 className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">{title}</h1>
-          {subtitle && <p className="mt-1 max-w-3xl text-[13px] font-medium text-white/80">{subtitle}</p>}
+          <h1 className="font-display text-xl font-bold tracking-tight text-header-foreground sm:text-2xl">{title}</h1>
+          {subtitle && <p className="mt-1 max-w-3xl break-words text-[13px] font-medium leading-5 text-header-foreground">{subtitle}</p>}
         </div>
       </div>
     </div>

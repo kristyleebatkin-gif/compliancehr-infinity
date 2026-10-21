@@ -14,6 +14,7 @@ import { CalendarRange, ChevronLeft, ChevronRight, CalendarClock, UserX, Clipboa
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, format } from 'date-fns';
 import RosterBoard from '@/components/rostering/RosterBoard';
+import RosterWeekToolbar from '@/components/rostering/RosterWeekToolbar';
 import ShiftForm from '@/components/rostering/ShiftForm';
 import ShiftList from '@/components/rostering/ShiftList';
 import ApprovalsPanel from '@/components/rostering/ApprovalsPanel';
@@ -323,16 +324,7 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
         <RosterDashboardNavigation profile={profile} profileKind={profileKind} />
 
         <TabsContent value="roster" className="mt-4 space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, -7))}><ChevronLeft className="h-4 w-4" /></Button>
-              <span className="text-sm font-medium">{format(weekStart, 'd MMM')} – {format(addDays(weekStart, 6), 'd MMM yyyy')}</span>
-              <Button variant="outline" size="icon" onClick={() => setWeekStart(addDays(weekStart, 7))}><ChevronRight className="h-4 w-4" /></Button>
-            </div>
-            <div className="flex-1" />
-            <Button variant="outline" onClick={repeatLastWeek} disabled={saving} title="Copy last week's shifts into this week"><Repeat className="mr-2 h-4 w-4" /> Repeat last week</Button>
-            <Button onClick={() => openNew()}><PlusIcon /> Schedule shift</Button>
-          </div>
+          <RosterWeekToolbar weekStart={weekStart} onWeekChange={setWeekStart} onRepeat={repeatLastWeek} onSchedule={() => openNew()} saving={saving} />
           {!profile && <RosterSuggestions onChanged={refresh} />}
           {loading ? (
             <Loading />
@@ -423,9 +415,9 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
           <RosterLeaveFeed />
         </TabsContent>}
 
-        <TabsContent value="payroll" className="mt-4">
+        {profileKind !== 'participant' && !profile && <TabsContent value="payroll" className="mt-4">
           <div className="space-y-4"><PayrollHub embedded /><PayrollReport /></div>
-        </TabsContent>
+        </TabsContent>}
 
         <TabsContent value="patterns" className="mt-4">
           <ShiftPatterns />

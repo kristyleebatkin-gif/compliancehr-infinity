@@ -12,7 +12,7 @@ import PayrollReportsTab from '@/components/payroll/PayrollReportsTab';
 export default function PayrollHub({ embedded = false } = {}) {
   const [tab, setTab] = useState('details');
   return (
-    <div className={embedded ? 'min-w-0 space-y-4' : 'mx-auto min-w-0 max-w-6xl space-y-6 p-3 sm:p-3 md:p-5'}>
+    <div className={embedded ? 'min-w-0 space-y-4 rounded-xl border border-payroll/30 bg-payroll/5 p-3' : 'mx-auto min-w-0 max-w-6xl space-y-6 p-3 sm:p-3 md:p-5'} style={{ '--header-gradient': 'linear-gradient(110deg, hsl(var(--payroll)), hsl(var(--hr-evidence)))', '--header-foreground': '0 0% 100%' }}>
       {!embedded && (
         <PageHeader
           title="Payroll"

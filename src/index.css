@@ -25,6 +25,8 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 262 83% 58%;
+    --header-foreground: 0 0% 100%;
+    --payroll: 160 84% 32%;
     --header-blue: 221 83% 53%;
     --header-pink: 330 81% 60%;
     --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(var(--brand)) 52%, hsl(var(--header-pink)) 100%);
@@ -88,6 +90,8 @@
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 262 83% 66%;
+    --header-foreground: 0 0% 100%;
+    --payroll: 160 70% 55%;
     --header-blue: 221 83% 53%;
     --header-pink: 330 81% 60%;
     --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(262 83% 58%) 52%, hsl(var(--header-pink)) 100%);
@@ -215,6 +219,22 @@
   }
   .gradient-brand {
     background: var(--header-gradient);
+    color: hsl(var(--header-foreground));
+  }
+  .app-page-header, .gradient-brand.text-white {
+    color: hsl(var(--header-foreground));
+  }
+  .app-page-header :is(h1, h2, h3, p, [class*="text-white"]),
+  .gradient-brand :is(h1, h2, h3, p, [class*="text-white"]) {
+    color: hsl(var(--header-foreground)) !important;
+    opacity: 1;
+    overflow-wrap: anywhere;
+  }
+  .app-page-header :is(h1, h2, h3, p), .gradient-brand :is(h1, h2, h3, p) {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    -webkit-line-clamp: unset;
   }
   .gradient-brand-soft {
     background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(236,72,153,0.08) 100%);

@@ -28,8 +28,8 @@ export default function ProfileAuditConsentCard({ profile, kind, onUpdated, comp
     } catch (error) { toast({ title: 'Could not record consent', description: error.message, variant: 'destructive' }); }
     finally { setBusy(false); }
   };
-  return <section className={`min-w-0 rounded-xl border border-border bg-card ${compact ? 'p-2 [&_button]:h-auto [&_button]:min-h-7 [&_button]:whitespace-normal [&_button]:px-2 [&_button]:py-1 [&_button]:text-[10px] [&_input]:h-7 [&_input]:text-xs' : 'p-3'}`}>
-    <div className="mb-2 flex flex-wrap items-center gap-2"><ShieldCheck className="h-4 w-4 text-primary" /><h2 className="text-sm font-semibold">Consent to audit</h2><Badge variant="outline">{profile.audit_consent_recorded_date ? consent : consent === 'Audit consent received' ? consent : 'Not recorded'}</Badge></div>
+  return <details className={`min-w-0 rounded-xl border border-border bg-card ${compact ? 'p-2 [&_button]:h-auto [&_button]:min-h-7 [&_button]:whitespace-normal [&_button]:px-2 [&_button]:py-1 [&_button]:text-[10px] [&_input]:h-7 [&_input]:text-xs' : 'p-3'}`}>
+    <summary className="mb-2 cursor-pointer text-sm font-semibold"><ShieldCheck className="mr-2 inline h-4 w-4 text-primary" />Consent to audit <Badge variant="outline">{profile.audit_consent_recorded_date ? consent : consent === 'Audit consent received' ? consent : 'Not recorded'}</Badge></summary>
     <p className="text-xs text-muted-foreground">{profile.audit_consent_recorded_date ? `Logged by ${profile.audit_consent_recorded_by || 'Not recorded'} on ${profile.audit_consent_recorded_date} at ${profile.audit_consent_recorded_time || 'Not recorded'} (Sydney time)` : 'No dated consent decision has been logged. Consent must not be assumed.'}</p>
     {editable && <div className="mt-2 flex flex-wrap items-center gap-2">
       <Input aria-label="Audit consent reason or evidence" className={compact ? 'min-w-0 w-full flex-auto' : 'min-w-40 flex-1'} placeholder="Reason / consent evidence" maxLength={2000} value={reason} onChange={(e) => setReason(e.target.value)} />
@@ -38,5 +38,5 @@ export default function ProfileAuditConsentCard({ profile, kind, onUpdated, comp
     </div>}
     {(compact || kind === 'staff') && <ProfileConsentLog profile={profile} />}
     {kind === 'staff' && <ProfileConsentExport profile={profile} />}
-  </section>;
+  </details>;
 }

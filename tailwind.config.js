@@ -69,6 +69,8 @@ module.exports = {
 				foreground: 'hsl(var(--ai-hint-foreground))'
 			},
 			'hr-evidence': 'hsl(var(--hr-evidence))',
+			       'header-foreground': 'hsl(var(--header-foreground))',
+			       payroll: 'hsl(var(--payroll))',
 			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',

@@ -27,8 +27,8 @@ export default function ParticipantAuthorisationCard({ participant, type, onUpda
     } catch (e) { setError(e.message); }
     finally { setBusy(false); }
   };
-  return <section className="space-y-2 rounded-xl border border-border bg-card p-3">
-    <div className="flex flex-wrap items-center gap-2"><h2 className="text-sm font-semibold">{title}</h2><Badge variant="outline">{saved.status || 'Not recorded'}</Badge></div>
+  return <details className="space-y-2 rounded-xl border border-border bg-card p-3">
+    <summary className="cursor-pointer text-sm font-semibold">{title} <Badge variant="outline">{saved.status || 'Not recorded'}</Badge></summary>
     <p className="text-xs text-muted-foreground">{saved.recorded_date ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (Sydney time)` : 'No consent decision logged. Consent must not be assumed.'}</p>
     {editable ? <><div className="grid gap-2 sm:grid-cols-2">
       <Input aria-label={`${title}: person giving consent`} placeholder="Participant / representative giving consent" maxLength={200} value={form.granted_by || ''} onChange={(e) => set('granted_by', e.target.value)} />
@@ -37,5 +37,5 @@ export default function ParticipantAuthorisationCard({ participant, type, onUpda
       <Input aria-label={`${title}: reason`} placeholder="Reason / evidence reference" maxLength={2000} value={form.reason || ''} onChange={(e) => set('reason', e.target.value)} />
     </div><div className="flex flex-wrap gap-2">{['Consent received', 'Declined', 'Withdrawn'].map((status) => <Button key={status} variant="outline" size="sm" disabled={busy || (status === 'Consent received' && ![form.granted_by, form.authorised_person, form.scope].every((v) => v?.trim()))} onClick={() => record(status)}>{busy ? 'Saving…' : `Record ${status.toLowerCase()}`}</Button>)}</div></> : <div className="text-xs text-muted-foreground">{saved.granted_by && <p>Consent given by: {saved.granted_by}</p>}{saved.authorised_person && <p>Authorised person: {saved.authorised_person}</p>}{saved.scope && <p>Scope: {saved.scope}</p>}</div>}
     {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
-  </section>;
+  </details>;
 }
