@@ -51,8 +51,6 @@ export default function HelpCentre() {
         title="Help Centre"
         icon={LifeBuoy}
         subtitle="Self-help guides for every module, how-to answers, escalation contacts and a direct line to support."
-        showCompliance={false}
-        showAudit={false}
         action={
           <>
             {/* Emergency quick access (pink) */}

@@ -28,7 +28,7 @@ export default function EmployeeRoster({ embedded = false }) {
   };
   const shifts = query.data?.pages.flatMap((page) => page.items || []) || [];
   return <section className="space-y-4">
-    {!embedded && <PageHeader title="My Rostering" subtitle="Only shifts assigned to you, with approved participants." showCompliance={false} showAudit={false} showAlerts={false} />}
+    {!embedded && <PageHeader title="My Rostering" subtitle="Only shifts assigned to you, with approved participants." />}
     <div className="grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-2"><label className="text-sm">From<Input type="date" value={from} onChange={(event) => setFrom(event.target.value)} /></label><label className="text-sm">To<Input type="date" value={to} onChange={(event) => setTo(event.target.value)} /></label><div className="sm:col-span-2"><EmployeeParticipantSelect value={participantId} onChange={setParticipantId} optional /></div></div>
     {error && <p role="alert" className="text-destructive">{error}</p>}
     {query.isPending ? <p role="status">Loading your roster…</p> : query.isError ? <p role="alert" className="text-destructive">{query.error.message}<Button variant="outline" onClick={() => query.refetch()}>Retry</Button></p> : !shifts.length ? <p className="text-muted-foreground">No shifts assigned to you match these dates and approved participants.</p> : shifts.map((shift) => <EmployeeShiftCard key={shift.id} shift={shift} busy={busy} onAction={act} />)}

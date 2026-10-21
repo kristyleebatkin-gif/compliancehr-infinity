@@ -86,8 +86,6 @@ export default function Assistant() {
         title="AI Assistant"
         subtitle="One home for all four AI assistants. Each one reads your live app data to answer, check and summarise."
         icon={Bot}
-        showCompliance={false}
-        showAudit={false}
       />
       <AssistantHints />
       <div className="grid gap-2 sm:grid-cols-2">

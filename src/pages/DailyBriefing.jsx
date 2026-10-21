@@ -120,8 +120,6 @@ export default function DailyBriefing() {
         subtitle="Everything pending and expiring for today — pending compliance tasks, checks due, and records approaching or past expiry."
         icon={Sunrise}
         accent={['#7c3aed', '#22d3ee']}
-        showCompliance={false}
-        showAudit={false}
         action={(
           <Select value={windowDays} onValueChange={setWindowDays}>
             <SelectTrigger className="h-8 w-40 px-2 py-1 text-xs"><SelectValue /></SelectTrigger>

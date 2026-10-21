@@ -145,7 +145,7 @@ export default function MyProfile() {
         icon={UserRound}
         title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
         subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
-        showAlerts={false} showCompliance={false} showAudit={false}
+        showAlerts={false}
       />
 
       {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views">

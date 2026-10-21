@@ -96,7 +96,7 @@ export default function Certificates() {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 space-y-4">
-      <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry" showAlerts={false} showCompliance={false}
+      <PageHeader title="Certificates" subtitle="Track staff training certificates and expiry" showAlerts={false}
         beforeAudit={<Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" />Issue Certificate</Button>}
         auditClassName="ml-auto"
         afterAudit={<Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [

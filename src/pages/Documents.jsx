@@ -207,7 +207,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         title="Document Vault"
         subtitle="Every Document, Expiry Tracking and Data Control."
         showAlerts={false}
-        showAudit={false}
+        
         showDivider={false}
       />}
 

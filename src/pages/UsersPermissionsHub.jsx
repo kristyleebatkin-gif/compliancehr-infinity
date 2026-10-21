@@ -14,7 +14,7 @@ export default function UsersPermissionsHub() {
         title="Users & Permissions Hub"
         subtitle="Manage app users, roles, invitations and per-module permissions."
         showAlerts={false}
-        showAudit={false}
+        
       />
 
       <div className="grid min-w-0 gap-2">

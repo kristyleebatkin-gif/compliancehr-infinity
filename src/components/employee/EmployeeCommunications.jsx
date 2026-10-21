@@ -8,7 +8,7 @@ const TABS = [['alerts', Siren, 'Alerts'], ['logs', History, 'Alert Logs'], ['di
 export default function EmployeeCommunications({ embedded = false }) {
   const [view, setView] = useState('diary');
   return <section className="space-y-4">
-    {!embedded && <PageHeader title="My Communication Centre" subtitle="Your personal communications, team updates and notes for approved participants." showAudit={false} showCompliance={false} showAlerts={false} />}
+    {!embedded && <PageHeader title="My Communication Centre" subtitle="Your personal communications, team updates and notes for approved participants." />}
     <Tabs value={view} onValueChange={setView}><CommunicationNavigation tabs={TABS} /><TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent></Tabs>
   </section>;
 }

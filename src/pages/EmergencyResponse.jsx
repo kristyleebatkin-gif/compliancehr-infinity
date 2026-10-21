@@ -94,7 +94,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
       {!embedded && <PageHeader
         icon={Siren}
         title="Emergency Response"
-        showCompliance={!employee} showAudit={!employee} showAlerts={!employee}
+        showAlerts={!employee}
         subtitle={employee ? 'Your emergency drill and safety-check records.' : 'Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.'}
         beforeAudit={<><Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>{!employee && <Button variant="outline" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}</>}
         afterAudit={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}

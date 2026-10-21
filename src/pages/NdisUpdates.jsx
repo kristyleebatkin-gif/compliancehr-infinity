@@ -92,7 +92,7 @@ export default function NdisUpdates() {
 
   return (
     <div className="ndis-workspace space-y-4">
-      <PageHeader title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} showCompliance={false} showAudit={false} />
+      <PageHeader title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} />
       <div className="module-action-bar flex flex-wrap items-center gap-1 rounded-xl border border-primary/20 bg-card p-2 shadow-sm">
         <ModuleAlertsButton />
       </div>

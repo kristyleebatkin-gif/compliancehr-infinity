@@ -145,8 +145,6 @@ export default function Notifications() {
         title="Notification Centre"
         subtitle="Every alert, reminder and escalation across the platform, in one live feed."
         icon={Bell}
-        showCompliance={false}
-        showAudit={false}
         action={
           <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2">
             <CheckCheck className="h-4 w-4" /> Mark all read

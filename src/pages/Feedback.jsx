@@ -233,8 +233,6 @@ function Feedback({ profile, embedded = false } = {}) {
         title="Feedback & Surveys"
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         showAlerts={false}
-        showCompliance={false}
-        showAudit={false}
         action={<FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} />}
       />}
 

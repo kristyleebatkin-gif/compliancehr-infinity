@@ -140,7 +140,7 @@ export default function CrmHub() {
         icon={Briefcase}
         accent={['#16a34a', '#0d9488']}
         showAlerts={false}
-        showAudit={false}
+        
         action={(
           <>
             <Button size="sm" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>

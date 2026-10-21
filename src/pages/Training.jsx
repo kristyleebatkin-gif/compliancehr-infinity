@@ -104,7 +104,7 @@ export default function Training({ profile, embedded = false } = {}) {
     <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
       {!embedded && <PageHeader
         title="Training Hub"
-        showAudit={!employee} showCompliance={!employee} showAlerts={!employee}
+        showAlerts={!employee}
         subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
         action={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
       />}
