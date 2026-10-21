@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { LayoutGrid } from 'lucide-react';
 import ModuleAuditButton from '@/components/ModuleAuditButton';
 import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
@@ -15,7 +16,7 @@ import { resolveAuditModule } from '@/lib/moduleAuditReport';
  * Sizing, colour, border and font are enforced in src/index.css (".app-page-header"); the show* props are
  * kept only so existing callers keep working — they no longer hide the tracker or the audit exports.
  */
-export default function PageHeader({ title, subtitle, action, icon: Icon, className, under, beforeAudit, afterAudit, compactActions = true, actionClassName, auditClassName }) {
+export default function PageHeader({ title, subtitle, action, icon: Icon = LayoutGrid, className, under, beforeAudit, afterAudit, compactActions = true, actionClassName, auditClassName }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   const description = subtitle || resolveAuditModule(seg)?.blurb || '';
@@ -26,11 +27,9 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
         style={{ background: 'var(--header-gradient)' }}
       >
         <div className="relative flex min-w-0 w-full items-center gap-3">
-          {Icon && (
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
-              <Icon className="h-5 w-5" />
-            </div>
-          )}
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
+            <Icon className="h-5 w-5" />
+          </div>
           <div className="min-w-0 flex-1">
             <h1>{title}</h1>
             {description && <p className="line-clamp-2">{description}</p>}
