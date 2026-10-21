@@ -23,7 +23,6 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
-      {actions && <div className={`module-shell-actions module-action-bar ${WHITE_ROW}`}>{actions}</div>}
       {search && <div className="rounded-xl border border-border/60 bg-white p-2 shadow-sm">{search}</div>}
       {insight}
       {insightModule && <RegisterInsights module={insightModule} />}
@@ -39,7 +38,12 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
         title={title}
         subtitle={subtitle}
         icon={icon}
-        beforeAudit={tabs && <div className="order-last min-w-0 basis-full [&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
+        beforeAudit={(tabs || actions) && (
+          <div className="order-last flex min-w-0 basis-full flex-col" style={{ gap: '0.5cm' }}>
+            {tabs && <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
+            {actions && <div className="module-shell-actions module-action-bar flex flex-wrap items-center">{actions}</div>}
+          </div>
+        )}
         under={rows}
       />
       {children}
