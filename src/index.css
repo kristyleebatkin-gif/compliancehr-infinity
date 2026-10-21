@@ -419,4 +419,8 @@
     }
     .compact-tabs [role="tab"] svg, .compact-module [role="tab"] svg { width: 0.75rem; height: 0.75rem; }
   }
+  /* Shared page and section headers retain the app's blue-purple-pink branding. */
+  .app-readable .app-page-header { background: var(--header-gradient) !important; }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) { background: var(--section-header-gradient) !important; }
+  .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
 }

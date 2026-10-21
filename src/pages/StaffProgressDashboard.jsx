@@ -43,18 +43,20 @@ function ProgressChart({ title, data, pendingLabel }) {
   );
 }
 
-export default function StaffProgressDashboard({ embedded = false }) {
+export default function StaffProgressDashboard({ embedded = false, search = '' }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
+      const term = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const ownerQuery = term ? { assigned_to: { $regex: term, $options: 'i' } } : {};
       const [intakeDone, intakePending, tasksDone, tasksPending] = await Promise.all([
-        base44.entities.IntakeCase.aggregate({ query: { status: { $in: INTAKE_COMPLETED } }, groupBy: 'assigned_to' }),
-        base44.entities.IntakeCase.aggregate({ query: { status: { $in: INTAKE_PENDING } }, groupBy: 'assigned_to' }),
-        base44.entities.TodoTask.aggregate({ query: { status: { $in: TASK_COMPLETED } }, groupBy: 'assigned_to' }),
-        base44.entities.TodoTask.aggregate({ query: { status: { $in: TASK_PENDING } }, groupBy: 'assigned_to' }),
+        base44.entities.IntakeCase.aggregate({ query: { ...ownerQuery, status: { $in: INTAKE_COMPLETED } }, groupBy: 'assigned_to' }),
+        base44.entities.IntakeCase.aggregate({ query: { ...ownerQuery, status: { $in: INTAKE_PENDING } }, groupBy: 'assigned_to' }),
+        base44.entities.TodoTask.aggregate({ query: { ...ownerQuery, status: { $in: TASK_COMPLETED } }, groupBy: 'assigned_to' }),
+        base44.entities.TodoTask.aggregate({ query: { ...ownerQuery, status: { $in: TASK_PENDING } }, groupBy: 'assigned_to' }),
       ]);
       const toMap = (result) => Object.fromEntries((result.rows || [])
         .filter((r) => String(r.assigned_to || '').trim())
@@ -77,7 +79,7 @@ export default function StaffProgressDashboard({ embedded = false }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [search]);
 
   useEffect(() => { load(); }, [load]);
 

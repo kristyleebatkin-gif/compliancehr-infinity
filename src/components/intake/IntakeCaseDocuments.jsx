@@ -34,7 +34,7 @@ export default function IntakeCaseDocuments({
   const pct = checks.length ? Math.round((doneCount / checks.length) * 100) : 0;
 
   return (
-    <div className={showReadiness ? 'grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]' : 'space-y-4'}>
+    <div className={showReadiness ? 'grid items-start gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,0.7fr)]' : 'space-y-4'}>
       <details className="space-y-2">
         <summary className="cursor-pointer rounded-lg border border-border bg-muted/30 px-3 py-2 text-foreground">
           <span className="text-xs font-bold uppercase tracking-wide">Required documents</span>

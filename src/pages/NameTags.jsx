@@ -5,6 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
+import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
@@ -152,6 +153,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
           )}
         </div>
       )}
+      {!loading && profile && <IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="documents" />}
     </div>
   );
 }

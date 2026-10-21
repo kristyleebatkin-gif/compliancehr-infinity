@@ -29,7 +29,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
       <div className="pointer-events-none absolute bottom-0 right-1/4 h-24 w-24 rounded-full bg-cyan-300/20 blur-xl" />
       <div className="pointer-events-none absolute -right-20 top-0 h-full w-44 rotate-12" style={{ background: 'linear-gradient(90deg, transparent 15%, rgba(255,255,255,0.14) 50%, transparent 85%)' }} />
       <div className="pointer-events-none absolute left-0 top-0 h-full w-32" style={{ background: `linear-gradient(90deg, ${primary}14, transparent)` }} />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full" style={{ background: `linear-gradient(90deg, ${moduleAccent}, ${moduleAccent}00)` }} />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full" style={{ background: 'var(--header-gradient)' }} />
       <div className="pointer-events-none absolute left-0 top-0 h-[2px] w-2/3" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.7), transparent)' }} />
       <div className="relative flex min-w-0 w-full items-start gap-3">
         {Icon && (

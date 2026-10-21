@@ -1,11 +1,11 @@
 .bright-dashboard [data-dashboard-module] {
   border-color: var(--module-color);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--module-color) 42%, hsl(var(--card))), color-mix(in srgb, var(--module-color) 18%, hsl(var(--card))));
+  background: linear-gradient(145deg, color-mix(in srgb, var(--module-color) 42%, hsl(var(--card))), color-mix(in srgb, var(--module-accent) 24%, hsl(var(--card))));
 }
 .bright-dashboard [data-dashboard-module] > div:first-child { opacity: 1; }
 .bright-dashboard [data-dashboard-module] p { color: hsl(var(--foreground)); }
 .bright-dashboard [data-dashboard-module] > div:last-child > span { opacity: 1; color: hsl(var(--foreground)); }
 .bright-dashboard > .gradient-brand { filter: saturate(1.25); }
 .dark .bright-dashboard [data-dashboard-module] {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--module-color) 32%, hsl(var(--card))), color-mix(in srgb, var(--module-color) 12%, hsl(var(--card))));
+  background: linear-gradient(145deg, color-mix(in srgb, var(--module-color) 32%, hsl(var(--card))), color-mix(in srgb, var(--module-accent) 18%, hsl(var(--card))));
 }

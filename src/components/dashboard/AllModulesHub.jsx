@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { moduleColour } from '@/lib/moduleColours';
+import dashboardModuleColours from '@/components/dashboard/dashboardModuleColours';
 import { ArrowRight, LayoutGrid } from 'lucide-react';
 
 // Live status hues the hub shares with the module compliance strips.
@@ -47,7 +47,7 @@ export default function AllModulesHub() {
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4">
         {modules.map((module) => {
           const Icon = module.icon;
-          const color = moduleColour(module.label);
+          const { colour: color, accent } = dashboardModuleColours(module.key);
           const status = STATUS_MAP[module.key];
           return (
             <Link
@@ -55,9 +55,9 @@ export default function AllModulesHub() {
               to={module.path}
               className="group relative flex min-h-28 flex-col overflow-hidden rounded-xl border p-2.5 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
               data-dashboard-module
-              style={{ '--module-color': color }}
+              style={{ '--module-color': color, '--module-accent': accent }}
             >
-              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${color}66)` }} />
+              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${accent})` }} />
               <div className="flex items-start gap-2">
                 <div
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white transition-transform group-hover:scale-110"

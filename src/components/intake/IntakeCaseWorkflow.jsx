@@ -1060,7 +1060,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
 
 
               {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} activeCase={activeCase} allowResumeUpload={intakeType === 'Employee'} resumeDocument={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} /> : <IntakeCaseDocuments
-                showReadiness={!profileView}
+                showReadiness={!profileView || (intakeType === 'Employee' && profileView === 'documents')}
                 activeCase={profileView ? { ...activeCase, status: 'Draft' } : activeCase}
                 intakeType={intakeType}
                 readiness={readiness}

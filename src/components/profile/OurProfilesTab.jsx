@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import EmptyState from '@/components/EmptyState';
 import ProfileLoadError from '@/components/profile/ProfileLoadError';
+import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
+import useEmployeeDirectoryPage from '@/components/profile/useEmployeeDirectoryPage';
 import { loadProfileWithTimeout } from '@/lib/profileLoading';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
@@ -16,19 +18,27 @@ import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } fro
 // Admin view: every employee or participant profile in the organisation,
 // grouped into modular sections with search and quick filters. Staff and
 // participants see only their own profile in their matching module.
-export default function OurProfilesTab({ kind, basePath, scoped = true }) {
+export default function OurProfilesTab({ kind, basePath, scoped = true, directory = false, searchValue = '', groupValue = 'all', onGroupChange, categories = [] }) {
   const isParticipant = kind === 'participant';
   const profilePath = basePath || (isParticipant ? '/our-participants' : '/our-employees');
   const { role, user } = useRole();
   const selfOnly = scoped && !managesProfiles(role) && !(isParticipant && role === ROLES.SUPPORT);
-  const [records, setRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [search, setSearch] = useState('');
-  const [group, setGroup] = useState('all');
+  const [storedRecords, setRecords] = useState([]);
+  const [storedLoading, setLoading] = useState(true);
+  const [storedError, setError] = useState('');
+  const [localSearch, setSearch] = useState('');
+  const [localGroup, setLocalGroup] = useState('all');
   const [reload, setReload] = useState(0);
+  const search = directory ? searchValue : localSearch;
+  const group = directory ? groupValue : localGroup;
+  const setGroup = directory ? onGroupChange : setLocalGroup;
+  const directoryPage = useEmployeeDirectoryPage({ enabled: directory, scoped, search, group });
+  const records = directory ? directoryPage.data?.pages.flatMap(page => page.items || []) || [] : storedRecords;
+  const loading = directory ? directoryPage.isPending : storedLoading;
+  const error = directory ? directoryPage.error : storedError;
 
   useEffect(() => {
+    if (directory) return;
     let active = true;
     setRecords([]);
     setLoading(true);
@@ -50,7 +60,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
       }
     })();
     return () => { active = false; };
-  }, [isParticipant, selfOnly, scoped, role, user?.id, user?.email, reload]);
+  }, [directory, isParticipant, selfOnly, scoped, role, user?.id, user?.email, reload]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
@@ -64,6 +74,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
   }, [records, isParticipant]);
 
   const visible = useMemo(() => {
+    if (directory) return records;
     const term = search.trim().toLowerCase();
     return records.filter((r) => {
       if (group !== 'all' && groupKey(r) !== group) return false;
@@ -71,10 +82,10 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
       return [r.full_name, r.email, r.phone, r.position, r.role, r.ndis_number, r.ndis_reference_number, r.support_type]
         .some((v) => (v || '').toLowerCase().includes(term));
     });
-  }, [records, search, group, isParticipant]);
+  }, [directory, records, search, group, isParticipant]);
 
   const initials = (name) => (name || '?').split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
-  const activeCount = records.filter((r) => (r.status || 'Active') === 'Active').length;
+  const activeCount = directory ? 0 : records.filter((r) => (r.status || 'Active') === 'Active').length;
   const attentionCount = records.length - activeCount;
   const Icon = isParticipant ? Heart : Users;
 
@@ -99,9 +110,9 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
     return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
 
-  if (error) return <ProfileLoadError error={error} onRetry={() => setReload((value) => value + 1)} />;
+  if (error) return <ProfileLoadError error={error} onRetry={() => directory ? directoryPage.refetch() : setReload((value) => value + 1)} />;
 
-  if (!records.length) {
+  if (!records.length && !directory) {
     return <EmptyState icon={Users} title={selfOnly ? 'Your profile is not set up yet' : 'No profiles yet'} message={selfOnly ? 'Your profile will appear here once management creates it and links your email.' : (isParticipant ? 'Participant profiles will appear here once created.' : 'Employee profiles will appear here once created.')} modulePath={isParticipant ? 'participants' : 'staff'} />;
   }
 
@@ -122,10 +133,10 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
       {/* Participants: search sits directly under the header */}
       {isParticipant && searchBox}
 
-      {!isParticipant && searchBox}
+      {!isParticipant && !directory && searchBox}
 
-      {/* Stat tiles */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      {/* Standalone directories keep their own summary; the employee page owns its header tiles. */}
+      {!directory && <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
           { label: 'Total profiles', value: records.length, Icon: Users, grad: 'from-indigo-500 via-violet-500 to-purple-500' },
           { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
@@ -139,10 +150,10 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* Profile categories sit below the dashboard. */}
-      {filterRow}
+      {directory ? <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} /> : filterRow}
       </>}
 
       {/* Modular grouped sections */}
@@ -204,6 +215,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
             ))}
         </div>
       )}
+      {directory && directoryPage.hasNextPage && <Button variant="outline" disabled={directoryPage.isFetchingNextPage} onClick={() => directoryPage.fetchNextPage()}>{directoryPage.isFetchingNextPage ? 'Loading…' : 'Load more employees'}</Button>}
     </div>
   );
 }
