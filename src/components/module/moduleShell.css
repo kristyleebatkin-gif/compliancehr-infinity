@@ -23,7 +23,6 @@
 /* Audit Checklist + Audit Report: top right, full module colour, black text, white border. */
 .module-audit-buttons {
   gap: 0.5cm !important;
-  margin-left: auto;
 }
 .module-audit-buttons > button {
   background: var(--module-colour) !important;
