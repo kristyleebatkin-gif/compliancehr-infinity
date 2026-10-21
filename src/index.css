@@ -423,11 +423,14 @@
   .app-readable .app-page-header { background: var(--header-gradient) !important; }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) { background: var(--section-header-gradient) !important; }
   .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
-  /* Consistent physical spacing and minimum header height across the workspace. */
+  /* Header standard: keep 2cm sizing and existing brand colours unless explicitly requested. */
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
-    min-height: 2cm;
-    height: auto;
+    min-height: 2cm !important;
+    height: 2cm !important;
+    padding-top: .25rem !important;
+    padding-bottom: .25rem !important;
+    align-content: center;
     color: hsl(var(--foreground));
   }
   .app-readable .app-page-header { color: hsl(var(--header-foreground)); }
