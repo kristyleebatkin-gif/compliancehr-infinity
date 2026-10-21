@@ -46,6 +46,18 @@ Submissions carrying a `participant_id` can be read and updated by the profile
 management roles above and by the participant themself only while the submission
 belongs to their own linked profile.
 
+## Staff profile and name tag
+The employee (staff) profile page mirrors the participant design: name tag at the
+top, half-height paired forms, and Résumé following the Driver's Licence section.
+- The name tag preview reads company branding from Company Safe; no personal
+  data leaves the profile.
+- Sending a name tag by email goes through the `sendNameTagEmail` function and
+  reaches registered app users only.
+- Staff intake documents load through the same personal intake client
+  (`myStaffIntakeDocuments`), scoped to that one staff profile.
+- Staff forms (Staff Information, Staff Onboarding, Résumé, section forms) save
+  to that staff member's own profile records.
+
 ## Profile logs
 Consent changes, detail changes and acknowledgements shown in the Logged sections
 come from function-recorded logs (service-role written) and staff acknowledgements
