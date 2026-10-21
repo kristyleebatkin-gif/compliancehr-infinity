@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import useSubjectPastels from '@/components/profile/useSubjectPastels';
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
@@ -57,6 +58,8 @@ export default function MyProfile() {
   const [loadError, setLoadError] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const pageRef = useRef(null);
+  useSubjectPastels(pageRef, loading);
 
   const tab = searchParams.get('tab') || 'details';
   const setTab = (value) => setSearchParams(value === 'details' ? {} : { tab: value }, { replace: true });
@@ -139,7 +142,7 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div ref={pageRef} className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       <PageHeader
         className="my-profile-heading"
         icon={UserRound}

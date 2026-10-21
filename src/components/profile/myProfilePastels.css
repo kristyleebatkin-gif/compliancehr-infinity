@@ -1,21 +1,7 @@
-/* My Profile: each subject (tab and section) gets its own solid pastel colour with black text. Page header is untouched. */
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+1) { --subject-pastel: var(--profile-lilac); }
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+2) { --subject-pastel: var(--profile-sky); }
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+3) { --subject-pastel: var(--profile-mint); }
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+4) { --subject-pastel: var(--profile-peach); }
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+5) { --subject-pastel: var(--profile-rose); }
-html body .my-profile-pastels [data-dashboard-tab]:nth-child(6n+6) { --subject-pastel: var(--profile-lemon); }
-
-html body .my-profile-pastels div:nth-child(6n+1) > .app-section-card-header { --subject-pastel: var(--profile-lilac); }
-html body .my-profile-pastels div:nth-child(6n+2) > .app-section-card-header { --subject-pastel: var(--profile-sky); }
-html body .my-profile-pastels div:nth-child(6n+3) > .app-section-card-header { --subject-pastel: var(--profile-mint); }
-html body .my-profile-pastels div:nth-child(6n+4) > .app-section-card-header { --subject-pastel: var(--profile-peach); }
-html body .my-profile-pastels div:nth-child(6n+5) > .app-section-card-header { --subject-pastel: var(--profile-rose); }
-html body .my-profile-pastels div:nth-child(6n+6) > .app-section-card-header { --subject-pastel: var(--profile-lemon); }
-
+/* My Profile: each subject (tab and section) gets its own solid pastel colour (set per item by useSubjectPastels) with black text. Page header is untouched. */
 html body .my-profile-pastels [data-dashboard-tab],
 html body .my-profile-pastels .app-section-card-header {
-  background: hsl(var(--subject-pastel, var(--profile-lilac))) !important;
+  background: var(--subject-pastel, #e9d5ff) !important;
   background-image: none !important;
 }
 html body .my-profile-pastels [data-dashboard-tab][data-state="active"],
