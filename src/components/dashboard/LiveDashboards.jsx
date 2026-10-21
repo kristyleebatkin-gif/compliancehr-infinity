@@ -11,6 +11,7 @@ import {
   Activity, Heart, Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { moduleColour } from '@/lib/moduleColours';
 
 const MODULES = [
   { key: 'intake', title: 'Intake Centre', href: '/intake', icon: ClipboardList, bar: 'bg-violet-500' },
@@ -46,11 +47,12 @@ const csvCell = (value) => '"' + String(value ?? '').replace(/"/g, '""') + '"';
 function ModuleCard({ mod }) {
   const max = Math.max(1, ...mod.breakdown.map((b) => b.count));
   const extraCounts = Object.entries(mod.counts || {});
+  const colour = moduleColour(mod.title);
   return (
-    <Link to={mod.href} className="group rounded-2xl border bg-card p-4 shadow-panel transition-shadow hover:shadow-lg">
+    <Link to={mod.href} className="group rounded-2xl border p-4 shadow-panel transition-shadow hover:shadow-lg" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-white ${mod.bar}`}>
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg text-white" style={{ background: colour }}>
             <mod.icon className="h-4 w-4" />
           </span>
           <span className="text-sm font-bold text-foreground">{mod.title}</span>
@@ -66,7 +68,7 @@ function ModuleCard({ mod }) {
           <div key={item.label} className="flex items-center gap-2">
             <span className="w-28 shrink-0 truncate text-[11px] font-medium text-muted-foreground">{item.label}</span>
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-              <div className={`h-full rounded-full ${mod.bar}`} style={{ width: `${Math.round((item.count / max) * 100)}%` }} />
+              <div className="h-full rounded-full" style={{ width: `${Math.round((item.count / max) * 100)}%`, background: colour }} />
             </div>
             <span className="w-8 text-right text-[11px] font-bold text-foreground">{item.count}</span>
           </div>
