@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
+import { notifyRoutedManagement } from '../../shared/routedManagementAlerts.ts';
 
 // Cross-module register routing: files any new record from the routed entities
 // into its correct Register (and escalates critical items as Notifications).
@@ -187,13 +188,8 @@ export default async function(req) {
     let notified = false;
     if (route.notify && event === 'create' && (!route.notifyWhen || route.notifyWhen(rec))) {
       try {
-        await base44.asServiceRole.entities.Notification.create({
-          type: route.notifyType,
-          recipient: 'Management',
-          message: `${entity.replace(/([a-z])([A-Z])/g, '$1 $2')} auto-routed: ${title}${person ? ` (${person})` : ''}`,
-          read: false,
-        });
-        notified = true;
+        notified = (await notifyRoutedManagement(base44.asServiceRole, entity, recordId, route.notifyType,
+          `${entity.replace(/([a-z])([A-Z])/g, '$1 $2')} auto-routed: ${title}${person ? ` (${person})` : ''}`)) > 0;
       } catch (e) { console.error('Notification failed', e.message); }
     }
 

@@ -61,16 +61,17 @@ function Tasks() {
       const me = await base44.auth.me();
       const seesAll = MANAGEMENT_ROLES.includes(me?.role);
       setMeEmail(me?.email || '');
-      const taskQuery = { archived: { $ne: true }, ...(seesAll ? {} : { $or: [{ assigned_email: me?.email }, { responsible_emails: me?.email }] }), ...(taskId ? { id: taskId } : {}) };
+      const taskScope = { archived: { $ne: true }, ...(seesAll ? {} : { $or: [{ assigned_email: me?.email }, { responsible_emails: me?.email }] }), ...(taskId ? { id: taskId } : {}) };
+      const taskQuery = { $and: [taskScope, ...(filter === 'All' ? [] : filter === 'My tasks' ? [{ $or: [{ assigned_email: me?.email }, { responsible_emails: me?.email }] }] : [{ status: filter }])] };
       const today = format(new Date(), 'yyyy-MM-dd');
       const activeStatuses = { $in: ['Open', 'In Progress', 'Overdue'] };
       const [page, userPage, totals, dueToday, overdue, timing] = await Promise.all([
         base44.entities.TodoTask.filter(taskQuery, { sort: '-due_date', limit: 500 }),
         base44.entities.User.list().catch(() => []),
-        base44.entities.TodoTask.aggregate({ query: taskQuery, groupBy: 'status' }),
-        base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: today }),
-        base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: { $lt: today } }),
-        base44.entities.TodoTask.aggregate({ query: { ...taskQuery, status: { $in: ['Completed', 'Finalised'] }, time_taken_minutes: { $gt: 0 } }, groupBy: 'status', avg: ['time_taken_minutes'] }),
+        base44.entities.TodoTask.aggregate({ query: taskScope, groupBy: 'status' }),
+        base44.entities.TodoTask.count({ ...taskScope, status: activeStatuses, due_date: today }),
+        base44.entities.TodoTask.count({ ...taskScope, status: activeStatuses, due_date: { $lt: today } }),
+        base44.entities.TodoTask.aggregate({ query: { ...taskScope, status: { $in: ['Completed', 'Finalised'] }, time_taken_minutes: { $gt: 0 } }, groupBy: 'status', avg: ['time_taken_minutes'] }),
       ]);
       const timedCount = (timing.rows || []).reduce((sum, row) => sum + row.count, 0);
       const timedMinutes = (timing.rows || []).reduce((sum, row) => sum + (row.avg_time_taken_minutes || 0) * row.count, 0);
@@ -80,7 +81,7 @@ function Tasks() {
       setUsers(userPage || []);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, [taskId]);
+  }, [taskId, filter]);
   useEffect(() => { load(); }, [load]);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
@@ -168,9 +169,7 @@ function Tasks() {
     setRunning(false);
   };
 
-  const filtered = filter === 'All' ? list
-    : filter === 'My tasks' ? list.filter((t) => t.assigned_email === meEmail)
-    : list.filter((t) => t.status === filter);
+  const filtered = list;
 
   // Keyboard-first triage: N new, J/K next/previous, Enter open, Escape close.
   useEffect(() => {

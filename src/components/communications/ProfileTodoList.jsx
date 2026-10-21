@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeTasks from '@/components/employee/EmployeeTasks';
 export default withEmployeeView(ProfileTodoList, EmployeeTasks);
@@ -17,6 +18,7 @@ function ProfileTodoList({ staff, person }) {
   const [loading, setLoading] = useState(true);
   const [finaliseTarget, setFinaliseTarget] = useState(null);
   const [minutes, setMinutes] = useState('');
+  const [saving, setSaving] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -39,23 +41,27 @@ function ProfileTodoList({ staff, person }) {
 
   useEffect(() => { load(); }, [staff?.id]);
 
-  const pending = tasks.filter((t) => t.status === 'Pending');
-  const finalised = tasks.filter((t) => t.status === 'Finalised');
+  const pending = tasks.filter((t) => !t.archived && ['Pending', 'Open', 'In Progress', 'Overdue'].includes(t.status));
+  const awaiting = tasks.filter((t) => !t.archived && t.status === 'Pending Approval');
+  const finalised = tasks.filter((t) => ['Finalised', 'Completed'].includes(t.status));
 
   const finalise = async () => {
-    if (!finaliseTarget) return;
+    if (!finaliseTarget || saving) return;
+    if (!Number.isFinite(Number(minutes)) || Number(minutes) < 0) { toast({ title: 'Enter valid time taken', variant: 'destructive' }); return; }
+    setSaving(true);
     try {
       await base44.entities.TodoTask.update(finaliseTarget.id, {
-        status: 'Finalised',
+        status: 'Pending Approval',
         completed_date: new Date().toISOString().slice(0, 10),
         completed_by: staff.full_name,
         time_taken_minutes: Number(minutes) || 0,
       });
-      toast({ title: 'Task finalised', description: 'A point has been added on the leaderboard.' });
+      toast({ title: 'Submitted for manager sign-off', description: 'The task will be finalised once a manager approves it.' });
       setFinaliseTarget(null);
       setMinutes('');
       await load();
-    } finally { /* handled */ }
+    } catch (error) { toast({ title: 'Unable to submit task', description: error.message, variant: 'destructive' }); }
+    finally { setSaving(false); }
   };
 
   return (
@@ -92,6 +98,7 @@ function ProfileTodoList({ staff, person }) {
               </div>
             ))}
           </div>
+          {awaiting.length > 0 && <section className="space-y-2"><h3 className="text-sm font-semibold">Awaiting manager sign-off ({awaiting.length})</h3>{awaiting.map((task) => <div key={task.id} className="rounded-xl border border-border bg-card p-3 text-sm">{task.title}<Button asChild size="sm" variant="outline" className="ml-2"><Link to={`/shared-to-do?task=${encodeURIComponent(task.id)}`}>View sign-off status</Link></Button></div>)}</section>}
           {finalised.length > 0 && (
             <div className="space-y-2">
               <p className="text-sm font-semibold">Finalised ({finalised.length})</p>
@@ -109,12 +116,12 @@ function ProfileTodoList({ staff, person }) {
       )}
       <Dialog open={Boolean(finaliseTarget)} onOpenChange={(o) => !o && setFinaliseTarget(null)}>
         <DialogContent>
-          <DialogHeader><DialogTitle>Finalise task</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>Submit task for manager sign-off</DialogTitle></DialogHeader>
           <p className="text-xs text-muted-foreground">{finaliseTarget?.title}</p>
-          <Input type="number" placeholder="How long did it take? (minutes)" value={minutes} onChange={(e) => setMinutes(e.target.value)} />
+          <Input type="number" min="0" placeholder="How long did it take? (minutes)" value={minutes} onChange={(e) => setMinutes(e.target.value)} />
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setFinaliseTarget(null)}>Cancel</Button>
-            <Button onClick={finalise}><ListTodo className="h-4 w-4" />Finalise</Button>
+            <Button onClick={finalise} disabled={saving}><ListTodo className="h-4 w-4" />{saving ? 'Submitting…' : 'Submit for sign-off'}</Button>
           </div>
         </DialogContent>
       </Dialog>
