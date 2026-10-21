@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-export default function EmployeePersonalRecord({ record, view, onFinalise }) {
+export default function EmployeePersonalRecord({ record, view, onFinalise, onStart, saving }) {
   const [error, setError] = useState('');
   const [opening, setOpening] = useState(false);
   const open = async () => {
@@ -21,7 +21,9 @@ export default function EmployeePersonalRecord({ record, view, onFinalise }) {
     {[record.message, record.description, record.notes, record.how_to_complete, record.resources_needed, record.important_info, record.outcome, record.resolution].filter(Boolean).map((text, index) => <p key={index} className="whitespace-pre-wrap text-sm">{text}</p>)}
     {record.certificate_number && <p className="text-xs text-muted-foreground">Certificate {record.certificate_number}{record.score != null ? ` · ${record.score}%` : ''}</p>}
     {(record.file_uri || record.file_url || record.form_uri) && <Button variant="outline" size="sm" disabled={opening} onClick={open}>{opening ? 'Opening…' : 'Open document'}</Button>}
-    {view === 'tasks' && !['Finalised', 'Completed', 'Cancelled', 'Pending Approval'].includes(record.status) && <Button variant="outline" size="sm" onClick={() => onFinalise(record)}>Complete task</Button>}
+    {view === 'tasks' && ['Pending', 'Open', 'Overdue'].includes(record.status) && <Button variant="outline" size="sm" disabled={saving} onClick={() => onStart(record)}>Start task</Button>}
+    {view === 'tasks' && !['Finalised', 'Completed', 'Cancelled', 'Pending Approval'].includes(record.status) && <Button variant="outline" size="sm" disabled={saving} onClick={() => onFinalise(record)}>Complete task</Button>}
+    {view === 'tasks' && record.status === 'Pending Approval' && <p className="text-xs text-muted-foreground">Submitted for manager sign-off. The decision will appear in your alerts.</p>}
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
   </article>;
 }

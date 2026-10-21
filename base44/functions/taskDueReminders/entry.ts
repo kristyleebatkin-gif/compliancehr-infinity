@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
+import { auDate, addDays } from '../../shared/reminders.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -12,14 +13,14 @@ export default async function(req) {
     }
     const service = base44.asServiceRole;
 
-    const sydneyToday = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
-    const tomorrow = new Date(Date.now() + 24 * 3600 * 1000).toISOString().slice(0, 10);
+    const sydneyToday = auDate(new Date());
+    const tomorrow = addDays(sydneyToday, 1);
 
     const pending = [];
     let cursor = null;
     do {
       const page = await service.entities.TodoTask.filter(
-        { status: 'Pending' },
+        { status: { $in: ['Pending', 'Open', 'In Progress', 'Overdue'] }, archived: { $ne: true }, due_date: { $gte: '0001-01-01', $lte: tomorrow } },
         { limit: 200, ...(cursor ? { cursor } : {}) },
       );
       pending.push(...(page.items || []));
@@ -29,8 +30,9 @@ export default async function(req) {
     const due = pending.filter((t) => t.due_date && t.due_date <= tomorrow);
     let sent = 0;
     const failures = [];
+    if (body.dry_run === true) return Response.json({ ok: true, dry_run: true, due_tasks: due.length });
     for (const task of due) {
-      for (const to of task.responsible_emails || []) {
+      for (const to of new Set([task.assigned_email, ...(task.responsible_emails || [])].filter(Boolean).map((email) => String(email).trim().toLowerCase()))) {
         if (!EMAIL_RE.test(String(to))) continue;
         try {
           await service.integrations.Core.SendEmail({

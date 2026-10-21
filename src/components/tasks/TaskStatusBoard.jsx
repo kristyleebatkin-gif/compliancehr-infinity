@@ -23,7 +23,7 @@ const boardStatus = (t) => {
 export default function TaskStatusBoard({ tasks, onOpen, setStatus }) {
   const [groupBy, setGroupBy] = useState('department'); // 'department' (task type) | 'worker' (assignee)
 
-  const pending = tasks.filter((t) => !['Completed', 'Cancelled'].includes(t.status));
+  const pending = tasks.filter((t) => !['Completed', 'Finalised', 'Pending Approval', 'Cancelled'].includes(t.status));
 
   const groups = [];
   if (groupBy === 'department') {

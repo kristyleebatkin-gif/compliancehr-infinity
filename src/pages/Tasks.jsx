@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeTasks from '@/components/employee/EmployeeTasks';
+export default withEmployeeView(Tasks, EmployeeTasks);
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
@@ -27,8 +32,10 @@ const PRIORITIES = ['Low', 'Medium', 'High', 'Urgent'];
 
 const blank = { title: '', task_type: 'General', assigned_to: '', assigned_email: '', due_date: '', status: 'Open', priority: 'Medium', estimated_hours: '', completed_date: '', notes: '', linked_entity_type: '', linked_entity_id: '' };
 
-export default function Tasks() {
+function Tasks() {
   const { toast } = useToast();
+  const [params] = useSearchParams();
+  const taskId = params.get('task');
   const [list, setList] = useState([]);
   const [taskTotals, setTaskTotals] = useState([]);
   const [taskMetrics, setTaskMetrics] = useState({ dueToday: 0, overdue: 0, averageMinutes: 0 });
@@ -54,12 +61,12 @@ export default function Tasks() {
       const me = await base44.auth.me();
       const seesAll = MANAGEMENT_ROLES.includes(me?.role);
       setMeEmail(me?.email || '');
-      const taskQuery = seesAll ? { archived: { $ne: true } } : { archived: { $ne: true }, assigned_email: me?.email };
+      const taskQuery = { archived: { $ne: true }, ...(seesAll ? {} : { $or: [{ assigned_email: me?.email }, { responsible_emails: me?.email }] }), ...(taskId ? { id: taskId } : {}) };
       const today = format(new Date(), 'yyyy-MM-dd');
       const activeStatuses = { $in: ['Open', 'In Progress', 'Overdue'] };
       const [page, userPage, totals, dueToday, overdue, timing] = await Promise.all([
         base44.entities.TodoTask.filter(taskQuery, { sort: '-due_date', limit: 500 }),
-        base44.entities.User.list(),
+        base44.entities.User.list().catch(() => []),
         base44.entities.TodoTask.aggregate({ query: taskQuery, groupBy: 'status' }),
         base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: today }),
         base44.entities.TodoTask.count({ ...taskQuery, status: activeStatuses, due_date: { $lt: today } }),
@@ -73,7 +80,7 @@ export default function Tasks() {
       setUsers(userPage || []);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, []);
+  }, [taskId]);
   useEffect(() => { load(); }, [load]);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
@@ -87,17 +94,12 @@ export default function Tasks() {
   const openEdit = (t) => { setEditing(t.id); setForm({ ...blank, ...t }); setEmailAssignee(false); };
 
   const alertAssignee = async (task) => {
-    if (!task.assigned_to) return;
     try {
-      await base44.entities.Notification.create({
-        type: 'Task Allocation',
-        recipient: task.assigned_to,
-        message: `Task allocated: ${task.title}${task.due_date ? ` (due ${format(new Date(task.due_date), 'd MMM yyyy')})` : ''}`,
-        read: false,
-        linked_entity_type: 'Task',
-        linked_entity_id: task.id,
-      });
-    } catch { /* alert is best-effort */ }
+      const { data } = await base44.functions.invoke('taskWorkflowAlerts', { action: 'manual', task_id: task.id });
+      toast({ title: data.sent ? 'Task alert sent' : 'No new alerts sent', description: data.sent ? 'The alert links directly to this task.' : 'An alert was already sent for this version, or no assigned account was found.' });
+    } catch (error) {
+      toast({ title: 'Alert could not be sent', description: error.response?.data?.error || error.message, variant: 'destructive' });
+    }
   };
 
   const save = async (e) => {
@@ -111,7 +113,6 @@ export default function Tasks() {
     const previous = editing === 'new' ? null : list.find((t) => t.id === editing);
     if (editing === 'new') await base44.entities.TodoTask.create(payload);
     else await base44.entities.TodoTask.update(editing, payload);
-    if (payload.assigned_to && (!previous || previous.assigned_to !== payload.assigned_to)) await alertAssignee(payload);
     if (payload.assigned_to && emailAssignee && payload.assigned_email && (!previous || previous.assigned_to !== payload.assigned_to)) {
       try {
         await base44.functions.invoke('sendAppEmail', {
@@ -211,6 +212,7 @@ export default function Tasks() {
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
       <PageHeader className="task-page-header" title="Task Dashboard" subtitle="Current, past and future tasks with allocation, alerts and status tracking" action={<TaskToolbar navigationOnly />} />
 
+      {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
 
       <TaskDashboard tasks={list} onOpen={openEdit} />

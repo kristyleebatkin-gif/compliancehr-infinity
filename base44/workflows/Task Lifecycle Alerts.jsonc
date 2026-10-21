@@ -1,0 +1,50 @@
+{
+  "name": "Task Lifecycle Alerts",
+  "description": "Notify assigned app users when tasks are assigned, rescheduled, returned or closed, and notify existing approvers when sign-off is requested.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "TodoTask",
+      "events": [
+        "create",
+        "update"
+      ]
+    },
+    "condition": "${ .trigger.event_type == \"create\" or ((.trigger.changed_fields // []) | any(. == \"status\" or . == \"assigned_email\" or . == \"responsible_emails\" or . == \"due_date\")) }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "task_lifecycle_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "notify_task_participants": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "taskWorkflowAlerts",
+            "args": {
+              "action": "event",
+              "task_id": "${ .trigger.entity_id }",
+              "event": "${ .trigger.event_type }",
+              "expected_status": "${ .trigger.data.status // \"\" }",
+              "previous": {
+                "status": "${ .trigger.old_data.status // \"\" }",
+                "assigned_email": "${ .trigger.old_data.assigned_email // \"\" }",
+                "responsible_emails": "${ .trigger.old_data.responsible_emails // [] }",
+                "due_date": "${ .trigger.old_data.due_date // \"\" }"
+              }
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Notify task participants",
+            "description": "Assignment, sign-off and outcome alerts with direct task links"
+          }
+        }
+      }
+    ]
+  }
+}

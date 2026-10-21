@@ -19,14 +19,21 @@ export default async function(req) {
       if (view === 'documents') return Response.json(await entities.EmployeeDocument.filter({ $and: [{ status: { $ne: 'Archived' } }, { $or: [{ employee_id: staff.id }, { employee_id: { $in: [null, ''] }, employee_name: staff.full_name }, { created_by_id: user.id }] }] }, options));
       if (view === 'certificates') return Response.json(await entities.Certificate.filter({ $or: [{ staff_id: staff.id }, { staff_id: { $in: [null, ''] }, staff_name: staff.full_name }] }, options));
       if (view === 'training') return Response.json(await entities.TrainingCompletion.filter({ $or: [{ learner_id: user.id }, { employee_id: staff.id }, { employee_id: { $in: [null, ''] }, learner_id: { $in: [null, ''] }, employee_name: staff.full_name }, { created_by_id: user.id }] }, { ...options, sort: '-completed_date', limit: 200 }));
-      if (view === 'tasks') return Response.json(await entities.TodoTask.filter(taskScope, options));
+      if (view === 'tasks') {
+        if (id != null && (typeof id !== 'string' || !id || id.length > 100)) throw new Error('Invalid task.');
+        return Response.json(await entities.TodoTask.filter({ $and: [taskScope, { archived: { $ne: true } }, ...(id ? [{ id }] : [])] }, options));
+      }
       throw new Error('Unknown personal-record view.');
     }
-    if (action === 'finaliseTask') {
+    if (action === 'startTask' || action === 'finaliseTask') {
       if (typeof id !== 'string' || id.length > 100) throw new Error('Select a task.');
       const page = await entities.TodoTask.filter({ $and: [{ id }, taskScope] }, { limit: 1 });
       if (!page.items[0]) throw new Error('This task is not assigned to you.');
-      if (['Finalised', 'Completed', 'Cancelled', 'Pending Approval'].includes(page.items[0].status)) throw new Error('This task is closed or already awaiting manager sign-off.');
+      if (page.items[0].archived || ['Finalised', 'Completed', 'Cancelled', 'Pending Approval'].includes(page.items[0].status)) throw new Error('This task is closed or already awaiting manager sign-off.');
+      if (action === 'startTask') {
+        await entities.TodoTask.update(id, { status: 'In Progress' });
+        return Response.json({ success: true });
+      }
       const minutes = Number(values.minutes);
       if (!Number.isFinite(minutes) || minutes < 0 || minutes > 100000) throw new Error('Enter valid time taken.');
       await entities.TodoTask.update(id, { status: 'Pending Approval', completed_date: new Date().toISOString().slice(0, 10), completed_by: staff.full_name, time_taken_minutes: minutes });

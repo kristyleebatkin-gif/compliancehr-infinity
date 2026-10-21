@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Bell, CheckCircle2, Circle, Clock, Mail, Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -6,7 +7,7 @@ const STATUSES = ['Open', 'In Progress', 'Completed', 'Overdue', 'Cancelled'];
 export default function TaskListRow({ task: t, checked, focused, onSelect, onToggle, onStatus, onSend, onAlert, onEdit, onDelete }) {
   return <div className={`flex flex-wrap items-center gap-2 rounded-xl border px-3 py-2 transition-colors ${checked ? 'border-primary bg-primary/5' : 'border-border/60 bg-card'} ${focused ? 'ring-2 ring-primary/60' : ''}`}>
     <input type="checkbox" checked={checked} onChange={onSelect} aria-label={`Select ${t.title}`} className="h-4 w-4 shrink-0 accent-primary" />
-    <button onClick={onToggle} aria-label={t.status === 'Completed' ? 'Reopen task' : 'Complete task'} className="shrink-0">{t.status === 'Completed' ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}</button>
+    {t.status === 'Pending Approval' ? <Link to="/shared-to-do" className="text-xs text-primary underline">Review sign-off</Link> : <button onClick={onToggle} disabled={t.status === 'Finalised'} aria-label={t.status === 'Completed' ? 'Reopen task' : 'Complete task'} className="shrink-0">{['Completed', 'Finalised'].includes(t.status) ? <CheckCircle2 className="h-5 w-5 text-safe" /> : <Circle className="h-5 w-5 text-foreground/30" />}</button>}
     <div className="min-w-0 flex-1">
       <p className={t.status === 'Completed' ? 'text-sm font-medium line-through text-muted-foreground' : 'text-sm font-medium'}>{t.title}</p>
       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
@@ -16,7 +17,7 @@ export default function TaskListRow({ task: t, checked, focused, onSelect, onTog
         {t.completed_date && t.status === 'Completed' && <span>• completed {format(new Date(t.completed_date), 'd MMM yyyy')}</span>}
       </div>
     </div>
-    <select aria-label={`Status for ${t.title}`} value={t.status} onChange={(event) => onStatus(event.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">{STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}</select>
+    <select aria-label={`Status for ${t.title}`} value={t.status} onChange={(event) => onStatus(event.target.value)} className="h-8 shrink-0 rounded-full border border-border/60 bg-card px-2 text-xs font-medium">{!STATUSES.includes(t.status) && <option value={t.status}>{t.status}</option>}{STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}</select>
     <div className="flex gap-1">
       <button onClick={onSend} title="Send / alert assignee" className="rounded p-1.5 hover:bg-primary/10"><Mail className="h-4 w-4 text-muted-foreground" /></button>
       <button onClick={onAlert} title="Send in-app alert" className="rounded p-1.5 hover:bg-primary/10"><Bell className="h-4 w-4 text-muted-foreground" /></button>

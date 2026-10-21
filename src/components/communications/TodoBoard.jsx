@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,8 @@ const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '
 
 export default function TodoBoard({ compact = false, presentation = 'default' }) {
   const { toast } = useToast();
+  const [params] = useSearchParams();
+  const taskId = params.get('task');
   const [staffList, setStaffList] = useState([]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +39,7 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
     setLoading(true);
     try {
       const [taskPage, staffPage, user] = await Promise.all([
-        base44.entities.TodoTask.filter({}, { sort: '-created_date', limit: 500 }),
+        base44.entities.TodoTask.filter({ archived: { $ne: true }, ...(taskId ? { id: taskId } : {}) }, { sort: '-created_date', limit: 500 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 300, fields: ['full_name', 'email'] }).catch(() => ({ items: [] })),
         base44.auth.me().catch(() => null),
       ]);
@@ -48,11 +51,11 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [taskId]);
 
-  const pending = items.filter((t) => t.status === 'Pending');
+  const pending = items.filter((t) => !t.archived && ['Pending', 'Open', 'In Progress', 'Overdue'].includes(t.status));
   const awaiting = items.filter((t) => t.status === 'Pending Approval');
-  const finalised = items.filter((t) => t.status === 'Finalised');
+  const finalised = items.filter((t) => ['Finalised', 'Completed'].includes(t.status));
   const canSign = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(currentUser?.role);
   const finalisedByModule = APP_MODULES
     .map((m) => ({ module: m, rows: finalised.filter((t) => t.module === m) }))
@@ -180,6 +183,7 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
 
   return (
     <div className={compact ? 'min-w-0' : 'space-y-4'}>
+      {taskId && <Button asChild size="sm" variant="outline"><Link to="/shared-to-do">View all shared tasks</Link></Button>}
       {presentation === 'review' ? <ReviewTodoBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : <>
       <div className={compact ? 'flex flex-wrap items-center justify-between gap-2 rounded-lg bg-primary/5 p-2.5' : 'flex flex-wrap items-center justify-between gap-2'}>
         {compact ? <div className="flex min-w-0 items-center gap-2"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><ListTodo className="h-4 w-4" /></span><div><h2 className="text-sm font-semibold">Shared To-do List</h2><p className="text-[11px] text-muted-foreground">Share, complete and sign off team actions.</p></div></div> : <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>}
