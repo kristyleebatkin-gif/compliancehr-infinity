@@ -11,7 +11,7 @@ const tones = {
 export default function EmployeeProfileSection({ title, children, tone = 'neutral' }) {
   const [activated, setActivated] = useState(false);
   return <details data-profile-tone={tone} className={`min-w-0 rounded-xl border border-l-4 p-2 ${tones[tone] || tones.neutral}`} onToggle={(event) => { if (event.target === event.currentTarget && event.currentTarget.open) setActivated(true); }}>
-    <summary className="cursor-pointer text-xs font-semibold">{title}</summary>
+    <summary className="app-section-card-header flex cursor-pointer items-center rounded-lg px-3 text-xs font-semibold">{title}</summary>
     {activated && <div className="mt-2 min-w-0 space-y-2">{children}</div>}
   </details>;
 }

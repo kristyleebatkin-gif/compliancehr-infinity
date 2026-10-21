@@ -421,7 +421,11 @@
   }
   /* Shared page and section headers retain the app's blue-purple-pink branding. */
   .app-readable .app-page-header { background: var(--header-gradient) !important; }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) { background: var(--section-header-gradient) !important; }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header),
+  .app-readable .safety-workspace .dashboard-panel-header {
+    background: var(--header-gradient) !important;
+    color: hsl(var(--header-foreground)) !important;
+  }
   .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
   /* Header standard: keep 2cm sizing and existing brand colours unless explicitly requested. */
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
@@ -434,8 +438,8 @@
     color: hsl(var(--foreground));
   }
   .app-readable .app-page-header { color: hsl(var(--header-foreground)); }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title]) {
-    color: hsl(var(--foreground));
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], button, span) {
+    color: hsl(var(--header-foreground)) !important;
     opacity: 1;
     overflow-wrap: anywhere;
     white-space: normal;
