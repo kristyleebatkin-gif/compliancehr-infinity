@@ -58,25 +58,20 @@ export default function IncidentAnalytics() {
         title="Incident Analytics"
         subtitle="Where incidents are happening and who is reporting them, so support can be directed where it is needed."
         icon={Activity}
+        small={loading ? null : [
+          ['Total incidents logged', data.total],
+          ['High / Critical', data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0)],
+          ['Open / investigating', data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0)],
+          ['Locations involved', data.byLocation.length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+        ))}
       />
 
       {loading ? (
         <div className="py-20 text-center text-sm text-foreground/40">Loading analytics...</div>
       ) : (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[{ label: 'Total incidents logged', value: data.total, grad: 'from-violet-500 via-purple-500 to-fuchsia-500' },
-              { label: 'High / Critical', value: data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0), grad: 'from-red-500 via-rose-500 to-orange-500' },
-              { label: 'Open / investigating', value: data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0), grad: 'from-amber-500 via-orange-500 to-yellow-500' },
-              { label: 'Locations involved', value: data.byLocation.length, grad: 'from-cyan-500 via-teal-500 to-emerald-500' },
-            ].map((card) => (
-              <div key={card.label} className={`rounded-2xl bg-gradient-to-br ${card.grad} p-4 text-white shadow-md`}>
-                <div className="w-fit rounded-lg bg-white/20 p-1.5"><Activity className="h-3.5 w-3.5" /></div>
-                <p className="mt-1 text-xl font-bold tabular-nums">{card.value}</p>
-                <p className="text-[11px] font-medium text-white/85">{card.label}</p>
-              </div>
-            ))}
-          </div>
 
           <IncidentAnalyticsGuidance />
 
