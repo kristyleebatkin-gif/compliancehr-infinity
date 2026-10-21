@@ -17,7 +17,8 @@ const CHECK_TYPES = [
 ];
 const RESULTS = ['Pass', 'Issues Found', 'Scheduled'];
 
-export default function SafetyChecksLog() {
+const ALL_CHECKS = {};
+export default function SafetyChecksLog({ scope = ALL_CHECKS }) {
   const { toast } = useToast();
   const [checks, setChecks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,12 +31,12 @@ export default function SafetyChecksLog() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.SafetyCheck.filter({}, { sort: '-date_completed', limit: 200 });
+      const page = await base44.entities.SafetyCheck.filter(scope, { sort: '-date_completed', limit: 200 });
       setChecks(page.items);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope]);
 
   useEffect(() => { load(); }, [load]);
 

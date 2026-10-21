@@ -12,7 +12,7 @@ import { format } from 'date-fns';
 
 const TYPES = ['Progress Note', 'Progress Report'];
 
-export default function GoalNotes({ goal, participantName, readOnly = false }) {
+export default function GoalNotes({ goal, participantName, readOnly = false, api = base44.entities.GoalProgressNote }) {
   const { toast } = useToast();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,14 +25,14 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
     if (!goal?.id) return;
     setLoading(true);
     try {
-      const page = await base44.entities.GoalProgressNote.filter({ goal_id: goal.id }, { sort: '-created_date', limit: 50 });
+      const page = await api.filter({ goal_id: goal.id }, { sort: '-created_date', limit: 50 });
       setEntries(page.items);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [goal?.id]);
+  }, [goal?.id, api]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -62,8 +62,8 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
         file_name = file.name;
       }
       const me = await base44.auth.me().catch(() => null);
-      const participant_user_id = await resolveParticipantUserId(participantName);
-      await base44.entities.GoalProgressNote.create({
+      const participant_user_id = api === base44.entities.GoalProgressNote ? await resolveParticipantUserId(participantName) : '';
+      await api.create({
         goal_id: goal.id,
         participant_name: participantName,
         participant_user_id,
@@ -130,8 +130,8 @@ export default function GoalNotes({ goal, participantName, readOnly = false }) {
                       <Download className="h-3.5 w-3.5" />
                     </Button>
                   )}
-                  {!readOnly && (
-                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await base44.entities.GoalProgressNote.delete(entry.id); await load(); }}>
+                  {!readOnly && api.delete && (
+                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={async () => { await api.delete(entry.id); await load(); }}>
                       <Trash2 className="h-3.5 w-3.5 text-destructive" />
                     </Button>
                   )}

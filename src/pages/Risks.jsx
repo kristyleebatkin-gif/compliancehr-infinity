@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeRiskReports from '@/components/employee/EmployeeRiskReports';
+export default withEmployeeView(Risks, EmployeeRiskReports);
 import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { recordStatusLog, currentUserName } from '@/lib/statusLog';
@@ -54,7 +57,7 @@ const matrixCell = {
   Critical: 'bg-red-500 text-red-950',
 };
 
-export default function Risks({ profile, profileKind, embedded = false } = {}) {
+function Risks({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { can } = useRole();
   const { toast } = useToast();

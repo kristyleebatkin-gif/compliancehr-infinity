@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRole } from '@/lib/useRole';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
@@ -26,6 +27,9 @@ import OfflineFieldCapture from '@/components/safety/OfflineFieldCapture';
 const TYPES = ['Fire Evacuation', 'Fire Drill', 'Lockdown', 'Medical Emergency', 'Natural Disaster', 'Other'];
 
 export default function EmergencyResponse({ embedded = false } = {}) {
+  const { user } = useRole();
+  const employee = user?.role === 'Employee';
+  const scope = useMemo(() => employee ? { created_by_id: user.id } : {}, [employee, user?.id]);
   const [drills, setDrills] = useState([]);
   const [checks, setChecks] = useState([]);
   const [docCount, setDocCount] = useState(0);
@@ -38,9 +42,9 @@ export default function EmergencyResponse({ embedded = false } = {}) {
     setLoading(true);
     try {
       const [drillPage, checkPage, docPage] = await Promise.all([
-        base44.entities.EmergencyDrill.filter({}, { sort: '-date', limit: 100 }),
-        base44.entities.SafetyCheck.filter({}, { sort: '-date_completed', limit: 200 }),
-        base44.entities.EmergencyDocument.count({}),
+        base44.entities.EmergencyDrill.filter(scope, { sort: '-date', limit: 100 }),
+        base44.entities.SafetyCheck.filter(scope, { sort: '-date_completed', limit: 200 }),
+        employee ? Promise.resolve(0) : base44.entities.EmergencyDocument.count({}),
       ]);
       setDrills(drillPage.items);
       setChecks(checkPage.items);
@@ -48,7 +52,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [scope, employee]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -75,7 +79,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
   );
 
   const exportSafetyChecks = async () => {
-    const rows = await fetchAllRecords(base44.entities.SafetyCheck, {}, '-date_completed');
+    const rows = await fetchAllRecords(base44.entities.SafetyCheck, scope, '-date_completed');
     downloadCsv('Safety-Check-Register.csv', [
       { key: 'name', label: 'Check Name' }, { key: 'check_type', label: 'Check Type' },
       { key: 'location', label: 'Location' }, { key: 'date_completed', label: 'Date Completed' },
@@ -94,11 +98,11 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         action={<Button variant="outline" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>}
       />}
 
-      <RegisterInsights module="emergency" />
+      {!employee && <RegisterInsights module="emergency" />}
 
-      <EmergencyQuickDial />
+      {!employee && <EmergencyQuickDial />}
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {!employee && <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { label: 'Drills & evacuations logged', value: drills.length, icon: Siren },
           { label: 'Checks logged', value: checks.length, icon: ClipboardCheck },
@@ -118,7 +122,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
             </Card>
           );
         })}
-      </div>
+      </div>}
 
       {dueSoonChecks > 0 && (
         <Card><CardContent className="p-3 text-sm text-warning">{dueSoonChecks} check{dueSoonChecks === 1 ? '' : 's'} due within 30 days - see the Safety checks tab.</CardContent></Card>
@@ -128,8 +132,8 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         <TabsList className="flex-wrap">
           <TabsTrigger value="drills">Drills &amp; evacuations</TabsTrigger>
           <TabsTrigger value="checks">Safety checks log</TabsTrigger>
-          <TabsTrigger value="documents">Documents &amp; plans</TabsTrigger>
-          <TabsTrigger value="visitors">Visitor log</TabsTrigger>
+          {!employee && <TabsTrigger value="documents">Documents &amp; plans</TabsTrigger>}
+          {!employee && <TabsTrigger value="visitors">Visitor log</TabsTrigger>}
           <TabsTrigger value="resources">Resources &amp; links</TabsTrigger>
           <TabsTrigger value="alerts">Live alerts &amp; warnings</TabsTrigger>
           <TabsTrigger value="capture">Field capture</TabsTrigger>
@@ -199,9 +203,9 @@ export default function EmergencyResponse({ embedded = false } = {}) {
           )}
         </TabsContent>
 
-        <TabsContent value="checks" className="mt-4"><SafetyChecksLog /></TabsContent>
-        <TabsContent value="documents" className="mt-4"><EmergencyDocumentsLibrary /></TabsContent>
-        <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>
+        <TabsContent value="checks" className="mt-4"><SafetyChecksLog scope={scope} /></TabsContent>
+        {!employee && <TabsContent value="documents" className="mt-4"><EmergencyDocumentsLibrary /></TabsContent>}
+        {!employee && <TabsContent value="visitors" className="mt-4"><VisitorLogTable /></TabsContent>}
         <TabsContent value="resources" className="mt-4"><EmergencyResources /></TabsContent>
         <TabsContent value="alerts" className="mt-4"><LiveAlerts /></TabsContent>
         <TabsContent value="capture" className="mt-4"><OfflineFieldCapture /></TabsContent>

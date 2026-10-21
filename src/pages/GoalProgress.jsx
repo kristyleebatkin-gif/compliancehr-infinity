@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeGoals from '@/components/employee/EmployeeGoals';
+export default withEmployeeView(GoalProgress, EmployeeGoals);
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
@@ -22,7 +25,7 @@ import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 import StaffGoals from '@/components/goals/StaffGoals';
 
-export default function GoalProgress({ profile, profileKind, ourView = false, embedded = false } = {}) {
+function GoalProgress({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
   const [activeTab, setActiveTab] = useState(profileKind === 'staff' ? 'staff' : 'all');

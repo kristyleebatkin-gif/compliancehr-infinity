@@ -32,7 +32,7 @@ export default function GoalProgressCard({ g, compact, isAdmin, ourView, onProgr
       {!compact && <>
         <div className="flex items-center justify-end gap-1.5 border-t border-border/60 pt-2">
           {isAdmin && !g.admin_approved && <Button variant="outline" size="sm" className="h-8" onClick={() => onApprove(g)}>Approve</Button>}
-          <Button aria-label={`Delete goal: ${g.goal}`} variant="ghost" size="icon" className="h-8 w-8" onClick={() => onDelete(g)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+          {onDelete && <Button aria-label={`Delete goal: ${g.goal}`} variant="ghost" size="icon" className="h-8 w-8" onClick={() => onDelete(g)}><Trash2 className="h-4 w-4 text-destructive" /></Button>}
         </div>
         {notesContent === undefined ? <GoalNotes goal={g} participantName={g.participant_name} readOnly={ourView} /> : notesContent}
       </>}

@@ -26,6 +26,7 @@ export default function RiskSubmitPortal() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(null);
   const [me, setMe] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     base44.auth.me().then(setMe).catch(() => {});
@@ -37,6 +38,7 @@ export default function RiskSubmitPortal() {
     e.preventDefault();
     if (!form.title || !form.description) return;
     setSubmitting(true);
+    setError('');
     try {
       const record = {
         ...form,
@@ -44,11 +46,14 @@ export default function RiskSubmitPortal() {
         identified_date: format(new Date(), 'yyyy-MM-dd'),
         owner: me?.full_name || 'Staff',
         status: 'Identified',
+        rating: ['Low', 'Medium', 'High', 'Critical'][((LIKELIHOODS.indexOf(form.likelihood) + 1) * (CONSEQUENCES.indexOf(form.consequence) + 1)) <= 4 ? 0 : ((LIKELIHOODS.indexOf(form.likelihood) + 1) * (CONSEQUENCES.indexOf(form.consequence) + 1)) <= 9 ? 1 : ((LIKELIHOODS.indexOf(form.likelihood) + 1) * (CONSEQUENCES.indexOf(form.consequence) + 1)) <= 15 ? 2 : 3],
         source_entity_type: 'Staff Portal',
       };
       const created = await base44.entities.Risk.create(record);
       setSubmitted(created);
       setForm(blank);
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setSubmitting(false);
     }
@@ -65,7 +70,7 @@ export default function RiskSubmitPortal() {
           </p>
           <div className="mt-6 flex justify-center gap-2">
             <button onClick={() => setSubmitted(null)} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand/90">Report another risk</button>
-            <Link to="/risks" className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">View risk register</Link>
+            <Link to="/risks" className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">{me?.role === 'Employee' ? 'Back to risk reporting' : 'View risk register'}</Link>
           </div>
         </div>
       </div>
@@ -99,6 +104,7 @@ export default function RiskSubmitPortal() {
           <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
           If there is immediate danger, keep everyone safe first and contact your supervisor straight away.
         </p>
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <div className="flex justify-end">
           <button type="submit" disabled={submitting} className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-60">
             {submitting ? 'Submitting...' : 'Submit risk report'}

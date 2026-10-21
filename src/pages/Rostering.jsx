@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeRoster from '@/components/employee/EmployeeRoster';
+export default withEmployeeView(Rostering, EmployeeRoster);
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/PageHeader';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -47,7 +50,7 @@ const StatCard = ({ icon: Icon, label, value, tone }) => (
   </Card>
 );
 
-export default function Rostering({ profile, profileKind, ourView = false, embedded = false } = {}) {
+function Rostering({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const scope = useMemo(() => profile ? { [profileKind === 'participant' ? 'participant_name' : 'employee_name']: profile.full_name } : {}, [profile?.full_name, profileKind]);
   const exportShiftRegister = async () => {
     const rows = await fetchAllRecords(base44.entities.Shift, scope, '-date');

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import withEmployeeView from '@/components/withEmployeeView';
+import EmployeeIncidents from '@/components/employee/EmployeeIncidents';
+export default withEmployeeView(Incidents, EmployeeIncidents);
 import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
@@ -36,7 +39,7 @@ const fieldBase = 'w-full rounded-lg border border-input bg-background px-2.5 py
 const labelCls = 'text-[11px] font-semibold text-foreground/60 mb-1';
 const blankInv = { title: '', investigation_id: '', incident_id: '', investigator: '', received_by: '', start_date: '', target_completion: '', status: 'Pending', incident_summary: '', evidence_reviewed: '', persons_interviewed: '', hazards_identified: '', risk_assessment: '', control_measures: '', findings: '', recommendations: '', root_cause: '', corrective_actions: '' };
 
-export default function Incidents({ profile, profileKind, embedded = false } = {}) {
+function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const { role } = useRole();

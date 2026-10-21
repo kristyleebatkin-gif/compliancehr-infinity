@@ -27,6 +27,7 @@ export default function StaffIncidentPortal() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(null);
   const [me, setMe] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     base44.auth.me().then(setMe).catch(() => {});
@@ -38,6 +39,7 @@ export default function StaffIncidentPortal() {
     e.preventDefault();
     if (!form.title || !form.date_occurred) return;
     setSubmitting(true);
+    setError('');
     try {
       const record = {
         ...form,
@@ -50,6 +52,8 @@ export default function StaffIncidentPortal() {
       const created = await base44.entities.Incident.create(record);
       setSubmitted(created);
       setForm(blank);
+    } catch (failure) {
+      setError(failure.message);
     } finally {
       setSubmitting(false);
     }
@@ -66,7 +70,7 @@ export default function StaffIncidentPortal() {
           </p>
           <div className="mt-6 flex justify-center gap-2">
             <button onClick={() => setSubmitted(null)} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand/90">Report another incident</button>
-            <Link to="/incidents" className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">View incident register</Link>
+            <Link to="/incidents" className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">{me?.role === 'Employee' ? 'View my incidents' : 'View incident register'}</Link>
           </div>
         </div>
       </div>
@@ -107,6 +111,7 @@ export default function StaffIncidentPortal() {
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
           Critical incidents (serious injury, abuse or neglect) must also be reported verbally to your supervisor straight away.
         </p>
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <div className="flex justify-end">
           <button type="submit" disabled={submitting} className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand/90 disabled:opacity-60">
             {submitting ? 'Submitting...' : 'Submit incident report'}
