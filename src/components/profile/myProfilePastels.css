@@ -49,6 +49,22 @@ html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { b
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: #f472b6 !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: #4ade80 !important; }
 html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: #fb923c !important; }
+/* Left-hand forms: solid bright colour each, repeating, with the white outline. */
+html body .my-profile-pastels .profile-left-fill > details {
+  color: #000 !important;
+  border: 3px solid #fff !important;
+  border-color: #fff !important;
+}
+html body .my-profile-pastels .profile-left-fill > details :is(summary, div, section, span, p, h3, h4, li, details) {
+  background: transparent !important;
+  background-image: none !important;
+}
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n+1) { background: #a78bfa !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n+2) { background: #2dd4bf !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n+3) { background: #38bdf8 !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n+4) { background: #f472b6 !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n+5) { background: #4ade80 !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(6n) { background: #fb923c !important; }
 /* Left-hand forms stretch so the column ends level with the logs on the right. */
 html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
   flex: 1 1 auto;
