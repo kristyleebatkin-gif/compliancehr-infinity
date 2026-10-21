@@ -54,22 +54,22 @@
   "rls": {
     "read": {
       "user_condition": {
-        "role": "__service_role_only__"
+        "collaborator_role": "editor"
       }
     },
     "create": {
       "user_condition": {
-        "role": "__service_role_only__"
+        "collaborator_role": "editor"
       }
     },
     "update": {
       "user_condition": {
-        "role": "__service_role_only__"
+        "collaborator_role": "editor"
       }
     },
     "delete": {
       "user_condition": {
-        "role": "__service_role_only__"
+        "collaborator_role": "editor"
       }
     }
   }
