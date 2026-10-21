@@ -26,6 +26,12 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
       {search && <div>{search}</div>}
       {!insightAfterTiles && insight}
       {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
+      {(tabs || actions) && (
+        <div className="flex flex-col" style={{ gap: '0.5cm' }}>
+          {tabs && <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
+          {actions && <div className="module-shell-actions module-action-bar flex flex-wrap items-center">{actions}</div>}
+        </div>
+      )}
       {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border [&>*]:p-3">{small}</div>}
       {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border [&>*]:p-4">{medium}</div>}
     </div>
@@ -38,12 +44,6 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
         title={title}
         subtitle={subtitle}
         icon={icon}
-        beforeAudit={(tabs || actions) && (
-          <div className="order-last flex min-w-0 basis-full flex-col" style={{ gap: '0.5cm' }}>
-            {tabs && <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
-            {actions && <div className="module-shell-actions module-action-bar flex flex-wrap items-center">{actions}</div>}
-          </div>
-        )}
         under={rows}
       />
       {children}
