@@ -19,7 +19,8 @@ import {
 } from '@/lib/intakeOnlineForms';
 import { Plus } from 'lucide-react';
 import { downloadOriginalDocument } from '@/lib/documentDownloads';
-import IntakeCaseForm, { SUPPORT_OPTIONS } from '@/components/intake/IntakeCaseForm';
+import IntakeCaseForm, { SUPPORT_OPTIONS, IntakeReadinessPanel } from '@/components/intake/IntakeCaseForm';
+import personalStaffIntakeClient from '@/lib/personalStaffIntakeClient';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
 import ParticipantJourneyPanel from '@/components/intake/ParticipantJourneyPanel';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
@@ -204,8 +205,13 @@ function mapStaffRole(employeeRole) {
   return 'Support Worker';
 }
 
-export default function IntakeCaseWorkflow({ intakeType, profile }) {
+export default function IntakeCaseWorkflow({ intakeType, profile, profileView }) {
   const { user } = useRole();
+  const personalClient = useMemo(() => profileView ? personalStaffIntakeClient(profile) : null, [profileView, profile?.id]);
+  const caseApi = personalClient?.cases || base44.entities.IntakeCase;
+  const documentApi = personalClient?.documents || base44.entities.IntakeDocument;
+  const [profileLoading, setProfileLoading] = useState(!!profileView);
+  const [profileError, setProfileError] = useState('');
   const { toast } = useToast();
   const [cases, setCases] = useState([]);
   const [exporting, setExporting] = useState(false);
@@ -285,12 +291,12 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
   }, [cases, statusFilter, search]);
 
   const load = useCallback(async (preferredId = '') => {
-    const casePage = await base44.entities.IntakeCase.filter(caseQuery, { sort: '-created_date', limit: 200 });
+    const casePage = await caseApi.filter(caseQuery, { sort: '-created_date', limit: 200 });
     const [profilePage, docPage] = await Promise.all([
       profile ? Promise.resolve({ items: [profile] }) : intakeType === 'Participant'
         ? base44.entities.ParticipantProfile.filter({}, { sort: '-created_date', limit: 200 })
         : base44.entities.StaffProfile.filter({}, { sort: '-created_date', limit: 200 }),
-      base44.entities.IntakeDocument.filter({ intake_type: intakeType, ...(profile ? { intake_case_id: { $in: casePage.items.map((record) => record.id) } } : {}) }, { sort: '-created_date', limit: 500 }),
+      documentApi.filter({ intake_type: intakeType, ...(profile ? { intake_case_id: { $in: casePage.items.map((record) => record.id) } } : {}) }, { sort: '-created_date', limit: 500 }),
     ]);
     const docsByCase = new Map();
     docPage.items.forEach((doc) => {
@@ -316,7 +322,12 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     setActiveCaseId(nextId);
   }, [intakeType, activeCaseId, profile?.id, profile?.email]);
 
-  useEffect(() => { load(); }, [intakeType, profile?.id]);
+  useEffect(() => {
+    if (!profileView) { load(); return; }
+    setProfileLoading(true);
+    setProfileError('');
+    load().catch((error) => setProfileError(error.message)).finally(() => setProfileLoading(false));
+  }, [intakeType, profile?.id, profileView]);
 
   // Load the company name and logo from Company Safe so generated
   // intake forms are branded in the header.
@@ -418,7 +429,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     if (!activeCase) return;
     setBusy(true);
     try {
-      await base44.entities.IntakeCase.update(activeCase.id, updates);
+      await caseApi.update(activeCase.id, updates);
       setCases((current) => current.map((record) => (
         record.id === activeCase.id ? { ...record, ...updates } : record
       )));
@@ -626,7 +637,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
           { $set: { staff_id: profile.id } },
         );
       }
-      await base44.entities.IntakeCase.update(activeCase.id, {
+      await caseApi.update(activeCase.id, {
         status: 'Converted to Profile',
         related_profile_id: profile.id,
         converted_date: date,
@@ -665,7 +676,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     try {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const canonical = canonicalIntakeDocumentType(docType);
-      const intakeDoc = await base44.entities.IntakeDocument.create({
+      const intakeDoc = await documentApi.create({
         intake_case_id: activeCase.id,
         intake_case_number: activeCase.case_number,
         intake_type: intakeType,
@@ -677,7 +688,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         uploaded_date: businessDateTime().date,
       });
       routeDocument(intakeDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
-      if (TRAINING_REGISTER_DOC_TYPES.has(canonical)) {
+      if (!profileView && TRAINING_REGISTER_DOC_TYPES.has(canonical)) {
         await base44.entities.TrainingCompletion.create({
           learner_type: 'Employee',
           learner_name: activeCase.applicant_name,
@@ -692,7 +703,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         ...(activeCase.completed_document_types || []),
         canonical,
       ]));
-      await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
+      await caseApi.update(activeCase.id, { completed_document_types: completed });
       await load(activeCase.id);
       toast({ title: `${canonical} uploaded to ${activeCase.case_number}` });
     } catch (error) {
@@ -721,7 +732,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
   const submitOnlineForm = async ({ file_uri, file_name, answers }) => {
     if (!onlineForm || !activeCase) throw new Error('Please reopen the intake case before saving.');
     const canonical = canonicalIntakeDocumentType(onlineForm.docType);
-    const onlineDoc = await base44.entities.IntakeDocument.create({
+    const onlineDoc = await documentApi.create({
       intake_case_id: activeCase.id,
       intake_case_number: activeCase.case_number,
       intake_type: intakeType,
@@ -734,7 +745,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     });
     await routeDocument(onlineDoc, { source: 'IntakeDocument', person_name: activeCase.applicant_name, person_type: intakeType });
     const completed = Array.from(new Set([...(activeCase.completed_document_types || []), canonical]));
-    await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: completed });
+    await caseApi.update(activeCase.id, { completed_document_types: completed });
     setAnswersBank((bank) => ({ ...bank, ...answers }));
     await load(activeCase.id);
     toast({ title: `${canonical} completed online and attached` });
@@ -784,7 +795,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
       const file = new File([blob], `${ackForm.docType} (acknowledged).pdf`, { type: 'application/pdf' });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const canonical = canonicalIntakeDocumentType(ackForm.docType);
-      const ackDoc = await base44.entities.IntakeDocument.create({
+      const ackDoc = await documentApi.create({
         intake_case_id: activeCase.id,
         intake_case_number: activeCase.case_number,
         intake_type: intakeType,
@@ -800,7 +811,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         ...(activeCase.completed_document_types || []),
         canonical,
       ]));
-      await base44.entities.IntakeCase.update(activeCase.id, {
+      await caseApi.update(activeCase.id, {
         completed_document_types: completed,
         acknowledgement_log: [
           activeCase.acknowledgement_log || '',
@@ -833,7 +844,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         `Other employee present: ${buddyShift.other_employee.trim()}`,
         buddyShift.notes.trim(),
       ].filter(Boolean).join(' - ');
-      await base44.entities.IntakeCase.update(activeCase.id, {
+      await caseApi.update(activeCase.id, {
         buddy_shift_log: [activeCase.buddy_shift_log || '', entry].filter(Boolean).join('\n'),
       });
       await base44.entities.BuddyShift.create({
@@ -877,7 +888,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
         refereeCheck.checked_by.trim(),
         refereeCheck.outcome.trim(),
       ].filter(Boolean).join(' - ');
-      await base44.entities.IntakeCase.update(activeCase.id, {
+      await caseApi.update(activeCase.id, {
         referee_check_log: [activeCase.referee_check_log || '', entry].filter(Boolean).join('\n'),
       });
       await base44.entities.TrainingCompletion.create({
@@ -913,9 +924,9 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     if (!activeCase) return;
     setBusy(true);
     try {
-      await base44.entities.IntakeDocument.delete(doc.id);
+      await documentApi.delete(doc.id);
       const remaining = activeDocs.filter((d) => d.id !== doc.id).map((d) => canonicalIntakeDocumentType(d.document_type));
-      await base44.entities.IntakeCase.update(activeCase.id, { completed_document_types: remaining });
+      await caseApi.update(activeCase.id, { completed_document_types: remaining });
       await load(activeCase.id);
       toast({ title: `${doc.document_type} removed from ${activeCase.case_number}` });
     } catch (error) {
@@ -977,9 +988,12 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
     }
   };
 
+  if (profileView && profileLoading) return <div role="status" className="py-8 text-sm text-muted-foreground">Loading employee intake…</div>;
+  if (profileView && profileError) return <div role="alert" className="rounded-xl border border-destructive/30 p-4 text-sm text-destructive">{profileError}<Button variant="outline" className="ml-3" onClick={() => { setProfileError(''); setProfileLoading(true); load().catch((error) => setProfileError(error.message)).finally(() => setProfileLoading(false)); }}>Retry</Button></div>;
+
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      {!profileView && <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-1.5">
           {['All', ...STATUS_ORDER.filter((s) => statusCounts[s] && s !== 'All')].map((s) => (
             <button
@@ -1013,17 +1027,17 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
           {!profile && <IntakeBulkImport intakeType={intakeType} onImported={() => load()} />}
           {!profile && <Button onClick={() => setShowNew(true)}><Plus className="mr-2 h-4 w-4" /> {intakeType === 'Participant' ? 'Participant Intake' : 'Employee Intake'}</Button>}
         </div>
-      </div>
+      </div>}
 
       {cases.length === 0 && !showNew ? (
         <Card><CardContent className="p-8 text-center text-muted-foreground">No {intakeType} intake cases yet.</CardContent></Card>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-[19rem_minmax(0,1fr)]">
-          <IntakeCaseList cases={visibleCases} activeCaseId={activeCaseId} onSelect={setActiveCaseId} />
+        <div className={profileView ? 'space-y-4' : 'grid gap-4 lg:grid-cols-[19rem_minmax(0,1fr)]'}>
+          {!profileView && <IntakeCaseList cases={visibleCases} activeCaseId={activeCaseId} onSelect={setActiveCaseId} />}
 
           {activeCase && (
             <div className="space-y-4">
-              <IntakeCaseDetail
+              {!profileView && <IntakeCaseDetail
                 activeCase={activeCase}
                 intakeType={intakeType}
                 readiness={readiness}
@@ -1032,11 +1046,12 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
                 onApprove={approve}
                 onConvert={convertToProfile}
                 onUpdateCase={updateCase}
-              />
+              />}
 
 
-              <IntakeCaseDocuments
-                activeCase={activeCase}
+              {profileView === 'readiness' ? <IntakeReadinessPanel readiness={readiness} /> : <IntakeCaseDocuments
+                showReadiness={!profileView}
+                activeCase={profileView ? { ...activeCase, status: 'Draft' } : activeCase}
                 intakeType={intakeType}
                 readiness={readiness}
                 docForCheck={docForCheck}
@@ -1050,11 +1065,11 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
                 onUpload={uploadDocument}
                 onRemove={removeDocument}
                 canCompleteOnline={(label) => canCompleteIntakeFormOnline(intakeType, label)}
-              />
+              />}
 
               {intakeType === 'Participant' && <ParticipantJourneyPanel activeCase={activeCase} docs={activeDocs} />}
 
-              <IntakeLogPanels
+              {!profileView && <IntakeLogPanels
                 intakeType={intakeType}
                 activeCase={activeCase}
                 refereeCheck={refereeCheck}
@@ -1064,7 +1079,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile }) {
                 busy={busy}
                 addRefereeCheck={addRefereeCheck}
                 addBuddyShift={addBuddyShift}
-              />
+              />}
             </div>
           )}
         </div>

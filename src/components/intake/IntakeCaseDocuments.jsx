@@ -27,13 +27,14 @@ export default function IntakeCaseDocuments({
   onUpload,
   onRemove,
   canCompleteOnline,
+  showReadiness = true,
 }) {
   const checks = readiness.documentChecks;
   const doneCount = checks.filter((c) => c.complete).length;
   const pct = checks.length ? Math.round((doneCount / checks.length) * 100) : 0;
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className={showReadiness ? 'grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]' : 'space-y-4'}>
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-2">
           <div className="text-xs font-bold uppercase tracking-wide text-foreground/45">Required documents</div>
@@ -138,7 +139,7 @@ export default function IntakeCaseDocuments({
         )}
       </div>
 
-      <IntakeReadinessPanel readiness={readiness} />
+      {showReadiness && <IntakeReadinessPanel readiness={readiness} />}
     </div>
   );
 }
