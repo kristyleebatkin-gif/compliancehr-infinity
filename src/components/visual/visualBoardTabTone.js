@@ -23,7 +23,9 @@ function hexToHslChannels(hex) {
     else if (max === g) h = (b - r) / d + 2;
     else h = (r - g) / d + 4;
   }
-  return `${Math.round((h * 60 + 360) % 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+  // Brighter: fuller saturation and a lift in lightness.
+  const bright = Math.min(0.62, l + 0.1);
+  return `${Math.round((h * 60 + 360) % 360)} ${Math.round(Math.min(1, s + 0.15) * 100)}% ${Math.round(bright * 100)}%`;
 }
 
 export default function visualBoardTabTone(tab) {
