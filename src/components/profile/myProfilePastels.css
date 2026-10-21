@@ -36,6 +36,11 @@ html body .my-profile-pastels .profile-uniform-box {
   overflow-y: auto !important;
   box-sizing: border-box;
 }
+/* One flat colour per box: inner headers/panels take the box colour (inputs and buttons keep their own look). */
+html body .my-profile-pastels .profile-uniform-box :is(summary, div, section, span, p, h3, h4, li, header) {
+  background: transparent !important;
+  background-image: none !important;
+}
 /* Left-hand forms stretch so the column ends level with the logs on the right. */
 html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
   flex: 1 1 auto;
