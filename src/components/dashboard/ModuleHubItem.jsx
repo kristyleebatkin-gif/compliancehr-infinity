@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { moduleColour } from '@/lib/moduleColours';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 
 export default function ModuleHubItem({ module }) {
   const Icon = module.icon;
-  const colour = moduleColour(module.label);
+  const colour = moduleKeyColour(module.key);
   return <Link to={module.path} title={module.blurb} className="group flex min-w-0 items-start gap-2 rounded-lg border p-2 transition-shadow hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}59, ${colour}1f)` }}>
     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" style={{ color: '#fff', background: colour }}><Icon className="h-4 w-4" /></span>
     <div className="min-w-0 flex-1">

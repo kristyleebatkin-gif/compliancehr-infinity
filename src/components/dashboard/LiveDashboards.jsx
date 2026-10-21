@@ -11,7 +11,7 @@ import {
   Activity, Heart, Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { moduleColour } from '@/lib/moduleColours';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 
 const MODULES = [
   { key: 'intake', title: 'Intake Centre', href: '/intake', icon: ClipboardList, bar: 'bg-violet-500' },
@@ -47,7 +47,7 @@ const csvCell = (value) => '"' + String(value ?? '').replace(/"/g, '""') + '"';
 function ModuleCard({ mod }) {
   const max = Math.max(1, ...mod.breakdown.map((b) => b.count));
   const extraCounts = Object.entries(mod.counts || {});
-  const colour = moduleColour(mod.title);
+  const colour = moduleKeyColour(mod.key);
   return (
     <Link to={mod.href} className="group rounded-2xl border p-4 shadow-panel transition-shadow hover:shadow-lg" style={{ borderColor: `${colour}99`, background: `linear-gradient(125deg, ${colour}40, ${colour}14)`, boxShadow: `inset 0 4px 0 ${colour}` }}>
       <div className="flex items-center justify-between gap-2">
