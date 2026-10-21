@@ -33,6 +33,7 @@ export default function VisualBoards({ embedded = false } = {}) {
         moduleKey="visual-boards"
         search={<ModuleSearchBar value={query} onChange={search} placeholder="Search boards (clock, routine, weather, translator…)" />}
         insight={<VisualBoardsInsight tab={tab} />}
+        insightAfterTiles
         tabs={<TabsList>
           <TabsTrigger value="clock"><ClockIcon className="mr-1 inline h-3.5 w-3.5" />Clock</TabsTrigger>
           <TabsTrigger value="routine"><ListChecks className="mr-1 inline h-3.5 w-3.5" />Visual Routine</TabsTrigger>

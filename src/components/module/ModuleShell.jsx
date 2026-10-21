@@ -19,13 +19,13 @@ const WHITE_ROW = 'flex flex-wrap items-center gap-1.5 rounded-xl border border-
  *  Then   the module's tab content (`children`).
  * Put `tabs` (a <TabsList>) and `children` (<TabsContent>s) inside a <Tabs> root.
  */
-export default function ModuleShell({ embedded = false, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, small, medium, large = [], children }) {
+export default function ModuleShell({ embedded = false, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, insightAfterTiles = false, small, medium, large = [], children }) {
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
       {search && <div>{search}</div>}
-      {insight}
-      {insightModule && <RegisterInsights module={insightModule} />}
+      {!insightAfterTiles && insight}
+      {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
       {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border [&>*]:p-3">{small}</div>}
       {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border [&>*]:p-4">{medium}</div>}
     </div>
@@ -47,6 +47,8 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
         under={rows}
       />
       {children}
+      {insightAfterTiles && insight}
+      {insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
       {large.map((s) => <CollapsibleSection key={s.key || s.title} title={s.title}>{s.content}</CollapsibleSection>)}
     </div>
   );
