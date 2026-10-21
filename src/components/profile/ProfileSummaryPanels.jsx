@@ -17,9 +17,9 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
   if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} />;
   if (staffQuestions) return <div className="grid items-stretch gap-3 p-3 md:grid-cols-2">
     <div className="profile-left-fill flex min-w-0 flex-col gap-3">
+      <EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
-      <EmployeeProfileSection title="Résumé" tone="yellow"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <EmployeeRemainingSections key={profile.id} profile={profile} />
       <StaffBadgePreview branding={branding} staff={profile} compact />
     </div>

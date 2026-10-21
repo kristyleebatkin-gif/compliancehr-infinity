@@ -70,6 +70,10 @@ html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
   flex: 1 1 auto;
 }
 html body .my-profile-pastels .profile-left-fill > details[open] { flex-grow: 0; }
+/* Staff Information + Staff Onboarding: half height each, together level with Employee Journey. */
+html body .my-profile-pastels .profile-left-fill > details[data-profile-half] {
+  height: calc((9.5rem - 0.75rem) / 2) !important;
+}
 /* Left-hand boxes match the right-hand box size. */
 html body .my-profile-pastels .profile-left-fill > details {
   height: 9.5rem !important;
