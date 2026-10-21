@@ -6,13 +6,13 @@ import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import OurProfileData from '@/components/profile/OurProfileData';
 import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipantProfiles';
 
-export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false }) {
+export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false, matchEmployeeLayout = false }) {
   const [params, setParams] = useSearchParams();
-  const personalStaff = personal && kind === 'staff';
+  const employeeTiles = kind === 'staff' && (personal || matchEmployeeLayout);
   const modules = [...OurProfileModuleList({ kind, profile, ourView,
     details: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
-  }), ...extraModules].flatMap((module) => personalStaff && module.key === 'details' ? [
+  }), ...extraModules].flatMap((module) => employeeTiles && module.key === 'details' ? [
     { ...module, label: 'Documents', content: <OurProfileData personal contentOnly profile={profile} kind={kind} /> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileText, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="forms" /> },
     { key: 'files', label: 'File Checklist', Icon: ClipboardList, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="files" /> },
@@ -29,7 +29,7 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
   return (
     <>
       {header}
-      <Tabs value={selected.key} onValueChange={selectModule} className={`${personal ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
+      <Tabs value={selected.key} onValueChange={selectModule} className={`${personal || matchEmployeeLayout ? 'compact-tabs ' : ''}min-w-0 space-y-3`}>
       <TabsList aria-label={`${kind === 'staff' ? 'Employee' : 'Participant'} profile modules`} className="h-auto justify-start">
         {modules.map((module, index) => {
           const Icon = module.Icon;
