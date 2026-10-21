@@ -1,36 +1,40 @@
-/* Standard module layout: every button, tab, tile and dashboard is white with a thin border, at least 0.5cm apart. */
+/* Standard module layout: buttons, tabs, tiles and dashboards in the module's full colour, black text, thin white border, 0.5cm apart. */
 .module-shell-actions {
   gap: 0.5cm !important;
 }
 .module-shell-actions :is(button, a):not([role="tab"]) {
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--module-colour) 55%, white);
-  color: color-mix(in srgb, var(--module-colour) 80%, black);
-  font-weight: 600;
+  background: var(--module-colour);
+  border: 1px solid #fff;
+  color: #000;
+  font-weight: 700;
 }
 .module-shell-actions :is(button, a):not([role="tab"]):hover {
-  background: color-mix(in srgb, var(--module-colour) 8%, white);
+  filter: brightness(1.1);
 }
 .module-shell-tiles {
   gap: 0.5cm !important;
 }
 .module-shell-tiles > * {
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--module-colour) 45%, white);
+  background: var(--module-colour);
+  border: 1px solid #fff;
+  color: #000;
 }
 
-/* Audit Checklist + Audit Report: top right, full module colour, white border to separate them. */
+/* Audit Checklist + Audit Report: top right, full module colour, black text, white border. */
 .module-audit-buttons {
   gap: 0.5cm !important;
   margin-left: auto;
 }
 .module-audit-buttons > button {
   background: var(--module-colour) !important;
-  color: #fff !important;
+  color: #000 !important;
   border: 2px solid #fff !important;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--module-colour) 40%, white);
   font-weight: 700;
 }
 .module-audit-buttons > button:hover {
   filter: brightness(1.1);
+}
+.module-audit-buttons > button svg {
+  color: #000 !important;
 }
