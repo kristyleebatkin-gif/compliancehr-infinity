@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LifeBuoy, Search, Phone, AlertTriangle, ChevronDown, MessagesSquare, BookOpen, Library, Lightbulb, Siren, Sparkles, Stethoscope, Activity, Bot, Headset, ClipboardList } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Link } from 'react-router-dom';
 import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { moduleGuides } from '@/lib/moduleGuides';
@@ -47,11 +47,23 @@ export default function HelpCentre() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Help Centre"
         icon={LifeBuoy}
+        moduleKey="help"
         subtitle="Self-help guides for every module, how-to answers, escalation contacts and a direct line to support."
-        action={
+        search={
+          <div className="relative max-w-xl">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              className="bg-white pl-9"
+              placeholder="Search every guide and how-to article..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        }
+        actions={
           <>
             {/* Emergency quick access (pink) */}
             <Link
@@ -77,15 +89,6 @@ export default function HelpCentre() {
             >
               <LifeBuoy className="h-4 w-4" />Technical Support
             </button>
-            <div className="relative min-w-56 max-w-xl flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                className="pl-9"
-                placeholder="Search every guide and how-to article..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </div>
           </>
         }
       />

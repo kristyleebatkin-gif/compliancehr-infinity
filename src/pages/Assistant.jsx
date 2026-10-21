@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import AssistantChat from '@/components/assistant/AssistantChat';
 import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2 } from 'lucide-react';
 import AssistantHints from '@/components/assistant/AssistantHints';
@@ -82,10 +82,11 @@ export default function Assistant() {
 
   return (
     <div className="compact-module space-y-2">
-      <PageHeader
+      <ModuleShell
         title="AI Assistant"
         subtitle="One home for all four AI assistants. Each one reads your live app data to answer, check and summarise."
         icon={Bot}
+        moduleKey="assistant"
       />
       <AssistantHints />
       <div className="grid gap-2 sm:grid-cols-2">

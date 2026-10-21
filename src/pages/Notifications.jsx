@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { useRole } from '@/lib/useRole';
 import { useToast } from '@/components/ui/use-toast';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { Bell, PartyPopper, Check, CheckCheck, ExternalLink, Inbox } from 'lucide-react';
@@ -141,12 +141,13 @@ export default function Notifications() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Notification Centre"
         subtitle="Every alert, reminder and escalation across the platform, in one live feed."
         icon={Bell}
-        action={
-          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2">
+        moduleKey="notifications"
+        actions={
+          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2 border-border bg-white text-black">
             <CheckCheck className="h-4 w-4" /> Mark all read
           </Button>
         }

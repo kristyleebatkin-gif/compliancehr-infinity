@@ -1,6 +1,6 @@
 import React from 'react';
 import '@/components/users/usersWorkspace.css';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Users, ShieldCheck } from 'lucide-react';
 import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
@@ -9,12 +9,11 @@ import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 export default function UsersPermissionsHub() {
   return (
     <div className="users-workspace compact-module space-y-2">
-      <PageHeader
+      <ModuleShell
         icon={Users}
         title="Users & Permissions Hub"
         subtitle="Manage app users, roles, invitations and per-module permissions."
-        showAlerts={false}
-        
+        moduleKey="users"
       />
 
       <div className="grid min-w-0 gap-2">

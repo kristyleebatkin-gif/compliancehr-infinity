@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BookOpen, Download, Library, Search } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import GuideReader from '@/components/guides/GuideReader';
 import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
@@ -74,12 +74,11 @@ export default function UserGuides() {
     if (entry) {
       return (
         <div className="mx-auto w-full max-w-5xl space-y-4 px-4 py-6">
-          <PageHeader
+          <ModuleShell
             title="User Guides"
             subtitle="The complete operating manual for every module in the platform."
             icon={BookOpen}
-            accent={ACCENTS.overview}
-            
+            moduleKey="user-guides"
           />
           <GuideReader
             moduleKey={selectedKey}
@@ -95,13 +94,11 @@ export default function UserGuides() {
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6">
-      <PageHeader
+      <ModuleShell
         title="User Guides"
         subtitle={`Professional guides for all ${guides.length} modules — every feature, process, tool and resource, each one downloadable as a branded PDF.`}
         icon={BookOpen}
-        accent={ACCENTS.overview}
-        showAlerts={false}
-        
+        moduleKey="user-guides"
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
