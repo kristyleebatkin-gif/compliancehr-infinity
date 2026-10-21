@@ -9,6 +9,8 @@ import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
 
 /*
+ * FROZEN: the owner has ordered that no header is changed. Do not edit this component or header styles
+ * unless the owner explicitly asks for a header change.
  * LOCKED HEADER STANDARD — do not change without an explicit request from the app owner.
  * Every module header is: exactly 3cm tall, app gradient, black outer border, white text with a black outline,
  * the standard body font (same as Key Personnel), and a short professional description.

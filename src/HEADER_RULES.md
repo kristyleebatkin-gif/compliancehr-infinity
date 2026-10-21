@@ -1,3 +1,7 @@
+# FROZEN — HEADERS MUST NOT BE CHANGED (owner's standing instruction, 21 Oct 2026)
+Every header stays exactly as it is now: layout, size, colours, icon tile, text, tracker and audit buttons.
+No edit to any header, by any request that does not explicitly say "change the header", is permitted.
+
 # LOCKED HEADER RULES (owner's standing instruction — change only on explicit request)
 Every page/module header (use `<PageHeader>`; never hand-build a banner):
 1. Exactly 3cm tall.
