@@ -27,10 +27,11 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
   return (
     <div className="employee-directory mx-auto max-w-6xl space-y-4 p-4 md:p-8 sm:max-lg:space-y-2 sm:max-lg:p-2">
       <PageHeader title={title} showDivider={false} showAlerts={false} showCompliance={false} showAudit={false} />
+      <div aria-hidden="true" className="h-1.5 w-full rounded-full bg-primary-foreground" />
       <Tabs value={tab} onValueChange={selectTab} className="space-y-4">
         <EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} />
         <EmployeeDirectoryToolbar search={search} onSearch={setSearch} progressAllowed={progressAllowed} />
-        {tab === 'profiles' && <div aria-hidden="true" className="h-3 w-full rounded-md border border-border bg-card" />}
+        <div aria-hidden="true" className="h-1.5 w-full rounded-full bg-primary-foreground" />
         <TabsContent value="profiles"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></TabsContent>
         {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
       </Tabs>

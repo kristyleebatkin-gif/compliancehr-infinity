@@ -37,7 +37,7 @@ export default function StaffComplianceFlags() {
   const flagged = data.flagged || [];
 
   return (
-    <Card className={`shadow-panel ${flagged.length ? 'border-red-200' : 'border-emerald-200'}`}>
+    <Card className={`staff-compliance-summary shadow-panel ${flagged.length ? 'border-red-200' : 'border-emerald-200'}`}>
       <CardContent className="p-4">
         <h2 className={`flex items-center gap-2 font-display text-lg font-bold ${flagged.length ? 'text-red-700 dark:text-red-400' : 'text-emerald-700 dark:text-emerald-400'}`}>
           {flagged.length ? <AlertTriangle className="h-5 w-5" /> : <ShieldCheck className="h-5 w-5" />}

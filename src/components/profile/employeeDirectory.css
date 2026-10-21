@@ -26,15 +26,21 @@
   background: linear-gradient(125deg, hsl(var(--directory-tone) / .4), hsl(var(--directory-tone) / .25)), hsl(var(--card));
 }
 .employee-directory .employee-directory-summary-tile {
-  min-height: 8rem;
+  min-height: 5rem;
+  padding: .75rem;
+  gap: .5rem;
 }
 .employee-directory .employee-directory-summary-tile > svg {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 .employee-directory .employee-directory-summary-tile p:first-child {
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   line-height: 1.2;
+}
+.employee-directory .staff-compliance-summary {
+  border-color: hsl(var(--chart-5) / .6);
+  background: linear-gradient(125deg, hsl(var(--chart-5) / .35), hsl(var(--chart-5) / .15)), hsl(var(--card));
 }
 .employee-directory .employee-directory-my-profile {
   border-color: hsl(var(--chart-5) / .6);
@@ -50,5 +56,6 @@
 .employee-directory .app-page-header { min-height: 7rem; padding: 1.5rem; }
 .employee-directory .app-page-header h1 { font-size: 1.875rem; line-height: 1.2; }
 @media (min-width: 640px) {
+  .employee-directory .profile-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .employee-directory .app-page-header { min-height: 8rem; padding: 1.75rem; }
 }
