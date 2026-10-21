@@ -1,5 +1,6 @@
 // Board-ready monthly compliance report (PDF) with KPIs, charts and attention items.
 import { jsPDF } from 'jspdf';
+import downloadComplianceAuditChecklist from '@/lib/complianceAuditChecklistPdf';
 import { base44 } from '@/api/base44Client';
 import { loadCompanyBranding, drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
 
@@ -95,7 +96,7 @@ function simpleTable(doc, cols, rows, y) {
   return cy + 6;
 }
 
-export async function generateBoardReportPdf() {
+export async function generateBoardReportPdf({ checklist = false } = {}) {
   const branding = await loadCompanyBranding();
   const today = todayStr();
   const year = new Date().getFullYear();
@@ -120,6 +121,17 @@ export async function generateBoardReportPdf() {
   const overduePolicies = policies.filter((p) => p.review_date && p.review_date < new Date().toISOString().slice(0, 10) && p.status !== 'Archived');
   const overdueTasks = tasks.filter((t) => t.due_date && t.due_date < new Date().toISOString().slice(0, 10) && !['Completed', 'Finalised', 'Cancelled'].includes(t.status));
 
+  if (checklist) return downloadComplianceAuditChecklist([
+    { label: 'Review key performance indicators', evidence: `${kpis.length} KPIs reviewed in the report; ${kpis.filter((k) => ['On Track', 'Exceeded'].includes(k.status)).length} on or above target. Confirm targets, outcomes and supporting evidence.` },
+    { label: 'Review open compliance issues', evidence: `${openIssues.length} open or in-progress issues. Confirm ownership, due dates and corrective actions.` },
+    { label: 'Review high and critical incidents', evidence: `${criticalIncidents.length} high or critical incidents. Confirm investigations, reporting and follow-up.` },
+    { label: 'Review risk ratings and treatments', evidence: `${highRisks.length} risks rated high or critical. Confirm controls and treatment plans.` },
+    { label: 'Review certification currency', evidence: `${expiredCerts.length} expired certificates. Confirm renewal evidence and any required restrictions.` },
+    { label: 'Review policy currency', evidence: `${overduePolicies.length} policies overdue for review. Confirm approvals and current versions.` },
+    { label: 'Review overdue tasks', evidence: `${overdueTasks.length} overdue tasks. Confirm responsibility, revised due dates and completion evidence.` },
+    { label: 'Confirm management review and follow-up', evidence: 'Review all report charts and attention items; document decisions, owners and due dates below.' },
+  ]);
+
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageW = doc.internal.pageSize.getWidth();
 
@@ -127,9 +139,9 @@ export async function generateBoardReportPdf() {
   doc.setFillColor(PURPLE); doc.rect(0, 0, pageW, 180, 'F');
   doc.setFillColor(TEAL); doc.rect(0, 180, pageW, 6, 'F');
   doc.setTextColor('#ffffff'); doc.setFont('helvetica', 'bold'); doc.setFontSize(26);
-  doc.text('Monthly Compliance Report', 40, 90);
+  doc.text('Compliance Audit Report', 40, 90);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(12);
-  doc.text(`Board briefing - ${today}`, 40, 115);
+  doc.text(`Management review - ${today}`, 40, 115);
   if (branding?.name) doc.text(branding.name, 40, 138);
   doc.setTextColor(DARK);
 
@@ -167,7 +179,7 @@ export async function generateBoardReportPdf() {
 
   // Attention items
   doc.addPage();
-  header(doc, 'Attention items', `Board action list - generated ${today}`);
+  header(doc, 'Attention items', `Compliance audit action list - generated ${today}`);
   const attention = [
     ...openIssues.slice(0, 6).map((i) => ['Issue', i.title || 'Untitled', i.priority || '-', i.status]),
     ...criticalIncidents.slice(0, 6).map((i) => ['Incident', i.title || 'Untitled', i.severity || '-', i.status]),
@@ -178,5 +190,5 @@ export async function generateBoardReportPdf() {
   simpleTable(doc, ['Type', 'Item', 'Level', 'Status / due'], attention, 56);
 
   drawDocumentFooter(doc);
-  doc.save(`board-compliance-report-${year}-${String(new Date().getMonth() + 1).padStart(2, '0')}.pdf`);
+  doc.save(`compliance-audit-report-${year}-${String(new Date().getMonth() + 1).padStart(2, '0')}.pdf`);
 }

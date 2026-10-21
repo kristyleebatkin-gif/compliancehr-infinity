@@ -65,6 +65,8 @@ export default function Dashboard() {
 
       {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
 
+      {OVERVIEW_ROLES.includes(role) && <ComplianceDashboardFrame><LiveDashboards /></ComplianceDashboardFrame>}
+
       {canAccessNav(role, 'compliance') && <ComplianceDashboardFrame><MorningBrief /></ComplianceDashboardFrame>}
 
       {canAccessNav(role, 'compliance') && <ComplianceDashboardFrame><IssuesDashboardWidget /></ComplianceDashboardFrame>}
@@ -74,8 +76,6 @@ export default function Dashboard() {
         : (role === ROLES.SUPPORT)
           ? <ComplianceDashboardFrame><StaffDashboard /></ComplianceDashboardFrame>
           : <AdminDashboard />}
-
-      {OVERVIEW_ROLES.includes(role) && <ComplianceDashboardFrame><LiveDashboards /></ComplianceDashboardFrame>}
 
       {canAccessNav(role, 'safety-insights') && <ComplianceDashboardFrame><SafetyTrendsDashboard /></ComplianceDashboardFrame>}
     </div>

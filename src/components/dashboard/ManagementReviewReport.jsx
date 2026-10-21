@@ -11,6 +11,9 @@ export default function ManagementReviewReport() {
         <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">Export the current risk and compliance status as a PDF summary for management.</p>
       </div>
     </div>
-    <BoardReportButton />
+    <div className="management-review-actions flex flex-wrap items-center gap-2">
+      <BoardReportButton />
+      <BoardReportButton checklist />
+    </div>
   </section>;
 }

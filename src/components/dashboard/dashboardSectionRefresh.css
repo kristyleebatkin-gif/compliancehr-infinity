@@ -1,5 +1,5 @@
 /* Only the home dashboard receives these presentation refinements. */
-.bright-dashboard .management-review-report > button {
+.bright-dashboard .management-review-report .management-review-actions > button {
   min-height: 2rem;
   height: auto;
   padding: .375rem .625rem;
