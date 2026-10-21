@@ -14,7 +14,7 @@ export default function StaffGoals({ profile }) {
   const [open, setOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState('');
-  const manager = ['Provider Administrator', 'Management', 'Administration'].includes(role);
+  const manager = ['Provider Administrator', 'Management', 'Administration'].includes(role) || (!!profile && role === 'Human Resources Manager');
   const scope = profile ? { staff_id: profile.id } : manager ? {} : { staff_email: user?.email || '__no_email__' };
   const query = useQuery({ queryKey: ['staff-goals', 'summary', scope], queryFn: async () => {
     const [totals, achieved] = await Promise.all([

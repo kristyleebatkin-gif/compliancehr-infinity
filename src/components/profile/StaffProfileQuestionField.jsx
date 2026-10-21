@@ -2,7 +2,7 @@ import React, { useId } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { answerText, fieldAnswer, validFieldChoice } from '@/lib/formQuestionModel';
-export default function StaffProfileQuestionField({ field, answers, onChange }) {
+export default function StaffProfileQuestionField({ field, answers, onChange, dateInputs = false }) {
   const id = useId();
   const value = fieldAnswer(field, answers);
   const selected = field.options ? validFieldChoice(field, value) : '';
@@ -12,6 +12,6 @@ export default function StaffProfileQuestionField({ field, answers, onChange }) 
     {field.options ? <div role="group" aria-labelledby={`${id}-label`} className="flex flex-wrap gap-x-2 gap-y-0.5 rounded-md border border-input bg-background px-2 py-1">
       {field.options.map((option) => <label key={option} className="flex items-center gap-1 text-[11px] leading-tight"><input type={field.type === 'multiple' ? 'checkbox' : 'radio'} name={id} checked={Array.isArray(selected) ? selected.includes(option) : selected === option} onChange={(event) => change(field.type === 'multiple' ? event.target.checked ? [...(Array.isArray(selected) ? selected : []), option] : selected.filter((item) => item !== option) : option)} className="accent-primary" />{option}</label>)}
       {answerText(value) && !answerText(selected) && <p className="w-full text-xs text-muted-foreground">Earlier answer: {answerText(value)}</p>}
-    </div> : field.multiline ? <Textarea id={id} rows={2} maxLength={4000} value={answerText(value)} onChange={(event) => change(event.target.value)} className="min-h-12 px-2 py-1 text-xs md:text-xs" /> : <Input id={id} maxLength={1000} value={answerText(value)} onChange={(event) => change(event.target.value)} className="h-7 px-2 py-0.5 text-xs md:text-xs" />}
+    </div> : field.multiline ? <Textarea id={id} rows={2} maxLength={4000} value={answerText(value)} onChange={(event) => change(event.target.value)} className="min-h-12 px-2 py-1 text-xs md:text-xs" /> : <Input id={id} type={dateInputs && /^(issue date|expiry date|verification date|renewal due date|assessment date|check date|review date|next due date|follow-up date|plan start date|plan review date|effective from date|effective until date|submitted date)$/i.test(field.label) ? 'date' : 'text'} maxLength={1000} value={answerText(value)} onChange={(event) => change(event.target.value)} className="h-7 px-2 py-0.5 text-xs md:text-xs" />}
   </div>;
 }

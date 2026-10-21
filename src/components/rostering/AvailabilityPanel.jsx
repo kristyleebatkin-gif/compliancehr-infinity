@@ -14,7 +14,7 @@ import { statusTone } from '@/lib/statusStyles';
 
 const BLANK = { staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' };
 
-export default function AvailabilityPanel({ staff, staffName }) {
+export default function AvailabilityPanel({ staff, staffName, canCreate = true, canDelete = true }) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ export default function AvailabilityPanel({ staff, staffName }) {
             <h3 className="font-semibold">Availability & unavailability</h3>
             <p className="mt-1 text-sm text-muted-foreground">Record when staff can or cannot work — used to suggest who can fill a shift.</p>
           </div>
-          <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" /> Add entry</Button>
+          {canCreate && <Button onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" /> Add entry</Button>}
         </div>
 
         {loading ? (
@@ -92,7 +92,7 @@ export default function AvailabilityPanel({ staff, staffName }) {
                     ].filter(Boolean).join(' · ')}
                   </p>
                 </div>
-                <Button variant="ghost" size="icon" onClick={() => remove(e)} title="Remove"><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                {canDelete && <Button variant="ghost" size="icon" onClick={() => remove(e)} title="Remove"><Trash2 className="h-4 w-4 text-destructive" /></Button>}
               </div>
             ))}
           </div>
