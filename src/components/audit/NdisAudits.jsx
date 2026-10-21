@@ -32,9 +32,9 @@ export default function NdisAudits({ audits }) {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <Card>
-        <CardContent className="p-4">
+        <CardContent className="p-3">
           <div className="mb-3 flex items-center gap-2">
-            <CalendarClock className="h-4 w-4 text-brand" />
+            <CalendarClock className="h-4 w-4 text-[#7e22ce]" />
             <p className="font-semibold">Upcoming NDIS audits</p>
           </div>
           {upcoming.length === 0 ? (
@@ -45,9 +45,9 @@ export default function NdisAudits({ audits }) {
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4">
+        <CardContent className="p-3">
           <div className="mb-3 flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-600" />
+            <ShieldCheck className="h-4 w-4 text-[#14b8a6]" />
             <p className="font-semibold">Passed NDIS audits</p>
           </div>
           {passed.length === 0 ? (

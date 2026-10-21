@@ -80,11 +80,11 @@ export default function AuditChecklistLibrary() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <Card>
-        <CardContent className="p-4">
+        <CardContent className="p-3">
           <div className="mb-3 flex items-center gap-2">
-            <ClipboardList className="h-4 w-4 text-brand" />
+            <ClipboardList className="h-4 w-4 text-[#6d28d9]" />
             <p className="font-semibold">Master audit checklists</p>
             <span className="text-xs text-muted-foreground">download a printable copy of any checklist</span>
           </div>
@@ -112,9 +112,9 @@ export default function AuditChecklistLibrary() {
       </Card>
 
       <Card>
-        <CardContent className="p-4">
+        <CardContent className="p-3">
           <div className="mb-3 flex items-center gap-2">
-            <FileText className="h-4 w-4 text-brand" />
+            <FileText className="h-4 w-4 text-[#6d28d9]" />
             <p className="font-semibold">Stored completed checklists</p>
             <span className="text-xs text-muted-foreground">upload and store completed audit checklists</span>
           </div>

@@ -76,3 +76,18 @@ export const NDIS_CORE_STANDARDS = [
     ],
   },
 ];
+
+// Fixed vibrant colour per principal, taken from the 45-module palette
+// (src/components/dashboard/dashboardModuleColours.js).
+export const NDIS_STANDARD_COLOURS = {
+  '1. Rights and Responsibility': '#e11d48',
+  '2. Governance and Operational Management': '#4338ca',
+  '3. Regulation': '#7e22ce',
+  '4. Provision of Supports': '#6366f1',
+  '5. Support Provision Environment': '#b91c1c',
+  '6. Complaints and Grievances': '#f472b6',
+  '7. Incident Management': '#dc2626',
+  '8. Human Resources': '#7c3aed',
+  '9. Risk Management': '#ea580c',
+  '10. Continuous Improvement': '#22c55e',
+};

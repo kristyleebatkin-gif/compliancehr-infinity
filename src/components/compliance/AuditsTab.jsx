@@ -158,8 +158,8 @@ export default function AuditsTab() {
   const completed = audits.filter((a) => a.status === 'Complete' || a.status === 'Follow-up Required');
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="space-y-2">
+      <div className="module-action-bar flex flex-wrap items-center gap-2">
         <div className="flex gap-2">
           <Button variant="outline" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export register</Button>
           <Dialog open={open} onOpenChange={setOpen}>
@@ -203,29 +203,29 @@ export default function AuditsTab() {
       </div>
 
       <Tabs defaultValue="dashboard">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-          <TabsTrigger value="audits">Audit register</TabsTrigger>
-          <TabsTrigger value="actions">Actions</TabsTrigger>
-          <TabsTrigger value="checklists">Checklists</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar</TabsTrigger>
-          <TabsTrigger value="log">Audit log</TabsTrigger>
+        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
+          <TabsTrigger value="dashboard" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400 data-[state=active]:text-white">Dashboard</TabsTrigger>
+          <TabsTrigger value="audits" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-400 data-[state=active]:text-white">Audit register</TabsTrigger>
+          <TabsTrigger value="actions" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-fuchsia-500 data-[state=active]:to-pink-400 data-[state=active]:text-white">Actions</TabsTrigger>
+          <TabsTrigger value="checklists" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-rose-400 data-[state=active]:text-white">Checklists</TabsTrigger>
+          <TabsTrigger value="calendar" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-500 data-[state=active]:to-orange-400 data-[state=active]:text-white">Calendar</TabsTrigger>
+          <TabsTrigger value="log" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-amber-400 data-[state=active]:text-white">Audit log</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="dashboard" className="mt-4 space-y-4">
+        <TabsContent value="dashboard" className="mt-2 space-y-4">
           <ReviewSchedule audits={audits} />
           <NdisAudits audits={audits} />
         </TabsContent>
 
-        <TabsContent value="audits" className="mt-4 space-y-3">
+        <TabsContent value="audits" className="mt-2 space-y-3">
           {loading ? (
-            <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+            <div className="flex justify-center py-8"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : audits.length === 0 ? (
             <Card><CardContent className="p-10 text-center">
               <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><ClipboardCheck className="h-5 w-5" /></div>
               <p className="font-semibold">No audits recorded yet</p>
               <p className="mt-1 text-sm text-muted-foreground">Audits track compliance reviews, their scores and the corrective actions they raise.</p>
-              <Button className="mt-4" onClick={openNew}><Plus className="mr-2 h-4 w-4" /> New audit</Button>
+              <Button className="mt-2" onClick={openNew}><Plus className="mr-2 h-4 w-4" /> New audit</Button>
             </CardContent></Card>
           ) : (
             <div className="overflow-x-auto rounded-xl border border-border/60 shadow-panel">
@@ -290,24 +290,24 @@ export default function AuditsTab() {
           )}
         </TabsContent>
 
-        <TabsContent value="actions" className="mt-4">
+        <TabsContent value="actions" className="mt-2">
           <AuditActions audits={audits} />
         </TabsContent>
 
-        <TabsContent value="checklists" className="mt-4">
+        <TabsContent value="checklists" className="mt-2">
           <AuditChecklistLibrary />
         </TabsContent>
 
-        <TabsContent value="calendar" className="mt-4">
+        <TabsContent value="calendar" className="mt-2">
           <AuditCalendar audits={audits} />
         </TabsContent>
 
-        <TabsContent value="log" className="mt-4 space-y-4">
+        <TabsContent value="log" className="mt-2 space-y-4">
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <History className="h-4 w-4 text-brand" />
+                  <History className="h-4 w-4 text-[#6d28d9]" />
                   <p className="font-semibold">Completed audits - full details</p>
                 </div>
                 <Button variant="outline" size="sm" onClick={exportRegister}><Download className="mr-2 h-4 w-4" />Export</Button>
@@ -342,7 +342,7 @@ export default function AuditsTab() {
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <p className="font-semibold">Every status change (audits and actions)</p>
                 <Button variant="outline" size="sm" onClick={exportLog}><Download className="mr-2 h-4 w-4" />Export log</Button>

@@ -42,13 +42,13 @@ export default function AuditCalendar({ audits }) {
               key={day.toISOString()}
               onClick={() => setSelected(day)}
               className={`min-h-16 rounded-lg border p-1 text-left align-top transition-colors ${
-                isSelected ? 'border-brand bg-brand/10' : 'border-border/60 hover:bg-muted/60'
+                isSelected ? 'border-[#6d28d9] bg-[#6d28d9]/10' : 'border-border/60 hover:bg-muted/60'
               } ${inMonth ? 'bg-card' : 'bg-muted/30 opacity-50'}`}
             >
               <span className="text-xs font-semibold">{format(day, 'd')}</span>
               <div className="mt-0.5 space-y-0.5">
                 {dayAudits.slice(0, 2).map((a) => (
-                  <div key={a.id} className="truncate rounded bg-brand/10 px-1 text-[10px] font-medium text-brand">{a.title}</div>
+                  <div key={a.id} className="truncate rounded bg-[#6d28d9]/10 px-1 text-[10px] font-medium text-[#6d28d9]">{a.title}</div>
                 ))}
                 {dayAudits.length > 2 && <div className="text-[10px] text-muted-foreground">+{dayAudits.length - 2} more</div>}
               </div>
@@ -58,8 +58,8 @@ export default function AuditCalendar({ audits }) {
       </div>
 
       {selected && (
-        <div className="rounded-xl border border-border/60 bg-card p-4">
-          <div className="mb-2 flex items-center gap-2 text-sm font-semibold"><CalendarDays className="h-4 w-4 text-brand" />Audits on {format(selected, 'EEEE d MMMM yyyy')}</div>
+        <div className="rounded-xl border border-border/60 bg-card p-3">
+          <div className="mb-2 flex items-center gap-2 text-sm font-semibold"><CalendarDays className="h-4 w-4 text-[#6d28d9]" />Audits on {format(selected, 'EEEE d MMMM yyyy')}</div>
           {selectedAudits.length === 0 ? (
             <p className="text-sm text-muted-foreground">No audits on this day.</p>
           ) : (

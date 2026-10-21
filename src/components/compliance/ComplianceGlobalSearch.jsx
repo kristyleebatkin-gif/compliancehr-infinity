@@ -11,12 +11,12 @@ import { Search, Users, FileText, BadgeCheck, ListTodo, Loader2, X } from 'lucid
 
 const DOC_STATUSES = ['Current', 'Expiring Soon', 'Expired', 'Archived'];
 const QUICK_CHIPS = [
-  { label: 'Expired documents', value: 'Expired' },
-  { label: 'Expiring soon', value: 'Expiring Soon' },
-  { label: 'Current documents', value: 'Current' },
-  { label: 'Overdue tasks', value: 'Overdue' },
-  { label: 'Pending tasks', value: 'Pending' },
-  { label: 'Completed tasks', value: 'Completed' },
+  { label: 'Expired documents', value: 'Expired', colour: '#dc2626' },
+  { label: 'Expiring soon', value: 'Expiring Soon', colour: '#ea580c' },
+  { label: 'Current documents', value: 'Current', colour: '#16a34a' },
+  { label: 'Overdue tasks', value: 'Overdue', colour: '#ef4444' },
+  { label: 'Pending tasks', value: 'Pending', colour: '#f97316' },
+  { label: 'Completed tasks', value: 'Completed', colour: '#0d9488' },
 ];
 
 const DEBOUNCE_MS = 300;
@@ -106,16 +106,16 @@ export default function ComplianceGlobalSearch() {
   const hasFilters = staffFilter !== 'all' || statusFilter !== 'all';
 
   return (
-    <Card className="shadow-panel">
+    <Card className="border-t-4 border-t-[#6d28d9] shadow-panel">
       <CardContent className="p-2">
         <div className="module-filter-bar flex flex-wrap items-center gap-1.5">
           <div className="relative min-w-0 flex-1 basis-56">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6d28d9]" />
             <Input
               value={term}
               onChange={(e) => setTerm(e.target.value)}
               placeholder="Search staff, documents, certificates or tasks…"
-              className="pl-9"
+              className="border-[#6d28d9]/50 pl-9"
             />
             {term && (
               <button aria-label="Clear search" onClick={() => setTerm('')} className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:bg-accent">
@@ -151,7 +151,8 @@ export default function ComplianceGlobalSearch() {
             <button
               key={c.value}
               onClick={() => setStatusFilter(statusFilter === c.value ? 'all' : c.value)}
-              className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${statusFilter === c.value ? 'border-transparent bg-primary text-primary-foreground' : 'border-border bg-muted/50 hover:bg-accent'}`}
+              className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${statusFilter === c.value ? '' : 'border-border bg-muted/50 hover:bg-accent'}`}
+              style={statusFilter === c.value ? { backgroundColor: `${c.colour}1f`, borderColor: c.colour, color: c.colour } : undefined}
             >
               {c.label}
             </button>

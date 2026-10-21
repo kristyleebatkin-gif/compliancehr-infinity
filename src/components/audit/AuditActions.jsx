@@ -123,8 +123,8 @@ export default function AuditActions({ audits }) {
   const isOverdue = (a) => a.due_date && a.status !== 'Completed' && a.status !== 'Cancelled' && isBefore(new Date(a.due_date), startOfDay(new Date()));
 
   return (
-    <div className="space-y-4">
-      <div className="space-y-2">
+    <div className="space-y-2">
+      <div className="space-y-1.5">
         <p className="text-sm text-muted-foreground">Corrective and improvement actions from audits. Every status change is logged.</p>
         <div className="flex gap-2">
           <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export register</Button>
@@ -165,14 +165,14 @@ export default function AuditActions({ audits }) {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+        <div className="flex justify-center py-8"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : actions.length === 0 ? (
         <Card><CardContent className="p-10 text-center text-muted-foreground">No actions allocated yet.</CardContent></Card>
       ) : (
         <div className="space-y-3">
           {actions.map((a) => (
             <Card key={a.id}>
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="font-semibold">{a.title}</p>

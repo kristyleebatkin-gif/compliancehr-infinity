@@ -30,9 +30,9 @@ export default function ReviewSchedule({ audits }) {
 
   return (
     <Card>
-      <CardContent className="p-4">
+      <CardContent className="p-3">
         <div className="mb-3 flex items-center gap-2">
-          <CalendarClock className="h-4 w-4 text-brand" />
+          <CalendarClock className="h-4 w-4 text-[#6d28d9]" />
           <p className="font-semibold">Audit review schedule</p>
           <span className="text-xs text-muted-foreground">required review cycles by area</span>
         </div>

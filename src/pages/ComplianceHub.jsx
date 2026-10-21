@@ -276,64 +276,64 @@ export default function ComplianceHub() {
           ))}
         </TabsList>
 
-        <TabsContent value="standards-map" className="mt-4">
+        <TabsContent value="standards-map" className="mt-2">
           <ControlEvidenceMap />
         </TabsContent>
 
-        <TabsContent value="master-checklist" className="mt-4">
+        <TabsContent value="master-checklist" className="mt-2">
           <MasterChecklist />
         </TabsContent>
 
-        <TabsContent value="audits" className="mt-4">
+        <TabsContent value="audits" className="mt-2">
           <AuditsTab />
         </TabsContent>
 
-        <TabsContent value="audit-report-list" className="mt-4">
+        <TabsContent value="audit-report-list" className="mt-2">
           <AuditReportList />
         </TabsContent>
 
-        <TabsContent value="weekly-audit-reports" className="mt-4">
+        <TabsContent value="weekly-audit-reports" className="mt-2">
           <WeeklyAuditReports />
         </TabsContent>
 
-        <TabsContent value="executive-summary" className="mt-4">
+        <TabsContent value="executive-summary" className="mt-2">
           <ExecutiveSummary />
         </TabsContent>
 
-        <TabsContent value="issues" className="mt-4">
+        <TabsContent value="issues" className="mt-2">
           <ComplianceIssuesTab />
         </TabsContent>
 
-        <TabsContent value="readiness" className="mt-4 space-y-4">
+        <TabsContent value="readiness" className="mt-2 space-y-4">
           <ComplianceScore compact />
           <ComplianceReadiness />
         </TabsContent>
 
-        <TabsContent value="trend-charts" className="mt-4">
+        <TabsContent value="trend-charts" className="mt-2">
           <SafetyTrendChart />
         </TabsContent>
 
-        <TabsContent value="quick-tasks" className="mt-4">
+        <TabsContent value="quick-tasks" className="mt-2">
           <ComplianceTaskActions />
         </TabsContent>
 
-        <TabsContent value="task-kanban" className="mt-4">
+        <TabsContent value="task-kanban" className="mt-2">
           <TaskKanban />
         </TabsContent>
 
-        <TabsContent value="risk-status" className="mt-4">
+        <TabsContent value="risk-status" className="mt-2">
           <RiskStatusDashboard />
         </TabsContent>
 
-        <TabsContent value="kits-drills" className="mt-4">
+        <TabsContent value="kits-drills" className="mt-2">
           <KitDrillChecklists />
         </TabsContent>
 
-        <TabsContent value="visitors" className="mt-4">
+        <TabsContent value="visitors" className="mt-2">
           <VisitorSignInOut />
         </TabsContent>
 
-        <TabsContent value="policies" className="mt-4 space-y-4">
+        <TabsContent value="policies" className="mt-2 space-y-4">
           <PolicyAcknowledgements policies={policies} />
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={() => exportPoliciesCsv(policies)}><Download className="mr-2 h-4 w-4" /> Export Register (CSV)</Button>
@@ -422,7 +422,7 @@ export default function ComplianceHub() {
           )}
         </TabsContent>
 
-        <TabsContent value="requirements" className="mt-4 space-y-4">
+        <TabsContent value="requirements" className="mt-2 space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={() => exportRequirementsCsv(requirements)}><Download className="mr-2 h-4 w-4" /> Export Register (CSV)</Button>
             <Dialog open={rOpen} onOpenChange={setROpen}>
@@ -489,55 +489,55 @@ export default function ComplianceHub() {
           )}
         </TabsContent>
 
-        <TabsContent value="internal-audits" className="mt-4">
+        <TabsContent value="internal-audits" className="mt-2">
           <InternalAuditRegister />
         </TabsContent>
 
-        <TabsContent value="participant-reviews" className="mt-4">
+        <TabsContent value="participant-reviews" className="mt-2">
           <ParticipantReviewRegister />
         </TabsContent>
 
-        <TabsContent value="consents" className="mt-4">
+        <TabsContent value="consents" className="mt-2">
           <ConsentRegister />
         </TabsContent>
 
-        <TabsContent value="form-templates" className="mt-4">
+        <TabsContent value="form-templates" className="mt-2">
           <ReviewFormTemplates />
         </TabsContent>
 
-        <TabsContent value="checklists" className="mt-4">
+        <TabsContent value="checklists" className="mt-2">
           <Checklists />
         </TabsContent>
 
-        <TabsContent value="cert-renewals" className="mt-4">
+        <TabsContent value="cert-renewals" className="mt-2">
           <CertificationCalendar />
         </TabsContent>
 
-        <TabsContent value="renewal-calendar" className="mt-4">
+        <TabsContent value="renewal-calendar" className="mt-2">
           <DocumentRenewalCalendar />
         </TabsContent>
 
-        <TabsContent value="staff-compliance" className="mt-4">
+        <TabsContent value="staff-compliance" className="mt-2">
           <StaffComplianceChart />
         </TabsContent>
 
-        <TabsContent value="worker-screening" className="mt-4">
+        <TabsContent value="worker-screening" className="mt-2">
           <RosterScreeningAlerts />
         </TabsContent>
 
-        <TabsContent value="risk-heatmap" className="mt-4">
+        <TabsContent value="risk-heatmap" className="mt-2">
           <RiskHeatmap />
         </TabsContent>
 
-        <TabsContent value="onboarding-progress" className="mt-4">
+        <TabsContent value="onboarding-progress" className="mt-2">
           <StaffOnboardingTracker />
         </TabsContent>
 
-        <TabsContent value="staff-bulk-actions" className="mt-4">
+        <TabsContent value="staff-bulk-actions" className="mt-2">
           <StaffBulkActions />
         </TabsContent>
 
-        <TabsContent value="activity-feed" className="mt-4">
+        <TabsContent value="activity-feed" className="mt-2">
           <ComplianceActivityFeed />
         </TabsContent>
       </Tabs>
