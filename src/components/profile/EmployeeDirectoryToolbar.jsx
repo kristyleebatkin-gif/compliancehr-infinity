@@ -15,6 +15,6 @@ export default function EmployeeDirectoryToolbar({ search, onSearch, progressAll
       <TabsTrigger value="profiles">Employee profiles</TabsTrigger>
       {progressAllowed && <TabsTrigger value="progress" data-dashboard-tone="blue"><TrendingUp />Staff progress</TabsTrigger>}
     </TabsList>
-    <Button asChild variant="outline" className="h-11 shrink-0 border-primary/40 bg-profile-lilac text-xs font-bold text-foreground"><Link to="/my-profile"><UserRound />My profile</Link></Button>
+    <Button asChild variant="outline" className="employee-directory-my-profile h-11 shrink-0 border-primary/40 bg-profile-rose text-xs font-bold text-foreground"><Link to="/my-profile"><UserRound />My profile</Link></Button>
   </div>;
 }

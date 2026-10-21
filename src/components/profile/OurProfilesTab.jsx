@@ -117,7 +117,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
   }
 
   return (
-    <div className="space-y-5 sm:max-lg:space-y-1.5">
+    <div className={`space-y-5 sm:max-lg:space-y-1.5 ${directory ? 'employee-directory-profile-list' : ''}`}>
       {selfOnly && records[0] && (
         <div className="flex items-center gap-4 rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 p-5 text-white shadow-md">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-lg font-bold">{initials(records[0].full_name)}</div>
@@ -160,7 +160,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       {visible.length === 0 ? (
         <EmptyState icon={Icon} title="No matches" message="Try a different search term or filter." modulePath={isParticipant ? 'participants' : 'staff'} />
       ) : (
-        <div className="space-y-4 sm:max-lg:space-y-1.5">
+        <div className="profile-groups space-y-4 sm:max-lg:space-y-1.5">
           {groups
             .map(([key, list]) => [key, list.filter((r) => visible.includes(r))])
             .filter(([, list]) => list.length > 0)
@@ -172,7 +172,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
                   <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-foreground/60">{list.length}</span>
                   <div className="h-px flex-1 bg-border/60" />
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="profile-card-grid grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {list.map((r) => {
                     const { primary } = profilePalette(r.full_name);
                     return (
