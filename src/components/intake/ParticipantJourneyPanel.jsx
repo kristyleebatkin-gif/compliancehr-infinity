@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Download, Route } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 
 const fmt = (d) => (d ? String(d).slice(0, 16).replace('T', ' ') : '');
 
@@ -24,7 +25,7 @@ const STAGE_COLOUR = {
  * consents, audit consent, acknowledgements, referee checks, documents and
  * conversion — shown in order and exportable as CSV.
  */
-export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
+export default function ParticipantJourneyPanel({ activeCase, docs = [], compact = false }) {
   const [exporting, setExporting] = useState(false);
 
   if (!activeCase) return null;
@@ -62,9 +63,8 @@ export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
     }
   };
 
-  return (
-    <Card>
-      <CardContent className="p-4">
+  const content = (
+      <CardContent className={compact ? 'p-0' : 'p-4'}>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Route className="h-4 w-4" /></span>
@@ -76,7 +76,7 @@ export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
         {ordered.length === 0 ? (
           <p className="py-3 text-center text-sm text-muted-foreground">No actions recorded yet.</p>
         ) : (
-          <ol className="relative space-y-1.5 border-l-2 border-violet-200 pl-4 dark:border-violet-900">
+          <ol className={compact ? 'relative max-h-48 space-y-1.5 overflow-y-auto border-l-2 border-border pl-4' : 'relative space-y-1.5 border-l-2 border-violet-200 pl-4 dark:border-violet-900'}>
             {ordered.map((row, i) => {
               const dot = STAGE_COLOUR[row.stage] || '#94a3b8';
               return (
@@ -92,6 +92,8 @@ export default function ParticipantJourneyPanel({ activeCase, docs = [] }) {
           </ol>
         )}
       </CardContent>
-    </Card>
   );
+  return compact
+    ? <EmployeeProfileSection title="Participant Journey" tone="green">{content}</EmployeeProfileSection>
+    : <Card>{content}</Card>;
 }
