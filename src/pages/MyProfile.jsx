@@ -14,6 +14,7 @@ import loadPersonalProfile from '@/lib/loadPersonalProfile';
 import { useAuth } from '@/lib/AuthContext';
 import { loadProfileWithTimeout } from '@/lib/profileLoading';
 import ProfileLoadError from '@/components/profile/ProfileLoadError';
+import '@/components/profile/myProfilePastels.css';
 
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
@@ -138,8 +139,9 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
       <PageHeader
+        className="my-profile-heading"
         icon={UserRound}
         title={tab === 'participant-details' ? 'My participant profile' : isParticipant ? 'My participant profile' : 'My employee profile'}
         subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}

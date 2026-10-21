@@ -8,6 +8,7 @@ import ParticipantFillableForms from '@/components/participants/ParticipantFilla
 import StaffFileChecklist from '@/components/staff/StaffFileChecklist';
 import ParticipantDocumentsTab from '@/components/participants/ParticipantDocumentsTab';
 import ExportRow from '@/components/profile/ExportRow';
+import AllEmployeeForms from '@/components/profile/AllEmployeeForms';
 
 export default function OurProfileData({ profile, kind, onUpdated, detailsContent, initialTab = 'details', personal = false }) {
   const participant = kind === 'participant';
@@ -24,7 +25,7 @@ export default function OurProfileData({ profile, kind, onUpdated, detailsConten
         {participant ? <ParticipantDetailsTab participant={profile} onUpdated={onUpdated} /> : <StaffDetailsTab staff={profile} onUpdated={onUpdated} />}</>}
       </TabsContent>
       <TabsContent value="forms">
-        {participant ? <ParticipantFillableForms participant={profile} /> : <StaffFillableForms staff={profile} />}
+        {participant ? <ParticipantFillableForms participant={profile} /> : personal ? <AllEmployeeForms profile={profile} /> : <StaffFillableForms staff={profile} />}
       </TabsContent>
       <TabsContent value="files">
         {staffIntake ? <IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="readiness" /> : participant ? <ParticipantDocumentsTab participant={profile} /> : <StaffFileChecklist staff={profile} />}
