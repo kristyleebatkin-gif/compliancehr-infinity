@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { HeartHandshake, Library, Phone, Send } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import CrisisInformation from '@/components/referral/CrisisInformation';
 import LocalServices from '@/components/referral/LocalServices';
@@ -18,11 +18,12 @@ export default function ReferralSupport() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={HeartHandshake}
+        moduleKey="community-referral"
         title="Referral & Support"
         subtitle="Crisis information, local services, a national resource library and a loggable referral form."
-        action={<>
+        actions={<>
           <a href="tel:000" className="inline-flex h-7 items-center gap-1 rounded-lg bg-danger px-2 text-[11px] font-bold text-white hover:bg-danger/90"><Phone className="h-3 w-3" />Emergency 000</a>
           <ModuleAlertsButton />
         </>}

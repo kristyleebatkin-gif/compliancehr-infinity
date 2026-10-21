@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import BriefingList from '@/components/briefing/BriefingList';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sunrise, ClipboardList, CalendarClock, CalendarX2, FileWarning, ListChecks } from 'lucide-react';
@@ -115,12 +115,12 @@ export default function DailyBriefing() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
+        moduleKey="daily-briefing"
         title="Daily Briefing"
         subtitle="Everything pending and expiring for today — pending compliance tasks, checks due, and records approaching or past expiry."
         icon={Sunrise}
-        accent={['#7c3aed', '#22d3ee']}
-        action={(
+        actions={(
           <Select value={windowDays} onValueChange={setWindowDays}>
             <SelectTrigger className="h-8 w-40 px-2 py-1 text-xs"><SelectValue /></SelectTrigger>
             <SelectContent>

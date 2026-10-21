@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/PageHeader";
+import ModuleShell from "@/components/module/ModuleShell";
 import EmptyState from "@/components/EmptyState";
 import { ShieldCheck, Download, CheckCircle2, RefreshCw } from "lucide-react";
 
@@ -110,7 +110,7 @@ export default function ReviewDueBoard() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         title="Review & Audit Board"
         subtitle="Every risk, incident, feedback, complaint, issue, take 5 and safety check, aged for review: yellow at 2 months, red at 10 weeks, audit due the day before 3 months"
         icon={ShieldCheck}

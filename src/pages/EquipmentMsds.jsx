@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Wrench } from 'lucide-react';
 import EquipmentManuals from '@/pages/EquipmentManuals';
 import MsdsLibrary from '@/pages/MsdsLibrary';
@@ -11,11 +11,12 @@ export default function EquipmentMsds() {
   const [reportTarget, setReportTarget] = useState(null);
   return (
     <div className="mx-auto max-w-6xl px-4 pb-8 pt-2 md:px-8">
-      <PageHeader
+      <ModuleShell
+        moduleKey="equipment-manuals"
         title="Equipment & MSDS"
         subtitle="Equipment manuals, operating instructions, maintenance schedules and the chemical MSDS library, with review tracking."
         icon={Wrench}
-        afterAudit={<span ref={setReportTarget} className="flex flex-wrap items-center gap-1" />}
+        actions={<span ref={setReportTarget} className="flex flex-wrap items-center gap-1" />}
       />
       <Tabs value={tab} onValueChange={setTab} className="space-y-4">
         <TabsList className="flex flex-wrap">

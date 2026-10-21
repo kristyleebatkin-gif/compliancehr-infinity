@@ -7,7 +7,7 @@ import { MapPin, ExternalLink, Phone, Mail, CalendarDays, Search, Loader2, Build
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LocalServices from '@/components/referral/LocalServices';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 
 const safeUrl = (url) => {
@@ -56,11 +56,12 @@ export default function CommunityCouncil() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={MapPin}
+        moduleKey="community-council"
         title="Community & Council"
         subtitle="Local council details, community programs and events for your postcode."
-        action={<ModuleAlertsButton />}
+        actions={<ModuleAlertsButton />}
       />
 
       <AutoRegisterInsights placement="header" />

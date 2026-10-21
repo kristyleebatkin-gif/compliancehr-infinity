@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import IncidentAnalyticsGuidance from '@/components/incidents/IncidentAnalyticsGuidance';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
@@ -53,7 +53,8 @@ export default function IncidentAnalytics() {
 
   return (
     <div className="compact-module mx-auto max-w-6xl p-3 space-y-3">
-      <PageHeader
+      <ModuleShell
+        moduleKey="incident-analytics"
         title="Incident Analytics"
         subtitle="Where incidents are happening and who is reporting them, so support can be directed where it is needed."
         icon={Activity}

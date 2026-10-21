@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import NdisNewsToolbar from '@/components/ndis/NdisNewsToolbar';
 import NdisNewsDashboard from '@/components/ndis/NdisNewsDashboard';
 import '@/components/ndis/ndisWorkspace.css';
@@ -92,7 +92,7 @@ export default function NdisUpdates() {
 
   return (
     <div className="ndis-workspace space-y-4">
-      <PageHeader title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} />
+      <ModuleShell moduleKey="ndis-news" title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} />
       <div className="module-action-bar flex flex-wrap items-center gap-1 rounded-xl border border-primary/20 bg-card p-2 shadow-sm">
         <ModuleAlertsButton />
       </div>

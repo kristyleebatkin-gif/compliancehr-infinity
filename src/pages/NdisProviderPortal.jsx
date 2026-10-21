@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, ShieldCheck, Landmark, ReceiptText, Newspaper, Lock } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import NdisPortalCards from '@/components/ndis/NdisPortalCards';
 import '@/components/ndis/ndisWorkspace.css';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
@@ -20,7 +20,7 @@ const PORTALS = [
 export default function NdisProviderPortal() {
   return (
     <div className="ndis-workspace space-y-4">
-      <PageHeader title="NDIS Registered Provider Portal" subtitle="Direct access points to the official NDIS portals and provider resources." icon={Building2} beforeAudit={<ModuleAlertsButton />} />
+      <ModuleShell moduleKey="ndis-provider" title="NDIS Registered Provider Portal" subtitle="Direct access points to the official NDIS portals and provider resources." icon={Building2} actions={<ModuleAlertsButton />} />
       <AutoRegisterInsights placement="header" />
       <div className="ndis-dashboard-panels grid items-start gap-3 xl:grid-cols-2"><NdisDeadlineTracker /><GovernanceControlsRegister /></div>
       <div className="ndis-panel ndis-accent-warning p-4">

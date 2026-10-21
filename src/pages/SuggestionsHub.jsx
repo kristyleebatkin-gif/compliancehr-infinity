@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -55,11 +55,11 @@ export default function SuggestionsHub() {
 
   return (
     <div className="compact-module space-y-2">
-      <PageHeader
+      <ModuleShell
+        moduleKey="suggestions-hub"
         title="Suggestions Hub"
         subtitle="A live review of every module: what to visualise, automate and refine, generated from real register numbers."
-        showAlerts={false}
-        action={
+        actions={
           <div className="flex flex-wrap items-center gap-1">
             <div className="relative w-44 min-w-0">
               <Search className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground" />
