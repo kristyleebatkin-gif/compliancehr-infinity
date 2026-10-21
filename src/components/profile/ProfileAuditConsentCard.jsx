@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { Loader2, ShieldCheck } from 'lucide-react';
 import ProfileConsentLog from '@/components/profile/ProfileConsentLog';
+import ProfileConsentExport from '@/components/profile/ProfileConsentExport';
 
 export default function ProfileAuditConsentCard({ profile, kind, onUpdated, compact = false }) {
   const { user } = useRole();
@@ -35,6 +36,7 @@ export default function ProfileAuditConsentCard({ profile, kind, onUpdated, comp
       <Button size="sm" variant="outline" disabled={busy} onClick={() => record('Audit consent received')}>{busy && <Loader2 className="h-3 w-3 animate-spin" />}Record received</Button>
       <Button size="sm" variant="outline" disabled={busy} onClick={() => record('Audit declined')}>Record declined / withdrawn</Button>
     </div>}
-    {compact && <ProfileConsentLog profile={profile} />}
+    {(compact || kind === 'staff') && <ProfileConsentLog profile={profile} />}
+    {kind === 'staff' && <ProfileConsentExport profile={profile} />}
   </section>;
 }

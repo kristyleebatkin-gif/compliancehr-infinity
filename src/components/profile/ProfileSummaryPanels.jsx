@@ -4,17 +4,19 @@ import ProfileDetailsCheck from '@/components/profile/ProfileDetailsCheck';
 import StaffBadgePreview from '@/components/safe/StaffBadgePreview';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import StaffProfileQuestionForm from '@/components/profile/StaffProfileQuestionForm';
+import EmployeeJourney from '@/components/profile/EmployeeJourney';
 
-export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = false }) {
+export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff' }) {
   if (staffQuestions) return <div className="grid items-start gap-3 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)]">
     <div className="min-w-0 space-y-3">
       <StaffBadgePreview branding={branding} staff={profile} compact />
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
+      <EmployeeJourney profile={profile} onUpdated={onUpdated} />
     </div>
     <aside className="min-w-0 space-y-2">
-      <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} compact />
+      <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <ProfileDetailsCheck profile={profile} />
     </aside>
   </div>;
