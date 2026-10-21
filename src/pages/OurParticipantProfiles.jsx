@@ -26,16 +26,16 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
     setParams(next, { replace: true });
   };
   return (
-    <div className="employee-directory mx-auto max-w-6xl space-y-4 p-4 md:p-8 sm:max-lg:space-y-2 sm:max-lg:p-2">
+    <div className="employee-directory mx-auto max-w-6xl space-y-4 px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-2 sm:max-lg:space-y-2 sm:max-lg:p-2">
       <Tabs value={tab} onValueChange={selectTab} className="space-y-4">
         <ModuleShell
           title={title}
           icon={Heart}
           moduleKey="our-participants"
-          tabs={<div className="flex flex-wrap items-center gap-1.5">
-            <TabsList className="w-auto"><TabsTrigger value="profiles">Participant profiles</TabsTrigger></TabsList>
+          tabs={<div className="flex flex-nowrap items-center gap-1.5">
+            <TabsList className="w-auto shrink-0"><TabsTrigger value="profiles">Participant profiles</TabsTrigger></TabsList>
             <MyProfileTabLink />
-            {progressAllowed && <TabsList className="w-auto"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
+            {progressAllowed && <TabsList className="w-auto shrink-0"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
           </div>}
           search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search participants…" />}
           insightModule="participants"
