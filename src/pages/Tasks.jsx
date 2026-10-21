@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeTasks from '@/components/employee/EmployeeTasks';
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import PageHeader from '@/components/PageHeader';
 import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
-import EmptyState from '@/components/EmptyState';
+
 import TaskDashboard from '@/components/tasks/TaskDashboard';
 import TaskCompletionFields from '@/components/tasks/TaskCompletionFields';
 import TaskToolbar from '@/components/tasks/TaskToolbar';
@@ -23,7 +23,7 @@ import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import '@/components/tasks/taskDashboardLayout.css';
 import '@/components/dashboard/brightActions.css';
-import { ListTodo, Plus, Pencil, Trash2, CheckCircle2, Circle, Clock, Zap, Mail, Bell, Download, Archive, X } from 'lucide-react';
+import { Archive, X } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
 
