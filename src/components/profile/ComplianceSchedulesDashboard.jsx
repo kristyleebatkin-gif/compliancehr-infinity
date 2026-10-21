@@ -61,12 +61,12 @@ const WHERE_LIVE = [
   { label: 'Compliance to-do tasks', to: '/tasks' },
 ];
 
-const Chip = ({ children }) => <li className="break-words rounded-md bg-white px-2 py-1 text-[11px] leading-relaxed text-black">{children}</li>;
+const Chip = ({ children }) => <li className="break-words rounded-md bg-white px-2.5 py-1.5 text-xs leading-relaxed text-black">{children}</li>;
 
 export default function ComplianceSchedulesDashboard() {
-  return <EmployeeProfileSection title="NDIS Compliance Schedule & Registers Dashboard" tone="red" uniform defaultOpen>
-    <div className="space-y-2">
-      <div className="grid gap-2 sm:grid-cols-2">
+  return <EmployeeProfileSection title="NDIS Compliance Schedule & Registers Dashboard" tone="red" defaultOpen>
+    <div className="space-y-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {CADENCES.map((cadence) => <div key={cadence.title} className={`rounded-lg ${cadence.tone} p-2`}>
           <p className="text-[11px] font-bold text-black">{cadence.title}</p>
           <ul className="mt-1 space-y-1">{cadence.items.map((item) => <Chip key={item}>{item}</Chip>)}</ul>
