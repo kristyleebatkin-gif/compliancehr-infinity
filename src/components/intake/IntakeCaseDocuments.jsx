@@ -80,7 +80,7 @@ export default function IntakeCaseDocuments({
                     && !DOWNLOAD_ONLY_DOC_TYPES.has(check.label)
                     && canCompleteOnline?.(check.label) && !TERMINAL_STATUSES.has(activeCase.status) && (
                     <Button variant="outline" size="sm" onClick={() => onOnlineForm(check.label)} disabled={busy}>
-                      <Pencil className="h-3.5 w-3.5" /> Fill out online / Drafts
+                      <Pencil className="h-3.5 w-3.5" /> Fill out online
                     </Button>
                   )}
                   {(!LEGISLATION_ACK_DOC_TYPES.has(check.label) || ACK_KEEP_DOWNLOAD_DOC_TYPES.has(check.label)) && !UPLOAD_ONLY_DOC_TYPES.has(check.label) && (
