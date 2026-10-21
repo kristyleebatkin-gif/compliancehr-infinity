@@ -4,10 +4,15 @@ import ParticipantAuthorisationCard from '@/components/participants/ParticipantA
 import ProfileAboutMeEditor from '@/components/profile/ProfileAboutMeEditor';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import ProfileDetailsCheck from '@/components/profile/ProfileDetailsCheck';
+import ParticipantRequiredForms from '@/components/profile/ParticipantRequiredForms';
+import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 
 export default function ParticipantSummaryPanels({ profile, onUpdated }) {
   return <div className="grid items-start gap-3 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)]">
-    <div className="min-w-0"><ParticipantDetailsTab participant={profile} onUpdated={onUpdated} compact hideConsents /></div>
+    <div className="min-w-0 space-y-3">
+      <ParticipantRequiredForms key={profile.id} profile={profile} />
+      <EmployeeProfileSection title="Participant Details" tone="neutral"><ParticipantDetailsTab participant={profile} onUpdated={onUpdated} compact hideConsents /></EmployeeProfileSection>
+    </div>
     <aside className="min-w-0 space-y-2">
       <ProfileAboutMeEditor profile={profile} kind="participant" onUpdated={onUpdated} compact />
       <ParticipantAuthorisationCard participant={profile} type="sharing" onUpdated={onUpdated} />

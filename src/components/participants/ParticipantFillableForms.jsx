@@ -12,11 +12,13 @@ import { buildAutofilledAnswers, autofillParticipantValue } from '@/lib/particip
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
 import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
+import StaffProfileQuestionField from '@/components/profile/StaffProfileQuestionField';
+import { legacyFormFields } from '@/lib/formQuestionModel';
 import OnlineDocumentRegister from '@/components/documents/OnlineDocumentRegister';
 import { Link, useSearchParams } from 'react-router-dom';
 import { profileVaultUrl, participantModuleUrl } from '@/lib/profileDocumentLinks';
 
-export default function ParticipantFillableForms({ participant, formType }) {
+export default function ParticipantFillableForms({ participant, formType, compact = false }) {
   const { toast } = useToast();
   const [params, setParams] = useSearchParams();
   const requestedForm = formType || params.get('form');
@@ -126,7 +128,7 @@ export default function ParticipantFillableForms({ participant, formType }) {
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
+    <div className={compact ? 'min-w-0 space-y-2 [&_button]:h-auto [&_button]:min-h-7 [&_button]:whitespace-normal [&_button]:px-2 [&_button]:py-1 [&_button]:text-[11px]' : 'rounded-2xl border border-border/60 bg-card p-5'}>
       <div className="flex flex-wrap items-end justify-between gap-3">
         {!formType && <div className="w-full max-w-sm space-y-1.5">
           <Label>Form</Label>
@@ -158,8 +160,10 @@ export default function ParticipantFillableForms({ participant, formType }) {
       {loading ? (
         <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : (
-        <div className="mt-5">
-          <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />
+        <div className={compact ? 'mt-2 min-w-0' : 'mt-5'}>
+          {compact ? <fieldset disabled={saving} className="grid min-w-0 gap-x-2 gap-y-2 sm:grid-cols-2">
+            {[...definition.fields, ...legacyFormFields(definition.fields, answers)].map(field => <StaffProfileQuestionField key={field.label} field={field} dateInputs answers={answers} onChange={(label, value) => setAnswers(current => ({ ...current, [label]: value }))} />)}
+          </fieldset> : <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />}
           <OnlineDocumentRegister columns={definition.columns} rows={answers.__rows || []} onChange={(rows) => setAnswers((current) => ({ ...current, __rows: rows }))} disabled={saving} />
         </div>
       )}
