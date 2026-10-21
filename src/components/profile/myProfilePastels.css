@@ -20,6 +20,16 @@ html body .my-profile-pastels [data-dashboard-tab] * {
   outline: 0 !important;
   box-shadow: none !important;
 }
+/* Catch-all: no visible borders on any box, row, card, table or tile (form fields and the page header keep theirs). */
+html body .my-profile-pastels :is(div, section, article, aside, nav, ul, li, table, thead, tbody, tr, th, td, summary, details, header, fieldset, p, span, a, [role="tablist"], [role="tab"], [role="tabpanel"]):not(.app-page-header):not(.app-page-header *) {
+  border-color: transparent !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+}
+html body .my-profile-pastels :is(.border, .border-t, .border-b, .border-l, .border-r, .ring-1, .ring-2):not(.app-page-header *) {
+  border-color: transparent !important;
+  --tw-ring-color: transparent !important;
+}
 /* Section headers are all the same compact size (as Staff Information). */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
