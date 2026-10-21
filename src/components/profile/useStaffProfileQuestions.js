@@ -37,6 +37,7 @@ export default function useStaffProfileQuestions(profile, title, definitionOverr
       if (payload.answers.length > 100000) throw new Error('Please shorten long answers before saving.');
       const record = entry ? await base44.entities.StaffFormEntry.update(entry.id, payload) : await base44.entities.StaffFormEntry.create({ ...payload, staff_id: profile.id, form_type: title });
       setEntry({ ...entry, ...payload, ...record }); setSaved(true);
+      if (["Driver's Licence Details", 'Car Registration Details', 'Medicare Card Details'].includes(title) && profile.email?.toLowerCase() === user.email?.toLowerCase()) await base44.functions.invoke('profileIdentityExpiryReminders', {});
     } catch (failure) { setError(failure.message); }
     finally { setSaving(false); }
   };

@@ -32,6 +32,7 @@ export default function EmployeeSectionForm({ profile, title }) {
   if (state.loading) return <p role="status" className="text-xs">Loading saved form…</p>;
   if (!state.ready) return <p role="alert" className="text-xs text-destructive">{state.error}<Button type="button" size="sm" variant="outline" onClick={state.retry}>Retry</Button></p>;
   return <form onSubmit={state.save} className="min-w-0 space-y-2">
+    {["Driver's Licence Details", 'Car Registration Details', 'Medicare Card Details'].includes(title) && <p className="text-[11px] text-primary">Save an expiry date to receive in-app reminders within 30, 14 and 7 days, on the expiry date, and once after expiry. Dates are checked daily.</p>}
     <fieldset disabled={!editable || state.saving || busy || exporting} className="grid min-w-0 gap-2 sm:grid-cols-2">{fields.map((field) => <StaffProfileQuestionField key={field.label} field={field} dateInputs answers={state.answers} onChange={change} />)}</fieldset>
     {definition.columns && <fieldset disabled={state.saving || busy || exporting}><EmployeeFormTable columns={definition.columns} rows={state.answers.__rows || []} onChange={(rows) => change('__rows', rows)} readOnly={!editable} /></fieldset>}
     <fieldset disabled={state.saving || exporting}><JourneyDocuments documents={state.answers.__documents || []} onChange={(documents) => change('__documents', documents)} readOnly={!editable} onBusy={setBusy} /></fieldset>

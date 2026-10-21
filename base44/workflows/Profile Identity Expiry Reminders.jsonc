@@ -1,0 +1,45 @@
+{
+  "description": "Check saved employee licence, rego and Medicare expiry dates daily; notify their registered owner within 30, 14 and 7 days, on expiry, and once after expiry without daily duplicates.",
+  "name": "Profile Identity Expiry Reminders",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "profile_identity_expiry_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "check_identity_expiries": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "profileIdentityExpiryReminders",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Check licence, rego and Medicare expiry",
+            "description": "Create personal in-app renewal reminders"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}
