@@ -11,19 +11,21 @@ import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { logUserAction } from '@/lib/actionLog';
 import { BadgeCheck, Download, Loader2, Save } from 'lucide-react';
 
+const chip = 'rounded-full bg-primary/10 px-2.5 py-1 text-foreground';
+
 /**
  * Colour-coded profile front page shared by staff and participants:
- * photo, ID numbers, contact numbers, start/end dates, About Me,
- * name tag (staff) and the details-check change log.
+ * standard 3cm app header (photo, name, role) followed by ID numbers, contact numbers,
+ * start/end dates, name tag (staff) and the profile summary panels.
  */
-export default function ProfileHeader({ profile, kind, onUpdated, compact = false }) {
+export default function ProfileHeader({ profile, kind, onUpdated }) {
   const { toast } = useToast();
 
   const [branding, setBranding] = useState(getCompanyBranding());
 
   const [makingTag, setMakingTag] = useState(false);
 
-  const { primary, accent } = profilePalette(profile.full_name);
+  const { primary } = profilePalette(profile.full_name);
   const isStaff = kind === 'staff';
 
   useEffect(() => {
@@ -67,39 +69,37 @@ export default function ProfileHeader({ profile, kind, onUpdated, compact = fals
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-      <div className={compact ? 'relative gradient-brand px-4 py-3 text-white' : 'relative gradient-brand px-6 py-6 text-white'}>
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(circle at 88% 8%, rgba(255,255,255,0.28), transparent 42%), radial-gradient(circle at 6% 95%, rgba(255,255,255,0.18), transparent 38%)' }} />
-        <div className={compact ? 'relative flex flex-wrap items-center gap-3' : 'relative flex flex-wrap items-center gap-5'}>
+      <div className="app-page-header relative flex items-center rounded-none px-4" style={{ background: 'var(--header-gradient)' }}>
+        <div className="relative flex w-full min-w-0 items-center gap-3">
           <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-bold">{profile.full_name}</h1>
+              <h1>{profile.full_name}</h1>
               <Badge className="border-0 bg-white/20 text-white">{profile.status}</Badge>
             </div>
-            <p className="text-sm text-white/85">{title}</p>
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-medium">
-              {isStaff && (profile.employee_number
-                ? <span className="rounded-full bg-white/20 px-2.5 py-1"><BadgeCheck className="mr-1 inline h-3 w-3" />Employee ID {profile.employee_number}</span>
-                : <Button size="sm" className="h-6 rounded-full px-2.5 text-[11px]" onClick={generateEmployeeId}><BadgeCheck className="h-3 w-3" />Generate employee ID</Button>)}
-              {!isStaff && profile.ndis_number && <span className="rounded-full bg-white/20 px-2.5 py-1">NDIS {profile.ndis_number}</span>}
-              {!isStaff && profile.ndis_reference_number && <span className="rounded-full bg-white/20 px-2.5 py-1">Ref {profile.ndis_reference_number}</span>}
-              {profile.phone && <span className="rounded-full bg-white/20 px-2.5 py-1">{profile.phone}</span>}
-              {profile.email && <span className="rounded-full bg-white/20 px-2.5 py-1">{profile.email}</span>}
-              {isStaff && profile.start_date && <span className="rounded-full bg-white/20 px-2.5 py-1">Start {profile.start_date}</span>}
-              {isStaff && profile.end_date && <span className="rounded-full bg-white/20 px-2.5 py-1">End {profile.end_date}</span>}
-            </div>
+            <p>{title}</p>
           </div>
-
         </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 p-3 text-xs font-medium">
+        {isStaff && (profile.employee_number
+          ? <span className={chip}><BadgeCheck className="mr-1 inline h-3 w-3" />Employee ID {profile.employee_number}</span>
+          : <Button size="sm" className="h-6 rounded-full px-2.5 text-[11px]" onClick={generateEmployeeId}><BadgeCheck className="h-3 w-3" />Generate employee ID</Button>)}
+        {!isStaff && profile.ndis_number && <span className={chip}>NDIS {profile.ndis_number}</span>}
+        {!isStaff && profile.ndis_reference_number && <span className={chip}>Ref {profile.ndis_reference_number}</span>}
+        {profile.phone && <span className={chip}>{profile.phone}</span>}
+        {profile.email && <span className={chip}>{profile.email}</span>}
+        {isStaff && profile.start_date && <span className={chip}>Start {profile.start_date}</span>}
+        {isStaff && profile.end_date && <span className={chip}>End {profile.end_date}</span>}
         {isStaff && (
-          <div className={compact ? 'mt-2 flex flex-wrap gap-2' : 'mt-4 flex flex-wrap gap-2'}>
-            <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" onClick={() => downloadStaffBadgePdf({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) })}>
+          <>
+            <Button size="sm" variant="outline" onClick={() => downloadStaffBadgePdf({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) })}>
               <Download className="h-3.5 w-3.5" />Download name tag
             </Button>
-            <Button size="sm" variant="secondary" className="bg-white/90 text-slate-900 hover:bg-white" disabled={makingTag} onClick={makeNameTag}>
+            <Button size="sm" variant="outline" disabled={makingTag} onClick={makeNameTag}>
               {makingTag ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Make name tag
             </Button>
-          </div>
+          </>
         )}
       </div>
 
