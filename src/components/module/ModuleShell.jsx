@@ -35,7 +35,7 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
   return (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
       <PageHeader
-        auditClassName="module-audit-buttons order-first basis-full justify-start"
+        auditClassName="module-audit-buttons ml-auto"
         title={title}
         subtitle={subtitle}
         icon={icon}
