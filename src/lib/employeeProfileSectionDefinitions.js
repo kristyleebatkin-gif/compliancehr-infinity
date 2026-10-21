@@ -15,11 +15,12 @@ export const EMPLOYEE_PROFILE_FORMS = {
   'Staff Availability': form('EMP-AVAILABILITY', ['Employee full name', 'Effective from date', 'Effective until date', 'Preferred weekly hours', 'Restrictions / preferences', 'Submitted date'], ['Day / date', 'Available / unavailable', 'Start time', 'End time', 'All day', 'Notes']),
 };
 export const EMPLOYEE_PROFILE_SECTION_FORMS = [
-  { title: 'Skills, Assessments & Training Plan', forms: ['Skill Assessment Form', 'Training Record', 'Staff Training Plan'] },
-  { title: 'Safety Checks & Risk Assessments', forms: ['Take Five Safety Check', 'Staff Safety Check', 'Staff Risk Assessment', 'Car Safety Check Form', 'Car Registration Details', "Driver's Licence Details"] },
-  { title: 'Performance, Appraisals & Goals', forms: ['Performance Review Schedule', 'Performance Review Form'] },
-  { title: 'Yellow Card, Blue Card & Screening', forms: ['Yellow Card Details', 'Blue Card Details', 'NDIS Worker Screening Clearance'] },
-  { title: 'Employment Documents & Declarations', forms: ['Employment Contract', 'Position Description', 'Staff Commitment Declaration Form', 'Secondary Employment Form'] },
-  { title: 'Reference Checks & Buddy Shifts', forms: ['Referee Checks Form', 'Buddy Shift Log'] },
-  { title: 'Availability', forms: ['Staff Availability'] },
+  { title: 'Skills, Assessments & Training Plan', tone: 'green', forms: ['Skill Assessment Form', 'Training Record', 'Staff Training Plan'] },
+  { title: 'Safety Checks & Risk Assessments', tone: 'red', forms: ['Take Five Safety Check', 'Staff Safety Check', 'Staff Risk Assessment', 'Car Safety Check Form', 'Car Registration Details'] },
+  { title: 'Performance, Appraisals & Goals', tone: 'purple', forms: ['Performance Review Schedule', 'Performance Review Form'] },
+  { title: "Driver's Licence & Expiry, Blue Card & Screening", tone: 'blue', forms: ["Driver's Licence Details", 'Blue Card Details', 'NDIS Worker Screening Clearance'] },
+  { title: 'Birth Certificate, Passport & Medicare Card', tone: 'orange', forms: ['Birth Certificate or Visa Details', 'Passport Details', 'Medicare Card Details'] },
+  { title: 'Employment Documents & Declarations', tone: 'teal', forms: ['Employment Contract', 'Position Description', 'Staff Commitment Declaration Form', 'Secondary Employment Form'] },
+  { title: 'Reference Checks & Buddy Shifts', tone: 'pink', forms: ['Referee Checks Form', 'Buddy Shift Log'] },
+  { title: 'Availability', tone: 'slate', forms: ['Staff Availability'] },
 ];
