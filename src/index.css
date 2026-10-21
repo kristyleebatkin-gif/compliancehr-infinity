@@ -469,6 +469,19 @@
   }
 }
 
+/* ===== WHITE THIN-BORDER CONTROLS — buttons, tabs, tiles and dashboards sit on white with a thin
+   border and at least 0.5cm apart. Headers are frozen and excluded. ===== */
+@layer utilities {
+  main [data-dashboard-tabs]:not(.app-page-header *) { gap: .5cm; background: transparent; box-shadow: none; padding: 0; }
+  main [data-dashboard-tab]:not(.app-page-header *)[data-state="inactive"] { background: #fff; }
+  main [data-dashboard-tab]:not(.app-page-header *) { border: 1px solid hsl(var(--border)); }
+  main .module-action-bar:not(.app-page-header *) { gap: .5cm; }
+  main :is(.dashboard-panel, [data-dashboard-module]):not(.app-page-header *) {
+    background: #fff;
+    border: 1px solid hsl(var(--border));
+  }
+}
+
 /* ===== LOCKED COLOUR RULE — never change unless the app owner explicitly asks =====
    Every screen, chart, data item and section uses ONLY:
    (1) bright pastel colours, (2) the exact colours of the 45 dashboard module tiles
