@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import ComplianceScore from '@/components/compliance/ComplianceScore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -72,23 +72,25 @@ export default function AuditorsPortal() {
 
   return (
     <div className="space-y-5">
-      <PageHeader
+      <ModuleShell
+        icon={ClipboardCheck}
         title="Auditor Portal"
         subtitle="Live read-only collaboration view for internal and external auditors: compliance evidence, audits, corrective actions and observation log."
-        showAlerts={false}
+        moduleKey="auditor-portal"
+        small={data ? [
+          ['Audits on record', audits.length],
+          ['Open corrective actions', data.openActions],
+          ['Overdue actions', data.overdueActions],
+          ['Auditor observations', data.observations.length],
+        ].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+        )) : undefined}
       />
 
       {data === null ? (
         <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-            <StatTile label="Audits on record" value={audits.length} tone="border-indigo-200 bg-indigo-500/10 text-indigo-700" />
-            <StatTile label="Open corrective actions" value={data.openActions} tone="border-amber-200 bg-amber-500/10 text-amber-700" />
-            <StatTile label="Overdue actions" value={data.overdueActions} tone="border-red-200 bg-red-500/10 text-red-700" />
-            <StatTile label="Auditor observations" value={data.observations.length} tone="border-teal-200 bg-teal-500/10 text-teal-700" />
-          </div>
-
           <Tabs defaultValue="audits">
             <TabsList>
               <TabsTrigger value="audits">Audits</TabsTrigger>

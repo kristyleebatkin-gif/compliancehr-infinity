@@ -19,7 +19,7 @@ import EventCalendar from '@/components/events/EventCalendar';
 import { format } from 'date-fns';
 import EventAdBuilder from '@/components/events/EventAdBuilder';
 import EventInviteDialog from '@/components/events/EventInviteDialog';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 
 const EMPTY = {
   title: '', type: 'Program', date: '', end_date: '', start_time: '', end_time: '',
@@ -141,16 +141,16 @@ export default function ProgramsEvents() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
+      <ModuleShell
         icon={PartyPopper}
         title="Program Design Centre"
         subtitle="Design community programs and events, advertise them and invite attendees."
-        action={[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
-          <span key={label} className="rounded-md border border-border/60 bg-muted/50 px-2 py-0.5 text-[11px] font-semibold">{label}: {value}</span>
+        moduleKey="programs"
+        insight={<AutoRegisterInsights placement="header" />}
+        small={[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
       />
-
-      <AutoRegisterInsights placement="header" />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>

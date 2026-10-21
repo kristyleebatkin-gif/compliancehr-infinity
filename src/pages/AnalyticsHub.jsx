@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Loader2, AlertCircle } from 'lucide-react';
@@ -88,11 +88,11 @@ export default function AnalyticsHub() {
 
   return (
     <div className="analytics-workspace compact-module space-y-2">
-      <PageHeader
+      <ModuleShell
         title="Business Analytics"
         subtitle="Live cross-module KPIs: revenue, sales outcomes, operations and workforce - exportable for the board pack."
         icon={BarChart3}
-        showAlerts={false}
+        moduleKey="analytics"
       />
 
       {loading && <Card><CardContent className="flex items-center justify-center gap-2 p-10 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Crunching the numbers...</CardContent></Card>}

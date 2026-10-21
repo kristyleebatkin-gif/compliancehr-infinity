@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
@@ -241,29 +241,27 @@ export default function ComplianceHub() {
 
   return (
     <div className="compact-module space-y-3">
-      <PageHeader
+      <ModuleShell
         icon={ShieldCheck}
         title="Compliance & Report Centre"
         subtitle="Policies, legal obligations and their review cycles."
-        showAlerts={false}
-        action={(
+        moduleKey="compliance"
+        insightModule="compliance"
+        search={<ComplianceGlobalSearch />}
+        actions={(
           <>
             <AuditPackButton />
             <WeeklyReportPdfButton />
             <BoardReportButton />
             <ComplianceHealthExportButton />
-            <Button asChild variant="outline"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
+            <Button asChild variant="outline" className="border-border bg-white text-black"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
             <AuditArchiveButton />
-            <Button variant="outline" onClick={exportCorrectiveRegister}>
+            <Button variant="outline" className="border-border bg-white text-black" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
             </Button>
           </>
         )}
       />
-
-      <RegisterInsights module="compliance" />
-
-      <ComplianceGlobalSearch />
 
       <Tabs defaultValue="standards-map">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
