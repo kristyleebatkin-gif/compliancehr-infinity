@@ -44,7 +44,7 @@ export default function AllModulesHub() {
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4">
         {modules.map((module) => {
           const Icon = module.icon;
           const color = moduleColour(module.label);
@@ -53,24 +53,24 @@ export default function AllModulesHub() {
             <Link
               key={module.key}
               to={module.path}
-              className="group relative flex min-h-40 flex-col overflow-hidden rounded-2xl border p-4 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
+              className="group relative flex min-h-28 flex-col overflow-hidden rounded-xl border p-2.5 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
               data-dashboard-module
               style={{ '--module-color': color }}
             >
               <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${color}, ${color}66)` }} />
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-2">
                 <div
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white transition-transform group-hover:scale-110"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white transition-transform group-hover:scale-110"
                   style={{ background: `linear-gradient(135deg, ${color}, ${color}dd)`, boxShadow: `0 8px 20px -8px ${color}aa` }}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-4 w-4" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-bold leading-tight text-foreground">{module.label}</div>
-                  <p className="mt-1 text-xs leading-relaxed text-foreground/60 line-clamp-3">{module.blurb}</p>
+                  <p className="mt-1 text-[11px] leading-4 text-foreground/60 line-clamp-2">{module.blurb}</p>
                 </div>
               </div>
-              <div className="mt-auto flex items-center justify-between pt-3">
+              <div className="mt-auto flex items-center justify-between gap-1 pt-1.5">
                 {status ? (
                   <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-foreground/55">
                     <span className="relative flex h-2 w-2">

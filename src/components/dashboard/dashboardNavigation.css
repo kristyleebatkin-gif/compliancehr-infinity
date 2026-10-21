@@ -5,8 +5,8 @@
   align-items: stretch;
   width: 100%;
   height: auto;
-  gap: .5rem;
-  padding: .5rem;
+  gap: .375rem;
+  padding: .375rem;
   border: 1px solid hsl(var(--primary) / .18);
   border-radius: .875rem;
   background: hsl(var(--card));
@@ -18,22 +18,23 @@
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 3.75rem;
+  min-height: 2.75rem;
   height: auto;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  gap: .375rem;
-  padding: .625rem .75rem;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: .25rem;
+  padding: .375rem .5rem;
   border: 1px solid hsl(var(--dashboard-tone) / .5);
-  border-inline-start-width: 4px;
-  border-radius: .75rem;
+  border-inline-start-width: 3px;
+  border-radius: .5rem;
   background: linear-gradient(125deg, hsl(var(--dashboard-tone) / .4), hsl(var(--dashboard-tone) / .18));
   color: hsl(var(--foreground));
   text-align: start;
   white-space: normal;
   overflow-wrap: anywhere;
-  font-size: .75rem;
+  font-size: .6875rem;
   font-weight: 750;
   line-height: 1.35;
   box-shadow: 0 2px 5px hsl(var(--dashboard-tone) / .08);
@@ -44,13 +45,7 @@
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+4) { --dashboard-tone: var(--safe); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5) { --dashboard-tone: var(--warning); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+6) { --dashboard-tone: var(--hr-evidence); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="primary"] { --dashboard-tone: var(--primary); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="blue"] { --dashboard-tone: var(--teal); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="pink"] { --dashboard-tone: var(--chart-5); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="safe"] { --dashboard-tone: var(--safe); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="warning"] { --dashboard-tone: var(--warning); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="danger"] { --dashboard-tone: var(--danger); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab][data-dashboard-tone="evidence"] { --dashboard-tone: var(--hr-evidence); }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+1) { --dashboard-tone: var(--primary); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) {
   background: linear-gradient(125deg, hsl(var(--dashboard-tone) / .58), hsl(var(--dashboard-tone) / .28));
   color: hsl(var(--foreground));
@@ -61,11 +56,15 @@
 }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 3px; }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:disabled { opacity: .5; }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab] svg { width: .875rem; height: .875rem; flex-shrink: 0; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab] > span + span { flex-basis: 100%; font-size: .625rem; line-height: 1.25; }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab] .text-muted-foreground { color: hsl(var(--foreground) / .85); }
 @media (min-width: 640px) {
   .app-readable [data-dashboard-tabs][role="tablist"], .app-readable nav[data-dashboard-tabs] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .app-readable [data-dashboard-tabs][role="tablist"], .app-readable nav[data-dashboard-tabs] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) {
+  .app-readable [data-dashboard-tabs][role="tablist"], .app-readable nav[data-dashboard-tabs] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
