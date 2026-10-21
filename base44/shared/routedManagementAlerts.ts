@@ -1,9 +1,10 @@
 const ROLES = {
   Incident: ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'],
   Risk: ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'],
+  Feedback: ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'],
   DataBreach: ['admin', 'Provider Administrator'],
 };
-const PATHS = { Incident: '/incidents', Risk: '/risks', DataBreach: '/documents' };
+const PATHS = { Incident: '/incidents', Risk: '/risks', Feedback: '/feedback', DataBreach: '/documents' };
 export async function notifyRoutedManagement(service, entity, recordId, type, message) {
   if (!ROLES[entity]) return 0;
   const records = await service.entities.User.list();
@@ -14,7 +15,7 @@ export async function notifyRoutedManagement(service, entity, recordId, type, me
       const key = { recipient_id: user.id, linked_entity_type: entity, linked_entity_id: recordId, type, message };
       const existing = await service.entities.Notification.filter(key, { limit: 1 });
       if (existing.items.length) return;
-      await service.entities.Notification.create({ ...key, recipient: user.full_name || user.email, read: false, action_url: entity === 'Incident' ? `/incidents/${encodeURIComponent(recordId)}` : PATHS[entity] });
+      await service.entities.Notification.create({ ...key, recipient: user.full_name || user.email, read: false, action_url: entity === 'Incident' ? `/incidents/${encodeURIComponent(recordId)}` : (PATHS[entity] || '/') });
       sent++;
     }));
   }

@@ -58,7 +58,8 @@ const GROUPS = [
     heading: 'Meetings & Manager Copies',
     items: [
       'Every meeting documented (minutes, attendees, actions)',
-      'Managers receive a copy of all incidents, risks, issues, concerns, tasks, corrective actions, feedback and follow-ups',
+      'Manager copies built in: every incident, risk and feedback is auto-routed to management the moment it is recorded',
+      'Corrective actions, tasks, issues, concerns and follow-ups also copied to management',
       'Follow-up review completed and recorded for records needing review',
     ],
   },

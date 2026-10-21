@@ -46,7 +46,8 @@ const ROUTES = {
     descFields: ['message', 'comments', 'description'],
     personFields: ['participant_name', 'staff_name'],
     ownerFields: ['recorded_by'],
-    notify: false,
+    notify: true,
+    notifyType: 'Feedback Manager Copy',
   },
   Risk: {
     // report_type: Risk / Hazard / Near Miss -> matching register
@@ -61,8 +62,7 @@ const ROUTES = {
     personFields: ['participant_name'],
     ownerFields: ['owner'],
     notify: true,
-    notifyType: 'General',
-    notifyWhen: (rec) => ['High', 'Critical'].includes(rec?.rating),
+    notifyType: 'Risk Manager Copy',
   },
   GoalProgressNote: {
     register: () => 'Goal Progress Register',

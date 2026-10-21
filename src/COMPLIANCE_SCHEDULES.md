@@ -33,6 +33,10 @@ Reference list shown on every employee and participant profile via the
 - **Managers receive a copy of all**: incidents, risks, issues, concerns, tasks,
   corrective actions, feedback and follow-ups. Most need a follow-up review
   completed and recorded.
+- **Built (2026-10-22):** every incident, risk (any rating) and feedback is
+  auto-routed to a manager copy the moment it is recorded — a Notification to
+  admin, Provider Administrator, Compliance Manager and Administration users,
+  linked to the record, plus its register entry.
 
 ## NDIS registration audits
 Evidence pack and registration groups kept audit-ready, drawing on the
