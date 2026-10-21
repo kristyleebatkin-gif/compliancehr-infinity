@@ -1,6 +1,7 @@
 import React from 'react';
 import DashboardTile from './DashboardTile';
 import MyAvailability from '@/components/rostering/MyAvailability';
+import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipantProfiles';
 import { useRole } from '@/lib/useRole';
 import {
   UserPlus, FolderOpen, Users, Megaphone,
@@ -31,6 +32,7 @@ export default function StaffDashboard() {
   return (
     <div className="space-y-4">
       <MyAvailability />
+      <ApprovedParticipantProfiles />
 
       <div>
         <div className="mb-3 text-base font-semibold">Your Tools</div>
