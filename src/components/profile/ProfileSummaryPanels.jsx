@@ -26,7 +26,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
     <aside className="min-w-0 space-y-2">
       <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
-      <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><StaffCommPanel staff={profile} /></EmployeeProfileSection>
+      <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
       <ProfileLoggedSections profile={profile} />
     </aside>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>

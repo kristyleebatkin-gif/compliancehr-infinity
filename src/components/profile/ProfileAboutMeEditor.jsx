@@ -24,7 +24,7 @@ export default function ProfileAboutMeEditor({ profile, kind, onUpdated, compact
     } catch (failure) { setError(failure.message); }
     finally { setSaving(false); }
   };
-  return <section className={`min-w-0 rounded-xl border border-primary/25 bg-primary/5 ${compact ? 'p-2' : 'p-3'}`}>
+  return <section className={`min-w-0 rounded-xl border border-primary/25 bg-primary/5 ${compact ? 'profile-uniform-box p-2' : 'p-3'}`}>
     <label htmlFor={`about-${kind}-${profile.id}`} className="mb-2 flex items-center gap-2 text-sm font-semibold"><Sparkles className="h-4 w-4 text-primary" />About Me</label>
     <Textarea id={`about-${kind}-${profile.id}`} rows={compact ? 2 : 3} value={value} disabled={saving} onChange={(event) => { setValue(event.target.value); setSaved(false); }} placeholder="Interests, story and anything to share." />
     <div className="mt-2 flex items-center justify-end gap-2">{saved && <span role="status" className="text-xs text-safe">Saved</span>}<Button size="sm" variant="outline" disabled={saving || value === (profile.about_me || '')} onClick={save}>{saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save About Me</Button></div>

@@ -21,7 +21,7 @@ export default function ParticipantSummaryPanels({ profile, onUpdated }) {
       <ParticipantAuthorisationCard participant={profile} type="sharing" onUpdated={onUpdated} />
       <ParticipantAuthorisationCard participant={profile} type="advocacy" onUpdated={onUpdated} />
       <ParticipantAuthorisationCard participant={profile} type="medication" onUpdated={onUpdated} />
-      <EmployeeProfileSection title="Communication Logs & Records" tone="blue"><ProfileCommDiary participant={profile} /></EmployeeProfileSection>
+      <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><ProfileCommDiary participant={profile} /></EmployeeProfileSection>
       <ProfileLoggedSections profile={profile} />
     </aside>
     <p className="min-w-0 rounded-lg border border-border bg-muted/30 px-2 py-1 text-[10px] text-muted-foreground md:col-span-2">Saved details, required intake forms and readiness belong to this participant. Consent decisions include who recorded them and when; consent is never assumed.</p>

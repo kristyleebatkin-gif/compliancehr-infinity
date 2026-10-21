@@ -23,8 +23,8 @@ function Acknowledgements({ profile }) {
 export default function ProfileLoggedSections({ profile }) {
   const lines = String(profile.change_log || '').split('\n').filter(Boolean).reverse();
   return <>
-    <EmployeeProfileSection title="Logged Audit Consent" tone="pink"><LogList lines={lines.filter((l) => CONSENT.test(l))} empty="No audit consent changes logged yet." /></EmployeeProfileSection>
-    <EmployeeProfileSection title="Logged Detail Changes" tone="green"><LogList lines={lines.filter((l) => !CONSENT.test(l))} empty="No detail changes logged yet." /></EmployeeProfileSection>
-    <EmployeeProfileSection title="Logged Acknowledgements" tone="orange"><Acknowledgements profile={profile} /></EmployeeProfileSection>
+    <EmployeeProfileSection title="Logged Audit Consent" tone="pink" uniform><LogList lines={lines.filter((l) => CONSENT.test(l))} empty="No audit consent changes logged yet." /></EmployeeProfileSection>
+    <EmployeeProfileSection title="Logged Detail Changes" tone="green" uniform><LogList lines={lines.filter((l) => !CONSENT.test(l))} empty="No detail changes logged yet." /></EmployeeProfileSection>
+    <EmployeeProfileSection title="Logged Acknowledgements" tone="orange" uniform><Acknowledgements profile={profile} /></EmployeeProfileSection>
   </>;
 }

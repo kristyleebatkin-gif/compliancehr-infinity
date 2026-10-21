@@ -30,6 +30,12 @@ html body .my-profile-pastels :is(.border, .border-t, .border-b, .border-l, .bor
   border-color: transparent !important;
   --tw-ring-color: transparent !important;
 }
+/* About Me, Employee Journey, Communication Logs and the Logged sections share one box size. */
+html body .my-profile-pastels .profile-uniform-box {
+  height: 9.5rem !important;
+  overflow-y: auto !important;
+  box-sizing: border-box;
+}
 /* Section headers are all the same compact size (as Staff Information). */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
