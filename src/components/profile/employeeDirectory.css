@@ -53,8 +53,6 @@
 .employee-directory .profile-card-grid {
   gap: .5cm !important;
 }
-.employee-directory .app-page-header { border: 1px solid black; }
-.employee-directory .app-page-header h1 { font-size: 1.875rem; line-height: 1.2; }
 @media (min-width: 640px) {
   .employee-directory .employee-paired-sections {
     display: grid;

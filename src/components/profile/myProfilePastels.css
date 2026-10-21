@@ -1,15 +1,3 @@
-.my-profile-pastels {
-  --header-gradient: linear-gradient(115deg, hsl(var(--profile-sky)), hsl(var(--profile-lilac)), hsl(var(--profile-rose)));
-  --section-header-gradient: var(--header-gradient);
-  --header-foreground: var(--foreground);
-}
-.my-profile-pastels .my-profile-heading :is(h1, p, .text-white),
-.my-profile-pastels .gradient-brand :is(.text-primary-foreground, .text-white, [class*="text-white/"]),
-.my-profile-pastels .gradient-brand.text-primary-foreground,
-.my-profile-pastels .gradient-brand.text-white {
-  color: hsl(var(--foreground));
-}
-.my-profile-pastels .my-profile-heading p { color: hsl(var(--muted-foreground)); }
 .app-readable .my-profile-pastels [data-dashboard-tabs] { background: hsl(var(--card)); }
 .app-readable .my-profile-pastels [data-dashboard-tabs] > [data-dashboard-tab] {
   --profile-tone: var(--profile-lilac);
