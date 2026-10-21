@@ -13,7 +13,8 @@ Card.displayName = "Card"
 const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("app-section-card-header flex flex-col space-y-1.5 rounded-t-xl border-b border-primary/15 p-6", className)}
+    style={{ background: 'var(--section-header-gradient)' }}
     {...props} />
 ))
 CardHeader.displayName = "CardHeader"

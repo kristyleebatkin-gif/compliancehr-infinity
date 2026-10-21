@@ -25,6 +25,10 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 262 83% 58%;
+    --header-blue: 221 83% 53%;
+    --header-pink: 330 81% 60%;
+    --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(var(--brand)) 52%, hsl(var(--header-pink)) 100%);
+    --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .16), hsl(var(--brand) / .18) 52%, hsl(var(--header-pink) / .14));
     --brand: 262 83% 58%;
     --brand-foreground: 0 0% 100%;
     --teal: 217 91% 60%;
@@ -78,6 +82,10 @@
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 262 83% 66%;
+    --header-blue: 221 83% 53%;
+    --header-pink: 330 81% 60%;
+    --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(262 83% 58%) 52%, hsl(var(--header-pink)) 100%);
+    --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .2), hsl(var(--brand) / .22) 52%, hsl(var(--header-pink) / .18));
     --brand: 262 83% 66%;
     --brand-foreground: 0 0% 100%;
     --teal: 217 91% 67%;
@@ -194,7 +202,7 @@
     color: hsl(0 0% 100%);
   }
   .gradient-brand {
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
+    background: var(--header-gradient);
   }
   .gradient-brand-soft {
     background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(236,72,153,0.08) 100%);

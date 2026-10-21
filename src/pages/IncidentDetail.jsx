@@ -48,9 +48,9 @@ export default function IncidentDetail() {
       <Link to="/incidents" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:underline"><ArrowLeft className="h-4 w-4" /> All Incidents</Link>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
+        <div className="gradient-brand flex-1 rounded-2xl p-4 text-primary-foreground">
           <h1 className="text-2xl font-bold font-display">{item.title}</h1>
-          {item.incident_id && <p className="text-sm text-foreground/50">{item.incident_id}</p>}
+          {item.incident_id && <p className="text-sm text-primary-foreground">{item.incident_id}</p>}
         </div>
         {canReview && <div className="flex gap-2">
           <Link to={`/incidents/${item.id}/edit`} className="flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium hover:bg-muted"><Pencil className="h-4 w-4" /> Edit</Link>

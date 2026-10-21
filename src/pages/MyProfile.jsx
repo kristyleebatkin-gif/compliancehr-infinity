@@ -153,10 +153,10 @@ export default function MyProfile() {
         showAlerts={false} showCompliance={false} showAudit={false}
       />
 
-      {!isParticipant && participantProfile && <div className="flex flex-wrap gap-2">
-        <Button variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>
-        <Button variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My participant profile</Button>
-      </div>}
+      {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views">
+        <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>
+        <Button data-dashboard-tab="" data-dashboard-tone="pink" aria-pressed={tab === 'participant-details'} variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My participant profile</Button>
+      </nav>}
       {loadError ? <ProfileLoadError error={loadError} onRetry={load} /> : !(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
         const secondary = tab === 'participant-details' && participantProfile;
         const person = secondary || profile;

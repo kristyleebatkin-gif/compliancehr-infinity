@@ -19,7 +19,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon, classN
     <div
       className={cn('relative overflow-hidden rounded-2xl p-3.5 shadow-lg sm:flex sm:flex-col sm:items-start sm:gap-2 sm:p-4 md:flex-row md:items-center md:justify-between md:gap-4', className)}
       style={{
-        background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)',
+        background: 'var(--header-gradient)',
         boxShadow: '0 10px 30px -16px rgba(124, 58, 237, 0.45), 0 2px 5px rgba(15, 23, 42, 0.05)'
       }}
     >
