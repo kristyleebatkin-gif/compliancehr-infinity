@@ -18,7 +18,7 @@ import { Search, ChevronRight, Users, Heart, Mail, Phone, UserCheck, Clock } fro
 // Admin view: every employee or participant profile in the organisation,
 // grouped into modular sections with search and quick filters. Staff and
 // participants see only their own profile in their matching module.
-export default function OurProfilesTab({ kind, basePath, scoped = true, directory = false, searchValue = '', groupValue = 'all', onGroupChange, categories = [] }) {
+export default function OurProfilesTab({ kind, basePath, scoped = true, directory = false, searchValue = '', groupValue = 'all', onGroupChange, categories = [], total }) {
   const isParticipant = kind === 'participant';
   const profilePath = basePath || (isParticipant ? '/our-participants' : '/our-employees');
   const { role, user } = useRole();
@@ -153,7 +153,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
       </div>}
 
       {/* Profile categories sit below the dashboard. */}
-      {directory ? (!isParticipant && <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} />) : filterRow}
+      {directory ? (!isParticipant && <EmployeeCategoryTiles categories={categories} selected={group} onSelect={setGroup} total={total} />) : filterRow}
       </>}
 
       {/* Modular grouped sections */}
