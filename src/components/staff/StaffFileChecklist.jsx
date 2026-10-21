@@ -164,7 +164,7 @@ export default function StaffFileChecklist({ staff }) {
   return (
     <div className="space-y-4">
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-gradient-to-r from-teal-50 via-cyan-50 to-blue-50 px-5 py-3 dark:from-teal-950/30 dark:via-cyan-950/30 dark:to-blue-950/30">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-white px-5 py-3">
           <div className="flex items-center gap-2">
             <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><FileCheck2 className="h-4 w-4" /></span>
             <span className="text-sm font-bold">Staff file checklist (online)</span>

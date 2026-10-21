@@ -56,7 +56,7 @@ export default function StaffRecordsTab({ staff }) {
   return (
     <div className="space-y-6">
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-pink-50 via-violet-50 to-blue-50 px-5 py-3 dark:from-pink-950/30 dark:via-violet-950/30 dark:to-blue-950/30">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-white px-5 py-3">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Users className="h-4 w-4" /></span>
           <span className="text-sm font-bold">Buddy training shifts ({shifts.length})</span>
         </div>
@@ -75,7 +75,7 @@ export default function StaffRecordsTab({ staff }) {
         ) : (
           <div className="space-y-2">
             {shifts.map((s) => (
-              <div key={s.id} className="flex items-start justify-between gap-2 rounded-lg border border-border/60 bg-gradient-to-r from-pink-50/60 to-blue-50/60 p-3 dark:from-pink-950/20 dark:to-blue-950/20">
+              <div key={s.id} className="flex items-start justify-between gap-2 rounded-lg border border-border/60 bg-white p-3">
                 <div className="min-w-0">
                   <p className="text-sm font-medium">{s.date} · {s.shift}</p>
                   <p className="text-xs text-muted-foreground">Buddy: {s.buddy_supervisor || 'Not recorded'}{s.comments ? ` · ${s.comments}` : ''}</p>
@@ -91,7 +91,7 @@ export default function StaffRecordsTab({ staff }) {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-blue-50 via-violet-50 to-pink-50 px-5 py-3 dark:from-blue-950/30 dark:via-violet-950/30 dark:to-pink-950/30">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-white px-5 py-3">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><GraduationCap className="h-4 w-4" /></span>
           <span className="text-sm font-bold">Training completions ({completions.length})</span>
         </div>
@@ -115,7 +115,7 @@ export default function StaffRecordsTab({ staff }) {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
-        <div className="flex items-center gap-2 border-b border-border/60 bg-gradient-to-r from-violet-50 via-pink-50 to-blue-50 px-5 py-3 dark:from-violet-950/30 dark:via-pink-950/30 dark:to-blue-950/30">
+        <div className="flex items-center gap-2 border-b border-border/60 bg-white px-5 py-3">
           <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg text-white"><Award className="h-4 w-4" /></span>
           <span className="text-sm font-bold">Training certificates ({certificates.length})</span>
         </div>

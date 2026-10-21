@@ -132,7 +132,7 @@ export default function StaffRecognition() {
           const e = rows.entries[i];
           const Icon = p.icon;
           return (
-            <div key={p.label} className={`overflow-hidden rounded-2xl border bg-gradient-to-br p-5 shadow-sm ${e ? p.chip : 'from-muted/40 to-transparent border-border opacity-50'}`}>
+            <div key={p.label} className={`overflow-hidden rounded-2xl border bg-white p-5 shadow-sm ${e ? 'border-border' : 'border-border opacity-50'}`}>
               <div className="flex items-center justify-between">
                 <Icon className="h-6 w-6" />
                 <span className="text-[10px] font-extrabold uppercase tracking-widest">{p.label}</span>
