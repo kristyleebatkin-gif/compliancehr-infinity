@@ -28,6 +28,7 @@ import IntakeCaseList from '@/components/intake/IntakeCaseList';
 import IntakeBulkImport from '@/components/intake/IntakeBulkImport';
 import IntakeCaseDetail from '@/components/intake/IntakeCaseDetail';
 import IntakeCaseDocuments from '@/components/intake/IntakeCaseDocuments';
+import IntakeResumeUpload from '@/components/intake/IntakeResumeUpload';
 import IntakeOnlineFormDialog from '@/components/intake/IntakeOnlineFormDialog';
 import IntakeAcknowledgementDialog from '@/components/intake/IntakeAcknowledgementDialog';
 import { STATUS_CLASS, STATUS_ORDER, TERMINAL_STATUSES } from '@/components/intake/intakeDisplay';
@@ -993,6 +994,10 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
 
   if (profileView && profileLoading) return <div role="status" className="py-8 text-sm text-muted-foreground">Loading employee intake…</div>;
   if (profileView && profileError) return <div role="alert" className="rounded-xl border border-destructive/30 p-4 text-sm text-destructive">{profileError}<Button variant="outline" className="ml-3" onClick={() => { setProfileError(''); setProfileLoading(true); load().catch((error) => setProfileError(error.message)).finally(() => setProfileLoading(false)); }}>Retry</Button></div>;
+
+  if (profileView === 'resume') return activeCase
+    ? <IntakeResumeUpload activeCase={activeCase} document={docForCheck('Resume')} uploadingDoc={uploadingDoc} busy={busy} onUpload={uploadDocument} onView={viewDocument} allowUpload />
+    : <p className="text-xs text-muted-foreground">No linked employee intake record found.</p>;
 
   return (
     <div className="space-y-3">

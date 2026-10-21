@@ -9,6 +9,7 @@ import EmployeeJourney from '@/components/profile/EmployeeJourney';
 import EmployeeRemainingSections from '@/components/profile/EmployeeRemainingSections';
 import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection';
 import StaffCommPanel from '@/components/communications/StaffCommPanel';
+import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 
 export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff' }) {
   if (staffQuestions) return <div className="grid items-start gap-3 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)]">
@@ -16,6 +17,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       <StaffBadgePreview branding={branding} staff={profile} compact />
       <StaffProfileQuestionForm profile={profile} title="Staff Information Form" />
       <StaffProfileQuestionForm profile={profile} title="Staff Onboarding Form" />
+      <EmployeeProfileSection title="Résumé" tone="teal"><IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="resume" /></EmployeeProfileSection>
       <EmployeeRemainingSections key={profile.id} profile={profile} />
       <EmployeeRecordNotice />
     </div>
