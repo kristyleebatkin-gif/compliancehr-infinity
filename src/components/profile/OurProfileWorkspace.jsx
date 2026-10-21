@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { Loader2, FileText, ClipboardList } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import OurProfileModuleList from '@/components/profile/OurProfileModuleList';
 import OurProfileData from '@/components/profile/OurProfileData';
@@ -8,11 +8,16 @@ import ApprovedParticipantProfiles from '@/components/profile/ApprovedParticipan
 
 export default function OurProfileWorkspace({ profile, kind, header, onUpdated, details, ourView = true, extraModules = [], moduleOverrides = {}, personal = false }) {
   const [params, setParams] = useSearchParams();
+  const personalStaff = personal && kind === 'staff';
   const modules = [...OurProfileModuleList({ kind, profile, ourView,
     details: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
-  }), ...extraModules].map((module) => ({ ...module, content: moduleOverrides[module.key] || module.content }));
-  const legacy = personal ? ({ work: 'work', documents: 'documents', 'name-tags': 'name-tag' }[params.get('tab')]) : null;
+  }), ...extraModules].flatMap((module) => personalStaff && module.key === 'details' ? [
+    { ...module, label: 'Documents', content: <OurProfileData personal contentOnly profile={profile} kind={kind} /> },
+    { key: 'forms', label: 'Fillable Forms', Icon: FileText, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="forms" /> },
+    { key: 'files', label: 'File Checklist', Icon: ClipboardList, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="files" /> },
+  ] : [module]).map((module) => ({ ...module, content: moduleOverrides[module.key] || module.content }));
+  const legacy = personal ? ({ work: 'work', documents: 'documents', forms: 'forms', files: 'files', 'name-tags': 'name-tag' }[params.get('tab')]) : null;
   const selected = modules.find((module) => module.key === (params.get('module') || legacy)) || modules[0];
   const selectModule = (key) => {
     const next = new URLSearchParams(params);
