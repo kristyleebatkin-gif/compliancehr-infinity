@@ -10,6 +10,8 @@ import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import OurProfileData from '@/components/profile/OurProfileData';
 import PersonalProfileHeader from '@/components/profile/PersonalProfileHeader';
 import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
+import { loadProfileWithTimeout } from '@/lib/profileLoading';
+import ProfileLoadError from '@/components/profile/ProfileLoadError';
 
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
@@ -48,6 +50,7 @@ export default function MyProfile() {
   const [form, setForm] = useState({});
   const [participantForm, setParticipantForm] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -55,35 +58,35 @@ export default function MyProfile() {
   const setTab = (value) => setSearchParams(value === 'details' ? {} : { tab: value }, { replace: true });
 
   const load = useCallback(async () => {
+    setLoading(true);
+    setLoadError(null);
     try {
-      await preparePersonalProfileAccess();
-      const user = await base44.auth.me();
+      const { user, prof, pProf } = await loadProfileWithTimeout(async () => {
+        await preparePersonalProfileAccess();
+        const user = await base44.auth.me();
+        if (!user?.email) throw new Error('Your account could not be loaded. Please sign in again.');
+        const participant = user.role === 'Participant';
+        const entity = participant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
+        const [page, participantPage] = await Promise.all([
+          entity.filter({ email: user.email }, { limit: 1 }),
+          participant ? Promise.resolve({ items: [] }) : base44.entities.ParticipantProfile.filter({ email: user.email }, { limit: 1 }),
+        ]);
+        return { user, prof: page.items?.[0] || null, pProf: participantPage.items?.[0] || null };
+      });
       setMe(user);
-      const isParticipant = user.role === 'Participant';
-      if (!isParticipant) {
-        try {
-          const pPage = await base44.entities.ParticipantProfile.filter({ email: user.email }, { limit: 1 });
-          const pProf = (pPage.items || [])[0] || null;
-          setParticipantProfile(pProf);
-          if (pProf) {
-            const pInitial = {};
-            PARTICIPANT_FIELDS.forEach(([key]) => { pInitial[key] = pProf[key] || ''; });
-            setParticipantForm(pInitial);
-          }
-        } catch (e) { console.error(e); }
-      }
-      const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-      const page = await entity.filter({ email: user.email }, { limit: 1 });
-      const prof = (page.items || [])[0] || null;
       setProfile(prof);
-      if (prof) {
-        const fields = isParticipant ? PARTICIPANT_FIELDS : STAFF_FIELDS;
-        const initial = {};
-        fields.forEach(([key]) => { initial[key] = prof[key] || ''; });
-        setForm(initial);
-      }
-    } catch (e) { console.error(e); }
-    setLoading(false);
+      setParticipantProfile(pProf);
+      const initial = {};
+      (user.role === 'Participant' ? PARTICIPANT_FIELDS : STAFF_FIELDS).forEach(([key]) => { initial[key] = prof?.[key] || ''; });
+      setForm(initial);
+      const pInitial = {};
+      PARTICIPANT_FIELDS.forEach(([key]) => { pInitial[key] = pProf?.[key] || ''; });
+      setParticipantForm(pInitial);
+    } catch (error) {
+      setLoadError(error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -154,7 +157,7 @@ export default function MyProfile() {
         <Button variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>
         <Button variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My participant profile</Button>
       </div>}
-      {!(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
+      {loadError ? <ProfileLoadError error={loadError} onRetry={load} /> : !(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
         const secondary = tab === 'participant-details' && participantProfile;
         const person = secondary || profile;
         const kind = secondary || isParticipant ? 'participant' : 'staff';

@@ -16,7 +16,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
   const notPermitted = scoped && !loading && !error && participant && ((role === ROLES.PARTICIPANT && participant.email !== (user?.email || '')) || (role === ROLES.SUPPORT && !participant.admin_approved));
   if (loading || error || !participant || notPermitted) {
     if (notPermitted) return <ProfileLoadState backTo={backTo} label={backLabel} error message={role === ROLES.SUPPORT ? 'This participant profile has not been approved for employee access.' : 'You can only view your own participant profile.'} />;
-    return <ProfileLoadState loading={loading} error={error} backTo={backTo} label={backLabel} />;
+    return <ProfileLoadState loading={loading} error={error} backTo={backTo} label={backLabel} onRetry={refresh} />;
   }
   return (
     <div className="space-y-4">

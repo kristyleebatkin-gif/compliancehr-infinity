@@ -16,7 +16,7 @@ export default function OurEmployeeDetail({ backTo = '/our-employees', backLabel
   const notPermitted = scoped && !loading && !error && employee && role === ROLES.SUPPORT && employee.email !== (user?.email || '');
   if (loading || error || !employee || notPermitted) {
     if (notPermitted) return <ProfileLoadState backTo={backTo} label={backLabel} error message="You can only view your own employee profile." />;
-    return <ProfileLoadState loading={loading} error={error} backTo={backTo} label={backLabel} />;
+    return <ProfileLoadState loading={loading} error={error} backTo={backTo} label={backLabel} onRetry={refresh} />;
   }
   return (
     <div className="space-y-4">

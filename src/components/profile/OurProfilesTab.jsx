@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import EmptyState from '@/components/EmptyState';
+import ProfileLoadError from '@/components/profile/ProfileLoadError';
+import { loadProfileWithTimeout } from '@/lib/profileLoading';
 import { profilePalette } from '@/lib/profileColours';
 import { statusTone } from '@/lib/statusStyles';
 import { useRole, ROLES } from '@/lib/useRole';
@@ -24,6 +26,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [group, setGroup] = useState('all');
+  const [reload, setReload] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -32,17 +35,22 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
     setError('');
     (async () => {
       try {
-        if (!user?.id) return;
-        if (scoped) await preparePersonalProfileAccess();
-        const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
-        const query = scoped ? profileRecordScope(role, user, isParticipant ? 'ParticipantProfile' : 'StaffProfile') : {};
-        const page = await entity.filter(query, { sort: 'full_name', limit: 200 });
+        const page = await loadProfileWithTimeout(async () => {
+          if (!user?.id) throw new Error('Your account could not be loaded. Please sign in again.');
+          if (scoped) await preparePersonalProfileAccess();
+          const entity = isParticipant ? base44.entities.ParticipantProfile : base44.entities.StaffProfile;
+          const query = scoped ? profileRecordScope(role, user, isParticipant ? 'ParticipantProfile' : 'StaffProfile') : {};
+          return entity.filter(query, { sort: 'full_name', limit: 200 });
+        });
         if (active) setRecords(page.items || []);
-      } catch (e) { if (active) setError(e.message || 'Unable to load your profile.'); }
-      if (active) setLoading(false);
+      } catch (e) {
+        if (active) setError(e);
+      } finally {
+        if (active) setLoading(false);
+      }
     })();
     return () => { active = false; };
-  }, [isParticipant, selfOnly, scoped, role, user?.id, user?.email]);
+  }, [isParticipant, selfOnly, scoped, role, user?.id, user?.email, reload]);
 
   const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
@@ -91,7 +99,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true }) {
     return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
 
-  if (error) return <div role="alert" className="rounded-xl border border-destructive/30 bg-card p-4 text-destructive">{error}</div>;
+  if (error) return <ProfileLoadError error={error} onRetry={() => setReload((value) => value + 1)} />;
 
   if (!records.length) {
     return <EmptyState icon={Users} title={selfOnly ? 'Your profile is not set up yet' : 'No profiles yet'} message={selfOnly ? 'Your profile will appear here once management creates it and links your email.' : (isParticipant ? 'Participant profiles will appear here once created.' : 'Employee profiles will appear here once created.')} modulePath={isParticipant ? 'participants' : 'staff'} />;
