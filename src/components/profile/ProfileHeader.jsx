@@ -11,7 +11,7 @@ import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { logUserAction } from '@/lib/actionLog';
 import { BadgeCheck, Download, Loader2, Save } from 'lucide-react';
 
-const chip = 'rounded-full bg-primary/10 px-2.5 py-1 text-foreground';
+const chip = 'rounded-full bg-primary/10 px-2 py-0.5 text-[11px] text-foreground';
 
 /**
  * Colour-coded profile front page shared by staff and participants:
@@ -72,7 +72,6 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
     <div className="overflow-hidden rounded-2xl border border-border/60 bg-card">
       <div className="app-page-header relative flex items-center rounded-none px-4" style={{ background: 'var(--header-gradient)' }}>
         <div className="relative flex w-full min-w-0 items-center gap-3">
-          <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <h1>{profile.full_name}</h1>
@@ -80,9 +79,10 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
             </div>
             <p>{title}</p>
           </div>
+          <div className="shrink-0"><ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} /></div>
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-2 p-3 text-xs font-medium">
+      <div className="flex flex-wrap items-center gap-1.5 p-2 text-[11px] font-medium">
         {isStaff && (profile.employee_number
           ? <span className={chip}><BadgeCheck className="mr-1 inline h-3 w-3" />Employee ID {profile.employee_number}</span>
           : <Button size="sm" className="h-6 rounded-full px-2.5 text-[11px]" onClick={generateEmployeeId}><BadgeCheck className="h-3 w-3" />Generate employee ID</Button>)}

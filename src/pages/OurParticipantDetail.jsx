@@ -22,7 +22,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
   }
   return (
     <div className="my-profile-pastels mx-auto max-w-6xl p-3 md:p-5 space-y-4">
-      <PageHeader title={participant.full_name || 'Participant profile'} subtitle="Participant profile, plan, support team, documents and safeguards in one place." />
+      <PageHeader title="Participant profile" subtitle="Participant profile, plan, support team, documents and safeguards in one place." />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button variant="ghost" size="sm" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel}</Link></Button>
         <div className="flex flex-wrap items-center gap-2">

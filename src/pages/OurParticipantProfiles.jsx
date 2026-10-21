@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, UserRound } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import ParticipantDirectoryDashboard from '@/components/profile/ParticipantDirectoryDashboard';
 import '@/components/profile/employeeDirectory.css';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import OurProfilesTab from '@/components/profile/OurProfilesTab';
-import { Button } from '@/components/ui/button';
+import MyProfileTabLink from '@/components/profile/MyProfileTabLink';
 import '@/components/profile/myProfilePastels.css';
 
 export default function OurParticipantProfiles({ basePath = '/our-participants', scoped = true, title = 'Our participant profiles' }) {
@@ -18,12 +17,12 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
         title={title}
         icon={Heart}
         moduleKey="our-participants"
-        actions={<Button asChild variant="outline"><Link to="/my-profile"><UserRound />My profile</Link></Button>}
+        tabs={<MyProfileTabLink />}
         search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search participants…" />}
         insightModule="participants"
       >
-        <ParticipantDirectoryDashboard scoped={scoped} selected={status} onSelect={setStatus} />
-        <OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} />
+        <div className="px-2 py-2"><ParticipantDirectoryDashboard scoped={scoped} selected={status} onSelect={setStatus} /></div>
+        <div className="mt-[1cm]"><OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} /></div>
       </ModuleShell>
     </div>
   );

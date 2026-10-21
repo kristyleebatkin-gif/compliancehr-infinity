@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, UserRound, Users } from 'lucide-react';
+import { TrendingUp, Users } from 'lucide-react';
 import EmployeeDirectorySummary from '@/components/profile/EmployeeDirectorySummary';
 import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
 import useEmployeeDirectorySummary from '@/components/profile/useEmployeeDirectorySummary';
@@ -8,10 +8,10 @@ import '@/components/profile/employeeDirectory.css';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import OurProfilesTab from '@/components/profile/OurProfilesTab';
+import MyProfileTabLink from '@/components/profile/MyProfileTabLink';
 import { lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRole } from '@/lib/useRole';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const StaffProgressDashboard = lazy(() => import('@/pages/StaffProgressDashboard'));
 
@@ -35,17 +35,17 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
           title={title}
           icon={Users}
           moduleKey="our-staff"
-          tabs={<TabsList className="w-auto">
-            <TabsTrigger value="profiles">Employee profiles</TabsTrigger>
-            {progressAllowed && <TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger>}
-          </TabsList>}
-          actions={<Button asChild variant="outline"><Link to="/my-profile"><UserRound />My profile</Link></Button>}
+          tabs={<div className="flex flex-wrap items-center gap-1.5">
+            <TabsList className="w-auto"><TabsTrigger value="profiles">Employee profiles</TabsTrigger></TabsList>
+            <MyProfileTabLink />
+            {progressAllowed && <TabsList className="w-auto"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
+          </div>}
           search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search employees…" />}
           insightModule="staff"
         >
-          <EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} />
-          {tab === 'profiles' && <EmployeeCategoryTiles categories={summary.data?.categories || []} selected={category} onSelect={setCategory} total={summary.data?.total} />}
-          <TabsContent value="profiles"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></TabsContent>
+          <div className="px-2 py-2"><EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} /></div>
+          {tab === 'profiles' && <div className="px-2 py-2"><EmployeeCategoryTiles categories={summary.data?.categories || []} selected={category} onSelect={setCategory} total={summary.data?.total} /></div>}
+          <TabsContent value="profiles"><div className="mt-[1cm]"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
         </ModuleShell>
       </Tabs>

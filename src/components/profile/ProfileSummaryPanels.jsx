@@ -37,10 +37,10 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
       </div>
     </div>
     <aside className="flex min-w-0 flex-col gap-3">
+      <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <StaffBadgePreview branding={branding} staff={profile} compact />
       <ProfileQuickSquares profile={profile} kind={kind} personal={personal} />
       <ProfileLoggedSections profile={profile} />
-      <ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} compact />
       <EmployeeJourney profile={profile} onUpdated={onUpdated} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><StaffCommPanel staff={profile} /></EmployeeProfileSection>
     </aside>

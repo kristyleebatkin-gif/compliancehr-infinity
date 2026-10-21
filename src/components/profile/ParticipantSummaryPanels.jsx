@@ -33,9 +33,9 @@ export default function ParticipantSummaryPanels({ profile, onUpdated, personal 
       </div>
     </div>
     <aside className="flex min-w-0 flex-col gap-3">
+      <ProfileAboutMeEditor profile={profile} kind="participant" onUpdated={onUpdated} compact />
       <ProfileQuickSquares profile={profile} kind="participant" personal={personal} />
       <ProfileLoggedSections profile={profile} />
-      <ProfileAboutMeEditor profile={profile} kind="participant" onUpdated={onUpdated} compact />
       <ParticipantJourneyBox profile={profile} />
       <EmployeeProfileSection title="Communication Logs & Records" tone="blue" uniform><ProfileCommDiary participant={profile} /></EmployeeProfileSection>
     </aside>

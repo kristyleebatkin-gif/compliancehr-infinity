@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { AlertTriangle, BriefcaseBusiness, CalendarClock, CalendarDays, ClipboardList, Contact, FolderOpen, GraduationCap, Heart, IdCard, LayoutGrid, MapPin, MessagesSquare, Newspaper, Receipt, ShieldAlert, Siren, Target, ThumbsUp, UserRound } from 'lucide-react';
+import { AlertTriangle, BriefcaseBusiness, CalendarClock, CalendarDays, ClipboardList, Contact, GraduationCap, Heart, IdCard, LayoutGrid, MapPin, MessagesSquare, Newspaper, Receipt, ShieldAlert, Siren, Target, ThumbsUp, UserRound } from 'lucide-react';
 
 const KeyContacts = lazy(() => import('@/pages/KeyContacts'));
 const HrHub = lazy(() => import('@/pages/HrHub'));
@@ -18,7 +18,6 @@ const Communications = lazy(() => import('@/pages/Communications'));
 const Training = lazy(() => import('@/pages/Training'));
 const Feedback = lazy(() => import('@/pages/Feedback'));
 const NameTags = lazy(() => import('@/pages/NameTags'));
-const Documents = lazy(() => import('@/pages/Documents'));
 const ProfileCommDiary = lazy(() => import('@/components/communications/ProfileCommDiary'));
 const IntakeCaseWorkflow = lazy(() => import('@/components/intake/IntakeCaseWorkflow'));
 const ParticipantDocumentRegister = lazy(() => import('@/components/documents/ParticipantDocumentRegister'));
@@ -55,6 +54,5 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     ...(employee ? [{ key: 'training', label: 'Training Centre', Icon: GraduationCap, content: <Training {...props} /> }] : []),
     { key: 'feedback', label: 'Feedback', Icon: ThumbsUp, content: <Feedback {...props} /> },
     ...(employee ? [{ key: 'name-tag', label: 'Staff Name Tag', Icon: IdCard, content: <NameTags {...props} /> }] : []),
-    { key: 'documents', label: 'Document Vault', Icon: FolderOpen, content: <Documents {...props} /> },
   ];
 }
