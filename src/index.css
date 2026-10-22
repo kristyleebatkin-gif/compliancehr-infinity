@@ -501,13 +501,13 @@
 /* Communications Centre header (owner request): taller, with the editorial
    brand font restored for the heading. Scoped to the Communication Centre only. */
 .comm-centre .app-page-header {
-  height: 4.5cm !important;
-  min-height: 4.5cm !important;
-  max-height: 4.5cm !important;
+  height: 6cm !important;
+  min-height: 6cm !important;
+  max-height: 6cm !important;
 }
 .comm-centre .app-page-header h1 {
   font-family: "Fraunces", Georgia, "Times New Roman", serif !important;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+  font-size: 2.75rem;
+  line-height: 3rem;
   font-weight: 700;
 }

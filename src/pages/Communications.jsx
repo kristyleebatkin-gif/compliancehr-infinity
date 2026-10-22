@@ -34,6 +34,7 @@ import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import CommGuide from '@/components/communications/CommGuide';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
+import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
 const TABS = [
   ['alerts', Siren, 'Alerts'],
@@ -96,13 +97,15 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           embedded={embedded || participantOnly}
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
+              <RosterMiniOverview />
               <CommDailyInsight />
               <CommWeatherBar />
-              <CommSharedTodo compact />
               <CommTaskDash />
-              <CommunicationNavigation tabs={shown} />
               <TeamBanter />
+              <CommSharedTodo compact />
+              <CommunicationNavigation tabs={shown} />
               <CommTeamDash compact />
+              <CommGuide />
               <TaskLeaderboard />
             </div>
           )}

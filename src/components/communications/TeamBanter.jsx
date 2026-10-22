@@ -71,7 +71,7 @@ export default function TeamBanter() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border-2 border-black bg-white p-3 shadow-lg">
+    <div className="flex flex-col rounded-2xl border-2 border-black bg-white p-2.5 shadow-lg">
       <div className="mb-2 flex items-center gap-2 text-sm font-bold">
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md">
           <MessagesSquare className="h-3.5 w-3.5" />
@@ -85,7 +85,7 @@ export default function TeamBanter() {
       ) : items.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">No banter yet - start a friendly conversation below. Every message is saved to the communication diary.</p>
       ) : (
-        <div className="mb-3 max-h-[14rem] space-y-2 overflow-y-auto pr-1">
+        <div className="mb-2.5 max-h-[10rem] space-y-1.5 overflow-y-auto pr-1">
           {[...items].reverse().map((e) => {
             const mine = me?.email && String(e.sender_email || '').toLowerCase() === String(me.email).toLowerCase();
             return (
