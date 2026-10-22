@@ -33,7 +33,7 @@ export default function PageHeader({ title, subtitle, action, icon: Icon = Layou
       <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
         <ModuleComplianceStrip path={seg} />
         {beforeAudit}
-        <div className={cn('flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3', auditClassName)}>
+        <div className="flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3">
           <ModuleAuditChecklistButton />
           <ModuleAuditButton />
         </div>
