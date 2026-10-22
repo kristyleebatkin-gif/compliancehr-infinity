@@ -59,14 +59,13 @@ export default function EmployeeCommunications({ embedded = false }) {
               <div className="mt-2"><CommHintsTips /></div>
               <CommTeamDash compact />
               <RosterMiniOverview />
-              <TaskLeaderboard />
-              <TeamFeed />
               <CommSharedTodo compact />
               <CommunicationNavigation tabs={TABS} />
             </div>
           )}
         >
           <TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent>
+          {!embedded && <TaskLeaderboard compact />}
         </ModuleShell>
       </Tabs>
     </div>

@@ -110,8 +110,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
               <div className="mt-2"><CommHintsTips /></div>
               <CommTeamDash compact />
               <RosterMiniOverview />
-              <TaskLeaderboard />
-              <TeamFeed />
               <CommSharedTodo compact />
               <CommunicationNavigation tabs={shown} />
             </div>
@@ -134,16 +132,17 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <TodoBoard />}
         </TabsContent>
         <TabsContent value="task-dashboard">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TodoBoard compact /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TodoBoard compact /></div>}
         </TabsContent>
         <TabsContent value="guide"><CommGuide /></TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
+        {!(embedded || participantOnly) && <TaskLeaderboard compact />}
         </ModuleShell>
       </Tabs>
     </div>

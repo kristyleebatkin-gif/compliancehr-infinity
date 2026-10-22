@@ -15,7 +15,8 @@ import '@/components/dashboard/brightActions.css';
 import { generateTaskCertificate } from '@/lib/taskCertificatePdf';
 
 
-export default function TaskLeaderboard() {
+export default function TaskLeaderboard({ compact = true }) {
+  const [expanded, setExpanded] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [banter, setBanter] = useState([]);
   const [banterText, setBanterText] = useState('');
@@ -119,9 +120,105 @@ export default function TaskLeaderboard() {
     setBanter(banterPage.items || []);
   };
 
+  if (compact && !expanded) {
+    return (
+      <section
+        className="task-competition-compact relative flex h-[6cm] max-h-[6cm] flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel"
+        style={{ borderTop: '4px solid #ec4899' }}
+      >
+        <div
+          className="comm-panel-bar relative flex shrink-0 items-center justify-between gap-2 px-3 py-1.5"
+          style={{ background: 'var(--header-gradient)', color: '#fff' }}
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <Trophy className="h-3.5 w-3.5 shrink-0 text-white" />
+            <span className="truncate text-xs font-extrabold text-white">
+              {settings.leaderboard_title || 'Task Competition'} · Season {season.year}
+            </span>
+            <span className="hidden sm:inline-block rounded-full bg-white/20 px-2 py-0.5 font-mono text-[10px] font-bold text-white" suppressHydrationWarning>
+              {days}d {hours}h {minutes}m {seconds}s left
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => setExpanded(true)}
+              className="h-6 border-white/40 bg-white/15 px-2 text-[10px] font-bold text-white hover:bg-white/25"
+            >
+              Expand
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid flex-1 grid-cols-1 gap-2 overflow-hidden p-2.5 sm:grid-cols-3">
+          <div className="flex flex-col justify-between rounded-xl border border-pink-200/70 bg-gradient-to-br from-pink-500/10 via-violet-500/5 to-transparent p-2">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                Ends {format(endAt, 'd MMM, h:mma')}
+              </p>
+              <p className="mt-0.5 font-mono text-base font-extrabold text-brand sm:text-lg" suppressHydrationWarning>
+                {days}d {hours}h {minutes}m {seconds}s
+              </p>
+            </div>
+            <p className="line-clamp-2 text-[10px] text-muted-foreground">
+              <span className="font-bold text-foreground/80">Fun fact:</span> {funFact || settings.season_note}
+            </p>
+          </div>
+
+          <div className="flex flex-col justify-between rounded-xl border border-violet-200/70 bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-transparent p-2">
+            <p className="flex items-center gap-1 text-[11px] font-extrabold text-foreground">
+              <Award className="h-3.5 w-3.5 text-brand" /> {settings.prizes_title}
+            </p>
+            <div className="space-y-1">
+              {settings.vouchers.slice(0, 3).map((v) => (
+                <div key={v.rank} className="flex items-center justify-between rounded-md bg-white/80 px-2 py-0.5 text-[10px]">
+                  <span className="font-semibold">{v.rank === 1 ? '🥇 1st' : v.rank === 2 ? '🥈 2nd' : '🥉 3rd'}</span>
+                  <span className="font-bold text-brand">{v.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-between rounded-xl border border-blue-200/70 bg-gradient-to-br from-blue-500/10 via-emerald-500/5 to-transparent p-2">
+            <p className="flex items-center gap-1 text-[11px] font-extrabold text-foreground">
+              <Trophy className="h-3.5 w-3.5 text-primary" /> Top Performers
+            </p>
+            {season.board.length === 0 ? (
+              <p className="text-[10px] text-muted-foreground">Complete a task to claim 1st place on the board!</p>
+            ) : (
+              <div className="space-y-1">
+                {season.board.slice(0, 3).map((entry, idx) => {
+                  const rank = idx + 1;
+                  const character = characterFor(entry.name);
+                  return (
+                    <div key={entry.name} className="flex items-center justify-between rounded-md bg-white/80 px-2 py-0.5 text-[10px]">
+                      <span className="truncate font-semibold">
+                        {rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'} {character.emoji} {entry.name}
+                      </span>
+                      <span className="ml-1 shrink-0 font-bold text-primary">{entry.points} pt{entry.points === 1 ? '' : 's'}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <details className="task-competition" open>
-      <summary>Task competition & leaderboard</summary>
+      <summary className="flex items-center justify-between">
+        <span>Task competition & leaderboard</span>
+        {compact && (
+          <Button type="button" size="sm" variant="outline" className="h-6 px-2 text-[10px]" onClick={(e) => { e.preventDefault(); setExpanded(false); }}>
+            Compact 6cm view
+          </Button>
+        )}
+      </summary>
       <div className="competition-content space-y-4">
       <div className="flex justify-end"><CompetitionSettingsDialog settings={settings} onSave={saveSettings} loading={settingsLoading} /></div>
       {settingsError && <p role="alert" className="text-sm text-destructive">Unable to load competition settings: {settingsError.message}</p>}
