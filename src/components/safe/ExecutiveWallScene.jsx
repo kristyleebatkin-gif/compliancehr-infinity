@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from '@/components/ui/image';
-import { Clock, Lock } from 'lucide-react';
+import { Clock, Lock, Vault, FolderLock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
+import SilverScreenSplit from '@/components/safe/SilverScreenSplit';
+import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
@@ -10,7 +13,7 @@ const DEFAULT_SOFTWARE_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d
 
 function ExecutiveChairFrontLeftSvg() {
   return (
-    <svg viewBox="0 0 130 135" className="h-14 w-14 shrink-0 drop-shadow-sm" aria-label="Executive Chair Back Front Left">
+    <svg viewBox="0 0 130 135" className="h-12 w-12 shrink-0 drop-shadow-sm" aria-label="Executive Chair Back Front Left">
       <defs>
         <linearGradient id="chairBackSquished" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#2563eb" />
@@ -39,9 +42,9 @@ function ExecutiveChairFrontLeftSvg() {
   );
 }
 
-function CouchNearFrontDoorSvg() {
+export function CouchNearFrontDoorSvg() {
   return (
-    <svg viewBox="0 0 250 110" className="h-16 w-36 shrink-0 drop-shadow-sm" aria-label="Reception Couch Near Front Door">
+    <svg viewBox="0 0 250 110" className="h-14 w-32 shrink-0 drop-shadow-sm" aria-label="Reception Couch Near Front Door">
       <defs>
         <linearGradient id="couchSquished" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#2563eb" />
@@ -53,51 +56,85 @@ function CouchNearFrontDoorSvg() {
       </defs>
       {/* Plush 3-Seater Couch on Left */}
       <rect x="14" y="28" width="136" height="38" rx="12" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="2.5" />
-      {/* 3 Couch Back Cushions */}
       <rect x="20" y="33" width="38" height="26" rx="6" fill="#ffffff" fillOpacity="0.22" />
       <rect x="63" y="33" width="38" height="26" rx="6" fill="#ffffff" fillOpacity="0.22" />
       <rect x="106" y="33" width="38" height="26" rx="6" fill="#ffffff" fillOpacity="0.22" />
-      {/* Couch Rolled Armrests */}
       <rect x="4" y="42" width="16" height="36" rx="8" fill="#1d4ed8" stroke="#ffffff" strokeWidth="2" />
       <rect x="144" y="42" width="16" height="36" rx="8" fill="#db2777" stroke="#ffffff" strokeWidth="2" />
-      {/* Couch Seat Deck */}
       <rect x="14" y="60" width="136" height="20" rx="8" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="2.5" />
-      {/* Couch Legs */}
       <rect x="20" y="80" width="6" height="14" rx="2" fill="#1e293b" />
       <rect x="138" y="80" width="6" height="14" rx="2" fill="#1e293b" />
-
       {/* Front Door right next to the Couch */}
       <rect x="174" y="6" width="66" height="94" rx="6" fill="#1e3a8a" stroke="#f59e0b" strokeWidth="3" />
       <rect x="180" y="12" width="54" height="82" rx="4" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="1.5" />
-      {/* Glass Window Panel in Front Door */}
       <rect x="188" y="18" width="38" height="32" rx="4" fill="#e0f2fe" fillOpacity="0.85" stroke="#ffffff" strokeWidth="1.5" />
-      <text x="207" y="37" textAnchor="middle" fill="#1e3a8a" fontSize="8" fontWeight="900">WELCOME</text>
-      {/* Lower Door Panel */}
+      <text x="207" y="37" textAnchor="middle" fill="#1e3a8a" fontSize="8" fontWeight="900">DOOR</text>
       <rect x="188" y="56" width="38" height="30" rx="3" fill="#ffffff" fillOpacity="0.2" stroke="#ffffff" strokeWidth="1" />
-      {/* Gold Door Handle */}
       <circle cx="226" cy="54" r="3.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1" />
     </svg>
   );
 }
 
+export function OfficeTechTableSvg() {
+  return (
+    <svg viewBox="0 0 280 115" className="h-16 w-40 shrink-0 drop-shadow-sm" aria-label="Table with Modern Speaker, iPhone and Computer">
+      <defs>
+        <linearGradient id="techScreenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#2563eb" />
+          <stop offset="50%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#ec4899" />
+        </linearGradient>
+      </defs>
+      {/* 1. Modern Smart Speaker on Left of Table */}
+      <rect x="24" y="32" width="34" height="44" rx="14" fill="#1e293b" stroke="#ec4899" strokeWidth="2" />
+      <ellipse cx="41" cy="37" rx="12" ry="3.5" fill="url(#techScreenGrad)" />
+      {/* Speaker Mesh Dots */}
+      <circle cx="35" cy="50" r="1.5" fill="#94a3b8" />
+      <circle cx="41" cy="50" r="1.5" fill="#94a3b8" />
+      <circle cx="47" cy="50" r="1.5" fill="#94a3b8" />
+      <circle cx="35" cy="58" r="1.5" fill="#94a3b8" />
+      <circle cx="41" cy="58" r="1.5" fill="#94a3b8" />
+      <circle cx="47" cy="58" r="1.5" fill="#94a3b8" />
+
+      {/* 2. iPhone in Middle of Table */}
+      <rect x="76" y="42" width="24" height="34" rx="5" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
+      <rect x="79" y="45" width="18" height="27" rx="3" fill="url(#techScreenGrad)" />
+      <rect x="85" y="46" width="6" height="2" rx="1" fill="#0f172a" />
+      <circle cx="88" cy="69" r="1.2" fill="#ffffff" />
+
+      {/* 3. Desktop Computer Monitor & Keyboard on Right of Table */}
+      <rect x="122" y="10" width="128" height="54" rx="6" fill="#cbd5e1" stroke="#475569" strokeWidth="2.5" />
+      <rect x="127" y="14" width="118" height="44" rx="3" fill="url(#techScreenGrad)" />
+      <text x="186" y="34" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900">ComplianceHR</text>
+      <text x="186" y="46" textAnchor="middle" fill="#fde047" fontSize="8" fontWeight="800">INFINITY</text>
+      {/* Monitor Stand */}
+      <rect x="178" y="64" width="16" height="9" fill="#94a3b8" />
+      <rect x="164" y="72" width="44" height="4" rx="2" fill="#64748b" />
+      {/* Keyboard */}
+      <rect x="148" y="75" width="76" height="3" rx="1.5" fill="#e2e8f0" />
+
+      {/* Modern Office Table Surface & Legs */}
+      <rect x="8" y="76" width="264" height="9" rx="4" fill="#7c3aed" stroke="#ffffff" strokeWidth="1.5" />
+      <rect x="24" y="85" width="8" height="26" rx="2" fill="#334155" />
+      <rect x="248" y="85" width="8" height="26" rx="2" fill="#334155" />
+    </svg>
+  );
+}
+
 /**
- * Photo Frame ONLY including:
+ * Big Logo, Name & Slogan in Left Corner inside Picture Frame:
  *   Software: ComplianceHR Infinity
  *   Complete Control. Greater Confidence.
  *   Brighter Success
  */
-export function ComplianceHrPhotoFrame({ logoUrl, large = false, badgeLabel = '' }) {
+export function ComplianceHrPhotoFrame({ logoUrl, large = true, badgeLabel = '' }) {
   const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
   return (
     <div
-      className={`rounded-2xl p-1.5 shadow-lg ${large ? 'ring-2 ring-amber-300/90' : ''}`}
+      className="rounded-2xl p-1.5 shadow-lg ring-2 ring-amber-300/90"
       style={{ background: SQUISHED_GRADIENT }}
     >
-      <div
-        className={`rounded-xl border-[3px] border-amber-300 bg-white text-center shadow-inner ${
-          large ? 'p-3' : 'p-2'
-        }`}
-      >
+      <div className="rounded-xl border-[3px] border-amber-300 bg-white p-2.5 text-center shadow-inner">
         {badgeLabel && (
           <div className="mb-1 flex justify-center">
             <span
@@ -108,9 +145,10 @@ export function ComplianceHrPhotoFrame({ logoUrl, large = false, badgeLabel = ''
             </span>
           </div>
         )}
+        {/* Big Logo inside Picture Frame */}
         <div
-          className={`mx-auto flex items-center justify-center overflow-hidden rounded-xl border-2 border-pink-400 bg-white p-1 shadow-sm ${
-            large ? 'h-20 w-28 sm:h-24 sm:w-36' : 'h-12 w-16'
+          className={`mx-auto flex items-center justify-center overflow-hidden rounded-xl border-2 border-pink-400 bg-white p-1.5 shadow-sm ${
+            large ? 'h-24 w-36 sm:h-28 sm:w-44' : 'h-16 w-24'
           }`}
         >
           <Image
@@ -120,24 +158,60 @@ export function ComplianceHrPhotoFrame({ logoUrl, large = false, badgeLabel = ''
             className="h-full w-full object-contain"
           />
         </div>
-        <div
-          className={`mt-1 font-extrabold tracking-tight text-blue-950 ${
-            large ? 'text-xs sm:text-sm' : 'text-[11px]'
-          }`}
-        >
+        <div className="mt-1.5 text-xs sm:text-sm font-extrabold tracking-tight text-blue-950">
           Software: ComplianceHR Infinity
         </div>
         <div
           className="mt-1 rounded-lg px-2 py-1 text-white shadow-sm"
           style={{ background: SQUISHED_GRADIENT }}
         >
-          <div className={large ? 'text-[11px] font-extrabold leading-tight' : 'text-[9px] font-extrabold leading-tight'}>
+          <div className="text-[10px] sm:text-xs font-extrabold leading-tight">
             Complete Control. Greater Confidence.
           </div>
-          <div className={large ? 'text-[11px] font-extrabold leading-tight' : 'text-[9px] font-extrabold leading-tight'}>
+          <div className="text-[10px] sm:text-xs font-extrabold leading-tight">
             Brighter Success
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function SmallSafeVaultBar() {
+  return (
+    <div
+      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-violet-300 bg-white px-3 py-1.5 shadow-sm"
+    >
+      <div className="flex items-center gap-2">
+        <span
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
+          style={{ background: SQUISHED_GRADIENT }}
+        >
+          <Vault className="h-4 w-4" />
+        </span>
+        <div>
+          <div className="text-[11px] font-extrabold text-blue-950">
+            Small Safe Vault · Secured Under Inbox &amp; Company Safe
+          </div>
+          <div className="text-[9px] font-bold text-violet-800">
+            All inbox attachments, compliance records, and company safe documents locked &amp; audit-ready
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <Link
+          to="/company-safe"
+          className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-extrabold text-white shadow-sm"
+          style={{ background: SQUISHED_GRADIENT }}
+        >
+          <Lock className="h-3 w-3" /> Open Safe
+        </Link>
+        <Link
+          to="/documents"
+          className="inline-flex items-center gap-1 rounded-lg border border-violet-300 bg-violet-50 px-2.5 py-1 text-[10px] font-extrabold text-violet-900 hover:bg-violet-100"
+        >
+          <FolderLock className="h-3 w-3" /> Document Vault
+        </Link>
       </div>
     </div>
   );
@@ -161,7 +235,7 @@ function ThreeDoorCupboardCompact() {
         {doors.map((d) => (
           <div
             key={d.num}
-            className="flex items-center justify-between rounded-md border border-white px-2 py-1.5 text-white shadow-sm"
+            className="flex items-center justify-between rounded-md border border-white px-2 py-1 text-white shadow-sm"
             style={{ background: d.color }}
           >
             <div className="min-w-0">
@@ -176,7 +250,7 @@ function ThreeDoorCupboardCompact() {
   );
 }
 
-export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = true }) {
+export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = true, showRosterAbove = true }) {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -202,30 +276,39 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border-2 p-2.5 sm:p-3 shadow-panel space-y-2.5"
+      className="relative overflow-hidden rounded-2xl border-2 p-2 sm:p-2.5 shadow-panel space-y-2"
       style={{
         borderColor: '#7c3aed55',
         background:
           'linear-gradient(180deg, rgba(37,99,235,0.10) 0%, rgba(124,58,237,0.06) 50%, rgba(236,72,153,0.12) 100%)',
       }}
     >
-      {/* Squashed Side-by-Side Grid: Left (4 cols = 1x) & Top-Right Colour Area (8 cols = 2x Twice the Size) */}
-      <div className="grid gap-2.5 md:grid-cols-12 items-stretch">
-        {/* LEFT COLUMN (1x = 4 cols): Top-Left Photo Frame + Front-Left Chair Back + Couch Near Front Door */}
-        <div className="md:col-span-4 flex flex-col justify-between gap-2 rounded-xl border-2 border-blue-400/80 bg-white p-2 shadow-sm">
-          {/* Top-Left Photo Frame (ONLY ComplianceHR Infinity in exact order) */}
-          <ComplianceHrPhotoFrame logoUrl={logoUrl} large={false} />
+      {/* 1. ROSTER FITTED ABOVE */}
+      {showRosterAbove && <RosterMiniOverview />}
 
-          {/* Front-Left Chair Back + Couch Near Front Door (Squashed Side by Side) */}
+      {/* 2. SILVER SCREEN: Live Weather on One Half + NDIS News & Updates on Other Half */}
+      <SilverScreenSplit />
+
+      {/* 3. MAIN SQUASHED SCENE: Left Corner Big Logo/Name/Slogan Picture Frame + Couch Near Front Door + Table with Speaker/iPhone/Computer + Top-Right 2x Colour Area */}
+      <div className="grid gap-2 md:grid-cols-12 items-stretch">
+        {/* LEFT CORNER (5 cols): BIG LOGO, NAME & SLOGAN IN PICTURE FRAME + CHAIR BACK + COUCH NEAR FRONT DOOR */}
+        <div className="md:col-span-5 flex flex-col justify-between gap-2 rounded-xl border-2 border-blue-400/80 bg-white p-2 shadow-sm">
+          {/* Big Logo, Name, Slogan in Left Corner inside Picture Frame */}
+          <ComplianceHrPhotoFrame
+            logoUrl={logoUrl}
+            large={true}
+            badgeLabel="Top-Left Corner Picture Frame"
+          />
+
+          {/* Couch Near Front Door + Front-Left Chair Back */}
           <div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-1.5 rounded-xl border p-1.5"
+            className="grid grid-cols-2 gap-1.5 rounded-xl border p-1.5"
             style={{
               borderColor: '#ec489966',
               background: 'linear-gradient(120deg, rgba(37,99,235,0.08) 0%, rgba(124,58,237,0.06) 50%, rgba(236,72,153,0.12) 100%)',
             }}
           >
-            {/* Front Left Chair Back */}
-            <div className="flex items-center gap-1.5 rounded-lg bg-white/90 p-1.5 shadow-sm">
+            <div className="flex items-center gap-1.5 rounded-lg bg-white/95 p-1.5 shadow-sm">
               <ExecutiveChairFrontLeftSvg />
               <div className="min-w-0">
                 <div className="text-[9px] font-extrabold uppercase text-blue-800">Front Left</div>
@@ -233,8 +316,7 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
               </div>
             </div>
 
-            {/* Couch Near Front Door */}
-            <div className="flex flex-col items-center justify-center rounded-lg bg-white/90 p-1.5 shadow-sm">
+            <div className="flex flex-col items-center justify-center rounded-lg bg-white/95 p-1 shadow-sm">
               <CouchNearFrontDoorSvg />
               <div className="text-[9px] font-extrabold text-pink-800 leading-none">
                 Couch Near Front Door
@@ -243,37 +325,34 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
           </div>
         </div>
 
-        {/* TOP-RIGHT COLOUR AREA (2x TWICE THE SIZE = 8 cols): Strict Ordered Text + Copied BIGGER Photo Frame in Top Corner + Clock + 3-Door Cupboard */}
+        {/* RIGHT COLOUR AREA (7 cols): Exact Ordered Text + Table with Modern Speaker, iPhone & Computer + 3-Door Cupboard */}
         <div
-          className="md:col-span-8 rounded-2xl p-1.5 shadow-lg"
+          className="md:col-span-7 rounded-2xl p-1.5 shadow-lg"
           style={{
             background:
               'linear-gradient(120deg, #2563eb 0%, #0ea5e9 22%, #10b981 38%, #7c3aed 50%, #eab308 64%, #ec4899 100%)',
           }}
         >
           <div
-            className="flex h-full flex-col justify-between gap-2 rounded-xl border-2 border-white p-2.5 text-white shadow-inner"
+            className="flex h-full flex-col justify-between gap-2 rounded-xl border-2 border-white p-2 text-white shadow-inner"
             style={{ background: SQUISHED_GRADIENT }}
           >
-            {/* Top Row: Exact Ordered Business/Software/Developer List on Left + BIGGER Copied Photo Frame in Top Corner */}
-            <div className="grid gap-2.5 sm:grid-cols-12 items-start">
-              {/* STRICT ORDER CARD (7 cols) */}
-              <div className="sm:col-span-7 flex flex-col justify-between gap-2 rounded-xl bg-white/95 p-2.5 text-foreground shadow-sm">
-                {/* Exact Order Block 1: Software */}
-                <div className="rounded-lg border border-blue-200 bg-blue-50/70 p-2 space-y-0.5">
-                  <div className="text-xs sm:text-sm font-extrabold text-blue-950">
+            <div className="grid gap-2 sm:grid-cols-12 items-stretch">
+              {/* STRICT ORDERED BUSINESS & DEVELOPER DETAILS (7 cols) */}
+              <div className="sm:col-span-7 flex flex-col justify-between gap-1.5 rounded-xl bg-white/95 p-2 text-foreground shadow-sm">
+                <div className="rounded-lg border border-blue-200 bg-blue-50/70 px-2 py-1 space-y-0.5">
+                  <div className="text-xs font-extrabold text-blue-950">
                     Software: ComplianceHR Infinity
                   </div>
-                  <div className="text-[11px] font-extrabold text-violet-800">
+                  <div className="text-[10px] font-extrabold text-violet-800">
                     Complete Control. Greater Confidence.
                   </div>
-                  <div className="text-[11px] font-extrabold text-pink-700">
+                  <div className="text-[10px] font-extrabold text-pink-700">
                     Brighter Success
                   </div>
                 </div>
 
-                {/* Exact Order Block 2: Our Business Using Software + Developer */}
-                <div className="rounded-lg border border-pink-200 bg-pink-50/60 p-2 space-y-0.5 text-[11px] leading-snug">
+                <div className="rounded-lg border border-pink-200 bg-pink-50/60 px-2 py-1 space-y-0.5 text-[10px] leading-snug">
                   <div className="font-extrabold text-blue-950">
                     Our Business Using Software:
                   </div>
@@ -283,7 +362,7 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
                   <div className="font-extrabold text-pink-700">
                     Choices NQ
                   </div>
-                  <div className="pt-1 font-extrabold text-blue-950">
+                  <div className="pt-0.5 font-extrabold text-blue-950">
                     Developer: Kristy Lee Whelan
                   </div>
                   <div className="font-extrabold text-violet-800 break-all">
@@ -291,42 +370,44 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
                   </div>
                 </div>
 
-                {/* Compact Live Smart Clock bar */}
                 <div
-                  className="flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
+                  className="flex items-center justify-between rounded-lg px-2 py-1 text-white"
                   style={{ background: SQUISHED_GRADIENT }}
                 >
-                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold">
-                    <Clock className="h-3 w-3" /> Smart Wall Clock
+                  <span className="inline-flex items-center gap-1 text-[9px] font-extrabold">
+                    <Clock className="h-3 w-3" /> Smart Clock
                   </span>
-                  <span className="font-mono text-[11px] font-extrabold">
+                  <span className="font-mono text-[10px] font-extrabold">
                     {timeStr} · {dateStr}
                   </span>
                 </div>
               </div>
 
-              {/* TOP CORNER: COPIED & BIGGER PHOTO FRAME (5 cols) — ONLY ComplianceHR Infinity */}
-              <div className="sm:col-span-5 flex flex-col justify-between gap-2">
-                <ComplianceHrPhotoFrame
-                  logoUrl={logoUrl}
-                  large={true}
-                  badgeLabel="Top Corner Frame"
-                />
+              {/* TABLE WITH MODERN SPEAKER, IPHONE & COMPUTER + COPIED PHOTO FRAME (5 cols) */}
+              <div className="sm:col-span-5 flex flex-col justify-between gap-1.5">
+                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-white bg-white/95 p-2 text-center text-foreground shadow-sm">
+                  <div className="mb-1 text-[9px] font-extrabold uppercase tracking-wider text-violet-900">
+                    Table · Speaker · iPhone · Computer
+                  </div>
+                  <OfficeTechTableSvg />
+                  <div className="mt-1 text-[9px] font-bold text-blue-950">
+                    Modern Speaker · iPhone · Computer
+                  </div>
+                </div>
+
+                <ThreeDoorCupboardCompact />
               </div>
             </div>
-
-            {/* Bottom of Top-Right Colour Area: 3-Door Cupboard */}
-            <ThreeDoorCupboardCompact />
           </div>
         </div>
       </div>
 
-      {/* Minimised Icons & Modular Names — Display All 45 Platform Modules Squashed to Fit */}
+      {/* 4. ALL 45 MODULARS — MINIMISED ICONS & NAMES */}
       {showAllModulesMinimised && (
         <div className="rounded-xl border border-violet-300 bg-white/95 p-2 shadow-sm">
-          <div className="mb-1.5 flex items-center justify-between px-1">
+          <div className="mb-1 flex items-center justify-between px-1">
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-950">
-              All {MODULE_DIRECTORY.length} Platform Modules · Minimised Icons &amp; Modular Names
+              All {MODULE_DIRECTORY.length} Modulars · Minimised Icons &amp; Names
             </span>
             <span className="text-[9px] font-extrabold text-pink-700">
               Complete Control. Greater Confidence. Brighter Success
@@ -337,9 +418,9 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
               const Icon = mod.icon;
               const colour = moduleKeyColour(mod.key);
               return (
-                <a
+                <Link
                   key={mod.key}
-                  href={mod.path}
+                  to={mod.path}
                   className="flex items-center gap-1 rounded-md border px-1.5 py-1 text-left transition-transform hover:-translate-y-0.5"
                   style={{
                     borderColor: `${colour}55`,
@@ -356,12 +437,15 @@ export default function ExecutiveWallScene({ logoUrl, showAllModulesMinimised = 
                   <span className="truncate text-[9px] font-extrabold text-foreground leading-none">
                     {mod.label}
                   </span>
-                </a>
+                </Link>
               );
             })}
           </div>
         </div>
       )}
+
+      {/* 5. SMALL VAULT AT BOTTOM */}
+      <SmallSafeVaultBar />
     </div>
   );
 }

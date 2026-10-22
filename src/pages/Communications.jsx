@@ -35,9 +35,8 @@ import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import CommGuide, { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
-import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import CommAuditBar from '@/components/communications/CommAuditBar';
-import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
+import ExecutiveWallScene, { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
@@ -99,18 +98,16 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
-            <div className="space-y-2.5">
-              <CommWeatherBar />
+            <div className="space-y-2">
+              <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
+              <CommunicationNavigation tabs={shown} />
               <CommDailyInsight />
               <CommAuditBar />
-              <AboutCommunication />
               <CommHintsTips />
               <CommunicateWell />
               <CommTaskDash />
               <CommTeamDash />
-              <RosterMiniOverview />
               <CommSharedTodo />
-              <CommunicationNavigation tabs={shown} />
             </div>
           )}
         >
@@ -141,6 +138,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
+        {!(embedded || participantOnly) && <SmallSafeVaultBar />}
         {!(embedded || participantOnly) && <TeamBanter />}
         {!(embedded || participantOnly) && <TaskLeaderboard compact />}
         {!(embedded || participantOnly) && <AutomatedAlertSystem selfOnly={employeeSelf} />}

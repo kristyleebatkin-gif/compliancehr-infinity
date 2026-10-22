@@ -78,26 +78,25 @@ export default function AlertLamp({ kind, className }) {
     <TabsTrigger
       value={kind}
       aria-label={`${label}${lit ? `: ${count} active` : ''}`}
-      className={`group relative flex w-full items-center justify-start gap-3 overflow-hidden rounded-2xl border-2 px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:shadow-xl ${className || ''}`}
+      className={`group relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-xl border px-2.5 py-1.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-md ${className || ''}`}
       style={{
         borderColor: colour,
         background: gradient,
-        boxShadow: lit ? `0 0 24px 3px ${colour}88` : `0 10px 24px -12px ${colour}80`,
         color: '#ffffff',
       }}
     >
       <span
-        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white shadow-md ring-2 ring-white/40 ${lit ? 'animate-pulse' : ''}`}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/20 text-white ring-1 ring-white/40 ${lit ? 'animate-pulse' : ''}`}
       >
-        <Icon aria-hidden="true" className="h-5 w-5 text-white" />
+        <Icon aria-hidden="true" className="h-3.5 w-3.5 text-white" />
       </span>
-      <span className="relative min-w-0 flex-1 leading-tight">
-        <span className="block text-sm sm:text-base font-extrabold text-white">{label}</span>
-        <span className="mt-0.5 block text-xs font-bold text-white/95">
-          {count === null ? 'Checking…' : lit ? `${count} active alert${count === 1 ? '' : 's'}` : clear}
+      <span className="relative min-w-0 flex-1 truncate leading-tight">
+        <span className="text-xs font-extrabold text-white">{label}</span>
+        <span className="ml-1.5 text-[10px] font-bold text-white/90">
+          ({count === null ? '…' : lit ? `${count} active` : 'All clear'})
         </span>
       </span>
-      <span className="rounded-full bg-white/25 px-2.5 py-1 text-[11px] font-extrabold text-white ring-1 ring-white/40">
+      <span className="rounded-full bg-white/25 px-2 py-0.5 text-[9px] font-extrabold text-white">
         Open
       </span>
     </TabsTrigger>

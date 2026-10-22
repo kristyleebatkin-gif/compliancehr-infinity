@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Paperclip, Reply } from 'lucide-react';
 import { openAttachment } from '@/lib/commTypes';
 import ReplyDialog from './ReplyDialog';
+import { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
@@ -91,6 +92,9 @@ export default function Inbox() {
           })}
         </div>
       )}
+      {/* Small Vault at Bottom Under Inbox */}
+      <SmallSafeVaultBar />
+
       {replyTarget && (
         <ReplyDialog entry={replyTarget} open={Boolean(replyTarget)} onOpenChange={(o) => !o && setReplyTarget(null)} onSaved={load} />
       )}

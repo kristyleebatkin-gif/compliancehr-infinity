@@ -48,22 +48,17 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
   return (
     <section className="overflow-hidden rounded-2xl border-2 border-red-400/70 bg-card shadow-panel">
       <div
-        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-3 px-4 py-3"
+        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-3 py-1.5"
         style={{ '--comm-bar-bg': 'linear-gradient(120deg, #dc2626 0%, #ef4444 52%, #f97316 100%)', color: '#fff' }}
       >
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/40">
-            <Siren className="h-5 w-5 text-white" />
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/20 ring-1 ring-white/40">
+            <Siren className="h-3.5 w-3.5 text-white" />
           </span>
-          <div>
-            <h3 className="text-base font-extrabold text-white">Live Alerts &amp; Flagged Communications</h3>
-            <p className="text-xs font-bold text-white/90">
-              {selfOnly ? 'Your unread notifications and any flagged communication involving you' : 'New unread notifications and flagged communications across the platform'}
-            </p>
-          </div>
+          <h3 className="text-xs font-extrabold text-white">Live Alerts &amp; Flagged Communications</h3>
         </div>
-        <Button variant="outline" size="sm" onClick={load} disabled={loading} className="border-white/40 bg-white/15 font-bold text-white hover:bg-white/25">
-          <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />Refresh
+        <Button variant="outline" size="sm" onClick={load} disabled={loading} className="h-6 border-white/40 bg-white/15 px-2 text-[10px] font-bold text-white hover:bg-white/25">
+          <RefreshCw className={cn('h-3 w-3', loading && 'animate-spin')} />Refresh
         </Button>
       </div>
 

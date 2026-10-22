@@ -82,25 +82,22 @@ export default function AutomatedLogs() {
       style={{ borderTop: '4px solid #7c3aed' }}
     >
       <div
-        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-3 py-2"
+        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-2.5 py-1"
         style={{ background: 'var(--header-gradient)', color: '#fff' }}
       >
-        <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
-            <History className="h-3.5 w-3.5 text-white" />
-          </span>
-          <div>
-            <h3 className="text-xs font-extrabold text-white">Automated Alert Log</h3>
-            <p className="text-[10px] text-white/90">Automated compliance, task and document expiry reminders</p>
-          </div>
-        </div>
         <div className="flex items-center gap-1.5">
+          <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white/15 ring-1 ring-white/30">
+            <History className="h-3 w-3 text-white" />
+          </span>
+          <h3 className="text-[11px] font-extrabold text-white">Automated Alert Log</h3>
+        </div>
+        <div className="flex items-center gap-1">
           {[
             { label: 'Total', value: stats.total },
             { label: 'Emailed', value: stats.emails },
             { label: 'Today', value: stats.today },
           ].map((s) => (
-            <span key={s.label} className="rounded-lg bg-white/15 px-2 py-0.5 text-[10px] font-bold text-white ring-1 ring-white/25">
+            <span key={s.label} className="rounded bg-white/15 px-1.5 py-0 text-[9px] font-bold text-white ring-1 ring-white/25">
               {s.label}: {s.value ?? '…'}
             </span>
           ))}

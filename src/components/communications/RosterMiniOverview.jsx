@@ -24,34 +24,32 @@ export default function RosterMiniOverview() {
   }, []);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #7c3aed 0%, #9333ea 55%, #a855f7 100%)', color: '#fff' }}>
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
-          <CalendarRange className="h-4 w-4 text-white" />
-        </span>
-        <h3 className="text-base font-extrabold">Roster</h3>
-        <span className="ml-auto text-xs font-bold text-white/95">{roster ? `${roster.length} shift${roster.length === 1 ? '' : 's'} today` : 'Loading…'}</span>
-      </div>
-      <div className="p-3.5">
-        {!roster ? (
-          <p className="py-2.5 text-center text-xs font-bold text-muted-foreground">Loading today's shifts…</p>
-        ) : roster.length === 0 ? (
-          <p className="py-2.5 text-center text-xs sm:text-sm font-bold text-muted-foreground">No shifts rostered today.</p>
-        ) : (
-          <ul className="space-y-1.5">
-            {roster.map((s) => (
-              <li key={s.id} className="flex items-center gap-2.5 rounded-lg border px-3 py-2 text-xs sm:text-sm font-bold">
-                <Clock className="h-4 w-4 shrink-0 text-purple-600" />
-                <span className="min-w-0 flex-1 truncate">{s.employee_name || 'Unassigned'}{s.participant_name ? ` · ${s.participant_name}` : ''}</span>
-                <span className="shrink-0 text-muted-foreground">{s.start_time || ''}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-        <Link to="/roster" className="mt-2.5 block rounded-xl bg-purple-100 py-2 text-center text-xs font-extrabold text-purple-800 hover:bg-purple-200">
-          Open Roster Dashboard
+    <section className="overflow-hidden rounded-xl border border-purple-300 bg-card shadow-sm">
+      <div className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-3 py-1.5" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)', color: '#fff' }}>
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
+            <CalendarRange className="h-3.5 w-3.5 text-white" />
+          </span>
+          <h3 className="text-xs font-extrabold">Today&apos;s Roster Overview</h3>
+          <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white">
+            {roster ? `${roster.length} shift${roster.length === 1 ? '' : 's'} today` : 'Loading…'}
+          </span>
+        </div>
+        <Link to="/roster" className="rounded-lg bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-purple-900 shadow-sm hover:bg-pink-50">
+          Open Roster
         </Link>
       </div>
+      {roster && roster.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 p-2">
+          {roster.slice(0, 6).map((s) => (
+            <div key={s.id} className="inline-flex items-center gap-1.5 rounded-md border border-purple-200 bg-purple-50/60 px-2 py-0.5 text-[10px] font-bold">
+              <Clock className="h-3 w-3 shrink-0 text-purple-600" />
+              <span className="truncate">{s.employee_name || 'Unassigned'}{s.participant_name ? ` · ${s.participant_name}` : ''}</span>
+              <span className="text-muted-foreground">{s.start_time || ''}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
