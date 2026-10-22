@@ -38,13 +38,13 @@ export default function CommDailyInsight() {
 
   return (
     <section className="overflow-hidden rounded-2xl border-2 border-black bg-white shadow-lg">
-      <div className="flex items-center gap-3 px-4 py-3" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
-          <Sparkles className="h-5 w-5 text-white" />
+      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+        <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
+          <Sparkles className="h-4 w-4 text-white" />
         </span>
         <div className="flex-1">
-          <h3 className="text-base font-bold">Daily AI Insight</h3>
-          <p className="text-[11px] font-semibold text-white/85">A fresh focus for the team today</p>
+          <h3 className="text-sm font-bold">Daily AI Insight</h3>
+          <p className="text-[10px] font-semibold text-white/85">A fresh focus for the team today</p>
         </div>
         <button
           type="button"
@@ -56,15 +56,15 @@ export default function CommDailyInsight() {
           <RefreshCw className={`h-4 w-4 text-white ${loading ? 'animate-spin' : ''}`} />
         </button>
       </div>
-      <div className="p-3">
+      <div className="p-2">
         {loading ? (
-          <div className="flex items-center justify-center gap-2 py-6 text-sm font-semibold text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" /> Thinking about your day…
+          <div className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-muted-foreground">
+            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Thinking about your day…
           </div>
         ) : error ? (
-          <p className="py-4 text-center text-sm text-muted-foreground">Insight unavailable right now — tap refresh to try again.</p>
+          <p className="py-2 text-center text-xs text-muted-foreground">Insight unavailable right now — tap refresh to try again.</p>
         ) : (
-          <p className="text-sm font-medium leading-relaxed">{insight}</p>
+          <p className="line-clamp-3 text-xs font-medium leading-relaxed">{insight}</p>
         )}
       </div>
     </section>

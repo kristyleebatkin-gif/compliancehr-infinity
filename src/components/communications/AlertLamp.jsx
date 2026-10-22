@@ -24,7 +24,7 @@ const beep = () => {
 
 const CONFIG = {
   alerts: { icon: Siren, label: 'Alerts', colour: '#dc2626', clear: 'All clear' },
-  logs: { icon: History, label: 'Alert Log', colour: '#1e3a8a', clear: 'Log quiet' },
+  logs: { icon: History, label: 'Alert Log', colour: '#ea580c', clear: 'Log quiet' },
 };
 
 // A light shown at the bottom corners of the communication board: it lights up
@@ -68,22 +68,24 @@ export default function AlertLamp({ kind, className }) {
     <TabsTrigger
       value={kind}
       aria-label={`${label}${lit ? `: ${count} active` : ''}`}
-      className={`group relative flex min-h-20 w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border p-2 text-center transition-all hover:-translate-y-0.5 ${className || ''}`}
+      className={`group relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-xl border px-2 py-1 text-left transition-all ${className || ''}`}
       style={{
         borderColor: lit ? `${colour}80` : 'hsl(var(--border))',
         background: lit ? `linear-gradient(165deg, ${colour}2e 0%, hsl(var(--card)) 85%)` : 'hsl(var(--card))',
-        boxShadow: lit ? `0 0 26px 2px ${colour}73` : 'none',
+        boxShadow: lit ? `0 0 20px 2px ${colour}73` : 'none',
       }}
     >
       <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full text-white shadow-md ${lit ? 'animate-pulse' : 'opacity-40'}`}
-        style={{ background: lit ? colour : '#94a3b8', boxShadow: lit ? `0 0 16px 3px ${colour}` : 'none' }}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white shadow-md ${lit ? 'animate-pulse' : 'opacity-40'}`}
+        style={{ background: lit ? colour : '#94a3b8', boxShadow: lit ? `0 0 12px 2px ${colour}` : 'none' }}
       >
-        <Icon aria-hidden="true" className="h-4 w-4" />
+        <Icon aria-hidden="true" className="h-3 w-3" />
       </span>
-      <span className="relative text-xs font-bold text-foreground">{label}</span>
-      <span className="relative text-[10px] font-semibold" style={{ color: lit ? colour : 'hsl(var(--muted-foreground))' }}>
-        {count === null ? 'Checking…' : lit ? `${count} active` : clear}
+      <span className="relative min-w-0 flex-1 leading-tight">
+        <span className="block text-xs font-bold text-foreground">{label}</span>
+        <span className="block text-[10px] font-semibold" style={{ color: lit ? colour : 'hsl(var(--muted-foreground))' }}>
+          {count === null ? 'Checking…' : lit ? `${count} active` : clear}
+        </span>
       </span>
     </TabsTrigger>
   );

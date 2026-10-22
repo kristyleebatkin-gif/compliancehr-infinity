@@ -81,11 +81,11 @@ export default function TeamBanter() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+        <div className="flex justify-center py-4"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : items.length === 0 ? (
-        <p className="py-8 text-center text-sm text-muted-foreground">No banter yet - start a friendly conversation below. Every message is saved to the communication diary.</p>
+        <p className="py-3 text-center text-xs text-muted-foreground">No banter yet - start a friendly conversation below. Every message is saved to the communication diary.</p>
       ) : (
-        <div className="mb-2 max-h-[8rem] space-y-1.5 overflow-y-auto pr-1">
+        <div className="mb-1.5 max-h-[4rem] space-y-1 overflow-y-auto pr-1">
           {[...items].reverse().map((e) => {
             const mine = me?.email && String(e.sender_email || '').toLowerCase() === String(me.email).toLowerCase();
             return (

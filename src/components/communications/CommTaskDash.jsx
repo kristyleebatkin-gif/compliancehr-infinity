@@ -54,21 +54,21 @@ export default function CommTaskDash() {
       </div>
 
       {!stats ? (
-        <div className="flex items-center justify-center gap-2 py-8 text-sm font-semibold text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-muted-foreground">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading tasks…
         </div>
       ) : (
-        <div className="space-y-2.5 p-3">
+        <div className="space-y-1.5 p-2">
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
             {tiles.map(({ key, label, from, to, Icon, statuses }) => (
               <div key={key} className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
                 <div className="h-1" style={{ background: `linear-gradient(90deg, ${from}, ${to})` }} />
-                <div className="flex items-center gap-2 p-2">
+                <div className="flex items-center gap-2 p-1.5">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white shadow" style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}>
                     <Icon className="h-3.5 w-3.5" />
                   </span>
                   <div>
-                    <p className="text-base font-bold leading-5">{stats[key]}</p>
+                    <p className="text-sm font-bold leading-4">{stats[key]}</p>
                     <p className="text-[10px] font-semibold text-muted-foreground">{label}</p>
                   </div>
                 </div>

@@ -38,11 +38,11 @@ export default function TeamFeed() {
     return () => { live = false; unsubShout(); unsubAnn(); };
   }, []);
 
-  const shown = (items || []).filter((i) => filter === 'All' || i._kind === filter);
+  const shown = (items || []).filter((i) => filter === 'All' || i._kind === filter).slice(0, 6);
 
   return (
     <Card>
-      <CardContent className="p-5">
+      <CardContent className="p-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="rounded-lg bg-cyan-500/10 p-2"><Radio className="h-4 w-4 text-cyan-600" /></div>
@@ -66,38 +66,38 @@ export default function TeamFeed() {
           </div>
         </div>
 
-        <div className="mt-4 space-y-2">
+        <div className="mt-2 space-y-1.5">
           {items === null && (
-            <div className="flex justify-center py-6"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /></div>
+            <div className="flex justify-center py-3"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /></div>
           )}
           {items !== null && shown.map((i) => (
             i._kind === 'Shoutout' ? (
-              <div key={i.id} className="rounded-xl border border-amber-200/60 bg-amber-500/10 p-3 dark:border-amber-500/20">
+              <div key={i.id} className="rounded-xl border border-amber-200/60 bg-amber-500/10 p-2 dark:border-amber-500/20">
                 <div className="mb-1 flex items-center gap-2">
                   <Badge className="gap-1 border-0 bg-amber-500/20 text-amber-700 hover:bg-amber-500/20 dark:text-amber-300">
                     <PartyPopper className="h-3 w-3" /> Shoutout
                   </Badge>
                   <span className="text-[11px] font-semibold text-foreground/60">{i.person_name}</span>
                 </div>
-                <p className="text-sm leading-snug">{i.body}</p>
-                <p className="mt-1 text-[11px] text-foreground/50">{[i.sender_name, i.entry_date, i.entry_time].filter(Boolean).join(' · ')}</p>
+                <p className="text-xs leading-snug">{i.body}</p>
+                <p className="mt-1 text-[10px] text-foreground/50">{[i.sender_name, i.entry_date, i.entry_time].filter(Boolean).join(' · ')}</p>
               </div>
             ) : (
-              <div key={i.id} className="rounded-xl border border-indigo-200/60 bg-indigo-500/10 p-3 dark:border-indigo-500/20">
+              <div key={i.id} className="rounded-xl border border-indigo-200/60 bg-indigo-500/10 p-2 dark:border-indigo-500/20">
                 <div className="mb-1 flex items-center gap-2">
                   <Badge className="gap-1 border-0 bg-indigo-500/20 text-indigo-700 hover:bg-indigo-500/20 dark:text-indigo-300">
                     <Megaphone className="h-3 w-3" /> Update
                   </Badge>
                   <span className="text-[11px] font-semibold text-foreground/60">{i.audience}</span>
                 </div>
-                <p className="text-sm font-semibold leading-snug">{i.title}</p>
-                {i.body && <p className="mt-0.5 text-sm leading-snug">{i.body}</p>}
-                <p className="mt-1 text-[11px] text-foreground/50">{[i.posted_by, i.created_date?.slice(0, 10)].filter(Boolean).join(' · ')}</p>
+                <p className="text-xs font-semibold leading-snug">{i.title}</p>
+                {i.body && <p className="mt-0.5 text-xs leading-snug">{i.body}</p>}
+                <p className="mt-1 text-[10px] text-foreground/50">{[i.posted_by, i.created_date?.slice(0, 10)].filter(Boolean).join(' · ')}</p>
               </div>
             )
           ))}
           {items !== null && shown.length === 0 && (
-            <p className="py-6 text-center text-sm text-muted-foreground">
+            <p className="py-3 text-center text-xs text-muted-foreground">
               {filter === 'All' ? 'Nothing on the feed yet - post a shoutout or an update.' : `No ${filter === 'Shoutout' ? 'shoutouts' : 'updates'} yet.`}
             </p>
           )}

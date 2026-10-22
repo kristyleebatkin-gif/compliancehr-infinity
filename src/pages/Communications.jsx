@@ -33,6 +33,7 @@ import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import CommGuide from '@/components/communications/CommGuide';
+import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
@@ -88,7 +89,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
     : TABS;
 
   return (
-    <div className="comm-centre space-y-4">
+    <div className="comm-centre space-y-2.5">
       <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
@@ -100,9 +101,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
               <CommTaskDash />
               <TeamBanter />
               <CommSharedTodo compact />
-              <CommunicationNavigation tabs={shown} />
               <CommTeamDash compact />
+              <CommunicationNavigation tabs={shown} />
               <CommGuide />
+              <CommunicateWell />
               <TaskLeaderboard />
             </div>
           )}
