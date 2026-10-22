@@ -4,7 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download, Loader2, Mail, Save } from 'lucide-react';
+import { Download, Loader2, Mail, Save, ChevronDown, ChevronRight } from 'lucide-react';
 import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
 import { staffBadgeBlob } from '@/lib/staffBadgePdf';
@@ -18,6 +18,7 @@ export default function StaffBadgeCreator() {
   const [staffId, setStaffId] = useState('');
   const [branding, setBranding] = useState(getCompanyBranding());
   const [saving, setSaving] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -98,14 +99,18 @@ export default function StaffBadgeCreator() {
         background: 'linear-gradient(155deg, rgba(13,148,136,0.10) 0%, #ffffff 70%)',
       }}
     >
-      <div
-        className="comm-panel-bar flex items-center justify-between gap-2 px-5 py-3 text-sm font-extrabold text-white"
-        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="comm-panel-bar flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left text-xs sm:text-sm font-extrabold text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%)' }}
       >
-        <span>Staff Badge Creator</span>
-        <span className="text-xs font-bold text-white/90">Uses Saved Logo, Name &amp; Slogan</span>
-      </div>
-      <div className="p-5">
+        <span>Staff Badge Creator — Uses Saved Logo, Name &amp; Slogan</span>
+        <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+          {open ? <>Minimise <ChevronDown className="h-3.5 w-3.5" /></> : <>Open <ChevronRight className="h-3.5 w-3.5" /></>}
+        </span>
+      </button>
+      {open && <div className="p-5">
       <p className="mb-3 text-xs font-bold text-foreground/80">Badges use the business name, logo and slogan stored in the company safe.</p>
       <div className="grid items-start gap-2 sm:grid-cols-[minmax(0,1fr)_200px]">
         <div className="min-w-0 space-y-2">
@@ -133,7 +138,7 @@ export default function StaffBadgeCreator() {
 
         <div className="w-full max-w-[200px]"><StaffBadgePreview branding={branding} staff={selected} compact /></div>
       </div>
-      </div>
+      </div>}
     </div>
   );
 }

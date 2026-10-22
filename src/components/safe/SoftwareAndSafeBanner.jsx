@@ -138,7 +138,7 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
       <div
         className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-6 px-6 py-6 text-white"
         style={{
-          background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)',
+          background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%)',
         }}
       >
         <div className="flex min-w-0 items-start gap-5">
@@ -383,7 +383,7 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
               className="overflow-hidden rounded-2xl border-2 p-4 text-white shadow-md"
               style={{
                 borderColor: '#7c3aed',
-                background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)',
+                background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%)',
               }}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -413,13 +413,14 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
           </div>
         </div>
 
-        {/* Executive Wall Scene: Framed Logo on Wall Above Corner Chair + Smart Clock Between You & Wall */}
+        {/* Executive Wall Scene: Top-Left Picture Frame (Logo, Name, Slogan), Front Corner Chair with Chair Back, Top-Right Colour Frame (Role, Name, Icon, Other Details), Smart Clock & 3-Door Cupboard */}
         {!compact && (
           <ExecutiveWallScene
             logoUrl={branding.logoUrl || DEFAULT_LOGO}
-            companyName={branding.companyName || 'Choices North Queensland (Choices NQ)'}
+            companyName={branding.companyName || 'Choices North Queensland'}
             sloganLine1={SOFTWARE_INFO.sloganLine1}
             sloganLine2={SOFTWARE_INFO.sloganLine2}
+            business={business}
           />
         )}
       </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
 import { useToast } from '@/components/ui/use-toast';
-import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud } from 'lucide-react';
+import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud, ChevronDown, ChevronRight } from 'lucide-react';
 import { routeDocument } from '@/lib/documentRouting';
 import { COMPLIANCE_DOC_TYPES, downloadComplianceTemplatePdf } from '@/lib/complianceDocTemplates';
 
@@ -11,6 +11,7 @@ export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, tit
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -72,14 +73,21 @@ export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, tit
         background: 'linear-gradient(155deg, rgba(219,39,119,0.08) 0%, #ffffff 70%)',
       }}
     >
-      <div
-        className="comm-panel-bar flex items-center gap-2 px-5 py-3 text-sm font-extrabold text-white"
-        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="comm-panel-bar flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left text-xs sm:text-sm font-extrabold text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%)' }}
       >
-        <FileText className="h-4 w-4" />
-        <span>{title}</span>
-      </div>
-      <div className="p-5">
+        <span className="flex items-center gap-2">
+          <FileText className="h-4 w-4" />
+          <span>{title} ({docTypes.length} subjects)</span>
+        </span>
+        <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+          {open ? <>Minimise <ChevronDown className="h-3.5 w-3.5" /></> : <>Open <ChevronRight className="h-3.5 w-3.5" /></>}
+        </span>
+      </button>
+      {open && <div className="p-5">
       <p className="mb-4 text-xs font-bold text-foreground/80">{description}</p>
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
@@ -120,7 +128,7 @@ export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, tit
           })}
         </div>
       )}
-      </div>
+      </div>}
     </div>
   );
 }
