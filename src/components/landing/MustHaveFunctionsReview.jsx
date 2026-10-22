@@ -15,6 +15,8 @@ const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 const CHOICES_NQ_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
+const MASTER_AUDIT_DUAL_IMAGE =
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a4e081538_ChoicesNQMasterComplianceAuditDoc2026.png';
 
 export const MUST_HAVE_PILLARS = [
   {
@@ -225,7 +227,7 @@ export default function MustHaveFunctionsReview() {
           { val: '100+', label: 'Server Functions', color: '#0ea5e9' },
           { val: '65+', label: 'Live Workflows', color: '#0d9488' },
           { val: '115+', label: 'Secured Entities', color: '#16a34a' },
-          { val: '$160/m', label: 'Elite Plan Value', color: '#e11d48' },
+          { val: '+$160/m', label: 'Elite Pack Included', color: '#e11d48' },
         ].map((stat) => (
           <div
             key={stat.label}
@@ -246,56 +248,37 @@ export default function MustHaveFunctionsReview() {
         ))}
       </div>
 
-      {/* $355 Master Compliance Audit Checklist Spotlight Box */}
+      {/* $355 Master Compliance Audit Checklist Spotlight Box with Official Dual Visual */}
       <div
         id="audit-doc-value"
         className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-amber-400 bg-gradient-to-r from-amber-50/90 via-white to-pink-50/80 p-2 shadow-sm"
       >
-        <div className="lg:col-span-3 flex items-center justify-center gap-2">
-          <div className="flex flex-col items-center rounded-xl border-2 border-amber-400 bg-white p-1.5 shadow-sm w-1/2">
-            <div className="h-14 w-full flex items-center justify-center">
-              <Image
-                src={CHOICES_NQ_LOGO}
-                alt="Choices NQ Logo"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <span className="mt-0.5 rounded-full bg-amber-400 px-2 py-0.5 text-[7px] font-black text-purple-950">
-              CHN-AUD-001
-            </span>
-          </div>
-          <div className="flex flex-col items-center rounded-xl border-2 border-purple-500 bg-white p-1.5 shadow-sm w-1/2">
-            <div className="h-14 w-full flex items-center justify-center">
-              <Image
-                src={CHR_LOGO}
-                alt="ComplianceHR Infinity Logo"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <span className="mt-0.5 rounded-full bg-purple-700 px-2 py-0.5 text-[7px] font-black text-white">
-              CHR-AUD-001
-            </span>
-          </div>
+        <div className="lg:col-span-4 overflow-hidden rounded-xl border-2 border-purple-400 bg-white p-1 shadow-sm">
+          <Image
+            src={MASTER_AUDIT_DUAL_IMAGE}
+            alt="Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001) Master Compliance Audit Checklists"
+            fittingType="fit"
+            className="h-36 sm:h-44 w-full object-contain"
+          />
         </div>
-
-        <div className="lg:col-span-6 space-y-1">
+        <div className="lg:col-span-5 space-y-1">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="rounded-full bg-rose-600 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white">
               NEW $355 COMPLIANCE MASTER DOCUMENT
             </span>
             <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white">
-              INCLUDED FREE IN MONTHLY SUBSCRIPTION
+              INCLUDED FREE IN SMART ENHANCED PLANS
             </span>
           </div>
           <h3 className="text-xs sm:text-sm font-black text-blue-950">
             Master Compliance Audit Checklist (`CHN-AUD-001` &amp; `CHR-AUD-001`) — 17 Audit Categories · 356 Checkpoints · 11 Pages
           </h3>
           <p className="text-[8px] font-semibold leading-snug text-blue-950">
-            Built from real NDIS registered provider operations (**Choices NQ** &amp; **ComplianceHR Infinity**), this 11-page, 356-checkpoint Master Compliance Audit Checklist covers Governance, Participant Rights, HR Screening, Reportable Incidents, Complaints, WHS Risk, Emergency Management, Care Planning, Quality Assurance, Privacy &amp; NDIS Financial Claims. Purchase standalone for **$355**, or get it **100% included** with live auto-linked evidence inside your ComplianceHR Infinity monthly plan!
+            Built from real NDIS registered provider operations (**Choices NQ** &amp; **ComplianceHR Infinity**), this 11-page, 356-checkpoint Master Compliance Audit Checklist covers Governance, Participant Rights, HR Screening, Reportable Incidents, Complaints, WHS Risk, Emergency Management, Care Planning, Quality Assurance, Privacy &amp; NDIS Financial Claims. Purchase standalone for **$355**, or get it **100% included** inside your Smart Enhanced All-In-One ComplianceHR Infinity subscription ($660–$1,035/mo, which includes the $160/mo Elite Plan)!
           </p>
         </div>
+
+
 
         <div className="lg:col-span-3 flex flex-col gap-1 rounded-xl border-2 border-purple-500 bg-white p-2 text-center shadow-sm">
           <div className="text-[7.5px] font-black uppercase tracking-wider text-purple-800">

@@ -51,11 +51,11 @@ export default function MarketingSafeShowcase() {
                   $355 MASTER AUDIT DOC INCLUDED FREE IN PLANS
                 </span>
                 <span className="rounded-full bg-white/20 px-2 py-0.5 text-[8px] font-black text-white">
-                  ELITE PLAN: $160 / MO
+                  SMART ENHANCED PACKS: +$160/MO ELITE INCLUDED ($660–$1,035/MO)
                 </span>
               </div>
               <p className="text-[8.5px] font-bold text-amber-100">
-                Complete Control. Greater Confidence. Brighter Success. · 45 Connected Modules · 17 Audit Categories · 356 Checkpoints · $0 Upfront Trial
+                Complete Control. Greater Confidence. Brighter Success. · 45 Connected Modules · 17 Audit Categories · 356 Checkpoints · 14-Day $0 Trial
               </p>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function MarketingSafeShowcase() {
               href="#pricing"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              3. Monthly Subscriptions ($160 Elite)
+              3. Smart Enhanced Plans ($660–$1,035/mo)
             </a>
             <Link
               to="/login"
