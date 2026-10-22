@@ -129,19 +129,28 @@ export default function AppLayout() {
   const sidebarContent = (
     <div className="flex h-full min-h-0 flex-col">
       <div
-        className="shrink-0 px-4 py-4 text-white"
+        className="shrink-0 space-y-2.5 px-4 py-4 text-white"
         style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
       >
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-start gap-2.5">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR INFINITY" className="h-10 w-10 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
-          <div className="min-w-0">
+          <div className="min-w-0 space-y-1">
             <div className="text-xs font-extrabold uppercase tracking-wider text-white">ComplianceHR INFINITY</div>
-            <div className="text-[10px] font-bold leading-tight text-white/95">Your Comprehensive ALL-IN-ONE Business Documentation Platform</div>
+            <div className="text-[10px] font-bold leading-snug text-white/95">
+              <div>Your Comprehensive ALL-IN-ONE</div>
+              <div>Business Documentation Platform</div>
+            </div>
           </div>
         </div>
-        <div className="mt-2 rounded-lg bg-white/15 px-2.5 py-1.5 text-[10px] font-bold leading-snug text-white ring-1 ring-white/25">
-          <div>Business Use: Choices North Queensland (Choices NQ)</div>
-          <div className="truncate">Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au</div>
+        <div className="space-y-0.5 rounded-lg bg-white/15 px-2.5 py-1.5 text-[10px] font-extrabold leading-snug text-white ring-1 ring-white/25">
+          <div>Complete Control. Greater Confidence.</div>
+          <div>Brighter Success.</div>
+        </div>
+        <div className="space-y-1 rounded-lg bg-white/15 px-2.5 py-2 text-[10px] font-bold leading-snug text-white ring-1 ring-white/25">
+          <div>Developer: Kristy Lee Whelan</div>
+          <div className="truncate">Email: kristyleebatkin@live.com.au</div>
+          <div className="pt-1 font-extrabold">Business Use: Choices North Queensland</div>
+          <div className="font-extrabold">Choices NQ</div>
         </div>
       </div>
 

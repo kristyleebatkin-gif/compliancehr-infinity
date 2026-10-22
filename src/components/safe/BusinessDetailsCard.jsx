@@ -202,7 +202,7 @@ export default function BusinessDetailsCard() {
       </Section>
 
       <Section icon={Building2} title="Important business information">
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-3">
           <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
           <Field label="Trading name" value={form.trading_name} onChange={set('trading_name')} />
           <Field label="Business structure" value={form.business_structure} onChange={set('business_structure')} />

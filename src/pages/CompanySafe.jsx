@@ -11,7 +11,7 @@ import SecurityPosture from '@/components/safe/SecurityPosture';
 import LiveSecurityEvidence from '@/components/safe/LiveSecurityEvidence';
 
 export default function CompanySafe() {
-  return <div className="space-y-4">
+  return <div className="space-y-6">
     <ModuleShell icon={Lock} moduleKey="company-safe" title="Company Safe" subtitle="Business identity, business documents and important business information, secured in one safe." />
     <SoftwareAndSafeBanner />
     <LiveSecurityEvidence />
