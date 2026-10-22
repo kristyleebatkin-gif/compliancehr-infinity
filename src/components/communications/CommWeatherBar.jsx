@@ -49,7 +49,7 @@ export default function CommWeatherBar() {
   }, []);
 
   const w = weather?.current;
-  const [label, Icon] = w ? (CODES[w.weather_code] || ['Cloudy', Cloud]) : null;
+  const [label, Icon] = w ? (CODES[w.weather_code] || ['Cloudy', Cloud]) : ['Loading…', Cloud];
 
   return (
     <div
