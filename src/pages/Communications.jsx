@@ -87,7 +87,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
     : TABS;
 
   return (
-    <div className="comm-centre space-y-2">
+    <div className="comm-centre space-y-1">
       <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
@@ -98,7 +98,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
-            <div className="space-y-2">
+            <div className="space-y-1">
               <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
               <CommunicationNavigation tabs={shown} />
               <CommDailyInsight />

@@ -32,32 +32,22 @@ const DEFAULT_SOFTWARE_LOGO = DEFAULT_LOGO;
  */
 function WallHangingPictureFrame({ title, children, className = '', frameAccent = SQUISHED_GRADIENT }) {
   return (
-    <div className={`relative flex flex-col items-center ${className}`}>
-      {/* Brass Nail & Hanging Wire on the Office Wall */}
-      <div className="relative flex flex-col items-center">
-        <div className="h-2 w-2 rounded-full bg-amber-400 ring-2 ring-amber-600 shadow" />
-        <svg viewBox="0 0 80 12" className="h-2 w-14 -mt-0.5 overflow-visible">
-          <path d="M40 0 L6 12 M40 0 L74 12" stroke="#b45309" strokeWidth="1.8" fill="none" />
-        </svg>
-      </div>
-
-      {/* Outer Gallery Frame */}
+    <div className={`relative flex flex-col ${className}`}>
+      {/* Outer Gallery Frame with Integrated Brass Plaque Header — Zero Vertical Gap */}
       <div
-        className="w-full rounded-xl p-1 shadow-[0_8px_20px_-6px_rgba(15,23,42,0.35)] ring-2 ring-amber-300"
+        className="flex h-full w-full flex-col rounded-lg p-0.5 shadow-sm ring-1 ring-amber-300"
         style={{ background: frameAccent }}
       >
-        {/* Inner White Matboard & Screenshot Canvas */}
-        <div className="h-full w-full overflow-hidden rounded-lg border-2 border-amber-200 bg-white p-1.5">
+        {title && (
+          <div className="flex shrink-0 items-center justify-center gap-1 px-1.5 py-0.5 text-[6.8px] font-extrabold uppercase tracking-wider text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
+            <span className="truncate">{title}</span>
+          </div>
+        )}
+        <div className="flex-1 w-full overflow-hidden rounded-md border border-amber-200 bg-white p-1">
           {children}
         </div>
       </div>
-
-      {/* Subtle Brass Wall Plaque Label under Picture */}
-      {title && (
-        <div className="mt-0.5 rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-[7px] font-extrabold uppercase tracking-wider text-amber-950 shadow-sm text-center">
-          {title}
-        </div>
-      )}
     </div>
   );
 }
@@ -482,9 +472,9 @@ function ProfilesAndDataDisplayColumn({
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-xl border-2 border-purple-500 bg-white p-2 shadow-md space-y-2">
+    <div className="flex h-full flex-col rounded-xl border-2 border-purple-500 bg-white p-1.5 shadow-sm space-y-1">
       {/* Header Banner of View 2 (General Profile & Modular Data Display Choice) with Logo + Full Slogan */}
-      <div className="space-y-1.5">
+      <div className="flex-1 space-y-1">
         <div
           className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1.5 text-white shadow-sm"
           style={{ background: SQUISHED_GRADIENT }}
@@ -718,7 +708,7 @@ export default function ExecutiveWallScene({
   const [monitorFeed, setMonitorFeed] = useState('overview');
   const [activeDataTab, setActiveDataTab] = useState('modular-picker');
   const [secondScreenKey, setSecondScreenKey] = useState('our-staff');
-  const [selectedModulars, setSelectedModulars] = useState(['our-staff', 'our-participants', 'communications']);
+  const [selectedModulars, setSelectedModulars] = useState(['our-staff', 'our-participants', 'communications', 'compliance']);
 
   const handleToggleModular = (modKey) => {
     setSelectedModulars((prev) =>
@@ -800,13 +790,13 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* MAIN BODY: Renders Both Views Beside Each Other ('both' — including tablet md+), or Single View ('office' / 'profiles') */}
-      <div className="bg-white p-2 sm:p-2.5">
+      {/* MAIN BODY: Zero-Gap Layout for Both Views Beside Each Other ('both') or Single View ('office' / 'profiles') */}
+      <div className="bg-white p-1">
         <div
           className={
             viewMode === 'both'
-              ? 'grid grid-cols-1 md:grid-cols-12 gap-2.5 items-stretch'
-              : 'space-y-2'
+              ? 'grid grid-cols-1 md:grid-cols-12 gap-1 items-stretch'
+              : 'space-y-1'
           }
         >
           {/* ==================== VIEW 1: THE UNIQUE EXECUTIVE OFFICE EXPERIENCE ==================== */}
@@ -814,66 +804,62 @@ export default function ExecutiveWallScene({
             <div
               className={`${
                 viewMode === 'both' ? 'md:col-span-7' : 'w-full'
-              } flex flex-col justify-between rounded-xl border-2 border-blue-500 bg-white p-2 shadow-md space-y-2`}
+              } flex flex-col rounded-xl border-2 border-blue-500 bg-white p-1.5 shadow-sm space-y-1`}
             >
               {/* View 1 Header Badge */}
               <div
-                className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white shadow-sm"
+                className="flex flex-wrap items-center justify-between gap-1 rounded-md px-2 py-1 text-white shadow-sm"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                <div className="flex items-center gap-1.5">
-                  <Building2 className="h-3.5 w-3.5 text-amber-200" />
-                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider">
+                <div className="flex items-center gap-1">
+                  <Building2 className="h-3 w-3 text-amber-200" />
+                  <span className="text-[9px] font-extrabold uppercase tracking-wider">
                     VIEW 1 · UNIQUE EXECUTIVE OFFICE EXPERIENCE (WALL, TABLE, SPEAKER, CHAIR &amp; SCREENS)
                   </span>
                 </div>
-                <span className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-blue-950">
+                <span className="rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-blue-950">
                   Interactive Office Room
                 </span>
               </div>
 
-              {/* OFFICE WALL WITH HANGING FRAMED SCREENSHOTS */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-1.5 items-start">
-                {/* LEFT / CENTER WALL AREA (7 cols):
-                    Top Row: Picture 1 (Logo + Full Slogan) + Picture 2 ("Compliance management, simplified end to end." with Slogan)
-                    Bottom Row: Picture 3 (All 45 Modules Squashed Together) */}
-                <div className="md:col-span-7 flex flex-col gap-1.5">
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 items-stretch">
+              {/* OFFICE WALL WITH HANGING FRAMED SCREENSHOTS — Equal-Height Columns, Zero Gap */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-1 items-stretch">
+                <div className="md:col-span-7 flex flex-col gap-1">
+                  <div className="grid grid-cols-2 gap-1 items-stretch">
                     {/* PICTURE 1: Updated Logo with Full Slogan Shown */}
-                    <div className="sm:col-span-6">
-                      <WallHangingPictureFrame title="Logo & Full Slogan">
-                        <LogoWithFullSloganCard
-                          logoUrl={frameSrc}
-                          companyName={companyName}
-                          compact={viewMode === 'both'}
-                        />
-                      </WallHangingPictureFrame>
-                    </div>
+                    <WallHangingPictureFrame title="Logo & Full Slogan" className="h-full">
+                      <LogoWithFullSloganCard
+                        logoUrl={frameSrc}
+                        companyName={companyName}
+                        compact={true}
+                      />
+                    </WallHangingPictureFrame>
 
                     {/* PICTURE 2: Screenshot of "Compliance management, simplified end to end." with Slogan */}
-                    <div className="sm:col-span-6">
-                      <WallHangingPictureFrame title="Headline & Full Slogan">
-                        <div className="flex h-full min-h-[96px] flex-col items-center justify-center rounded bg-white px-2 py-1.5 text-center">
-                          <div className="font-editorial text-xs sm:text-sm font-bold leading-tight text-blue-950">
-                            Compliance management,
-                            <span className="block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
-                              simplified end to end.
-                            </span>
-                          </div>
-                          <div
-                            className="mt-1.5 w-full rounded-full px-2 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white shadow-sm"
-                            style={{ background: SQUISHED_GRADIENT }}
-                          >
-                            {FULL_SLOGAN}
-                          </div>
+                    <WallHangingPictureFrame title="Headline & Full Slogan" className="h-full">
+                      <div className="flex h-full flex-col items-center justify-center rounded bg-white px-1.5 py-1 text-center">
+                        <div className="font-editorial text-[11px] sm:text-xs font-bold leading-tight text-blue-950">
+                          Compliance management,
+                          <span className="block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
+                            simplified end to end.
+                          </span>
                         </div>
-                      </WallHangingPictureFrame>
-                    </div>
+                        <div
+                          className="mt-1 w-full rounded-md px-1.5 py-0.5 text-[7px] font-extrabold uppercase leading-tight tracking-wide text-white shadow-sm"
+                          style={{ background: SQUISHED_GRADIENT }}
+                        >
+                          {FULL_SLOGAN}
+                        </div>
+                      </div>
+                    </WallHangingPictureFrame>
                   </div>
 
-                  {/* PICTURE 3: Screenshot of All 45 Modules Squashed Together */}
-                  <WallHangingPictureFrame title={`${companyName} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}>
-                    <div className="space-y-1 bg-white">
+                  {/* PICTURE 3: Screenshot of All 45 Modules Squashed Together (flex-1 so bottom aligns with Silver Screen) */}
+                  <WallHangingPictureFrame
+                    title={`${companyName} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}
+                    className="flex-1"
+                  >
+                    <div className="flex h-full flex-col justify-between gap-1 bg-white">
                       <div
                         className="flex items-center justify-between rounded px-2 py-0.5 text-white"
                         style={{ background: SQUISHED_GRADIENT }}
@@ -886,7 +872,7 @@ export default function ExecutiveWallScene({
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-0.5">
+                      <div className="grid flex-1 content-between grid-cols-3 sm:grid-cols-5 gap-0.5">
                         {MODULE_DIRECTORY.map((mod) => {
                           const Icon = mod.icon;
                           const colour = moduleKeyColour(mod.key);
@@ -925,7 +911,7 @@ export default function ExecutiveWallScene({
                 {/* RIGHT SIDE OF THE OFFICE WALL (5 cols):
                     Picture 4: Screenshot of Communication Centre Modulars & Today's Roster Overview
                     with the Squashed Silver Screen mounted directly underneath it */}
-                <div className="md:col-span-5 flex flex-col gap-1.5">
+                <div className="md:col-span-5 flex flex-col gap-1">
                   <WallHangingPictureFrame title="Communication Centre Modulars & Today's Roster">
                     <CommunicationCentreScreenshot
                       showRosterAbove={showRosterAbove}
@@ -936,13 +922,14 @@ export default function ExecutiveWallScene({
                   <WallHangingPictureFrame
                     title="Silver Screen · Weather & NDIS News"
                     frameAccent="linear-gradient(135deg, #64748b 0%, #cbd5e1 50%, #475569 100%)"
+                    className="flex-1"
                   >
                     <SilverScreenSplit />
                   </WallHangingPictureFrame>
                 </div>
               </div>
 
-              {/* Interactive Office Smart Screen #2 + Modular Screen Selector right inside the Enhanced Office Experience */}
+              {/* Full-Width Logo-Branded Office Smart Screen #2 directly beneath the equal-height wall frames */}
               <LogoBrandedOfficeSecondScreen
                 logoUrl={frameSrc}
                 selectedScreen={secondScreenKey}

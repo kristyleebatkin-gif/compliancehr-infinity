@@ -22,8 +22,8 @@ export const FULL_SLOGAN = 'Complete Control. Greater Confidence. Brighter Succe
 export function LogoWithFullSloganCard({ logoUrl, compact = false, companyName = 'ComplianceHR Infinity' }) {
   const src = logoUrl || DEFAULT_LOGO;
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg bg-white p-1.5 text-center">
-      <div className={`flex w-full items-center justify-center overflow-hidden rounded-lg bg-white ${compact ? 'h-14' : 'h-20'}`}>
+    <div className="flex flex-col items-center justify-center rounded bg-white p-1 text-center">
+      <div className={`flex w-full items-center justify-center overflow-hidden rounded bg-white ${compact ? 'h-12' : 'h-16'}`}>
         <Image
           src={src}
           alt={`${companyName} — ${FULL_SLOGAN}`}
@@ -31,11 +31,11 @@ export function LogoWithFullSloganCard({ logoUrl, compact = false, companyName =
           className="h-full w-full object-contain"
         />
       </div>
-      <div className="mt-0.5 text-[10px] font-extrabold tracking-tight text-blue-950">
+      <div className="text-[9.5px] font-extrabold leading-tight tracking-tight text-blue-950">
         {companyName}
       </div>
       <div
-        className="mt-0.5 w-full rounded-full px-2 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white shadow-sm"
+        className="mt-0.5 w-full rounded-md px-1.5 py-0.5 text-[7px] font-extrabold uppercase leading-tight tracking-wide text-white shadow-sm"
         style={{ background: SQUISHED_GRADIENT }}
       >
         {FULL_SLOGAN}
@@ -72,10 +72,10 @@ export function LogoBrandedOfficeSecondScreen({
   const activeColor = moduleKeyColour(activeModule.key || 'dashboard');
 
   return (
-    <div className="rounded-xl border-2 border-amber-400 bg-white p-2 shadow-md">
+    <div className="rounded-lg border-2 border-amber-400 bg-white p-1.5 shadow-sm">
       {/* Top Branded Bezel with Logo & Full Slogan on the Office Display Item */}
       <div
-        className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white shadow-sm"
+        className="flex flex-wrap items-center justify-between gap-1 rounded-md px-2 py-1 text-white shadow-sm"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex items-center gap-2 min-w-0">
