@@ -8,15 +8,15 @@ import { useToast } from '@/components/ui/use-toast';
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import { UploadCloud, Save, Loader2, PenSquare } from 'lucide-react';
 
-const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png';
+const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
 
 export const SOFTWARE_INFO = {
-  name: 'ComplianceHR INFINITY',
+  name: 'ComplianceHR Infinity',
   taglineLine1: 'Your Comprehensive ALL-IN-ONE',
   taglineLine2: 'Business Documentation Platform',
   sloganLine1: 'Complete Control. Greater Confidence.',
-  sloganLine2: 'Brighter Success.',
-  slogan: 'Complete Control. Greater Confidence. Brighter Success.',
+  sloganLine2: 'Brighter Success',
+  slogan: 'Complete Control. Greater Confidence. Brighter Success',
   description: 'All-in-one, Smart, Comprehensive, Business Super, Documentation Platform',
   developer: {
     name: 'Kristy Lee Whelan',
@@ -140,20 +140,20 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
         softwareName={SOFTWARE_INFO.name}
       />
 
-      {/* Compact Quick Bar to Edit & Save Logo, Name & Slogan */}
+      {/* Squashed Quick Bar to Edit & Save Logo, Name & Slogan */}
       {!compact && (
-        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-violet-300 bg-white px-3.5 py-2 shadow-sm">
-          <span className="text-xs font-extrabold text-violet-950">
-            Top-Left Frame Identity: {branding.companyName} · {branding.slogan}
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-violet-300 bg-white px-3 py-1.5 shadow-sm">
+          <span className="text-[11px] font-extrabold text-violet-950">
+            Software: ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success
           </span>
           <button
             type="button"
             onClick={() => setEditingIdentity((v) => !v)}
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-sm"
+            className="inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-[10px] font-extrabold text-white shadow-sm"
             style={{ background: SQUISHED_GRADIENT }}
           >
-            <PenSquare className="h-3.5 w-3.5" />
-            {editingIdentity ? 'Close Identity Editor' : 'Edit Frame Logo, Name & Slogan'}
+            <PenSquare className="h-3 w-3" />
+            {editingIdentity ? 'Close Editor' : 'Edit Frame'}
           </button>
         </div>
       )}

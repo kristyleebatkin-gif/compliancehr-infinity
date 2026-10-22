@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
+import MarketingSafeShowcase from '@/components/landing/MarketingSafeShowcase';
 import QuickStartSection from '@/components/landing/QuickStartSection';
 import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
@@ -30,6 +31,7 @@ export default function Landing() {
       <LandingNav />
       <main>
         <LandingHero />
+        <MarketingSafeShowcase />
         <QuickStartSection />
         <FeaturesSection />
         <ExpressAuditSection />

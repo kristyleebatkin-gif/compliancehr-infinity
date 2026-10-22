@@ -64,13 +64,15 @@ export default function LandingHero() {
         <div className="mx-auto max-w-3xl text-center">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
 
-          <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            Software: ComplianceHR INFINITY · Your Comprehensive ALL-IN-ONE Business Documentation Platform
-          </div>
-          <div className="mx-auto mt-3 flex flex-wrap items-center justify-center gap-2 text-xs font-extrabold text-violet-800">
-            <span className="rounded-full bg-violet-100 px-3 py-1">Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au</span>
-            <span className="rounded-full bg-pink-100 px-3 py-1 text-pink-800">Business Use: Choices North Queensland · Choices NQ</span>
+          <div className="mx-auto mt-5 max-w-xl rounded-2xl border-2 border-violet-300 bg-white/95 p-3.5 text-center shadow-md space-y-1">
+            <div className="text-sm sm:text-base font-extrabold text-blue-950">Software: ComplianceHR Infinity</div>
+            <div className="text-xs sm:text-sm font-extrabold text-violet-800">Complete Control. Greater Confidence.</div>
+            <div className="text-xs sm:text-sm font-extrabold text-pink-700">Brighter Success</div>
+            <div className="pt-1.5 border-t border-violet-200 text-xs font-extrabold text-blue-950">Our Business Using Software:</div>
+            <div className="text-xs font-extrabold text-violet-900">Choices North Queensland</div>
+            <div className="text-xs font-extrabold text-pink-700">Choices NQ</div>
+            <div className="pt-1 text-xs font-extrabold text-blue-950">Developer: Kristy Lee Whelan</div>
+            <div className="text-xs font-extrabold text-violet-800">Email: kristyleebatkin@live.com.au</div>
           </div>
 
           <h1 className="mt-6 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">

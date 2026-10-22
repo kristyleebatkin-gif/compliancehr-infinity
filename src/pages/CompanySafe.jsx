@@ -85,7 +85,7 @@ export default function CompanySafe() {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
+        <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6">
           {SAFE_MODULES.map((m) => {
             const Icon = m.icon;
             const isOpen = !!openArea[m.key];
@@ -94,37 +94,22 @@ export default function CompanySafe() {
                 key={m.key}
                 type="button"
                 onClick={() => toggle(m.key)}
-                className="group relative flex min-w-0 flex-col items-start overflow-hidden rounded-xl border p-2 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative flex min-w-0 items-center gap-1.5 overflow-hidden rounded-lg border px-2 py-1.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
                 style={{
                   borderColor: isOpen ? m.color : `${m.color}55`,
                   background: `linear-gradient(165deg, ${m.color}24 0%, ${m.color}0d 48%, #ffffff 90%)`,
                 }}
               >
-                <span className="absolute inset-x-0 top-0 h-1" style={{ background: m.color }} />
-                <div className="flex w-full items-center justify-between gap-1 pt-0.5">
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
-                    style={{ background: m.color }}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                  </span>
-                  <span
-                    className="rounded-full px-1.5 py-0 text-[9px] font-extrabold"
-                    style={{ color: m.color, backgroundColor: `${m.color}18` }}
-                  >
-                    {isOpen ? 'Close' : 'Open'}
-                  </span>
-                </div>
-                <div className="mt-1 w-full truncate text-[11px] font-extrabold text-foreground">
+                <span className="absolute inset-x-0 top-0 h-0.5" style={{ background: m.color }} />
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-sm"
+                  style={{ background: m.color }}
+                >
+                  <Icon className="h-3 w-3" />
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[10px] font-extrabold text-foreground">
                   {m.title}
-                </div>
-                <div className="mt-0.5 w-full space-y-0.5 border-t border-border/50 pt-1">
-                  {m.shared.map((line, idx) => (
-                    <div key={idx} className="truncate text-[10px] font-semibold leading-tight text-foreground/80">
-                      {line}
-                    </div>
-                  ))}
-                </div>
+                </span>
               </button>
             );
           })}
