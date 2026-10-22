@@ -13,7 +13,7 @@ export default function RosterMiniOverview() {
     (async () => {
       try {
         const today = format(new Date(), 'yyyy-MM-dd');
-        const page = await base44.entities.Shift.filter({ date: today }, { sort: 'start_time', limit: 5 });
+        const page = await base44.entities.Shift.filter({ date: today }, { sort: 'start_time', limit: 10 });
         if (!alive) return;
         setRoster(page.items || []);
       } catch {
@@ -39,7 +39,7 @@ export default function RosterMiniOverview() {
         ) : (
           <ul className="space-y-1">
             {roster.map((s) => (
-              <li key={s.id} className="flex items-center gap-2 rounded-lg border px-2 py-1 text-[11px] font-semibold">
+              <li key={s.id} className="flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-xs font-semibold">
                 <Clock className="h-3 w-3 shrink-0 text-blue-600" />
                 <span className="min-w-0 flex-1 truncate">{s.employee_name || 'Unassigned'}{s.participant_name ? ` · ${s.participant_name}` : ''}</span>
                 <span className="shrink-0 text-muted-foreground">{s.start_time || ''}</span>

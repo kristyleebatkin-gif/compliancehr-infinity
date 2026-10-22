@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { useState } from 'react';
-import { Ear, MessageCircleQuestion, Languages, PenLine, Repeat, Radio, Users, Handshake, HeartHandshake, Trophy, Clock, Lightbulb, Info, ShieldAlert, RefreshCcw, BookOpen, Share2, Copy, Check } from 'lucide-react';
+import { Ear, MessageCircleQuestion, Languages, PenLine, Repeat, Radio, Users, Handshake, HeartHandshake, Trophy, Clock, Lightbulb, Info, ShieldAlert, RefreshCcw, BookOpen } from 'lucide-react';
 
 const COLOUR = '#0891b2';
 
@@ -43,54 +42,22 @@ const AUDIT_TIPS = [
   { icon: Users, colour: '#7c3aed', title: 'Review the register weekly', text: 'Check for gaps, unsigned entries and missing documents so evidence stays current, not a pre-audit scramble.' },
 ];
 
-// Short, one-line hints the team can copy and share anywhere - the feed, an email, a huddle.
-const SHAREABLE = [
-  'Say the main point in your first sentence - clear is kind.',
-  'Confirm every instruction by playing it back before acting on it.',
-  'Write it while it is fresh: a note reconstructed later is evidence lost.',
-  'Urgent? Call or raise an alert. Everything else belongs in the diary or feed.',
-  'Read the handover before the shift starts; leave notes for the next shift.',
-  'Praise in public on the feed, correct in private in a direct message.',
-  'Check the shared to-do board before you plan your day: one team, one plan.',
-  'No entry is too small: if it happened on shift, it belongs in the register.',
-  'Listen to understand, not to reply - let the person finish first.',
-  'Close every loop: a message is delivered only when it is confirmed.',
-];
-
-function ShareHint({ text }) {
-  const [copied, setCopied] = useState(false);
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch { /* clipboard unavailable */ }
-  };
-  return (
-    <div className="flex items-start justify-between gap-2 rounded-xl border p-2.5" style={{ background: '#0891b20d' }}>
-      <p className="text-xs font-medium leading-snug text-foreground/80">{text}</p>
-      <button type="button" onClick={copy} aria-label="Copy hint" className="shrink-0 rounded-lg p-1.5 transition-colors hover:bg-[#0891b21f]" style={{ color: copied ? '#16a34a' : '#0891b2' }}>
-        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-      </button>
-    </div>
-  );
-}
-
+// Compact section card - half the previous footprint: smaller tiles, type and padding.
 function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' }) {
   return (
     <Card className="shadow-panel" style={{ borderTop: `4px solid ${colour}` }}>
-      <CardContent className="p-3">
-        <h3 className="font-heading text-base font-bold" style={{ color: colour }}>{title}</h3>
-        {intro && <p className="mt-0.5 text-xs text-muted-foreground">{intro}</p>}
-        <div className={`mt-2 grid gap-2 ${columns}`}>
+      <CardContent className="p-2.5">
+        <h3 className="text-sm font-bold" style={{ color: colour }}>{title}</h3>
+        {intro && <p className="mt-0.5 text-[10px] text-muted-foreground">{intro}</p>}
+        <div className={`mt-1.5 grid gap-1.5 ${columns}`}>
           {items.map(({ icon: Icon, colour: c, title: t, text }) => (
-            <div key={t} className="flex items-start gap-2.5 rounded-xl border border-border/60 p-2.5" style={{ background: `${c}0d` }}>
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: `${c}1f`, color: c }}>
-                <Icon className="h-4 w-4" />
+            <div key={t} className="flex items-start gap-2 rounded-lg border border-border/60 p-1.5" style={{ background: `${c}0d` }}>
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md" style={{ background: `${c}1f`, color: c }}>
+                <Icon className="h-3 w-3" />
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-bold" style={{ color: c }}>{t}</p>
-                <p className="mt-0.5 text-xs leading-snug text-foreground/70">{text}</p>
+                <p className="text-[11px] font-bold" style={{ color: c }}>{t}</p>
+                <p className="mt-0.5 text-[10px] leading-snug text-foreground/70">{text}</p>
               </div>
             </div>
           ))}
@@ -100,29 +67,27 @@ function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' 
   );
 }
 
+// "About communication" fundamentals - also shown above Team Banter on the centre board.
+export function AboutCommunication() {
+  return <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />;
+}
+
+// Hints & tips sections - shown above the communication board.
+export function CommHintsTips() {
+  return (
+    <div className="space-y-2">
+      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
+      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
+    </div>
+  );
+}
+
 export default function CommGuide() {
   return (
-    <div className="space-y-3">
-      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
-      <div className="rounded-2xl border border-border/60 p-3" style={{ background: `linear-gradient(110deg, ${COLOUR}14, #7c3aed14, #f472b614)` }}>
-        <h2 className="font-heading text-lg font-bold text-[#0891b2]">Communicate well, work as one team</h2>
-        <p className="text-xs text-muted-foreground">Practical hints, teamwork habits and the communication basics behind safe, high-quality supports.</p>
-      </div>
-      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" />
-      <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />
-      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
-      <Card className="shadow-panel" style={{ borderTop: '4px solid #0d9488' }}>
-        <CardContent className="p-3">
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: '#0d94881f', color: '#0d9488' }}><Share2 className="h-4 w-4" /></span>
-            <h3 className="font-heading text-base font-bold" style={{ color: '#0d9488' }}>Hints to share</h3>
-          </div>
-          <p className="mt-0.5 text-xs text-muted-foreground">One-line hints on effective communication and teamwork. Copy any hint and paste it into the team feed, an email or a huddle.</p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {SHAREABLE.map((h) => <ShareHint key={h} text={h} />)}
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-2.5">
+      <CommHintsTips />
+      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" columns="sm:grid-cols-2 lg:grid-cols-3" />
+      <AboutCommunication />
     </div>
   );
 }

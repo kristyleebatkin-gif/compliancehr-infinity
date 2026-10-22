@@ -33,6 +33,7 @@ import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import CommGuide from '@/components/communications/CommGuide';
+import { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
@@ -96,15 +97,16 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
               <CommWeatherBar />
+              <AboutCommunication />
+              <TeamBanter />
+              <CommTeamDash compact />
               <CommDailyInsight />
               <CommTaskDash />
-              <CommTeamDash compact />
-              <TeamBanter />
+              <CommunicateWell />
               <RosterMiniOverview />
               <CommSharedTodo compact />
-              <CommunicateWell />
+              <CommHintsTips />
               <CommunicationNavigation tabs={shown} />
-              <CommGuide />
               <TaskLeaderboard />
             </div>
           )}
