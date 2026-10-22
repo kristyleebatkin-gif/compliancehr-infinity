@@ -53,36 +53,36 @@ export default function CommWeatherBar() {
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-3 shadow-sm"
-      style={{ background: 'linear-gradient(120deg, #0ea5e9 0%, #0891b2 55%, #7c3aed 100%)', borderColor: '#0891b233' }}
+      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border bg-card p-3 transition-all hover:-translate-y-1 hover:shadow-lg"
+      style={{ borderColor: '#0891b255', boxShadow: '0 6px 16px -12px #0891b2aa' }}
     >
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
-          <CalendarDays className="h-5 w-5 text-white" />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: '#0891b21f', color: '#0891b2' }}>
+          <CalendarDays className="h-5 w-5" />
         </span>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-white/70">Today</p>
-          <p className="text-sm font-bold text-white">{dateFmt.format(now)}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Today</p>
+          <p className="text-sm font-bold" style={{ color: '#0891b2' }}>{dateFmt.format(now)}</p>
         </div>
-        <div className="ml-1 border-l border-white/25 pl-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-white/70">Time</p>
-          <p className="font-mono text-lg font-bold leading-5 text-white">{timeFmt.format(now)}</p>
+        <div className="ml-1 border-l border-border pl-3">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Time</p>
+          <p className="font-mono text-lg font-bold leading-5" style={{ color: '#0891b2' }}>{timeFmt.format(now)}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2.5 rounded-xl bg-white/15 px-3 py-2">
+      <div className="flex items-center gap-2.5 rounded-full px-3 py-2" style={{ background: '#0ea5e91f' }}>
         {w ? (
           <>
-            <Icon className="h-6 w-6 text-white" />
+            <Icon className="h-6 w-6" style={{ color: '#0ea5e9' }} />
             <div>
-              <p className="text-lg font-bold leading-5 text-white">{Math.round(w.temperature_2m)}°C</p>
-              <p className="text-[11px] font-semibold text-white/85">
+              <p className="text-lg font-bold leading-5" style={{ color: '#0ea5e9' }}>{Math.round(w.temperature_2m)}°C</p>
+              <p className="text-[11px] font-semibold text-foreground/60">
                 {label}
                 {weather?.daily && ` · ${Math.round(weather.daily.temperature_2m_min[0])}–${Math.round(weather.daily.temperature_2m_max[0])}°C`}
               </p>
             </div>
           </>
         ) : (
-          <p className="text-xs font-semibold text-white/85">Loading weather…</p>
+          <p className="text-xs font-semibold text-foreground/60">Loading weather…</p>
         )}
       </div>
     </div>
