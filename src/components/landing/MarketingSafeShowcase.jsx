@@ -7,6 +7,7 @@ import { Image } from '@/components/ui/image';
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import MustHaveFunctionsReview from '@/components/landing/MustHaveFunctionsReview';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
 import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import PricingSection from '@/components/landing/PricingSection';
 
@@ -59,10 +60,10 @@ export default function MarketingSafeShowcase() {
               1. Live Office &amp; Profile Workspace
             </a>
             <a
-              href="#audit-master-doc"
+              href="#complete-2026-docs-print-store"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              2. $355 Master Audit Doc (356 Checkpoints)
+              2. All 125+ 2026 Docs &amp; Printed Binders
             </a>
             <a
               href="#screen-by-screen-audit"
@@ -223,10 +224,13 @@ export default function MarketingSafeShowcase() {
       {/* Section 2: Full Review of Must-Have Functions, Resources, Features & $355 Master Audit Checklist */}
       <MustHaveFunctionsReview />
 
-      {/* Section 3: Comprehensive 45-Screen 2026 Smart-Fill Audit & 1-Click Task Completion Studio */}
+      {/* Section 3: Complete 2026 Compliance Document Library (125+ Docs) & Professional Printed Binder Ordering */}
+      <Complete2026DocumentPrintStore />
+
+      {/* Section 4: Comprehensive 45-Screen 2026 Smart-Fill Audit & 1-Click Task Completion Studio */}
       <ScreenByScreenMasterAudit2026 />
 
-      {/* Section 4: Ready-to-Launch Marketing Flyer Campaign Studio */}
+      {/* Section 5: Ready-to-Launch Marketing Flyer Campaign Studio */}
       <MarketingFlyerCampaign />
 
       {/* Section 5: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}

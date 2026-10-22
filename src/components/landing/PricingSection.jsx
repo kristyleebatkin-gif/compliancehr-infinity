@@ -408,31 +408,31 @@ export default function PricingSection({ compact = false }) {
           <div className="lg:col-span-9 space-y-1.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                $355 STANDALONE COMPLIANCE DOCUMENT PACK
+                $355 DIGITAL AUDIT DOC · $495 PRINTED BINDER · $2,490 FULL 6-BINDER PRINTED BOX SET
               </span>
               <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black text-white">
-                100% INCLUDED IN EVERY SMART ENHANCED MONTHLY PLAN ABOVE
+                ALL 125+ DIGITAL DOCS ($1,495 VALUE) INCLUDED FREE IN MONTHLY PLANS
               </span>
             </div>
             <h4 className="text-xs sm:text-sm font-black text-blue-950">
-              2026 ComplianceHR Infinity Master Compliance Audit Checklist Pack (`CHR-AUD-001` &amp; `CHR-AUD-002`) — 17 Audit Categories · 356 Checkpoints · 11 Pages
+              Every 2026 Compliance Document You Need (125+ Policies, Contracts, Intake Packs, Consents, Risks &amp; Checklists) — Digital or Professionally Printed &amp; Bound!
             </h4>
             <p className="text-[8px] font-semibold leading-snug text-blue-950">
-              Need the official 11-page Master Compliance Audit Checklist on its own? Get both the **Governance &amp; NDIS Edition (`CHR-AUD-001`)** and **Workforce &amp; Operations Edition (`CHR-AUD-002`)** 356-checkpoint audit documents for **$355 standalone** — or subscribe to any **Smart Enhanced All-In-One Compliance Pack** ($660–$1,035/mo, including the $160/mo Elite Plan) and receive the interactive + printable PDF checklists **100% included**!
+              Need someone to print, tab-index, bind, and courier your compliance folders? Order the **Master Audit Checklist** (**$355 Digital** or **$495 Printed &amp; Bound Binder**), the **Complete 125+ Document Digital Suite** (**$1,495** or **$0 FREE inside any monthly plan**), or the **Complete 6-Binder Printed &amp; Tab-Indexed Office Box Set Delivered** (**$2,490 standalone**, or just **$995 print-only upgrade** for monthly subscribers)!
             </p>
             <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
               <a
-                href="#audit-master-doc"
+                href="#complete-2026-docs-print-store"
                 className="rounded-lg border-2 border-purple-600 bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 hover:bg-purple-50"
               >
-                Inspect Interactive 11-Page Checklists Above
+                Order Printed 6-Binder Box Set or Digital Suite
               </a>
               <Link
                 to="/register"
                 className="inline-flex items-center gap-1 rounded-lg px-3 py-1 text-[8px] font-black text-white shadow-sm"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                Claim Free in 14-Day Trial <ArrowRight className="h-2.5 w-2.5" />
+                Claim Digital Suite Free in 14-Day Trial <ArrowRight className="h-2.5 w-2.5" />
               </Link>
             </div>
           </div>

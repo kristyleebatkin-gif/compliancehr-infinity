@@ -50,6 +50,7 @@ import AuditsTab from '@/components/compliance/AuditsTab';
 import MasterChecklist from '@/components/compliance/MasterChecklist';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -89,6 +90,7 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 const TABS = [
   ['standards-map', 'NDIS Standards Map'],
   ['screen-audit-2026', '45-Screen 2026 Smart-Fill Audit'],
+  ['print-doc-store', 'Order Printed Binders & 125+ 2026 Docs'],
   ['master-checklist', 'Master Checklist'],
   ['audits', 'Audits'],
   ['audit-report-list', 'Internal Audit Report List'],
@@ -287,6 +289,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="screen-audit-2026" className="mt-2">
           <ScreenByScreenMasterAudit2026 />
+        </TabsContent>
+
+        <TabsContent value="print-doc-store" className="mt-2">
+          <Complete2026DocumentPrintStore />
         </TabsContent>
 
         <TabsContent value="master-checklist" className="mt-2">
