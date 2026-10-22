@@ -63,7 +63,7 @@ export default function LandingFooter() {
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 sm:flex-row">
           <p className="text-xs text-white/80 font-semibold">Software: ComplianceHR INFINITY — Your Comprehensive ALL-IN-ONE Business Documentation Platform</p>
-          <p className="text-xs text-white/80 font-semibold">Developer: Kristy Lee Whelan (kristyleebatkin@live.com.au) · Business Use: Choices North Queensland (Choices NQ)</p>
+          <p className="text-xs text-white/80 font-semibold">Developer: Kristy Lee Whelan (kristyleebatkin@live.com.au)</p>
         </div>
       </div>
     </footer>

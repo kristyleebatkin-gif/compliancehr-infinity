@@ -355,16 +355,16 @@ export default function ExecutiveWallScene({ logoUrl, showRosterAbove = true }) 
               badgeLabel="Left Corner Picture Frame"
             />
 
-            {/* Ordered Business & Developer Details */}
+            {/* Ordered Software & Developer Details */}
             <div className="rounded-xl border border-pink-300 bg-pink-50 px-2.5 py-1.5 space-y-0.5 text-[10px] leading-snug">
               <div className="font-extrabold text-blue-950">
-                Our Business Using Software:
+                Software: ComplianceHR Infinity
               </div>
               <div className="font-extrabold text-violet-900">
-                Choices North Queensland
+                Complete Control. Greater Confidence.
               </div>
               <div className="font-extrabold text-pink-700">
-                Choices NQ
+                Brighter Success
               </div>
               <div className="pt-0.5 font-extrabold text-blue-950">
                 Developer: Kristy Lee Whelan

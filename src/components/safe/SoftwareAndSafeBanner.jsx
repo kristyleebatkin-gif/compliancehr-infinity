@@ -25,13 +25,13 @@ export const SOFTWARE_INFO = {
     email: 'kristyleebatkin@live.com.au',
   },
   business: {
-    business_name: 'Choices North Queensland',
-    short_name: 'Choices NQ',
-    trading_name: 'DALTON, KRISTY LEE Trading as CHOICES NORTH QUEENSLAND',
+    business_name: 'ComplianceHR Infinity',
+    short_name: 'ComplianceHR Infinity',
+    trading_name: 'ComplianceHR Infinity',
     abn: '11769681650',
     ndis_provider_number: '4-LPHJR5O',
     address_line: 'U5/14 Keane Street, Currajong, QLD, 4812',
-    contact_person: 'Choices NQ Administration',
+    contact_person: 'Administration',
     phone: '0402 165 668',
     email: 'kristyleebatkin@live.com.au',
   },
@@ -132,7 +132,7 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
       {/* Top-Left Frame (Logo, Name, Slogan + Chair Back Front Left) & Twice-Size Top-Right Colour Area */}
       <ExecutiveWallScene
         logoUrl={branding.logoUrl || DEFAULT_LOGO}
-        companyName={branding.companyName || 'Choices North Queensland'}
+        companyName={branding.companyName || 'ComplianceHR Infinity'}
         sloganLine1={SOFTWARE_INFO.sloganLine1}
         sloganLine2={SOFTWARE_INFO.sloganLine2}
         business={business}

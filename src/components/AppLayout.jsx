@@ -136,7 +136,7 @@ export default function AppLayout() {
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR INFINITY" className="h-9 w-9 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
           <div className="min-w-0">
             <div className="truncate text-xs font-extrabold uppercase tracking-wider text-white">ComplianceHR INFINITY</div>
-            <div className="truncate text-[10px] font-bold text-white/95">Choices North Queensland · Choices NQ</div>
+            <div className="truncate text-[10px] font-bold text-white/95">Complete Control. Greater Confidence.</div>
           </div>
         </div>
       </div>
@@ -276,7 +276,7 @@ export default function AppLayout() {
             />
             <div className="hidden sm:block">
               <div className="text-sm font-extrabold tracking-tight font-display text-foreground">{currentLabel}</div>
-              <div className="text-[11px] font-bold text-violet-700">ComplianceHR INFINITY · Choices North Queensland (Choices NQ)</div>
+              <div className="text-[11px] font-bold text-violet-700">ComplianceHR INFINITY · Complete Control. Greater Confidence. Brighter Success.</div>
             </div>
           </div>
 

@@ -19,7 +19,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
             <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-lg ring-2 ring-white/50">
               <Image
                 src={DEFAULT_LOGO}
-                alt="Choices North Queensland (Choices NQ)"
+                alt="ComplianceHR Infinity"
                 fittingType="fit"
                 className="h-full w-full object-contain"
               />
@@ -42,11 +42,6 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
               <div className="space-y-1 pt-1 text-xs font-bold text-white/95">
                 <div>Developer: {SOFTWARE_INFO.developer.name}</div>
                 <div>Email: {SOFTWARE_INFO.developer.email}</div>
-              </div>
-
-              <div className="space-y-0.5 pt-1 text-xs font-extrabold text-white">
-                <div>Business Use: Choices North Queensland</div>
-                <div>Choices NQ</div>
               </div>
             </div>
           </div>

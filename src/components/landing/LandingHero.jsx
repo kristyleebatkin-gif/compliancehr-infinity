@@ -68,10 +68,7 @@ export default function LandingHero() {
             <div className="text-sm sm:text-base font-extrabold text-blue-950">Software: ComplianceHR Infinity</div>
             <div className="text-xs sm:text-sm font-extrabold text-violet-800">Complete Control. Greater Confidence.</div>
             <div className="text-xs sm:text-sm font-extrabold text-pink-700">Brighter Success</div>
-            <div className="pt-1.5 border-t border-violet-200 text-xs font-extrabold text-blue-950">Our Business Using Software:</div>
-            <div className="text-xs font-extrabold text-violet-900">Choices North Queensland</div>
-            <div className="text-xs font-extrabold text-pink-700">Choices NQ</div>
-            <div className="pt-1 text-xs font-extrabold text-blue-950">Developer: Kristy Lee Whelan</div>
+            <div className="pt-1.5 border-t border-violet-200 text-xs font-extrabold text-blue-950">Developer: Kristy Lee Whelan</div>
             <div className="text-xs font-extrabold text-violet-800">Email: kristyleebatkin@live.com.au</div>
           </div>
 

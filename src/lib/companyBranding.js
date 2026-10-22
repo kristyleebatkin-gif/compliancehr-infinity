@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 const STORAGE_KEY = 'compliancehr_company_branding';
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 const DEFAULTS = {
-  companyName: 'Choices North Queensland (Choices NQ)',
+  companyName: 'ComplianceHR Infinity',
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
   logoUrl: 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png',
   logoDataUrl: '',

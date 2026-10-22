@@ -16,7 +16,7 @@ const SAFE_MODULES = [
     icon: Sparkles,
     color: '#2563eb',
     title: 'Business Identity',
-    shared: ['Logo, Name & Slogan', 'Choices North Queensland', 'Complete Control. Greater Confidence.'],
+    shared: ['Logo, Name & Slogan', 'ComplianceHR Infinity', 'Complete Control. Greater Confidence.'],
   },
   {
     key: 'evidence',
