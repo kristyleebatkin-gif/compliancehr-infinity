@@ -6,3 +6,6 @@
 main .communication-navigation[role="tablist"]{gap:.5rem!important}
 /* Owner request: no yellow tone in the Communication Centre header tab strip. */
 .app-readable .comm-centre [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5){--dashboard-tone:var(--chart-2)}
+/* Communication Centre: the live tracker / Audit checklist / Audit report bar sits under the Task Dash (CommAuditBar).
+   Hide the header's copy on this page only; the header itself is untouched. */
+.comm-centre .app-page-header + .module-action-bar{display:none}

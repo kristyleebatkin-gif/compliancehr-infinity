@@ -36,6 +36,7 @@ import CommGuide from '@/components/communications/CommGuide';
 import { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
+import CommAuditBar from '@/components/communications/CommAuditBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
 const TABS = [
@@ -98,6 +99,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
             <div className="space-y-2.5">
               <CommWeatherBar />
               <CommTaskDash />
+              <CommAuditBar />
               <AboutCommunication />
               <CommDailyInsight />
               <TeamBanter />
