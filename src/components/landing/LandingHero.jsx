@@ -62,7 +62,7 @@ export default function LandingHero() {
 
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
 
           <div className="mx-auto mt-5 max-w-xl rounded-2xl border-2 border-violet-300 bg-white/95 p-3.5 text-center shadow-md space-y-1">
             <div className="text-sm sm:text-base font-extrabold text-blue-950">Software: ComplianceHR Infinity</div>

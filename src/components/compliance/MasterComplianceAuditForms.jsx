@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
+const CHOICES_NQ_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
 const CHR_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 const REFERENCE_ARTWORK = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/ef2dd9d4b_ComplianceHRInfinityComplianceAuditMasterDoc2026hereonprofile.png';
 
@@ -146,53 +147,14 @@ export const AUDIT_CATEGORIES_17 = [
 
 function ChoicesNqLogoEmblem() {
   return (
-    <div className="flex flex-col items-center text-center select-none">
-      {/* Sunburst rays */}
-      <div className="flex items-end justify-center gap-1 -mb-0.5">
-        <span className="h-2 w-0.5 rotate-[-28deg] rounded-full bg-amber-400" />
-        <span className="h-2.5 w-0.5 rotate-[-12deg] rounded-full bg-amber-500" />
-        <span className="h-3 w-0.5 rounded-full bg-yellow-400" />
-        <span className="h-2.5 w-0.5 rotate-[12deg] rounded-full bg-amber-500" />
-        <span className="h-2 w-0.5 rotate-[28deg] rounded-full bg-amber-400" />
-      </div>
-      {/* CHOICES + cheerful figures + NQ */}
-      <div className="leading-none">
-        <div
-          className="text-lg sm:text-xl font-black tracking-tight text-amber-400"
-          style={{
-            WebkitTextStroke: '1.2px #78350f',
-            textShadow: '0 1px 0 #78350f',
-          }}
-        >
-          CHOICES
-        </div>
-        <div className="flex items-center justify-center gap-1 -mt-0.5">
-          {/* Two little joyful support figures */}
-          <div className="flex items-center gap-0.5 rounded-full bg-amber-50 px-1 py-0.5 border border-amber-300">
-            <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-sky-500 text-[7px] font-black text-white">
-              ★
-            </span>
-            <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-500 text-[7px] font-black text-white">
-              ♥
-            </span>
-          </div>
-          <span
-            className="text-base sm:text-lg font-black tracking-tight text-amber-400"
-            style={{
-              WebkitTextStroke: '1.2px #78350f',
-              textShadow: '0 1px 0 #78350f',
-            }}
-          >
-            NQ
-          </span>
-        </div>
-      </div>
-      <div className="mt-0.5 text-[7.5px] font-black uppercase tracking-wider text-slate-900">
-        Registered NDIS Provider
-      </div>
-      <div className="font-editorial-italic text-[8.5px] font-semibold leading-tight text-purple-950">
-        Holistic &amp; Individualised Supports
-        <span className="block">in North Queensland</span>
+    <div className="flex flex-col items-center justify-center text-center select-none">
+      <div className="flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ring-amber-200/80">
+        <Image
+          src={CHOICES_NQ_LOGO}
+          alt="Choices NQ — Registered NDIS Provider — Holistic & Individualised Supports in North Queensland"
+          fittingType="fit"
+          className="h-full w-full object-contain"
+        />
       </div>
     </div>
   );
@@ -200,17 +162,14 @@ function ChoicesNqLogoEmblem() {
 
 function ComplianceHrInfinityLogoEmblem() {
   return (
-    <div className="flex flex-col items-center text-center select-none">
-      <div className="h-14 w-24 overflow-hidden rounded-lg bg-white p-0.5">
+    <div className="flex flex-col items-center justify-center text-center select-none">
+      <div className="flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ring-purple-200/80">
         <Image
           src={CHR_LOGO}
-          alt="ComplianceHR Infinity"
+          alt="ComplianceHR Infinity — Complete Control. Greater Confidence. Brighter Success."
           fittingType="fit"
           className="h-full w-full object-contain"
         />
-      </div>
-      <div className="mt-0.5 text-[7px] font-extrabold tracking-tight text-pink-600">
-        Complete Control. Greater Confidence. Brighter Success.
       </div>
     </div>
   );
@@ -481,12 +440,13 @@ export function SingleMasterComplianceAuditForm({
               providers assess and monitor their compliance with the NDIS Practice Standards, National Disability
               Insurance Scheme (Provider Registration and Practice Standards) Rules 2018 and relevant legislation.
             </p>
-            <div className="shrink-0 opacity-25">
-              {isChoices ? (
-                <HeartHandshake className="h-7 w-7 text-amber-600" />
-              ) : (
-                <InfinityIcon className="h-7 w-7 text-purple-700" />
-              )}
+            <div className="h-10 w-16 shrink-0 overflow-hidden rounded bg-white/70 p-0.5 opacity-45">
+              <Image
+                src={isChoices ? CHOICES_NQ_LOGO : CHR_LOGO}
+                alt={isChoices ? 'Choices NQ emblem' : 'ComplianceHR Infinity emblem'}
+                fittingType="fit"
+                className="h-full w-full object-contain"
+              />
             </div>
           </div>
         </div>

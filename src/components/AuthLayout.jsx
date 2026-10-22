@@ -2,7 +2,7 @@ import React from "react";
 import { Image } from "@/components/ui/image";
 import { SOFTWARE_INFO } from "@/components/safe/SoftwareAndSafeBanner";
 
-const DEFAULT_LOGO = "https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png";
+const DEFAULT_LOGO = "https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png";
 
 export default function AuthLayout({ icon: Icon, title, subtitle, footer, children }) {
   return (
