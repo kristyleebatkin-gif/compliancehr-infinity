@@ -41,7 +41,7 @@ export default function Dashboard() {
     return () => window.removeEventListener('chr-view-mode-change', onModeChange);
   }, []);
 
-  if (viewMode === 'office') {
+  if (viewMode !== 'profiles') {
     return (
       <div className="mx-auto max-w-6xl bg-white p-3 md:p-4">
         <SoftwareAndSafeBanner compact />
