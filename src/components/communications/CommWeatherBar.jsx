@@ -53,7 +53,7 @@ export default function CommWeatherBar() {
 
   return (
     <div
-      className="relative flex flex-wrap items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-3 shadow-lg"
+      className="comm-weather-bar relative flex flex-wrap items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-3 shadow-lg"
       style={{ background: 'var(--header-gradient)', border: '2px solid #000', color: 'hsl(var(--header-foreground))' }}
     >
       <div className="relative flex items-center gap-3">
