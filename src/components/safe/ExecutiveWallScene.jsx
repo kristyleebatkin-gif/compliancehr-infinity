@@ -20,6 +20,7 @@ import {
   DEFAULT_LOGO,
   FULL_SLOGAN,
 } from '@/components/safe/OfficeInteractiveMaterials';
+import ModularScreenDataSelector, { MODULAR_SCREEN_DECKS } from '@/components/safe/ModularScreenDataSelector';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
@@ -392,18 +393,18 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
           {COMM_CENTRE_MODULARS.map((item) => {
             const Icon = item.icon;
             return (
-              <Link
+              <button
                 key={item.key}
-                to="/communications"
-                onClick={() => onSelectSecondScreen && onSelectSecondScreen('communications')}
-                className="flex items-center gap-1 rounded border px-1 py-0.5 text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
+                type="button"
+                onClick={() => onSelectSecondScreen && onSelectSecondScreen(item.key === 'task-dashboard' || item.key === 'todo' ? 'tasks' : 'communications')}
+                className="flex items-center gap-1 rounded border px-1 py-0.5 text-left text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: `${item.color}88`,
                   borderTopWidth: '2px',
                   borderTopColor: item.color,
                   background: `linear-gradient(165deg, ${item.color}22 0%, #ffffff 90%)`,
                 }}
-                title={item.label}
+                title={`Select ${item.label} modular screen to review`}
               >
                 <span
                   className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
@@ -412,7 +413,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                   <Icon className="h-2 w-2" />
                 </span>
                 <span className="truncate">{item.label}</span>
-              </Link>
+              </button>
             );
           })}
           {/* Smart Vault right beside Employee Log */}
@@ -451,6 +452,9 @@ function ProfilesAndDataDisplayColumn({
   setActiveDataTab,
   secondScreenKey,
   onSelectSecondScreen,
+  selectedModulars,
+  onToggleModular,
+  onSelectPreset,
 }) {
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
@@ -471,15 +475,15 @@ function ProfilesAndDataDisplayColumn({
   }, []);
 
   const dataTabs = [
-    { id: 'profiles', label: 'Profiles Data', icon: Users },
+    { id: 'modular-picker', label: 'Select Modulars & Data', icon: LayoutGrid },
+    { id: 'profiles', label: 'General Profiles', icon: Users },
     { id: 'safe', label: 'Safe & Identity', icon: Lock },
     { id: 'compliance', label: 'Compliance & Tasks', icon: ShieldCheck },
-    { id: 'modules', label: '45 Modules Data', icon: LayoutGrid },
   ];
 
   return (
     <div className="flex h-full flex-col justify-between rounded-xl border-2 border-purple-500 bg-white p-2 shadow-md space-y-2">
-      {/* Header Banner of View 2 (Profiles & Data Display Choice) with Logo + Full Slogan */}
+      {/* Header Banner of View 2 (General Profile & Modular Data Display Choice) with Logo + Full Slogan */}
       <div className="space-y-1.5">
         <div
           className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1.5 text-white shadow-sm"
@@ -496,7 +500,7 @@ function ProfilesAndDataDisplayColumn({
             </div>
             <div className="min-w-0">
               <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                VIEW 2 · PROFILES &amp; DATA DISPLAY CHOICE
+                VIEW 2 · GENERAL PROFILE &amp; SELECTABLE MODULAR DATA
               </div>
               <div className="truncate text-[8px] font-extrabold text-amber-100">
                 {FULL_SLOGAN}
@@ -505,7 +509,7 @@ function ProfilesAndDataDisplayColumn({
           </div>
 
           <span className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-purple-950 shadow-sm">
-            Direct Data View
+            Custom Data Choice
           </span>
         </div>
 
@@ -533,7 +537,21 @@ function ProfilesAndDataDisplayColumn({
           })}
         </div>
 
-        {/* Active Data Display Content */}
+        {/* Tab 1: Interactive Modular Screen & Data Review Selector */}
+        {activeDataTab === 'modular-picker' && (
+          <ModularScreenDataSelector
+            selectedModulars={selectedModulars}
+            activeScreen={secondScreenKey}
+            onSelectActiveScreen={onSelectSecondScreen}
+            onToggleModular={onToggleModular}
+            onSelectPreset={onSelectPreset}
+            logoUrl={logoUrl || DEFAULT_SOFTWARE_LOGO}
+            companyName={companyName}
+            modeLabel="General Profile · Select Modulars & Data to Review"
+          />
+        )}
+
+        {/* Tab 2: General Profiles Directory */}
         {activeDataTab === 'profiles' && (
           <div className="space-y-2 pt-0.5">
             <div className="grid grid-cols-1 gap-1.5">
@@ -546,7 +564,7 @@ function ProfilesAndDataDisplayColumn({
                     <UserRound className="h-4 w-4" />
                   </span>
                   <div>
-                    <div className="text-[11px] font-extrabold text-blue-950">My Profile &amp; Work</div>
+                    <div className="text-[11px] font-extrabold text-blue-950">My General Profile &amp; Work</div>
                     <div className="text-[9px] font-bold text-blue-700">Personal details, documents, name tag &amp; tasks</div>
                   </div>
                 </div>
@@ -666,54 +684,9 @@ function ProfilesAndDataDisplayColumn({
         {activeDataTab === 'compliance' && (
           <ComplianceAndOperationsMaterialPanel />
         )}
-
-        {activeDataTab === 'modules' && (
-          <div className="rounded-xl border border-purple-200 bg-white p-2 space-y-1.5">
-            <div className="text-[9px] font-extrabold text-blue-950">
-              Click any module below to project it onto the Office Smart Screen #2 or open its data view:
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-72 overflow-y-auto pr-1">
-              {MODULE_DIRECTORY.map((mod) => {
-                const Icon = mod.icon;
-                const colour = moduleKeyColour(mod.key);
-                const isProjected = secondScreenKey === mod.key;
-                return (
-                  <div
-                    key={mod.key}
-                    className={`flex items-center justify-between gap-1 rounded-lg border px-1.5 py-1 ${
-                      isProjected ? 'ring-2 ring-pink-500 bg-pink-50/40' : 'bg-white'
-                    }`}
-                    style={{ borderColor: colour, borderLeftWidth: '3px' }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => onSelectSecondScreen(mod.key)}
-                      className="flex items-center gap-1 min-w-0 flex-1 text-left"
-                      title={`Show ${mod.label} on Office Screen #2`}
-                    >
-                      <span
-                        className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
-                        style={{ background: colour }}
-                      >
-                        <Icon className="h-2.5 w-2.5" />
-                      </span>
-                      <span className="truncate text-[8px] font-extrabold text-blue-950">{mod.label}</span>
-                    </button>
-                    <Link
-                      to={mod.path}
-                      className="shrink-0 rounded bg-purple-100 px-1 py-0.5 text-[7px] font-extrabold text-purple-900 hover:bg-purple-200"
-                    >
-                      Go
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Logo-Branded Office Item Showing Another Screen in the Office (Also accessible right inside the Data Column) */}
+      {/* Logo-Branded Office Item Showing Another Screen in the Office (Also synced with the selected modulars) */}
       <LogoBrandedOfficeSecondScreen
         logoUrl={logoUrl || DEFAULT_SOFTWARE_LOGO}
         selectedScreen={secondScreenKey}
@@ -743,8 +716,24 @@ export default function ExecutiveWallScene({
     return saved || 'both';
   });
   const [monitorFeed, setMonitorFeed] = useState('overview');
-  const [activeDataTab, setActiveDataTab] = useState('profiles');
+  const [activeDataTab, setActiveDataTab] = useState('modular-picker');
   const [secondScreenKey, setSecondScreenKey] = useState('our-staff');
+  const [selectedModulars, setSelectedModulars] = useState(['our-staff', 'our-participants', 'communications']);
+
+  const handleToggleModular = (modKey) => {
+    setSelectedModulars((prev) =>
+      prev.includes(modKey)
+        ? prev.length > 1
+          ? prev.filter((k) => k !== modKey)
+          : prev
+        : [...prev, modKey]
+    );
+  };
+
+  const handleSelectScreenInOffice = (modKey) => {
+    setSecondScreenKey(modKey);
+    setSelectedModulars((prev) => (prev.includes(modKey) ? prev : [modKey, ...prev.slice(0, 3)]));
+  };
 
   useEffect(() => {
     const syncViewMode = (e) => {
@@ -811,12 +800,12 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* MAIN BODY: Renders Both Views Beside Each Other ('both'), or Single View ('office' / 'profiles') */}
+      {/* MAIN BODY: Renders Both Views Beside Each Other ('both' — including tablet md+), or Single View ('office' / 'profiles') */}
       <div className="bg-white p-2 sm:p-2.5">
         <div
           className={
             viewMode === 'both'
-              ? 'grid grid-cols-1 lg:grid-cols-12 gap-2.5 items-stretch'
+              ? 'grid grid-cols-1 md:grid-cols-12 gap-2.5 items-stretch'
               : 'space-y-2'
           }
         >
@@ -824,7 +813,7 @@ export default function ExecutiveWallScene({
           {(viewMode === 'both' || viewMode === 'office') && (
             <div
               className={`${
-                viewMode === 'both' ? 'lg:col-span-7' : 'w-full'
+                viewMode === 'both' ? 'md:col-span-7' : 'w-full'
               } flex flex-col justify-between rounded-xl border-2 border-blue-500 bg-white p-2 shadow-md space-y-2`}
             >
               {/* View 1 Header Badge */}
@@ -901,17 +890,20 @@ export default function ExecutiveWallScene({
                         {MODULE_DIRECTORY.map((mod) => {
                           const Icon = mod.icon;
                           const colour = moduleKeyColour(mod.key);
+                          const isSelected = secondScreenKey === mod.key || selectedModulars.includes(mod.key);
                           return (
-                            <Link
+                            <button
                               key={mod.key}
-                              to={mod.path}
-                              onClick={() => setSecondScreenKey(mod.key)}
-                              className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                              type="button"
+                              onClick={() => handleSelectScreenInOffice(mod.key)}
+                              className={`flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${
+                                isSelected ? 'ring-1 ring-pink-500 bg-pink-50/40' : ''
+                              }`}
                               style={{
                                 borderColor: colour,
                                 borderLeftWidth: '3px',
                               }}
-                              title={`${mod.label} — Click to open or preview`}
+                              title={`Select ${mod.label} modular screen to review`}
                             >
                               <span
                                 className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
@@ -922,7 +914,7 @@ export default function ExecutiveWallScene({
                               <span className="min-w-0 flex-1 truncate text-[6.8px] font-extrabold text-blue-950 leading-tight">
                                 {mod.label}
                               </span>
-                            </Link>
+                            </button>
                           );
                         })}
                       </div>
@@ -937,7 +929,7 @@ export default function ExecutiveWallScene({
                   <WallHangingPictureFrame title="Communication Centre Modulars & Today's Roster">
                     <CommunicationCentreScreenshot
                       showRosterAbove={showRosterAbove}
-                      onSelectSecondScreen={setSecondScreenKey}
+                      onSelectSecondScreen={handleSelectScreenInOffice}
                     />
                   </WallHangingPictureFrame>
 
@@ -950,13 +942,27 @@ export default function ExecutiveWallScene({
                 </div>
               </div>
 
-              {/* When viewing Office View Only, also show the Logo-Branded Second Office Screen right above the Desk */}
+              {/* Interactive Office Smart Screen #2 + Modular Screen Selector right inside the Enhanced Office Experience */}
+              <LogoBrandedOfficeSecondScreen
+                logoUrl={frameSrc}
+                selectedScreen={secondScreenKey}
+                onSelectScreen={handleSelectScreenInOffice}
+                companyName={companyName}
+              />
+
               {viewMode === 'office' && (
-                <LogoBrandedOfficeSecondScreen
+                <ModularScreenDataSelector
+                  selectedModulars={selectedModulars}
+                  activeScreen={secondScreenKey}
+                  onSelectActiveScreen={handleSelectScreenInOffice}
+                  onToggleModular={handleToggleModular}
+                  onSelectPreset={(keys) => {
+                    setSelectedModulars(keys);
+                    if (keys[0]) setSecondScreenKey(keys[0]);
+                  }}
                   logoUrl={frameSrc}
-                  selectedScreen={secondScreenKey}
-                  onSelectScreen={setSecondScreenKey}
                   companyName={companyName}
+                  modeLabel="Enhanced Office Experience · Select Modulars & Data to Review"
                 />
               )}
 
@@ -969,16 +975,22 @@ export default function ExecutiveWallScene({
             </div>
           )}
 
-          {/* ==================== VIEW 2: PROFILES & DATA DISPLAY CHOICE (BESIDE THE OFFICE VIEW) ==================== */}
+          {/* ==================== VIEW 2: GENERAL PROFILE & SELECTABLE MODULAR DATA DISPLAY (BESIDE THE OFFICE VIEW) ==================== */}
           {(viewMode === 'both' || viewMode === 'profiles') && (
-            <div className={viewMode === 'both' ? 'lg:col-span-5' : 'w-full'}>
+            <div className={viewMode === 'both' ? 'md:col-span-5' : 'w-full'}>
               <ProfilesAndDataDisplayColumn
                 logoUrl={frameSrc}
                 companyName={companyName}
                 activeDataTab={activeDataTab}
                 setActiveDataTab={setActiveDataTab}
                 secondScreenKey={secondScreenKey}
-                onSelectSecondScreen={setSecondScreenKey}
+                onSelectSecondScreen={handleSelectScreenInOffice}
+                selectedModulars={selectedModulars}
+                onToggleModular={handleToggleModular}
+                onSelectPreset={(keys) => {
+                  setSelectedModulars(keys);
+                  if (keys[0]) setSecondScreenKey(keys[0]);
+                }}
               />
             </div>
           )}
