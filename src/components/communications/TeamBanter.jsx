@@ -71,10 +71,10 @@ export default function TeamBanter() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border border-border/60 bg-card p-4 shadow-md">
-      <div className="mb-3 flex items-center gap-2 text-sm font-bold">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md">
-          <MessagesSquare className="h-4 w-4" />
+    <div className="flex flex-col rounded-2xl border-2 border-black bg-white p-3 shadow-lg">
+      <div className="mb-2 flex items-center gap-2 text-sm font-bold">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md">
+          <MessagesSquare className="h-3.5 w-3.5" />
         </span>
         Team Banter
         <span className="rounded-full bg-pink-100 px-2 py-0.5 text-[11px] font-semibold text-pink-800 dark:bg-pink-950/40 dark:text-pink-300">team chat</span>
@@ -85,14 +85,14 @@ export default function TeamBanter() {
       ) : items.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">No banter yet - start a friendly conversation below. Every message is saved to the communication diary.</p>
       ) : (
-        <div className="mb-4 max-h-[28rem] space-y-2.5 overflow-y-auto pr-1">
+        <div className="mb-3 max-h-[14rem] space-y-2 overflow-y-auto pr-1">
           {[...items].reverse().map((e) => {
             const mine = me?.email && String(e.sender_email || '').toLowerCase() === String(me.email).toLowerCase();
             return (
-              <div key={e.id} className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ${mine ? 'ml-auto rounded-br-md bg-gradient-to-br from-brand to-fuchsia-500 text-white' : 'rounded-bl-md bg-muted/70 text-foreground'}`}>
-                <div className={`mb-0.5 text-[11px] font-bold ${mine ? 'text-white/80' : 'text-foreground/50'}`}>{e.sender_name || 'Team member'}</div>
+              <div key={e.id} className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs shadow-sm ${mine ? 'ml-auto rounded-br-md bg-gradient-to-br from-brand to-fuchsia-500 text-white' : 'rounded-bl-md bg-muted/70 text-foreground'}`}>
+                <div className={`mb-0.5 text-[10px] font-bold ${mine ? 'text-white/80' : 'text-foreground/50'}`}>{e.sender_name || 'Team member'}</div>
                 <div className="whitespace-pre-wrap break-words leading-snug">{e.body}</div>
-                <div className={`mt-1 text-[10px] ${mine ? 'text-white/70' : 'text-foreground/40'}`}>{[e.entry_date, e.entry_time].filter(Boolean).join(' · ')}</div>
+                <div className={`mt-1 text-[9px] ${mine ? 'text-white/70' : 'text-foreground/40'}`}>{[e.entry_date, e.entry_time].filter(Boolean).join(' · ')}</div>
               </div>
             );
           })}
@@ -100,9 +100,9 @@ export default function TeamBanter() {
         </div>
       )}
 
-      <div className="mt-auto flex items-end gap-2 border-t border-border/60 pt-3">
+      <div className="mt-auto flex items-end gap-2 border-t border-border/60 pt-2">
         <Textarea
-          rows={2}
+          rows={1}
           placeholder="Say something to the team…"
           value={text}
           onChange={(e) => setText(e.target.value)}

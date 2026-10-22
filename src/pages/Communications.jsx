@@ -98,9 +98,9 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
             <div className="space-y-2.5">
               <CommDailyInsight />
               <CommWeatherBar />
-              <CommSharedTodo />
-              <CommunicationNavigation tabs={shown} />
+              <CommSharedTodo compact />
               <CommTaskDash />
+              <CommunicationNavigation tabs={shown} />
               <TeamBanter />
               <CommTeamDash compact />
               <TaskLeaderboard />
