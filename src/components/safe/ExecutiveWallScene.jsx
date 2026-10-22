@@ -469,7 +469,7 @@ function ProfilesAndDataDisplayColumn({
     { id: 'modular-picker', label: 'Select Modulars & Data', icon: LayoutGrid },
     { id: 'profiles', label: 'General Profiles', icon: Users },
     { id: 'safe', label: 'Safe & Identity', icon: Lock },
-    { id: 'compliance', label: 'Compliance & Tasks', icon: ShieldCheck },
+    { id: 'compliance', label: 'Compliance & Plans', icon: ShieldCheck },
   ];
 
   return (

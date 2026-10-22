@@ -11,6 +11,7 @@ import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
+import PricingSection from '@/components/landing/PricingSection';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 export const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
@@ -412,6 +413,7 @@ export function ComplianceAndOperationsMaterialPanel() {
   return (
     <div className="space-y-1.5 bg-white p-0.5">
       <MasterComplianceAuditForms compact={true} />
+      <PricingSection compact={true} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 bg-white">
         {cards.map((c) => {
         const Icon = c.icon;
