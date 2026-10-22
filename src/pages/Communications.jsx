@@ -138,6 +138,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
+        <TabsContent value="smart-vault"><SmallSafeVaultBar /></TabsContent>
         {!(embedded || participantOnly) && <SmallSafeVaultBar />}
         {!(embedded || participantOnly) && <TeamBanter />}
         {!(embedded || participantOnly) && <TaskLeaderboard compact />}

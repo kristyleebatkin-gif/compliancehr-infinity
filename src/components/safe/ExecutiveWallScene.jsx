@@ -176,36 +176,40 @@ export function ComplianceHrPhotoFrame({ logoUrl, large = true, badgeLabel = '' 
 
 export function SmallSafeVaultBar() {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-violet-300 bg-white px-2.5 py-1.5">
+    <div
+      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-pink-400 px-3 py-1.5 text-white shadow-sm"
+      style={{ background: SQUISHED_GRADIENT }}
+    >
       <div className="flex items-center gap-2">
-        <span
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white"
-          style={{ background: SQUISHED_GRADIENT }}
-        >
-          <Vault className="h-3.5 w-3.5" />
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow-sm">
+          <Image
+            src={DEFAULT_SOFTWARE_LOGO}
+            alt="ComplianceHR Infinity"
+            fittingType="fit"
+            className="h-full w-full object-contain"
+          />
         </span>
         <div>
-          <div className="text-[10px] font-extrabold text-blue-950">
-            Small Safe Vault · Under Inbox &amp; Company Safe
+          <div className="text-[10px] font-extrabold text-white">
+            ComplianceHR Infinity Smart Vault · Under Inbox &amp; Beside Employee Log
           </div>
-          <div className="text-[9px] font-bold text-violet-800">
-            Inbox &amp; safe records locked and audit-ready
+          <div className="text-[9px] font-bold text-white/95">
+            Complete Control. Greater Confidence. Brighter Success
           </div>
         </div>
       </div>
       <div className="flex items-center gap-1">
         <Link
           to="/company-safe"
-          className="inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-extrabold text-white"
-          style={{ background: SQUISHED_GRADIENT }}
+          className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-[9px] font-extrabold text-blue-950 hover:bg-pink-50"
         >
-          <Lock className="h-2.5 w-2.5" /> Safe
+          <Lock className="h-2.5 w-2.5 text-pink-600" /> Company Safe
         </Link>
         <Link
           to="/documents"
-          className="inline-flex items-center gap-1 rounded-lg border border-violet-300 bg-violet-50 px-2 py-0.5 text-[9px] font-extrabold text-violet-900 hover:bg-violet-100"
+          className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-[9px] font-extrabold text-purple-950 hover:bg-pink-50"
         >
-          <FolderLock className="h-2.5 w-2.5" /> Vault
+          <FolderLock className="h-2.5 w-2.5 text-purple-700" /> Document Vault
         </Link>
       </div>
     </div>
@@ -217,8 +221,8 @@ function CommunicationCentreAboveSilverScreen() {
     { label: 'Alerts', icon: Siren, to: '/communications', color: '#dc2626' },
     { label: 'Auto Log', icon: History, to: '/communications', color: '#1e3a8a' },
     { label: 'Inbox', icon: Inbox, to: '/communications', color: '#0369a1' },
-    { label: 'Send Email', icon: Mail, to: '/communications', color: '#16a34a' },
     { label: 'Enter Shift Notes', icon: NotebookPen, to: '/communications', color: '#d97706' },
+    { label: 'Employee Log', icon: Mail, to: '/communications', color: '#c026d3' },
   ];
 
   return (
@@ -242,8 +246,8 @@ function CommunicationCentreAboveSilverScreen() {
         </Link>
       </div>
 
-      {/* Squashed Alert & Automated Headers + Quick Comm Links */}
-      <div className="grid grid-cols-5 gap-1">
+      {/* Quick Comm Links + Smart Vault in the space right beside Employee Log */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1">
         {quickLinks.map((item) => {
           const Icon = item.icon;
           return (
@@ -258,6 +262,23 @@ function CommunicationCentreAboveSilverScreen() {
             </Link>
           );
         })}
+        {/* Smart Vault right beside Employee Log with ComplianceHR Infinity Logo & Colours */}
+        <Link
+          to="/company-safe"
+          className="flex items-center gap-1 rounded-md border-2 border-pink-400 px-1.5 py-1 text-[9px] font-extrabold text-white shadow-sm"
+          style={{ background: SQUISHED_GRADIENT }}
+          title="ComplianceHR Infinity Smart Vault"
+        >
+          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+            <Image
+              src={DEFAULT_SOFTWARE_LOGO}
+              alt="ComplianceHR Infinity"
+              fittingType="fit"
+              className="h-full w-full object-contain"
+            />
+          </span>
+          <span className="truncate">Smart Vault</span>
+        </Link>
       </div>
 
       {/* Small Vault directly under Inbox inside Communication Centre */}

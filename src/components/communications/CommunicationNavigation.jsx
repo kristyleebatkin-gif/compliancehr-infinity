@@ -1,7 +1,12 @@
 import React from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Image } from '@/components/ui/image';
+import { Vault } from 'lucide-react';
 import AlertLamp from '@/components/communications/AlertLamp';
+import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/communicationNavigation.css';
+
+const INFINITY_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
 
 // One fixed colour per tile, taken from the 45-module dashboard palette
 // (src/components/dashboard/dashboardModuleColours.js). Tiles styled like the
@@ -58,6 +63,25 @@ export default function CommunicationNavigation({ tabs }) {
             </TabsTrigger>
           );
         })}
+        {/* Smart Vault in the space right beside Employee Log with ComplianceHR Infinity Logo & Colours */}
+        <TabsTrigger
+          value="smart-vault"
+          className="group relative flex min-h-8 min-w-0 items-center gap-1.5 overflow-hidden rounded-lg border-2 border-pink-400 px-2 py-1 text-left text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+          style={{ background: SQUISHED_GRADIENT }}
+        >
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5 shadow-sm">
+            <Image
+              src={INFINITY_LOGO}
+              alt="ComplianceHR Infinity"
+              fittingType="fit"
+              className="h-full w-full object-contain"
+            />
+          </span>
+          <span className="relative min-w-0 flex-1 truncate text-[10px] font-extrabold text-white">
+            Smart Vault
+          </span>
+          <Vault className="h-3 w-3 shrink-0 text-white" />
+        </TabsTrigger>
       </TabsList>
     </div>
   );
