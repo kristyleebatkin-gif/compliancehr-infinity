@@ -43,13 +43,13 @@ export default function CommTaskDash() {
 
   return (
     <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #4338ca 0%, #4f46e5 55%, #6366f1 100%)', color: '#fff' }}>
+      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #b45309 0%, #d97706 50%, #eab308 100%)', color: '#fff' }}>
         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
           <ClipboardList className="h-4 w-4 text-white" />
         </span>
         <div>
-          <h3 className="text-base font-bold">Task Dashboard</h3>
-          <p className="text-xs font-semibold text-white/90">Live team to-do status at a glance</p>
+          <h3 className="text-base font-extrabold">Task Dashboard</h3>
+          <p className="text-xs font-bold text-white/95">Live team to-do status at a glance</p>
         </div>
       </div>
 

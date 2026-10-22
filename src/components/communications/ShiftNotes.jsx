@@ -160,7 +160,7 @@ export default function ShiftNotes({ selfOnly = false } = {}) {
   return (
     <div className="space-y-4">
       <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="mb-4 flex items-center gap-2 text-sm font-semibold"><NotebookPen className="h-4 w-4 text-brand" />Record a participant note</div>
+        <div className="mb-4 flex items-center gap-2 text-sm font-extrabold"><NotebookPen className="h-4 w-4 text-brand" />Enter Shift Notes</div>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="grid gap-1.5">
             <Label>Participant *</Label>

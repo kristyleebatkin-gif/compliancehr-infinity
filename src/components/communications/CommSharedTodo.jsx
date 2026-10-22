@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ListTodo, Loader2, Plus } from 'lucide-react';
+import SharedTodoInfoPanel from '@/components/communications/SharedTodoInfoPanel';
 
 const statusTone = {
   Pending: 'bg-pink-100 text-pink-800',
@@ -14,15 +15,16 @@ export default function CommSharedTodo() {
   const [text, setText] = useState('');
   const [adding, setAdding] = useState(false);
 
+  const load = async () => {
+    const page = await base44.entities.TodoTask.filter(
+      { status: { $in: ['Pending', 'Open', 'Pending Approval', 'In Progress'] } },
+      { sort: '-created_date', limit: 12 }
+    );
+    setTasks(page.items || []);
+  };
+
   useEffect(() => {
     let alive = true;
-    const load = async () => {
-      const page = await base44.entities.TodoTask.filter(
-        { status: { $in: ['Pending', 'Open', 'Pending Approval', 'In Progress'] } },
-        { sort: '-created_date', limit: 8 }
-      );
-      if (alive) setTasks(page.items);
-    };
     load().catch(() => { if (alive) setTasks([]); });
     const unsubscribe = base44.entities.TodoTask.subscribe(() => { load().catch(() => {}); });
     return () => { alive = false; unsubscribe(); };
@@ -40,6 +42,7 @@ export default function CommSharedTodo() {
         task_date: new Date().toISOString().slice(0, 10),
       });
       setText('');
+      await load();
     } finally {
       setAdding(false);
     }
@@ -52,13 +55,13 @@ export default function CommSharedTodo() {
           <ListTodo className="h-4 w-4 text-white" />
         </span>
         <div>
-          <h3 className="text-base font-bold">Shared To-Do List</h3>
-          <p className="text-xs font-semibold text-white/90">What the team needs to get done</p>
+          <h3 className="text-base font-extrabold">Shared To-Do List</h3>
+          <p className="text-xs font-bold text-white/90">What the team needs to get done</p>
         </div>
       </div>
 
       {!tasks ? (
-        <div className="flex items-center justify-center gap-2 py-6 text-sm font-semibold text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 py-5 text-sm font-bold text-muted-foreground">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading to-dos…
         </div>
       ) : (
@@ -68,14 +71,14 @@ export default function CommSharedTodo() {
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') add(); }}
-              placeholder="Add a shared to-do…"
-              className="min-w-0 flex-1 rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-pink-300"
+              placeholder="Quick add a shared to-do…"
+              className="min-w-0 flex-1 rounded-xl border px-3 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-pink-300"
             />
             <button
               type="button"
               onClick={add}
               disabled={adding || !text.trim()}
-              className="flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-bold text-white shadow transition hover:opacity-90 disabled:opacity-50"
+              className="flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-extrabold text-white shadow transition hover:opacity-90 disabled:opacity-50"
               style={{ background: 'linear-gradient(135deg, #ec4899, #db2777)' }}
             >
               {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
@@ -84,18 +87,31 @@ export default function CommSharedTodo() {
           </div>
 
           {tasks.length === 0 ? (
-            <p className="py-4 text-center text-sm text-muted-foreground">All clear — nothing open on the shared list.</p>
+            <p className="py-3 text-center text-sm font-semibold text-muted-foreground">All clear — nothing open on the shared list.</p>
           ) : (
             <div className="space-y-1.5">
               {tasks.map((t) => (
-                <div key={t.id} className="flex items-center gap-2 rounded-xl border px-3 py-2">
-                  <span className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-bold ${statusTone[t.status] || 'bg-pink-100 text-pink-800'}`}>{t.status}</span>
-                  <p className="min-w-0 flex-1 truncate text-xs sm:text-sm font-semibold">{t.title}</p>
-                  {t.due_date && <span className="shrink-0 text-xs font-semibold text-muted-foreground">{t.due_date}</span>}
+                <div key={t.id} className="rounded-xl border bg-white px-3 py-2 shadow-sm">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-extrabold ${statusTone[t.status] || 'bg-pink-100 text-pink-800'}`}>{t.status}</span>
+                    {t.module && <span className="rounded-md bg-pink-50 px-2 py-0.5 text-[11px] font-bold text-pink-700">{t.module}</span>}
+                    <p className="min-w-0 flex-1 truncate text-xs sm:text-sm font-extrabold">{t.title}</p>
+                    {t.due_date && <span className="shrink-0 text-xs font-bold text-rose-700">Due {t.due_date}</span>}
+                  </div>
+                  {(t.how_to_complete || t.resources_needed || t.important_info || (t.responsible && t.responsible.length > 0)) && (
+                    <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold text-foreground/75">
+                      {t.responsible?.length > 0 && <span><strong>Responsible:</strong> {t.responsible.join(', ')}</span>}
+                      {t.how_to_complete && <span><strong>How:</strong> {t.how_to_complete}</span>}
+                      {t.resources_needed && <span><strong>Resources:</strong> {t.resources_needed}</span>}
+                      {t.important_info && <span><strong>Info:</strong> {t.important_info}</span>}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           )}
+
+          <SharedTodoInfoPanel tasks={tasks} onCreated={load} />
         </div>
       )}
     </section>

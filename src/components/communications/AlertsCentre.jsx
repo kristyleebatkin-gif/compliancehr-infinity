@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, RefreshCw,Bell, MessageCircleWarning } from 'lucide-react';
+import { Loader2, RefreshCw, Bell, MessageCircleWarning, Siren } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRole } from '@/lib/useRole';
 
@@ -46,44 +46,59 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-foreground/65">
-          {selfOnly ? 'Your unread notifications and any flagged communication that involves you.' : 'New unread notifications and flagged communications across the platform.'}
-        </p>
-        <Button variant="outline" size="sm" onClick={load} disabled={loading}>
-          <RefreshCw className={cn('h-3.5 w-3.5', loading && 'animate-spin')} />Refresh
+    <section className="overflow-hidden rounded-2xl border-2 border-red-400/70 bg-card shadow-panel">
+      <div
+        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-3 px-4 py-3"
+        style={{ '--comm-bar-bg': 'linear-gradient(120deg, #dc2626 0%, #ef4444 52%, #f97316 100%)', color: '#fff' }}
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/40">
+            <Siren className="h-5 w-5 text-white" />
+          </span>
+          <div>
+            <h3 className="text-base font-extrabold text-white">Live Alerts &amp; Flagged Communications</h3>
+            <p className="text-xs font-bold text-white/90">
+              {selfOnly ? 'Your unread notifications and any flagged communication involving you' : 'New unread notifications and flagged communications across the platform'}
+            </p>
+          </div>
+        </div>
+        <Button variant="outline" size="sm" onClick={load} disabled={loading} className="border-white/40 bg-white/15 font-bold text-white hover:bg-white/25">
+          <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />Refresh
         </Button>
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center gap-2 py-12 text-sm text-foreground/50">
-          <Loader2 className="h-5 w-5 animate-spin" /> Checking for new alerts…
+        <div className="flex items-center justify-center gap-2 py-10 text-sm font-bold text-foreground/70">
+          <Loader2 className="h-5 w-5 animate-spin text-red-600" /> Checking for new alerts…
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4 p-4">
           <section className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="flex items-center gap-2 text-sm font-bold"><Bell className="h-4 w-4 text-brand" />New Alerts &amp; Notifications ({notifications.length})</h3>
+              <h4 className="flex items-center gap-2 text-sm font-extrabold text-red-700">
+                <Bell className="h-4 w-4 text-red-600" />New Alerts &amp; Notifications ({notifications.length})
+              </h4>
               {notifications.length > 0 && (
-                <Button variant="outline" size="sm" onClick={markAllRead}>Mark all read</Button>
+                <Button variant="outline" size="sm" onClick={markAllRead} className="font-bold">Mark all read</Button>
               )}
             </div>
             {notifications.length === 0 ? (
-              <p className="rounded-xl border border-safe/30 bg-safe/5 p-4 text-sm text-safe">All clear — no new alerts or unread notifications.</p>
+              <p className="rounded-xl border-2 border-emerald-400/50 bg-emerald-50 p-3.5 text-sm font-bold text-emerald-800">
+                All clear — no new alerts or unread notifications.
+              </p>
             ) : (
               <div className="space-y-2">
                 {notifications.map((n) => (
-                  <div key={n.id} className="rounded-xl border border-border/60 p-3">
+                  <div key={n.id} className="rounded-xl border-2 border-red-200 bg-red-50/40 p-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline">{n.type}</Badge>
-                        <span className="text-sm">{n.message}</span>
+                        <Badge className="bg-red-600 font-bold text-white">{n.type}</Badge>
+                        <span className="text-sm font-bold">{n.message}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">{(n.created_date || '').slice(0, 10)}</span>
+                      <span className="text-xs font-bold text-muted-foreground">{(n.created_date || '').slice(0, 10)}</span>
                     </div>
                     {n.action_url && (
-                      <Button asChild variant="link" size="sm" className="h-6 px-0">
+                      <Button asChild variant="link" size="sm" className="h-6 px-0 font-bold">
                         <Link to={n.action_url}>Open</Link>
                       </Button>
                     )}
@@ -94,22 +109,26 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
           </section>
 
           <section className="space-y-2">
-            <h3 className="flex items-center gap-2 text-sm font-bold"><MessageCircleWarning className="h-4 w-4 text-destructive" />Flagged Communications ({flagged.length})</h3>
+            <h4 className="flex items-center gap-2 text-sm font-extrabold text-orange-700">
+              <MessageCircleWarning className="h-4 w-4 text-orange-600" />Flagged Communications ({flagged.length})
+            </h4>
             {flagged.length === 0 ? (
-              <p className="rounded-xl border border-border/60 bg-white/60 p-4 text-sm text-foreground/60">No diary entries currently flag issues or concerns.</p>
+              <p className="rounded-xl border border-border/60 bg-white p-3.5 text-sm font-bold text-foreground/75">
+                No diary entries currently flag issues or concerns.
+              </p>
             ) : (
               <div className="space-y-2">
                 {flagged.map((f) => (
-                  <Link key={f.id} to="/communications" className="block rounded-xl border border-destructive/30 bg-destructive/5 p-3 hover:bg-destructive/10">
+                  <Link key={f.id} to="/communications" className="block rounded-xl border-2 border-orange-300 bg-orange-50/60 p-3 hover:bg-orange-100/60">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline">{f.entry_kind}</Badge>
-                        <span className="text-sm font-semibold">{f.subject || f.note_type || f.entry_kind}</span>
-                        {f.person_name && <Badge variant="outline">{f.person_name}</Badge>}
+                        <Badge variant="outline" className="font-bold">{f.entry_kind}</Badge>
+                        <span className="text-sm font-extrabold">{f.subject || f.note_type || f.entry_kind}</span>
+                        {f.person_name && <Badge variant="outline" className="font-bold">{f.person_name}</Badge>}
                       </div>
-                      <span className="text-xs text-muted-foreground">{[f.sender_name, f.entry_date].filter(Boolean).join(' · ')}</span>
+                      <span className="text-xs font-bold text-muted-foreground">{[f.sender_name, f.entry_date].filter(Boolean).join(' · ')}</span>
                     </div>
-                    <p className="mt-1 line-clamp-2 text-xs text-foreground/70">{f.issues_concerns}</p>
+                    <p className="mt-1 line-clamp-2 text-xs font-semibold text-foreground/80">{f.issues_concerns}</p>
                   </Link>
                 ))}
               </div>
@@ -117,6 +136,6 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
           </section>
         </div>
       )}
-    </div>
+    </section>
   );
 }

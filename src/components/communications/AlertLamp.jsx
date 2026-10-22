@@ -23,16 +23,26 @@ const beep = () => {
 };
 
 const CONFIG = {
-  alerts: { icon: Siren, label: 'Alerts', colour: '#dc2626', clear: 'All clear' },
-  logs: { icon: History, label: 'Alert Log', colour: '#1e3a8a', clear: 'Log quiet' },
+  alerts: {
+    icon: Siren,
+    label: 'Alerts & Live Warnings',
+    colour: '#dc2626',
+    gradient: 'linear-gradient(125deg, #dc2626 0%, #ef4444 55%, #f97316 100%)',
+    clear: 'All clear — tap to view alerts',
+  },
+  logs: {
+    icon: History,
+    label: 'Automated Alert Log',
+    colour: '#1e3a8a',
+    gradient: 'linear-gradient(125deg, #1e3a8a 0%, #1d4ed8 55%, #2563eb 100%)',
+    clear: 'Log quiet — tap to open history',
+  },
 };
 
-// A light shown on the communication board: it lights up (and sounds an alarm)
-// as alerts arrive. Tapping it opens that section.
 export default function AlertLamp({ kind, className }) {
   const [count, setCount] = useState(null);
   const prev = useRef(null);
-  const { icon: Icon, label, colour, clear } = CONFIG[kind] || CONFIG.alerts;
+  const { icon: Icon, label, colour, gradient, clear } = CONFIG[kind] || CONFIG.alerts;
 
   useEffect(() => {
     let alive = true;
@@ -68,24 +78,27 @@ export default function AlertLamp({ kind, className }) {
     <TabsTrigger
       value={kind}
       aria-label={`${label}${lit ? `: ${count} active` : ''}`}
-      className={`group relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-xl border px-2 py-1 text-left transition-all ${className || ''}`}
+      className={`group relative flex w-full items-center justify-start gap-3 overflow-hidden rounded-2xl border-2 px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:shadow-xl ${className || ''}`}
       style={{
-        borderColor: lit ? `${colour}80` : 'hsl(var(--border))',
-        background: lit ? `linear-gradient(165deg, ${colour}2e 0%, hsl(var(--card)) 85%)` : 'hsl(var(--card))',
-        boxShadow: lit ? `0 0 20px 2px ${colour}73` : 'none',
+        borderColor: colour,
+        background: gradient,
+        boxShadow: lit ? `0 0 24px 3px ${colour}88` : `0 10px 24px -12px ${colour}80`,
+        color: '#ffffff',
       }}
     >
       <span
-        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white shadow-md ${lit ? 'animate-pulse' : 'opacity-40'}`}
-        style={{ background: lit ? colour : '#94a3b8', boxShadow: lit ? `0 0 12px 2px ${colour}` : 'none' }}
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white shadow-md ring-2 ring-white/40 ${lit ? 'animate-pulse' : ''}`}
       >
-        <Icon aria-hidden="true" className="h-3 w-3" />
+        <Icon aria-hidden="true" className="h-5 w-5 text-white" />
       </span>
       <span className="relative min-w-0 flex-1 leading-tight">
-        <span className="block text-xs font-bold text-foreground">{label}</span>
-        <span className="block text-[10px] font-semibold" style={{ color: lit ? colour : 'hsl(var(--muted-foreground))' }}>
-          {count === null ? 'Checking…' : lit ? `${count} active` : clear}
+        <span className="block text-sm sm:text-base font-extrabold text-white">{label}</span>
+        <span className="mt-0.5 block text-xs font-bold text-white/95">
+          {count === null ? 'Checking…' : lit ? `${count} active alert${count === 1 ? '' : 's'}` : clear}
         </span>
+      </span>
+      <span className="rounded-full bg-white/25 px-2.5 py-1 text-[11px] font-extrabold text-white ring-1 ring-white/40">
+        Open
       </span>
     </TabsTrigger>
   );

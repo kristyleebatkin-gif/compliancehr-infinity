@@ -29,7 +29,7 @@ export default function EmployeeCommunicationNotes({ employeeLog = false }) {
   };
   return <section className="space-y-4">
     {!employeeLog && <><EmployeeParticipantSelect value={participantId} onChange={(value) => { setParticipantId(value); setDetails((current) => ({ ...current, goal_id: '' })); }} /><p className="text-xs text-muted-foreground">No participant selected: your own notes. Select any approved participant to view and add their shift notes.</p></>}
-    <form onSubmit={save} className="space-y-3 rounded-xl border border-border bg-card p-4"><h3 className="text-sm font-semibold">{employeeLog ? 'Add to my employee log' : 'Record shift note'}</h3>
+    <form onSubmit={save} className="space-y-3 rounded-xl border border-border bg-card p-4"><h3 className="text-sm font-extrabold">{employeeLog ? 'Add to my employee log' : 'Enter Shift Notes'}</h3>
       <label className="block text-sm">Subject<Input maxLength={200} value={subject} onChange={(event) => setSubject(event.target.value)} /></label>
       <label className="block text-sm">Date<Input type="date" required value={date} onChange={(event) => setDate(event.target.value)} /></label>
       <EmployeeNoteDetails value={details} onChange={setDetails} participantId={participantId} employeeLog={employeeLog} />

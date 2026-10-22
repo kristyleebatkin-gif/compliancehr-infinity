@@ -40,8 +40,7 @@ const TABS = [
 export default function EmployeeCommunications({ embedded = false }) {
   const [view, setView] = useState('feed');
   return (
-    <div className="comm-centre space-y-2.5">
-      {!embedded && <CommDailyInsight />}
+    <div className="comm-centre space-y-2">
       <Tabs value={view} onValueChange={setView}>
         <ModuleShell
           embedded={embedded}
@@ -50,8 +49,9 @@ export default function EmployeeCommunications({ embedded = false }) {
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!embedded && (
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <CommWeatherBar />
+              <CommDailyInsight />
               <CommAuditBar />
               <AboutCommunication />
               <CommHintsTips />
