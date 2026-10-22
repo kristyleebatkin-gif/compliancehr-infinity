@@ -87,7 +87,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="comm-centre space-y-4">
-      <Tabs defaultValue="diary">
+      <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
           title="Communication Centre"
