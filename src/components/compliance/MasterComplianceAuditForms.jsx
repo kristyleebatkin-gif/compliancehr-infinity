@@ -801,7 +801,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
   const [categoryIndex, setCategoryIndex] = useState(0);
 
   return (
-    <div className="rounded-xl border-2 border-purple-600 bg-white p-1.5 shadow-md space-y-1.5">
+    <div id="audit-master-doc" className="scroll-mt-14 rounded-xl border-2 border-purple-600 bg-white p-1.5 shadow-md space-y-1.5">
       {/* Top Control & App Switcher Bar */}
       <div
         className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
@@ -813,11 +813,16 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         <div className="flex items-center gap-1.5 min-w-0">
           <ClipboardList className="h-3.5 w-3.5 shrink-0 text-amber-200" />
           <div className="min-w-0">
-            <div className="truncate text-[9px] font-black uppercase tracking-wider">
-              MASTER COMPLIANCE AUDIT CHECKLIST · BOTH APPS (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="truncate text-[9px] font-black uppercase tracking-wider">
+                MASTER COMPLIANCE AUDIT CHECKLIST · BOTH APPS (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
+              </span>
+              <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
+                $355 STANDALONE DOC · INCLUDED FREE IN MONTHLY SUBSCRIPTION
+              </span>
             </div>
             <div className="truncate text-[7.5px] font-bold text-amber-100">
-              Choices NQ (CHN-AUD-001) &amp; ComplianceHR Infinity (CHR-AUD-001) — Interactive &amp; Printable Visual Forms
+              Choices NQ (CHN-AUD-001) &amp; ComplianceHR Infinity (CHR-AUD-001) — Interactive &amp; Printable 11-Page Visual Forms
             </div>
           </div>
         </div>

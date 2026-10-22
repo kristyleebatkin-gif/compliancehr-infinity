@@ -10,26 +10,48 @@ const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 const DEFAULT_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+const CHOICES_NQ_LOGO =
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
 const FULL_SLOGAN = 'Complete Control. Greater Confidence. Brighter Success.';
 
 export const COMPLIANCE_HR_PACKAGES = [
   {
+    id: 'audit-doc-only',
+    name: 'Master Audit Doc Pack',
+    badge: 'Standalone · One-Off',
+    users: '11 Pages · 356 Checkpoints',
+    monthly: 355,
+    yearly: 355,
+    oneOff: true,
+    messageCredits: 'CHN-AUD-001 & CHR-AUD-001 Docs',
+    integrationCredits: '17 Categories · 356 Checkpoints',
+    color: '#d97706',
+    tagline: 'Standalone Master Compliance Audit Checklist Document Pack (or FREE in monthly plans!).',
+    benefits: [
+      'Full 11-Page Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      'Both Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001) templates',
+      'Editable Business Governance, HR, Incident, Risk & NDIS Practice Standard tables',
+      'Ready-to-print PDF & interactive compliance status key (Yes / No / N/A)',
+      '100% INCLUDED FREE when you choose a Starter, Growth, Elite or Scale monthly plan',
+    ],
+  },
+  {
     id: 'free-test',
     name: 'Free Trial & Test Plan',
-    badge: '$0 Upfront · Start Today',
+    badge: '$0 Upfront · 14-Day Trial',
     users: 'Up to 5 test users',
     monthly: 0,
     yearly: 0,
     messageCredits: '100 message credits / mo',
     integrationCredits: '500 integration credits / mo',
     color: '#0ea5e9',
-    tagline: 'Test & explore ComplianceHR Infinity with zero upfront costs before scaling up.',
+    tagline: 'Build and test your application without any upfront costs, then scale as you grow.',
     benefits: [
-      '$0 upfront cost — no lock-in contract required',
+      '$0 upfront cost — build and test with no lock-in contract',
       'Preview both Enhanced Office View & General Profile View',
       'Test Employee & Participant profile workflows',
-      'Explore Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
-      'Upgrade seamlessly to any plan as your organisation grows',
+      'Preview Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      'Scale up anytime to Starter, Growth, Elite ($160/mo) or Enterprise',
     ],
   },
   {
@@ -240,9 +262,13 @@ export default function PricingSection({ compact = false }) {
       </div>
 
       {/* Package Cards Grid — Zero Wasted Space */}
-      <div className={`grid grid-cols-1 md:grid-cols-3 ${compact ? 'lg:grid-cols-5' : 'lg:grid-cols-5'} gap-1.5 items-stretch`}>
+      <div className={`grid grid-cols-1 md:grid-cols-3 ${compact ? 'lg:grid-cols-6' : 'lg:grid-cols-6'} gap-1.5 items-stretch`}>
         {COMPLIANCE_HR_PACKAGES.map((pkg) => {
-          const price = billing === 'monthly' ? pkg.monthly : Math.round(pkg.yearly / 12);
+          const price = pkg.oneOff
+            ? pkg.monthly
+            : billing === 'monthly'
+              ? pkg.monthly
+              : Math.round(pkg.yearly / 12);
           return (
             <div
               key={pkg.id}
@@ -277,7 +303,9 @@ export default function PricingSection({ compact = false }) {
                     ${price}
                   </span>
                   <span className="text-[8px] font-bold text-purple-800">
-                    / month {billing === 'yearly' && pkg.yearly > 0 ? `($${pkg.yearly}/yr)` : ''}
+                    {pkg.oneOff
+                      ? 'standalone doc (FREE in plans)'
+                      : `/ month ${billing === 'yearly' && pkg.yearly > 0 ? `($${pkg.yearly}/yr)` : ''}`}
                   </span>
                 </div>
 
