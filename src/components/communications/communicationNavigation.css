@@ -2,5 +2,7 @@
 .communication-navigation [role="tab"]{--tile-tone:#0891b2;white-space:normal;line-height:1.3}
 .communication-navigation [role="tab"][data-state="active"]{box-shadow:inset 0 0 0 2px var(--tile-tone),0 6px 16px -12px var(--tile-tone)!important;border-color:var(--tile-tone)!important}
 @media(max-width:639px){.communication-navigation[role="tablist"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}}
+/* Owner fix: the shared 0.5cm dashboard-tab gap rule must not spread the board tiles apart. */
+main .communication-navigation[role="tablist"]{gap:.5rem!important}
 /* Owner request: no yellow tone in the Communication Centre header tab strip. */
 .app-readable .comm-centre [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5){--dashboard-tone:var(--chart-2)}

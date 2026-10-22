@@ -44,9 +44,9 @@ export default function CommunicationNavigation({ tabs }) {
         })}
       </TabsList>
       {/* Bottom corner lights: alerts and the alert log glow (and sound) as alerts arrive. */}
-      <div className="flex items-stretch justify-between gap-2">
-        <AlertLamp kind="alerts" />
-        <AlertLamp kind="logs" />
+      <div className="grid grid-cols-4 gap-2">
+        <AlertLamp kind="alerts" className="col-span-2" />
+        <AlertLamp kind="logs" className="col-span-2" />
       </div>
     </div>
   );

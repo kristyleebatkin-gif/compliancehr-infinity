@@ -29,7 +29,7 @@ const CONFIG = {
 
 // A light shown at the bottom corners of the communication board: it lights up
 // (and sounds an alarm) as alerts arrive. Tapping it opens that section.
-export default function AlertLamp({ kind }) {
+export default function AlertLamp({ kind, className }) {
   const [count, setCount] = useState(null);
   const prev = useRef(null);
   const { icon: Icon, label, colour, clear } = CONFIG[kind] || CONFIG.alerts;
@@ -68,7 +68,7 @@ export default function AlertLamp({ kind }) {
     <TabsTrigger
       value={kind}
       aria-label={`${label}${lit ? `: ${count} active` : ''}`}
-      className="group relative flex min-h-20 flex-1 flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border p-2 text-center transition-all hover:-translate-y-0.5"
+      className={`group relative flex min-h-20 w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border p-2 text-center transition-all hover:-translate-y-0.5 ${className || ''}`}
       style={{
         borderColor: lit ? `${colour}80` : 'hsl(var(--border))',
         background: lit ? `linear-gradient(165deg, ${colour}2e 0%, hsl(var(--card)) 85%)` : 'hsl(var(--card))',
