@@ -128,7 +128,7 @@ export default function TaskLeaderboard({ compact = true }) {
       >
         <div
           className="comm-panel-bar relative flex shrink-0 items-center justify-between gap-2 px-3 py-1.5"
-          style={{ background: 'var(--header-gradient)', color: '#fff' }}
+          style={{ '--comm-bar-bg': 'linear-gradient(120deg, #be185d 0%, #db2777 52%, #ec4899 100%)', color: '#fff' }}
         >
           <div className="flex items-center gap-2 min-w-0">
             <Trophy className="h-3.5 w-3.5 shrink-0 text-white" />

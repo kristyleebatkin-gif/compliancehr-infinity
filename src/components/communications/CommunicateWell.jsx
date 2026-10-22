@@ -12,7 +12,7 @@ const PRINCIPLES = [
 export default function CommunicateWell() {
   return (
     <section className="overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2 px-2.5 py-1" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+      <div className="comm-panel-bar relative flex items-center gap-2 px-2.5 py-1" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #15803d 0%, #16a34a 52%, #65a30d 100%)', color: '#fff' }}>
         <span className="flex h-5 w-5 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
           <HeartHandshake className="h-3 w-3 text-white" />
         </span>

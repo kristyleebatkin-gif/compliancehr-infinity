@@ -10,10 +10,10 @@ const priorityTone = {
 };
 
 const tiles = [
-  { key: 'open', label: 'Open', from: '#2563eb', to: '#3b82f6', Icon: ClipboardList, statuses: ['Pending', 'Open', 'Pending Approval'] },
-  { key: 'progress', label: 'In Progress', from: '#7c3aed', to: '#a855f7', Icon: PlayCircle, statuses: ['In Progress'] },
-  { key: 'overdue', label: 'Overdue', from: '#dc2626', to: '#f87171', Icon: AlertTriangle, statuses: null },
-  { key: 'done', label: 'Completed', from: '#059669', to: '#34d399', Icon: CheckCircle2, statuses: ['Completed'] },
+  { key: 'open', label: 'Open', from: '#2563eb', to: '#0ea5e9', Icon: ClipboardList, statuses: ['Pending', 'Open', 'Pending Approval'] },
+  { key: 'progress', label: 'In Progress', from: '#d97706', to: '#ca8a04', Icon: PlayCircle, statuses: ['In Progress'] },
+  { key: 'overdue', label: 'Overdue', from: '#dc2626', to: '#f97316', Icon: AlertTriangle, statuses: null },
+  { key: 'done', label: 'Completed', from: '#16a34a', to: '#14b8a6', Icon: CheckCircle2, statuses: ['Completed'] },
 ];
 
 export default function CommTaskDash() {
@@ -43,7 +43,7 @@ export default function CommTaskDash() {
 
   return (
     <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2.5 px-3 py-2" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+      <div className="comm-panel-bar relative flex items-center gap-2.5 px-3 py-2" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #4338ca 0%, #4f46e5 55%, #6366f1 100%)', color: '#fff' }}>
         <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
           <ClipboardList className="h-4 w-4 text-white" />
         </span>

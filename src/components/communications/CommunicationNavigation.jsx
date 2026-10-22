@@ -8,11 +8,24 @@ import '@/components/communications/communicationNavigation.css';
 // first modules on the main Dashboard (DashboardTile): gradient card, top
 // colour bar, gradient icon chip and a coloured "Open" pill.
 const COLOURS = {
-  alerts: '#dc2626', logs: '#1e3a8a', diary: '#0891b2', inbox: '#0ea5e9',
-  templates: '#c026d3', email: '#059669', bulk: '#f97316', banter: '#22c55e',
-  shoutouts: '#ec4899', feed: '#0d9488', complaints: '#b91c1c', todo: '#ef4444',
-  'task-dashboard': '#4338ca', guide: '#65a30d', video: '#6366f1', ai: '#8b5cf6',
-  'shift-notes': '#14b8a6', 'employee-log': '#7c3aed',
+  alerts: '#dc2626',
+  logs: '#1e3a8a',
+  'task-dashboard': '#2563eb',
+  todo: '#ea580c',
+  guide: '#65a30d',
+  templates: '#ca8a04',
+  banter: '#db2777',
+  feed: '#0d9488',
+  shoutouts: '#f43f5e',
+  video: '#4f46e5',
+  complaints: '#b91c1c',
+  ai: '#9333ea',
+  diary: '#0ea5e9',
+  inbox: '#0369a1',
+  email: '#16a34a',
+  'shift-notes': '#d97706',
+  'employee-log': '#c026d3',
+  bulk: '#15803d',
 };
 
 export default function CommunicationNavigation({ tabs }) {

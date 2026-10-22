@@ -3,10 +3,10 @@ import { base44 } from '@/api/base44Client';
 import { MessageSquare, StickyNote, PartyPopper, Megaphone, HeartHandshake, Lightbulb, Copy, Check, Loader2 } from 'lucide-react';
 
 const tiles = [
-  { key: 'messages', label: 'Messages', from: '#2563eb', to: '#60a5fa', Icon: MessageSquare, kind: 'Message' },
-  { key: 'notes', label: 'Shift Notes', from: '#0d9488', to: '#2dd4bf', Icon: StickyNote, kind: 'Shift Note' },
-  { key: 'banter', label: 'Team Banter', from: '#db2777', to: '#f472b6', Icon: PartyPopper, kind: 'Team Banter' },
-  { key: 'broadcasts', label: 'Broadcasts', from: '#7c3aed', to: '#c084fc', Icon: Megaphone, kind: 'Broadcast' },
+  { key: 'messages', label: 'Messages', from: '#0ea5e9', to: '#3b82f6', Icon: MessageSquare, kind: 'Message' },
+  { key: 'notes', label: 'Shift Notes', from: '#65a30d', to: '#22c55e', Icon: StickyNote, kind: 'Shift Note' },
+  { key: 'banter', label: 'Team Banter', from: '#e11d48', to: '#f43f5e', Icon: PartyPopper, kind: 'Team Banter' },
+  { key: 'broadcasts', label: 'Broadcasts', from: '#ea580c', to: '#f97316', Icon: Megaphone, kind: 'Broadcast' },
 ];
 
 const commTips = [
@@ -68,7 +68,7 @@ export default function CommTeamDash() {
 
   return (
     <section className="overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2 px-2.5 py-1" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+      <div className="comm-panel-bar relative flex items-center gap-2 px-2.5 py-1" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #0d9488 0%, #14b8a6 55%, #0891b2 100%)', color: '#fff' }}>
         <span className="flex h-5 w-5 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
           <HeartHandshake className="h-3 w-3 text-white" />
         </span>
@@ -101,8 +101,8 @@ export default function CommTeamDash() {
             ))}
           </div>
           <div className="grid gap-1.5 sm:grid-cols-2">
-            {tipCard('comm', Lightbulb, 'Communication tip', commTips[day % commTips.length], '#2563eb', '#60a5fa')}
-            {tipCard('team', HeartHandshake, 'Teamwork tip', teamTips[day % teamTips.length], '#db2777', '#f472b6')}
+            {tipCard('comm', Lightbulb, 'Communication tip', commTips[day % commTips.length], '#0369a1', '#0ea5e9')}
+            {tipCard('team', HeartHandshake, 'Teamwork tip', teamTips[day % teamTips.length], '#c026d3', '#ec4899')}
           </div>
         </div>
       )}

@@ -47,7 +47,7 @@ export default function CommSharedTodo({ compact = false } = {}) {
 
   return (
     <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className={`comm-panel-bar relative flex items-center gap-2.5 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`} style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+      <div className={`comm-panel-bar relative flex items-center gap-2.5 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`} style={{ '--comm-bar-bg': 'linear-gradient(120deg, #ea580c 0%, #f97316 55%, #d97706 100%)', color: '#fff' }}>
         <span className={`flex items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30 ${compact ? 'h-7 w-7' : 'h-9 w-9'}`}>
           <ListTodo className={`text-white ${compact ? 'h-4 w-4' : 'h-5 w-5'}`} />
         </span>

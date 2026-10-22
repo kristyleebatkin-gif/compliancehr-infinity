@@ -420,11 +420,19 @@
     .compact-tabs [role="tab"] svg, .compact-module [role="tab"] svg { width: 0.75rem; height: 0.75rem; }
   }
   /* Shared page and section headers: merged blue-purple-pink gradient, circular pattern, borderless, crisp white text, generous modern spacing. */
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar),
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header),
   .app-readable .safety-workspace .dashboard-panel-header {
     position: relative;
     overflow: hidden;
     background: var(--header-gradient) !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-family: var(--font-body) !important;
+  }
+  .app-readable :is(.comm-weather-bar, .comm-panel-bar) {
+    position: relative;
+    overflow: hidden;
+    background: var(--comm-bar-bg, var(--header-gradient)) !important;
     color: #ffffff !important;
     border: none !important;
     font-family: var(--font-body) !important;
