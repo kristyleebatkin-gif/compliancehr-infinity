@@ -3,7 +3,8 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb, Eye, EyeOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -30,6 +31,7 @@ import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import CommGuide from '@/components/communications/CommGuide';
+import CommWeatherBar from '@/components/communications/CommWeatherBar';
 
 const TABS = [
   ['alerts', Siren, 'Alerts'],
@@ -62,6 +64,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const participantOnly = role === ROLES.PARTICIPANT;
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
+  const [tilesOpen, setTilesOpen] = useState(true);
 
   // Standalone view for a restricted user: resolve their own profile so the
   // diary shows only entries about them.
@@ -88,6 +91,17 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   return (
     <div className="comm-centre space-y-4">
       <Tabs defaultValue="feed">
+        {!(embedded || participantOnly) && (
+          <div className="space-y-2.5">
+            <CommWeatherBar />
+            <div className="flex items-center justify-end">
+              <Button variant="outline" size="sm" onClick={() => setTilesOpen(v => !v)}>
+                {tilesOpen ? <EyeOff /> : <Eye />}{tilesOpen ? 'Hide dashboards' : 'Show dashboards'}
+              </Button>
+            </div>
+            {tilesOpen && <CommunicationNavigation tabs={shown} />}
+          </div>
+        )}
         <ModuleShell
           embedded={embedded || participantOnly}
           title="Communication Centre"
@@ -96,7 +110,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
             : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
           icon={MessagesSquare}
           moduleKey="communications"
-          tabs={<CommunicationNavigation tabs={shown} />}
         >
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>

@@ -29,13 +29,12 @@ export default function CommunicationNavigation({ tabs }) {
           <TabsTrigger
             key={value}
             value={value}
-            className="group relative flex min-h-28 min-w-0 flex-col items-center overflow-hidden rounded-xl border p-2.5 text-center font-semibold text-foreground transition-all hover:-translate-y-1 hover:shadow-lg"
-            style={{ '--tile-tone': c, borderColor: `${c}40`, background: `linear-gradient(165deg, ${c}29 0%, ${c}12 46%, hsl(var(--card)) 82%)`, boxShadow: `0 10px 30px -18px ${c}77` }}
+            className="group relative flex min-h-24 min-w-0 flex-col items-center gap-1 overflow-hidden rounded-2xl border bg-card p-3 text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+            style={{ '--tile-tone': c, borderColor: `${c}55`, boxShadow: `0 6px 16px -12px ${c}aa` }}
           >
-            <span className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${c}, ${c}99)` }} />
-            <span className="absolute -right-8 -top-10 h-24 w-24 rounded-full opacity-15" style={{ backgroundColor: c }} />
-            <span className="communication-navigation-icon relative" style={{ background: `linear-gradient(135deg, ${c}, ${c}cc)` }}><Icon aria-hidden="true" /></span>
-            <span className="relative mt-1 text-sm font-bold">{label}</span>
+            <span className="communication-navigation-icon" style={{ background: `${c}1f`, color: c }}><Icon aria-hidden="true" /></span>
+            <span className="relative text-sm font-bold" style={{ color: c }}>{label}</span>
+            <span className="relative text-[10px] font-semibold text-foreground/50 transition-colors group-hover:text-foreground/70">Open</span>
           </TabsTrigger>
         );
       })}

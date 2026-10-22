@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Ear, MessageCircleQuestion, Languages, PenLine, Repeat, Radio, Users, Handshake, HeartHandshake, Trophy, Clock, Lightbulb, Info, ShieldAlert, RefreshCcw, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { Ear, MessageCircleQuestion, Languages, PenLine, Repeat, Radio, Users, Handshake, HeartHandshake, Trophy, Clock, Lightbulb, Info, ShieldAlert, RefreshCcw, BookOpen, Share2, Copy, Check } from 'lucide-react';
 
 const COLOUR = '#0891b2';
 
@@ -42,6 +43,39 @@ const AUDIT_TIPS = [
   { icon: Users, colour: '#7c3aed', title: 'Review the register weekly', text: 'Check for gaps, unsigned entries and missing documents so evidence stays current, not a pre-audit scramble.' },
 ];
 
+// Short, one-line hints the team can copy and share anywhere - the feed, an email, a huddle.
+const SHAREABLE = [
+  'Say the main point in your first sentence - clear is kind.',
+  'Confirm every instruction by playing it back before acting on it.',
+  'Write it while it is fresh: a note reconstructed later is evidence lost.',
+  'Urgent? Call or raise an alert. Everything else belongs in the diary or feed.',
+  'Read the handover before the shift starts; leave notes for the next shift.',
+  'Praise in public on the feed, correct in private in a direct message.',
+  'Check the shared to-do board before you plan your day: one team, one plan.',
+  'No entry is too small: if it happened on shift, it belongs in the register.',
+  'Listen to understand, not to reply - let the person finish first.',
+  'Close every loop: a message is delivered only when it is confirmed.',
+];
+
+function ShareHint({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* clipboard unavailable */ }
+  };
+  return (
+    <div className="flex items-start justify-between gap-2 rounded-xl border p-2.5" style={{ background: '#0891b20d' }}>
+      <p className="text-xs font-medium leading-snug text-foreground/80">{text}</p>
+      <button type="button" onClick={copy} aria-label="Copy hint" className="shrink-0 rounded-lg p-1.5 transition-colors hover:bg-[#0891b21f]" style={{ color: copied ? '#16a34a' : '#0891b2' }}>
+        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      </button>
+    </div>
+  );
+}
+
 function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' }) {
   return (
     <Card className="shadow-panel" style={{ borderTop: `4px solid ${colour}` }}>
@@ -73,6 +107,18 @@ export default function CommGuide() {
         <h2 className="font-heading text-lg font-bold text-[#0891b2]">Communicate well, work as one team</h2>
         <p className="text-xs text-muted-foreground">Practical hints, teamwork habits and the communication basics behind safe, high-quality supports.</p>
       </div>
+      <Card className="shadow-panel" style={{ borderTop: '4px solid #0d9488' }}>
+        <CardContent className="p-3">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: '#0d94881f', color: '#0d9488' }}><Share2 className="h-4 w-4" /></span>
+            <h3 className="font-heading text-base font-bold" style={{ color: '#0d9488' }}>Hints to share</h3>
+          </div>
+          <p className="mt-0.5 text-xs text-muted-foreground">One-line hints on effective communication and teamwork. Copy any hint and paste it into the team feed, an email or a huddle.</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {SHAREABLE.map((h) => <ShareHint key={h} text={h} />)}
+          </div>
+        </CardContent>
+      </Card>
       <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
       <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" />
       <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />
