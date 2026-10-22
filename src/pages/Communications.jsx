@@ -37,7 +37,6 @@ import { AboutCommunication, CommHintsTips } from '@/components/communications/C
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import CommAuditBar from '@/components/communications/CommAuditBar';
-import '@/components/communications/commCentreTheme.css';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
 const TABS = [
