@@ -29,7 +29,7 @@
     --payroll: 160 84% 32%;
     --header-blue: 221 83% 53%;
     --header-pink: 330 81% 52%;
-    --header-gradient: linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%);
+    --header-gradient: linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%);
     --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .16), hsl(var(--brand) / .18) 52%, hsl(var(--header-pink) / .14));
     --brand: 262 83% 58%;
     --brand-foreground: 0 0% 100%;

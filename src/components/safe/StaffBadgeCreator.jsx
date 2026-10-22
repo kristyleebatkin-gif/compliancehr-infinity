@@ -18,7 +18,7 @@ export default function StaffBadgeCreator() {
   const [staffId, setStaffId] = useState('');
   const [branding, setBranding] = useState(getCompanyBranding());
   const [saving, setSaving] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     (async () => {

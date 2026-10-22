@@ -4,20 +4,25 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, Save, Landmark, Building2, ScrollText, KeyRound, PenLine, ShieldAlert, Eye, ChevronDown, ChevronRight, Minimize2, Maximize2 } from 'lucide-react';
+import { Loader2, Save, Landmark, Building2, ScrollText, KeyRound, PenLine, ShieldAlert, Eye, Minimize2, Maximize2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import BusinessContactSignature from '@/components/safe/BusinessContactSignature';
 import { cacheCompanyBranding } from '@/lib/companyBranding';
+import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 
 const EMPTY = {
   business_name: 'Choices North Queensland (Choices NQ)', trading_name: 'DALTON, KRISTY LEE Trading as CHOICES NORTH QUEENSLAND', abn: '11769681650', acn: '', ndis_provider_number: '4-LPHJR5O',
   address_line: 'U5/14 Keane Street, Currajong, QLD, 4812', postal_address: '', suburb: 'Currajong', state: 'QLD', postcode: '4812',
   phone: '0402 165 668', after_hours_phone: '', email: 'kristyleebatkin@live.com.au', website: '',
   contact_person: 'Choices NQ Administration', contact_person_phone: '0402 165 668', contact_person_email: 'kristyleebatkin@live.com.au',
-  business_structure: '', registration_date: '', asic_registration: '', business_activity: '', key_contact: 'Choices NQ Administration',
-  operating_hours: '', preferred_communication: '', business_owner: 'DALTON, KRISTY LEE', authorised_contact_name: 'Choices NQ Administration', authorised_contact: '0402 165 668 | kristyleebatkin@live.com.au',
+  business_structure: 'Sole Trader / Registered NDIS Provider', registration_date: '', asic_registration: '', business_activity: 'NDIS Disability Support Services', key_contact: 'Choices NQ Administration',
+  operating_hours: 'Mon–Fri 8:00am – 5:00pm (24/7 On-Call Support)', preferred_communication: 'Email & Phone', business_owner: 'DALTON, KRISTY LEE', authorised_contact_name: 'Choices NQ Administration', authorised_contact: '0402 165 668 | kristyleebatkin@live.com.au',
   organisational_structure: '', delegation_of_authority: '', tax_file_number: '',
-  purpose: '', contact_role: '', signature_farewell: '', contact_signature: '', confidentiality_disclaimer: '',
+  purpose: 'Empowering participants across North Queensland with safe, compliant, person-centred support.',
+  vision: 'Complete Control. Greater Confidence. Brighter Success.',
+  mission: 'Delivering high-quality, NDIS-compliant support with dignity and transparency.',
+  values: 'Respect · Integrity · Safety · Inclusion · Excellence',
+  contact_role: 'Provider Administrator', signature_farewell: 'Kind regards,', contact_signature: '', confidentiality_disclaimer: 'This communication and any attachments are confidential and intended solely for the addressee.',
   ndis_commissioner_username: '', ndis_commissioner_password: '',
   business_email_username: '', business_email_password: '',
   computer_username: '', computer_password: '',
@@ -28,7 +33,7 @@ const EMPTY = {
   digital_id_username: '', digital_id_password: '',
   other_password_1_name: '', other_password_1_username: '', other_password_1_password: '',
   other_password_2_name: '', other_password_2_username: '', other_password_2_password: '',
-  bank_name: '', bsb: '', account_number: '', account_name: '',
+  bank_name: '', bsb: '', account_number: '', account_name: 'Choices North Queensland',
   payment_terms_days: 14, payment_terms_note: 'Payment is due within 14 days of the invoice date.',
   default_invoice_notes: 'NDIS supports are GST free. Please quote the invoice number as the payment reference.',
   payment_instructions: '',
@@ -64,57 +69,12 @@ const INVOICE_TERMS = [
   ['contact_information', 'Contact information'],
 ];
 
-const SECTION_PALETTE = [
-  { color: '#4f46e5', bg: 'rgba(79,70,229,0.10)' },
-  { color: '#db2777', bg: 'rgba(219,39,119,0.10)' },
-  { color: '#2563eb', bg: 'rgba(37,99,235,0.10)' },
-  { color: '#0d9488', bg: 'rgba(13,148,136,0.10)' },
-  { color: '#ea580c', bg: 'rgba(234,88,12,0.10)' },
-  { color: '#7c3aed', bg: 'rgba(124,58,237,0.10)' },
-  { color: '#16a34a', bg: 'rgba(22,163,74,0.10)' },
-  { color: '#ca8a04', bg: 'rgba(202,138,4,0.10)' },
-  { color: '#c026d3', bg: 'rgba(192,38,211,0.10)' },
-];
-
-const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 40%, #7c3aed 50%, #ec4899 60%, #ec4899 100%)';
-
-const Section = ({ icon: Icon, title, open, onToggle, children }) => {
-  const tone = SECTION_PALETTE[title.length % SECTION_PALETTE.length];
-  return (
-    <div
-      className="overflow-hidden rounded-2xl border-2 bg-card shadow-sm transition-all"
-      style={{
-        borderColor: `${tone.color}88`,
-        background: `linear-gradient(155deg, ${tone.bg} 0%, #ffffff 75%)`,
-      }}
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="comm-panel-bar flex w-full items-center justify-between gap-2.5 px-4 py-2.5 text-left text-xs sm:text-sm font-extrabold text-white"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <span className="flex items-center gap-2.5 min-w-0">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/20 text-white ring-1 ring-white/40">
-            <Icon className="h-3.5 w-3.5" />
-          </span>
-          <span className="truncate">{title}</span>
-        </span>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-          {open ? <>Minimise <ChevronDown className="h-3.5 w-3.5" /></> : <>Open <ChevronRight className="h-3.5 w-3.5" /></>}
-        </span>
-      </button>
-      {open && <div className="p-4">{children}</div>}
-    </div>
-  );
-};
-
 const Field = ({ label, value, onChange, type = 'text' }) => (
-  <div className="grid gap-1.5"><Label>{label}</Label><Input type={type} value={value ?? ''} onChange={onChange} /></div>
+  <div className="grid gap-1"><Label className="text-[11px] font-bold">{label}</Label><Input className="h-8 text-xs" type={type} value={value ?? ''} onChange={onChange} /></div>
 );
 
-const Area = ({ label, value, onChange, rows = 3, className = '' }) => (
-  <div className={`grid gap-1.5 sm:col-span-3 ${className}`}><Label>{label}</Label><Textarea rows={rows} value={value ?? ''} onChange={onChange} /></div>
+const Area = ({ label, value, onChange, rows = 2, className = '' }) => (
+  <div className={`grid gap-1 sm:col-span-3 ${className}`}><Label className="text-[11px] font-bold">{label}</Label><Textarea className="text-xs" rows={rows} value={value ?? ''} onChange={onChange} /></div>
 );
 
 export default function BusinessDetailsCard() {
@@ -194,29 +154,169 @@ export default function BusinessDetailsCard() {
     }
   };
 
-  if (loading) return <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
+  if (loading) return <div className="flex justify-center py-4"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /></div>;
+
+  const MODULAR_SUBJECTS = [
+    {
+      key: 'vision',
+      icon: Eye,
+      color: '#4f46e5',
+      title: '1. Vision & Mission',
+      shared: [form.business_name, form.vision || 'Complete Control. Greater Confidence.', form.values || 'Respect · Safety · Inclusion'],
+    },
+    {
+      key: 'letterhead',
+      icon: PenLine,
+      color: '#db2777',
+      title: '2. Business Letterhead',
+      shared: [form.business_name, form.contact_person, form.email],
+    },
+    {
+      key: 'signature',
+      icon: PenLine,
+      color: '#2563eb',
+      title: '3. Business Signature',
+      shared: [form.contact_person, `NDIS: ${form.ndis_provider_number}`, form.contact_person_phone],
+    },
+    {
+      key: 'disclaimer',
+      icon: ShieldAlert,
+      color: '#0d9488',
+      title: '4. Confidentiality',
+      shared: [form.confidentiality_disclaimer || 'Official confidentiality notice active'],
+    },
+    {
+      key: 'important',
+      icon: Building2,
+      color: '#ea580c',
+      title: '5. Important Business Info',
+      shared: [`ABN: ${form.abn}`, `NDIS: ${form.ndis_provider_number}`, form.address_line],
+    },
+    {
+      key: 'operational',
+      icon: Building2,
+      color: '#7c3aed',
+      title: '6. Operational Details',
+      shared: [`Owner: ${form.business_owner}`, form.operating_hours, form.authorised_contact_name],
+    },
+    {
+      key: 'banking',
+      icon: Landmark,
+      color: '#16a34a',
+      title: '7. Banking & Financial',
+      shared: [form.account_name || form.business_name, form.bank_name ? `Bank: ${form.bank_name}` : 'Bank & BSB ready', form.bsb ? `BSB: ${form.bsb}` : 'Account on file'],
+    },
+    {
+      key: 'logins',
+      icon: KeyRound,
+      color: '#ca8a04',
+      title: '8. Management Logins',
+      shared: ['NDIS · ATO · Workcover', 'Qleave · RAM · Digital ID', '10 Credential Vaults'],
+    },
+    {
+      key: 'invoice',
+      icon: ScrollText,
+      color: '#0ea5e9',
+      title: '9. Invoice & Payment Terms',
+      shared: [`${form.payment_terms_days || 14} Days Terms`, 'GST-Free NDIS Supports', form.payment_terms_note],
+    },
+    {
+      key: 'quote',
+      icon: ScrollText,
+      color: '#c026d3',
+      title: '10. Quote Terms',
+      shared: [`Valid ${form.quote_validity_days || 30} Days`, 'NDIS Pricing Schedule', 'Quote Centre Defaults'],
+    },
+  ];
 
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-blue-300 bg-white px-4 py-2.5 shadow-sm">
-        <span className="text-xs font-extrabold text-blue-950">
-          Company Safe Subjects (Minimised so you can see all subjects at once — click any bar to open)
+    <div className="space-y-2.5">
+      {/* Compact Header Bar with Squished Purple */}
+      <div
+        className="comm-panel-bar flex flex-wrap items-center justify-between gap-2 rounded-xl px-3.5 py-2 text-white shadow-sm"
+        style={{ background: SQUISHED_GRADIENT }}
+      >
+        <span className="text-xs font-extrabold">
+          Business Safe Modular Subjects (10 Small Icon Tiles — Shared Details Under Name)
         </span>
-        <div className="flex items-center gap-2">
-          <Button type="button" size="sm" variant="outline" onClick={() => setAllSections(false)} className="h-7 text-xs font-extrabold">
-            <Minimize2 className="h-3.5 w-3.5" /> Minimise All Subjects
-          </Button>
-          <Button type="button" size="sm" variant="outline" onClick={() => setAllSections(true)} className="h-7 text-xs font-extrabold">
-            <Maximize2 className="h-3.5 w-3.5" /> Expand All Subjects
-          </Button>
-          <Button onClick={save} size="sm" disabled={saving} className="h-7 text-xs font-extrabold text-white" style={{ background: SQUISHED_GRADIENT }}>
-            {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}Save business details
-          </Button>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => setAllSections(false)}
+            className="inline-flex items-center gap-1 rounded-lg bg-white/20 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-white/30"
+          >
+            <Minimize2 className="h-3 w-3" /> Minimise All
+          </button>
+          <button
+            type="button"
+            onClick={() => setAllSections(true)}
+            className="inline-flex items-center gap-1 rounded-lg bg-white/20 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-white/30"
+          >
+            <Maximize2 className="h-3 w-3" /> Expand All
+          </button>
+          <button
+            type="button"
+            onClick={save}
+            disabled={saving}
+            className="inline-flex items-center gap-1 rounded-lg bg-white px-2.5 py-1 text-[10px] font-extrabold text-violet-900 shadow-sm hover:bg-pink-50"
+          >
+            {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3 text-pink-600" />}
+            Save All
+          </button>
         </div>
       </div>
 
-      <div className="grid gap-2.5 md:grid-cols-2">
-        <Section icon={Eye} title="1. Business vision, purpose, values & mission statement" open={!!openMap.vision} onToggle={() => toggleSection('vision')}>
+      {/* Very Small Modular Icon Tiles Sharing All Details Under Name */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        {MODULAR_SUBJECTS.map((item) => {
+          const Icon = item.icon;
+          const isOpen = !!openMap[item.key];
+          return (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => toggleSection(item.key)}
+              className="group relative flex min-w-0 flex-col items-start overflow-hidden rounded-xl border p-2 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
+              style={{
+                borderColor: isOpen ? item.color : `${item.color}55`,
+                background: `linear-gradient(165deg, ${item.color}24 0%, ${item.color}0d 48%, #ffffff 90%)`,
+              }}
+            >
+              <span className="absolute inset-x-0 top-0 h-1" style={{ background: item.color }} />
+              <div className="flex w-full items-center justify-between gap-1.5 pt-0.5">
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
+                  style={{ background: item.color }}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </span>
+                <span
+                  className="rounded-full px-1.5 py-0 text-[9px] font-extrabold"
+                  style={{ color: item.color, backgroundColor: `${item.color}18` }}
+                >
+                  {isOpen ? 'Close' : 'Open'}
+                </span>
+              </div>
+              <div className="mt-1 w-full truncate text-[11px] font-extrabold text-foreground">
+                {item.title}
+              </div>
+              {/* Shared details directly under the name */}
+              <div className="mt-0.5 w-full space-y-0.5 border-t border-border/50 pt-1">
+                {item.shared.filter(Boolean).map((line, idx) => (
+                  <div key={idx} className="truncate text-[10px] font-semibold leading-tight text-foreground/80">
+                    {line}
+                  </div>
+                ))}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Opened Subject Editors Below */}
+      {openMap.vision && (
+        <div className="rounded-xl border-2 border-indigo-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-indigo-950">1. Business vision, purpose, values &amp; mission statement</div>
           <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
             <Area label="Vision" value={form.vision} onChange={set('vision')} />
@@ -224,10 +324,13 @@ export default function BusinessDetailsCard() {
             <Area label="Mission statement" value={form.mission} onChange={set('mission')} />
             <Area label="Values" value={form.values} onChange={set('values')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={PenLine} title="2. Business letterhead" open={!!openMap.letterhead} onToggle={() => toggleSection('letterhead')}>
-          <div className="grid gap-2 sm:grid-cols-2">
+      {openMap.letterhead && (
+        <div className="rounded-xl border-2 border-pink-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-pink-950">2. Business letterhead</div>
+          <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
             <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
             <Field label="Contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
@@ -235,9 +338,12 @@ export default function BusinessDetailsCard() {
             <Field label="Business email" value={form.email} onChange={set('email')} />
             <Field label="Contact role" value={form.contact_role} onChange={set('contact_role')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={PenLine} title="3. Business signature" open={!!openMap.signature} onToggle={() => toggleSection('signature')}>
+      {openMap.signature && (
+        <div className="rounded-xl border-2 border-blue-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-blue-950">3. Business signature</div>
           <div className="grid gap-2 sm:grid-cols-2">
             <Area label="Farewell" value={form.signature_farewell} onChange={set('signature_farewell')} rows={2} />
             <Field label="Business contact name" value={form.contact_person} onChange={set('contact_person')} />
@@ -248,17 +354,20 @@ export default function BusinessDetailsCard() {
             <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
             <Field label="Business NDIS registered provider number" value={form.ndis_provider_number} onChange={set('ndis_provider_number')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={ShieldAlert} title="4. Confidentiality disclaimer" open={!!openMap.disclaimer} onToggle={() => toggleSection('disclaimer')}>
-          <div className="grid gap-1.5">
-            <Label>Disclaimer</Label>
-            <Textarea rows={6} placeholder="Space to write or paste your full confidentiality disclaimer..." value={form.confidentiality_disclaimer} onChange={set('confidentiality_disclaimer')} />
-          </div>
-        </Section>
+      {openMap.disclaimer && (
+        <div className="rounded-xl border-2 border-teal-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-teal-950">4. Confidentiality disclaimer</div>
+          <Textarea rows={3} value={form.confidentiality_disclaimer} onChange={set('confidentiality_disclaimer')} className="text-xs" />
+        </div>
+      )}
 
-        <Section icon={Building2} title="5. Important business information" open={!!openMap.important} onToggle={() => toggleSection('important')}>
-          <div className="grid gap-3 sm:grid-cols-2">
+      {openMap.important && (
+        <div className="rounded-xl border-2 border-orange-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-orange-950">5. Important business information</div>
+          <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
             <Field label="Trading name" value={form.trading_name} onChange={set('trading_name')} />
             <Field label="Business structure" value={form.business_structure} onChange={set('business_structure')} />
@@ -275,36 +384,45 @@ export default function BusinessDetailsCard() {
             <Field label="Business contact email" value={form.contact_person_email} onChange={set('contact_person_email')} />
             <Field label="Business key contact phone" value={form.contact_person_phone} onChange={set('contact_person_phone')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={Building2} title="6. Business operational details" open={!!openMap.operational} onToggle={() => toggleSection('operational')}>
-          <div className="grid gap-2 sm:grid-cols-2">
+      {openMap.operational && (
+        <div className="rounded-xl border-2 border-purple-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-purple-950">6. Business operational details</div>
+          <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Business name" value={form.business_name} onChange={set('business_name')} />
             <Field label="Business operating hours" value={form.operating_hours} onChange={set('operating_hours')} />
-            <Field label="Business preferred communication method" value={form.preferred_communication} onChange={set('preferred_communication')} />
+            <Field label="Preferred communication" value={form.preferred_communication} onChange={set('preferred_communication')} />
             <Field label="Business owner" value={form.business_owner} onChange={set('business_owner')} />
-            <Field label="Business authorised contact name" value={form.authorised_contact_name} onChange={set('authorised_contact_name')} />
-            <Field label="Business authorised contact" value={form.authorised_contact} onChange={set('authorised_contact')} />
+            <Field label="Authorised contact name" value={form.authorised_contact_name} onChange={set('authorised_contact_name')} />
+            <Field label="Authorised contact" value={form.authorised_contact} onChange={set('authorised_contact')} />
             <Area label="Organisational structure" value={form.organisational_structure} onChange={set('organisational_structure')} />
             <Area label="Delegation of authority" value={form.delegation_of_authority} onChange={set('delegation_of_authority')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={Landmark} title="7. Banking & financial identity" open={!!openMap.banking} onToggle={() => toggleSection('banking')}>
-          <div className="grid gap-2 sm:grid-cols-2">
+      {openMap.banking && (
+        <div className="rounded-xl border-2 border-green-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-green-950">7. Banking &amp; financial identity</div>
+          <div className="grid gap-2 sm:grid-cols-4">
             <Field label="Business bank name" value={form.bank_name} onChange={set('bank_name')} />
             <Field label="Business BSB" value={form.bsb} onChange={set('bsb')} />
             <Field label="Business account" value={form.account_number} onChange={set('account_number')} />
             <Field label="Account name" value={form.account_name} onChange={set('account_name')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={KeyRound} title="8. Login details (management only)" open={!!openMap.logins} onToggle={() => toggleSection('logins')}>
-          <div className="grid gap-2 sm:grid-cols-2">
+      {openMap.logins && (
+        <div className="rounded-xl border-2 border-amber-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-amber-950">8. Login details (management only)</div>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {LOGIN_SECTIONS.map((s) => (
-              <div key={s.title} className="rounded-xl border border-border/60 bg-muted/20 p-3">
-                <p className="mb-2 flex items-center gap-1.5 text-xs font-bold"><KeyRound className="h-3.5 w-3.5 text-brand" />{s.title}</p>
-                <div className="grid gap-1.5">
+              <div key={s.title} className="rounded-lg border border-border/60 bg-muted/20 p-2.5">
+                <p className="mb-1.5 flex items-center gap-1 text-[11px] font-bold"><KeyRound className="h-3 w-3 text-brand" />{s.title}</p>
+                <div className="grid gap-1">
                   {s.withTfn && <Field label="Tax file number" value={form.tax_file_number} onChange={set('tax_file_number')} />}
                   {s.withName && <Field label="Name" value={form[`${s.prefix}_name`]} onChange={set(`${s.prefix}_name`)} />}
                   <Field label="Username" value={form[`${s.prefix}_username`]} onChange={set(`${s.prefix}_username`)} />
@@ -313,28 +431,33 @@ export default function BusinessDetailsCard() {
               </div>
             ))}
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={ScrollText} title="9. Invoice & payment terms and conditions" open={!!openMap.invoice} onToggle={() => toggleSection('invoice')}>
+      {openMap.invoice && (
+        <div className="rounded-xl border-2 border-sky-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-sky-950">9. Invoice &amp; payment terms and conditions</div>
           <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Payment terms (days)" type="number" value={form.payment_terms_days} onChange={set('payment_terms_days')} />
-            <div className="grid gap-1.5 sm:col-span-2"><Label>Payment terms</Label><Input value={form.payment_terms_note} onChange={set('payment_terms_note')} /></div>
+            <div className="grid gap-1 sm:col-span-2"><Label className="text-[11px] font-bold">Payment terms</Label><Input className="h-8 text-xs" value={form.payment_terms_note} onChange={set('payment_terms_note')} /></div>
             {INVOICE_TERMS.map(([key, label]) => (
               <Area key={key} label={label} value={form[key]} onChange={set(key)} />
             ))}
             <Area label="Default invoice notes" value={form.default_invoice_notes} onChange={set('default_invoice_notes')} />
             <Area label="Bill payment instructions" value={form.payment_instructions} onChange={set('payment_instructions')} />
           </div>
-        </Section>
+        </div>
+      )}
 
-        <Section icon={ScrollText} title="10. Quote terms & conditions (Quote Centre)" open={!!openMap.quote} onToggle={() => toggleSection('quote')}>
+      {openMap.quote && (
+        <div className="rounded-xl border-2 border-fuchsia-300 bg-white p-3.5 shadow-sm">
+          <div className="mb-2 text-xs font-extrabold text-fuchsia-950">10. Quote terms &amp; conditions (Quote Centre)</div>
           <div className="grid gap-2 sm:grid-cols-3">
             <Field label="Quote validity (days)" type="number" value={form.quote_validity_days} onChange={set('quote_validity_days')} />
-            <div className="grid gap-1.5 sm:col-span-2"><Label>Quote terms and conditions</Label><Textarea rows={4} value={form.quote_terms} onChange={set('quote_terms')} /></div>
-            <p className="text-xs text-muted-foreground sm:col-span-3">Saved as defaults for new quotes and invoices, together with the invoice and payment details above. Individual documents keep their saved terms.</p>
+            <div className="grid gap-1 sm:col-span-2"><Label className="text-[11px] font-bold">Quote terms and conditions</Label><Textarea rows={3} className="text-xs" value={form.quote_terms} onChange={set('quote_terms')} /></div>
           </div>
-        </Section>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -6,12 +6,12 @@ import { Download, ExternalLink, FileText, Loader2, Trash2, UploadCloud, Chevron
 import { routeDocument } from '@/lib/documentRouting';
 import { COMPLIANCE_DOC_TYPES, downloadComplianceTemplatePdf } from '@/lib/complianceDocTemplates';
 
-export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, title = 'Compliance & business documents', description = 'Upload the provider\'s certificates, insurances and statutory records, or download a professional record template for each one. Files are stored in the company safe.' }) {
+export default function ComplianceUploads({ defaultOpen = true, docTypes = COMPLIANCE_DOC_TYPES, title = 'Compliance & business documents', description = 'Upload the provider\'s certificates, insurances and statutory records, or download a professional record template for each one. Files are stored in the company safe.' }) {
   const { toast } = useToast();
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState('');
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
 
   const load = async () => {
     setLoading(true);

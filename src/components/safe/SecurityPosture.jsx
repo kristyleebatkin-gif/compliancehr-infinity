@@ -13,8 +13,8 @@ const GUARANTEES = [
 
 // Visible security posture (Drata/Vanta trust-centre pattern): the guarantees and
 // the live evidence behind them, shown inside the app rather than hidden in settings.
-export default function SecurityPosture() {
-  const [open, setOpen] = useState(false);
+export default function SecurityPosture({ defaultOpen = true }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="space-y-2">
       <button
