@@ -16,6 +16,7 @@ import IssuesDashboardWidget from '@/components/compliance/IssuesDashboardWidget
 import { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
 import LiveDashboards from '@/components/dashboard/LiveDashboards';
 import PageHeader from '@/components/PageHeader';
+import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
 const HEADINGS = {
@@ -38,6 +39,8 @@ export default function Dashboard() {
         title={firstName ? `Welcome, ${firstName}` : heading.title}
         subtitle={heading.sub}
       />
+
+      <SoftwareAndSafeBanner compact />
 
       <AllModulesHub />
 

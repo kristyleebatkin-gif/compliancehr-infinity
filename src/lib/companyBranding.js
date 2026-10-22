@@ -3,14 +3,14 @@ import { base44 } from '@/api/base44Client';
 const STORAGE_KEY = 'compliancehr_company_branding';
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 const DEFAULTS = {
-  companyName: 'ComplianceHR Infinity',
+  companyName: 'Choices North Queensland (Choices NQ)',
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
-  logoUrl: '',
+  logoUrl: 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png',
   logoDataUrl: '',
-  addressLine: '',
-  abn: '',
-  phone: '',
-  email: '',
+  addressLine: 'U5/14 Keane Street, Currajong, QLD, 4812',
+  abn: '11769681650',
+  phone: '0402 165 668',
+  email: 'kristyleebatkin@live.com.au',
 };
 
 const composeAddress = (business) => [

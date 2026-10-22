@@ -4,6 +4,7 @@ import { Lock, IdCard, Building2, FolderLock, ShieldCheck } from 'lucide-react';
 import BusinessIdentityCard from '@/components/safe/BusinessIdentityCard';
 import BusinessDetailsCard from '@/components/safe/BusinessDetailsCard';
 import ComplianceUploads from '@/components/safe/ComplianceUploads';
+import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 import SecurityPosture from '@/components/safe/SecurityPosture';
@@ -12,6 +13,7 @@ import LiveSecurityEvidence from '@/components/safe/LiveSecurityEvidence';
 export default function CompanySafe() {
   return <div className="space-y-4">
     <ModuleShell icon={Lock} moduleKey="company-safe" title="Company Safe" subtitle="Business identity, business documents and important business information, secured in one safe." />
+    <SoftwareAndSafeBanner />
     <LiveSecurityEvidence />
     <div className="flex items-center gap-2 text-sm font-bold font-editorial"><IdCard className="h-4 w-4 text-primary" />Staff Badge Creator</div>
     <StaffBadgeCreator />

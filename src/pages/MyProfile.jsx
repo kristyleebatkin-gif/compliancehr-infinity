@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import { format } from 'date-fns';
 import PageHeader from '@/components/PageHeader';
+import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import PersonalProfileForm from '@/components/profile/PersonalProfileForm';
@@ -150,6 +151,7 @@ export default function MyProfile() {
         subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
         showAlerts={false}
       />
+      <SoftwareAndSafeBanner compact />
 
       {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views">
         <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>

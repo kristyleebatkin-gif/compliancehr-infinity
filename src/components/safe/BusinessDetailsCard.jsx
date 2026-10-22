@@ -10,12 +10,12 @@ import BusinessContactSignature from '@/components/safe/BusinessContactSignature
 import { cacheCompanyBranding } from '@/lib/companyBranding';
 
 const EMPTY = {
-  business_name: '', trading_name: '', abn: '', acn: '', ndis_provider_number: '',
-  address_line: '', postal_address: '', suburb: '', state: '', postcode: '',
-  phone: '', after_hours_phone: '', email: '', website: '',
-  contact_person: '', contact_person_phone: '', contact_person_email: '',
-  business_structure: '', registration_date: '', asic_registration: '', business_activity: '', key_contact: '',
-  operating_hours: '', preferred_communication: '', business_owner: '', authorised_contact_name: '', authorised_contact: '',
+  business_name: 'Choices North Queensland (Choices NQ)', trading_name: 'DALTON, KRISTY LEE Trading as CHOICES NORTH QUEENSLAND', abn: '11769681650', acn: '', ndis_provider_number: '4-LPHJR5O',
+  address_line: 'U5/14 Keane Street, Currajong, QLD, 4812', postal_address: '', suburb: 'Currajong', state: 'QLD', postcode: '4812',
+  phone: '0402 165 668', after_hours_phone: '', email: 'kristyleebatkin@live.com.au', website: '',
+  contact_person: 'Choices NQ Administration', contact_person_phone: '0402 165 668', contact_person_email: 'kristyleebatkin@live.com.au',
+  business_structure: '', registration_date: '', asic_registration: '', business_activity: '', key_contact: 'Choices NQ Administration',
+  operating_hours: '', preferred_communication: '', business_owner: 'DALTON, KRISTY LEE', authorised_contact_name: 'Choices NQ Administration', authorised_contact: '0402 165 668 | kristyleebatkin@live.com.au',
   organisational_structure: '', delegation_of_authority: '', tax_file_number: '',
   purpose: '', contact_role: '', signature_farewell: '', contact_signature: '', confidentiality_disclaimer: '',
   ndis_commissioner_username: '', ndis_commissioner_password: '',
