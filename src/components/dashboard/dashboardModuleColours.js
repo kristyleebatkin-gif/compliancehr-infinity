@@ -6,7 +6,7 @@ export const MODULE_KEY_COLOURS = {
   'our-participants': '#e11d48',
   'intake': '#0ea5e9',
   'documents': '#ca8a04',
-  'company-safe': '#78716c',
+  'company-safe': '#7c3aed',
   'visual-boards': '#a855f7',
   'communications': '#0891b2',
   'assistant': '#8b5cf6',
@@ -23,7 +23,7 @@ export const MODULE_KEY_COLOURS = {
   'goals': '#c026d3',
   'emergency-response': '#b91c1c',
   'meetings': '#d97706',
-  'users': '#475569',
+  'users': '#0284c7',
   'receipts': '#059669',
   'equipment-manuals': '#a16207',
   'community-council': '#65a30d',
@@ -43,8 +43,8 @@ export const MODULE_KEY_COLOURS = {
   'feedback': '#f472b6',
   'quality': '#22c55e',
   'suggestions-hub': '#3b82f6',
-  'help': '#64748b',
-  'user-guides': '#94a3b8',
+  'help': '#0891b2',
+  'user-guides': '#ec4899',
 };
 
 // Live dashboard card keys that differ from the module directory keys.

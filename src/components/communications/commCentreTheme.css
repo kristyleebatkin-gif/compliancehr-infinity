@@ -8,10 +8,10 @@
     hsl(var(--background));
 }
 
-/* Communication Centre main header in bright pink */
+/* Communication Centre main header uses the app-wide Blue, Purple, Pink gradient */
 .comm-centre .app-page-header,
 .app-readable .comm-centre .app-page-header {
-  background: linear-gradient(120deg, #ec4899 0%, #db2777 52%, #f43f5e 100%) !important;
+  background: var(--header-gradient) !important;
 }
 
 /* Gradient bars: floating glass sheen for an artistic, modern look */

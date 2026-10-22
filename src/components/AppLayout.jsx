@@ -10,6 +10,7 @@ import { Navigate } from 'react-router-dom';
 import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
+import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
@@ -152,16 +153,27 @@ export default function AppLayout() {
                 {items.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.path);
+                  const modColor = moduleKeyColour(item.key);
                   return (
                     <Link
                       key={item.path}
                       to={item.path}
-                      className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all ${
-                        active ? 'bg-brand/10 font-bold text-brand shadow-sm' : 'font-medium text-foreground/60 hover:bg-brand/5 hover:text-brand'
+                      className={`group relative flex items-center gap-2.5 rounded-xl border px-3 py-2 text-sm transition-all ${
+                        active ? 'font-extrabold shadow-sm' : 'font-bold text-foreground/80 hover:shadow-sm'
                       }`}
+                      style={{
+                        borderColor: active ? `${modColor}88` : `${modColor}30`,
+                        background: active
+                          ? `linear-gradient(125deg, ${modColor}33, ${modColor}14)`
+                          : `linear-gradient(125deg, ${modColor}14, ${modColor}06)`,
+                      }}
                     >
-                      {active && <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full gradient-brand" />}
-                      <Icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${active ? 'text-brand' : 'text-foreground/40'}`} />
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white shadow-sm transition-transform group-hover:scale-110"
+                        style={{ background: modColor }}
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                      </span>
                       <span className="truncate">{navLabel(item)}</span>
                     </Link>
                   );
