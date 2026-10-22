@@ -31,6 +31,17 @@ const INFO = [
   { icon: ShieldAlert, colour: '#ea580c', title: 'Escalation', text: 'Safety concerns go straight to alerts and incidents - never only in a diary note. Escalate first, document straight after.' },
 ];
 
+const AUDIT_TIPS = [
+  { icon: PenLine, colour: '#0d9488', title: 'Record as you go', text: 'A shift note written during the shift is audit evidence; one reconstructed later is a compliance risk.' },
+  { icon: Info, colour: '#0891b2', title: 'Stay factual and objective', text: 'Write what was seen, said and done - not opinions. Auditors look for factual, specific, dated records.' },
+  { icon: Repeat, colour: '#4338ca', title: 'Link every entry', text: 'Use the right module, person and note type so each entry lands on the Communication Register against the person\'s record.' },
+  { icon: RefreshCcw, colour: '#16a34a', title: 'Complete the loop', text: 'Log the emails sent, copies to management and outcomes so the record shows who received what, and when.' },
+  { icon: Clock, colour: '#ea580c', title: 'Never backdate', text: 'If you forget to record something, enter it today with a note of the actual date - never alter history.' },
+  { icon: Trophy, colour: '#f472b6', title: 'Keep it retrievable', text: 'Consistent titles and note types mean evidence is found in seconds at audit time, not hours.' },
+  { icon: ShieldAlert, colour: '#dc2626', title: 'Route sensitive entries', text: 'Management-copy serious notes, incidents and risks so the governance trail is complete before the auditor asks.' },
+  { icon: Users, colour: '#7c3aed', title: 'Review the register weekly', text: 'Check for gaps, unsigned entries and missing documents so evidence stays current, not a pre-audit scramble.' },
+];
+
 function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' }) {
   return (
     <Card className="shadow-panel" style={{ borderTop: `4px solid ${colour}` }}>
@@ -65,6 +76,7 @@ export default function CommGuide() {
       <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
       <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" />
       <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />
+      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
     </div>
   );
 }
