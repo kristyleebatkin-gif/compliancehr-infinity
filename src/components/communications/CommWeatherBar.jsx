@@ -51,45 +51,38 @@ export default function CommWeatherBar() {
   const w = weather?.current;
   const [label, Icon] = w ? (CODES[w.weather_code] || ['Cloudy', Cloud]) : ['Loading…', Cloud];
 
-  const C = '#0891b2'; // same teal as the diary/shared tiles
   return (
     <div
-      className="relative flex flex-wrap items-center justify-between gap-3 overflow-hidden rounded-xl border p-2.5 transition-all hover:-translate-y-1 hover:shadow-lg"
-      style={{
-        borderColor: `${C}40`,
-        background: `linear-gradient(165deg, ${C}29 0%, ${C}12 46%, hsl(var(--card)) 82%)`,
-        boxShadow: `0 10px 30px -18px ${C}77`,
-      }}
+      className="relative flex flex-wrap items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-3 shadow-lg"
+      style={{ background: 'var(--header-gradient)', border: '2px solid #000', color: 'hsl(var(--header-foreground))' }}
     >
-      <span className="absolute inset-x-0 top-0 h-1.5" style={{ background: `linear-gradient(90deg, ${C}, ${C}99)` }} />
-      <span className="absolute -right-8 -top-10 h-24 w-24 rounded-full opacity-15" style={{ backgroundColor: C }} />
       <div className="relative flex items-center gap-3">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg text-white shadow-md" style={{ background: `linear-gradient(135deg, ${C}, ${C}cc)` }}>
-          <CalendarDays className="h-4 w-4" />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
+          <CalendarDays className="h-5 w-5 text-white" />
         </span>
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Today</p>
-          <p className="text-sm font-bold" style={{ color: C }}>{dateFmt.format(now)}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-white/70">Today</p>
+          <p className="text-sm font-bold text-white">{dateFmt.format(now)}</p>
         </div>
-        <div className="ml-1 border-l border-border pl-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Time</p>
-          <p className="font-mono text-lg font-bold leading-5" style={{ color: C }}>{timeFmt.format(now)}</p>
+        <div className="ml-1 border-l border-white/25 pl-3">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-white/70">Time</p>
+          <p className="font-mono text-lg font-bold leading-5 text-white">{timeFmt.format(now)}</p>
         </div>
       </div>
-      <div className="relative flex items-center gap-2.5 rounded-full px-3 py-1.5" style={{ backgroundColor: '#0ea5e912' }}>
+      <div className="relative flex items-center gap-2.5 rounded-xl bg-white/15 px-3 py-2">
         {w ? (
           <>
-            <Icon className="h-6 w-6" style={{ color: '#0ea5e9' }} />
+            <Icon className="h-6 w-6 text-white" />
             <div>
-              <p className="text-lg font-bold leading-5" style={{ color: '#0ea5e9' }}>{Math.round(w.temperature_2m)}°C</p>
-              <p className="text-[11px] font-semibold text-foreground/60">
+              <p className="text-lg font-bold leading-5 text-white">{Math.round(w.temperature_2m)}°C</p>
+              <p className="text-[11px] font-semibold text-white/85">
                 {label}
                 {weather?.daily && ` · ${Math.round(weather.daily.temperature_2m_min[0])}–${Math.round(weather.daily.temperature_2m_max[0])}°C`}
               </p>
             </div>
           </>
         ) : (
-          <p className="text-xs font-semibold text-foreground/60">Loading weather…</p>
+          <p className="text-xs font-semibold text-white/85">Loading weather…</p>
         )}
       </div>
     </div>
