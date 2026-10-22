@@ -12,7 +12,9 @@ import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
 import TeamBanter from '@/components/communications/TeamBanter';
+import CommDailyInsight from '@/components/communications/CommDailyInsight';
 import CommTaskDash from '@/components/communications/CommTaskDash';
+import CommSharedTodo from '@/components/communications/CommSharedTodo';
 import CommTeamDash from '@/components/communications/CommTeamDash';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import ProfessionalEmail from '@/components/communications/ProfessionalEmail';
@@ -95,12 +97,13 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
               <CommWeatherBar />
-              <div className="space-y-2.5">
-                <CommTaskDash />
-                <CommTeamDash />
-                <TaskLeaderboard />
-              </div>
+              <CommDailyInsight />
+              <CommTaskDash />
+              <CommSharedTodo />
+              <CommTeamDash />
+              <TeamBanter />
               <CommunicationNavigation tabs={shown} />
+              <TaskLeaderboard />
             </div>
           )}
           title="Communication Centre"
