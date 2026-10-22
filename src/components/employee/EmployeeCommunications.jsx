@@ -40,7 +40,8 @@ const TABS = [
 export default function EmployeeCommunications({ embedded = false }) {
   const [view, setView] = useState('feed');
   return (
-    <div className="comm-centre space-y-1.5">
+    <div className="comm-centre space-y-2.5">
+      {!embedded && <CommDailyInsight />}
       <Tabs value={view} onValueChange={setView}>
         <ModuleShell
           embedded={embedded}
@@ -51,21 +52,20 @@ export default function EmployeeCommunications({ embedded = false }) {
           tabs={!embedded && (
             <div className="space-y-3">
               <CommWeatherBar />
-              <CommTaskDash />
               <CommAuditBar />
               <AboutCommunication />
-              <CommDailyInsight />
-              <TeamBanter />
+              <CommHintsTips />
               <CommunicateWell />
-              <div className="mt-2"><CommHintsTips /></div>
-              <CommTeamDash compact />
+              <CommTaskDash />
+              <CommTeamDash />
               <RosterMiniOverview />
-              <CommSharedTodo compact />
+              <CommSharedTodo />
               <CommunicationNavigation tabs={TABS} />
             </div>
           )}
         >
           <TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent>
+          {!embedded && <TeamBanter />}
           {!embedded && <TaskLeaderboard compact />}
           {!embedded && <AutomatedAlertSystem selfOnly />}
         </ModuleShell>

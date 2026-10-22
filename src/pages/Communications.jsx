@@ -88,7 +88,8 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
     : TABS;
 
   return (
-    <div className="comm-centre space-y-1.5">
+    <div className="comm-centre space-y-2.5">
+      {!(embedded || participantOnly) && <CommDailyInsight />}
       <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
@@ -101,16 +102,14 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-3">
               <CommWeatherBar />
-              <CommTaskDash />
               <CommAuditBar />
               <AboutCommunication />
-              <CommDailyInsight />
-              <TeamBanter />
+              <CommHintsTips />
               <CommunicateWell />
-              <div className="mt-2"><CommHintsTips /></div>
-              <CommTeamDash compact />
+              <CommTaskDash />
+              <CommTeamDash />
               <RosterMiniOverview />
-              <CommSharedTodo compact />
+              <CommSharedTodo />
               <CommunicationNavigation tabs={shown} />
             </div>
           )}
@@ -142,6 +141,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
+        {!(embedded || participantOnly) && <TeamBanter />}
         {!(embedded || participantOnly) && <TaskLeaderboard compact />}
         {!(embedded || participantOnly) && <AutomatedAlertSystem selfOnly={employeeSelf} />}
         </ModuleShell>
