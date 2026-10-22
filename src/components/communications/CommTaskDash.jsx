@@ -31,8 +31,8 @@ export default function CommTaskDash() {
         base44.entities.TodoTask.count({ status: 'Completed' }),
         base44.entities.TodoTask.filter(
           { status: { $in: ['Pending', 'Open', 'In Progress', 'Pending Approval'] }, due_date: { $ne: null } },
-          { sort: 'due_date', limit: 6 }
-        ).then((p) => p.items.filter((t) => t.due_date >= today).slice(0, 3)),
+          { sort: 'due_date', limit: 4 }
+        ).then((p) => p.items.filter((t) => t.due_date >= today).slice(0, 2)),
       ]);
       if (!alive) return;
       setStats({ open, progress, overdue, done });
@@ -43,13 +43,13 @@ export default function CommTaskDash() {
 
   return (
     <section className="overflow-hidden rounded-2xl border-2 border-black bg-white shadow-lg">
-      <div className="flex items-center gap-3 px-4 py-3" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
-          <ClipboardList className="h-5 w-5 text-white" />
+      <div className="flex items-center gap-2.5 px-3 py-2" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+        <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
+          <ClipboardList className="h-4 w-4 text-white" />
         </span>
         <div>
-          <h3 className="text-base font-bold">Task Dashboard</h3>
-          <p className="text-[11px] font-semibold text-white/85">Live team to-do status at a glance</p>
+          <h3 className="text-sm font-bold">Task Dashboard</h3>
+          <p className="text-[10px] font-semibold text-white/85">Live team to-do status at a glance</p>
         </div>
       </div>
 
@@ -59,17 +59,17 @@ export default function CommTaskDash() {
         </div>
       ) : (
         <div className="space-y-2.5 p-3">
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
             {tiles.map(({ key, label, from, to, Icon, statuses }) => (
               <div key={key} className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
-                <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${from}, ${to})` }} />
-                <div className="flex items-center gap-2.5 p-2.5">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white shadow" style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}>
-                    <Icon className="h-5 w-5" />
+                <div className="h-1" style={{ background: `linear-gradient(90deg, ${from}, ${to})` }} />
+                <div className="flex items-center gap-2 p-2">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white shadow" style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}>
+                    <Icon className="h-3.5 w-3.5" />
                   </span>
                   <div>
-                    <p className="text-xl font-bold leading-6">{stats[key]}</p>
-                    <p className="text-[11px] font-semibold text-muted-foreground">{label}</p>
+                    <p className="text-base font-bold leading-5">{stats[key]}</p>
+                    <p className="text-[10px] font-semibold text-muted-foreground">{label}</p>
                   </div>
                 </div>
               </div>

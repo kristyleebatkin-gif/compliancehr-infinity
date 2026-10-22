@@ -37,22 +37,19 @@ import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 
 const TABS = [
-  ['alerts', Siren, 'Alerts'],
-  ['logs', History, 'Alert Logs'],
+  ['task-dashboard', LayoutDashboard, 'Tasks'],
+  ['todo', ListTodo, 'To-Do Board'],
+  ['guide', Lightbulb, 'Tips & Teamwork'],
+  ['templates', BookMarked, 'Templates'],
+  ['banter', MessagesSquare, 'Team Banter'],
+  ['feed', Radio, 'Team Feed'],
+  ['shoutouts', Sparkles, 'Shoutouts'],
+  ['video', Video, 'Video Calls'],
+  ['complaints', MessagesSquare, 'Complaints'],
+  ['ai', Sparkles, 'AI Compose'],
   ['diary', MessagesSquare, 'Diary'],
   ['inbox', InboxIcon, 'Inbox'],
-  ['templates', BookMarked, 'Templates'],
   ['email', Mail, 'Send Email'],
-  ['bulk', Megaphone, 'Bulk Messages'],
-  ['banter', MessagesSquare, 'Team Banter'],
-  ['shoutouts', Sparkles, 'Shoutouts'],
-  ['feed', Radio, 'Team Feed'],
-  ['complaints', MessagesSquare, 'Complaints'],
-  ['todo', ListTodo, 'To-Do Board'],
-  ['task-dashboard', LayoutDashboard, 'Task Dashboard'],
-  ['guide', Lightbulb, 'Tips & Teamwork'],
-  ['video', Video, 'Video Calls'],
-  ['ai', Sparkles, 'AI Compose'],
   ['shift-notes', NotebookPen, 'Shift Notes'],
   ['employee-log', Briefcase, 'Employee Log'],
 ];
@@ -97,9 +94,9 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           embedded={embedded || participantOnly}
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
-              <RosterMiniOverview />
               <CommDailyInsight />
               <CommWeatherBar />
+              <RosterMiniOverview />
               <CommTaskDash />
               <TeamBanter />
               <CommSharedTodo compact />

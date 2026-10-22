@@ -74,9 +74,9 @@ export default function AutomatedLogs() {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <div className="mb-1 flex items-center gap-2 text-sm font-semibold"><History className="h-4 w-4 text-brand" />Automated alert log</div>
-        <p className="text-xs text-muted-foreground">A complete history of every automated compliance reminder and email alert the system sends to staff, including task expiry reminders and document expiry alerts.</p>
+      <div className="rounded-2xl border border-blue-900 bg-[#1e3a8a] p-4 text-white shadow-lg">
+        <div className="mb-1 flex items-center gap-2 text-sm font-bold text-white"><History className="h-4 w-4 text-white" />Automated alert log</div>
+        <p className="text-xs text-white/75">A complete history of every automated compliance reminder and email alert the system sends to staff, including task expiry reminders and document expiry alerts.</p>
       </div>
 
       <div className="grid grid-cols-3 gap-3">

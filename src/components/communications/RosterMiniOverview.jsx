@@ -45,7 +45,7 @@ export default function RosterMiniOverview() {
           <CalendarRange className="h-4 w-4 text-white" />
         </span>
         <div>
-          <h3 className="text-sm font-bold">Roster Overview</h3>
+          <h3 className="text-sm font-bold">Roster Dashboard</h3>
           <p className="text-[10px] font-semibold text-white/85">Today's shifts and the week ahead</p>
         </div>
       </div>

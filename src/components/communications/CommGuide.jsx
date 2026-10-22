@@ -103,10 +103,14 @@ function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' 
 export default function CommGuide() {
   return (
     <div className="space-y-3">
+      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
       <div className="rounded-2xl border border-border/60 p-3" style={{ background: `linear-gradient(110deg, ${COLOUR}14, #7c3aed14, #f472b614)` }}>
         <h2 className="font-heading text-lg font-bold text-[#0891b2]">Communicate well, work as one team</h2>
         <p className="text-xs text-muted-foreground">Practical hints, teamwork habits and the communication basics behind safe, high-quality supports.</p>
       </div>
+      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" />
+      <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />
+      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
       <Card className="shadow-panel" style={{ borderTop: '4px solid #0d9488' }}>
         <CardContent className="p-3">
           <div className="flex items-center gap-2">
@@ -119,10 +123,6 @@ export default function CommGuide() {
           </div>
         </CardContent>
       </Card>
-      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
-      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" />
-      <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />
-      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
     </div>
   );
 }
