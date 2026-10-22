@@ -90,24 +90,25 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
     : TABS;
 
   return (
-    <div className="comm-centre space-y-2.5">
+    <div className="comm-centre space-y-1.5">
       <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
               <CommWeatherBar />
+              <CommDailyInsight />
               <AboutCommunication />
               <TeamBanter />
-              <CommTeamDash compact />
-              <CommDailyInsight />
-              <CommTaskDash />
               <CommunicateWell />
+              <CommTeamDash compact />
+              <CommTaskDash />
+              <div className="mt-2"><CommHintsTips /></div>
               <RosterMiniOverview />
               <CommSharedTodo compact />
-              <CommHintsTips />
-              <CommunicationNavigation tabs={shown} />
               <TaskLeaderboard />
+              <TeamFeed />
+              <CommunicationNavigation tabs={shown} />
             </div>
           )}
           title="Communication Centre"

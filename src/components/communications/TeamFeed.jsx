@@ -38,11 +38,11 @@ export default function TeamFeed() {
     return () => { live = false; unsubShout(); unsubAnn(); };
   }, []);
 
-  const shown = (items || []).filter((i) => filter === 'All' || i._kind === filter).slice(0, 6);
+  const shown = (items || []).filter((i) => filter === 'All' || i._kind === filter).slice(0, 2);
 
   return (
     <Card>
-      <CardContent className="p-3">
+      <CardContent className="p-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="rounded-lg bg-cyan-500/10 p-2"><Radio className="h-4 w-4 text-cyan-600" /></div>

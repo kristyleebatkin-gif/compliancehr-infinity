@@ -500,6 +500,12 @@
 
 /* Communications Centre header (owner request): taller, with the editorial
    brand font restored for the heading. Scoped to the Communication Centre only. */
+/* Owner request: the header colour runs the entire width, edge to edge. */
+.comm-centre .app-page-header {
+  margin-left: -1cm;
+  margin-right: -1cm;
+  border-radius: 0;
+}
 .comm-centre .app-page-header {
   height: 4cm !important;
   min-height: 4cm !important;
