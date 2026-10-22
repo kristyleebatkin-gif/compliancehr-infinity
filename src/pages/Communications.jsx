@@ -3,8 +3,7 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb, Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+  import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -64,7 +63,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const participantOnly = role === ROLES.PARTICIPANT;
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
-  const [tilesOpen, setTilesOpen] = useState(true);
 
   // Standalone view for a restricted user: resolve their own profile so the
   // diary shows only entries about them.
@@ -91,19 +89,14 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   return (
     <div className="comm-centre space-y-4">
       <Tabs defaultValue="feed">
-        {!(embedded || participantOnly) && (
-          <div className="space-y-2.5">
-            <CommWeatherBar />
-            <div className="flex items-center justify-end">
-              <Button variant="outline" size="sm" onClick={() => setTilesOpen(v => !v)}>
-                {tilesOpen ? <EyeOff /> : <Eye />}{tilesOpen ? 'Hide dashboards' : 'Show dashboards'}
-              </Button>
-            </div>
-            {tilesOpen && <CommunicationNavigation tabs={shown} />}
-          </div>
-        )}
         <ModuleShell
           embedded={embedded || participantOnly}
+          tabs={!(embedded || participantOnly) && (
+            <div className="space-y-2.5">
+              <CommWeatherBar />
+              <CommunicationNavigation tabs={shown} />
+            </div>
+          )}
           title="Communication Centre"
           subtitle={employeeSelf
             ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
