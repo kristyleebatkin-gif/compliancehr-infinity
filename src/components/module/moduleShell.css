@@ -1,41 +1,51 @@
-/* Standard module layout: buttons, tabs, tiles and dashboards in the module's full colour, black text, thin white border, 0.5cm apart. */
+/* Standard module layout: colourful Communication Centre sub-section cards, top accent bars, soft tinted gradients. */
 .module-shell-actions {
-  gap: 0.5cm !important;
+  gap: 0.5rem !important;
 }
 .module-shell-actions :is(button, a):not([role="tab"]) {
-  background: var(--module-colour);
-  border: 1px solid #fff;
-  color: #000;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--module-colour) 18%, white), color-mix(in srgb, var(--module-colour) 8%, white));
+  border: 1px solid color-mix(in srgb, var(--module-colour) 38%, white);
+  color: hsl(var(--foreground));
   font-weight: 700;
+  box-shadow: 0 4px 12px -6px color-mix(in srgb, var(--module-colour) 45%, transparent);
 }
 .module-shell-actions :is(button, a):not([role="tab"]):hover {
-  filter: brightness(1.1);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--module-colour) 26%, white), color-mix(in srgb, var(--module-colour) 14%, white));
+  transform: translateY(-1px);
 }
 .module-shell-tiles {
-  gap: 0.5cm !important;
+  gap: 0.75rem !important;
 }
 .module-shell-tiles > * {
-  background: var(--module-colour);
-  border: 1px solid #fff;
-  color: #000;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, color-mix(in srgb, var(--module-colour) 16%, white) 0%, color-mix(in srgb, var(--module-colour) 6%, white) 48%, hsl(var(--card)) 90%);
+  border: 1px solid color-mix(in srgb, var(--module-colour) 32%, white);
+  border-top: 4px solid var(--module-colour);
+  color: hsl(var(--foreground));
+  box-shadow: 0 10px 26px -18px color-mix(in srgb, var(--module-colour) 55%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.module-shell-tiles > *:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--module-colour) 65%, transparent);
 }
 
-/* Audit Checklist + Audit Report: top right, full module colour, black text, white border. */
+/* Audit Checklist + Audit Report: top right, vibrant blue and pink pills with crisp white text. */
 .module-audit-buttons {
-  gap: 0.5cm !important;
+  gap: 0.5rem !important;
 }
 .module-audit-buttons > button {
-  background: var(--module-colour) !important;
-  color: #000 !important;
-  border: 2px solid #fff !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--module-colour) 40%, white);
+  color: #ffffff !important;
+  border: none !important;
   font-weight: 700;
+  box-shadow: 0 4px 12px -4px rgba(37, 99, 235, 0.35);
 }
-.module-audit-buttons > button:nth-child(1) { background: #3b82f6 !important; }
-.module-audit-buttons > button:nth-child(2) { background: #ec4899 !important; }
+.module-audit-buttons > button:nth-child(1) { background: linear-gradient(135deg, #2563eb, #4f46e5) !important; }
+.module-audit-buttons > button:nth-child(2) { background: linear-gradient(135deg, #db2777, #ec4899) !important; }
 .module-audit-buttons > button:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 .module-audit-buttons > button svg {
-  color: #000 !important;
+  color: #ffffff !important;
 }

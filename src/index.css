@@ -419,42 +419,76 @@
     }
     .compact-tabs [role="tab"] svg, .compact-module [role="tab"] svg { width: 0.75rem; height: 0.75rem; }
   }
-  /* Shared page and section headers retain the app's blue-purple-pink branding. */
-  .app-readable .app-page-header { background: var(--header-gradient) !important; }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header),
+  /* Shared page and section headers: merged blue-purple-pink gradient, circular pattern, borderless, crisp white text, generous modern spacing. */
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar),
   .app-readable .safety-workspace .dashboard-panel-header {
-    background: var(--header-gradient) !important;
-    color: hsl(var(--header-foreground)) !important;
-  }
-  .app-readable .dashboard-panel-header > .absolute { background: var(--header-gradient) !important; }
-  /* ===== LOCKED HEADER STANDARD — change only on explicit request from the app owner =====
-     Every module header: exactly 3cm tall, app gradient, black outer border, white text with a
-     black outline, standard body font (as Key Personnel), short professional description. */
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
-    box-sizing: border-box;
-    min-height: 3cm !important;
-    height: 3cm !important;
-    max-height: 3cm !important;
-    padding-top: .25rem !important;
-    padding-bottom: .25rem !important;
-    align-content: center;
+    position: relative;
     overflow: hidden;
-    color: #fff;
-    border: 2px solid #000 !important;
+    background: var(--header-gradient) !important;
+    color: #ffffff !important;
+    border: none !important;
     font-family: var(--font-body) !important;
   }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .gradient-brand) :is(h1, h2, h3, h4, p, span, button, a, svg) {
-    font-family: var(--font-body) !important;
-    color: #fff !important;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 3px rgba(0, 0, 0, 0.9) !important;
+  .app-readable .app-page-header {
+    box-sizing: border-box;
+    min-height: 4.75rem;
+    height: auto !important;
+    max-height: none !important;
+    padding: 1.125rem 1.375rem !important;
   }
-  .app-readable .app-page-header h1 { font-size: 1.5rem; font-weight: 700; line-height: 2rem; letter-spacing: -0.025em; }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
+    box-sizing: border-box;
+    min-height: 3rem;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0.75rem 1.125rem !important;
+  }
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar)::before {
+    content: '';
+    position: absolute;
+    left: -3.5rem;
+    bottom: -100%;
+    height: 220%;
+    width: 34%;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar)::after {
+    content: '';
+    position: absolute;
+    right: -2.5rem;
+    top: -65%;
+    height: 220%;
+    width: 14rem;
+    border-radius: 9999px;
+    border: 26px solid rgba(255, 255, 255, 0.11);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.14), transparent 68%);
+    pointer-events: none;
+  }
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar, .gradient-brand) :is(h1, h2, h3, h4, p, span, button, a, svg, [data-panel-title]) {
+    font-family: var(--font-body) !important;
+    color: #ffffff !important;
+    text-shadow: none !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app-readable .app-page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.95rem;
+    letter-spacing: -0.02em;
+  }
   .app-readable .app-page-header p {
-    font-size: 0.875rem; font-weight: 600; line-height: 1.25rem; margin-top: 0.125rem;
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.375rem;
+    margin-top: 0.25rem;
+    opacity: 0.95;
+    overflow: visible;
+    white-space: normal;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], button, span) {
-    color: hsl(var(--header-foreground)) !important;
+    color: #ffffff !important;
     opacity: 1;
     overflow-wrap: anywhere;
     white-space: normal;

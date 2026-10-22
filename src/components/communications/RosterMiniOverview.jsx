@@ -25,8 +25,8 @@ export default function RosterMiniOverview() {
   }, []);
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-black bg-white shadow-lg">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+    <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
+      <div className="comm-panel-bar relative flex items-center gap-2 px-3 py-2" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
         <CalendarRange className="h-4 w-4 text-white" />
         <h3 className="text-sm font-bold">Roster</h3>
         <span className="ml-auto text-[10px] font-semibold text-white/85">{roster ? `${roster.length} shift${roster.length === 1 ? '' : 's'} today` : 'Loading…'}</span>

@@ -37,8 +37,8 @@ export default function CommDailyInsight() {
   useEffect(() => { load(); }, []);
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-black bg-white shadow-lg">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+    <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
+      <div className="comm-panel-bar relative flex items-center gap-2 px-3 py-2" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
         <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
           <Sparkles className="h-4 w-4 text-white" />
         </span>

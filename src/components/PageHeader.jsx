@@ -8,16 +8,6 @@ import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
 
-/*
- * FROZEN: the owner has ordered that no header is changed. Do not edit this component or header styles
- * unless the owner explicitly asks for a header change.
- * LOCKED HEADER STANDARD — do not change without an explicit request from the app owner.
- * Every module header is: exactly 3cm tall, app gradient, black outer border, white text with a black outline,
- * the standard body font (same as Key Personnel), and a short professional description.
- * Every module bar below it always shows the live compliance tracker, Audit Checklist and Audit Report.
- * Sizing, colour, border and font are enforced in src/index.css (".app-page-header"); the show* props are
- * kept only so existing callers keep working — they no longer hide the tracker or the audit exports.
- */
 export default function PageHeader({ title, subtitle, action, icon: Icon = LayoutGrid, className, under, beforeAudit, afterAudit, compactActions = true, actionClassName, auditClassName }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
@@ -25,16 +15,18 @@ export default function PageHeader({ title, subtitle, action, icon: Icon = Layou
   return (
     <div className="space-y-2.5">
       <div
-        className={cn('app-page-header relative flex items-center overflow-hidden rounded-2xl px-4 shadow-lg', className)}
+        className={cn('app-page-header relative flex items-center overflow-hidden rounded-2xl px-5 py-4 shadow-lg', className)}
         style={{ background: 'var(--header-gradient)' }}
       >
-        <div className="relative flex min-w-0 w-full items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
-            <Icon className="h-5 w-5" />
+        <div className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full border-[28px] border-white/10" />
+        <div className="pointer-events-none absolute -bottom-16 right-24 h-36 w-36 rounded-full bg-white/10" />
+        <div className="relative flex min-w-0 w-full items-center gap-3.5">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
+            <Icon className="h-5 w-5 text-white" />
           </div>
           <div className="min-w-0 flex-1">
-            <h1>{title}</h1>
-            {description && <p className="line-clamp-2">{description}</p>}
+            <h1 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">{title}</h1>
+            {description && <p className="mt-1 text-sm font-medium leading-relaxed text-white/95">{description}</p>}
           </div>
         </div>
       </div>
@@ -53,7 +45,6 @@ export default function PageHeader({ title, subtitle, action, icon: Icon = Layou
     </div>
   );
 }
-
 
 // Row of controls rendered just below the header card (left-aligned by default).
 export function HeaderUnderRow({ children, className }) {

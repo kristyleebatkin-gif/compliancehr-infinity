@@ -120,7 +120,7 @@ export default function TaskLeaderboard() {
   };
 
   return (
-    <details className="task-competition">
+    <details className="task-competition" open>
       <summary>Task competition & leaderboard</summary>
       <div className="competition-content space-y-4">
       <div className="flex justify-end"><CompetitionSettingsDialog settings={settings} onSave={saveSettings} loading={settingsLoading} /></div>

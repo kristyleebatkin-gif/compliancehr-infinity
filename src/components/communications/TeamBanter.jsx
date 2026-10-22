@@ -71,7 +71,7 @@ export default function TeamBanter() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border-2 border-black bg-white p-2 shadow-lg">
+    <div className="flex flex-col rounded-2xl border border-border/60 bg-card p-3 shadow-panel">
       <div className="mb-2 flex items-center gap-2 text-sm font-bold">
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md">
           <MessagesSquare className="h-3.5 w-3.5" />
