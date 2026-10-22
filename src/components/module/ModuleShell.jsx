@@ -19,7 +19,7 @@ const WHITE_ROW = 'flex flex-wrap items-center gap-1.5 rounded-xl border border-
  *  Then   the module's tab content (`children`).
  * Put `tabs` (a <TabsList>) and `children` (<TabsContent>s) inside a <Tabs> root.
  */
-export default function ModuleShell({ embedded = false, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, insightAfterTiles = false, small, medium, large = [], children }) {
+export default function ModuleShell({ embedded = false, header, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, insightAfterTiles = false, small, medium, large = [], children }) {
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
@@ -39,13 +39,20 @@ export default function ModuleShell({ embedded = false, title, subtitle, icon, m
   if (embedded) return <div className="space-y-2.5">{tabs}{children}</div>;
   return (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
-      <PageHeader
-        auditClassName="module-audit-buttons ml-auto"
-        title={title}
-        subtitle={subtitle}
-        icon={icon}
-        under={rows}
-      />
+      {header ? (
+        <>
+          {header}
+          {rows}
+        </>
+      ) : (
+        <PageHeader
+          auditClassName="module-audit-buttons ml-auto"
+          title={title}
+          subtitle={subtitle}
+          icon={icon}
+          under={rows}
+        />
+      )}
       {children}
       {insightAfterTiles && insight}
       {insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
