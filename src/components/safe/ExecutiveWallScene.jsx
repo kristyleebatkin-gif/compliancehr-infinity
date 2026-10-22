@@ -13,7 +13,7 @@ const DEFAULT_SOFTWARE_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d
 
 function ExecutiveChairFrontLeftSvg() {
   return (
-    <svg viewBox="0 0 130 135" className="h-11 w-11 shrink-0" aria-label="Executive Chair Back Front Left">
+    <svg viewBox="0 0 130 135" className="h-8 w-8 shrink-0" aria-label="Executive Chair Back Front Left">
       <defs>
         <linearGradient id="chairBackSquished" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#2563eb" />
@@ -44,7 +44,7 @@ function ExecutiveChairFrontLeftSvg() {
 
 export function CouchNearFrontDoorSvg() {
   return (
-    <svg viewBox="0 0 250 110" className="h-12 w-28 shrink-0" aria-label="Reception Couch Near Front Door">
+    <svg viewBox="0 0 250 110" className="h-8 w-16 shrink-0" aria-label="Reception Couch Near Front Door">
       <defs>
         <linearGradient id="couchSquished" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#2563eb" />
@@ -77,7 +77,7 @@ export function CouchNearFrontDoorSvg() {
 
 export function OfficeTechTableSvg() {
   return (
-    <svg viewBox="0 0 280 115" className="h-14 w-36 shrink-0" aria-label="Table with Modern Speaker, iPhone and Computer">
+    <svg viewBox="0 0 280 115" className="h-9 w-24 shrink-0" aria-label="Table with Modern Speaker, iPhone and Computer">
       <defs>
         <linearGradient id="techScreenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#2563eb" />
@@ -177,11 +177,11 @@ export function ComplianceHrPhotoFrame({ logoUrl, large = true, badgeLabel = '' 
 export function SmallSafeVaultBar() {
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-pink-400 px-3 py-1.5 text-white shadow-sm"
+      className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-pink-400 px-2 py-1 text-white shadow-sm"
       style={{ background: SQUISHED_GRADIENT }}
     >
-      <div className="flex items-center gap-2">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow-sm">
+      <div className="flex items-center gap-1.5 min-w-0">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5 shadow-sm">
           <Image
             src={DEFAULT_SOFTWARE_LOGO}
             alt="ComplianceHR Infinity"
@@ -189,27 +189,24 @@ export function SmallSafeVaultBar() {
             className="h-full w-full object-contain"
           />
         </span>
-        <div>
-          <div className="text-[10px] font-extrabold text-white">
-            ComplianceHR Infinity Smart Vault · Under Inbox &amp; Beside Employee Log
-          </div>
-          <div className="text-[9px] font-bold text-white/95">
-            Complete Control. Greater Confidence. Brighter Success
+        <div className="min-w-0">
+          <div className="truncate text-[9px] font-extrabold text-white">
+            ComplianceHR Infinity Smart Vault
           </div>
         </div>
       </div>
       <div className="flex items-center gap-1">
         <Link
           to="/company-safe"
-          className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-[9px] font-extrabold text-blue-950 hover:bg-pink-50"
+          className="inline-flex items-center gap-0.5 rounded bg-white px-1.5 py-0.5 text-[8px] font-extrabold text-blue-950 hover:bg-pink-50"
         >
-          <Lock className="h-2.5 w-2.5 text-pink-600" /> Company Safe
+          <Lock className="h-2 w-2 text-pink-600" /> Safe
         </Link>
         <Link
           to="/documents"
-          className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-[9px] font-extrabold text-purple-950 hover:bg-pink-50"
+          className="inline-flex items-center gap-0.5 rounded bg-white px-1.5 py-0.5 text-[8px] font-extrabold text-purple-950 hover:bg-pink-50"
         >
-          <FolderLock className="h-2.5 w-2.5 text-purple-700" /> Document Vault
+          <FolderLock className="h-2 w-2 text-purple-700" /> Vault
         </Link>
       </div>
     </div>
@@ -226,35 +223,35 @@ function CommunicationCentreAboveSilverScreen() {
   ];
 
   return (
-    <div className="rounded-xl border-2 border-blue-400 bg-white p-2 space-y-1.5">
+    <div className="rounded-xl border-2 border-blue-400 bg-white p-1.5 space-y-1">
       {/* Squashed Communication Centre Header */}
       <div
-        className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
+        className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
         style={{ background: SQUISHED_GRADIENT }}
       >
-        <div className="flex items-center gap-1.5">
-          <MessagesSquare className="h-3.5 w-3.5 text-white" />
-          <span className="text-[11px] font-extrabold text-white">
-            Communication Centre (Above Silver Screen)
+        <div className="flex items-center gap-1">
+          <MessagesSquare className="h-3 w-3 text-white" />
+          <span className="text-[9.5px] font-extrabold text-white">
+            Communication Centre
           </span>
         </div>
         <Link
           to="/communications"
-          className="rounded bg-white px-2 py-0.5 text-[9px] font-extrabold text-purple-900 hover:bg-pink-50"
+          className="rounded bg-white px-1.5 py-0 text-[8px] font-extrabold text-purple-900 hover:bg-pink-50"
         >
-          Open Centre
+          Open
         </Link>
       </div>
 
       {/* Quick Comm Links + Smart Vault in the space right beside Employee Log */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1">
+      <div className="grid grid-cols-3 gap-1">
         {quickLinks.map((item) => {
           const Icon = item.icon;
           return (
             <Link
               key={item.label}
               to={item.to}
-              className="flex items-center gap-1 rounded-md border px-1.5 py-1 text-[9px] font-extrabold text-white"
+              className="flex items-center gap-1 rounded border px-1 py-0.5 text-[8px] font-extrabold text-white"
               style={{ background: item.color, borderColor: item.color }}
             >
               <Icon className="h-2.5 w-2.5 shrink-0 text-white" />
@@ -265,11 +262,11 @@ function CommunicationCentreAboveSilverScreen() {
         {/* Smart Vault right beside Employee Log with ComplianceHR Infinity Logo & Colours */}
         <Link
           to="/company-safe"
-          className="flex items-center gap-1 rounded-md border-2 border-pink-400 px-1.5 py-1 text-[9px] font-extrabold text-white shadow-sm"
+          className="flex items-center gap-1 rounded border border-pink-400 px-1 py-0.5 text-[8px] font-extrabold text-white shadow-sm"
           style={{ background: SQUISHED_GRADIENT }}
           title="ComplianceHR Infinity Smart Vault"
         >
-          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+          <span className="flex h-3 w-3 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
             <Image
               src={DEFAULT_SOFTWARE_LOGO}
               alt="ComplianceHR Infinity"
@@ -287,9 +284,12 @@ function CommunicationCentreAboveSilverScreen() {
   );
 }
 
-export default function ExecutiveWallScene({ logoUrl, showRosterAbove = true }) {
+export default function ExecutiveWallScene({
+  logoUrl,
+  companyName = 'ComplianceHR Infinity',
+  showRosterAbove = true,
+}) {
   const [now, setNow] = useState(() => new Date());
-  const [middleTab, setMiddleTab] = useState('all'); // 'left' | 'all' | 'right'
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
@@ -312,128 +312,45 @@ export default function ExecutiveWallScene({ logoUrl, showRosterAbove = true }) 
     year: 'numeric',
   });
 
+  const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
+
   return (
     /* Solid opaque white blockout background — zero background bleed */
-    <div className="relative overflow-hidden rounded-2xl border-2 border-purple-500 bg-white p-2.5 shadow-md space-y-2">
-      {/* 1. ROSTER FITTED ABOVE */}
-      {showRosterAbove && <RosterMiniOverview />}
-
-      {/* 2. TOP 3-TAB BAR WITH MODULES IN THE MIDDLE TAB */}
-      <div className="grid grid-cols-3 gap-1.5 rounded-xl border-2 border-purple-300 bg-white p-1">
-        <button
-          type="button"
-          onClick={() => setMiddleTab('left')}
-          className={`flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[10px] sm:text-xs font-extrabold transition-all ${
-            middleTab === 'left'
-              ? 'text-white shadow-sm'
-              : 'border border-blue-200 bg-blue-50 text-blue-950 hover:bg-blue-100'
-          }`}
-          style={middleTab === 'left' ? { background: '#2563eb' } : undefined}
-        >
-          <span>1. Left Office · Logo Frame &amp; Couch</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setMiddleTab('all')}
-          className={`flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[10px] sm:text-xs font-extrabold transition-all ${
-            middleTab === 'all'
-              ? 'text-white shadow-sm'
-              : 'border border-purple-200 bg-purple-50 text-purple-950 hover:bg-purple-100'
-          }`}
-          style={middleTab === 'all' ? { background: SQUISHED_GRADIENT } : undefined}
-        >
-          <LayoutGrid className="h-3.5 w-3.5 shrink-0" />
-          <span>2. Middle Tab · All {MODULE_DIRECTORY.length} Modules (Full Office View)</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setMiddleTab('right')}
-          className={`flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[10px] sm:text-xs font-extrabold transition-all ${
-            middleTab === 'right'
-              ? 'text-white shadow-sm'
-              : 'border border-pink-200 bg-pink-50 text-pink-950 hover:bg-pink-100'
-          }`}
-          style={middleTab === 'right' ? { background: '#ec4899' } : undefined}
-        >
-          <span>3. Other Side · Comm Centre &amp; Silver Screen</span>
-        </button>
-      </div>
-
-      {/* 3. THREE-PART OFFICE LAYOUT: Left Side | Middle Tab (All Modules Fitting Well) | Other Side (Comm Centre Above Silver Screen) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch bg-white">
-        {/* LEFT SIDE OF OFFICE (4 cols) */}
-        {(middleTab === 'all' || middleTab === 'left') && (
+    <div className="relative overflow-hidden rounded-2xl border-2 border-purple-500 bg-white p-2 shadow-md">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch bg-white">
+        {/* MIDDLE TAB UNDER BUSINESS NAME: BUSINESS NAME HEADER + ALL 45 MODULES SQUISHED TO FIT (7 cols) */}
+        <div className="md:col-span-7 flex flex-col justify-between gap-1.5 rounded-xl border-2 border-purple-500 bg-white p-1.5">
+          {/* Business Name & Picture Frame Header at Top of Middle Tab */}
           <div
-            className={`${
-              middleTab === 'left' ? 'lg:col-span-12' : 'lg:col-span-3'
-            } flex flex-col justify-between gap-2 rounded-xl border-2 border-blue-400 bg-white p-2`}
-          >
-            <ComplianceHrPhotoFrame
-              logoUrl={logoUrl}
-              large={true}
-              badgeLabel="Left Corner Picture Frame"
-            />
-
-            {/* Ordered Software & Developer Details */}
-            <div className="rounded-xl border border-pink-300 bg-pink-50 px-2.5 py-1.5 space-y-0.5 text-[10px] leading-snug">
-              <div className="font-extrabold text-blue-950">
-                Software: ComplianceHR Infinity
-              </div>
-              <div className="font-extrabold text-violet-900">
-                Complete Control. Greater Confidence.
-              </div>
-              <div className="font-extrabold text-pink-700">
-                Brighter Success
-              </div>
-              <div className="pt-0.5 font-extrabold text-blue-950">
-                Developer: Kristy Lee Whelan
-              </div>
-              <div className="font-extrabold text-violet-800 break-all">
-                Email: kristyleebatkin@live.com.au
-              </div>
-            </div>
-
-            {/* Front-Left Chair Back + Couch Near Front Door */}
-            <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-blue-300 bg-blue-50 p-1.5">
-              <div className="flex items-center gap-1 rounded-lg bg-white p-1">
-                <ExecutiveChairFrontLeftSvg />
-                <div className="min-w-0">
-                  <div className="text-[8px] font-extrabold uppercase text-blue-800">Front Left</div>
-                  <div className="text-[9px] font-extrabold leading-tight text-blue-950">Chair Back</div>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center justify-center rounded-lg bg-white p-1">
-                <CouchNearFrontDoorSvg />
-                <div className="text-[8px] font-extrabold text-pink-800 leading-none">
-                  Couch &amp; Front Door
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* MIDDLE TAB: ALL 45 MODULES FITTING WELL (5 cols) */}
-        <div
-          className={`${
-            middleTab === 'all' ? 'lg:col-span-5' : 'lg:col-span-12'
-          } flex flex-col justify-between rounded-xl border-2 border-purple-500 bg-white p-2`}
-        >
-          <div
-            className="mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
+            className="flex flex-wrap items-center justify-between gap-2 rounded-xl p-1.5 text-white shadow-sm ring-2 ring-amber-300"
             style={{ background: SQUISHED_GRADIENT }}
           >
-            <span className="inline-flex items-center gap-1 text-[11px] font-extrabold">
-              <LayoutGrid className="h-3.5 w-3.5" /> Middle Tab · All {MODULE_DIRECTORY.length} Modules
-            </span>
-            <span className="text-[9px] font-extrabold uppercase tracking-wider text-white">
-              Click any module
-            </span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex h-10 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border-2 border-amber-300 bg-white p-0.5 shadow-sm">
+                <Image
+                  src={frameSrc}
+                  alt="ComplianceHR Infinity"
+                  fittingType="fit"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <div className="min-w-0">
+                <div className="truncate text-xs sm:text-sm font-extrabold tracking-tight text-white">
+                  {companyName || 'ComplianceHR Infinity'}
+                </div>
+                <div className="truncate text-[9px] font-extrabold text-white/95">
+                  Complete Control. Greater Confidence. Brighter Success.
+                </div>
+              </div>
+            </div>
+            <div className="rounded-lg bg-white/95 px-2 py-0.5 text-right text-[8px] font-extrabold leading-tight text-blue-950">
+              <div>Developer: Kristy Lee Whelan</div>
+              <div className="text-violet-800">kristyleebatkin@live.com.au</div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+          {/* Squished 45 Modules Grid Directly Under Business Name */}
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-1">
             {MODULE_DIRECTORY.map((mod) => {
               const Icon = mod.icon;
               const colour = moduleKeyColour(mod.key);
@@ -441,20 +358,20 @@ export default function ExecutiveWallScene({ logoUrl, showRosterAbove = true }) 
                 <Link
                   key={mod.key}
                   to={mod.path}
-                  className="flex items-center gap-1.5 rounded-lg border bg-white px-2 py-1 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                  className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
                   style={{
                     borderColor: colour,
-                    borderLeftWidth: '4px',
+                    borderLeftWidth: '3px',
                   }}
                   title={mod.label}
                 >
                   <span
-                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
+                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
                     style={{ background: colour }}
                   >
-                    <Icon className="h-2.5 w-2.5" />
+                    <Icon className="h-2 w-2" />
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-[9.5px] font-extrabold text-blue-950 leading-tight">
+                  <span className="min-w-0 flex-1 truncate text-[8px] font-extrabold text-blue-950 leading-tight">
                     {mod.label}
                   </span>
                 </Link>
@@ -463,48 +380,58 @@ export default function ExecutiveWallScene({ logoUrl, showRosterAbove = true }) 
           </div>
         </div>
 
-        {/* OTHER SIDE OF OFFICE (RIGHT SIDE, 4 cols): Communication Centre Above + Silver Screen Below + Table with Speaker, iPhone & Computer */}
-        {(middleTab === 'all' || middleTab === 'right') && (
-          <div
-            className={`${
-              middleTab === 'right' ? 'lg:col-span-12' : 'lg:col-span-4'
-            } flex flex-col justify-between gap-2 rounded-xl border-2 border-pink-400 bg-white p-2`}
-          >
-            {/* Communication Centre ABOVE Silver Screen */}
+        {/* OTHER SIDE OF THE OFFICE (5 cols):
+            Squished Communication Centre & Today's Roster Overview on top,
+            Squished Silver Screen directly underneath,
+            plus Office Furniture & Tech placed cleanly on the other side */}
+        <div className="md:col-span-5 flex flex-col justify-between gap-1.5 rounded-xl border-2 border-pink-400 bg-white p-1.5">
+          {/* 1. Squished Today's Roster Overview + Communication Centre on the other side of the office */}
+          <div className="grid grid-cols-1 gap-1">
+            {showRosterAbove && <RosterMiniOverview />}
             <CommunicationCentreAboveSilverScreen />
+          </div>
 
-            {/* Silver Screen on Other Side of Office: Live Weather on One Half + NDIS News & Updates on Other Half */}
-            <SilverScreenSplit />
+          {/* 2. Squished Silver Screen directly UNDER Communication Centre & Roster on the other side */}
+          <SilverScreenSplit />
 
-            {/* Office Table with Modern Speaker, iPhone & Computer + Smart Clock */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 rounded-xl border border-purple-300 bg-purple-50 p-1.5 items-center">
-              <div className="flex flex-col items-center justify-center rounded-lg bg-white p-1.5 text-center">
-                <div className="text-[8px] font-extrabold uppercase tracking-wider text-violet-900">
-                  Table · Speaker · iPhone · Computer
-                </div>
-                <OfficeTechTableSvg />
+          {/* 3. Office Elements placed on the other side to fit and look good */}
+          <div className="grid grid-cols-3 gap-1 rounded-lg border border-purple-300 bg-purple-50 p-1 items-center">
+            <div className="flex flex-col items-center justify-center rounded bg-white p-1 text-center">
+              <div className="text-[7px] font-extrabold uppercase tracking-wider text-violet-900">
+                Table · Speaker · iPhone · PC
               </div>
+              <OfficeTechTableSvg />
+            </div>
 
-              <div className="flex flex-col justify-between gap-1.5 rounded-lg bg-white p-2">
-                <div
-                  className="rounded-lg px-2 py-1 text-white"
-                  style={{ background: SQUISHED_GRADIENT }}
-                >
-                  <div className="inline-flex items-center gap-1 text-[9px] font-extrabold">
-                    <Clock className="h-3 w-3" /> Office Smart Clock
-                  </div>
-                  <div className="font-mono text-[10px] font-extrabold">
-                    {timeStr}
-                  </div>
-                  <div className="text-[9px] font-bold">{dateStr}</div>
+            <div className="flex flex-col items-center justify-center rounded bg-white p-1 text-center">
+              <div className="flex items-center justify-center gap-1">
+                <ExecutiveChairFrontLeftSvg />
+                <CouchNearFrontDoorSvg />
+              </div>
+              <div className="text-[7px] font-extrabold text-pink-800 leading-none">
+                Chair · Couch &amp; Front Door
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-between gap-1 rounded bg-white p-1">
+              <div
+                className="rounded px-1.5 py-0.5 text-white"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                <div className="inline-flex items-center gap-1 text-[7.5px] font-extrabold">
+                  <Clock className="h-2.5 w-2.5" /> Smart Clock
                 </div>
-                <div className="rounded-lg border border-pink-300 bg-pink-50 px-2 py-1 text-[9px] font-extrabold text-pink-900">
-                  3-Door Cupboard · Company Safe, NDIS &amp; HR, Certificates Locked
+                <div className="font-mono text-[8.5px] font-extrabold">
+                  {timeStr}
                 </div>
+                <div className="text-[7px] font-bold">{dateStr}</div>
+              </div>
+              <div className="rounded border border-pink-300 bg-pink-50 px-1 py-0.5 text-[7px] font-extrabold text-pink-900 leading-tight">
+                3-Door Safe Cupboard
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

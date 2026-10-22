@@ -114,79 +114,77 @@ export default function SilverScreenSplit() {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl p-1.5 shadow-lg"
+      className="relative overflow-hidden rounded-xl p-1 shadow-md"
       style={{
         background: 'linear-gradient(135deg, #cbd5e1 0%, #f8fafc 28%, #94a3b8 50%, #e2e8f0 75%, #64748b 100%)',
-        border: '3px solid #94a3b8',
+        border: '2px solid #94a3b8',
       }}
     >
-      {/* Silver Screen Top Bezel Bar */}
-      <div className="mb-1 flex items-center justify-between rounded-t-xl bg-gradient-to-r from-blue-700 via-purple-700 to-pink-600 px-2.5 py-1 text-white">
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider">
-          <Tv className="h-3 w-3" /> Silver Screen · Live Dual Display
+      {/* Squashed Silver Screen Top Bezel Bar */}
+      <div className="mb-1 flex items-center justify-between rounded-t-lg bg-gradient-to-r from-blue-700 via-purple-700 to-pink-600 px-2 py-0.5 text-white">
+        <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider">
+          <Tv className="h-2.5 w-2.5" /> Silver Screen · Weather &amp; NDIS News
         </span>
-        <span className="font-mono text-[10px] font-extrabold">{timeStr}</span>
+        <span className="font-mono text-[9px] font-extrabold">{timeStr}</span>
       </div>
 
-      {/* Two Halves Inside the Silver Screen */}
-      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+      {/* Two Squashed Halves Inside the Silver Screen */}
+      <div className="grid grid-cols-2 gap-1">
         {/* LEFT HALF: LIVE WEATHER UPDATES */}
         <div
-          className="flex flex-col justify-between rounded-xl border-2 border-sky-300 p-2 text-white shadow-inner"
+          className="flex flex-col justify-between rounded-lg border border-sky-300 p-1.5 text-white shadow-inner"
           style={{
             background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 60%, #7c3aed 100%)',
           }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-[9px] font-extrabold uppercase tracking-wider text-white/90">
-              Half 1 · Live Weather Updates
+            <span className="text-[8px] font-extrabold uppercase tracking-wider text-white/95">
+              Live Weather
             </span>
-            <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[8px] font-extrabold text-white">
+            <span className="rounded-full bg-white/20 px-1 py-0 text-[7px] font-extrabold text-white">
               LIVE
             </span>
           </div>
-          <div className="my-1 flex items-center gap-2.5">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/40">
-              <WeatherIcon className="h-6 w-6 text-amber-200" />
+          <div className="mt-0.5 flex items-center gap-1.5">
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/20 ring-1 ring-white/40">
+              <WeatherIcon className="h-3.5 w-3.5 text-amber-200" />
             </div>
             <div className="min-w-0">
-              <div className="text-base sm:text-lg font-extrabold leading-tight text-white">
-                {current ? `${Math.round(current.temperature_2m)}°C · ${weatherLabel}` : '27°C · Mostly Sunny'}
+              <div className="truncate text-[11px] font-extrabold leading-tight text-white">
+                {current ? `${Math.round(current.temperature_2m)}°C · ${weatherLabel}` : '27°C · Sunny'}
               </div>
-              <div className="text-[10px] font-bold text-white/90">
+              <div className="truncate text-[8px] font-bold text-white/90">
                 {weather?.daily
-                  ? `Min ${Math.round(weather.daily.temperature_2m_min[0])}°C / Max ${Math.round(weather.daily.temperature_2m_max[0])}°C · Wind ${Math.round(current?.wind_speed_10m || 12)} km/h`
-                  : 'North Queensland & Sydney Live Weather Feed'}
+                  ? `${Math.round(weather.daily.temperature_2m_min[0])}°–${Math.round(weather.daily.temperature_2m_max[0])}°C · ${Math.round(current?.wind_speed_10m || 12)}km/h`
+                  : 'Live Weather Feed'}
               </div>
             </div>
           </div>
         </div>
 
         {/* RIGHT HALF: LIVE NDIS NEWS & UPDATES */}
-        <div
-          className="flex flex-col justify-between rounded-xl border-2 border-pink-300 bg-white p-2 text-foreground shadow-inner"
-        >
-          <div className="mb-1 flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-purple-900">
-              <Newspaper className="h-3 w-3 text-pink-600" /> Half 2 · NDIS News &amp; Updates
+        <div className="flex flex-col justify-between rounded-lg border border-pink-300 bg-white p-1.5 text-foreground shadow-inner">
+          <div className="mb-0.5 flex items-center justify-between">
+            <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-purple-900">
+              <Newspaper className="h-2.5 w-2.5 text-pink-600" /> NDIS News
             </span>
             <Link
               to="/ndis-updates"
-              className="inline-flex items-center gap-0.5 rounded bg-pink-100 px-1.5 py-0.5 text-[8px] font-extrabold text-pink-800 hover:bg-pink-200"
+              className="inline-flex items-center gap-0.5 rounded bg-pink-100 px-1 py-0 text-[7.5px] font-extrabold text-pink-800 hover:bg-pink-200"
             >
-              Open <ExternalLink className="h-2.5 w-2.5" />
+              Open <ExternalLink className="h-2 w-2" />
             </Link>
           </div>
-          <ul className="space-y-1">
-            {ndisItems.map((item, idx) => (
+          <ul className="space-y-0.5">
+            {ndisItems.slice(0, 2).map((item, idx) => (
               <li
                 key={item.id || idx}
-                className="flex items-center justify-between gap-1.5 rounded-md border border-purple-200 bg-purple-50/60 px-2 py-0.5 text-[10px]"
+                className="flex items-center justify-between gap-1 rounded border border-purple-200 bg-purple-50/70 px-1 py-0 text-[8px]"
               >
                 <span className="truncate font-extrabold text-blue-950">
-                  {item.title || item.headline || 'NDIS Compliance Update'}
+                  {item.title || item.headline || 'NDIS Update'}
                 </span>
-                <span className="shrink-0 rounded bg-purple-200/80 px-1 py-0 text-[8px] font-extrabold text-purple-900">
+                <span className="shrink-0 rounded bg-purple-200/80 px-1 py-0 text-[7px] font-extrabold text-purple-900">
                   {item.category || 'NDIS'}
                 </span>
               </li>
