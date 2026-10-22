@@ -24,7 +24,7 @@ const beep = () => {
 
 const CONFIG = {
   alerts: { icon: Siren, label: 'Alerts', colour: '#dc2626', clear: 'All clear' },
-  logs: { icon: History, label: 'Alert Log', colour: '#ea580c', clear: 'Log quiet' },
+  logs: { icon: History, label: 'Alert Log', colour: '#1e3a8a', clear: 'Log quiet' },
 };
 
 // A light shown at the bottom corners of the communication board: it lights up

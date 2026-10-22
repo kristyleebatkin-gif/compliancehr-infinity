@@ -8,7 +8,7 @@ import '@/components/communications/communicationNavigation.css';
 // first modules on the main Dashboard (DashboardTile): gradient card, top
 // colour bar, gradient icon chip and a coloured "Open" pill.
 const COLOURS = {
-  alerts: '#dc2626', logs: '#ea580c', diary: '#0891b2', inbox: '#0ea5e9',
+  alerts: '#dc2626', logs: '#1e3a8a', diary: '#0891b2', inbox: '#0ea5e9',
   templates: '#c026d3', email: '#059669', bulk: '#f97316', banter: '#22c55e',
   shoutouts: '#ec4899', feed: '#0d9488', complaints: '#b91c1c', todo: '#ef4444',
   'task-dashboard': '#4338ca', guide: '#65a30d', video: '#6366f1', ai: '#8b5cf6',
@@ -30,7 +30,7 @@ export default function CommunicationNavigation({ tabs }) {
             <TabsTrigger
               key={value}
               value={value}
-              className="group relative flex min-h-16 min-w-0 flex-col items-center overflow-hidden rounded-xl border p-1.5 text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="group relative flex min-h-14 min-w-0 flex-col items-center overflow-hidden rounded-xl border p-1 text-center transition-all hover:-translate-y-1 hover:shadow-lg"
               style={{
                 borderColor: `${c}40`,
                 background: `linear-gradient(165deg, ${c}29 0%, ${c}12 46%, hsl(var(--card)) 82%)`,
@@ -42,8 +42,8 @@ export default function CommunicationNavigation({ tabs }) {
               <span className="relative mb-1 flex h-6 w-6 items-center justify-center rounded-lg text-white shadow-md transition-transform group-hover:rotate-3 group-hover:scale-105" style={{ background: `linear-gradient(135deg, ${c}, ${c}cc)` }}>
                 <Icon aria-hidden="true" className="h-3 w-3" />
               </span>
-              <span className="relative text-xs font-bold text-foreground">{label}</span>
-              <span className="relative mt-1 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold" style={{ color: c, backgroundColor: `${c}12` }}>Open</span>
+              <span className="relative text-[11px] font-bold text-foreground">{label}</span>
+              <span className="relative mt-0.5 inline-flex items-center rounded-full px-1.5 py-0 text-[9px] font-bold" style={{ color: c, backgroundColor: `${c}12` }}>Open</span>
             </TabsTrigger>
           );
         })}

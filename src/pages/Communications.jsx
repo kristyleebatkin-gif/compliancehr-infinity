@@ -95,16 +95,16 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           embedded={embedded || participantOnly}
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
-              <CommDailyInsight />
               <CommWeatherBar />
-              <RosterMiniOverview />
+              <CommDailyInsight />
               <CommTaskDash />
-              <TeamBanter />
-              <CommSharedTodo compact />
               <CommTeamDash compact />
+              <TeamBanter />
+              <RosterMiniOverview />
+              <CommSharedTodo compact />
+              <CommunicateWell />
               <CommunicationNavigation tabs={shown} />
               <CommGuide />
-              <CommunicateWell />
               <TaskLeaderboard />
             </div>
           )}
