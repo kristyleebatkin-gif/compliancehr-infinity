@@ -12,7 +12,8 @@ import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
 import TeamBanter from '@/components/communications/TeamBanter';
-import TodoBoard from '@/components/communications/TodoBoard';
+import CommTaskDash from '@/components/communications/CommTaskDash';
+import CommTeamDash from '@/components/communications/CommTeamDash';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import ProfessionalEmail from '@/components/communications/ProfessionalEmail';
 import BulkMessage from '@/components/communications/BulkMessage';
@@ -95,7 +96,8 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
             <div className="space-y-2.5">
               <CommWeatherBar />
               <div className="space-y-2.5">
-                <TodoBoard compact />
+                <CommTaskDash />
+                <CommTeamDash />
                 <TaskLeaderboard />
               </div>
               <CommunicationNavigation tabs={shown} />
@@ -125,10 +127,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="task-dashboard">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard compact /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="guide"><CommGuide /></TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
