@@ -181,6 +181,11 @@ export function LogoBrandedOfficeSecondScreen({
             </Link>
           </div>
         </div>
+        {activeModule.key === 'compliance' && (
+          <div className="mt-1.5">
+            <MasterComplianceAuditForms compact={true} />
+          </div>
+        )}
       </div>
     </div>
   );
