@@ -3,7 +3,7 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-  import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -16,6 +16,7 @@ import CommDailyInsight from '@/components/communications/CommDailyInsight';
 import CommTaskDash from '@/components/communications/CommTaskDash';
 import CommSharedTodo from '@/components/communications/CommSharedTodo';
 import CommTeamDash from '@/components/communications/CommTeamDash';
+import TodoBoard from '@/components/communications/TodoBoard';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import ProfessionalEmail from '@/components/communications/ProfessionalEmail';
 import BulkMessage from '@/components/communications/BulkMessage';
@@ -32,13 +33,12 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
-import CommunicationHeader from '@/components/communications/CommunicationHeader';
-import CommGuide from '@/components/communications/CommGuide';
-import { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
+import CommGuide, { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import CommAuditBar from '@/components/communications/CommAuditBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
+import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
   ['task-dashboard', LayoutDashboard, 'Tasks'],
@@ -58,8 +58,6 @@ const TABS = [
   ['employee-log', Briefcase, 'Employee Log'],
 ];
 
-// Employees only get alerts for them, their own shift notes and employee log,
-// send email, and the diary entries linked to them. Participants see their own diary only.
 const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log'];
 
 function Communications({ profile, profileKind, embedded = false } = {}) {
@@ -69,8 +67,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
 
-  // Standalone view for a restricted user: resolve their own profile so the
-  // diary shows only entries about them.
   useEffect(() => {
     if (!restricted || profile) return;
     let active = true;
@@ -96,19 +92,18 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
       <Tabs defaultValue="feed">
         <ModuleShell
           embedded={embedded || participantOnly}
-          header={!(embedded || participantOnly) && (
-            <CommunicationHeader
-              subtitle={employeeSelf
-                ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
-                : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
-            />
-          )}
+          title="Communication Centre"
+          subtitle={employeeSelf
+            ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
+            : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
+          icon={MessagesSquare}
+          moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
-            <div className="space-y-2.5">
-              <CommAuditBar />
-              <AboutCommunication />
+            <div className="space-y-3">
               <CommWeatherBar />
               <CommTaskDash />
+              <CommAuditBar />
+              <AboutCommunication />
               <CommDailyInsight />
               <TeamBanter />
               <CommunicateWell />
@@ -121,12 +116,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
               <CommunicationNavigation tabs={shown} />
             </div>
           )}
-          title="Communication Centre"
-          subtitle={employeeSelf
-            ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
-            : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
-          icon={MessagesSquare}
-          moduleKey="communications"
         >
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
@@ -145,10 +134,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="feed"><TeamFeed /></TabsContent>
         <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
         <TabsContent value="todo">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="task-dashboard">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TaskLeaderboard /></div>}
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TodoBoard compact /><TaskLeaderboard /></div>}
         </TabsContent>
         <TabsContent value="guide"><CommGuide /></TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>

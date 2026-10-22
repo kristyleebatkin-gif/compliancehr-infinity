@@ -10,6 +10,7 @@ import EmployeeComplaints from '@/components/employee/EmployeeComplaints';
 import EmployeePersonalRecords from '@/components/employee/EmployeePersonalRecords';
 import TemplateLibrary from '@/components/communications/TemplateLibrary';
 import AiCompose from '@/components/communications/AiCompose';
+import CommGuide from '@/components/communications/CommGuide';
 export default function EmployeeCommunicationContent({ view }) {
   if (view === 'alerts') return <EmployeeAlerts />;
   if (view === 'logs') return <EmployeeCommunicationList view="logs" />;
@@ -23,7 +24,8 @@ export default function EmployeeCommunicationContent({ view }) {
   if (view === 'shoutouts') return <EmployeeTeamMessages shoutout />;
   if (view === 'feed') return <div className="space-y-4"><h3 className="text-sm font-semibold">Team announcements</h3><EmployeeCommunicationList view="feed" /><h3 className="text-sm font-semibold">Team shoutouts</h3><EmployeeCommunicationList view="shoutouts" /></div>;
   if (view === 'complaints') return <EmployeeComplaints />;
-  if (view === 'todo') return <EmployeePersonalRecords view="tasks" />;
+  if (view === 'todo' || view === 'task-dashboard') return <EmployeePersonalRecords view="tasks" />;
+  if (view === 'guide') return <CommGuide />;
   if (view === 'shift-notes') return <EmployeeCommunicationNotes />;
   if (view === 'employee-log') return <EmployeeCommunicationNotes employeeLog />;
   if (view === 'ai') return <AiCompose employeeMode />;

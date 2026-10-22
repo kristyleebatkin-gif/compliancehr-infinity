@@ -1,14 +1,74 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
-import PageHeader from '@/components/PageHeader';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import EmployeeCommunicationContent from '@/components/employee/EmployeeCommunicationContent';
-const TABS = [['alerts', Siren, 'Alerts'], ['logs', History, 'Alert Logs'], ['diary', MessagesSquare, 'Diary'], ['inbox', Inbox, 'Inbox'], ['templates', BookMarked, 'Templates'], ['email', Mail, 'Send Email'], ['bulk', Megaphone, 'Bulk Messages'], ['banter', MessagesSquare, 'Team Banter'], ['shoutouts', Sparkles, 'Shoutouts'], ['feed', Radio, 'Team Feed'], ['complaints', MessagesSquare, 'Complaints'], ['todo', ListTodo, 'To-Do Board'], ['video', Video, 'Video Calls'], ['ai', Sparkles, 'AI Compose'], ['shift-notes', NotebookPen, 'Shift Notes'], ['employee-log', Briefcase, 'Employee Log']];
+import ModuleShell from '@/components/module/ModuleShell';
+import CommWeatherBar from '@/components/communications/CommWeatherBar';
+import CommTaskDash from '@/components/communications/CommTaskDash';
+import CommAuditBar from '@/components/communications/CommAuditBar';
+import TeamBanter from '@/components/communications/TeamBanter';
+import CommDailyInsight from '@/components/communications/CommDailyInsight';
+import CommunicateWell from '@/components/communications/CommunicateWell';
+import { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
+import CommTeamDash from '@/components/communications/CommTeamDash';
+import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
+import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
+import TeamFeed from '@/components/communications/TeamFeed';
+import CommSharedTodo from '@/components/communications/CommSharedTodo';
+import '@/components/communications/commCentreTheme.css';
+
+const TABS = [
+  ['task-dashboard', LayoutDashboard, 'Tasks'],
+  ['todo', ListTodo, 'To-Do Board'],
+  ['guide', Lightbulb, 'Tips & Teamwork'],
+  ['templates', BookMarked, 'Templates'],
+  ['banter', MessagesSquare, 'Team Banter'],
+  ['feed', Radio, 'Team Feed'],
+  ['shoutouts', Sparkles, 'Shoutouts'],
+  ['video', Video, 'Video Calls'],
+  ['complaints', MessagesSquare, 'Complaints'],
+  ['ai', Sparkles, 'AI Compose'],
+  ['diary', MessagesSquare, 'Diary'],
+  ['inbox', Inbox, 'Inbox'],
+  ['email', Mail, 'Send Email'],
+  ['shift-notes', NotebookPen, 'Shift Notes'],
+  ['employee-log', Briefcase, 'Employee Log'],
+];
+
 export default function EmployeeCommunications({ embedded = false }) {
-  const [view, setView] = useState('diary');
-  return <section className="space-y-4">
-    {!embedded && <PageHeader title="My Communication Centre" subtitle="Your personal communications, team updates and notes for approved participants." />}
-    <Tabs value={view} onValueChange={setView}><CommunicationNavigation tabs={TABS} /><TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent></Tabs>
-  </section>;
+  const [view, setView] = useState('feed');
+  return (
+    <div className="comm-centre space-y-1.5">
+      <Tabs value={view} onValueChange={setView}>
+        <ModuleShell
+          embedded={embedded}
+          title="My Communication Centre"
+          subtitle="Your personal communications, team updates, shift notes, and tasks."
+          icon={MessagesSquare}
+          moduleKey="communications"
+          tabs={!embedded && (
+            <div className="space-y-3">
+              <CommWeatherBar />
+              <CommTaskDash />
+              <CommAuditBar />
+              <AboutCommunication />
+              <CommDailyInsight />
+              <TeamBanter />
+              <CommunicateWell />
+              <div className="mt-2"><CommHintsTips /></div>
+              <CommTeamDash compact />
+              <RosterMiniOverview />
+              <TaskLeaderboard />
+              <TeamFeed />
+              <CommSharedTodo compact />
+              <CommunicationNavigation tabs={TABS} />
+            </div>
+          )}
+        >
+          <TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent>
+        </ModuleShell>
+      </Tabs>
+    </div>
+  );
 }
