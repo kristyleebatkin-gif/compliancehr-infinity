@@ -65,9 +65,22 @@ export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, tit
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="mb-1 flex items-center gap-2 text-sm font-bold font-editorial"><span className="gradient-brand h-4 w-1.5 rounded-full" />{title}</div>
-      <p className="mb-4 text-xs text-muted-foreground">{description}</p>
+    <div
+      className="overflow-hidden rounded-2xl border-2 bg-card shadow-panel"
+      style={{
+        borderColor: '#db277766',
+        background: 'linear-gradient(155deg, rgba(219,39,119,0.08) 0%, #ffffff 70%)',
+      }}
+    >
+      <div
+        className="comm-panel-bar flex items-center gap-2 px-5 py-3 text-sm font-extrabold text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <FileText className="h-4 w-4" />
+        <span>{title}</span>
+      </div>
+      <div className="p-5">
+      <p className="mb-4 text-xs font-bold text-foreground/80">{description}</p>
       {loading ? (
         <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
       ) : (
@@ -107,6 +120,7 @@ export default function ComplianceUploads({ docTypes = COMPLIANCE_DOC_TYPES, tit
           })}
         </div>
       )}
+      </div>
     </div>
   );
 }

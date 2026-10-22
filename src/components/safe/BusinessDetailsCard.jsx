@@ -64,21 +64,41 @@ const INVOICE_TERMS = [
   ['contact_information', 'Contact information'],
 ];
 
-const SECTION_TONES = [
-  'from-violet-500 to-purple-500', 'from-sky-500 to-blue-600', 'from-fuchsia-500 to-pink-500',
-  'from-emerald-500 to-teal-500', 'from-amber-500 to-orange-500', 'from-indigo-500 to-violet-600',
-  'from-rose-500 to-pink-600', 'from-cyan-500 to-sky-600', 'from-purple-500 to-fuchsia-600',
+const SECTION_PALETTE = [
+  { color: '#4f46e5', bg: 'rgba(79,70,229,0.10)' },
+  { color: '#db2777', bg: 'rgba(219,39,119,0.10)' },
+  { color: '#2563eb', bg: 'rgba(37,99,235,0.10)' },
+  { color: '#0d9488', bg: 'rgba(13,148,136,0.10)' },
+  { color: '#ea580c', bg: 'rgba(234,88,12,0.10)' },
+  { color: '#7c3aed', bg: 'rgba(124,58,237,0.10)' },
+  { color: '#16a34a', bg: 'rgba(22,163,74,0.10)' },
+  { color: '#ca8a04', bg: 'rgba(202,138,4,0.10)' },
+  { color: '#c026d3', bg: 'rgba(192,38,211,0.10)' },
 ];
 
-const Section = ({ icon: Icon, title, children }) => (
-  <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-sm">
-    <div className="mb-3 flex items-center gap-2.5 text-sm font-bold">
-      <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br text-white shadow-sm ${SECTION_TONES[title.length % SECTION_TONES.length]}`}><Icon className="h-3.5 w-3.5" /></span>
-      {title}
+const Section = ({ icon: Icon, title, children }) => {
+  const tone = SECTION_PALETTE[title.length % SECTION_PALETTE.length];
+  return (
+    <div
+      className="overflow-hidden rounded-2xl border-2 bg-card shadow-panel"
+      style={{
+        borderColor: `${tone.color}66`,
+        background: `linear-gradient(155deg, ${tone.bg} 0%, #ffffff 70%)`,
+      }}
+    >
+      <div
+        className="comm-panel-bar flex items-center gap-2.5 px-5 py-3 text-sm font-extrabold text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/20 text-white ring-1 ring-white/40">
+          <Icon className="h-4 w-4" />
+        </span>
+        {title}
+      </div>
+      <div className="p-5">{children}</div>
     </div>
-    {children}
-  </div>
-);
+  );
+};
 
 const Field = ({ label, value, onChange, type = 'text' }) => (
   <div className="grid gap-1.5"><Label>{label}</Label><Input type={type} value={value ?? ''} onChange={onChange} /></div>

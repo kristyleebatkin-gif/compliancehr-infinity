@@ -4,7 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, Save, UploadCloud } from 'lucide-react';
+import { Loader2, Save, UploadCloud, Sparkles } from 'lucide-react';
 import { loadCompanyBranding, saveCompanyBranding } from '@/lib/companyBranding';
 
 export default function BusinessIdentityCard({ actions = null }) {
@@ -70,27 +70,61 @@ export default function BusinessIdentityCard({ actions = null }) {
   if (loading) return <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
 
   return (
-    <div className="rounded-2xl border border-brand/25 bg-gradient-brand-soft p-5 shadow-panel">
-      <div className="mb-3 text-sm font-bold font-editorial">Business identity</div>
-      <p className="mb-4 text-xs text-muted-foreground">The business name and logo stored here appear on every generated form, plan, register and staff badge.</p>
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-brand/30 bg-white shadow-sm">
-          {logoUrl
-            ? <img src={logoUrl} alt="Business logo" className="h-full w-full object-contain" />
-            : <span className="text-[10px] text-muted-foreground">No logo</span>}
-        </div>
-        <div className="grid flex-1 gap-2 sm:grid-cols-2">
-          <div className="grid gap-1.5"><Label>Business name</Label><Input value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>
-          <div className="grid gap-1.5"><Label>Slogan</Label><Input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></div>
+    <div
+      className="overflow-hidden rounded-2xl border-2 shadow-panel"
+      style={{
+        borderColor: '#7c3aed66',
+        background: 'linear-gradient(145deg, rgba(37,99,235,0.10) 0%, rgba(124,58,237,0.12) 52%, rgba(236,72,153,0.10) 100%)',
+      }}
+    >
+      <div
+        className="comm-panel-bar flex flex-wrap items-center justify-between gap-2 px-5 py-3.5 text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <div className="flex items-center gap-2 text-sm font-extrabold">
+          <Sparkles className="h-4 w-4" />
+          Business Identity — Save Logo, Business Name &amp; Slogan (Blue · Purple · Pink)
         </div>
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-input bg-transparent px-3 h-9 text-sm font-medium hover:bg-accent">
-          {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4" />}Upload logo
-          <input type="file" className="hidden" accept=".png,.jpg,.jpeg,.webp,.svg" onChange={(e) => uploadLogo(e.target.files?.[0])} />
-        </label>
-        <Button onClick={save} disabled={saving}>{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}Save identity</Button>
-        {actions}
+
+      <div className="p-5 space-y-4">
+        <p className="text-xs font-bold text-foreground/80">
+          The business name, logo, and slogan saved here appear on every generated form, plan, register, wall frame, and staff badge.
+        </p>
+        <div className="flex flex-wrap items-center gap-5">
+          <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-violet-400 bg-white p-2 shadow-md">
+            {logoUrl
+              ? <img src={logoUrl} alt="Business logo" className="h-full w-full object-contain" />
+              : <span className="text-[10px] font-bold text-muted-foreground">No logo</span>}
+          </div>
+          <div className="grid flex-1 gap-4 sm:grid-cols-2">
+            <div className="grid gap-1.5">
+              <Label className="font-extrabold text-violet-950">Business name</Label>
+              <Input className="bg-white font-bold" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+            </div>
+            <div className="grid gap-1.5">
+              <Label className="font-extrabold text-violet-950">Slogan</Label>
+              <Input className="bg-white font-bold" value={slogan} onChange={(e) => setSlogan(e.target.value)} />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 pt-1">
+          <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border-2 border-violet-400 bg-white px-4 h-10 text-xs font-extrabold text-violet-800 shadow-sm hover:bg-violet-50">
+            {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4 text-pink-600" />}
+            Upload logo
+            <input type="file" className="hidden" accept=".png,.jpg,.jpeg,.webp,.svg" onChange={(e) => uploadLogo(e.target.files?.[0])} />
+          </label>
+          <Button
+            onClick={save}
+            disabled={saving}
+            className="h-10 rounded-xl px-5 text-xs font-extrabold text-white shadow-md"
+            style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            Save Logo, Name &amp; Slogan
+          </Button>
+          {actions}
+        </div>
       </div>
     </div>
   );

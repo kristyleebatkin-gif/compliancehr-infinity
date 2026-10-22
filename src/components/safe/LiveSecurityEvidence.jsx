@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ShieldCheck } from 'lucide-react';
+
+const TILES = [
+  { label: 'Status-trail entries', color: '#4f46e5', bg: 'rgba(79,70,229,0.12)' },
+  { label: 'Platform audit-log entries', color: '#db2777', bg: 'rgba(219,39,119,0.12)' },
+  { label: 'Controlled user accounts', color: '#0d9488', bg: 'rgba(13,148,136,0.12)' },
+];
 
 export default function LiveSecurityEvidence() {
   const [stats, setStats] = useState(null);
@@ -16,13 +21,42 @@ export default function LiveSecurityEvidence() {
     });
     return () => { alive = false; };
   }, []);
-  return <Card><CardContent className="p-2">
-    <p className="mb-1.5 text-xs font-semibold">Live evidence</p>
-    {stats ? <div className="grid grid-cols-3 gap-1.5">
-      {['Status-trail entries', 'Platform audit-log entries', 'Controlled user accounts'].map((label, index) => <div key={label} className="min-w-0 rounded-lg border border-border/60 px-2 py-1">
-        <p className="text-lg leading-6 font-editorial tabular-nums">{stats[index] === null ? '—' : stats[index].toLocaleString()}</p>
-        <p className="text-[10px] leading-4 text-muted-foreground">{label}</p>
-      </div>)}
-    </div> : <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Loader2 className="h-3 w-3 animate-spin" />Collecting evidence...</div>}
-  </CardContent></Card>;
+
+  return (
+    <div className="overflow-hidden rounded-2xl border-2 border-violet-300 bg-card shadow-panel">
+      <div
+        className="comm-panel-bar flex items-center gap-2 px-5 py-3 text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <ShieldCheck className="h-4 w-4" />
+        <span className="text-sm font-extrabold">Live Security &amp; Compliance Evidence</span>
+      </div>
+      <div className="p-4">
+        {stats ? (
+          <div className="grid gap-4 sm:grid-cols-3">
+            {TILES.map((tile, index) => (
+              <div
+                key={tile.label}
+                className="rounded-xl border-2 p-4 shadow-sm"
+                style={{
+                  borderColor: `${tile.color}66`,
+                  borderTop: `4px solid ${tile.color}`,
+                  background: `linear-gradient(145deg, ${tile.bg}, #ffffff)`,
+                }}
+              >
+                <p className="text-2xl font-extrabold tabular-nums" style={{ color: tile.color }}>
+                  {stats[index] === null ? '—' : stats[index].toLocaleString()}
+                </p>
+                <p className="mt-1 text-xs font-extrabold text-foreground/85">{tile.label}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin" /> Collecting evidence...
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

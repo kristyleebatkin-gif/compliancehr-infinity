@@ -91,9 +91,22 @@ export default function StaffBadgeCreator() {
   };
 
   return (
-    <div className="rounded-xl border border-border/60 bg-card p-2.5">
-      <div className="mb-0.5 text-xs font-semibold">Staff badge creator</div>
-      <p className="mb-2 text-[11px] text-muted-foreground">Badges use the business name, logo and slogan stored in the company safe.</p>
+    <div
+      className="overflow-hidden rounded-2xl border-2 bg-card shadow-panel"
+      style={{
+        borderColor: '#0d948866',
+        background: 'linear-gradient(155deg, rgba(13,148,136,0.10) 0%, #ffffff 70%)',
+      }}
+    >
+      <div
+        className="comm-panel-bar flex items-center justify-between gap-2 px-5 py-3 text-sm font-extrabold text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <span>Staff Badge Creator</span>
+        <span className="text-xs font-bold text-white/90">Uses Saved Logo, Name &amp; Slogan</span>
+      </div>
+      <div className="p-5">
+      <p className="mb-3 text-xs font-bold text-foreground/80">Badges use the business name, logo and slogan stored in the company safe.</p>
       <div className="grid items-start gap-2 sm:grid-cols-[minmax(0,1fr)_200px]">
         <div className="min-w-0 space-y-2">
           <div className="grid max-w-sm gap-1.5">
@@ -119,6 +132,7 @@ export default function StaffBadgeCreator() {
         </div>
 
         <div className="w-full max-w-[200px]"><StaffBadgePreview branding={branding} staff={selected} compact /></div>
+      </div>
       </div>
     </div>
   );

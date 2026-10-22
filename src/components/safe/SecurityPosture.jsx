@@ -16,16 +16,21 @@ const GUARANTEES = [
 export default function SecurityPosture() {
   return (
     <div className="space-y-3">
-      <Card className="border-safe/40">
-        <CardContent className="flex flex-wrap items-center gap-3 p-4">
-          <span className="rounded-lg bg-safe/10 p-2"><ShieldCheck className="h-5 w-5 text-safe" /></span>
-          <div className="min-w-0 flex-1">
-            <p className="font-semibold font-editorial">Security &amp; Trust Posture</p>
-            <p className="text-xs text-muted-foreground">The guarantees protecting this organisation, and the live evidence behind them.</p>
+      <div
+        className="comm-panel-bar flex flex-wrap items-center justify-between gap-3 rounded-2xl px-5 py-3.5 text-white shadow-md"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/40">
+            <ShieldCheck className="h-4 w-4 text-white" />
+          </span>
+          <div>
+            <p className="text-sm font-extrabold text-white">Security &amp; Trust Posture</p>
+            <p className="text-xs font-bold text-white/90">The guarantees protecting this organisation, and the live evidence behind them.</p>
           </div>
-          <Badge className="bg-safe/10 text-safe border border-safe/30">Verified in-app</Badge>
-        </CardContent>
-      </Card>
+        </div>
+        <Badge className="bg-white/20 text-white border border-white/40">Verified in-app</Badge>
+      </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {GUARANTEES.map((g) => (
