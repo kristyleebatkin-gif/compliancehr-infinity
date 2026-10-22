@@ -30,8 +30,8 @@ export default function Landing() {
       </div>
       <LandingNav />
       <main>
-        <LandingHero />
         <MarketingSafeShowcase />
+        <LandingHero />
         <QuickStartSection />
         <FeaturesSection />
         <ExpressAuditSection />

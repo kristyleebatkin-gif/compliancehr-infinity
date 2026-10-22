@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from '@/components/ui/image';
-import { Clock, Lock, Vault, FolderLock, MessagesSquare, Inbox, Siren, History, Mail, NotebookPen, LayoutGrid } from 'lucide-react';
+import { Lock, FolderLock, MessagesSquare, Inbox, Siren, History, Mail, NotebookPen, LayoutGrid } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
@@ -11,166 +11,57 @@ export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45
 
 const DEFAULT_SOFTWARE_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
 
-function ExecutiveChairFrontLeftSvg() {
-  return (
-    <svg viewBox="0 0 130 135" className="h-8 w-8 shrink-0" aria-label="Executive Chair Back Front Left">
-      <defs>
-        <linearGradient id="chairBackSquished" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="45%" stopColor="#2563eb" />
-          <stop offset="50%" stopColor="#7c3aed" />
-          <stop offset="55%" stopColor="#ec4899" />
-          <stop offset="100%" stopColor="#ec4899" />
-        </linearGradient>
-      </defs>
-      <rect x="26" y="4" width="78" height="68" rx="16" fill="url(#chairBackSquished)" stroke="#ffffff" strokeWidth="3" />
-      <rect x="38" y="10" width="54" height="14" rx="6" fill="#ffffff" />
-      <line x1="38" y1="36" x2="92" y2="36" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-      <line x1="38" y1="48" x2="92" y2="48" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-      <line x1="38" y1="60" x2="92" y2="60" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-      <path d="M26 50 C10 50, 10 80, 24 84" fill="none" stroke="#1d4ed8" strokeWidth="6" strokeLinecap="round" />
-      <path d="M104 50 C120 50, 120 80, 106 84" fill="none" stroke="#db2777" strokeWidth="6" strokeLinecap="round" />
-      <rect x="20" y="70" width="90" height="18" rx="9" fill="url(#chairBackSquished)" stroke="#ffffff" strokeWidth="2.5" />
-      <rect x="61" y="88" width="8" height="22" rx="2" fill="#1e3a8a" />
-      <path d="M65 110 L28 124 M65 110 L102 124 M65 110 L46 128 M65 110 L84 128 M65 110 L65 129" stroke="#1e3a8a" strokeWidth="4.5" strokeLinecap="round" />
-      <circle cx="26" cy="126" r="3.5" fill="#2563eb" />
-      <circle cx="104" cy="126" r="3.5" fill="#ec4899" />
-      <circle cx="46" cy="130" r="3.5" fill="#7c3aed" />
-      <circle cx="84" cy="130" r="3.5" fill="#7c3aed" />
-      <circle cx="65" cy="131" r="3.5" fill="#ec4899" />
-    </svg>
-  );
-}
-
-export function CouchNearFrontDoorSvg() {
-  return (
-    <svg viewBox="0 0 250 110" className="h-8 w-16 shrink-0" aria-label="Reception Couch Near Front Door">
-      <defs>
-        <linearGradient id="couchSquished" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="45%" stopColor="#2563eb" />
-          <stop offset="50%" stopColor="#7c3aed" />
-          <stop offset="55%" stopColor="#ec4899" />
-          <stop offset="100%" stopColor="#ec4899" />
-        </linearGradient>
-      </defs>
-      {/* Plush 3-Seater Couch on Left */}
-      <rect x="14" y="28" width="136" height="38" rx="12" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="2.5" />
-      <rect x="20" y="33" width="38" height="26" rx="6" fill="#dbeafe" />
-      <rect x="63" y="33" width="38" height="26" rx="6" fill="#ede9fe" />
-      <rect x="106" y="33" width="38" height="26" rx="6" fill="#fce7f3" />
-      <rect x="4" y="42" width="16" height="36" rx="8" fill="#1d4ed8" stroke="#ffffff" strokeWidth="2" />
-      <rect x="144" y="42" width="16" height="36" rx="8" fill="#db2777" stroke="#ffffff" strokeWidth="2" />
-      <rect x="14" y="60" width="136" height="20" rx="8" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="2.5" />
-      <rect x="20" y="80" width="6" height="14" rx="2" fill="#1e3a8a" />
-      <rect x="138" y="80" width="6" height="14" rx="2" fill="#1e3a8a" />
-      {/* Front Door right next to the Couch */}
-      <rect x="174" y="6" width="66" height="94" rx="6" fill="#1e3a8a" stroke="#f59e0b" strokeWidth="3" />
-      <rect x="180" y="12" width="54" height="82" rx="4" fill="url(#couchSquished)" stroke="#ffffff" strokeWidth="1.5" />
-      <rect x="188" y="18" width="38" height="32" rx="4" fill="#e0f2fe" stroke="#ffffff" strokeWidth="1.5" />
-      <text x="207" y="37" textAnchor="middle" fill="#1e3a8a" fontSize="8" fontWeight="900">DOOR</text>
-      <rect x="188" y="56" width="38" height="30" rx="3" fill="#ede9fe" stroke="#ffffff" strokeWidth="1" />
-      <circle cx="226" cy="54" r="3.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1" />
-    </svg>
-  );
-}
-
-export function OfficeTechTableSvg() {
-  return (
-    <svg viewBox="0 0 280 115" className="h-9 w-24 shrink-0" aria-label="Table with Modern Speaker, iPhone and Computer">
-      <defs>
-        <linearGradient id="techScreenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="50%" stopColor="#7c3aed" />
-          <stop offset="100%" stopColor="#ec4899" />
-        </linearGradient>
-      </defs>
-      {/* 1. Modern Smart Speaker on Left of Table */}
-      <rect x="24" y="32" width="34" height="44" rx="14" fill="#1e3a8a" stroke="#ec4899" strokeWidth="2" />
-      <ellipse cx="41" cy="37" rx="12" ry="3.5" fill="url(#techScreenGrad)" />
-      <circle cx="35" cy="50" r="1.5" fill="#ffffff" />
-      <circle cx="41" cy="50" r="1.5" fill="#ffffff" />
-      <circle cx="47" cy="50" r="1.5" fill="#ffffff" />
-      <circle cx="35" cy="58" r="1.5" fill="#ffffff" />
-      <circle cx="41" cy="58" r="1.5" fill="#ffffff" />
-      <circle cx="47" cy="58" r="1.5" fill="#ffffff" />
-
-      {/* 2. iPhone in Middle of Table */}
-      <rect x="76" y="42" width="24" height="34" rx="5" fill="#1e3a8a" stroke="#38bdf8" strokeWidth="2" />
-      <rect x="79" y="45" width="18" height="27" rx="3" fill="url(#techScreenGrad)" />
-      <rect x="85" y="46" width="6" height="2" rx="1" fill="#ffffff" />
-      <circle cx="88" cy="69" r="1.2" fill="#ffffff" />
-
-      {/* 3. Desktop Computer Monitor & Keyboard on Right of Table */}
-      <rect x="122" y="10" width="128" height="54" rx="6" fill="#dbeafe" stroke="#2563eb" strokeWidth="2.5" />
-      <rect x="127" y="14" width="118" height="44" rx="3" fill="url(#techScreenGrad)" />
-      <text x="186" y="34" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900">ComplianceHR</text>
-      <text x="186" y="46" textAnchor="middle" fill="#fde047" fontSize="8" fontWeight="800">INFINITY</text>
-      <rect x="178" y="64" width="16" height="9" fill="#93c5fd" />
-      <rect x="164" y="72" width="44" height="4" rx="2" fill="#2563eb" />
-      <rect x="148" y="75" width="76" height="3" rx="1.5" fill="#dbeafe" />
-
-      {/* Modern Office Table Surface & Legs */}
-      <rect x="8" y="76" width="264" height="9" rx="4" fill="#7c3aed" stroke="#ffffff" strokeWidth="1.5" />
-      <rect x="24" y="85" width="8" height="26" rx="2" fill="#1e3a8a" />
-      <rect x="248" y="85" width="8" height="26" rx="2" fill="#1e3a8a" />
-    </svg>
-  );
-}
-
 /**
- * Big Logo, Name & Slogan in Left Corner inside Picture Frame:
- *   Software: ComplianceHR Infinity
- *   Complete Control. Greater Confidence.
- *   Brighter Success
+ * Reusable Hanging Wall Frame — makes each screenshot look like a real framed picture
+ * hanging on an office wall from a brass pin & wire.
  */
-export function ComplianceHrPhotoFrame({ logoUrl, large = true, badgeLabel = '' }) {
+function WallHangingPictureFrame({ title, children, className = '', frameAccent = SQUISHED_GRADIENT }) {
+  return (
+    <div className={`relative flex flex-col items-center ${className}`}>
+      {/* Brass Nail & Hanging Wire on the Office Wall */}
+      <div className="relative flex flex-col items-center">
+        <div className="h-2 w-2 rounded-full bg-amber-400 ring-2 ring-amber-600 shadow" />
+        <svg viewBox="0 0 80 14" className="h-3 w-16 -mt-0.5 overflow-visible">
+          <path d="M40 0 L6 14 M40 0 L74 14" stroke="#b45309" strokeWidth="1.8" fill="none" />
+        </svg>
+      </div>
+
+      {/* Outer Gallery Frame */}
+      <div
+        className="w-full rounded-xl p-1.5 shadow-[0_12px_28px_-6px_rgba(15,23,42,0.38)] ring-2 ring-amber-300"
+        style={{ background: frameAccent }}
+      >
+        {/* Inner White Matboard & Screenshot Canvas */}
+        <div className="h-full w-full overflow-hidden rounded-lg border-2 border-amber-200 bg-white p-2">
+          {children}
+        </div>
+      </div>
+
+      {/* Subtle Wall Plaque Label under Picture */}
+      {title && (
+        <div className="mt-1 rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-amber-950 shadow-sm">
+          {title}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ComplianceHrPhotoFrame({ logoUrl }) {
   const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
   return (
-    <div
-      className="rounded-2xl p-1.5 shadow-md ring-2 ring-amber-300"
-      style={{ background: SQUISHED_GRADIENT }}
-    >
-      <div className="rounded-xl border-[3px] border-amber-300 bg-white p-2 text-center">
-        {badgeLabel && (
-          <div className="mb-1 flex justify-center">
-            <span
-              className="rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
-              style={{ background: SQUISHED_GRADIENT }}
-            >
-              {badgeLabel}
-            </span>
-          </div>
-        )}
-        {/* Big Logo inside Picture Frame */}
-        <div
-          className={`mx-auto flex items-center justify-center overflow-hidden rounded-xl border-2 border-pink-400 bg-white p-1.5 ${
-            large ? 'h-20 w-32 sm:h-24 sm:w-40' : 'h-14 w-24'
-          }`}
-        >
+    <WallHangingPictureFrame title="Picture 1 · ComplianceHR Infinity Logo">
+      <div className="flex flex-col items-center justify-center bg-white p-1 text-center">
+        <div className="flex h-24 w-full items-center justify-center overflow-hidden rounded-lg bg-white p-1">
           <Image
             src={frameSrc}
-            alt="ComplianceHR Infinity"
+            alt="ComplianceHR Infinity Logo Screenshot"
             fittingType="fit"
             className="h-full w-full object-contain"
           />
         </div>
-        <div className="mt-1 text-xs sm:text-sm font-extrabold tracking-tight text-blue-950">
-          Software: ComplianceHR Infinity
-        </div>
-        <div
-          className="mt-1 rounded-lg px-2 py-1 text-white"
-          style={{ background: SQUISHED_GRADIENT }}
-        >
-          <div className="text-[10px] font-extrabold leading-tight">
-            Complete Control. Greater Confidence.
-          </div>
-          <div className="text-[10px] font-extrabold leading-tight">
-            Brighter Success
-          </div>
-        </div>
       </div>
-    </div>
+    </WallHangingPictureFrame>
   );
 }
 
@@ -213,7 +104,10 @@ export function SmallSafeVaultBar() {
   );
 }
 
-function CommunicationCentreAboveSilverScreen() {
+/**
+ * Screenshot 4: Communication Centre & Today's Roster Overview (with Smart Vault beside Employee Log)
+ */
+function CommunicationCentreScreenshot({ showRosterAbove = true }) {
   const quickLinks = [
     { label: 'Alerts', icon: Siren, to: '/communications', color: '#dc2626' },
     { label: 'Auto Log', icon: History, to: '/communications', color: '#1e3a8a' },
@@ -223,63 +117,64 @@ function CommunicationCentreAboveSilverScreen() {
   ];
 
   return (
-    <div className="rounded-xl border-2 border-blue-400 bg-white p-1.5 space-y-1">
-      {/* Squashed Communication Centre Header */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <div className="flex items-center gap-1">
-          <MessagesSquare className="h-3 w-3 text-white" />
-          <span className="text-[9.5px] font-extrabold text-white">
-            Communication Centre
-          </span>
-        </div>
-        <Link
-          to="/communications"
-          className="rounded bg-white px-1.5 py-0 text-[8px] font-extrabold text-purple-900 hover:bg-pink-50"
-        >
-          Open
-        </Link>
-      </div>
+    <div className="space-y-1 bg-white">
+      {showRosterAbove && <RosterMiniOverview />}
 
-      {/* Quick Comm Links + Smart Vault in the space right beside Employee Log */}
-      <div className="grid grid-cols-3 gap-1">
-        {quickLinks.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.label}
-              to={item.to}
-              className="flex items-center gap-1 rounded border px-1 py-0.5 text-[8px] font-extrabold text-white"
-              style={{ background: item.color, borderColor: item.color }}
-            >
-              <Icon className="h-2.5 w-2.5 shrink-0 text-white" />
-              <span className="truncate">{item.label}</span>
-            </Link>
-          );
-        })}
-        {/* Smart Vault right beside Employee Log with ComplianceHR Infinity Logo & Colours */}
-        <Link
-          to="/company-safe"
-          className="flex items-center gap-1 rounded border border-pink-400 px-1 py-0.5 text-[8px] font-extrabold text-white shadow-sm"
+      <div className="rounded-lg border border-blue-300 bg-white p-1.5 space-y-1">
+        <div
+          className="flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
           style={{ background: SQUISHED_GRADIENT }}
-          title="ComplianceHR Infinity Smart Vault"
         >
-          <span className="flex h-3 w-3 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
-            <Image
-              src={DEFAULT_SOFTWARE_LOGO}
-              alt="ComplianceHR Infinity"
-              fittingType="fit"
-              className="h-full w-full object-contain"
-            />
-          </span>
-          <span className="truncate">Smart Vault</span>
-        </Link>
-      </div>
+          <div className="flex items-center gap-1">
+            <MessagesSquare className="h-3 w-3 text-white" />
+            <span className="text-[9px] font-extrabold text-white">
+              Communication Centre
+            </span>
+          </div>
+          <Link
+            to="/communications"
+            className="rounded bg-white px-1.5 py-0 text-[7.5px] font-extrabold text-purple-900 hover:bg-pink-50"
+          >
+            Open
+          </Link>
+        </div>
 
-      {/* Small Vault directly under Inbox inside Communication Centre */}
-      <SmallSafeVaultBar />
+        <div className="grid grid-cols-3 gap-1">
+          {quickLinks.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="flex items-center gap-1 rounded border px-1 py-0.5 text-[7.5px] font-extrabold text-white"
+                style={{ background: item.color, borderColor: item.color }}
+              >
+                <Icon className="h-2.5 w-2.5 shrink-0 text-white" />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+          {/* Smart Vault beside Employee Log with ComplianceHR Infinity Logo & Colours */}
+          <Link
+            to="/company-safe"
+            className="flex items-center gap-1 rounded border border-pink-400 px-1 py-0.5 text-[7.5px] font-extrabold text-white shadow-sm"
+            style={{ background: SQUISHED_GRADIENT }}
+            title="ComplianceHR Infinity Smart Vault"
+          >
+            <span className="flex h-3 w-3 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+              <Image
+                src={DEFAULT_SOFTWARE_LOGO}
+                alt="ComplianceHR Infinity"
+                fittingType="fit"
+                className="h-full w-full object-contain"
+              />
+            </span>
+            <span className="truncate">Smart Vault</span>
+          </Link>
+        </div>
+
+        <SmallSafeVaultBar />
+      </div>
     </div>
   );
 }
@@ -289,150 +184,145 @@ export default function ExecutiveWallScene({
   companyName = 'ComplianceHR Infinity',
   showRosterAbove = true,
 }) {
-  const [now, setNow] = useState(() => new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const timeStr = now.toLocaleTimeString('en-AU', {
-    timeZone: 'Australia/Sydney',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  });
-
-  const dateStr = now.toLocaleDateString('en-AU', {
-    timeZone: 'Australia/Sydney',
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-
   const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
 
   return (
-    /* Solid opaque white blockout background — zero background bleed */
-    <div className="relative overflow-hidden rounded-2xl border-2 border-purple-500 bg-white p-2 shadow-md">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch bg-white">
-        {/* MIDDLE TAB UNDER BUSINESS NAME: BUSINESS NAME HEADER + ALL 45 MODULES SQUISHED TO FIT (7 cols) */}
-        <div className="md:col-span-7 flex flex-col justify-between gap-1.5 rounded-xl border-2 border-purple-500 bg-white p-1.5">
-          {/* Business Name & Picture Frame Header at Top of Middle Tab */}
-          <div
-            className="flex flex-wrap items-center justify-between gap-2 rounded-xl p-1.5 text-white shadow-sm ring-2 ring-amber-300"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="flex h-10 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border-2 border-amber-300 bg-white p-0.5 shadow-sm">
-                <Image
-                  src={frameSrc}
-                  alt="ComplianceHR Infinity"
-                  fittingType="fit"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-              <div className="min-w-0">
-                <div className="truncate text-xs sm:text-sm font-extrabold tracking-tight text-white">
-                  {companyName || 'ComplianceHR Infinity'}
-                </div>
-                <div className="truncate text-[9px] font-extrabold text-white/95">
-                  Complete Control. Greater Confidence. Brighter Success.
-                </div>
-              </div>
-            </div>
-            <div className="rounded-lg bg-white/95 px-2 py-0.5 text-right text-[8px] font-extrabold leading-tight text-blue-950">
-              <div>Developer: Kristy Lee Whelan</div>
-              <div className="text-violet-800">kristyleebatkin@live.com.au</div>
-            </div>
-          </div>
+    /* OFFICE WALL SCENE — Looking straight at the office walls and framed pictures, and nothing else */
+    <div className="relative overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
+      {/* Top Ceiling Crown Moulding / Gallery Lighting Bar */}
+      <div
+        className="flex items-center justify-around px-4 py-1 text-white"
+        style={{ background: SQUISHED_GRADIENT }}
+      >
+        <span className="h-1.5 w-10 rounded-full bg-amber-200 shadow-[0_0_10px_#fde68a]" />
+        <span className="text-[9px] font-extrabold uppercase tracking-widest text-white">
+          ComplianceHR Infinity · Executive Office Wall Gallery
+        </span>
+        <span className="h-1.5 w-10 rounded-full bg-amber-200 shadow-[0_0_10px_#fde68a]" />
+      </div>
 
-          {/* Squished 45 Modules Grid Directly Under Business Name */}
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-1">
-            {MODULE_DIRECTORY.map((mod) => {
-              const Icon = mod.icon;
-              const colour = moduleKeyColour(mod.key);
-              return (
-                <Link
-                  key={mod.key}
-                  to={mod.path}
-                  className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
-                  style={{
-                    borderColor: colour,
-                    borderLeftWidth: '3px',
-                  }}
-                  title={mod.label}
+      {/* Main Office Wall Surface with Framed Screenshots Hanging on the Wall */}
+      <div
+        className="p-2.5 sm:p-3"
+        style={{
+          background:
+            'linear-gradient(180deg, #ede9fe 0%, #f5f3ff 45%, #fce7f3 88%, #e0e7ff 100%)',
+        }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 items-start">
+          {/* LEFT / CENTER WALL AREA (7 cols):
+              Top Row: Picture 1 (Logo Screenshot) + Picture 2 ("Compliance management, simplified end to end." with Slogan Screenshot)
+              Bottom Row (Middle Tab under Business Name): Picture 3 (All 45 Modules Squashed Together Screenshot) */}
+          <div className="md:col-span-7 flex flex-col gap-2">
+            {/* Top Wall Row: Logo Frame + Headline & Slogan Frame */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch">
+              {/* PICTURE 1: Screenshot of My Logo */}
+              <div className="sm:col-span-5">
+                <WallHangingPictureFrame title="Logo">
+                  <div className="flex h-24 w-full items-center justify-center bg-white p-1">
+                    <Image
+                      src={frameSrc}
+                      alt="ComplianceHR Infinity Logo"
+                      fittingType="fit"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                </WallHangingPictureFrame>
+              </div>
+
+              {/* PICTURE 2: Screenshot of "Compliance management, simplified end to end." with Slogan */}
+              <div className="sm:col-span-7">
+                <WallHangingPictureFrame title="Headline & Slogan">
+                  <div className="flex h-24 flex-col items-center justify-center rounded bg-gradient-to-b from-violet-50 via-white to-pink-50 px-2 py-1 text-center">
+                    <div className="font-editorial text-sm sm:text-base font-bold leading-tight text-blue-950">
+                      Compliance management,
+                      <span className="block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
+                        simplified end to end.
+                      </span>
+                    </div>
+                    <div
+                      className="mt-1.5 rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white shadow-sm"
+                      style={{ background: SQUISHED_GRADIENT }}
+                    >
+                      Complete Control. Greater Confidence. Brighter Success.
+                    </div>
+                  </div>
+                </WallHangingPictureFrame>
+              </div>
+            </div>
+
+            {/* PICTURE 3 (Middle Wall under Business Name): Screenshot of All 45 Modules Squashed Together */}
+            <WallHangingPictureFrame title={`${companyName || 'ComplianceHR Infinity'} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}>
+              <div className="space-y-1 bg-white">
+                <div
+                  className="flex items-center justify-between rounded px-2 py-0.5 text-white"
+                  style={{ background: SQUISHED_GRADIENT }}
                 >
-                  <span
-                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
-                    style={{ background: colour }}
-                  >
-                    <Icon className="h-2 w-2" />
+                  <span className="inline-flex items-center gap-1 text-[9.5px] font-extrabold">
+                    <LayoutGrid className="h-3 w-3" /> {companyName || 'ComplianceHR Infinity'}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-[8px] font-extrabold text-blue-950 leading-tight">
-                    {mod.label}
+                  <span className="text-[8px] font-extrabold">
+                    {MODULE_DIRECTORY.length} Connected Modules
                   </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* OTHER SIDE OF THE OFFICE (5 cols):
-            Squished Communication Centre & Today's Roster Overview on top,
-            Squished Silver Screen directly underneath,
-            plus Office Furniture & Tech placed cleanly on the other side */}
-        <div className="md:col-span-5 flex flex-col justify-between gap-1.5 rounded-xl border-2 border-pink-400 bg-white p-1.5">
-          {/* 1. Squished Today's Roster Overview + Communication Centre on the other side of the office */}
-          <div className="grid grid-cols-1 gap-1">
-            {showRosterAbove && <RosterMiniOverview />}
-            <CommunicationCentreAboveSilverScreen />
-          </div>
-
-          {/* 2. Squished Silver Screen directly UNDER Communication Centre & Roster on the other side */}
-          <SilverScreenSplit />
-
-          {/* 3. Office Elements placed on the other side to fit and look good */}
-          <div className="grid grid-cols-3 gap-1 rounded-lg border border-purple-300 bg-purple-50 p-1 items-center">
-            <div className="flex flex-col items-center justify-center rounded bg-white p-1 text-center">
-              <div className="text-[7px] font-extrabold uppercase tracking-wider text-violet-900">
-                Table · Speaker · iPhone · PC
-              </div>
-              <OfficeTechTableSvg />
-            </div>
-
-            <div className="flex flex-col items-center justify-center rounded bg-white p-1 text-center">
-              <div className="flex items-center justify-center gap-1">
-                <ExecutiveChairFrontLeftSvg />
-                <CouchNearFrontDoorSvg />
-              </div>
-              <div className="text-[7px] font-extrabold text-pink-800 leading-none">
-                Chair · Couch &amp; Front Door
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-between gap-1 rounded bg-white p-1">
-              <div
-                className="rounded px-1.5 py-0.5 text-white"
-                style={{ background: SQUISHED_GRADIENT }}
-              >
-                <div className="inline-flex items-center gap-1 text-[7.5px] font-extrabold">
-                  <Clock className="h-2.5 w-2.5" /> Smart Clock
                 </div>
-                <div className="font-mono text-[8.5px] font-extrabold">
-                  {timeStr}
+
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-1">
+                  {MODULE_DIRECTORY.map((mod) => {
+                    const Icon = mod.icon;
+                    const colour = moduleKeyColour(mod.key);
+                    return (
+                      <Link
+                        key={mod.key}
+                        to={mod.path}
+                        className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                        style={{
+                          borderColor: colour,
+                          borderLeftWidth: '3px',
+                        }}
+                        title={mod.label}
+                      >
+                        <span
+                          className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
+                          style={{ background: colour }}
+                        >
+                          <Icon className="h-2 w-2" />
+                        </span>
+                        <span className="min-w-0 flex-1 truncate text-[7.5px] font-extrabold text-blue-950 leading-tight">
+                          {mod.label}
+                        </span>
+                      </Link>
+                    );
+                  })}
                 </div>
-                <div className="text-[7px] font-bold">{dateStr}</div>
               </div>
-              <div className="rounded border border-pink-300 bg-pink-50 px-1 py-0.5 text-[7px] font-extrabold text-pink-900 leading-tight">
-                3-Door Safe Cupboard
-              </div>
-            </div>
+            </WallHangingPictureFrame>
+          </div>
+
+          {/* OTHER SIDE OF THE OFFICE WALL (5 cols):
+              Picture 4: Screenshot of Communication Centre & Today's Roster Overview
+              with the Squashed Silver Screen mounted directly underneath it on the wall */}
+          <div className="md:col-span-5 flex flex-col gap-2">
+            {/* PICTURE 4: Screenshot of Communication Centre & Today's Roster Overview */}
+            <WallHangingPictureFrame title="Communication Centre & Today's Roster">
+              <CommunicationCentreScreenshot showRosterAbove={showRosterAbove} />
+            </WallHangingPictureFrame>
+
+            {/* Mounted Silver Screen directly underneath Communication Centre on the other side of the wall */}
+            <WallHangingPictureFrame
+              title="Silver Screen · Weather & NDIS News"
+              frameAccent="linear-gradient(135deg, #64748b 0%, #cbd5e1 50%, #475569 100%)"
+            >
+              <SilverScreenSplit />
+            </WallHangingPictureFrame>
           </div>
         </div>
       </div>
+
+      {/* Bottom Office Wall Dado Rail / Baseboard Trim */}
+      <div
+        className="h-2.5 w-full border-t-2 border-amber-300"
+        style={{ background: SQUISHED_GRADIENT }}
+      />
     </div>
   );
 }

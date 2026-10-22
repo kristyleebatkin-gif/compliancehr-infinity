@@ -26,8 +26,9 @@ export default function RosterMiniOverview() {
   return (
     <section className="overflow-hidden rounded-lg border border-purple-300 bg-white shadow-sm">
       <div
-        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-1.5 px-2 py-1"
+        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-1.5 px-2 py-1 text-white"
         style={{
+          background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)',
           '--comm-bar-bg': 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)',
           color: '#fff',
         }}
