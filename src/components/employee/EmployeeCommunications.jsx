@@ -16,6 +16,7 @@ import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import TeamFeed from '@/components/communications/TeamFeed';
 import CommSharedTodo from '@/components/communications/CommSharedTodo';
+import { AutomatedAlertSystem } from '@/components/communications/AutomatedLogs';
 import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
@@ -66,6 +67,7 @@ export default function EmployeeCommunications({ embedded = false }) {
         >
           <TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent>
           {!embedded && <TaskLeaderboard compact />}
+          {!embedded && <AutomatedAlertSystem selfOnly />}
         </ModuleShell>
       </Tabs>
     </div>

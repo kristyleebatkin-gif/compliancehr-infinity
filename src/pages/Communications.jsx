@@ -25,7 +25,7 @@ import EmployeeCommLog from '@/components/communications/EmployeeCommLog';
 import VideoCalls from '@/components/communications/VideoCalls';
 import AiCompose from '@/components/communications/AiCompose';
 import TemplateLibrary from '@/components/communications/TemplateLibrary';
-import AutomatedLogs from '@/components/communications/AutomatedLogs';
+import AutomatedLogs, { AutomatedAlertSystem } from '@/components/communications/AutomatedLogs';
 import ComplaintsFeed from '@/components/communications/ComplaintsFeed';
 import ShoutoutFeed from '@/components/communications/ShoutoutFeed';
 import TeamFeed from '@/components/communications/TeamFeed';
@@ -143,6 +143,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
         <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
         {!(embedded || participantOnly) && <TaskLeaderboard compact />}
+        {!(embedded || participantOnly) && <AutomatedAlertSystem selfOnly={employeeSelf} />}
         </ModuleShell>
       </Tabs>
     </div>
