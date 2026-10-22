@@ -12,6 +12,7 @@ import { downloadComplianceAuditReport } from '@/lib/complianceAuditReportPdf';
 import StaffFileMatrix, { STAFF_COLUMNS, staffColumnStatus } from '@/components/compliance/StaffFileMatrix';
 import ParticipantFileMatrix from '@/components/compliance/ParticipantFileMatrix';
 import PlatformComplianceStatus from '@/components/compliance/PlatformComplianceStatus';
+import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import { format, differenceInCalendarDays } from 'date-fns';
 import { Download, ClipboardCheck, Boxes, Car, Flame, ShieldCheck, Wrench, FileDown, Loader2, UploadCloud } from 'lucide-react';
 
@@ -394,6 +395,8 @@ export default function MasterChecklist() {
       <div className="flex flex-wrap items-center justify-end gap-2">
         <Button onClick={exportReport}><Download className="mr-2 h-4 w-4" /> Export compliance audit report</Button>
       </div>
+
+      <MasterComplianceAuditForms />
 
       <PlatformComplianceStatus />
 

@@ -48,6 +48,7 @@ import Checklists from '@/pages/Checklists';
 import ComplianceReadiness from '@/components/compliance/ComplianceReadiness';
 import AuditsTab from '@/components/compliance/AuditsTab';
 import MasterChecklist from '@/components/compliance/MasterChecklist';
+import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -262,6 +263,8 @@ export default function ComplianceHub() {
           </>
         )}
       />
+
+      <MasterComplianceAuditForms />
 
       <Tabs defaultValue="standards-map">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">

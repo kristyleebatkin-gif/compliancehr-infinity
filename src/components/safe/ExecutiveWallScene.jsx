@@ -21,6 +21,7 @@ import {
   FULL_SLOGAN,
 } from '@/components/safe/OfficeInteractiveMaterials';
 import ModularScreenDataSelector, { MODULAR_SCREEN_DECKS } from '@/components/safe/ModularScreenDataSelector';
+import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
@@ -982,6 +983,11 @@ export default function ExecutiveWallScene({
             </div>
           )}
         </div>
+      </div>
+
+      {/* Recreated Master Compliance Audit Checklist Forms for Both Apps (Choices NQ & ComplianceHR Infinity) */}
+      <div className="bg-white px-1 pb-1">
+        <MasterComplianceAuditForms />
       </div>
 
       {/* Bottom Office Baseboard Trim */}
