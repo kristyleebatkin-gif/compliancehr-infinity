@@ -152,7 +152,7 @@ export default function TaskLeaderboard() {
       </div>
 
       <div className="rounded-2xl border border-border/60 bg-card p-5">
-        <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><Trophy className="h-4 w-4 text-warning" />{settings.leaderboard_title} - Season {season.year}</p>
+        <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><Trophy className="h-4 w-4 text-primary" />{settings.leaderboard_title} - Season {season.year}</p>
         {season.board.length === 0 ? (
           <p className="text-sm text-muted-foreground">No points yet this season - complete or finalise a task with people responsible to put them on the board.</p>
         ) : (
@@ -162,7 +162,7 @@ export default function TaskLeaderboard() {
               const voucher = settings.vouchers.find((v) => v.rank === rank);
               const character = characterFor(entry.name);
               return (
-                <div key={entry.name} className={`flex flex-wrap items-center justify-between gap-2 rounded-xl border p-3 ${rank <= 3 ? 'border-warning/40 bg-warning/5' : 'border-border/60'}`}>
+                <div key={entry.name} className={`flex flex-wrap items-center justify-between gap-2 rounded-xl border p-3 ${rank <= 3 ? 'border-primary/40 bg-primary/5' : 'border-border/60'}`}>
                   <div className="flex items-center gap-3">
                     <span className="w-8 text-center text-lg font-bold">{rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}</span>
                     <span className="text-2xl" title={character.name}>{character.emoji}</span>
@@ -172,7 +172,7 @@ export default function TaskLeaderboard() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    {voucher && <Badge className="bg-warning text-warning-foreground">{voucher.label}</Badge>}
+                    {voucher && <Badge className="bg-primary/20 text-foreground">{voucher.label}</Badge>}
                     <Button variant="outline" size="sm" onClick={() => certificate(entry, rank)}>Certificate</Button>
                   </div>
                 </div>

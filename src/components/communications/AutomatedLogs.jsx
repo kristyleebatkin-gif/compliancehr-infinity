@@ -16,7 +16,7 @@ const AUTOMATED_FILTER = {
 const PAGE_SIZE = 50;
 
 const sourceBadge = (entry) => {
-  if (entry.sender_name === 'System (Compliance Reminders)') return { label: 'Document expiry alert', className: 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300' };
+  if (entry.sender_name === 'System (Compliance Reminders)') return { label: 'Document expiry alert', className: 'bg-chart-2/15 text-foreground' };
   return { label: 'Task reminder', className: 'bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300' };
 };
 

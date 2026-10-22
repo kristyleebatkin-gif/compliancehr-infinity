@@ -87,13 +87,13 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
       ) : (
         <div className="space-y-6">
           {!selfOnly && (<section className="space-y-2">
-            <h3 className="flex items-center gap-2 text-sm font-bold"><Siren className="h-4 w-4 text-warning" />Live System Alerts ({alerts.length})</h3>
+            <h3 className="flex items-center gap-2 text-sm font-bold"><Siren className="h-4 w-4 text-danger" />Live System Alerts ({alerts.length})</h3>
             {alerts.length === 0 ? (
               <p className="rounded-xl border border-safe/30 bg-safe/5 p-4 text-sm text-safe">All clear — every module's compliance tracker is in date.</p>
             ) : (
               <div className="grid gap-2 sm:grid-cols-2">
                 {alerts.map((a, i) => (
-                  <Link key={i} to={a.path} className="flex items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning/5 p-3 hover:bg-warning/10">
+                  <Link key={i} to={a.path} className="flex items-center justify-between gap-3 rounded-xl border border-danger/40 bg-danger/5 p-3 hover:bg-danger/10">
                     <div className="min-w-0">
                       <div className="truncate text-sm font-semibold">{a.label}</div>
                       <div className="truncate text-xs text-foreground/60">{a.tracker}</div>

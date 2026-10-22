@@ -43,7 +43,7 @@
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+2) { --dashboard-tone: var(--teal); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+3) { --dashboard-tone: var(--chart-5); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+4) { --dashboard-tone: var(--safe); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5) { --dashboard-tone: var(--warning); }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5) { --dashboard-tone: var(--chart-2); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+6) { --dashboard-tone: var(--hr-evidence); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+1) { --dashboard-tone: var(--primary); }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) {

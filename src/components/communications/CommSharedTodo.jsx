@@ -5,7 +5,7 @@ import { ListTodo, Loader2, Plus, Send } from 'lucide-react';
 const statusTone = {
   Pending: 'bg-blue-100 text-blue-800',
   Open: 'bg-sky-100 text-sky-800',
-  'Pending Approval': 'bg-amber-100 text-amber-800',
+  'Pending Approval': 'bg-primary/15 text-foreground',
   'In Progress': 'bg-violet-100 text-violet-800',
 };
 

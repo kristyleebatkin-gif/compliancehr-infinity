@@ -20,10 +20,10 @@ export function complaintSla(complaint) {
     return { tone: 'text-red-600 bg-red-500/10 border-red-200', label: `${Math.abs(daysLeft)}d overdue` };
   }
   if (dayOfSla >= ESCALATION_DAY) {
-    return { tone: 'text-amber-600 bg-amber-500/10 border-amber-200', label: `Escalate · ${daysLeft}d left` };
+    return { tone: 'text-danger bg-danger/10 border-danger/30', label: `Escalate · ${daysLeft}d left` };
   }
   if (daysLeft <= 7) {
-    return { tone: 'text-amber-600 bg-amber-500/10 border-amber-200', label: `${daysLeft}d left` };
+    return { tone: 'text-danger bg-danger/10 border-danger/30', label: `${daysLeft}d left` };
   }
   return { tone: 'text-emerald-600 bg-emerald-500/10 border-emerald-200', label: `In SLA · ${daysLeft}d left` };
 }

@@ -72,7 +72,7 @@ export default function ShoutoutFeed() {
     <Card>
       <CardContent className="p-5">
         <div className="flex items-center gap-2">
-          <div className="rounded-lg bg-amber-500/10 p-2"><PartyPopper className="h-4 w-4 text-amber-600" /></div>
+          <div className="rounded-lg bg-chart-5/10 p-2"><PartyPopper className="h-4 w-4 text-chart-5" /></div>
           <div>
             <p className="text-sm font-bold">Team Shoutouts</p>
             <p className="text-xs text-muted-foreground">Recognise a teammate - every shoutout lands on the team feed</p>
@@ -97,7 +97,7 @@ export default function ShoutoutFeed() {
         <div className="mt-4 space-y-2">
           {items === null && <div className="flex justify-center py-6"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /></div>}
           {items && items.map((s) => (
-            <div key={s.id} className="rounded-xl border border-amber-200/60 bg-amber-500/10 p-3 dark:border-amber-500/20">
+            <div key={s.id} className="rounded-xl border border-chart-5/30 bg-chart-5/10 p-3">
               <p className="text-sm leading-snug">{s.body}</p>
               <p className="mt-1 text-[11px] text-foreground/50">{[s.sender_name, s.entry_date, s.entry_time].filter(Boolean).join(' · ')}</p>
             </div>

@@ -225,13 +225,13 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
           </div>
 
           {awaiting.length > 0 && (
-            <div className={compact ? 'max-h-60 space-y-2 overflow-y-auto rounded-lg border border-border bg-warning/5 p-2' : 'space-y-2'}>
+            <div className={compact ? 'max-h-60 space-y-2 overflow-y-auto rounded-lg border border-border bg-primary/5 p-2' : 'space-y-2'}>
               <p className="text-sm font-semibold">Awaiting manager sign-off ({awaiting.length})</p>
               {awaiting.map((t) => (
-                <div key={t.id} className="rounded-xl border border-amber-300/60 bg-amber-50/60 p-3.5 dark:bg-amber-500/10">
+                <div key={t.id} className="rounded-xl border border-primary/30 bg-primary/10 p-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <Badge className="border-transparent bg-amber-200 text-amber-900">Awaiting sign-off</Badge>
+                      <Badge className="border-transparent bg-primary/20 text-foreground">Awaiting sign-off</Badge>
                       <Badge variant="outline">{t.module || 'General'}</Badge>
                       <span className="text-sm font-semibold">{t.title}</span>
                     </div>

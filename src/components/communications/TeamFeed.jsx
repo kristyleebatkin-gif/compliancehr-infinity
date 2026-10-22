@@ -72,9 +72,9 @@ export default function TeamFeed() {
           )}
           {items !== null && shown.map((i) => (
             i._kind === 'Shoutout' ? (
-              <div key={i.id} className="rounded-xl border border-amber-200/60 bg-amber-500/10 p-2 dark:border-amber-500/20">
+              <div key={i.id} className="rounded-xl border border-chart-5/30 bg-chart-5/10 p-2">
                 <div className="mb-1 flex items-center gap-2">
-                  <Badge className="gap-1 border-0 bg-amber-500/20 text-amber-700 hover:bg-amber-500/20 dark:text-amber-300">
+                  <Badge className="gap-1 border-0 bg-chart-5/20 text-foreground hover:bg-chart-5/20">
                     <PartyPopper className="h-3 w-3" /> Shoutout
                   </Badge>
                   <span className="text-[11px] font-semibold text-foreground/60">{i.person_name}</span>

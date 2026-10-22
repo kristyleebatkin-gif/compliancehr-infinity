@@ -1,5 +1,5 @@
 .task-competition { border: 1px solid hsl(var(--chart-5) / .35); border-radius: 1rem; padding: .85rem; background: linear-gradient(130deg, hsl(var(--chart-5) / .1), hsl(var(--primary) / .07), hsl(var(--card))); }
 .task-competition > summary { cursor: pointer; padding: .5rem; font-size: .875rem; font-weight: 800; }
 .task-competition .competition-content > .grid > div { border-color: hsl(var(--chart-5) / .3); background: linear-gradient(130deg, hsl(var(--chart-5) / .1), hsl(var(--card)) 80%); }
-.task-competition .competition-content > div:nth-child(3) { border-color: hsl(var(--warning) / .4); background: linear-gradient(120deg, hsl(var(--warning) / .1), hsl(var(--card))); }
+.task-competition .competition-content > div:nth-child(3) { border-color: hsl(var(--primary) / .4); background: linear-gradient(120deg, hsl(var(--primary) / .1), hsl(var(--card))); }
 .task-competition .competition-content button { border-radius: .6rem; }
