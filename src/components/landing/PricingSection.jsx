@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers, Users,
-  ClipboardCheck, Lock, TrendingUp, RefreshCw, Award, Building2,
+  ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers,
+  ClipboardCheck, Lock, RefreshCw,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
@@ -10,14 +10,10 @@ const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 const DEFAULT_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
-const CHOICES_NQ_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
-const MASTER_AUDIT_DUAL_IMAGE =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a4e081538_ChoicesNQMasterComplianceAuditDoc2026.png';
 const FULL_SLOGAN = 'Complete Control. Greater Confidence. Brighter Success.';
 
 /**
- * Previous ComplianceHR Infinity monthly prices increased by +$160/month across every tier
+ * ComplianceHR Infinity monthly prices increased by +$160/month across every tier
  * to include the $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack:
  * - Up to 20 users:  $500 + $160 = $660 / mo ($7,920 / yr)
  * - 21–30 users:     $563 + $160 = $723 / mo ($8,670 / yr)
@@ -67,7 +63,7 @@ export const COMPLIANCE_HR_PACKAGES = [
       'Base $563/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
-      'Includes $355 Master Compliance Audit Doc (CHN-AUD-001 & CHR-AUD-001)',
+      'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
       'Full 45-Module Smart Enhanced All-In-One Compliance Pack for 21–30 users',
       'Smart Rostering, Shift Notes, NDIS Price Guide Invoicing & Payroll',
       '24h / 5d NDIS Reportable Incident Timers, Risk Matrix & Take-5 Checks',
@@ -113,7 +109,7 @@ export const COMPLIANCE_HR_PACKAGES = [
       'Base $688/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
-      'Includes $355 Master Compliance Audit Doc (CHN-AUD-001 & CHR-AUD-001)',
+      'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
       'Complete Smart Enhanced All-In-One Compliance Pack for 41–50 users',
       'Multi-team Rostering, Labour Forecasting, Coverage Heatmap & Exceptions',
       'Quotes, Receipt Scanner, Bank Reconciliation & 3-Way Procurement Match',
@@ -159,7 +155,7 @@ export const COMPLIANCE_HR_PACKAGES = [
       'Base $875/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
-      'Includes $355 Master Compliance Audit Doc (CHN-AUD-001 & CHR-AUD-001)',
+      'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
       'Enterprise Smart Enhanced All-In-One Compliance Pack for 101+ users',
       'Unlimited Multi-Site Governance, Auditor Portal & Executive Wall Scenes',
       'Custom Modular Screen & Data Selector across all organisational branches',
@@ -178,7 +174,7 @@ export const CORE_PLATFORM_BENEFITS = [
   {
     icon: ClipboardCheck,
     title: '$355 Master Compliance Audit Doc Included Free',
-    desc: 'Both Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001) 11-page, 17-category, 356-checkpoint audit documents included.',
+    desc: 'Both ComplianceHR Infinity Governance (CHR-AUD-001) & Workforce Operations (CHR-AUD-002) 11-page, 17-category, 356-checkpoint audit documents included.',
     color: '#6d28d9',
   },
   {
@@ -281,7 +277,7 @@ export default function PricingSection({ compact = false }) {
               Smart Enhanced All-In-One Compliance Pack — Every Plan Includes the $160/mo Elite Plan + $355 Master Audit Checklist
             </div>
             <div className="text-[8px] font-bold text-purple-900">
-              Each user tier combines our standard ComplianceHR Infinity platform rate ($500–$875/mo) + <span className="font-black text-pink-700">$160/mo Elite Plan</span> (2,500 Message Credits &amp; 20,000 Integration Credits) + the <span className="font-black text-purple-950">$355 Master Compliance Audit Checklist (`CHN-AUD-001` &amp; `CHR-AUD-001`)</span>. Start with a <span className="font-black text-blue-950">14-Day Free Trial ($0 upfront)</span>!
+              Each user tier combines our standard ComplianceHR Infinity platform rate ($500–$875/mo) + <span className="font-black text-pink-700">$160/mo Elite Plan</span> (2,500 Message Credits &amp; 20,000 Integration Credits) + the <span className="font-black text-purple-950">$355 Master Compliance Audit Checklist (`CHR-AUD-001` &amp; `CHR-AUD-002`)</span>. Start with a <span className="font-black text-blue-950">14-Day Free Trial ($0 upfront)</span>!
             </div>
           </div>
         </div>
@@ -401,15 +397,15 @@ export default function PricingSection({ compact = false }) {
       {/* Standalone $355 Master Compliance Audit Checklist Option vs Free in Subscription */}
       {!compact && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-amber-400 bg-gradient-to-r from-amber-50 via-white to-purple-50 p-2 shadow-sm">
-          <div className="lg:col-span-5 overflow-hidden rounded-lg border border-purple-300 bg-white p-1 shadow-sm">
+          <div className="lg:col-span-3 flex items-center justify-center overflow-hidden rounded-lg border border-purple-300 bg-white p-2 shadow-sm">
             <Image
-              src={MASTER_AUDIT_DUAL_IMAGE}
-              alt="Choices NQ & ComplianceHR Infinity Master Compliance Audit Checklists"
+              src={DEFAULT_LOGO}
+              alt="ComplianceHR Infinity Master Compliance Audit Checklists"
               fittingType="fit"
-              className="h-44 sm:h-52 w-full object-contain"
+              className="h-24 sm:h-28 w-full object-contain"
             />
           </div>
-          <div className="lg:col-span-7 space-y-1.5">
+          <div className="lg:col-span-9 space-y-1.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
                 $355 STANDALONE COMPLIANCE DOCUMENT PACK
@@ -419,10 +415,10 @@ export default function PricingSection({ compact = false }) {
               </span>
             </div>
             <h4 className="text-xs sm:text-sm font-black text-blue-950">
-              2026 Master Compliance Audit Checklist Pack (`CHN-AUD-001` &amp; `CHR-AUD-001`) — 17 Audit Categories · 356 Checkpoints · 11 Pages
+              2026 ComplianceHR Infinity Master Compliance Audit Checklist Pack (`CHR-AUD-001` &amp; `CHR-AUD-002`) — 17 Audit Categories · 356 Checkpoints · 11 Pages
             </h4>
             <p className="text-[8px] font-semibold leading-snug text-blue-950">
-              Need the official 11-page Master Compliance Audit Checklist on its own? Get both the **Choices NQ (`CHN-AUD-001`)** and **ComplianceHR Infinity (`CHR-AUD-001`)** 356-checkpoint audit documents for **$355 standalone** — or subscribe to any **Smart Enhanced All-In-One Compliance Pack** ($660–$1,035/mo, including the $160/mo Elite Plan) and receive the interactive + printable PDF checklists **100% included**!
+              Need the official 11-page Master Compliance Audit Checklist on its own? Get both the **Governance &amp; NDIS Edition (`CHR-AUD-001`)** and **Workforce &amp; Operations Edition (`CHR-AUD-002`)** 356-checkpoint audit documents for **$355 standalone** — or subscribe to any **Smart Enhanced All-In-One Compliance Pack** ($660–$1,035/mo, including the $160/mo Elite Plan) and receive the interactive + printable PDF checklists **100% included**!
             </p>
             <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
               <a

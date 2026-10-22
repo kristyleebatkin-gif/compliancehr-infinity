@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import {
   ClipboardList, CheckCircle2, Target, Settings, Users, Mail, Phone,
   MapPin, Globe, FileText, Layers, Calendar, UserCheck, Building2,
-  HeartHandshake, Infinity as InfinityIcon, ChevronLeft, ChevronRight, Eye, Columns,
+  ShieldCheck, Infinity as InfinityIcon, ChevronLeft, ChevronRight, Columns,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
-const CHOICES_NQ_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
 const CHR_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
-const REFERENCE_ARTWORK = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/ef2dd9d4b_ComplianceHRInfinityComplianceAuditMasterDoc2026hereonprofile.png';
 
 export const AUDIT_CATEGORIES_17 = [
   {
@@ -145,25 +143,10 @@ export const AUDIT_CATEGORIES_17 = [
   },
 ];
 
-function ChoicesNqLogoEmblem() {
+function ComplianceHrInfinityLogoEmblem({ ringClass = 'ring-purple-200/80' }) {
   return (
     <div className="flex flex-col items-center justify-center text-center select-none">
-      <div className="flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ring-amber-200/80">
-        <Image
-          src={CHOICES_NQ_LOGO}
-          alt="Choices NQ — Registered NDIS Provider — Holistic & Individualised Supports in North Queensland"
-          fittingType="fit"
-          className="h-full w-full object-contain"
-        />
-      </div>
-    </div>
-  );
-}
-
-function ComplianceHrInfinityLogoEmblem() {
-  return (
-    <div className="flex flex-col items-center justify-center text-center select-none">
-      <div className="flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ring-purple-200/80">
+      <div className={`flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ${ringClass}`}>
         <Image
           src={CHR_LOGO}
           alt="ComplianceHR Infinity — Complete Control. Greater Confidence. Brighter Success."
@@ -176,9 +159,9 @@ function ComplianceHrInfinityLogoEmblem() {
 }
 
 /**
- * Single Master Compliance Audit Checklist Form Page — supports both:
- *  - variant="choices" (Gold / Amber / Deep Purple wave theme — CHN-AUD-001)
- *  - variant="infinity" (Blue / Purple / Magenta-Pink wave theme — CHR-AUD-001)
+ * Single Master Compliance Audit Checklist Form Page — supports both visual editions:
+ *  - variant="gold" (Gold / Amber / Deep Purple wave theme — CHR-AUD-001 Governance & NDIS Edition)
+ *  - variant="infinity" (Blue / Purple / Magenta-Pink wave theme — CHR-AUD-002 Workforce & Operations Edition)
  */
 export function SingleMasterComplianceAuditForm({
   variant = 'infinity',
@@ -186,34 +169,33 @@ export function SingleMasterComplianceAuditForm({
   onChangeCategory,
   compact = false,
 }) {
-  const isChoices = variant === 'choices';
+  const isGold = variant === 'gold' || variant === 'choices';
   const category = AUDIT_CATEGORIES_17[categoryIndex] || AUDIT_CATEGORIES_17[0];
 
   const [meta, setMeta] = useState(() =>
-    isChoices
+    isGold
       ? {
-          docNumber: 'CHN-AUD-001',
-          version: '1.0',
+          docNumber: 'CHR-AUD-001',
+          version: '2.0',
           issueDate: '22 October 2026',
           reviewDate: '22 October 2027',
-          businessName: 'Choices NQ',
-          abn: '11 769 681 650',
-          approvedBy: 'Kristy Whelan, Managing Director',
-          email: 'A.ChoicesNQ@outlook.com',
+          businessName: 'ComplianceHR Infinity · Governance & NDIS',
+          abn: 'Registered Provider Edition',
+          approvedBy: 'Kristy Lee Whelan, Managing Director',
+          email: 'kristyleebatkin@live.com.au',
         }
       : {
-          docNumber: 'CHR-AUD-001',
-          version: '1.0',
+          docNumber: 'CHR-AUD-002',
+          version: '2.0',
           issueDate: '22 October 2026',
           reviewDate: '22 October 2027',
-          businessName: 'ComplianceHR Infinity',
-          abn: '',
-          approvedBy: 'Director',
+          businessName: 'ComplianceHR Infinity · Workforce & HR',
+          abn: 'Enterprise Operations Edition',
+          approvedBy: 'Kristy Lee Whelan, Director',
           email: 'admin@compliancehr.com.au',
         }
   );
 
-  // Interactive checkpoint state per row
   const [rowStates, setRowStates] = useState({});
 
   const toggleStatus = (no, status) => {
@@ -239,8 +221,7 @@ export function SingleMasterComplianceAuditForm({
     }));
   };
 
-  // Visual theme tokens matching the two forms in the user's attached image
-  const theme = isChoices
+  const theme = isGold
     ? {
         outerBorder: 'border-amber-400',
         pillBarGradient: 'linear-gradient(90deg, #fde047 0%, #f59e0b 50%, #facc15 100%)',
@@ -286,13 +267,12 @@ export function SingleMasterComplianceAuditForm({
     <div className={`relative flex flex-col justify-between overflow-hidden rounded-xl border-2 ${theme.outerBorder} bg-white shadow-md`}>
       {/* ==================== TOP WAVE BANNER & BRAND LOCKUP ==================== */}
       <div className="relative overflow-hidden bg-white pt-1.5 pb-1 px-2">
-        {/* Left & Right Corner Flowing Wave Ribbons (Recreated SVG Waves) */}
         <svg
           viewBox="0 0 600 95"
           preserveAspectRatio="none"
           className="pointer-events-none absolute inset-x-0 top-0 h-16 w-full"
         >
-          {isChoices ? (
+          {isGold ? (
             <>
               <path d="M0,0 L230,0 C175,26 110,55 0,78 Z" fill="#f59e0b" opacity="0.88" />
               <path d="M0,0 L185,0 C135,22 80,45 0,60 Z" fill="#581c87" opacity="0.92" />
@@ -315,7 +295,7 @@ export function SingleMasterComplianceAuditForm({
 
         {/* Center Brand Emblem */}
         <div className="relative z-10 flex flex-col items-center">
-          {isChoices ? <ChoicesNqLogoEmblem /> : <ComplianceHrInfinityLogoEmblem />}
+          <ComplianceHrInfinityLogoEmblem ringClass={isGold ? 'ring-amber-300' : 'ring-purple-200/80'} />
 
           {/* Document Main Heading */}
           <h3 className="mt-0.5 text-center text-sm sm:text-base font-black tracking-tight text-blue-950">
@@ -387,7 +367,7 @@ export function SingleMasterComplianceAuditForm({
           <div className={`overflow-hidden rounded-lg border ${theme.cardBorder} ${theme.cardTint} text-[8px]`}>
             {[
               { icon: Building2, label: 'Business name:', key: 'businessName' },
-              { icon: UserCheck, label: 'ABN:', key: 'abn', placeholder: 'Enter ABN…' },
+              { icon: UserCheck, label: 'Edition / ABN:', key: 'abn', placeholder: 'Enter ABN…' },
               { icon: UserCheck, label: 'Approved by:', key: 'approvedBy' },
               { icon: Mail, label: 'Email:', key: 'email' },
             ].map((row, idx) => {
@@ -436,14 +416,14 @@ export function SingleMasterComplianceAuditForm({
           </div>
           <div className="relative flex items-center justify-between gap-2 px-2.5 py-1.5">
             <p className="text-[7.8px] font-semibold leading-snug text-blue-950">
-              This Master Compliance Audit Checklist provides a comprehensive tool to help NDIS registered
-              providers assess and monitor their compliance with the NDIS Practice Standards, National Disability
-              Insurance Scheme (Provider Registration and Practice Standards) Rules 2018 and relevant legislation.
+              This ComplianceHR Infinity Master Compliance Audit Checklist provides a comprehensive tool to help NDIS
+              registered providers and care organisations assess and monitor compliance with the NDIS Practice Standards,
+              Provider Registration Rules 2018, WHS, Fair Work and relevant legislation.
             </p>
             <div className="h-10 w-16 shrink-0 overflow-hidden rounded bg-white/70 p-0.5 opacity-45">
               <Image
-                src={isChoices ? CHOICES_NQ_LOGO : CHR_LOGO}
-                alt={isChoices ? 'Choices NQ emblem' : 'ComplianceHR Infinity emblem'}
+                src={CHR_LOGO}
+                alt="ComplianceHR Infinity emblem"
                 fittingType="fit"
                 className="h-full w-full object-contain"
               />
@@ -485,7 +465,7 @@ export function SingleMasterComplianceAuditForm({
               ))}
             </ol>
             <div className="hidden sm:flex h-12 w-10 shrink-0 flex-col items-center justify-center rounded-lg border-2 border-current/20 bg-white/70 p-1 opacity-45">
-              <ClipboardList className={`h-8 w-8 ${isChoices ? 'text-amber-600' : 'text-purple-600'}`} />
+              <ClipboardList className={`h-8 w-8 ${isGold ? 'text-amber-600' : 'text-purple-600'}`} />
             </div>
           </div>
         </div>
@@ -526,9 +506,8 @@ export function SingleMasterComplianceAuditForm({
           </div>
         </div>
 
-        {/* ==================== 1. BUSINESS GOVERNANCE AND OPERATIONAL MANAGEMENT (TABLE) ==================== */}
+        {/* ==================== CATEGORY CHECKPOINTS TABLE ==================== */}
         <div className={`overflow-hidden rounded-lg border ${theme.cardBorder} bg-white`}>
-          {/* Category Purple Bar with Category Switcher */}
           <div
             className="flex items-center justify-between gap-1 px-2 py-1 text-white"
             style={{ background: theme.tableHeaderGradient }}
@@ -572,7 +551,6 @@ export function SingleMasterComplianceAuditForm({
             </div>
           </div>
 
-          {/* Audit Requirement Checkpoints Table */}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-[7.2px]">
               <thead>
@@ -710,7 +688,7 @@ export function SingleMasterComplianceAuditForm({
           preserveAspectRatio="none"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-10 w-full"
         >
-          {isChoices ? (
+          {isGold ? (
             <>
               <path d="M0,60 L260,60 C190,42 110,22 0,8 Z" fill="#581c87" opacity="0.9" />
               <path d="M0,60 L340,60 C260,46 160,30 0,20 Z" fill="#f59e0b" opacity="0.82" />
@@ -730,13 +708,13 @@ export function SingleMasterComplianceAuditForm({
         <div className="relative z-10 flex flex-col gap-1">
           {/* Contact Strip */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-[7.2px] font-extrabold text-blue-950">
-            {isChoices ? (
+            {isGold ? (
               <>
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 shadow-sm">
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-purple-950 text-white">
                     <Mail className="h-2 w-2" />
                   </span>
-                  A.ChoicesNQ@outlook.com
+                  kristyleebatkin@live.com.au
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 shadow-sm">
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-400 text-purple-950">
@@ -748,7 +726,7 @@ export function SingleMasterComplianceAuditForm({
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-400 text-purple-950">
                     <MapPin className="h-2 w-2" />
                   </span>
-                  575 Ross River Road, Kirwan, Townsville, QLD 4817
+                  North Queensland · Australia
                 </span>
               </>
             ) : (
@@ -791,18 +769,17 @@ export function SingleMasterComplianceAuditForm({
 }
 
 /**
- * Dual-App Master Compliance Audit Checklist Showcase:
- * Displays both recreated Master Compliance Audit Checklist forms side-by-side
- * (Choices NQ CHN-AUD-001 + ComplianceHR Infinity CHR-AUD-001), plus view switcher
- * and interactive category navigation across all 11 pages / 17 audit categories.
+ * ComplianceHR Infinity Master Compliance Audit Checklist Showcase:
+ * Displays both Gold Governance (`CHR-AUD-001`) and Infinity Operations (`CHR-AUD-002`)
+ * 11-page, 17-category, 356-checkpoint interactive forms side-by-side.
  */
 export default function MasterComplianceAuditForms({ compact = false, defaultView = 'both' }) {
-  const [displayMode, setDisplayMode] = useState(defaultView); // 'both' | 'infinity' | 'choices' | 'artwork'
+  const [displayMode, setDisplayMode] = useState(defaultView); // 'both' | 'infinity' | 'gold'
   const [categoryIndex, setCategoryIndex] = useState(0);
 
   return (
     <div id="audit-master-doc" className="scroll-mt-14 rounded-xl border-2 border-purple-600 bg-white p-1.5 shadow-md space-y-1.5">
-      {/* Top Control & App Switcher Bar */}
+      {/* Top Control & Edition Switcher Bar */}
       <div
         className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
         style={{
@@ -815,24 +792,23 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="truncate text-[9px] font-black uppercase tracking-wider">
-                MASTER COMPLIANCE AUDIT CHECKLIST · BOTH APPS (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
+                COMPLIANCEHR INFINITY · MASTER COMPLIANCE AUDIT CHECKLIST (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
               </span>
               <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                $355 STANDALONE DOC · INCLUDED FREE IN MONTHLY SUBSCRIPTION
+                $355 STANDALONE DOC · INCLUDED FREE IN SMART ENHANCED PLANS
               </span>
             </div>
             <div className="truncate text-[7.5px] font-bold text-amber-100">
-              Choices NQ (CHN-AUD-001) &amp; ComplianceHR Infinity (CHR-AUD-001) — Interactive &amp; Printable 11-Page Visual Forms
+              Governance &amp; NDIS Edition (CHR-AUD-001) + Workforce &amp; Operations Edition (CHR-AUD-002) — Interactive &amp; Printable 11-Page Visual Forms
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-1">
           {[
-            { id: 'both', label: 'Both Apps Side-by-Side', icon: Columns },
-            { id: 'infinity', label: 'ComplianceHR Infinity', icon: InfinityIcon },
-            { id: 'choices', label: 'Choices NQ', icon: HeartHandshake },
-            { id: 'artwork', label: 'Original Poster', icon: Eye },
+            { id: 'both', label: 'Both Editions Side-by-Side', icon: Columns },
+            { id: 'infinity', label: 'Infinity Purple Edition (CHR-AUD-002)', icon: InfinityIcon },
+            { id: 'gold', label: 'Executive Gold Edition (CHR-AUD-001)', icon: ShieldCheck },
           ].map((btn) => {
             const Icon = btn.icon;
             const active = displayMode === btn.id;
@@ -880,43 +856,30 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
       </div>
 
       {/* Recreated Forms Grid */}
-      {displayMode === 'artwork' ? (
-        <div className="space-y-1.5">
-          <div className="overflow-hidden rounded-xl border-2 border-purple-300 bg-white p-1">
-            <Image
-              src={REFERENCE_ARTWORK}
-              alt="Master Compliance Audit Checklist — Choices NQ and ComplianceHR Infinity"
-              fittingType="fit"
-              className="w-full h-auto object-contain rounded-lg"
-            />
-          </div>
-        </div>
-      ) : (
-        <div
-          className={
-            displayMode === 'both'
-              ? 'grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch'
-              : 'grid grid-cols-1 gap-1.5'
-          }
-        >
-          {(displayMode === 'both' || displayMode === 'choices') && (
-            <SingleMasterComplianceAuditForm
-              variant="choices"
-              categoryIndex={categoryIndex}
-              onChangeCategory={setCategoryIndex}
-              compact={compact && displayMode === 'both'}
-            />
-          )}
-          {(displayMode === 'both' || displayMode === 'infinity') && (
-            <SingleMasterComplianceAuditForm
-              variant="infinity"
-              categoryIndex={categoryIndex}
-              onChangeCategory={setCategoryIndex}
-              compact={compact && displayMode === 'both'}
-            />
-          )}
-        </div>
-      )}
+      <div
+        className={
+          displayMode === 'both'
+            ? 'grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch'
+            : 'grid grid-cols-1 gap-1.5'
+        }
+      >
+        {(displayMode === 'both' || displayMode === 'gold') && (
+          <SingleMasterComplianceAuditForm
+            variant="gold"
+            categoryIndex={categoryIndex}
+            onChangeCategory={setCategoryIndex}
+            compact={compact && displayMode === 'both'}
+          />
+        )}
+        {(displayMode === 'both' || displayMode === 'infinity') && (
+          <SingleMasterComplianceAuditForm
+            variant="infinity"
+            categoryIndex={categoryIndex}
+            onChangeCategory={setCategoryIndex}
+            compact={compact && displayMode === 'both'}
+          />
+        )}
+      </div>
     </div>
   );
 }

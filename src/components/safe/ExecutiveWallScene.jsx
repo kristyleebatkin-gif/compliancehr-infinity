@@ -985,7 +985,7 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Recreated Master Compliance Audit Checklist Forms for Both Apps (Choices NQ & ComplianceHR Infinity) */}
+      {/* Recreated Master Compliance Audit Checklist Forms for ComplianceHR Infinity (CHR-AUD-001 & CHR-AUD-002) */}
       <div className="bg-white px-1 pb-1">
         <MasterComplianceAuditForms />
       </div>

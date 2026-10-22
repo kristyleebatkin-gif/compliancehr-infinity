@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, ClipboardCheck, Users, Heart, CalendarClock, FileSpreadsheet,
-  AlertTriangle, GraduationCap,MessagesSquare, Building2, Sparkles, Lock,
-  CheckCircle2, ArrowRight, Layers, Zap, Award, FileText, Globe, Cpu,
+  ShieldCheck, ClipboardCheck, Users, CalendarClock,
+  AlertTriangle, GraduationCap, MessagesSquare, Building2,
+  CheckCircle2, ArrowRight, Cpu, Sparkles, TrendingUp,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
@@ -13,26 +13,33 @@ const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
-const CHOICES_NQ_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
-const MASTER_AUDIT_DUAL_IMAGE =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/a4e081538_ChoicesNQMasterComplianceAuditDoc2026.png';
+
+export const REPLACED_SOFTWARE_STACK = [
+  { tool: 'Standalone NDIS Audit Consultant & Templates', typicalCost: '$1,200/mo', color: '#6d28d9' },
+  { tool: 'HR Information System & Digital Contracts', typicalCost: '$450/mo', color: '#7c3aed' },
+  { tool: 'Shift Rostering & Award/Timesheet Software', typicalCost: '$550/mo', color: '#4f46e5' },
+  { tool: 'NDIS Price Guide Invoicing & Claiming Tool', typicalCost: '$400/mo', color: '#16a34a' },
+  { tool: 'Incident, Risk & WHS Compliance Software', typicalCost: '$480/mo', color: '#dc2626' },
+  { tool: 'LMS Staff Training & Certificate Generator', typicalCost: '$390/mo', color: '#0d9488' },
+  { tool: 'Team Messaging, Diary & Task Boards', typicalCost: '$320/mo', color: '#0891b2' },
+  { tool: 'Document Vault, Read-Receipts & E-Sign', typicalCost: '$290/mo', color: '#ca8a04' },
+];
 
 export const MUST_HAVE_PILLARS = [
   {
     id: 'master-audit-doc',
     badge: 'NEW · VALUED AT $355',
-    title: '1. $355 Master Compliance Audit Checklist Suite (Both Apps)',
-    subtitle: 'Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001)',
+    title: '1. $355 Master Compliance Audit Checklist Suite (CHR-AUD-001 & 002)',
+    subtitle: '17 Audit Categories · 356 Checkpoints · 11 Interactive & Printable Pages',
     color: '#6d28d9',
     icon: ClipboardCheck,
     items: [
       '17 Audit Categories & 356 Checkpoints across 11 structured pages',
-      'Dual-branded visual editions for Choices NQ & ComplianceHR Infinity',
+      'Dual Executive Gold (CHR-AUD-001) & Infinity Purple (CHR-AUD-002) editions',
       'Interactive Yes / No / N/A compliance status ticks with live evidence notes',
       'Corrective action owner assignment, target dates & completion tracking',
       '1-Click Printable PDF Audit Pack, Weekly Compliance Report & Board Pack',
-      'Valued at $355 standalone — INCLUDED FREE with every monthly subscription',
+      'Valued at $355 standalone — INCLUDED FREE in every Smart Enhanced plan',
     ],
   },
   {
@@ -46,7 +53,7 @@ export const MUST_HAVE_PILLARS = [
       'Switch live between Enhanced Office View, General Profile View, or Side-by-Side',
       'Interactive Modular Screen & Data Selector: pin up to 6 live modulars at once',
       'Framed wall art of all 45 modules + 16 Communication Centre modulars',
-      'Split Silver Screen with live Townsville/NQ weather & NDIS Commission news',
+      'Split Silver Screen with live local weather & NDIS Commission news',
       'Interactive PC Monitor, Secondary Branded Screen & Company Safe Vault',
       'Zero-gap, high-contrast Blue-Purple-Pink & 45-module colour architecture',
     ],
@@ -126,7 +133,7 @@ export const MUST_HAVE_PILLARS = [
       'HR Paperwork Hub: Employment Contracts, Position Descriptions & Digital Signing',
       '100-Point Staff File Completeness Tracker & Annual Performance Appraisals',
       'Interactive LMS Learner Portal with AI Course Author & AI Competency Quiz Drill',
-      'Auto-issued PDF Certificates of Completion signed by Kristy Whelan',
+      'Auto-issued PDF Certificates of Completion signed by Kristy Lee Whelan',
       'Skills Gap Analytics, Training Streaks, Buddy Shifts & Volunteer Placements',
       'Smart Document Vault with version control, read-receipts & renewal calendars',
     ],
@@ -135,7 +142,7 @@ export const MUST_HAVE_PILLARS = [
     id: 'automation-engine',
     badge: '100+ FUNCTIONS · 65+ WORKFLOWS',
     title: '8. 24/7 Autonomous Compliance Engine & AI Copilots',
-    subtitle: 'Powered by 2,500 Message Credits & 20,000 Integration Credits on Elite',
+    subtitle: 'Powered by 2,500 Message Credits & 20,000 Integration Credits on Elite Pack',
     color: '#db2777',
     icon: Cpu,
     items: [
@@ -162,41 +169,31 @@ export default function MustHaveFunctionsReview() {
       id="must-haves"
       className="rounded-2xl border-2 border-purple-600 bg-white p-2 sm:p-3 shadow-md space-y-2"
     >
-      {/* Top Banner: Why Every Provider Needs a ComplianceHR Infinity Subscription */}
+      {/* Top Banner: Why Every Organisation Needs a ComplianceHR Infinity Subscription */}
       <div
         className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <div className="flex items-center gap-1 shrink-0">
-            <div className="flex h-9 w-12 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-              <Image
-                src={CHR_LOGO}
-                alt="ComplianceHR Infinity"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div className="flex h-9 w-12 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-              <Image
-                src={CHOICES_NQ_LOGO}
-                alt="Choices NQ"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </div>
+          <div className="flex h-10 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
+            <Image
+              src={CHR_LOGO}
+              alt="ComplianceHR Infinity"
+              fittingType="fit"
+              className="h-full w-full object-contain"
+            />
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-xs sm:text-sm font-black uppercase tracking-wider">
-                Full Platform Review · Every Must-Have Function, Resource &amp; Feature
+                ComplianceHR Infinity · Full Review of Every Must-Have Function, Resource &amp; Feature
               </span>
               <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
-                INCLUDES $355 MASTER AUDIT DOC
+                INCLUDES $355 MASTER AUDIT DOC FREE
               </span>
             </div>
             <p className="text-[9px] font-bold text-amber-100">
-              Now possible with ComplianceHR Infinity &amp; Choices NQ — 45 Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
+              Complete Control. Greater Confidence. Brighter Success. — 45 Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
             </p>
           </div>
         </div>
@@ -206,13 +203,13 @@ export default function MustHaveFunctionsReview() {
             href="#audit-master-doc"
             className="rounded-full bg-amber-300 px-2.5 py-1 text-[8.5px] font-black text-blue-950 shadow-sm hover:bg-amber-200"
           >
-            View $355 Audit Doc
+            Inspect $355 Audit Doc
           </a>
           <Link
             to="/register"
             className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[8.5px] font-black text-blue-950 shadow-sm hover:bg-blue-50"
           >
-            Subscribe Now <ArrowRight className="h-2.5 w-2.5 text-pink-600" />
+            Start 14-Day Free Trial <ArrowRight className="h-2.5 w-2.5 text-pink-600" />
           </Link>
         </div>
       </div>
@@ -248,48 +245,45 @@ export default function MustHaveFunctionsReview() {
         ))}
       </div>
 
-      {/* $355 Master Compliance Audit Checklist Spotlight Box with Official Dual Visual */}
-      <div
-        id="audit-doc-value"
-        className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-amber-400 bg-gradient-to-r from-amber-50/90 via-white to-pink-50/80 p-2 shadow-sm"
-      >
-        <div className="lg:col-span-4 overflow-hidden rounded-xl border-2 border-purple-400 bg-white p-1 shadow-sm">
-          <Image
-            src={MASTER_AUDIT_DUAL_IMAGE}
-            alt="Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001) Master Compliance Audit Checklists"
-            fittingType="fit"
-            className="h-36 sm:h-44 w-full object-contain"
-          />
-        </div>
-        <div className="lg:col-span-5 space-y-1">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="rounded-full bg-rose-600 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white">
-              NEW $355 COMPLIANCE MASTER DOCUMENT
-            </span>
-            <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white">
-              INCLUDED FREE IN SMART ENHANCED PLANS
-            </span>
-          </div>
+      {/* Replace 8 Expensive Disconnected Subscriptions With One All-In-One Platform */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-purple-500 bg-gradient-to-r from-blue-50/80 via-purple-50/70 to-pink-50/80 p-2 shadow-sm">
+        <div className="lg:col-span-4 space-y-1">
+          <span className="inline-flex items-center gap-1 rounded-full bg-purple-800 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white">
+            <TrendingUp className="h-2.5 w-2.5 text-amber-300" /> Why Providers Subscribe Monthly
+          </span>
           <h3 className="text-xs sm:text-sm font-black text-blue-950">
-            Master Compliance Audit Checklist (`CHN-AUD-001` &amp; `CHR-AUD-001`) — 17 Audit Categories · 356 Checkpoints · 11 Pages
+            Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Smart Enhanced Subscription
           </h3>
           <p className="text-[8px] font-semibold leading-snug text-blue-950">
-            Built from real NDIS registered provider operations (**Choices NQ** &amp; **ComplianceHR Infinity**), this 11-page, 356-checkpoint Master Compliance Audit Checklist covers Governance, Participant Rights, HR Screening, Reportable Incidents, Complaints, WHS Risk, Emergency Management, Care Planning, Quality Assurance, Privacy &amp; NDIS Financial Claims. Purchase standalone for **$355**, or get it **100% included** inside your Smart Enhanced All-In-One ComplianceHR Infinity subscription ($660–$1,035/mo, which includes the $160/mo Elite Plan)!
+            Instead of paying for 8 separate HR, rostering, invoicing, LMS, incident, vault, messaging and audit tools that never talk to each other, **ComplianceHR Infinity** unifies all 45 modules + the **$160/mo Elite Plan** + the **$355 Master Compliance Audit Checklist (`CHR-AUD-001` &amp; `CHR-AUD-002`)** into one single source of truth starting at **$660/month** (with a 14-day $0 upfront trial).
           </p>
         </div>
 
+        <div className="lg:col-span-5 grid grid-cols-2 gap-1">
+          {REPLACED_SOFTWARE_STACK.map((item) => (
+            <div
+              key={item.tool}
+              className="flex items-center justify-between gap-1 rounded-lg border bg-white px-2 py-1 text-[7.3px] font-extrabold text-blue-950 shadow-sm"
+              style={{ borderColor: item.color, borderLeftWidth: '3px' }}
+            >
+              <span className="truncate">{item.tool}</span>
+              <span className="shrink-0 rounded bg-rose-50 px-1 py-0.5 text-[7px] font-black text-rose-700 line-through">
+                {item.typicalCost}
+              </span>
+            </div>
+          ))}
+        </div>
 
-
-        <div className="lg:col-span-3 flex flex-col gap-1 rounded-xl border-2 border-purple-500 bg-white p-2 text-center shadow-sm">
+        <div className="lg:col-span-3 flex flex-col gap-1 rounded-xl border-2 border-amber-400 bg-white p-2 text-center shadow-sm">
           <div className="text-[7.5px] font-black uppercase tracking-wider text-purple-800">
-            Standalone Document Pack
+            Included Free in Every Plan
           </div>
           <div className="flex items-baseline justify-center gap-1">
             <span className="font-editorial text-xl font-black text-blue-950">$355</span>
-            <span className="text-[7.5px] font-bold text-purple-700">one-off pack</span>
+            <span className="text-[7.5px] font-bold text-purple-700">Master Audit Doc</span>
           </div>
-          <div className="rounded-md bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 text-[7.5px] font-black text-emerald-900">
-            OR $0 (Included Free) with Monthly Subscription
+          <div className="rounded-md bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 text-[7.2px] font-black text-emerald-900">
+            CHR-AUD-001 &amp; CHR-AUD-002 · 17 Categories · 356 Checkpoints
           </div>
           <div className="grid grid-cols-2 gap-1 pt-0.5">
             <a
@@ -298,13 +292,13 @@ export default function MustHaveFunctionsReview() {
             >
               Preview 11 Pages
             </a>
-            <Link
-              to="/register"
+            <a
+              href="#pricing"
               className="rounded-lg px-2 py-1 text-[7.5px] font-black text-white shadow-sm"
               style={{ background: SQUISHED_GRADIENT }}
             >
-              Get Free in Plan
-            </Link>
+              View Plans
+            </a>
           </div>
         </div>
       </div>
@@ -391,7 +385,7 @@ export default function MustHaveFunctionsReview() {
 
               <div className="mt-2 pt-1 border-t border-purple-100 flex items-center justify-between">
                 <span className="text-[7px] font-extrabold text-purple-800">
-                  Included in Monthly Plan
+                  Included in Smart Enhanced Plan
                 </span>
                 <Link
                   to="/register"

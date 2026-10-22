@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles, ShieldCheck, ClipboardCheck, Layers, ArrowRight, CheckCircle2, Building2, Users,
+  ArrowRight, ShieldCheck, Sparkles, CheckCircle2, Layers, Zap, ClipboardCheck,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
@@ -10,8 +10,6 @@ import PricingSection from '@/components/landing/PricingSection';
 
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
-const CHOICES_NQ_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/7772df0fa_generated_image.png';
 
 export default function MarketingSafeShowcase() {
   return (
@@ -22,36 +20,26 @@ export default function MarketingSafeShowcase() {
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          {/* Dual Brand Logos + Main Headline */}
+          {/* Official ComplianceHR Infinity Brand Lockup + Main Headline */}
           <div className="flex items-center gap-2 min-w-0">
-            <div className="flex items-center gap-1 shrink-0">
-              <div className="flex h-10 w-14 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-                <Image
-                  src={CHR_LOGO}
-                  alt="ComplianceHR Infinity"
-                  fittingType="fit"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-              <div className="flex h-10 w-14 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-                <Image
-                  src={CHOICES_NQ_LOGO}
-                  alt="Choices NQ"
-                  fittingType="fit"
-                  className="h-full w-full object-contain"
-                />
-              </div>
+            <div className="flex h-10 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
+              <Image
+                src={CHR_LOGO}
+                alt="ComplianceHR Infinity"
+                fittingType="fit"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-                  ComplianceHR Infinity &amp; Choices NQ · Super-Platform
+                  ComplianceHR Infinity · Smart Enhanced All-In-One Business &amp; NDIS Super-Platform
                 </span>
                 <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
                   $355 MASTER AUDIT DOC INCLUDED FREE IN PLANS
                 </span>
                 <span className="rounded-full bg-white/20 px-2 py-0.5 text-[8px] font-black text-white">
-                  SMART ENHANCED PACKS: +$160/MO ELITE INCLUDED ($660–$1,035/MO)
+                  +$160/MO ELITE INCLUDED ($660–$1,035/MO)
                 </span>
               </div>
               <p className="text-[8.5px] font-bold text-amber-100">
@@ -69,16 +57,22 @@ export default function MarketingSafeShowcase() {
               1. Live Office &amp; Profile Workspace
             </a>
             <a
+              href="#audit-master-doc"
+              className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
+            >
+              2. $355 Master Audit Doc (356 Checkpoints)
+            </a>
+            <a
               href="#must-haves"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              2. Must-Have Functions &amp; $355 Doc
+              3. All 8 Must-Have Pillars &amp; 45 Modules
             </a>
             <a
               href="#pricing"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              3. Smart Enhanced Plans ($660–$1,035/mo)
+              4. Smart Enhanced Plans ($660–$1,035/mo)
             </a>
             <Link
               to="/login"
@@ -96,6 +90,123 @@ export default function MarketingSafeShowcase() {
         </div>
       </header>
 
+      {/* Flagship Sales Hero Ribbon: Why Every Provider Needs a ComplianceHR Infinity Subscription */}
+      <section className="rounded-2xl border-2 border-purple-600 bg-gradient-to-r from-blue-50/90 via-white to-pink-50/90 p-2 sm:p-2.5 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center">
+          <div className="lg:col-span-3 flex flex-col items-center justify-center rounded-xl border-2 border-purple-400 bg-white p-2 text-center shadow-sm">
+            <div className="h-24 sm:h-28 w-full flex items-center justify-center">
+              <Image
+                src={CHR_LOGO}
+                alt="ComplianceHR Infinity Logo"
+                fittingType="fit"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="mt-1 text-[10px] font-black text-blue-950">
+              Software: ComplianceHR Infinity
+            </div>
+            <div className="text-[8px] font-extrabold text-purple-800">
+              Complete Control. Greater Confidence. Brighter Success.
+            </div>
+            <div className="mt-0.5 text-[7.5px] font-bold text-pink-700">
+              Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 space-y-1">
+            <div className="flex flex-wrap items-center gap-1">
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-white"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                <Sparkles className="h-2.5 w-2.5 text-amber-200" /> The All-In-One NDIS, HR, Safety &amp; Operations Super-Platform
+              </span>
+              <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black text-white">
+                14-DAY FREE TRIAL · $0 UPFRONT
+              </span>
+            </div>
+
+            <h1 className="font-editorial text-lg sm:text-2xl font-black leading-tight text-blue-950">
+              Why Every Provider Needs a{' '}
+              <span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
+                ComplianceHR Infinity Monthly Subscription
+              </span>
+            </h1>
+
+            <p className="text-[8.5px] font-bold leading-snug text-blue-950">
+              Stop juggling disconnected spreadsheets, HR folders, rostering apps, and last-minute audit panic. **ComplianceHR Infinity** unites **45 live operational modules**, **16 Communication Centre modulars**, **100+ automated server functions**, **65+ 24/7 workflows**, a **Dual Interactive Office &amp; Profile Workspace**, and the new **$355 Master Compliance Audit Checklist (`CHR-AUD-001` &amp; `CHR-AUD-002` — 17 Categories · 356 Checkpoints · 11 Pages)** into one Smart Enhanced All-In-One Compliance Pack.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 pt-0.5">
+              {[
+                { label: 'Dual Office + Profile Views', sub: 'Interactive Wall & Modular Picker', color: '#2563eb' },
+                { label: '$355 Audit Doc Included', sub: '17 Categories · 356 Checkpoints', color: '#7c3aed' },
+                { label: '+$160/mo Elite Pack Built-In', sub: '2,500 Msg & 20,000 Int. Credits', color: '#db2777' },
+                { label: 'Audit-Ready Every Day', sub: '1-Click Evidence & Board PDFs', color: '#16a34a' },
+              ].map((pill) => (
+                <div
+                  key={pill.label}
+                  className="rounded-lg border bg-white px-2 py-1 shadow-sm"
+                  style={{ borderColor: pill.color, borderLeftWidth: '3px' }}
+                >
+                  <div className="text-[8px] font-black text-blue-950 leading-tight">{pill.label}</div>
+                  <div className="text-[7px] font-bold text-purple-800 leading-tight">{pill.sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-3 flex flex-col justify-between gap-1.5 rounded-xl border-2 border-pink-500 bg-white p-2 shadow-sm">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="rounded-full bg-pink-600 px-2 py-0.5 text-[7px] font-black uppercase tracking-wider text-white">
+                  Smart Enhanced All-In-One
+                </span>
+                <span className="text-[7.5px] font-black text-purple-900">+$160 Elite Included</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1">
+                <span className="text-[8px] font-bold text-purple-800">From</span>
+                <span className="font-editorial text-2xl font-black text-blue-950">$660</span>
+                <span className="text-[8px] font-bold text-purple-800">/ month</span>
+              </div>
+              <div className="text-[7.2px] font-extrabold text-blue-900">
+                ($500 base + $160/mo Elite Pack · Up to 20 users)
+              </div>
+              <ul className="mt-1 space-y-0.5 text-[7.3px] font-bold text-blue-950">
+                <li className="flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3 shrink-0 text-emerald-600" />
+                  <span>Includes $355 Master Audit Checklist Free</span>
+                </li>
+                <li className="flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3 shrink-0 text-blue-600" />
+                  <span>2,500 Message &amp; 20,000 Integration Credits</span>
+                </li>
+                <li className="flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3 shrink-0 text-purple-600" />
+                  <span>All 45 Modules + 14-Day $0 Free Trial</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-2 gap-1">
+              <Link
+                to="/register"
+                className="flex items-center justify-center gap-1 rounded-lg px-2 py-1.5 text-[8px] font-black text-white shadow-sm"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                Start $0 Trial <ArrowRight className="h-2.5 w-2.5" />
+              </Link>
+              <a
+                href="#pricing"
+                className="flex items-center justify-center rounded-lg border border-purple-400 bg-purple-50 px-2 py-1.5 text-[8px] font-black text-purple-950 hover:bg-purple-100"
+              >
+                Compare All 6 Tiers
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 1: Interactive Executive Office + General Profile + $355 Dual Master Compliance Audit Checklists */}
       <div id="live-workspace" className="scroll-mt-14">
         <ExecutiveWallScene showAllModulesMinimised={true} />
@@ -104,7 +215,7 @@ export default function MarketingSafeShowcase() {
       {/* Section 2: Full Review of Must-Have Functions, Resources, Features & $355 Master Audit Checklist */}
       <MustHaveFunctionsReview />
 
-      {/* Section 3: Fair Monthly Subscription Packages & Listed Benefits (Anchored on $160/mo Elite Plan & $355 Doc) */}
+      {/* Section 3: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}
       <PricingSection />
 
       {/* Compact High-Converting Footer Bar */}

@@ -101,16 +101,16 @@ export const MODULAR_SCREEN_DECKS = [
   },
   {
     key: 'compliance',
-    label: 'Master Compliance Audit Checklist (Both Apps)',
+    label: 'Master Compliance Audit Checklist (CHR-AUD-001 & 002)',
     shortLabel: 'Compliance & Audits',
     category: 'Compliance & Safety',
     path: '/compliance',
     color: '#6d28d9',
     icon: ShieldCheck,
-    description: '17 Audit Categories · 356 Checkpoints · Choices NQ (CHN-AUD-001) & ComplianceHR Infinity (CHR-AUD-001).',
+    description: '17 Audit Categories · 356 Checkpoints · Governance (CHR-AUD-001) & Workforce Operations (CHR-AUD-002).',
     highlights: [
-      { id: 'a1', title: 'Choices NQ · Master Compliance Audit (CHN-AUD-001)', subtitle: '17 Audit Categories | 356 Checkpoints · Kristy Whelan', badge: 'Page 1 of 11' },
-      { id: 'a2', title: 'ComplianceHR Infinity · Master Audit (CHR-AUD-001)', subtitle: '17 Audit Categories | 356 Checkpoints · Governance & NDIS', badge: 'Page 1 of 11' },
+      { id: 'a1', title: 'ComplianceHR Infinity · Governance Audit (CHR-AUD-001)', subtitle: '17 Audit Categories | 356 Checkpoints · Kristy Lee Whelan', badge: 'Page 1 of 11' },
+      { id: 'a2', title: 'ComplianceHR Infinity · Workforce Audit (CHR-AUD-002)', subtitle: '17 Audit Categories | 356 Checkpoints · HR, Safety & NDIS', badge: 'Page 1 of 11' },
     ],
   },
   {
