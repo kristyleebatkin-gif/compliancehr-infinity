@@ -66,7 +66,11 @@ export default function LandingHero() {
 
           <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-violet-600 dark:text-violet-400" />
-            The all-in-one NDIS compliance platform
+            Software: ComplianceHR INFINITY · Your Comprehensive ALL-IN-ONE Business Documentation Platform
+          </div>
+          <div className="mx-auto mt-3 flex flex-wrap items-center justify-center gap-2 text-xs font-extrabold text-violet-800">
+            <span className="rounded-full bg-violet-100 px-3 py-1">Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au</span>
+            <span className="rounded-full bg-pink-100 px-3 py-1 text-pink-800">Business Use: Choices North Queensland · Choices NQ</span>
           </div>
 
           <h1 className="mt-6 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-[4.4rem]">

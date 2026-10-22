@@ -128,11 +128,20 @@ export default function AppLayout() {
 
   const sidebarContent = (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex shrink-0 items-center gap-2.5 px-5 py-5">
-        <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR" className="h-10 w-10 rounded-xl bg-white object-contain shadow-sm ring-1 ring-brand/10" />
-        <div className="min-w-0">
-          <div className="text-[15px] font-bold tracking-tight font-editorial">Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span> <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand">Infinity</span></div>
-          <div className="mt-0.5 text-[10px] font-medium leading-snug text-brand/60 line-clamp-2">Complete Control. Greater Confidence. Brighter Success.</div>
+      <div
+        className="shrink-0 px-4 py-4 text-white"
+        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+      >
+        <div className="flex items-center gap-2.5">
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR INFINITY" className="h-10 w-10 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
+          <div className="min-w-0">
+            <div className="text-xs font-extrabold uppercase tracking-wider text-white">ComplianceHR INFINITY</div>
+            <div className="text-[10px] font-bold leading-tight text-white/95">Your Comprehensive ALL-IN-ONE Business Documentation Platform</div>
+          </div>
+        </div>
+        <div className="mt-2 rounded-lg bg-white/15 px-2.5 py-1.5 text-[10px] font-bold leading-snug text-white ring-1 ring-white/25">
+          <div>Business Use: Choices North Queensland (Choices NQ)</div>
+          <div className="truncate">Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au</div>
         </div>
       </div>
 
@@ -270,8 +279,8 @@ export default function AppLayout() {
               className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
             />
             <div className="hidden sm:block">
-              <div className="text-sm font-bold tracking-tight font-display text-foreground">{currentLabel}</div>
-              <div className="text-[11px] font-medium text-foreground/40">ComplianceHR Infinity</div>
+              <div className="text-sm font-extrabold tracking-tight font-display text-foreground">{currentLabel}</div>
+              <div className="text-[11px] font-bold text-violet-700">ComplianceHR INFINITY · Choices North Queensland (Choices NQ)</div>
             </div>
           </div>
 

@@ -8,7 +8,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
   return (
     <div className="app-readable min-h-screen flex flex-col justify-center items-center px-4 py-8 app-workspace-bg">
       <div className="w-full max-w-md space-y-5">
-        {/* Bright Blue, Purple, Pink Header Card with Company Safe Business Name, Logo & Slogan */}
+        {/* Bright Blue, Purple, Pink Header Card with Software, Developer & Business Use */}
         <div
           className="app-page-header relative overflow-hidden rounded-2xl p-5 text-white shadow-xl"
           style={{
@@ -19,20 +19,23 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
             <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-lg ring-2 ring-white/50">
               <Image
                 src={DEFAULT_LOGO}
-                alt={SOFTWARE_INFO.business.business_name}
+                alt="Choices North Queensland (Choices NQ)"
                 fittingType="fit"
                 className="h-full w-full object-contain"
               />
             </div>
             <div className="min-w-0">
-              <div className="text-[11px] font-extrabold uppercase tracking-wider text-white/95">
-                {SOFTWARE_INFO.name}
+              <div className="text-[11px] font-extrabold uppercase tracking-wider text-white">
+                Software: {SOFTWARE_INFO.name}
               </div>
-              <div className="truncate text-base sm:text-lg font-extrabold text-white">
-                {SOFTWARE_INFO.business.business_name}
+              <div className="text-sm font-extrabold leading-tight text-white">
+                Your Comprehensive ALL-IN-ONE Business Documentation Platform
               </div>
-              <div className="text-xs font-bold text-white/95">
-                {SOFTWARE_INFO.slogan}
+              <div className="mt-1 text-[11px] font-bold text-white/95">
+                Business Use: Choices North Queensland · Choices NQ
+              </div>
+              <div className="text-[11px] font-bold text-white/90">
+                Developer: {SOFTWARE_INFO.developer.name} · {SOFTWARE_INFO.developer.email}
               </div>
             </div>
           </div>
