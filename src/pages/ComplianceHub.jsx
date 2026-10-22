@@ -51,6 +51,7 @@ import MasterChecklist from '@/components/compliance/MasterChecklist';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
+import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -89,6 +90,7 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 // Tab order: NDIS Standards Map first, then the audit checklist and audit reports.
 const TABS = [
   ['standards-map', 'NDIS Standards Map'],
+  ['printable-2026-templates', '2026 Printable Office Templates (A4)'],
   ['screen-audit-2026', '45-Screen 2026 Smart-Fill Audit'],
   ['print-doc-store', 'Order Printed Binders & 125+ 2026 Docs'],
   ['master-checklist', 'Master Checklist'],
@@ -285,6 +287,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="standards-map" className="mt-2">
           <ControlEvidenceMap />
+        </TabsContent>
+
+        <TabsContent value="printable-2026-templates" className="mt-2">
+          <Standard2026PrintableTemplatesSuite />
         </TabsContent>
 
         <TabsContent value="screen-audit-2026" className="mt-2">

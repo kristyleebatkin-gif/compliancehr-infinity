@@ -7,6 +7,7 @@ import {
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
+import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
@@ -435,6 +436,9 @@ export default function Complete2026DocumentPrintStore() {
           ))}
         </div>
       </div>
+
+      {/* Interactive A4 Print-Ready 2026 Standard Document Template Studio */}
+      <Standard2026PrintableTemplatesSuite />
 
       {/* 6 Clear Pricing & Print Ordering Options */}
       <div className="space-y-1.5">
