@@ -25,6 +25,8 @@ import MeetingDetail from '@/components/meetings/MeetingDetail';
 import MeetingNavigation from '@/components/meetings/MeetingNavigation';
 import MeetingSearchFilters from '@/components/meetings/MeetingSearchFilters';
 import MeetingMinutesOutstanding from '@/components/meetings/MeetingMinutesOutstanding';
+import MeetingMasterpieceSuite from '@/components/meetings/MeetingMasterpieceSuite';
+import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import '@/components/dashboard/operationsWorkspace.css';
 
@@ -66,6 +68,25 @@ export default function MeetingCentre() {
   const openNew = () => {
     setEditingId(null);
     setForm(EMPTY_FORM);
+    setOpen(true);
+  };
+
+  const openPreset = (preset) => {
+    setEditingId(null);
+    setForm({
+      ...EMPTY_FORM,
+      title: preset.title,
+      meeting_type: preset.meeting_type,
+      date: format(new Date(), 'yyyy-MM-dd'),
+      time: '10:00',
+      duration: preset.duration,
+      location: preset.location,
+      chair: 'Kristy Lee Whelan',
+      minute_taker: 'Compliance Officer',
+      purpose: preset.purpose,
+      agenda: preset.agenda,
+      status: 'Scheduled',
+    });
     setOpen(true);
   };
 
@@ -159,6 +180,11 @@ export default function MeetingCentre() {
 
         <TabsContent value="register" className="mt-2 space-y-3">
           <MeetingMinutesOutstanding meetings={minutesOutstanding} />
+          <MeetingMasterpieceSuite
+            meetings={meetings}
+            onQuickSchedulePreset={openPreset}
+            onRefreshMeetings={load}
+          />
           {nextMeeting && (
             <Card className="overflow-hidden border-0 bg-gradient-to-r from-sky-600 via-violet-600 to-brand text-white shadow-lg">
               <CardContent className="flex flex-wrap items-center gap-3 p-3">
@@ -234,12 +260,24 @@ export default function MeetingCentre() {
           </div>
         </TabsContent>
 
+        <TabsContent value="masterpiece" className="mt-2">
+          <MeetingMasterpieceSuite
+            meetings={meetings}
+            onQuickSchedulePreset={openPreset}
+            onRefreshMeetings={load}
+          />
+        </TabsContent>
+
         <TabsContent value="calendar" className="mt-2">
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
           ) : (
             <MeetingCalendar meetings={meetings} />
           )}
+        </TabsContent>
+
+        <TabsContent value="flyers" className="mt-2">
+          <MarketingFlyerCampaign />
         </TabsContent>
 
       <Dialog open={open} onOpenChange={setOpen}>

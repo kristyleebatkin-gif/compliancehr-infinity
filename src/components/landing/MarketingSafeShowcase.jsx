@@ -6,6 +6,8 @@ import {
 import { Image } from '@/components/ui/image';
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import MustHaveFunctionsReview from '@/components/landing/MustHaveFunctionsReview';
+import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import PricingSection from '@/components/landing/PricingSection';
 
 const CHR_LOGO =
@@ -63,16 +65,22 @@ export default function MarketingSafeShowcase() {
               2. $355 Master Audit Doc (356 Checkpoints)
             </a>
             <a
-              href="#must-haves"
+              href="#screen-by-screen-audit"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              3. All 8 Must-Have Pillars &amp; 45 Modules
+              3. 45-Screen 2026 Smart-Fill Audit
+            </a>
+            <a
+              href="#marketing-flyer-campaign"
+              className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
+            >
+              4. Marketing Flyer Campaign
             </a>
             <a
               href="#pricing"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              4. Smart Enhanced Plans ($660–$1,035/mo)
+              5. Smart Enhanced Plans ($660–$1,035/mo)
             </a>
             <Link
               to="/login"
@@ -215,7 +223,13 @@ export default function MarketingSafeShowcase() {
       {/* Section 2: Full Review of Must-Have Functions, Resources, Features & $355 Master Audit Checklist */}
       <MustHaveFunctionsReview />
 
-      {/* Section 3: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}
+      {/* Section 3: Comprehensive 45-Screen 2026 Smart-Fill Audit & 1-Click Task Completion Studio */}
+      <ScreenByScreenMasterAudit2026 />
+
+      {/* Section 4: Ready-to-Launch Marketing Flyer Campaign Studio */}
+      <MarketingFlyerCampaign />
+
+      {/* Section 5: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}
       <PricingSection />
 
       {/* Compact High-Converting Footer Bar */}

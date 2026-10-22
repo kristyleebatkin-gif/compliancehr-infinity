@@ -6,6 +6,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import EmptyState from '@/components/EmptyState';
+import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import { useToast } from '@/components/ui/use-toast';
 import { Eye, Zap, SlidersHorizontal, Sparkles, Mail, Loader2, RefreshCw, Search, AlertTriangle, Clock } from 'lucide-react';
 
@@ -57,8 +59,8 @@ export default function SuggestionsHub() {
     <div className="compact-module space-y-2">
       <ModuleShell
         moduleKey="suggestions-hub"
-        title="Suggestions Hub"
-        subtitle="A live review of every module: what to visualise, automate and refine, generated from real register numbers."
+        title="Suggestions Hub & 45-Screen 2026 Master Audit"
+        subtitle="Screen-by-screen 2026 Smart-Fill compliance audit, 1-click task completion flows, and live register intelligence."
         actions={
           <div className="flex flex-wrap items-center gap-1">
             <div className="relative w-44 min-w-0">
@@ -74,6 +76,10 @@ export default function SuggestionsHub() {
           </div>
         }
       />
+
+      <ScreenByScreenMasterAudit2026 />
+
+      <MarketingFlyerCampaign />
 
       {loading && (
         <Card><CardContent className="p-8 flex items-center justify-center gap-2 text-muted-foreground">

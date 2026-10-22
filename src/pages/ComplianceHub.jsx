@@ -49,6 +49,7 @@ import ComplianceReadiness from '@/components/compliance/ComplianceReadiness';
 import AuditsTab from '@/components/compliance/AuditsTab';
 import MasterChecklist from '@/components/compliance/MasterChecklist';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
+import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -87,6 +88,7 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 // Tab order: NDIS Standards Map first, then the audit checklist and audit reports.
 const TABS = [
   ['standards-map', 'NDIS Standards Map'],
+  ['screen-audit-2026', '45-Screen 2026 Smart-Fill Audit'],
   ['master-checklist', 'Master Checklist'],
   ['audits', 'Audits'],
   ['audit-report-list', 'Internal Audit Report List'],
@@ -281,6 +283,10 @@ export default function ComplianceHub() {
 
         <TabsContent value="standards-map" className="mt-2">
           <ControlEvidenceMap />
+        </TabsContent>
+
+        <TabsContent value="screen-audit-2026" className="mt-2">
+          <ScreenByScreenMasterAudit2026 />
         </TabsContent>
 
         <TabsContent value="master-checklist" className="mt-2">
