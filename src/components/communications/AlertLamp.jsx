@@ -23,11 +23,13 @@ const beep = () => {
 };
 
 const CONFIG = {
-  alerts: { icon: Siren, label: 'Automated Alerts', colour: '#ec4899', clear: 'All clear' },
-  logs: { icon: History, label: 'Automated Alert Log', colour: '#7c3aed', clear: 'Log quiet' },
+  alerts: { icon: Siren, label: 'Alerts', colour: '#dc2626', clear: 'All clear' },
+  logs: { icon: History, label: 'Alert Log', colour: '#1e3a8a', clear: 'Log quiet' },
 };
 
-export default function AlertLamp({ kind, className, onClick }) {
+// A light shown on the communication board: it lights up (and sounds an alarm)
+// as alerts arrive. Tapping it opens that section.
+export default function AlertLamp({ kind, className }) {
   const [count, setCount] = useState(null);
   const prev = useRef(null);
   const { icon: Icon, label, colour, clear } = CONFIG[kind] || CONFIG.alerts;
@@ -61,34 +63,30 @@ export default function AlertLamp({ kind, className, onClick }) {
   }, [count]);
 
   const lit = (count ?? 0) > 0;
-  const Comp = onClick ? 'button' : TabsTrigger;
 
   return (
-    <Comp
-      {...(onClick ? { type: 'button', onClick } : { value: kind })}
+    <TabsTrigger
+      value={kind}
       aria-label={`${label}${lit ? `: ${count} active` : ''}`}
-      className={`group relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-xl border px-2.5 py-1.5 text-left transition-all ${className || ''}`}
+      className={`group relative flex w-full items-center justify-start gap-2 overflow-hidden rounded-xl border px-2 py-1 text-left transition-all ${className || ''}`}
       style={{
-        borderColor: `${colour}55`,
-        background: `linear-gradient(135deg, ${colour}22 0%, ${colour}0d 55%, hsl(var(--card)) 100%)`,
-        boxShadow: lit ? `0 0 16px 1px ${colour}55` : `0 4px 12px -6px ${colour}40`,
+        borderColor: lit ? `${colour}80` : 'hsl(var(--border))',
+        background: lit ? `linear-gradient(165deg, ${colour}2e 0%, hsl(var(--card)) 85%)` : 'hsl(var(--card))',
+        boxShadow: lit ? `0 0 20px 2px ${colour}73` : 'none',
       }}
     >
       <span
-        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white shadow-sm ${lit ? 'animate-pulse' : ''}`}
-        style={{
-          background: `linear-gradient(135deg, #2563eb 0%, ${colour} 100%)`,
-          boxShadow: lit ? `0 0 10px 1px ${colour}` : 'none',
-        }}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white shadow-md ${lit ? 'animate-pulse' : 'opacity-40'}`}
+        style={{ background: lit ? colour : '#94a3b8', boxShadow: lit ? `0 0 12px 2px ${colour}` : 'none' }}
       >
         <Icon aria-hidden="true" className="h-3 w-3" />
       </span>
       <span className="relative min-w-0 flex-1 leading-tight">
-        <span className="block truncate text-[11px] font-bold text-foreground">{label}</span>
-        <span className="block text-[10px] font-semibold" style={{ color: colour }}>
+        <span className="block text-xs font-bold text-foreground">{label}</span>
+        <span className="block text-[10px] font-semibold" style={{ color: lit ? colour : 'hsl(var(--muted-foreground))' }}>
           {count === null ? 'Checking…' : lit ? `${count} active` : clear}
         </span>
       </span>
-    </Comp>
+    </TabsTrigger>
   );
 }

@@ -185,62 +185,6 @@ export default function AutomatedLogs() {
 }
 
 // Compact bottom-of-page Automated Alert System styled in the app's blue-purple-pink brand colours.
-export function AutomatedAlertSystem({ selfOnly = false }) {
-  const [panel, setPanel] = useState(null); // null | 'alerts' | 'logs'
-  return (
-    <section
-      className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel"
-      style={{ borderTop: '4px solid #7c3aed' }}
-    >
-      <div
-        className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-3 py-1.5"
-        style={{ background: 'var(--header-gradient)', color: '#fff' }}
-      >
-        <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
-            <Siren className="h-3.5 w-3.5 text-white" />
-          </span>
-          <div>
-            <h3 className="text-xs font-extrabold text-white">Automated Alert System</h3>
-            <p className="text-[10px] text-white/90">Live compliance notifications & automated reminder log</p>
-          </div>
-        </div>
-        {panel && (
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            onClick={() => setPanel(null)}
-            className="h-6 border-white/40 bg-white/15 px-2 text-[10px] font-bold text-white hover:bg-white/25"
-          >
-            Minimise
-          </Button>
-        )}
-      </div>
-
-      <div
-        className="space-y-2 p-2"
-        style={{ background: 'linear-gradient(180deg, rgba(37, 99, 235, 0.07) 0%, rgba(124, 58, 237, 0.07) 50%, rgba(236, 72, 153, 0.06) 100%)' }}
-      >
-        <div
-          aria-label="Automated alerts"
-          className="grid grid-cols-2 gap-2"
-        >
-          <AlertLamp kind="alerts" onClick={() => setPanel((p) => (p === 'alerts' ? null : 'alerts'))} />
-          <AlertLamp kind="logs" onClick={() => setPanel((p) => (p === 'logs' ? null : 'logs'))} />
-        </div>
-
-        {panel === 'alerts' && (
-          <div className="max-h-60 overflow-y-auto rounded-xl border border-pink-200/70 bg-white/90 p-2.5">
-            <AlertsCentre selfOnly={selfOnly} />
-          </div>
-        )}
-        {panel === 'logs' && (
-          <div className="rounded-xl">
-            <AutomatedLogs />
-          </div>
-        )}
-      </div>
-    </section>
-  );
+export function AutomatedAlertSystem() {
+  return <AutomatedLogs />;
 }
