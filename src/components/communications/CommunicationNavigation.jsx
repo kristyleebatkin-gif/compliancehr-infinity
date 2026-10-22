@@ -44,10 +44,10 @@ export default function CommunicationNavigation({ tabs }) {
         })}
       </TabsList>
       {/* Bottom corner lights: alerts and the alert log glow (and sound) as alerts arrive. */}
-      <div className="grid grid-cols-4 gap-2">
+      <TabsList aria-label="Communication alerts" data-dashboard-tabs={undefined} className="grid grid-cols-4 gap-2 rounded-none bg-transparent p-0 shadow-none">
         <AlertLamp kind="alerts" className="col-span-2" />
         <AlertLamp kind="logs" className="col-span-2" />
-      </div>
+      </TabsList>
     </div>
   );
 }
