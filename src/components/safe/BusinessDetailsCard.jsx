@@ -267,7 +267,7 @@ export default function BusinessDetailsCard() {
       </div>
 
       {/* Very Small Modular Icon Tiles Sharing All Details Under Name */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
         {MODULAR_SUBJECTS.map((item) => {
           const Icon = item.icon;
           const isOpen = !!openMap[item.key];

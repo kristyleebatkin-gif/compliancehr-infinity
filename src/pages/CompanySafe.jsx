@@ -85,7 +85,7 @@ export default function CompanySafe() {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
           {SAFE_MODULES.map((m) => {
             const Icon = m.icon;
             const isOpen = !!openArea[m.key];
