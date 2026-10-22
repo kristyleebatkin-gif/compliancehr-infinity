@@ -2,10 +2,15 @@ import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'compliancehr_company_branding';
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
+export const OFFICIAL_LOGO_WITH_SLOGAN_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+const LEGACY_LOGO_URLS = new Set([
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png',
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png',
+]);
 const DEFAULTS = {
   companyName: 'ComplianceHR Infinity',
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
-  logoUrl: 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png',
+  logoUrl: OFFICIAL_LOGO_WITH_SLOGAN_URL,
   logoDataUrl: '',
   addressLine: 'U5/14 Keane Street, Currajong, QLD, 4812',
   abn: '11769681650',
@@ -43,6 +48,9 @@ async function logoUrlToDataUrl(url) {
 export function getCompanyBranding() {
   try {
     const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    if (!branding.logoUrl || LEGACY_LOGO_URLS.has(branding.logoUrl)) {
+      branding.logoUrl = OFFICIAL_LOGO_WITH_SLOGAN_URL;
+    }
     // Older caches stored the slogan with the brand name prefixed; drop it so
     // documents never print the name twice.
     branding.slogan = String(branding.slogan || '')

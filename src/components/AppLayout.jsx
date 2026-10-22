@@ -149,10 +149,10 @@ export default function AppLayout() {
         style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
       >
         <div className="flex items-center gap-2.5">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png" alt="ComplianceHR INFINITY" className="h-9 w-9 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR INFINITY" className="h-9 w-9 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
           <div className="min-w-0">
             <div className="truncate text-xs font-extrabold uppercase tracking-wider text-white">ComplianceHR INFINITY</div>
-            <div className="truncate text-[10px] font-bold text-white/95">Complete Control. Greater Confidence.</div>
+            <div className="text-[9.5px] font-bold leading-tight text-white/95">Complete Control. Greater Confidence. Brighter Success.</div>
           </div>
         </div>
       </div>
@@ -285,7 +285,7 @@ export default function AppLayout() {
               <Menu className="h-5 w-5" />
             </button>
             <Image
-              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png"
+              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
               alt="ComplianceHR"
               fittingType="fit"
               className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
@@ -296,11 +296,23 @@ export default function AppLayout() {
             </div>
           </div>
 
-          {/* Global Switcher: Office View vs View Profiles */}
+          {/* Global Switcher: Both Views Side-by-Side, Office View, or View Profiles */}
           <div
             className="flex items-center gap-1 rounded-full p-1 shadow-sm"
             style={{ background: SQUISHED_GRADIENT }}
           >
+            <button
+              type="button"
+              onClick={() => switchWorkspaceView('both')}
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                workspaceView === 'both'
+                  ? 'bg-white text-blue-950 shadow-sm'
+                  : 'text-white hover:bg-white/15'
+              }`}
+            >
+              <Building2 className="h-3.5 w-3.5 text-blue-600" />
+              Both Views
+            </button>
             <button
               type="button"
               onClick={() => switchWorkspaceView('office')}

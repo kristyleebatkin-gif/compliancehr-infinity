@@ -33,7 +33,7 @@ export default function LandingNav() {
     <header className={`sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur-2xl transition-shadow duration-300 dark:border-white/10 dark:bg-background/80 ${scrolled ? 'shadow-lg shadow-slate-900/5' : 'shadow-sm'}`}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 md:px-6">
         <Link to="/" className="group flex shrink-0 items-center gap-2">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png" alt="ComplianceHR Infinity logo" className="h-10 w-10 rounded-xl shadow-md shadow-slate-900/10 ring-1 ring-slate-200 transition-transform group-hover:scale-105 dark:ring-white/10" fittingType="fit" />
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="h-10 w-10 rounded-xl shadow-md shadow-slate-900/10 ring-1 ring-slate-200 transition-transform group-hover:scale-105 dark:ring-white/10" fittingType="fit" />
           <span className="font-editorial text-lg font-semibold tracking-tight text-foreground">
             Compliance<span className="font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">HR</span>
             <span className="ml-1.5 hidden align-middle text-[11px] font-bold uppercase tracking-[0.2em] text-violet-600 sm:inline dark:text-violet-400">Infinity</span>

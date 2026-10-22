@@ -4,7 +4,7 @@ import {
   Lock, FolderLock, MessagesSquare, Inbox, Siren, History, Mail, NotebookPen,
   LayoutGrid, ListTodo, Lightbulb, BookMarked, Radio, Sparkles, Video, Briefcase,
   LayoutDashboard, Users, Heart, UserRound, Building2, ArrowRight, LogIn,
-  ShieldCheck, Monitor, Volume2, Eye,
+  ShieldCheck, Monitor, Columns, Eye, ExternalLink,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
@@ -15,11 +15,15 @@ import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import {
   CompanySafeMaterialPanel,
   ComplianceAndOperationsMaterialPanel,
+  LogoWithFullSloganCard,
+  LogoBrandedOfficeSecondScreen,
+  DEFAULT_LOGO,
+  FULL_SLOGAN,
 } from '@/components/safe/OfficeInteractiveMaterials';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
-const DEFAULT_SOFTWARE_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
+const DEFAULT_SOFTWARE_LOGO = DEFAULT_LOGO;
 
 /**
  * Reusable Hanging Wall Frame — makes each screenshot look like a real framed picture
@@ -31,14 +35,14 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
       {/* Brass Nail & Hanging Wire on the Office Wall */}
       <div className="relative flex flex-col items-center">
         <div className="h-2 w-2 rounded-full bg-amber-400 ring-2 ring-amber-600 shadow" />
-        <svg viewBox="0 0 80 12" className="h-2.5 w-16 -mt-0.5 overflow-visible">
+        <svg viewBox="0 0 80 12" className="h-2 w-14 -mt-0.5 overflow-visible">
           <path d="M40 0 L6 12 M40 0 L74 12" stroke="#b45309" strokeWidth="1.8" fill="none" />
         </svg>
       </div>
 
       {/* Outer Gallery Frame */}
       <div
-        className="w-full rounded-xl p-1.5 shadow-[0_10px_24px_-6px_rgba(15,23,42,0.35)] ring-2 ring-amber-300"
+        className="w-full rounded-xl p-1 shadow-[0_8px_20px_-6px_rgba(15,23,42,0.35)] ring-2 ring-amber-300"
         style={{ background: frameAccent }}
       >
         {/* Inner White Matboard & Screenshot Canvas */}
@@ -49,7 +53,7 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
 
       {/* Subtle Brass Wall Plaque Label under Picture */}
       {title && (
-        <div className="mt-0.5 rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-amber-950 shadow-sm">
+        <div className="mt-0.5 rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-[7px] font-extrabold uppercase tracking-wider text-amber-950 shadow-sm text-center">
           {title}
         </div>
       )}
@@ -60,35 +64,34 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
 /**
  * Complete Designed Office Equipment Scene:
  * - Executive Chair (Front-Left)
- * - Office Table with Studio Speaker, Interactive Widescreen PC Monitor & Office Phone (Center)
- * - Executive Couch, Indoor Plant, Floor Lamp & Company Safe Vault (Flanking)
- * Users can also click the PC Screen presets to change what material is shown on the PC Monitor!
+ * - Office Table with Studio Speaker, Interactive Widescreen PC Monitor (with Logo & Slogan) & Office Phone
+ * - Executive Couch, Indoor Plant & Company Safe Vault (with Logo Emblem)
  */
 function OfficeEquipmentWithInteractiveScreen({
   selectedMonitorFeed,
   onSelectMonitorFeed,
-  onSelectWallMaterial,
+  onSelectDataTab,
 }) {
   const feeds = [
-    { id: 'overview', label: '45 Modules Live', title: '45 MODULES HUB', sub: 'Complete Control · Greater Confidence', link: '/dashboard', accent: '#2563eb' },
-    { id: 'profiles', label: 'Staff & Participants', title: 'PEOPLE PROFILES', sub: 'Employees · Participants · Intake', link: '/our-employees', accent: '#7c3aed' },
-    { id: 'comms', label: 'Comms & Roster', title: 'COMMUNICATION & ROSTER', sub: 'Alerts · Shift Notes · Smart Vault', link: '/communications', accent: '#db2777' },
-    { id: 'safe', label: 'Company Safe', title: 'COMPANY SAFE VAULT', sub: 'Identity · Badges · NDIS Evidence', link: '/company-safe', accent: '#0d9488' },
+    { id: 'overview', label: '45 Modules Live', title: '45 MODULES HUB', sub: FULL_SLOGAN, dataTab: 'modules' },
+    { id: 'profiles', label: 'Staff & Participants', title: 'PEOPLE PROFILES', sub: 'Employees · Participants · Intake', dataTab: 'profiles' },
+    { id: 'comms', label: 'Comms & Roster', title: 'COMMS & ROSTER', sub: 'Alerts · Shift Notes · Smart Vault', dataTab: 'compliance' },
+    { id: 'safe', label: 'Company Safe', title: 'COMPANY SAFE VAULT', sub: 'Identity · Badges · NDIS Evidence', dataTab: 'safe' },
   ];
   const currentFeed = feeds.find((f) => f.id === selectedMonitorFeed) || feeds[0];
 
   return (
-    <div className="rounded-xl border-2 border-purple-300 bg-white px-2.5 py-1.5 shadow-sm">
+    <div className="rounded-xl border-2 border-purple-300 bg-white px-2 py-1.5 shadow-sm">
       {/* Interactive PC Monitor & Speaker Channel Controls Bar */}
-      <div className="mb-1 flex flex-wrap items-center justify-between gap-1.5 border-b border-purple-100 pb-1">
-        <div className="flex items-center gap-1.5 text-[8.5px] font-extrabold text-blue-950">
+      <div className="mb-1 flex flex-wrap items-center justify-between gap-1 border-b border-purple-100 pb-1">
+        <div className="flex items-center gap-1 text-[8px] font-extrabold text-blue-950">
           <span
             className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-white shadow-sm"
             style={{ background: SQUISHED_GRADIENT }}
           >
-            <Monitor className="h-2.5 w-2.5" /> Office Desk Display &amp; Speaker
+            <Monitor className="h-2.5 w-2.5" /> Desk PC Monitor &amp; Speaker
           </span>
-          <span className="text-purple-800">Click to change shown material on Desk Monitor &amp; Wall:</span>
+          <span className="text-purple-800">Select screen material:</span>
         </div>
         <div className="flex flex-wrap items-center gap-1">
           {feeds.map((feed) => (
@@ -97,12 +100,9 @@ function OfficeEquipmentWithInteractiveScreen({
               type="button"
               onClick={() => {
                 onSelectMonitorFeed(feed.id);
-                if (feed.id === 'profiles') onSelectWallMaterial('profiles');
-                else if (feed.id === 'safe') onSelectWallMaterial('safe');
-                else if (feed.id === 'comms') onSelectWallMaterial('compliance');
-                else onSelectWallMaterial('office');
+                if (onSelectDataTab) onSelectDataTab(feed.dataTab);
               }}
-              className={`rounded-full border px-2 py-0.5 text-[8px] font-extrabold transition-all ${
+              className={`rounded-full border px-2 py-0.5 text-[7.5px] font-extrabold transition-all ${
                 selectedMonitorFeed === feed.id
                   ? 'border-pink-500 text-white shadow-sm'
                   : 'border-purple-300 bg-white text-purple-950 hover:bg-purple-50'
@@ -117,7 +117,7 @@ function OfficeEquipmentWithInteractiveScreen({
 
       <svg
         viewBox="0 0 980 152"
-        className="mx-auto h-28 sm:h-32 w-full"
+        className="mx-auto h-24 sm:h-28 w-full"
         aria-label="Office Table with Speaker, PC Monitor, Chair, Couch and Safe"
       >
         <defs>
@@ -152,9 +152,7 @@ function OfficeEquipmentWithInteractiveScreen({
 
         {/* ==================== 2. EXECUTIVE OFFICE CHAIR (FRONT-LEFT) ==================== */}
         <g transform="translate(95, 6)">
-          {/* Headrest */}
           <rect x="38" y="0" width="76" height="22" rx="9" fill="url(#chairLeatherGrad)" stroke="#f9a8d4" strokeWidth="2.2" />
-          {/* Tufted High Backrest */}
           <path
             d="M24 24 Q76 16 128 24 L120 90 Q76 98 32 90 Z"
             fill="url(#chairLeatherGrad)"
@@ -163,12 +161,9 @@ function OfficeEquipmentWithInteractiveScreen({
           />
           <line x1="40" y1="45" x2="112" y2="45" stroke="#fbcfe8" strokeWidth="1.5" strokeOpacity="0.7" />
           <line x1="38" y1="66" x2="114" y2="66" stroke="#fbcfe8" strokeWidth="1.5" strokeOpacity="0.7" />
-          {/* Padded Armrests */}
           <path d="M8 52 Q18 46 26 54 L26 86 Q14 86 8 76 Z" fill="#1e40af" stroke="#93c5fd" strokeWidth="1.8" />
           <path d="M144 52 Q134 46 126 54 L126 86 Q138 86 144 76 Z" fill="#9d174d" stroke="#f9a8d4" strokeWidth="1.8" />
-          {/* Plush Seat Cushion */}
           <rect x="26" y="90" width="100" height="14" rx="7" fill="#312e81" stroke="#c4b5fd" strokeWidth="2" />
-          {/* Pneumatic Cylinder & 5-Star Castor Base */}
           <rect x="70" y="104" width="12" height="18" fill="#475569" />
           <path d="M34 124 L118 124" stroke="#64748b" strokeWidth="4.5" strokeLinecap="round" />
           <path d="M76 120 L42 130 M76 120 L110 130" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
@@ -201,17 +196,15 @@ function OfficeEquipmentWithInteractiveScreen({
           <g transform="translate(116, 2)">
             <rect x="0" y="0" width="186" height="60" rx="7" fill="#0f172a" stroke="#93c5fd" strokeWidth="2.2" />
             <rect x="5" y="5" width="176" height="46" rx="4" fill="url(#officeGradMain)" />
-            {/* Live Shown Material Title & Subtitle on Monitor */}
-            <text x="93" y="21" textAnchor="middle" fill="#ffffff" fontSize="9.5" fontWeight="800">
-              {currentFeed.title}
+            <text x="93" y="19" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontWeight="800">
+              COMPLIANCEHR INFINITY · {currentFeed.title}
             </text>
-            <text x="93" y="32" textAnchor="middle" fill="#fde68a" fontSize="7.5" fontWeight="700">
+            <text x="93" y="30" textAnchor="middle" fill="#fde68a" fontSize="6.8" fontWeight="700">
               {currentFeed.sub}
             </text>
-            <rect x="16" y="37" width="46" height="9" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
-            <rect x="69" y="37" width="46" height="9" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
-            <rect x="122" y="37" width="46" height="9" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
-            {/* Monitor Stand */}
+            <rect x="16" y="36" width="46" height="10" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
+            <rect x="69" y="36" width="46" height="10" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
+            <rect x="122" y="36" width="46" height="10" rx="2.5" fill="#ffffff" fillOpacity="0.92" />
             <rect x="83" y="60" width="20" height="10" fill="#475569" />
             <rect x="62" y="69" width="62" height="5" rx="2.5" fill="#94a3b8" />
           </g>
@@ -254,7 +247,6 @@ function OfficeEquipmentWithInteractiveScreen({
 
         {/* ==================== 4. EXECUTIVE COUCH & COMPANY SAFE VAULT (RIGHT) ==================== */}
         <g transform="translate(705, 34)">
-          {/* Executive Couch */}
           <rect x="10" y="12" width="142" height="42" rx="11" fill="url(#officeGradMain)" stroke="#93c5fd" strokeWidth="1.8" />
           <line x1="57" y1="16" x2="57" y2="52" stroke="#ffffff" strokeWidth="1.4" strokeOpacity="0.6" />
           <line x1="105" y1="16" x2="105" y2="52" stroke="#ffffff" strokeWidth="1.4" strokeOpacity="0.6" />
@@ -267,7 +259,6 @@ function OfficeEquipmentWithInteractiveScreen({
             EXECUTIVE LOUNGE COUCH
           </text>
 
-          {/* Company Safe Vault with Combination Dial */}
           <g transform="translate(174, 4)">
             <rect x="0" y="0" width="76" height="84" rx="8" fill="url(#officeGradMain)" stroke="#fde68a" strokeWidth="2" />
             <rect x="6" y="6" width="64" height="72" rx="5" fill="#1e1b4b" fillOpacity="0.4" stroke="#ffffff" strokeWidth="1" />
@@ -285,19 +276,9 @@ function OfficeEquipmentWithInteractiveScreen({
 }
 
 export function ComplianceHrPhotoFrame({ logoUrl }) {
-  const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
   return (
-    <WallHangingPictureFrame title="Picture 1 · ComplianceHR Infinity Logo">
-      <div className="flex flex-col items-center justify-center bg-white p-1 text-center">
-        <div className="flex h-24 w-full items-center justify-center overflow-hidden rounded-lg bg-white p-1">
-          <Image
-            src={frameSrc}
-            alt="ComplianceHR Infinity Logo Screenshot"
-            fittingType="fit"
-            className="h-full w-full object-contain"
-          />
-        </div>
-      </div>
+    <WallHangingPictureFrame title="Logo & Full Slogan">
+      <LogoWithFullSloganCard logoUrl={logoUrl} />
     </WallHangingPictureFrame>
   );
 }
@@ -318,8 +299,8 @@ export function SmallSafeVaultBar() {
           />
         </span>
         <div className="min-w-0">
-          <div className="truncate text-[9px] font-extrabold text-white">
-            ComplianceHR Infinity Smart Vault
+          <div className="truncate text-[8.5px] font-extrabold text-white">
+            ComplianceHR Infinity Smart Vault · {FULL_SLOGAN}
           </div>
         </div>
       </div>
@@ -362,7 +343,7 @@ const COMM_CENTRE_MODULARS = [
   { key: 'employee-log', label: 'Employee Log', icon: Briefcase, color: '#c026d3' },
 ];
 
-function CommunicationCentreScreenshot({ showRosterAbove = true }) {
+function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondScreen }) {
   return (
     <div className="space-y-1 bg-white">
       {showRosterAbove && <RosterMiniOverview />}
@@ -414,6 +395,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true }) {
               <Link
                 key={item.key}
                 to="/communications"
+                onClick={() => onSelectSecondScreen && onSelectSecondScreen('communications')}
                 className="flex items-center gap-1 rounded border px-1 py-0.5 text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: `${item.color}88`,
@@ -459,9 +441,17 @@ function CommunicationCentreScreenshot({ showRosterAbove = true }) {
 }
 
 /**
- * Interactive Profiles View — rendered when the user chooses "View Profiles"
+ * Interactive Profiles & Data Display View — rendered beside the Office View (or full width)
+ * so users can compare and use both the unique Office Experience and the direct Data Display Choice!
  */
-function ProfilesQuickDirectoryView() {
+function ProfilesAndDataDisplayColumn({
+  logoUrl,
+  companyName,
+  activeDataTab,
+  setActiveDataTab,
+  secondScreenKey,
+  onSelectSecondScreen,
+}) {
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -480,146 +470,264 @@ function ProfilesQuickDirectoryView() {
     return () => { active = false; };
   }, []);
 
+  const dataTabs = [
+    { id: 'profiles', label: 'Profiles Data', icon: Users },
+    { id: 'safe', label: 'Safe & Identity', icon: Lock },
+    { id: 'compliance', label: 'Compliance & Tasks', icon: ShieldCheck },
+    { id: 'modules', label: '45 Modules Data', icon: LayoutGrid },
+  ];
+
   return (
-    <div className="space-y-2.5 bg-white p-2">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <Link
-          to="/my-profile"
-          className="group flex items-center justify-between rounded-xl border-2 border-blue-400 bg-gradient-to-br from-blue-50 via-white to-violet-50 p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+    <div className="flex h-full flex-col justify-between rounded-xl border-2 border-purple-500 bg-white p-2 shadow-md space-y-2">
+      {/* Header Banner of View 2 (Profiles & Data Display Choice) with Logo + Full Slogan */}
+      <div className="space-y-1.5">
+        <div
+          className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1.5 text-white shadow-sm"
+          style={{ background: SQUISHED_GRADIENT }}
         >
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white shadow">
-              <UserRound className="h-4 w-4" />
-            </span>
-            <div>
-              <div className="text-xs font-extrabold text-blue-950">My Profile &amp; Work</div>
-              <div className="text-[9.5px] font-bold text-blue-700">Personal details, documents, name tag &amp; tasks</div>
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-0.5 shadow">
+              <Image
+                src={logoUrl || DEFAULT_SOFTWARE_LOGO}
+                alt="ComplianceHR Infinity Logo"
+                fittingType="fit"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+                VIEW 2 · PROFILES &amp; DATA DISPLAY CHOICE
+              </div>
+              <div className="truncate text-[8px] font-extrabold text-amber-100">
+                {FULL_SLOGAN}
+              </div>
             </div>
           </div>
-          <ArrowRight className="h-4 w-4 text-blue-600 transition-transform group-hover:translate-x-0.5" />
-        </Link>
 
-        <Link
-          to="/our-employees"
-          className="group flex items-center justify-between rounded-xl border-2 border-purple-400 bg-gradient-to-br from-purple-50 via-white to-pink-50 p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-        >
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-600 text-white shadow">
-              <Users className="h-4 w-4" />
-            </span>
-            <div>
-              <div className="text-xs font-extrabold text-purple-950">Our Employee Profiles</div>
-              <div className="text-[9.5px] font-bold text-purple-700">Staff files, HR compliance, shifts &amp; badges</div>
-            </div>
-          </div>
-          <ArrowRight className="h-4 w-4 text-purple-600 transition-transform group-hover:translate-x-0.5" />
-        </Link>
-
-        <Link
-          to="/our-participants"
-          className="group flex items-center justify-between rounded-xl border-2 border-pink-400 bg-gradient-to-br from-pink-50 via-white to-amber-50 p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-        >
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-pink-600 text-white shadow">
-              <Heart className="h-4 w-4" />
-            </span>
-            <div>
-              <div className="text-xs font-extrabold text-pink-950">Our Participant Profiles</div>
-              <div className="text-[9.5px] font-bold text-pink-700">NDIS plans, goals, consents, risks &amp; shift notes</div>
-            </div>
-          </div>
-          <ArrowRight className="h-4 w-4 text-pink-600 transition-transform group-hover:translate-x-0.5" />
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-        <div className="rounded-xl border-2 border-purple-300 bg-white p-2">
-          <div
-            className="mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <span className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold">
-              <Users className="h-3.5 w-3.5" /> Employee Profiles ({staff.length})
-            </span>
-            <Link to="/our-employees" className="rounded bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-purple-900">
-              View All Employees
-            </Link>
-          </div>
-          {loading ? (
-            <div className="py-3 text-center text-xs font-bold text-purple-700">Loading employee profiles…</div>
-          ) : staff.length === 0 ? (
-            <div className="py-3 text-center text-xs font-bold text-purple-800">
-              Open <Link to="/our-employees" className="underline">Our Employee Profiles</Link> to view or add staff records.
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-              {staff.slice(0, 6).map((person) => (
-                <Link
-                  key={person.id}
-                  to={`/our-employees/${person.id}`}
-                  className="flex items-center gap-1.5 rounded-lg border border-purple-200 bg-purple-50/60 px-2 py-1 text-left hover:border-purple-400 hover:bg-purple-100/70"
-                >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[9px] font-extrabold text-white">
-                    {(person.full_name || 'S')[0]}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate text-[9.5px] font-extrabold text-purple-950">{person.full_name}</div>
-                    <div className="truncate text-[8px] font-bold text-purple-700">{person.role || person.position || 'Staff'}</div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          <span className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-purple-950 shadow-sm">
+            Direct Data View
+          </span>
         </div>
 
-        <div className="rounded-xl border-2 border-pink-300 bg-white p-2">
-          <div
-            className="mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <span className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold">
-              <Heart className="h-3.5 w-3.5" /> Participant Profiles ({participants.length})
-            </span>
-            <Link to="/our-participants" className="rounded bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-pink-900">
-              View All Participants
-            </Link>
-          </div>
-          {loading ? (
-            <div className="py-3 text-center text-xs font-bold text-pink-700">Loading participant profiles…</div>
-          ) : participants.length === 0 ? (
-            <div className="py-3 text-center text-xs font-bold text-pink-800">
-              Open <Link to="/our-participants" className="underline">Our Participant Profiles</Link> to view or add participant records.
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-              {participants.slice(0, 6).map((person) => (
-                <Link
-                  key={person.id}
-                  to={`/our-participants/${person.id}`}
-                  className="flex items-center gap-1.5 rounded-lg border border-pink-200 bg-pink-50/60 px-2 py-1 text-left hover:border-pink-400 hover:bg-pink-100/70"
-                >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-pink-600 text-[9px] font-extrabold text-white">
-                    {(person.full_name || 'P')[0]}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate text-[9.5px] font-extrabold text-pink-950">{person.full_name}</div>
-                    <div className="truncate text-[8px] font-bold text-pink-700">{person.status || 'Active'}</div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+        {/* Data Display Choice Tabs */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
+          {dataTabs.map((t) => {
+            const Icon = t.icon;
+            const active = activeDataTab === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setActiveDataTab(t.id)}
+                className={`inline-flex items-center justify-center gap-1 rounded-lg border px-2 py-1 text-[8.5px] font-extrabold transition-all ${
+                  active
+                    ? 'border-pink-500 text-white shadow-sm'
+                    : 'border-purple-200 bg-purple-50/50 text-blue-950 hover:bg-purple-100/70'
+                }`}
+                style={active ? { background: SQUISHED_GRADIENT } : undefined}
+              >
+                <Icon className="h-3 w-3 shrink-0" />
+                <span className="truncate">{t.label}</span>
+              </button>
+            );
+          })}
         </div>
+
+        {/* Active Data Display Content */}
+        {activeDataTab === 'profiles' && (
+          <div className="space-y-2 pt-0.5">
+            <div className="grid grid-cols-1 gap-1.5">
+              <Link
+                to="/my-profile"
+                className="group flex items-center justify-between rounded-xl border-2 border-blue-400 bg-gradient-to-r from-blue-50 via-white to-violet-50 px-2.5 py-2 shadow-sm transition-all hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white shadow">
+                    <UserRound className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <div className="text-[11px] font-extrabold text-blue-950">My Profile &amp; Work</div>
+                    <div className="text-[9px] font-bold text-blue-700">Personal details, documents, name tag &amp; tasks</div>
+                  </div>
+                </div>
+                <ArrowRight className="h-3.5 w-3.5 text-blue-600" />
+              </Link>
+
+              <Link
+                to="/our-employees"
+                className="group flex items-center justify-between rounded-xl border-2 border-purple-400 bg-gradient-to-r from-purple-50 via-white to-pink-50 px-2.5 py-2 shadow-sm transition-all hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-600 text-white shadow">
+                    <Users className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <div className="text-[11px] font-extrabold text-purple-950">Our Employee Profiles ({staff.length})</div>
+                    <div className="text-[9px] font-bold text-purple-700">Staff files, HR compliance, shifts &amp; badges</div>
+                  </div>
+                </div>
+                <ArrowRight className="h-3.5 w-3.5 text-purple-600" />
+              </Link>
+
+              <Link
+                to="/our-participants"
+                className="group flex items-center justify-between rounded-xl border-2 border-pink-400 bg-gradient-to-r from-pink-50 via-white to-amber-50 px-2.5 py-2 shadow-sm transition-all hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-pink-600 text-white shadow">
+                    <Heart className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <div className="text-[11px] font-extrabold text-pink-950">Our Participant Profiles ({participants.length})</div>
+                    <div className="text-[9px] font-bold text-pink-700">NDIS plans, goals, consents, risks &amp; shift notes</div>
+                  </div>
+                </div>
+                <ArrowRight className="h-3.5 w-3.5 text-pink-600" />
+              </Link>
+            </div>
+
+            {/* Live Directory Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              <div className="rounded-xl border border-purple-300 bg-white p-2">
+                <div
+                  className="mb-1.5 flex items-center justify-between rounded px-2 py-0.5 text-white"
+                  style={{ background: SQUISHED_GRADIENT }}
+                >
+                  <span className="text-[9px] font-extrabold">Employee Directory</span>
+                  <Link to="/our-employees" className="rounded bg-white px-1.5 py-0 text-[7.5px] font-extrabold text-purple-900">
+                    Open All
+                  </Link>
+                </div>
+                {loading ? (
+                  <div className="py-2 text-center text-[9px] font-bold text-purple-700">Loading staff…</div>
+                ) : staff.length === 0 ? (
+                  <Link to="/our-employees" className="block py-2 text-center text-[9px] font-extrabold text-purple-800 underline">
+                    Open Employee Profiles Directory →
+                  </Link>
+                ) : (
+                  <div className="space-y-1">
+                    {staff.slice(0, 4).map((person) => (
+                      <Link
+                        key={person.id}
+                        to={`/our-employees/${person.id}`}
+                        className="flex items-center gap-1.5 rounded border border-purple-200 bg-purple-50/50 px-1.5 py-1 hover:bg-purple-100"
+                      >
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[8px] font-extrabold text-white">
+                          {(person.full_name || 'S')[0]}
+                        </span>
+                        <span className="truncate text-[8.5px] font-extrabold text-purple-950">{person.full_name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-pink-300 bg-white p-2">
+                <div
+                  className="mb-1.5 flex items-center justify-between rounded px-2 py-0.5 text-white"
+                  style={{ background: SQUISHED_GRADIENT }}
+                >
+                  <span className="text-[9px] font-extrabold">Participant Directory</span>
+                  <Link to="/our-participants" className="rounded bg-white px-1.5 py-0 text-[7.5px] font-extrabold text-pink-900">
+                    Open All
+                  </Link>
+                </div>
+                {loading ? (
+                  <div className="py-2 text-center text-[9px] font-bold text-pink-700">Loading participants…</div>
+                ) : participants.length === 0 ? (
+                  <Link to="/our-participants" className="block py-2 text-center text-[9px] font-extrabold text-pink-800 underline">
+                    Open Participant Profiles Directory →
+                  </Link>
+                ) : (
+                  <div className="space-y-1">
+                    {participants.slice(0, 4).map((person) => (
+                      <Link
+                        key={person.id}
+                        to={`/our-participants/${person.id}`}
+                        className="flex items-center gap-1.5 rounded border border-pink-200 bg-pink-50/50 px-1.5 py-1 hover:bg-pink-100"
+                      >
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-pink-600 text-[8px] font-extrabold text-white">
+                          {(person.full_name || 'P')[0]}
+                        </span>
+                        <span className="truncate text-[8.5px] font-extrabold text-pink-950">{person.full_name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeDataTab === 'safe' && (
+          <CompanySafeMaterialPanel companyName={companyName} logoUrl={logoUrl || DEFAULT_SOFTWARE_LOGO} />
+        )}
+
+        {activeDataTab === 'compliance' && (
+          <ComplianceAndOperationsMaterialPanel />
+        )}
+
+        {activeDataTab === 'modules' && (
+          <div className="rounded-xl border border-purple-200 bg-white p-2 space-y-1.5">
+            <div className="text-[9px] font-extrabold text-blue-950">
+              Click any module below to project it onto the Office Smart Screen #2 or open its data view:
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-72 overflow-y-auto pr-1">
+              {MODULE_DIRECTORY.map((mod) => {
+                const Icon = mod.icon;
+                const colour = moduleKeyColour(mod.key);
+                const isProjected = secondScreenKey === mod.key;
+                return (
+                  <div
+                    key={mod.key}
+                    className={`flex items-center justify-between gap-1 rounded-lg border px-1.5 py-1 ${
+                      isProjected ? 'ring-2 ring-pink-500 bg-pink-50/40' : 'bg-white'
+                    }`}
+                    style={{ borderColor: colour, borderLeftWidth: '3px' }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => onSelectSecondScreen(mod.key)}
+                      className="flex items-center gap-1 min-w-0 flex-1 text-left"
+                      title={`Show ${mod.label} on Office Screen #2`}
+                    >
+                      <span
+                        className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
+                        style={{ background: colour }}
+                      >
+                        <Icon className="h-2.5 w-2.5" />
+                      </span>
+                      <span className="truncate text-[8px] font-extrabold text-blue-950">{mod.label}</span>
+                    </button>
+                    <Link
+                      to={mod.path}
+                      className="shrink-0 rounded bg-purple-100 px-1 py-0.5 text-[7px] font-extrabold text-purple-900 hover:bg-purple-200"
+                    >
+                      Go
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Logo-Branded Office Item Showing Another Screen in the Office (Also accessible right inside the Data Column) */}
+      <LogoBrandedOfficeSecondScreen
+        logoUrl={logoUrl || DEFAULT_SOFTWARE_LOGO}
+        selectedScreen={secondScreenKey}
+        onSelectScreen={onSelectSecondScreen}
+        companyName={companyName}
+      />
     </div>
   );
 }
 
-const SHOWN_MATERIALS = [
-  { id: 'office', label: 'Office Wall & 45 Modules', icon: Building2 },
-  { id: 'profiles', label: 'View Profiles', icon: Users },
-  { id: 'safe', label: 'Company Safe & Identity', icon: Lock },
-  { id: 'compliance', label: 'Compliance, Tasks & Safety', icon: ShieldCheck },
+const LAYOUT_CHOICES = [
+  { id: 'both', label: 'Both Views Side-by-Side', icon: Columns },
+  { id: 'office', label: 'Office View Only', icon: Building2 },
+  { id: 'profiles', label: 'Profiles & Data View Only', icon: Users },
 ];
 
 export default function ExecutiveWallScene({
@@ -631,9 +739,12 @@ export default function ExecutiveWallScene({
   const frameSrc = logoUrl || DEFAULT_SOFTWARE_LOGO;
   const [viewMode, setViewMode] = useState(() => {
     if (defaultViewMode) return defaultViewMode;
-    return localStorage.getItem('chr-workspace-view-mode') || 'office';
+    const saved = localStorage.getItem('chr-workspace-view-mode');
+    return saved || 'both';
   });
   const [monitorFeed, setMonitorFeed] = useState('overview');
+  const [activeDataTab, setActiveDataTab] = useState('profiles');
+  const [secondScreenKey, setSecondScreenKey] = useState('our-staff');
 
   useEffect(() => {
     const syncViewMode = (e) => {
@@ -651,44 +762,48 @@ export default function ExecutiveWallScene({
 
   return (
     <div className="relative overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
-      {/* Top Ceiling Crown Moulding / Gallery Lighting Bar with Shown Materials Switcher */}
+      {/* Top Ceiling Crown Moulding / Gallery Lighting Bar with Side-by-Side & Single View Switcher */}
       <div
         className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-white"
         style={{ background: SQUISHED_GRADIENT }}
       >
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-6 rounded-full bg-amber-200 shadow-[0_0_10px_#fde68a]" />
-          <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-            ComplianceHR Infinity · Interactive Office &amp; Shown Materials
-          </span>
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5 shadow">
+            <Image src={frameSrc} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
+          </div>
+          <div className="min-w-0">
+            <div className="truncate text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+              {companyName} · {FULL_SLOGAN}
+            </div>
+          </div>
         </div>
 
-        {/* Shown Materials Switcher + Sign In */}
+        {/* View Comparison Switcher: Both Views Beside Each Other vs Office Only vs Profiles/Data Only */}
         <div className="flex flex-wrap items-center gap-1.5">
           <div className="flex flex-wrap items-center gap-1 rounded-full bg-white/20 p-0.5 backdrop-blur-sm">
-            {SHOWN_MATERIALS.map((mat) => {
-              const Icon = mat.icon;
-              const active = viewMode === mat.id;
+            {LAYOUT_CHOICES.map((choice) => {
+              const Icon = choice.icon;
+              const active = viewMode === choice.id;
               return (
                 <button
-                  key={mat.id}
+                  key={choice.id}
                   type="button"
-                  onClick={() => selectMode(mat.id)}
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold transition-all ${
+                  onClick={() => selectMode(choice.id)}
+                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
                     active
                       ? 'bg-white text-blue-950 shadow-sm'
                       : 'text-white hover:bg-white/15'
                   }`}
                 >
                   <Icon className={`h-2.5 w-2.5 ${active ? 'text-pink-600' : 'text-white'}`} />
-                  {mat.label}
+                  {choice.label}
                 </button>
               );
             })}
           </div>
           <Link
             to="/login"
-            className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold text-blue-950 shadow-sm hover:bg-pink-50"
+            className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-blue-950 shadow-sm hover:bg-pink-50"
           >
             <LogIn className="h-2.5 w-2.5 text-blue-600" />
             Sign In
@@ -696,141 +811,178 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      <div className="bg-white p-2 sm:p-2.5 space-y-2">
-        {/* TOP / WALL AREA: Renders the selected Shown Material framed on the Office Wall */}
-        {viewMode === 'profiles' && (
-          <WallHangingPictureFrame title="Shown Material · Employee, Participant & Personal Profiles">
-            <ProfilesQuickDirectoryView />
-          </WallHangingPictureFrame>
-        )}
+      {/* MAIN BODY: Renders Both Views Beside Each Other ('both'), or Single View ('office' / 'profiles') */}
+      <div className="bg-white p-2 sm:p-2.5">
+        <div
+          className={
+            viewMode === 'both'
+              ? 'grid grid-cols-1 lg:grid-cols-12 gap-2.5 items-stretch'
+              : 'space-y-2'
+          }
+        >
+          {/* ==================== VIEW 1: THE UNIQUE EXECUTIVE OFFICE EXPERIENCE ==================== */}
+          {(viewMode === 'both' || viewMode === 'office') && (
+            <div
+              className={`${
+                viewMode === 'both' ? 'lg:col-span-7' : 'w-full'
+              } flex flex-col justify-between rounded-xl border-2 border-blue-500 bg-white p-2 shadow-md space-y-2`}
+            >
+              {/* View 1 Header Badge */}
+              <div
+                className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white shadow-sm"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <Building2 className="h-3.5 w-3.5 text-amber-200" />
+                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider">
+                    VIEW 1 · UNIQUE EXECUTIVE OFFICE EXPERIENCE (WALL, TABLE, SPEAKER, CHAIR &amp; SCREENS)
+                  </span>
+                </div>
+                <span className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-blue-950">
+                  Interactive Office Room
+                </span>
+              </div>
 
-        {viewMode === 'safe' && (
-          <WallHangingPictureFrame title="Shown Material · Company Safe, Business Identity, Smart Vault & Staff Badges">
-            <CompanySafeMaterialPanel companyName={companyName} logoUrl={frameSrc} />
-          </WallHangingPictureFrame>
-        )}
+              {/* OFFICE WALL WITH HANGING FRAMED SCREENSHOTS */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-1.5 items-start">
+                {/* LEFT / CENTER WALL AREA (7 cols):
+                    Top Row: Picture 1 (Logo + Full Slogan) + Picture 2 ("Compliance management, simplified end to end." with Slogan)
+                    Bottom Row: Picture 3 (All 45 Modules Squashed Together) */}
+                <div className="md:col-span-7 flex flex-col gap-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 items-stretch">
+                    {/* PICTURE 1: Updated Logo with Full Slogan Shown */}
+                    <div className="sm:col-span-6">
+                      <WallHangingPictureFrame title="Logo & Full Slogan">
+                        <LogoWithFullSloganCard
+                          logoUrl={frameSrc}
+                          companyName={companyName}
+                          compact={viewMode === 'both'}
+                        />
+                      </WallHangingPictureFrame>
+                    </div>
 
-        {viewMode === 'compliance' && (
-          <WallHangingPictureFrame title="Shown Material · Compliance, Tasks, Incidents, Risks, Roster & Training">
-            <ComplianceAndOperationsMaterialPanel />
-          </WallHangingPictureFrame>
-        )}
+                    {/* PICTURE 2: Screenshot of "Compliance management, simplified end to end." with Slogan */}
+                    <div className="sm:col-span-6">
+                      <WallHangingPictureFrame title="Headline & Full Slogan">
+                        <div className="flex h-full min-h-[96px] flex-col items-center justify-center rounded bg-white px-2 py-1.5 text-center">
+                          <div className="font-editorial text-xs sm:text-sm font-bold leading-tight text-blue-950">
+                            Compliance management,
+                            <span className="block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
+                              simplified end to end.
+                            </span>
+                          </div>
+                          <div
+                            className="mt-1.5 w-full rounded-full px-2 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white shadow-sm"
+                            style={{ background: SQUISHED_GRADIENT }}
+                          >
+                            {FULL_SLOGAN}
+                          </div>
+                        </div>
+                      </WallHangingPictureFrame>
+                    </div>
+                  </div>
 
-        {viewMode === 'office' && (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-start">
-            {/* LEFT / CENTER WALL AREA (7 cols):
-                Top Row: Picture 1 (Logo Screenshot) + Picture 2 ("Compliance management, simplified end to end." with Slogan Screenshot)
-                Bottom Row: Picture 3 (All 45 Modules Squashed Together Screenshot) */}
-            <div className="md:col-span-7 flex flex-col gap-1.5">
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 items-stretch">
-                {/* PICTURE 1: Screenshot of My Logo */}
-                <div className="sm:col-span-5">
-                  <WallHangingPictureFrame title="Logo">
-                    <div className="flex h-20 w-full items-center justify-center bg-white p-1">
-                      <Image
-                        src={frameSrc}
-                        alt="ComplianceHR Infinity Logo"
-                        fittingType="fit"
-                        className="h-full w-full object-contain"
-                      />
+                  {/* PICTURE 3: Screenshot of All 45 Modules Squashed Together */}
+                  <WallHangingPictureFrame title={`${companyName} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}>
+                    <div className="space-y-1 bg-white">
+                      <div
+                        className="flex items-center justify-between rounded px-2 py-0.5 text-white"
+                        style={{ background: SQUISHED_GRADIENT }}
+                      >
+                        <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold">
+                          <LayoutGrid className="h-2.5 w-2.5" /> {companyName}
+                        </span>
+                        <span className="text-[7px] font-extrabold">
+                          Click any module to show on Office Screen #2 →
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-0.5">
+                        {MODULE_DIRECTORY.map((mod) => {
+                          const Icon = mod.icon;
+                          const colour = moduleKeyColour(mod.key);
+                          return (
+                            <Link
+                              key={mod.key}
+                              to={mod.path}
+                              onClick={() => setSecondScreenKey(mod.key)}
+                              className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                              style={{
+                                borderColor: colour,
+                                borderLeftWidth: '3px',
+                              }}
+                              title={`${mod.label} — Click to open or preview`}
+                            >
+                              <span
+                                className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
+                                style={{ background: colour }}
+                              >
+                                <Icon className="h-2 w-2" />
+                              </span>
+                              <span className="min-w-0 flex-1 truncate text-[6.8px] font-extrabold text-blue-950 leading-tight">
+                                {mod.label}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </div>
                   </WallHangingPictureFrame>
                 </div>
 
-                {/* PICTURE 2: Screenshot of "Compliance management, simplified end to end." with Slogan */}
-                <div className="sm:col-span-7">
-                  <WallHangingPictureFrame title="Headline & Slogan">
-                    <div className="flex h-20 flex-col items-center justify-center rounded bg-white px-2 py-1 text-center">
-                      <div className="font-editorial text-xs sm:text-sm font-bold leading-tight text-blue-950">
-                        Compliance management,
-                        <span className="block font-editorial-italic bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
-                          simplified end to end.
-                        </span>
-                      </div>
-                      <div
-                        className="mt-1 rounded-full px-2 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white shadow-sm"
-                        style={{ background: SQUISHED_GRADIENT }}
-                      >
-                        Complete Control. Greater Confidence. Brighter Success.
-                      </div>
-                    </div>
+                {/* RIGHT SIDE OF THE OFFICE WALL (5 cols):
+                    Picture 4: Screenshot of Communication Centre Modulars & Today's Roster Overview
+                    with the Squashed Silver Screen mounted directly underneath it */}
+                <div className="md:col-span-5 flex flex-col gap-1.5">
+                  <WallHangingPictureFrame title="Communication Centre Modulars & Today's Roster">
+                    <CommunicationCentreScreenshot
+                      showRosterAbove={showRosterAbove}
+                      onSelectSecondScreen={setSecondScreenKey}
+                    />
+                  </WallHangingPictureFrame>
+
+                  <WallHangingPictureFrame
+                    title="Silver Screen · Weather & NDIS News"
+                    frameAccent="linear-gradient(135deg, #64748b 0%, #cbd5e1 50%, #475569 100%)"
+                  >
+                    <SilverScreenSplit />
                   </WallHangingPictureFrame>
                 </div>
               </div>
 
-              {/* PICTURE 3: Screenshot of All 45 Modules Squashed Together */}
-              <WallHangingPictureFrame title={`${companyName || 'ComplianceHR Infinity'} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}>
-                <div className="space-y-1 bg-white">
-                  <div
-                    className="flex items-center justify-between rounded px-2 py-0.5 text-white"
-                    style={{ background: SQUISHED_GRADIENT }}
-                  >
-                    <span className="inline-flex items-center gap-1 text-[9px] font-extrabold">
-                      <LayoutGrid className="h-2.5 w-2.5" /> {companyName || 'ComplianceHR Infinity'}
-                    </span>
-                    <span className="text-[7.5px] font-extrabold">
-                      {MODULE_DIRECTORY.length} Connected Modules
-                    </span>
-                  </div>
+              {/* When viewing Office View Only, also show the Logo-Branded Second Office Screen right above the Desk */}
+              {viewMode === 'office' && (
+                <LogoBrandedOfficeSecondScreen
+                  logoUrl={frameSrc}
+                  selectedScreen={secondScreenKey}
+                  onSelectScreen={setSecondScreenKey}
+                  companyName={companyName}
+                />
+              )}
 
-                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-0.5">
-                    {MODULE_DIRECTORY.map((mod) => {
-                      const Icon = mod.icon;
-                      const colour = moduleKeyColour(mod.key);
-                      return (
-                        <Link
-                          key={mod.key}
-                          to={mod.path}
-                          className="flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
-                          style={{
-                            borderColor: colour,
-                            borderLeftWidth: '3px',
-                          }}
-                          title={mod.label}
-                        >
-                          <span
-                            className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
-                            style={{ background: colour }}
-                          >
-                            <Icon className="h-2 w-2" />
-                          </span>
-                          <span className="min-w-0 flex-1 truncate text-[7px] font-extrabold text-blue-950 leading-tight">
-                            {mod.label}
-                          </span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              </WallHangingPictureFrame>
+              {/* OFFICE FLOOR EQUIPMENT: CHAIR, TABLE WITH SPEAKER, PC MONITOR & PHONE, COUCH, PLANT & SAFE */}
+              <OfficeEquipmentWithInteractiveScreen
+                selectedMonitorFeed={monitorFeed}
+                onSelectMonitorFeed={setMonitorFeed}
+                onSelectDataTab={setActiveDataTab}
+              />
             </div>
+          )}
 
-            {/* RIGHT SIDE OF THE OFFICE WALL (5 cols):
-                Picture 4: Screenshot of Communication Centre Modulars & Today's Roster Overview
-                with the Squashed Silver Screen mounted directly underneath it */}
-            <div className="md:col-span-5 flex flex-col gap-1.5">
-              <WallHangingPictureFrame title="Communication Centre Modulars & Today's Roster">
-                <CommunicationCentreScreenshot showRosterAbove={showRosterAbove} />
-              </WallHangingPictureFrame>
-
-              <WallHangingPictureFrame
-                title="Silver Screen · Weather & NDIS News"
-                frameAccent="linear-gradient(135deg, #64748b 0%, #cbd5e1 50%, #475569 100%)"
-              >
-                <SilverScreenSplit />
-              </WallHangingPictureFrame>
+          {/* ==================== VIEW 2: PROFILES & DATA DISPLAY CHOICE (BESIDE THE OFFICE VIEW) ==================== */}
+          {(viewMode === 'both' || viewMode === 'profiles') && (
+            <div className={viewMode === 'both' ? 'lg:col-span-5' : 'w-full'}>
+              <ProfilesAndDataDisplayColumn
+                logoUrl={frameSrc}
+                companyName={companyName}
+                activeDataTab={activeDataTab}
+                setActiveDataTab={setActiveDataTab}
+                secondScreenKey={secondScreenKey}
+                onSelectSecondScreen={setSecondScreenKey}
+              />
             </div>
-          </div>
-        )}
-
-        {/* OFFICE FLOOR SCENE: ALWAYS VISIBLE BELOW THE WALL PICTURES
-            Shows Executive Chair, Office Table with Speaker, Interactive PC Monitor & Phone,
-            plus Executive Couch, Plant & Company Safe */}
-        <OfficeEquipmentWithInteractiveScreen
-          selectedMonitorFeed={monitorFeed}
-          onSelectMonitorFeed={setMonitorFeed}
-          onSelectWallMaterial={selectMode}
-        />
+          )}
+        </div>
       </div>
 
       {/* Bottom Office Baseboard Trim */}

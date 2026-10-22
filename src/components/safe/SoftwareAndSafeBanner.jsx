@@ -8,7 +8,7 @@ import { useToast } from '@/components/ui/use-toast';
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import { UploadCloud, Save, Loader2, PenSquare } from 'lucide-react';
 
-const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
+const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
 export const SOFTWARE_INFO = {
   name: 'ComplianceHR Infinity',

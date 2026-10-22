@@ -6,7 +6,7 @@ import AlertLamp from '@/components/communications/AlertLamp';
 import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/communicationNavigation.css';
 
-const INFINITY_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png';
+const INFINITY_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
 // One fixed colour per tile, taken from the 45-module dashboard palette
 // (src/components/dashboard/dashboardModuleColours.js). Tiles styled like the
