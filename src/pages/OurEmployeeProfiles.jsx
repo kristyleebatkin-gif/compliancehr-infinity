@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Users } from 'lucide-react';
+import { TrendingUp, Users, Building2 } from 'lucide-react';
 import EmployeeDirectorySummary from '@/components/profile/EmployeeDirectorySummary';
+import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
 import useEmployeeDirectorySummary from '@/components/profile/useEmployeeDirectorySummary';
 import '@/components/profile/employeeDirectory.css';
@@ -22,10 +23,11 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
   const summary = useEmployeeDirectorySummary(scoped);
   const [params, setParams] = useSearchParams();
   const progressAllowed = can('staff-progress');
-  const tab = progressAllowed && params.get('staffTab') === 'progress' ? 'progress' : 'profiles';
+  const rawTab = params.get('staffTab');
+  const tab = rawTab === 'office' ? 'office' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
   const selectTab = (value) => {
     const next = new URLSearchParams(params);
-    if (value === 'progress') next.set('staffTab', value); else next.delete('staffTab');
+    if (value === 'progress' || value === 'office') next.set('staffTab', value); else next.delete('staffTab');
     setParams(next, { replace: true });
   };
   return (
@@ -37,6 +39,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
           moduleKey="our-staff"
           tabs={<div className="flex flex-wrap items-center gap-1.5">
             <TabsList className="w-auto"><TabsTrigger value="profiles">Employee profiles</TabsTrigger></TabsList>
+            <TabsList className="w-auto"><TabsTrigger value="office"><Building2 />Office View</TabsTrigger></TabsList>
             <MyProfileTabLink />
             {progressAllowed && <TabsList className="w-auto"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
           </div>}
@@ -46,6 +49,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
           <div className="px-2 py-2"><EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} /></div>
           {tab === 'profiles' && <div className="px-2 py-2"><EmployeeCategoryTiles categories={summary.data?.categories || []} selected={category} onSelect={setCategory} total={summary.data?.total} /></div>}
           <TabsContent value="profiles"><div className="mt-[1cm]"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></div></TabsContent>
+          <TabsContent value="office"><div className="mt-4"><ExecutiveWallScene defaultViewMode="office" /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
         </ModuleShell>
       </Tabs>

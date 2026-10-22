@@ -14,8 +14,9 @@ import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
-  Search, Sun, Moon, User, Wallet,
+  Search, Sun, Moon, User, Wallet, Building2,
 } from 'lucide-react';
+import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { Image } from '@/components/ui/image';
@@ -40,6 +41,21 @@ export default function AppLayout() {
   const [notifications, setNotifications] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
+  const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'office');
+
+  useEffect(() => {
+    const onModeChange = (e) => {
+      if (e?.detail?.mode) setWorkspaceView(e.detail.mode);
+    };
+    window.addEventListener('chr-view-mode-change', onModeChange);
+    return () => window.removeEventListener('chr-view-mode-change', onModeChange);
+  }, []);
+
+  const switchWorkspaceView = (mode) => {
+    setWorkspaceView(mode);
+    localStorage.setItem('chr-workspace-view-mode', mode);
+    window.dispatchEvent(new CustomEvent('chr-view-mode-change', { detail: { mode } }));
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
@@ -280,6 +296,36 @@ export default function AppLayout() {
             </div>
           </div>
 
+          {/* Global Switcher: Office View vs View Profiles */}
+          <div
+            className="flex items-center gap-1 rounded-full p-1 shadow-sm"
+            style={{ background: SQUISHED_GRADIENT }}
+          >
+            <button
+              type="button"
+              onClick={() => switchWorkspaceView('office')}
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                workspaceView === 'office'
+                  ? 'bg-white text-blue-950 shadow-sm'
+                  : 'text-white hover:bg-white/15'
+              }`}
+            >
+              <Building2 className="h-3.5 w-3.5 text-pink-600" />
+              Office View
+            </button>
+            <button
+              type="button"
+              onClick={() => switchWorkspaceView('profiles')}
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                workspaceView === 'profiles'
+                  ? 'bg-white text-purple-950 shadow-sm'
+                  : 'text-white hover:bg-white/15'
+              }`}
+            >
+              <Users className="h-3.5 w-3.5 text-purple-600" />
+              View Profiles
+            </button>
+          </div>
         </header>
 
         <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">

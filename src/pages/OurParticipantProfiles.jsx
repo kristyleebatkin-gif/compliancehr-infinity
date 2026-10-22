@@ -1,7 +1,8 @@
 import React, { Suspense, lazy, useState } from 'react';
-import { Heart, TrendingUp } from 'lucide-react';
+import { Heart, TrendingUp, Building2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import ParticipantDirectoryDashboard from '@/components/profile/ParticipantDirectoryDashboard';
+import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import '@/components/profile/employeeDirectory.css';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
@@ -19,10 +20,11 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
   const [status, setStatus] = useState('all');
   const [params, setParams] = useSearchParams();
   const progressAllowed = can('staff-progress');
-  const tab = progressAllowed && params.get('participantTab') === 'progress' ? 'progress' : 'profiles';
+  const rawTab = params.get('participantTab');
+  const tab = rawTab === 'office' ? 'office' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
   const selectTab = (value) => {
     const next = new URLSearchParams(params);
-    if (value === 'progress') next.set('participantTab', value); else next.delete('participantTab');
+    if (value === 'progress' || value === 'office') next.set('participantTab', value); else next.delete('participantTab');
     setParams(next, { replace: true });
   };
   return (
@@ -34,6 +36,7 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
           moduleKey="our-participants"
           tabs={<div className="flex flex-nowrap items-center gap-1.5">
             <TabsList className="w-auto shrink-0"><TabsTrigger value="profiles">Participant profiles</TabsTrigger></TabsList>
+            <TabsList className="w-auto shrink-0"><TabsTrigger value="office"><Building2 />Office View</TabsTrigger></TabsList>
             <MyProfileTabLink />
             {progressAllowed && <TabsList className="w-auto shrink-0"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
           </div>}
@@ -42,6 +45,7 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
         >
           <div className="px-2 pb-2"><ParticipantDirectoryDashboard scoped={scoped} selected={status} onSelect={setStatus} /></div>
           <TabsContent value="profiles"><div className="mt-[1cm]"><OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} /></div></TabsContent>
+          <TabsContent value="office"><div className="mt-4"><ExecutiveWallScene defaultViewMode="office" /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
         </ModuleShell>
       </Tabs>
