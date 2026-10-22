@@ -32,7 +32,7 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
-import CommCentreHeader from '@/components/communications/CommCentreHeader';
+import CommunicationHeader from '@/components/communications/CommunicationHeader';
 import CommGuide from '@/components/communications/CommGuide';
 import { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
@@ -97,7 +97,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <ModuleShell
           embedded={embedded || participantOnly}
           header={!(embedded || participantOnly) && (
-            <CommCentreHeader
+            <CommunicationHeader
               subtitle={employeeSelf
                 ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
                 : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
@@ -105,10 +105,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           )}
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2.5">
-              <CommWeatherBar />
-              <CommTaskDash />
               <CommAuditBar />
               <AboutCommunication />
+              <CommWeatherBar />
+              <CommTaskDash />
               <CommDailyInsight />
               <TeamBanter />
               <CommunicateWell />
