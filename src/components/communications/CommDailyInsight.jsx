@@ -37,34 +37,34 @@ export default function CommDailyInsight() {
   useEffect(() => { load(); }, []);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2 px-3 py-2" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
-        <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
-          <Sparkles className="h-4 w-4 text-white" />
+    <section className="overflow-hidden rounded-xl border border-border/60 bg-card shadow-panel">
+      <div className="comm-panel-bar relative flex items-center gap-2 px-2.5 py-1" style={{ background: 'var(--header-gradient)', color: '#fff' }}>
+        <span className="flex h-5 w-5 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/30">
+          <Sparkles className="h-3 w-3 text-white" />
         </span>
-        <div className="flex-1">
-          <h3 className="text-sm font-bold">Daily AI Insight</h3>
-          <p className="text-[10px] font-semibold text-white/85">A fresh focus for the team today</p>
+        <div className="flex flex-1 flex-wrap items-baseline gap-2">
+          <h3 className="text-xs font-bold">Daily AI Insight</h3>
+          <p className="text-[9px] font-semibold text-white/85">A fresh focus for the team today</p>
         </div>
         <button
           type="button"
           onClick={() => load(true)}
           disabled={loading}
-          className="rounded-lg bg-white/15 p-1.5 ring-1 ring-white/30 transition hover:bg-white/25 disabled:opacity-50"
+          className="rounded-md bg-white/15 p-1 ring-1 ring-white/30 transition hover:bg-white/25 disabled:opacity-50"
           title="Refresh insight"
         >
-          <RefreshCw className={`h-4 w-4 text-white ${loading ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`h-3 w-3 text-white ${loading ? 'animate-spin' : ''}`} />
         </button>
       </div>
-      <div className="p-2">
+      <div className="px-2.5 py-1.5">
         {loading ? (
-          <div className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-muted-foreground">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Thinking about your day…
+          <div className="flex items-center justify-center gap-1.5 py-1 text-[10px] font-semibold text-muted-foreground">
+            <Loader2 className="h-3 w-3 animate-spin" /> Thinking about your day…
           </div>
         ) : error ? (
-          <p className="py-2 text-center text-xs text-muted-foreground">Insight unavailable right now — tap refresh to try again.</p>
+          <p className="py-1 text-center text-[10px] text-muted-foreground">Insight unavailable right now — tap refresh to try again.</p>
         ) : (
-          <p className="line-clamp-3 text-xs font-medium leading-relaxed">{insight}</p>
+          <p className="line-clamp-2 text-[11px] font-medium leading-snug">{insight}</p>
         )}
       </div>
     </section>

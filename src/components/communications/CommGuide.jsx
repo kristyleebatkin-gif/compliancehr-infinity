@@ -42,22 +42,24 @@ const AUDIT_TIPS = [
   { icon: Users, colour: '#7c3aed', title: 'Review the register weekly', text: 'Check for gaps, unsigned entries and missing documents so evidence stays current, not a pre-audit scramble.' },
 ];
 
-// Compact section card - half the previous footprint: smaller tiles, type and padding.
-function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' }) {
+// Ultra-compact guide section card for hints, tips and teamwork dashboards.
+function GuideSection({ title, intro, items, colour, columns = 'grid-cols-2 sm:grid-cols-4' }) {
   return (
-    <Card className="shadow-panel" style={{ borderTop: `4px solid ${colour}` }}>
-      <CardContent className="p-2.5">
-        <h3 className="text-sm font-bold" style={{ color: colour }}>{title}</h3>
-        {intro && <p className="mt-0.5 text-[10px] text-muted-foreground">{intro}</p>}
-        <div className={`mt-1.5 grid gap-1.5 ${columns}`}>
+    <Card className="shadow-panel" style={{ borderTop: `3px solid ${colour}` }}>
+      <CardContent className="p-1.5">
+        <div className="flex flex-wrap items-baseline justify-between gap-1 px-0.5">
+          <h3 className="text-xs font-extrabold leading-tight" style={{ color: colour }}>{title}</h3>
+          {intro && <p className="text-[9px] text-muted-foreground">{intro}</p>}
+        </div>
+        <div className={`mt-1 grid gap-1 ${columns}`}>
           {items.map(({ icon: Icon, colour: c, title: t, text }) => (
-            <div key={t} className="flex items-start gap-2 rounded-lg border border-border/60 p-1.5" style={{ background: `${c}0d` }}>
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md" style={{ background: `${c}1f`, color: c }}>
-                <Icon className="h-3 w-3" />
+            <div key={t} className="flex items-start gap-1.5 rounded-md border border-border/50 px-1.5 py-1" style={{ background: `${c}0d` }}>
+              <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded" style={{ background: `${c}1f`, color: c }}>
+                <Icon className="h-2.5 w-2.5" />
               </span>
               <div className="min-w-0">
-                <p className="text-[11px] font-bold" style={{ color: c }}>{t}</p>
-                <p className="mt-0.5 text-[10px] leading-snug text-foreground/70">{text}</p>
+                <p className="truncate text-[10px] font-bold leading-tight" style={{ color: c }}>{t}</p>
+                <p className="mt-0.5 line-clamp-2 text-[9px] leading-tight text-foreground/70">{text}</p>
               </div>
             </div>
           ))}
@@ -67,27 +69,25 @@ function GuideSection({ title, intro, items, colour, columns = 'sm:grid-cols-2' 
   );
 }
 
-// "About communication" fundamentals - also shown above Team Banter on the centre board.
+// "About communication" fundamentals - shown once near the top of the Communication Centre.
 export function AboutCommunication() {
-  return <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" />;
+  return <GuideSection title="About communication" intro="The fundamentals behind the Communication Centre." items={INFO} colour="#7c3aed" columns="grid-cols-2 sm:grid-cols-4" />;
 }
 
-// Hints & tips sections - shown above the communication board.
+// Hints & tips sections - compact 4-column rows.
 export function CommHintsTips() {
   return (
-    <div className="space-y-2">
-      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="sm:grid-cols-2 lg:grid-cols-4" />
-      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="sm:grid-cols-2 lg:grid-cols-4" />
+    <div className="space-y-1.5">
+      <GuideSection title="Hints & tips: communication effectiveness" intro="Small habits that make every message clearer and every shift smoother." items={TIPS} colour={COLOUR} columns="grid-cols-2 sm:grid-cols-4" />
+      <GuideSection title="Tips: communication compliance within audits" intro="Keep your communication records audit-ready every week, not just at audit time." items={AUDIT_TIPS} colour="#6d28d9" columns="grid-cols-2 sm:grid-cols-4" />
     </div>
   );
 }
 
 export default function CommGuide() {
   return (
-    <div className="space-y-2.5">
-      <CommHintsTips />
-      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" columns="sm:grid-cols-2 lg:grid-cols-3" />
-      <AboutCommunication />
+    <div className="space-y-1.5">
+      <GuideSection title="Teamwork" intro="How this team works together across shifts, modules and roles." items={TEAMWORK} colour="#4338ca" columns="grid-cols-2 sm:grid-cols-3" />
     </div>
   );
 }
