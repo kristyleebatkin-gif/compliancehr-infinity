@@ -3,7 +3,7 @@ import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 
 export default function MarketingSafeShowcase() {
   return (
-    <section className="relative mx-auto max-w-6xl px-4 py-6 md:px-8">
+    <section className="mx-auto max-w-6xl bg-white px-3 py-3 md:px-6">
       <ExecutiveWallScene showAllModulesMinimised={true} />
     </section>
   );

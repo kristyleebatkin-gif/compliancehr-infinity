@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '@/components/dashboard/brightDashboard.css';
 import '@/components/dashboard/dashboardSectionRefresh.css';
 import ManagementReviewReport from '@/components/dashboard/ManagementReviewReport';
@@ -31,6 +31,23 @@ export default function Dashboard() {
   const { role, user } = useRole();
   const heading = HEADINGS[role] || HEADINGS[ROLES.SUPPORT];
   const firstName = (user?.full_name || '').split(' ')[0];
+  const [viewMode, setViewMode] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'office');
+
+  useEffect(() => {
+    const onModeChange = (e) => {
+      if (e?.detail?.mode) setViewMode(e.detail.mode);
+    };
+    window.addEventListener('chr-view-mode-change', onModeChange);
+    return () => window.removeEventListener('chr-view-mode-change', onModeChange);
+  }, []);
+
+  if (viewMode === 'office') {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-3 md:p-4">
+        <SoftwareAndSafeBanner compact />
+      </div>
+    );
+  }
 
   return (
     <div className="bright-dashboard mx-auto max-w-6xl p-3 md:p-4 space-y-3">
