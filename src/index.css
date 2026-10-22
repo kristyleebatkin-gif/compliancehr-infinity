@@ -497,3 +497,17 @@
   .team-command-board .tcb-lane:before { background: #14b8a6 !important; }
   .team-command-board .tcb-task:hover { border-color: #14b8a6 !important; }
 }
+
+/* Communications Centre header (owner request): taller, with the editorial
+   brand font restored for the heading. Scoped to the Communication Centre only. */
+.comm-centre .app-page-header {
+  height: 4.5cm !important;
+  min-height: 4.5cm !important;
+  max-height: 4.5cm !important;
+}
+.comm-centre .app-page-header h1 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif !important;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+}

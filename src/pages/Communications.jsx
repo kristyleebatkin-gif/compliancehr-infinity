@@ -3,7 +3,7 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -29,6 +29,7 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
+import CommGuide from '@/components/communications/CommGuide';
 
 const TABS = [
   ['alerts', Siren, 'Alerts'],
@@ -43,6 +44,8 @@ const TABS = [
   ['feed', Radio, 'Team Feed'],
   ['complaints', MessagesSquare, 'Complaints'],
   ['todo', ListTodo, 'To-Do Board'],
+  ['task-dashboard', LayoutDashboard, 'Task Dashboard'],
+  ['guide', Lightbulb, 'Tips & Teamwork'],
   ['video', Video, 'Video Calls'],
   ['ai', Sparkles, 'AI Compose'],
   ['shift-notes', NotebookPen, 'Shift Notes'],
@@ -83,7 +86,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
     : TABS;
 
   return (
-    <div className="space-y-4">
+    <div className="comm-centre space-y-4">
       <Tabs defaultValue="diary">
         <ModuleShell
           embedded={embedded || participantOnly}
@@ -114,6 +117,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
         <TabsContent value="todo">
           {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard /><TaskLeaderboard /></div>}
         </TabsContent>
+        <TabsContent value="task-dashboard">
+          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><TodoBoard compact /><TaskLeaderboard /></div>}
+        </TabsContent>
+        <TabsContent value="guide"><CommGuide /></TabsContent>
         <TabsContent value="video"><VideoCalls /></TabsContent>
         <TabsContent value="ai"><AiCompose /></TabsContent>
         <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
