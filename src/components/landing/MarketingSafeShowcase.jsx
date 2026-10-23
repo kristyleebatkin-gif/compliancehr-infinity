@@ -12,6 +12,7 @@ import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign'
 import PricingSection from '@/components/landing/PricingSection';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
+import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
 
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
@@ -56,8 +57,20 @@ export default function MarketingSafeShowcase() {
           {/* Quick Jump Navigation & CTAs */}
           <div className="flex flex-wrap items-center gap-1">
             <a
-              href="#infinity-core-engine"
+              href="#infinity-one-click-operations"
               className="rounded-full bg-amber-300 px-2.5 py-1 text-[8px] font-black text-blue-950 hover:bg-amber-200"
+            >
+              ⚡ 1-Click Executive Operations
+            </a>
+            <Link
+              to="/operations-centre"
+              className="rounded-full bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 hover:bg-purple-50"
+            >
+              ★ Executive Operations Centre
+            </Link>
+            <a
+              href="#infinity-core-engine"
+              className="rounded-full bg-white/20 px-2.5 py-1 text-[8px] font-black text-white hover:bg-white/30"
             >
               ⚡ Infinity Core Engine
             </a>
@@ -229,6 +242,9 @@ export default function MarketingSafeShowcase() {
           </div>
         </div>
       </section>
+
+      {/* Flagship Infinity One-Click Operations & Executive Command Deck */}
+      <InfinityOneClickOperations />
 
       {/* Flagship Infinity Core Engine (104 Functions · 65 Workflows · Real-Time Validation & Smart-Fill) */}
       <InfinityCoreEngine />

@@ -11,6 +11,7 @@ import {
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, blurb: 'Live overview of compliance, safety and work across the organisation.' },
+  { key: 'operations-centre', label: 'Executive Operations Centre', path: '/operations-centre', icon: Sparkles, blurb: 'Infinity One-Click Operations, Core Engine, NDIS Health Intelligence, 2026 Printable Templates and all executive resources in one place.' },
   { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, blurb: 'Your profile, work, documents and name tag in one place.' },
   { key: 'our-staff', label: 'Our employee profiles', path: '/our-employees', icon: Users, blurb: 'Main employee records, documents, screening, forms, progress and connected modules.' },
   { key: 'our-participants', label: 'Our participant profiles', path: '/our-participants', icon: Heart, blurb: 'Main participant records, plans, documents, forms, goals and connected modules.' },
@@ -59,7 +60,7 @@ export const MODULE_DIRECTORY = [
 
 // Sidebar sections: every module key appears in exactly one group.
 export const NAV_GROUPS = [
-  { label: 'Overview', keys: ['dashboard', 'my-profile'] },
+  { label: 'Overview', keys: ['dashboard', 'operations-centre', 'my-profile'] },
   { label: 'People', keys: ['our-staff', 'our-participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
   { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },

@@ -18,6 +18,7 @@ import LiveDashboards from '@/components/dashboard/LiveDashboards';
 import PageHeader from '@/components/PageHeader';
 import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
+import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
 const HEADINGS = {
@@ -46,6 +47,7 @@ export default function Dashboard() {
     return (
       <div className="mx-auto max-w-6xl bg-white p-3 md:p-4 space-y-3">
         <SoftwareAndSafeBanner compact />
+        <InfinityOneClickOperations />
         <BusinessHealthComplianceIntelligenceDashboard />
       </div>
     );
@@ -60,6 +62,8 @@ export default function Dashboard() {
       />
 
       <SoftwareAndSafeBanner compact />
+
+      <InfinityOneClickOperations />
 
       <BusinessHealthComplianceIntelligenceDashboard />
 

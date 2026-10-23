@@ -15,6 +15,7 @@ import ResetPassword from '@/pages/ResetPassword';
 
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
+import OperationsCentre from '@/pages/OperationsCentre';
 import LegacyProfileRedirect from '@/components/profile/LegacyProfileRedirect';
 import ComplianceHub from '@/pages/ComplianceHub';
 import AuditorsPortal from '@/pages/AuditorsPortal';
@@ -120,6 +121,7 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/operations-centre" element={<RoleGate navKey="operations-centre"><OperationsCentre /></RoleGate>} />
           <Route path="/my-work" element={<Navigate to="/my-profile?tab=work" replace />} />
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/my-payroll" element={<MyPayrollPage />} />

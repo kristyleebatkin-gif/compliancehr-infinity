@@ -1,6 +1,7 @@
 // One fixed, distinct colour for each of the 45 modules.
 export const MODULE_KEY_COLOURS = {
   'dashboard': '#4f46e5',
+  'operations-centre': '#db2777',
   'my-profile': '#db2777',
   'our-staff': '#2563eb',
   'our-participants': '#e11d48',
