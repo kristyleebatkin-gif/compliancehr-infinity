@@ -53,6 +53,7 @@ import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScree
 import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
+import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -90,6 +91,7 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 
 // Tab order: NDIS Standards Map first, then the audit checklist and audit reports.
 const TABS = [
+  ['infinity-core-engine', 'Infinity Core Engine (104 Functions & 65 Workflows)'],
   ['health-intelligence', 'Business Health & Compliance Intelligence'],
   ['standards-map', 'NDIS Standards Map'],
   ['printable-2026-templates', '2026 Printable Office Templates (A4)'],
@@ -127,6 +129,7 @@ const TABS = [
 
 // Colour-coded tab tones: each tab gets its own gradient highlight.
 const TAB_TONES = {
+  'infinity-core-engine': 'data-[state=active]:from-indigo-600 data-[state=active]:to-fuchsia-600',
   'health-intelligence': 'data-[state=active]:from-blue-600 data-[state=active]:to-pink-500',
   'printable-2026-templates': 'data-[state=active]:from-purple-600 data-[state=active]:to-fuchsia-500',
   'standards-map': 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
@@ -274,11 +277,13 @@ export default function ComplianceHub() {
         )}
       />
 
+      <InfinityCoreEngine />
+
       <BusinessHealthComplianceIntelligenceDashboard />
 
       <MasterComplianceAuditForms />
 
-      <Tabs defaultValue="health-intelligence">
+      <Tabs defaultValue="infinity-core-engine">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
           {TABS.map(([value, label]) => (
             <TabsTrigger
@@ -290,6 +295,10 @@ export default function ComplianceHub() {
             </TabsTrigger>
           ))}
         </TabsList>
+
+        <TabsContent value="infinity-core-engine" className="mt-2">
+          <InfinityCoreEngine />
+        </TabsContent>
 
         <TabsContent value="health-intelligence" className="mt-2">
           <BusinessHealthComplianceIntelligenceDashboard />

@@ -22,6 +22,7 @@ import {
 } from '@/components/safe/OfficeInteractiveMaterials';
 import ModularScreenDataSelector, { MODULAR_SCREEN_DECKS } from '@/components/safe/ModularScreenDataSelector';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
+import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
@@ -985,8 +986,9 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Recreated Master Compliance Audit Checklist Forms for ComplianceHR Infinity (CHR-AUD-001 & CHR-AUD-002) */}
-      <div className="bg-white px-1 pb-1">
+      {/* Infinity Core Engine + Recreated Master Compliance Audit Checklist Forms (CHR-AUD-001 & CHR-AUD-002) */}
+      <div className="bg-white px-1 pb-1 space-y-1">
+        <InfinityCoreEngine compact={true} />
         <MasterComplianceAuditForms />
       </div>
 
