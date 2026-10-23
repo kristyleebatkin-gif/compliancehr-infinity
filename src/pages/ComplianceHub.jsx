@@ -127,6 +127,8 @@ const TABS = [
 
 // Colour-coded tab tones: each tab gets its own gradient highlight.
 const TAB_TONES = {
+  'health-intelligence': 'data-[state=active]:from-blue-600 data-[state=active]:to-pink-500',
+  'printable-2026-templates': 'data-[state=active]:from-purple-600 data-[state=active]:to-fuchsia-500',
   'standards-map': 'data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400',
   'executive-summary': 'data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-400',
   'quick-tasks': 'data-[state=active]:from-fuchsia-500 data-[state=active]:to-pink-400',
@@ -272,9 +274,11 @@ export default function ComplianceHub() {
         )}
       />
 
+      <BusinessHealthComplianceIntelligenceDashboard />
+
       <MasterComplianceAuditForms />
 
-      <Tabs defaultValue="standards-map">
+      <Tabs defaultValue="health-intelligence">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
           {TABS.map(([value, label]) => (
             <TabsTrigger

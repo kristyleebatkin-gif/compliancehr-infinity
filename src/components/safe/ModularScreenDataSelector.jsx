@@ -101,16 +101,17 @@ export const MODULAR_SCREEN_DECKS = [
   },
   {
     key: 'compliance',
-    label: 'Master Compliance Audit Checklist (CHR-AUD-001 & 002)',
-    shortLabel: 'Compliance & Audits',
+    label: 'Business Health & Compliance Intelligence + Master Audit (CHR-AUD-001/002)',
+    shortLabel: 'Compliance & Intelligence',
     category: 'Compliance & Safety',
     path: '/compliance',
     color: '#6d28d9',
     icon: ShieldCheck,
-    description: '17 Audit Categories · 356 Checkpoints · Governance (CHR-AUD-001) & Workforce Operations (CHR-AUD-002).',
+    description: '98.7% Business Health & Compliance Intelligence · 8 Pillars · 17 Audit Categories · 356 Checkpoints · 12 Printable A4 Docs.',
     highlights: [
+      { id: 'a0', title: 'Business Health & Compliance Intelligence Dashboard', subtitle: '98.7% Readiness · 8 Pillars · Predictive 14/30/60/90d Expiry Radar', badge: '98.7% Health' },
       { id: 'a1', title: 'ComplianceHR Infinity · Governance Audit (CHR-AUD-001)', subtitle: '17 Audit Categories | 356 Checkpoints · Kristy Lee Whelan', badge: 'Page 1 of 11' },
-      { id: 'a2', title: 'ComplianceHR Infinity · Workforce Audit (CHR-AUD-002)', subtitle: '17 Audit Categories | 356 Checkpoints · HR, Safety & NDIS', badge: 'Page 1 of 11' },
+      { id: 'a2', title: '12 Standard 2026 Printable Office Templates (A4)', subtitle: 'Smart-Filled & Blank Ruled Office Print Masters + Multi-Page PDF Pack', badge: 'A4 Print' },
     ],
   },
   {
