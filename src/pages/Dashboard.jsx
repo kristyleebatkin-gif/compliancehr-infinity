@@ -17,6 +17,7 @@ import { OVERVIEW_ROLES } from '@/components/profile/ProfilesOverview';
 import LiveDashboards from '@/components/dashboard/LiveDashboards';
 import PageHeader from '@/components/PageHeader';
 import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
+import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import { Activity, ShieldCheck, Sparkles, Zap, Users } from 'lucide-react';
 
 const HEADINGS = {
@@ -43,8 +44,9 @@ export default function Dashboard() {
 
   if (viewMode !== 'profiles') {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-3 md:p-4">
+      <div className="mx-auto max-w-6xl bg-white p-3 md:p-4 space-y-3">
         <SoftwareAndSafeBanner compact />
+        <BusinessHealthComplianceIntelligenceDashboard />
       </div>
     );
   }
@@ -58,6 +60,8 @@ export default function Dashboard() {
       />
 
       <SoftwareAndSafeBanner compact />
+
+      <BusinessHealthComplianceIntelligenceDashboard />
 
       <AllModulesHub />
 

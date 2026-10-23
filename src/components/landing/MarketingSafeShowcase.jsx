@@ -10,6 +10,7 @@ import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScree
 import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
 import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import PricingSection from '@/components/landing/PricingSection';
+import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
@@ -53,6 +54,12 @@ export default function MarketingSafeShowcase() {
 
           {/* Quick Jump Navigation & CTAs */}
           <div className="flex flex-wrap items-center gap-1">
+            <a
+              href="#business-health-intelligence"
+              className="rounded-full bg-amber-300 px-2.5 py-1 text-[8px] font-black text-blue-950 hover:bg-amber-200"
+            >
+              ★ Business Health &amp; Compliance Intelligence
+            </a>
             <a
               href="#live-workspace"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
@@ -215,6 +222,9 @@ export default function MarketingSafeShowcase() {
           </div>
         </div>
       </section>
+
+      {/* Flagship Business Health & Compliance Intelligence Dashboard */}
+      <BusinessHealthComplianceIntelligenceDashboard />
 
       {/* Section 1: Interactive Executive Office + General Profile + $355 Dual Master Compliance Audit Checklists */}
       <div id="live-workspace" className="scroll-mt-14">
