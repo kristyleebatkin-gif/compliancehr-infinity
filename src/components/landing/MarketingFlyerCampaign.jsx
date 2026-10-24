@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Sparkles, Printer, Copy, Mail, CheckCircle2, ShieldCheck,
-  ClipboardCheck, CalendarDays, Layers, ArrowRight, Zap, Building2,
+  ClipboardCheck, CalendarDays, Layers, ArrowRight, Zap, Building2, Download,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
+import { downloadBusinessComplianceDocsBrochurePdf } from '@/lib/businessComplianceDocsBrochurePdf';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
@@ -193,6 +194,13 @@ export default function MarketingFlyerCampaign({ compact = false }) {
         </div>
 
         <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => downloadBusinessComplianceDocsBrochurePdf()}
+            className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-1 font-body text-[8px] font-black text-blue-950 shadow-sm hover:bg-amber-200"
+          >
+            <Download className="h-3 w-3 text-blue-950" /> $999 / $125m Docs Brochure (PDF)
+          </button>
           <button
             type="button"
             onClick={() => window.print()}

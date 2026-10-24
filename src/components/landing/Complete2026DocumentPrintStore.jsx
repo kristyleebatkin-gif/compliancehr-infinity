@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Printer, PackageCheck, FileText, ShieldCheck, CheckCircle2,
-  ShoppingCart, Sparkles, Truck, BookOpen, Layers, ArrowRight, Mail, Copy,
+  ShoppingCart, Sparkles, Truck, BookOpen, Layers, ArrowRight, Mail, Copy, Download,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
+import { downloadBusinessComplianceDocsBrochurePdf } from '@/lib/businessComplianceDocsBrochurePdf';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
@@ -350,12 +351,26 @@ export default function Complete2026DocumentPrintStore() {
           </div>
         </div>
 
-        <a
-          href="#order-print-pack-form"
-          className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 font-body text-[8px] font-black text-blue-950 shadow-sm hover:bg-pink-50"
-        >
-          <Printer className="h-3 w-3 text-pink-600" /> Order Printed Binders or Digital Pack
-        </a>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() =>
+              downloadBusinessComplianceDocsBrochurePdf({
+                businessName: orderForm.businessName,
+                abn: orderForm.abn,
+              })
+            }
+            className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-3 py-1 font-body text-[8px] font-black text-blue-950 shadow-sm hover:bg-amber-200"
+          >
+            <Download className="h-3 w-3 text-blue-950" /> Download $999 / $125m Package Brochure (PDF)
+          </button>
+          <a
+            href="#order-print-pack-form"
+            className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 font-body text-[8px] font-black text-blue-950 shadow-sm hover:bg-pink-50"
+          >
+            <Printer className="h-3 w-3 text-pink-600" /> Order Printed Binders or Digital Pack
+          </a>
+        </div>
       </div>
 
       {/* Why Print Pricing Matters Banner */}
@@ -408,9 +423,23 @@ export default function Complete2026DocumentPrintStore() {
               </p>
             </div>
           </div>
-          <span className="rounded-full bg-emerald-600 px-2.5 py-1 font-body text-[7.5px] font-black uppercase tracking-wider text-white">
-            ✓ CHECK ALL RELEVANT REQUIREMENTS FOR 100% AUDIT SUCCESS
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() =>
+                downloadBusinessComplianceDocsBrochurePdf({
+                  businessName: orderForm.businessName,
+                  abn: orderForm.abn,
+                })
+              }
+              className="inline-flex items-center gap-1 rounded-full border-2 border-emerald-700 bg-white px-2.5 py-1 font-body text-[7.5px] font-black uppercase tracking-wider text-emerald-950 shadow-sm hover:bg-emerald-50"
+            >
+              <Download className="h-3 w-3 text-emerald-700" /> Download Package Brochure (A4 PDF)
+            </button>
+            <span className="rounded-full bg-emerald-600 px-2.5 py-1 font-body text-[7.5px] font-black uppercase tracking-wider text-white">
+              ✓ CHECK ALL RELEVANT REQUIREMENTS FOR 100% AUDIT SUCCESS
+            </span>
+          </div>
         </div>
       </div>
 
@@ -722,6 +751,18 @@ export default function Complete2026DocumentPrintStore() {
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() =>
+                  downloadBusinessComplianceDocsBrochurePdf({
+                    businessName: orderForm.businessName,
+                    abn: orderForm.abn,
+                  })
+                }
+                className="inline-flex items-center gap-1 rounded-lg border border-blue-400 bg-blue-50 px-2.5 py-1.5 font-body text-[8px] font-black text-blue-950 hover:bg-blue-100"
+              >
+                <Download className="h-3 w-3 text-blue-700" /> Download $999 / $125m PDF Brochure
+              </button>
               <button
                 type="button"
                 onClick={() => window.print()}

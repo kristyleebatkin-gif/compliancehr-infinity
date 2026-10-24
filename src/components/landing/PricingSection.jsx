@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers,
-  ClipboardCheck, Lock, RefreshCw,
+  ClipboardCheck, Lock, RefreshCw, Download,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
+import { downloadBusinessComplianceDocsBrochurePdf } from '@/lib/businessComplianceDocsBrochurePdf';
 
 const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
@@ -421,6 +422,13 @@ export default function PricingSection({ compact = false }) {
               Our **Professional Business Compliance Documents Package** provides **extensive documentation covering almost every document** your business needs to prepare for and complete compliance audits (125+ policies, contracts, intake packs, consents, risk forms, registers &amp; 356-checkpoint checklists). Available for **$999 outright** or **$125/month on a 24-month business subscription plan** for full digital suite access (or **$1,994** with 6 printed &amp; bound office binders delivered). **Please ensure your team checks all relevant and required standards for your business so there is no doubt of your compliance audit outcome of success!**
             </p>
             <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <button
+                type="button"
+                onClick={() => downloadBusinessComplianceDocsBrochurePdf()}
+                className="inline-flex items-center gap-1 rounded-lg border-2 border-blue-600 bg-blue-50 px-2.5 py-1 text-[8px] font-black text-blue-950 shadow-sm hover:bg-blue-100"
+              >
+                <Download className="h-3 w-3 text-blue-700" /> Download $999 / $125m Package Brochure (PDF)
+              </button>
               <a
                 href="#complete-2026-docs-print-store"
                 className="rounded-lg border-2 border-purple-600 bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 hover:bg-purple-50"
