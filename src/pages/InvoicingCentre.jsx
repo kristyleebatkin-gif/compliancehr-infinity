@@ -25,6 +25,7 @@ import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/invoicePdf';
 import { downloadCsv } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
+import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
 import { Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
@@ -202,6 +203,8 @@ export default function InvoicingCentre() {
           <FinanceSummary />
         </TabsContent>
       </Tabs>
+
+      <BestInClassBenchmarkSuite onRefresh={load} />
 
       <InvoiceBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} onSaved={load} invoiceCount={invoices.length} />
 

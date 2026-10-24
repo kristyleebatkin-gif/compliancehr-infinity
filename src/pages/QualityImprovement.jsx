@@ -16,6 +16,7 @@ import { Download, Lightbulb, MessageSquarePlus, Wrench, Loader2, Send, Plus, Ch
 import EmptyState from '@/components/EmptyState';
 import { format } from 'date-fns';
 import QualityToolbar from '@/components/quality/QualityToolbar';
+import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
 
 const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
 const TABS = [
@@ -68,6 +69,20 @@ export default function QualityImprovement() {
 
   const setStatus = async (item, status) => {
     if (status === item.status) return;
+    if (status === 'Closed' && item.type === 'Corrective Action') {
+      const hasOwner = Boolean((item.owner || item.nominated_to || '').trim());
+      const hasEvidence = Boolean((item.outcome || item.notes || '').trim());
+      if (!hasOwner || !hasEvidence) {
+        toast({
+          title: 'Closed-Loop CAPA Gate: Owner & Evidence Required',
+          description: 'Assign an Owner / Nominated Person and record the Outcome / Evidence Reference before closing a Corrective Action.',
+          variant: 'destructive',
+        });
+        setEditing(item);
+        setDialogOpen(true);
+        return;
+      }
+    }
     await changeStatus({ entityType: 'QualityItem', entity: 'QualityItem', record: item, toStatus: status });
     await load();
   };
@@ -184,6 +199,8 @@ export default function QualityImprovement() {
           </TabsContent>
         ))}
       </Tabs>
+
+      <BestInClassBenchmarkSuite onRefresh={load} />
 
       <QualityItemDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} users={users} onSaved={load} defaultType={defaultType} />
     </div>
