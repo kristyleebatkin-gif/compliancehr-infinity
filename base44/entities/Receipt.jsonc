@@ -184,6 +184,9 @@
           "user_condition": {
             "role": "Administration"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -203,6 +206,9 @@
           "user_condition": {
             "role": "Finance & Accounts Officer"
           }
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     }
