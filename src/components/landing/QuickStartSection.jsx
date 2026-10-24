@@ -66,7 +66,7 @@ export default function QuickStartSection() {
         </ol>
 
         <div className="mt-10 text-center">
-          <Link to="/login" className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-7 py-3 text-sm font-semibold text-white shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:shadow-2xl dark:bg-white dark:text-slate-950">
+          <Link to="/login" className="group inline-flex items-center gap-2 rounded-full gradient-brand px-7 py-3 text-sm font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl">
             Sign in to ComplianceHR
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>

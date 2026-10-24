@@ -19,9 +19,9 @@ const CHR_LOGO =
 export default function MarketingSafeShowcase({ embedded = false }) {
   return (
     <div className="w-full bg-white p-1 space-y-1.5">
-      {/* Sticky High-Converting Sales Navigation + Pitch Header */}
+      {/* High-Converting Sales Navigation + Pitch Header (sticky only when standalone) */}
       <header
-        className="sticky top-0 z-40 rounded-xl border-2 border-amber-300 px-3 py-1.5 text-white shadow-md"
+        className={`${embedded ? 'relative' : 'sticky top-0 z-40'} rounded-xl border-2 border-amber-300 px-3 py-1.5 text-white shadow-md`}
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -157,7 +157,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </h1>
 
             <p className="text-[8.5px] font-bold leading-snug text-blue-950">
-              Stop juggling disconnected spreadsheets, HR folders, rostering apps, and last-minute audit panic. **ComplianceHR Infinity** unites **45 live operational modules**, **16 Communication Centre modulars**, **100+ automated server functions**, **65+ 24/7 workflows**, a **Dual Interactive Office &amp; Profile Workspace**, and our **Professional Business Compliance Documents Package ($999 Outright or $125/month on a 24-month plan — 125+ Documents + Master Audit Checklists `CHR-AUD-001` &amp; `CHR-AUD-002`)** into one Smart Enhanced All-In-One Compliance Pack.
+              Stop juggling disconnected spreadsheets, HR folders, rostering apps, and last-minute audit panic. <strong>ComplianceHR Infinity</strong> unites <strong>45 live operational modules</strong>, <strong>16 Communication Centre modulars</strong>, <strong>100+ automated server functions</strong>, <strong>65+ 24/7 workflows</strong>, a <strong>Dual Interactive Office &amp; Profile Workspace</strong>, and our <strong>Professional Business Compliance Documents Package ($999 Outright or $125/month on a 24-month plan — 125+ Documents + Master Audit Checklists CHR-AUD-001 &amp; CHR-AUD-002)</strong> into one Smart Enhanced All-In-One Compliance Pack.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 pt-0.5">

@@ -20,9 +20,10 @@ import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
 import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
+import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import OriginalPublishedOverview from '@/components/dashboard/OriginalPublishedOverview';
-import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2 } from 'lucide-react';
+import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
   [ROLES.ADMIN]: { title: 'Administrator Dashboard', sub: 'Monitor compliance, manage documents, ensure safety and drive continuous improvement across your organisation.' },
@@ -38,6 +39,7 @@ const DASHBOARD_SUITES = [
   { id: 'office-wall', label: 'Interactive Office & Profile Scene', sub: 'Dual Office Wall · Safe · Modular Screens', icon: Building2, color: '#0284c7' },
   { id: 'control-centre', label: 'Infinity Control Centre', sub: '356 Audit Checks · 98 Docs · Approvals', icon: ShieldCheck, color: '#7c3aed' },
   { id: 'one-click', label: '1-Click Operations Deck', sub: '12 Instant Executive Actions', icon: Zap, color: '#db2777' },
+  { id: 'core-engine', label: 'Infinity Core Engine', sub: '104 Functions · 65 Workflows · AI Smart-Fill', icon: Cpu, color: '#16a34a' },
   { id: 'health-intelligence', label: 'NDIS Health & Readiness', sub: '8 Practice Standards · Predictive Radar', icon: Activity, color: '#2563eb' },
   { id: 'reviews-trends', label: 'Management & Safety Trends', sub: 'Board Reviews · Incident & Risk Trends', icon: ClipboardCheck, color: '#0d9488' },
 ];
@@ -86,7 +88,7 @@ export default function Dashboard() {
             </span>
           )}
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-7">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
           {DASHBOARD_SUITES.map((s) => {
             const Icon = s.icon;
             const active = activeSuite === s.id;
@@ -162,7 +164,12 @@ export default function Dashboard() {
         <InfinityOneClickOperations />
       )}
 
-      {/* 5. Business Health & Compliance Intelligence Dashboard */}
+      {/* 5. Infinity Core Engine (104 Functions · 65 Workflows · Real-Time Validation & Smart-Fill) */}
+      {(activeSuite === 'core-engine' || activeSuite === 'all') && (
+        <InfinityCoreEngine />
+      )}
+
+      {/* 6. Business Health & Compliance Intelligence Dashboard */}
       {(activeSuite === 'health-intelligence' || activeSuite === 'all') && (
         <BusinessHealthComplianceIntelligenceDashboard />
       )}

@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 
+const SQUISHED_GRADIENT =
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+
 export default function LandingFooter() {
   const cols = [
     { title: 'Platform', links: ['Staff Tracking', 'Participant Records', 'Incidents', 'Risk Management', 'Training', 'Audit Centre'] },
@@ -32,38 +35,57 @@ export default function LandingFooter() {
   };
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate-900 bg-slate-950 text-white">
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-violet-500/40 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-10 h-56 w-56 rounded-full bg-cyan-400/25 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-16 right-10 h-56 w-56 rounded-full bg-fuchsia-500/25 blur-3xl" />
-      <div className="relative mx-auto max-w-6xl px-4 py-14 md:px-8">
+    <footer
+      className="relative overflow-hidden border-t-2 border-violet-300 text-white"
+      style={{ background: SQUISHED_GRADIENT }}
+    >
+      <div className="relative mx-auto max-w-6xl px-4 py-12 md:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-3">
-              <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="h-14 w-14 shrink-0 rounded-2xl shadow-md ring-1 ring-white/20" fittingType="fit" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white p-1 shadow-md">
+                <Image
+                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                  alt="ComplianceHR Infinity logo"
+                  className="h-full w-full object-contain"
+                  fittingType="fit"
+                />
+              </div>
               <span className="flex min-w-0 flex-col leading-tight">
-                <span className="font-editorial text-xl font-semibold tracking-tight text-white">
-                  Compliance<span className="font-editorial-italic bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">HR</span>
+                <span className="font-editorial text-xl font-bold tracking-tight text-white">
+                  Compliance<span className="font-editorial-italic text-amber-200">HR</span>
                 </span>
-                <span className="mt-1 text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">Infinity</span>
+                <span className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.2em] text-amber-200">Infinity</span>
               </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-white/55">Complete Control. Greater Confidence. Brighter Success.</p>
+            <p className="mt-4 text-sm font-bold leading-relaxed text-white/95">
+              Complete Control. Greater Confidence. Brighter Success.
+            </p>
           </div>
           {cols.map((c) => (
             <div key={c.title}>
-              <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/40">{c.title}</h4>
+              <h4 className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-amber-200">{c.title}</h4>
               <ul className="mt-4 space-y-2.5">
                 {c.links.map((l) => (
-                  <li key={l}><Link to={linkHref(c, l)} className="text-sm text-white/55 transition-colors hover:text-white">{l}</Link></li>
+                  <li key={l}>
+                    <Link to={linkHref(c, l)} className="text-sm font-semibold text-white/90 transition-colors hover:text-amber-200">
+                      {l}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 sm:flex-row">
-          <p className="text-xs text-white/80 font-semibold">Software: ComplianceHR INFINITY — Your Comprehensive ALL-IN-ONE Business Documentation Platform</p>
-          <p className="text-xs text-white/80 font-semibold">Developer: Kristy Lee Whelan (kristyleebatkin@live.com.au)</p>
+        <div className="mt-10 flex flex-col items-center justify-between gap-2 border-t border-white/25 pt-6 text-center sm:flex-row sm:text-left">
+          <div className="space-y-0.5 text-xs font-extrabold text-white">
+            <div>Software: ComplianceHR Infinity</div>
+            <div className="text-amber-200">Complete Control. Greater Confidence. Brighter Success.</div>
+          </div>
+          <div className="space-y-0.5 text-xs font-extrabold text-white sm:text-right">
+            <div>Developer: Kristy Lee Whelan</div>
+            <div className="text-amber-200">Email: kristyleebatkin@live.com.au</div>
+          </div>
         </div>
       </div>
     </footer>
