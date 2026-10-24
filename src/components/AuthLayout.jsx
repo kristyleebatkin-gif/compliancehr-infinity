@@ -8,11 +8,11 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
   return (
     <div className="app-readable min-h-screen flex flex-col justify-center items-center px-4 py-8 app-workspace-bg">
       <div className="w-full max-w-md space-y-5">
-        {/* Bright Blue, Purple, Pink Header Card with Generous Spacing */}
+        {/* Symmetric Blue -> Dark Blue -> Dark Purple -> Purple -> Pink -> Purple -> Dark Purple -> Dark Blue -> Blue Header Card */}
         <div
           className="app-page-header relative overflow-hidden rounded-2xl p-6 text-white shadow-xl"
           style={{
-            background: "linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)",
+            background: "linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)",
           }}
         >
           <div className="relative z-10 flex items-start gap-4">
@@ -57,17 +57,18 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
           </div>
         </div>
 
-        {/* Vibrant Multi-Colour Card */}
+        {/* White Card with Light Border & Subtle Shadow */}
         <div
-          className="relative overflow-hidden rounded-2xl border-2 bg-card p-7 shadow-panel"
+          className="relative overflow-hidden rounded-2xl border bg-white p-7 shadow-panel"
           style={{
-            borderColor: "#7c3aed55",
-            background: "linear-gradient(165deg, rgba(124,58,237,0.10) 0%, rgba(236,72,153,0.08) 48%, #ffffff 90%)",
+            borderColor: "rgba(192, 132, 252, 0.55)",
           }}
         >
           <div
             className="absolute inset-x-0 top-0 h-1.5"
-            style={{ background: "linear-gradient(90deg, #2563eb, #7c3aed 52%, #ec4899)" }}
+            style={{
+              background: "linear-gradient(90deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)",
+            }}
           />
           {children}
         </div>

@@ -6,68 +6,68 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 265 100% 97%;
+    --foreground: 220 83% 23%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 83% 23%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 262 83% 58%;
+    --popover-foreground: 220 83% 23%;
+    --primary: 265 100% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 25% 30%;
-    --accent: 262 100% 97%;
-    --accent-foreground: 262 83% 50%;
-    --destructive: 0 63% 51%;
+    --secondary: 265 85% 95%;
+    --secondary-foreground: 220 83% 23%;
+    --muted: 265 85% 95%;
+    --muted-foreground: 220 65% 30%;
+    --accent: 270 95% 95%;
+    --accent-foreground: 265 100% 42%;
+    --destructive: 329 100% 59%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 262 83% 58%;
+    --border: 270 80% 90%;
+    --input: 270 70% 88%;
+    --ring: 213 100% 50%;
     --header-foreground: 0 0% 100%;
-    --payroll: 160 84% 32%;
-    --header-blue: 221 83% 53%;
-    --header-pink: 330 81% 52%;
-    --header-gradient: linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%);
-    --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .16), hsl(var(--brand) / .18) 52%, hsl(var(--header-pink) / .14));
-    --brand: 262 83% 58%;
+    --payroll: 193 100% 50%;
+    --header-blue: 213 100% 50%;
+    --header-pink: 329 100% 59%;
+    --header-gradient: linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%);
+    --section-header-gradient: linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%);
+    --brand: 213 100% 50%;
     --brand-foreground: 0 0% 100%;
-    --teal: 217 91% 60%;
+    --teal: 193 100% 50%;
     --teal-foreground: 0 0% 100%;
-    --safe: 134 61% 40%;
+    --safe: 193 100% 42%;
     --safe-foreground: 0 0% 100%;
-    --warning: 33 100% 50%;
+    --warning: 277 100% 50%;
     --warning-foreground: 0 0% 100%;
-    --danger: 0 63% 51%;
+    --danger: 329 100% 59%;
     --danger-foreground: 0 0% 100%;
-    --chart-1: 262 83% 58%;
-    --chart-2: 217 91% 60%;
-    --chart-3: 134 61% 40%;
-    --chart-4: 33 100% 50%;
-    --chart-5: 335 70% 52%;
-    --hr-evidence: 185 75% 35%;
-    --ai-hint: 330 100% 95%;
-    --ai-hint-foreground: 333 74% 35%;
-    --profile-lilac: 270 100% 93%;
-    --profile-sky: 200 100% 91%;
-    --profile-mint: 155 80% 90%;
-    --profile-peach: 28 100% 91%;
-    --profile-rose: 330 100% 93%;
-    --profile-lemon: 50 100% 90%;
+    --chart-1: 213 100% 50%;
+    --chart-2: 265 100% 42%;
+    --chart-3: 277 100% 50%;
+    --chart-4: 193 100% 50%;
+    --chart-5: 329 100% 59%;
+    --hr-evidence: 315 100% 72%;
+    --ai-hint: 270 100% 96%;
+    --ai-hint-foreground: 265 100% 42%;
+    --profile-lilac: 270 95% 94%;
+    --profile-sky: 193 100% 93%;
+    --profile-mint: 213 100% 94%;
+    --profile-peach: 315 100% 94%;
+    --profile-rose: 329 100% 94%;
+    --profile-lemon: 277 100% 94%;
     --radius: 0.75rem;
     --font-heading: ui-sans-serif, system-ui, sans-serif;
     --font-body: ui-sans-serif, system-ui, sans-serif;
     --font-display: ui-sans-serif, system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 20%;
-    --sidebar-primary: 262 83% 58%;
+    --sidebar-foreground: 220 83% 23%;
+    --sidebar-primary: 265 100% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 239 100% 97%;
-    --sidebar-accent-foreground: 243 75% 45%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 262 83% 58%;
+    --sidebar-accent: 265 100% 96%;
+    --sidebar-accent-foreground: 220 83% 23%;
+    --sidebar-border: 270 80% 90%;
+    --sidebar-ring: 213 100% 50%;
   }
 
   .dark {
@@ -237,19 +237,19 @@
     -webkit-line-clamp: unset;
   }
   .gradient-brand-soft {
-    background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(236,72,153,0.08) 100%);
+    background: linear-gradient(135deg, rgba(0, 114, 255, 0.08) 0%, rgba(90, 0, 214, 0.08) 50%, rgba(255, 46, 154, 0.08) 100%);
   }
   .gradient-teal {
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #0072FF 0%, #5A00D6 100%);
   }
   .app-workspace-bg {
-    background: #ffffff !important;
+    background: #F5F0FF !important;
   }
   .shadow-panel {
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px -16px rgba(124, 58, 237, 0.28);
+    box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 10px 26px -14px rgba(90, 0, 214, 0.22);
   }
   .text-gradient-brand {
-    background: linear-gradient(90deg, #2563eb, #7c3aed 60%, #ec4899);
+    background: linear-gradient(90deg, #0072FF 0%, #0A2B6D 16%, #5A00D6 34%, #A100FF 52%, #FF2E9A 74%, #FF6EDB 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -526,33 +526,36 @@
   main .module-action-bar:not(.app-page-header *) { gap: .5cm; }
 }
 
-/* ===== LOCKED COLOUR RULE — never change unless the app owner explicitly asks =====
-   Every screen, chart, data item and section uses ONLY:
-   (1) bright pastel colours, (2) the exact colours of the 45 dashboard module tiles
-   (src/components/dashboard/dashboardModuleColours.js), or (3) white.
-   No other greys, blacks or off-palette colours. Use moduleKeyColour(key) for module colours;
-   the overrides below catch any stray neutral/dark Tailwind classes. */
+/* ===== PLATFORM COLOUR SYSTEM =====
+   Spectrum: Blue (#0072FF) -> Dark blue (#0A2B6D) -> Dark purple (#5A00D6) -> Purple (#A100FF) -> Pink (#FF2E9A) -> Purple (#A100FF) -> Dark purple (#5A00D6) -> Dark blue (#0A2B6D) -> Blue (#0072FF)
+   Swatches: Sky blue #00C6FF · Blue #0072FF · Dark blue #0A2B6D · Dark purple #5A00D6 · Purple #A100FF · Pink #FF2E9A · Magenta #FF6EDB · Light purple / lilac #C084FC
+   Navigation & main headings: dark navy (#0A2B6D)
+   Buttons & controls: blue (#0072FF) and purple (#5A00D6 / #A100FF)
+   Highlights & brand accents: pink (#FF2E9A) and magenta (#FF6EDB)
+   Cards & forms: white (#FFFFFF) with light borders and subtle shadows
+   Background panels: pale lavender (#F5F0FF) */
 @layer utilities {
-  :root:not(.dark) :is(.bg-slate-50, .bg-slate-100, .bg-zinc-50, .bg-zinc-100) { background-color: hsl(var(--profile-lilac) / 0.5); }
-  :root:not(.dark) :is(.bg-slate-200, .bg-zinc-200) { background-color: hsl(var(--profile-sky)); }
-  :root:not(.dark) :is(.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, .bg-zinc-800, .bg-zinc-900) { background-color: #4338ca; }
-  :root:not(.dark) :is(.border-slate-100, .border-slate-200, .border-slate-300, .border-zinc-200) { border-color: hsl(var(--profile-lilac)); }
-  :root:not(.dark) :is(.border-slate-700, .border-slate-800, .border-slate-900, .border-black) { border-color: #4338ca; }
-  :root:not(.dark) :is(.text-slate-300, .text-slate-200) { color: #94a3b8; }
-  :root:not(.dark) :is(.text-slate-700, .text-slate-800, .text-slate-900, .text-slate-950, .text-zinc-900) { color: #4338ca; }
-  /* Shared to-do command board: dark navy/mint theme remapped to module colours (projects indigo, training teal). */
-  .team-command-board, .team-command-board :is(.tcb-mark, .tcb-lane, .tcb-task, .tcb-await) { --tcb-accent: #14b8a6; }
-  .team-command-board .tcb-mark { background: #4338ca !important; color: #fff !important; }
-  .team-command-board .tcb-btn.tcb-primary, .team-command-board .tcb-await .tcb-smallbtn { background: #14b8a6 !important; border-color: #14b8a6 !important; color: #fff !important; }
-  .team-command-board .tcb-lane:before { background: #14b8a6 !important; }
-  .team-command-board .tcb-task:hover { border-color: #14b8a6 !important; }
+  :root:not(.dark) :is(h1, h2, h3, h4):not(.app-page-header *):not(.gradient-brand *):not(.comm-panel-bar *):not(.comm-weather-bar *) {
+    color: #0A2B6D;
+  }
+  :root:not(.dark) nav a:not(.gradient-brand) {
+    color: #0A2B6D;
+  }
+  :root:not(.dark) :is(.bg-slate-50, .bg-slate-100, .bg-zinc-50, .bg-zinc-100) { background-color: #F5F0FF; }
+  :root:not(.dark) :is(.bg-slate-200, .bg-zinc-200) { background-color: #EDE9FE; }
+  :root:not(.dark) :is(.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, .bg-zinc-800, .bg-zinc-900) { background-color: #0A2B6D; }
+  :root:not(.dark) :is(.border-slate-100, .border-slate-200, .border-slate-300, .border-zinc-200) { border-color: rgba(192, 132, 252, 0.42); }
+  :root:not(.dark) :is(.border-slate-700, .border-slate-800, .border-slate-900, .border-black) { border-color: #0A2B6D; }
+  :root:not(.dark) :is(.text-slate-300, .text-slate-200) { color: #C084FC; }
+  :root:not(.dark) :is(.text-slate-700, .text-slate-800, .text-slate-900, .text-slate-950, .text-zinc-900) { color: #0A2B6D; }
+  .team-command-board, .team-command-board :is(.tcb-mark, .tcb-lane, .tcb-task, .tcb-await) { --tcb-accent: #0072FF; }
+  .team-command-board .tcb-mark { background: #0A2B6D !important; color: #fff !important; }
+  .team-command-board .tcb-btn.tcb-primary, .team-command-board .tcb-await .tcb-smallbtn { background: #5A00D6 !important; border-color: #5A00D6 !important; color: #fff !important; }
+  .team-command-board .tcb-lane:before { background: #0072FF !important; }
+  .team-command-board .tcb-task:hover { border-color: #A100FF !important; }
 }
 
-/* ===== BRIGHT, RICH, VIBRANT MULTI-COLOUR PAGES (45-Module Dashboard Palette) =====
-   Headers stay Blue, Purple, Pink (--header-gradient).
-   Every module sets --module-colour from moduleKeyColour(key), and all sections, cards,
-   tables, and metric tiles across all 45 modules use the module's semantic colour and the
-   vibrant 45-module dashboard palette with bold top colour bars and pastel-tinted surfaces. */
+/* ===== CARDS & FORMS: WHITE WITH LIGHT BORDERS & SUBTLE SHADOWS + SYMMETRIC TOP SPECTRUM ACCENTS ===== */
 @layer utilities {
   .app-dashboard-canvas :is(section, .rounded-2xl.border, .rounded-xl.border):not(.app-page-header):not(.comm-panel-bar):not(.comm-weather-bar) {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -566,48 +569,63 @@
     .space-y-3 > .rounded-xl.border,
     .space-y-4 > .rounded-xl.border
   ):not(.app-page-header) {
-    border-color: color-mix(in srgb, var(--module-colour, #4f46e5) 42%, white);
-    border-top: 4px solid var(--module-colour, #4f46e5);
-    background: linear-gradient(140deg, color-mix(in srgb, var(--module-colour, #4f46e5) 12%, white) 0%, color-mix(in srgb, var(--module-colour, #4f46e5) 4%, white) 55%, #ffffff 100%);
+    border-color: rgba(192, 132, 252, 0.45);
+    border-top: 3px solid var(--module-colour, #0072FF);
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(10, 43, 109, 0.07);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+1) {
-    border-color: rgba(79, 70, 229, 0.45);
-    border-top: 4px solid var(--module-colour, #4f46e5);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--module-colour, #4f46e5) 15%, white), color-mix(in srgb, var(--module-colour, #4f46e5) 4%, white) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+1) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #0072FF;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(0, 114, 255, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+2) {
-    border-color: rgba(219, 39, 119, 0.45);
-    border-top: 4px solid #db2777;
-    background: linear-gradient(135deg, rgba(219, 39, 119, 0.14), rgba(219, 39, 119, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+2) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #0A2B6D;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(10, 43, 109, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+3) {
-    border-color: rgba(14, 165, 233, 0.45);
-    border-top: 4px solid #0ea5e9;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.14), rgba(14, 165, 233, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+3) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #5A00D6;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(90, 0, 214, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+4) {
-    border-color: rgba(13, 148, 136, 0.45);
-    border-top: 4px solid #0d9488;
-    background: linear-gradient(135deg, rgba(13, 148, 136, 0.14), rgba(13, 148, 136, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+4) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #A100FF;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(161, 0, 255, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+5) {
-    border-color: rgba(234, 88, 12, 0.45);
-    border-top: 4px solid #ea580c;
-    background: linear-gradient(135deg, rgba(234, 88, 12, 0.14), rgba(234, 88, 12, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+5) {
+    border-color: rgba(255, 110, 219, 0.45);
+    border-top: 3px solid #FF2E9A;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(255, 46, 154, 0.09);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+6) {
-    border-color: rgba(147, 51, 234, 0.45);
-    border-top: 4px solid #9333ea;
-    background: linear-gradient(135deg, rgba(147, 51, 234, 0.14), rgba(147, 51, 234, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+6) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #A100FF;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(161, 0, 255, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+7) {
-    border-color: rgba(22, 163, 74, 0.45);
-    border-top: 4px solid #16a34a;
-    background: linear-gradient(135deg, rgba(22, 163, 74, 0.14), rgba(22, 163, 74, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+7) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #5A00D6;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(90, 0, 214, 0.08);
   }
-  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(8n+8) {
-    border-color: rgba(202, 138, 4, 0.45);
-    border-top: 4px solid #ca8a04;
-    background: linear-gradient(135deg, rgba(202, 138, 4, 0.14), rgba(202, 138, 4, 0.04) 60%, #ffffff);
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+8) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #0A2B6D;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(10, 43, 109, 0.08);
+  }
+  :root:not(.dark) .app-dashboard-canvas :is(.grid > .rounded-xl.border, .grid > .rounded-2xl.border, .space-y-2 > .rounded-xl.border, .space-y-3 > .rounded-xl.border, .space-y-4 > .rounded-2xl.border, .space-y-5 > .rounded-2xl.border):nth-child(9n+9) {
+    border-color: rgba(192, 132, 252, 0.42);
+    border-top: 3px solid #0072FF;
+    background: #ffffff;
+    box-shadow: 0 2px 10px -3px rgba(0, 114, 255, 0.08);
   }
 }
