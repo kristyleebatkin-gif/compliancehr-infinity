@@ -18,7 +18,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '60 mins',
     location: 'Executive Boardroom & Online Video Link',
     purpose: 'Review 356-checkpoint Master Compliance Audit status, financial KPIs, reportable incidents, and strategic resolutions.',
-    color: '#4f46e5',
+    color: '#0072FF',
     agenda:
       '1. Welcome, Quorum & Conflict of Interest Declarations\n2. Confirmation of Previous Board Minutes & Action Register\n3. Master Compliance Audit Checklist (CHR-AUD-001 & 002) Status\n4. NDIS Reportable Incidents, WHS Risks & Safeguarding Review\n5. Financial Performance, NDIS Claims & Budget Utilisation\n6. Formal Board Resolutions & Delegated Authorities\n7. Next Meeting Date & Close',
   },
@@ -29,7 +29,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '45 mins',
     location: 'Compliance Command Centre',
     purpose: 'Audit 100-point staff screening, expiring certificates, participant 3-part consents, and open compliance issues.',
-    color: '#7c3aed',
+    color: '#0A2B6D',
     agenda:
       '1. Attendance & Compliance Score Overview\n2. 100-Point Staff Screening & Worker Orientation Audit\n3. Participant Service Agreements & 3-Part Consent Verification\n4. Document Vault 30-Day Expiry Scan Results\n5. Corrective Actions Assigned to Owners with Target Dates',
   },
@@ -40,7 +40,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '30 mins',
     location: 'Main Office & Mobile Team Dial-In',
     purpose: 'Align support workers on weekly roster coverage, participant goals, Take-5 safety checks, and shared to-do tasks.',
-    color: '#0891b2',
+    color: '#5A00D6',
     agenda:
       '1. Team Shoutouts & Task Leaderboard Recognition\n2. Weekly Roster Coverage, Open Shifts & Buddy Shifts\n3. Participant Goal Progress & High-Support Shift Notes\n4. Take-5 Pre-Shift Safety, Vehicle & Kit Reminders\n5. Shared To-Do Command Board Sign-Offs',
   },
@@ -51,7 +51,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '45 mins',
     location: 'Participant Home / Consultation Room',
     purpose: 'Collaborate with participant, nominee, and support coordinator on goal attainment, budget, and risk controls.',
-    color: '#db2777',
+    color: '#A100FF',
     agenda:
       '1. Participant Voice: What is Working Well & Preferences\n2. NDIS Goal Progress & 10-Weekly Snapshot Review\n3. Individual & Home Risk Assessment + Medication Consent Check\n4. Plan Budget Utilisation & Schedule of Supports\n5. Agreed Next Steps, Owners & Target Dates',
   },
@@ -62,7 +62,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '45 mins',
     location: 'Safety & Safeguarding Hub',
     purpose: 'Evaluate recent incidents, 24h/5d NDIS Commission notifications, hierarchy of controls, and emergency drills.',
-    color: '#dc2626',
+    color: '#FF2E9A',
     agenda:
       '1. 24-Hour & 5-Day NDIS Reportable Incident SLA Verification\n2. Root-Cause Investigations & Participant Wellbeing Check\n3. New Hazards, Near Misses & Hierarchy of Controls\n4. 6-Monthly Fire Drill & First Aid Kit Readiness\n5. Preventive Actions Sent to Continuous Improvement Register',
   },
@@ -73,7 +73,7 @@ export const MASTERPIECE_MEETING_PRESETS = [
     duration: '40 mins',
     location: 'Quality Assurance Studio',
     purpose: 'Convert participant feedback, survey results, and audit findings into closed continuous improvement evidence.',
-    color: '#16a34a',
+    color: '#00C6FF',
     agenda:
       '1. Complaints & Feedback SLA Resolution Summary\n2. Participant & Staff Satisfaction Survey Insights\n3. Open Continuous Improvement Register (CIR) Items\n4. Verification of Completed Improvement Evidence\n5. New Quality Priorities & Task Assignments',
   },
@@ -467,7 +467,7 @@ export default function MeetingMasterpieceSuite({
                     key={t.id}
                     className="flex items-center justify-between gap-2 rounded-xl border-2 bg-white px-2.5 py-1.5 shadow-sm"
                     style={{
-                      borderColor: isDone ? '#16a34a' : '#7c3aed',
+                      borderColor: isDone ? '#00C6FF' : '#5A00D6',
                       borderLeftWidth: '4px',
                     }}
                   >

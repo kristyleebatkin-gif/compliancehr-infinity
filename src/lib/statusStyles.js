@@ -2,13 +2,13 @@
 // Tones use the app's semantic palette tokens (safe / warning / danger / teal / brand / muted).
 // Usage: import { statusTone } from '@/lib/statusStyles'; className={statusTone('Resolved')}
 
-const SAFE = 'bg-safe/10 text-safe';
-const WARNING = 'bg-warning/10 text-warning';
-const DANGER = 'bg-danger/10 text-danger';
-const TEAL = 'bg-teal/10 text-teal';
-const BRAND = 'bg-brand/10 text-brand';
-const ORANGE = 'bg-orange-500/10 text-orange-600';
-const MUTED = 'bg-muted text-foreground/60';
+const SAFE = 'bg-[#00C6FF]/15 text-[#0072FF] border-[#00C6FF]/50';
+const WARNING = 'bg-[#A100FF]/15 text-[#5A00D6] border-[#A100FF]/50';
+const DANGER = 'bg-[#FF2E9A]/15 text-[#FF2E9A] border-[#FF2E9A]/50';
+const TEAL = 'bg-[#0072FF]/15 text-[#0072FF] border-[#0072FF]/50';
+const BRAND = 'bg-[#5A00D6]/15 text-[#5A00D6] border-[#5A00D6]/50';
+const ORANGE = 'bg-[#FF6EDB]/20 text-[#A100FF] border-[#FF6EDB]/60';
+const MUTED = 'bg-[#C084FC]/20 text-[#0A2B6D] border-[#C084FC]/50';
 
 // Module-specific statuses (ComplianceHR Portal registers)
 const EXTENDED_TONES = {

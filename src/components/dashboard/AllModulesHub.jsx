@@ -8,16 +8,16 @@ import { ArrowRight, LayoutGrid } from 'lucide-react';
 
 // Live status hues the hub shares with the module compliance strips.
 const STATUS_MAP = {
-  incidents: { label: 'Incident register', dot: '#dc2626' },
-  risks: { label: 'Risk register', dot: '#ea580c' },
-  compliance: { label: 'Expiry scan + audits', dot: '#7c3aed' },
-  training: { label: 'Expiry alerts live', dot: '#0d9488' },
-  'emergency-response': { label: 'Live alerts armed', dot: '#dc2626' },
-  invoicing: { label: 'Unbilled shifts tracked', dot: '#16a34a' },
-  rostering: { label: 'Reminder alerts live', dot: '#8b5cf6' },
-  goals: { label: 'Progress notes due', dot: '#db2777' },
-  intake: { label: 'Cases awaiting review', dot: '#2563eb' },
-  documents: { label: 'Central routing on', dot: '#ca8a04' },
+  incidents: { label: 'Incident register', dot: '#FF2E9A' },
+  risks: { label: 'Risk register', dot: '#A100FF' },
+  compliance: { label: 'Expiry scan + audits', dot: '#5A00D6' },
+  training: { label: 'Expiry alerts live', dot: '#0072FF' },
+  'emergency-response': { label: 'Live alerts armed', dot: '#FF6EDB' },
+  invoicing: { label: 'Unbilled shifts tracked', dot: '#00C6FF' },
+  rostering: { label: 'Reminder alerts live', dot: '#5A00D6' },
+  goals: { label: 'Progress notes due', dot: '#FF2E9A' },
+  intake: { label: 'Cases awaiting review', dot: '#0072FF' },
+  documents: { label: 'Central routing on', dot: '#C084FC' },
 };
 
 export default function AllModulesHub() {

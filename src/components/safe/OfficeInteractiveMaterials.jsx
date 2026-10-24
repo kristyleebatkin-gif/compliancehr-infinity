@@ -61,12 +61,12 @@ export function LogoBrandedOfficeSecondScreen({
   companyName = 'ComplianceHR Infinity',
 }) {
   const quickScreens = [
-    { key: 'our-staff', label: 'Employee Profiles Screen', path: '/our-employees', color: '#2563eb', summary: 'Live Staff Directory, HR Compliance, Screening, Contracts & Staff ID Badges.' },
-    { key: 'our-participants', label: 'Participant Profiles Screen', path: '/our-participants', color: '#e11d48', summary: 'NDIS Plans, Goals, Consents, Medications, Risk Controls & Shift Notes.' },
-    { key: 'communications', label: 'Comms & Shift Notes Screen', path: '/communications', color: '#0891b2', summary: 'Active Alerts, Automated Log, Shift Notes, Team Feed, Inbox & Smart Vault.' },
-    { key: 'compliance', label: 'Compliance & Audit Screen', path: '/compliance', color: '#6d28d9', summary: '8 NDIS Practice Standards, Master Checklists, Evidence Map & Audit Pack PDF.' },
-    { key: 'rostering', label: 'Roster & Shifts Screen', path: '/roster', color: '#6366f1', summary: 'Live Shift Coverage, Screening Alerts, Availability, Sign-Off & Invoicing.' },
-    { key: 'tasks', label: 'Shared To-Do & Tasks Screen', path: '/tasks', color: '#ef4444', summary: 'Team Command Board, Overdue Escalations, Digital Sign-Off & Leaderboard.' },
+    { key: 'our-staff', label: 'Employee Profiles Screen', path: '/our-employees', color: '#0072FF', summary: 'Live Staff Directory, HR Compliance, Screening, Contracts & Staff ID Badges.' },
+    { key: 'our-participants', label: 'Participant Profiles Screen', path: '/our-participants', color: '#0A2B6D', summary: 'NDIS Plans, Goals, Consents, Medications, Risk Controls & Shift Notes.' },
+    { key: 'communications', label: 'Comms & Shift Notes Screen', path: '/communications', color: '#5A00D6', summary: 'Active Alerts, Automated Log, Shift Notes, Team Feed, Inbox & Smart Vault.' },
+    { key: 'compliance', label: 'Compliance & Audit Screen', path: '/compliance', color: '#A100FF', summary: '8 NDIS Practice Standards, Master Checklists, Evidence Map & Audit Pack PDF.' },
+    { key: 'rostering', label: 'Roster & Shifts Screen', path: '/roster', color: '#FF2E9A', summary: 'Live Shift Coverage, Screening Alerts, Availability, Sign-Off & Invoicing.' },
+    { key: 'tasks', label: 'Shared To-Do & Tasks Screen', path: '/tasks', color: '#FF6EDB', summary: 'Team Command Board, Overdue Escalations, Digital Sign-Off & Leaderboard.' },
   ];
 
   const activeModule =
@@ -275,12 +275,12 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
         </div>
         <div className="grid grid-cols-2 gap-1.5">
           {[
-            { label: 'NDIS Registration & Audit', path: '/company-safe', color: '#7c3aed' },
-            { label: 'Insurance & Certificates', path: '/company-safe', color: '#2563eb' },
-            { label: 'Policies & Procedures', path: '/documents', color: '#db2777' },
-            { label: 'Employee HR Contracts', path: '/hr', color: '#0d9488' },
-            { label: 'Participant Agreements', path: '/our-participants', color: '#ea580c' },
-            { label: 'Board & Audit Packs', path: '/compliance', color: '#16a34a' },
+            { label: 'NDIS Registration & Audit', path: '/company-safe', color: '#0072FF' },
+            { label: 'Insurance & Certificates', path: '/company-safe', color: '#0A2B6D' },
+            { label: 'Policies & Procedures', path: '/documents', color: '#5A00D6' },
+            { label: 'Employee HR Contracts', path: '/hr', color: '#A100FF' },
+            { label: 'Participant Agreements', path: '/our-participants', color: '#FF2E9A' },
+            { label: 'Board & Audit Packs', path: '/compliance', color: '#00C6FF' },
           ].map((item) => (
             <Link
               key={item.label}
@@ -367,7 +367,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.audits} Audits · 8 NDIS Standards`,
       desc: 'Master checklists, NDIS practice standards, evidence mapping & 1-click PDF board packs.',
       path: '/compliance',
-      color: '#6d28d9',
+      color: '#0072FF',
       icon: ClipboardCheck,
     },
     {
@@ -375,7 +375,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.tasks} Tracked Tasks`,
       desc: 'Team tasks, sign-off workflows, overdue alerts & seasonal task leaderboard.',
       path: '/tasks',
-      color: '#ef4444',
+      color: '#0A2B6D',
       icon: ListTodo,
     },
     {
@@ -383,7 +383,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.incidents} Logged Incidents`,
       desc: '24-hour & 5-day NDIS reportable timelines, photo evidence, WHS & root-cause actions.',
       path: '/incidents',
-      color: '#dc2626',
+      color: '#5A00D6',
       icon: Siren,
     },
     {
@@ -391,7 +391,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.risks} Active Risk Controls`,
       desc: 'Hierarchy of controls, home & individual risk assessments, emergency drills & MSDS.',
       path: '/risks',
-      color: '#ea580c',
+      color: '#A100FF',
       icon: AlertTriangle,
     },
     {
@@ -399,7 +399,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.shifts} Scheduled Shifts`,
       desc: 'Worker screening validation, shift notes, NDIS price guide & automated invoicing.',
       path: '/roster',
-      color: '#4f46e5',
+      color: '#FF2E9A',
       icon: Calendar,
     },
     {
@@ -407,7 +407,7 @@ export function ComplianceAndOperationsMaterialPanel() {
       stat: `${counts.certificates} Staff Credentials`,
       desc: 'AI course builder, knowledge quizzes, expiry reminders & printable certificates.',
       path: '/training',
-      color: '#0d9488',
+      color: '#00C6FF',
       icon: Award,
     },
   ];

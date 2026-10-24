@@ -30,7 +30,7 @@ export function EndOfShiftWorkflowTab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="rounded-xl border-2 border-[#6366f1] bg-indigo-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="rounded-xl border-2 border-[#0072FF] bg-indigo-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
         <h3 className="text-xs font-black uppercase tracking-wider text-indigo-950">
           Sections 9 &amp; 10 — Integrated Mobile-Friendly End-of-Shift Checklist &amp; Mandatory Shift Note Workflow
         </h3>
@@ -40,7 +40,7 @@ export function EndOfShiftWorkflowTab({
       </div>
 
       <form onSubmit={handleSaveEndOfShiftChecklist} className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-        <div className="rounded-xl border-2 border-[#2563eb] bg-blue-50/30 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#0A2B6D] bg-blue-50/30 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="text-[9px] font-black uppercase text-blue-800">
             1. Shift, Clock-Out &amp; Transport Details
           </div>
@@ -107,7 +107,7 @@ export function EndOfShiftWorkflowTab({
           </div>
         </div>
 
-        <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/30 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#5A00D6] bg-purple-50/30 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="text-[9px] font-black uppercase text-purple-800">
             2. Mandatory Progress Notes &amp; Goal Updates
           </div>
@@ -166,7 +166,7 @@ export function EndOfShiftWorkflowTab({
           </div>
         </div>
 
-        <div className="rounded-xl border-2 border-[#0d9488] bg-teal-50/40 p-2.5 flex flex-col justify-between space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#00C6FF] bg-teal-50/40 p-2.5 flex flex-col justify-between space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="space-y-2">
             <div className="text-[9px] font-black uppercase text-teal-800">
               3. Worker Handover &amp; Final Declaration
@@ -199,7 +199,7 @@ export function EndOfShiftWorkflowTab({
           <Button
             type="submit"
             disabled={savingEos || !eosForm.declarationAccepted}
-            className="w-full bg-[#0d9488] text-xs font-black text-white hover:bg-teal-700"
+            className="w-full bg-[#00C6FF] text-xs font-black text-white hover:bg-teal-700"
           >
             <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
             {savingEos ? 'Submitting Final Documentation...' : 'Submit End-of-Shift Checklist & Progress Note'}
@@ -224,7 +224,7 @@ export function DevelopmentRegister31Tab({
 }) {
   return (
     <div className="p-3 space-y-3 bg-white">
-      <div className="rounded-xl border-2 border-[#db2777] bg-pink-50/50 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="rounded-xl border-2 border-[#FF2E9A] bg-pink-50/50 p-2.5" style={{ borderTopWidth: '4px' }}>
         <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
           <div>
             <h3 className="text-xs font-black uppercase tracking-wider text-pink-950">
@@ -261,7 +261,7 @@ export function DevelopmentRegister31Tab({
                 devRegisterRows
               )
             }
-            className="h-7 bg-[#db2777] px-2.5 text-[8px] font-black text-white hover:bg-pink-700"
+            className="h-7 bg-[#FF2E9A] px-2.5 text-[8px] font-black text-white hover:bg-pink-700"
           >
             <Download className="mr-1 h-3 w-3" />
             Export 17-Column Development Register (CSV/Excel)
@@ -302,7 +302,7 @@ export function DevelopmentRegister31Tab({
           </div>
         </div>
 
-        <div className="max-h-[360px] overflow-auto rounded-xl border-2 border-[#7c3aed]">
+        <div className="max-h-[360px] overflow-auto rounded-xl border-2 border-[#5A00D6]">
           <table className="w-full border-collapse text-left text-[8px]">
             <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
               <tr>
@@ -364,7 +364,7 @@ export function DevelopmentRegister31Tab({
         </div>
       </div>
 
-      <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+      <div className="rounded-xl border-2 border-[#5A00D6] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h4 className="text-xs font-black uppercase tracking-wider text-blue-950">
@@ -410,7 +410,7 @@ export function DevelopmentRegister31Tab({
             size="sm"
             onClick={handleRecordManagementAcceptance}
             disabled={savingAcceptance}
-            className="h-7 bg-[#7c3aed] px-3 text-[8.5px] font-black text-white hover:bg-purple-700"
+            className="h-7 bg-[#5A00D6] px-3 text-[8.5px] font-black text-white hover:bg-purple-700"
           >
             <Award className="mr-1 h-3 w-3 text-amber-200" />
             {savingAcceptance ? 'Recording Acceptance...' : 'Record Management Acceptance Sign-Off'}

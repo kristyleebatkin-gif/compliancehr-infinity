@@ -228,7 +228,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
       <div className="p-3 space-y-3 bg-white">
         {/* Section 26: Infinity AI Assistant with Source References & Human Approval Gate */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
-          <div className="rounded-xl border-2 border-[#8b5cf6] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#A100FF] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
             <div className="text-[9.5px] font-black uppercase text-purple-950">
               Section 26 — Source-Grounded AI Drafting &amp; Mandatory Human Approval Gate
             </div>
@@ -240,7 +240,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                   onClick={() => handleSelectDomain(d)}
                   className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
                     selectedDomain.id === d.id
-                      ? 'border-[#7c3aed] bg-[#7c3aed] text-white'
+                      ? 'border-[#5A00D6] bg-[#5A00D6] text-white'
                       : 'border-purple-200 bg-white text-blue-950'
                   }`}
                 >
@@ -274,7 +274,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                 size="sm"
                 disabled={!humanApproved || committing}
                 onClick={handleCommitApprovedAiOutput}
-                className="h-7 bg-[#7c3aed] px-3 text-[8px] font-black text-white hover:bg-purple-700"
+                className="h-7 bg-[#5A00D6] px-3 text-[8px] font-black text-white hover:bg-purple-700"
               >
                 <CheckCircle2 className="mr-1 h-3 w-3" />
                 {committing ? 'Saving...' : `Approve & Commit to ${selectedDomain.targetEntity}`}
@@ -283,7 +283,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
           </div>
 
           {/* Section 27: AI Skills Library & Scenario Planning Simulator */}
-          <div className="rounded-xl border-2 border-[#0369a1] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#0072FF] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
             <div className="text-[9.5px] font-black uppercase text-sky-950">
               Section 27 — AI Skills Library (Guardrails, Permissions &amp; Versioning)
             </div>
@@ -345,7 +345,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
         {/* Section 28: All 12 Advanced Business Tools Matrix */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5">
           {ADVANCED_TOOLS_12.map((tool, i) => {
-            const palette = ['#4f46e5', '#db2777', '#0ea5e9', '#0d9488', '#ea580c', '#7c3aed', '#16a34a', '#ca8a04'];
+            const palette = ['#00C6FF', '#0072FF', '#0A2B6D', '#5A00D6', '#A100FF', '#FF2E9A', '#FF6EDB', '#C084FC'];
             const c = palette[i % palette.length];
             return (
               <Link

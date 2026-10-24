@@ -40,12 +40,23 @@
   box-shadow: 0 2px 5px hsl(var(--dashboard-tone) / .08);
   --tw-ring-shadow: 0 0 transparent;
 }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+2) { --dashboard-tone: var(--teal); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+3) { --dashboard-tone: var(--chart-5); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+4) { --dashboard-tone: var(--safe); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+5) { --dashboard-tone: var(--chart-2); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+6) { --dashboard-tone: var(--hr-evidence); }
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(6n+1) { --dashboard-tone: var(--primary); }
+/* 8-Colour Palette cycle across every modular tab strip:
+   1: skyBlue (193 100% 50%)
+   2: blue (213 100% 50%)
+   3: darkBlue (220 83% 23%)
+   4: darkPurple (265 100% 42%)
+   5: purple (277 100% 50%)
+   6: pink (329 100% 59%)
+   7: magenta (315 100% 72%)
+   8: lightPurpleLilac (270 95% 75%) */
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+1) { --dashboard-tone: 193 100% 50%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+2) { --dashboard-tone: 213 100% 50%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+3) { --dashboard-tone: 220 83% 23%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+4) { --dashboard-tone: 265 100% 42%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+5) { --dashboard-tone: 277 100% 50%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+6) { --dashboard-tone: 329 100% 59%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+7) { --dashboard-tone: 315 100% 72%; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+8) { --dashboard-tone: 270 95% 75%; }
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) {
   background: linear-gradient(125deg, hsl(var(--dashboard-tone) / .58), hsl(var(--dashboard-tone) / .28));
   color: hsl(var(--foreground));

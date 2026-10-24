@@ -2,9 +2,9 @@
    Palette stays on the 45-module tiles + brand gradient + pastels; no new dark tones. */
 .comm-centre {
   background:
-    radial-gradient(circle at 10% 0%, rgba(236, 72, 153, 0.12), transparent 24rem),
-    radial-gradient(circle at 90% 3%, rgba(8, 145, 178, 0.10), transparent 22rem),
-    radial-gradient(circle at 52% 58%, rgba(124, 58, 237, 0.08), transparent 28rem),
+    radial-gradient(circle at 10% 0%, rgba(255, 46, 154, 0.12), transparent 24rem),
+    radial-gradient(circle at 90% 3%, rgba(0, 198, 255, 0.12), transparent 22rem),
+    radial-gradient(circle at 52% 58%, rgba(90, 0, 214, 0.10), transparent 28rem),
     hsl(var(--background));
 }
 

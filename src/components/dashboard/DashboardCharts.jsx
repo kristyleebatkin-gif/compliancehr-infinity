@@ -8,23 +8,23 @@ import {
 import { AlertTriangle, ShieldAlert, Loader2 } from 'lucide-react';
 
 const STATUS_COLORS = {
-  Open: '#f59e0b',
-  Investigating: '#3b82f6',
-  Resolved: '#16a34a',
-  Closed: '#64748b',
+  Open: '#A100FF',
+  Investigating: '#0072FF',
+  Resolved: '#00C6FF',
+  Closed: '#0A2B6D',
 };
 
 const RATING_COLORS = {
-  Low: '#16a34a',
-  Medium: '#eab308',
-  High: '#f97316',
-  Critical: '#ef4444',
+  Low: '#00C6FF',
+  Medium: '#0072FF',
+  High: '#A100FF',
+  Critical: '#FF2E9A',
 };
 
 const STATUSES = ['Open', 'Investigating', 'Resolved', 'Closed'];
 const RATINGS = ['Low', 'Medium', 'High', 'Critical'];
 const RISK_CATEGORIES = ['Operational', 'Clinical', 'Financial', 'Workplace Health & Safety', 'Participant', 'Compliance'];
-const CATEGORY_COLORS = ['#6366f1', '#0ea5e9', '#14b8a6', '#f59e0b', '#ec4899', '#8b5cf6'];
+const CATEGORY_COLORS = ['#00C6FF', '#0072FF', '#0A2B6D', '#5A00D6', '#A100FF', '#FF2E9A', '#FF6EDB', '#C084FC'];
 
 // Derive the original rating scale from the likelihood/impact matrix when no rating field is stored.
 const riskRating = (r) => {
@@ -110,9 +110,9 @@ export default function DashboardCharts() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 rounded-2xl bg-gradient-to-r from-rose-50 via-white to-orange-50 p-2 dark:from-rose-950/20 dark:via-background dark:to-orange-950/20 sm:grid-cols-2">
-        <StatCard icon={AlertTriangle} label="Open incidents" value={openIncidents} tone="#e11d48" to="/incidents" />
-        <StatCard icon={ShieldAlert} label="Open high / critical risks" value={highRisks} tone="#ea580c" to="/risks" />
+      <div className="grid grid-cols-1 gap-4 rounded-2xl bg-[#F5F0FF] p-2 sm:grid-cols-2">
+        <StatCard icon={AlertTriangle} label="Open incidents" value={openIncidents} tone="#FF2E9A" to="/incidents" />
+        <StatCard icon={ShieldAlert} label="Open high / critical risks" value={highRisks} tone="#5A00D6" to="/risks" />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">

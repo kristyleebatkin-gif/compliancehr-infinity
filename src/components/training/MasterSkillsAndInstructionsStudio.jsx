@@ -266,7 +266,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#0d9488] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-[#0072FF] bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -341,7 +341,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
               onClick={() => setRoleFilter(r)}
               className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
                 roleFilter === r
-                  ? 'border-[#0d9488] bg-[#0d9488] text-white'
+                  ? 'border-[#0072FF] bg-[#0072FF] text-white'
                   : 'border-teal-300 bg-white text-blue-950'
               }`}
             >
@@ -360,13 +360,13 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
                 onClick={() => setSelectedSkill(skl)}
                 className={`rounded-xl border p-2 text-left transition-all ${
                   active
-                    ? 'border-2 border-[#0d9488] bg-teal-50/70 shadow-sm'
+                    ? 'border-2 border-[#0072FF] bg-teal-50/70 shadow-sm'
                     : 'border-teal-200 bg-white hover:bg-teal-50/30'
                 }`}
               >
                 <div className="flex items-center justify-between gap-1">
                   <span className="font-mono text-[8px] font-black text-teal-700">{skl.id}</span>
-                  <Badge className="bg-[#0d9488] text-white text-[7px]">{skl.roleCategory}</Badge>
+                  <Badge className="bg-[#0072FF] text-white text-[7px]">{skl.roleCategory}</Badge>
                 </div>
                 <div className="mt-0.5 text-[9.5px] font-black text-blue-950">{skl.skillName}</div>
                 <p className="mt-0.5 line-clamp-2 text-[7.5px] font-semibold text-purple-800">
@@ -379,7 +379,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
 
         {/* Full 17-Point Skill Instruction Sheet + Practical Competency Sign-Off */}
         {selectedSkill && (
-          <div className="rounded-xl border-2 border-[#0d9488] bg-teal-50/30 p-3 space-y-2.5" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#0072FF] bg-teal-50/30 p-3 space-y-2.5" style={{ borderTopWidth: '4px' }}>
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-200 pb-2">
               <div>
                 <span className="text-[8px] font-black uppercase text-teal-800">
@@ -433,7 +433,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
             </div>
 
             {/* Supervisor Practical Competency Sign-Off Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0d9488] bg-white p-2.5">
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white p-2.5">
               <div>
                 <div className="text-[9px] font-black uppercase text-blue-950">
                   Supervisor Practical Demonstration &amp; Competency Sign-Off

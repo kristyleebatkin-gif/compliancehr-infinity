@@ -438,7 +438,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
 
       <div className="p-3 grid grid-cols-1 lg:grid-cols-2 gap-2.5 bg-white">
         {/* Pillar 1: Closed-Loop CAPA & Immutable Audit Trail (Vanta / SafetyCulture Standard) */}
-        <div className="rounded-xl border-2 border-[#22c55e] bg-emerald-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#00C6FF] bg-emerald-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-xs font-black uppercase text-emerald-950">
@@ -448,7 +448,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 Cannot close without assigned Owner + verified Evidence Reference + immutable StatusLog entry
               </p>
             </div>
-            <Badge className="bg-[#16a34a] text-white text-[7.5px]">SafetyCulture / Vanta Standard</Badge>
+            <Badge className="bg-[#0072FF] text-white text-[7.5px]">SafetyCulture / Vanta Standard</Badge>
           </div>
 
           <form onSubmit={handleCreateClosedLoopCapa} className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
@@ -471,7 +471,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 placeholder="Evidence Doc Ref *"
                 className="h-7 text-xs bg-white"
               />
-              <Button type="submit" size="sm" className="h-7 bg-[#16a34a] px-2.5 text-[8px] font-black text-white hover:bg-emerald-700">
+              <Button type="submit" size="sm" className="h-7 bg-[#0072FF] px-2.5 text-[8px] font-black text-white hover:bg-emerald-700">
                 + Log CAPA
               </Button>
             </div>
@@ -507,7 +507,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 2: SCHADS Award Labour Cost & NDIS Margin Forecaster (Lumary / Deputy Standard) */}
-        <div className="rounded-xl border-2 border-[#6366f1] bg-indigo-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#5A00D6] bg-indigo-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-xs font-black uppercase text-indigo-950">
@@ -517,7 +517,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 Single-source SCHADS penalty multipliers (Sat 1.5x, Sun 2.0x, PH 2.5x, Evening 1.25x, Casual +25%, Super 11.5%)
               </p>
             </div>
-            <Badge className="bg-[#6366f1] text-white text-[7.5px]">Lumary / Deputy Standard</Badge>
+            <Badge className="bg-[#5A00D6] text-white text-[7.5px]">Lumary / Deputy Standard</Badge>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[8px]">
@@ -589,7 +589,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 3: Offline-First Mobile Field Capture Queue (SafetyCulture Thumb-First Pattern) */}
-        <div className="rounded-xl border-2 border-[#ea580c] bg-orange-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#FF2E9A] bg-orange-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-xs font-black uppercase text-orange-950">
@@ -633,7 +633,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 placeholder="Site / Vehicle Rego"
                 className="h-7 text-xs bg-white"
               />
-              <Button type="submit" size="sm" className="h-7 bg-[#ea580c] px-2.5 text-[8px] font-black text-white hover:bg-orange-700">
+              <Button type="submit" size="sm" className="h-7 bg-[#FF2E9A] px-2.5 text-[8px] font-black text-white hover:bg-orange-700">
                 Queue
               </Button>
             </div>
@@ -641,7 +641,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 4: Custom AI Skill Builder (Section 27) */}
-        <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+        <div className="rounded-xl border-2 border-[#A100FF] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-xs font-black uppercase text-purple-950">
@@ -651,7 +651,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 Create role-scoped AI skills with versioned instructions and mandatory human approval requirements
               </p>
             </div>
-            <Badge className="bg-[#7c3aed] text-white text-[7.5px]">
+            <Badge className="bg-[#A100FF] text-white text-[7.5px]">
               {customSkills.length + 4} Active Skills
             </Badge>
           </div>
@@ -669,7 +669,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               placeholder="Role-specific instructions & source rules..."
               className="h-7 text-xs bg-white"
             />
-            <Button type="submit" size="sm" className="h-7 bg-[#7c3aed] px-2.5 text-[8px] font-black text-white hover:bg-purple-700">
+            <Button type="submit" size="sm" className="h-7 bg-[#A100FF] px-2.5 text-[8px] font-black text-white hover:bg-purple-700">
               + Save Custom AI Skill
             </Button>
           </form>

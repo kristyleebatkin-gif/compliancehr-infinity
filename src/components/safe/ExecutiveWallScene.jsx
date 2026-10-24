@@ -115,32 +115,34 @@ function OfficeEquipmentWithInteractiveScreen({
       >
         <defs>
           <linearGradient id="officeGradMain" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#2563eb" />
-            <stop offset="48%" stopColor="#7c3aed" />
-            <stop offset="100%" stopColor="#ec4899" />
+            <stop offset="0%" stopColor="#0072FF" />
+            <stop offset="25%" stopColor="#0A2B6D" />
+            <stop offset="50%" stopColor="#5A00D6" />
+            <stop offset="75%" stopColor="#A100FF" />
+            <stop offset="100%" stopColor="#FF2E9A" />
           </linearGradient>
           <linearGradient id="chairLeatherGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#1e3a8a" />
-            <stop offset="50%" stopColor="#6d28d9" />
-            <stop offset="100%" stopColor="#be185d" />
+            <stop offset="0%" stopColor="#0A2B6D" />
+            <stop offset="50%" stopColor="#5A00D6" />
+            <stop offset="100%" stopColor="#FF2E9A" />
           </linearGradient>
           <linearGradient id="tableWoodGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#1e3a8a" />
-            <stop offset="50%" stopColor="#5b21b6" />
-            <stop offset="100%" stopColor="#9d174d" />
+            <stop offset="0%" stopColor="#0A2B6D" />
+            <stop offset="50%" stopColor="#5A00D6" />
+            <stop offset="100%" stopColor="#A100FF" />
           </linearGradient>
         </defs>
 
         {/* Office Floor Rug under the Furniture */}
-        <ellipse cx="490" cy="142" rx="465" ry="9" fill="#ede9fe" stroke="#c4b5fd" strokeWidth="1.5" />
+        <ellipse cx="490" cy="142" rx="465" ry="9" fill="#F5F0FF" stroke="#C084FC" strokeWidth="1.5" />
 
         {/* ==================== 1. INDOOR OFFICE PLANT (FAR LEFT) ==================== */}
         <g transform="translate(16, 36)">
-          <path d="M24 62 C8 44, 6 24, 20 12 C26 26, 26 44, 24 62 Z" fill="#16a34a" />
-          <path d="M28 62 C28 36, 36 12, 48 4 C50 24, 42 44, 28 62 Z" fill="#15803d" />
-          <path d="M32 62 C44 42, 56 30, 66 26 C58 44, 46 54, 32 62 Z" fill="#22c55e" />
-          <polygon points="14,62 46,62 41,96 19,96" fill="url(#officeGradMain)" stroke="#f9a8d4" strokeWidth="1.5" />
-          <rect x="11" y="58" width="38" height="6" rx="2" fill="#1e3a8a" />
+          <path d="M24 62 C8 44, 6 24, 20 12 C26 26, 26 44, 24 62 Z" fill="#00C6FF" />
+          <path d="M28 62 C28 36, 36 12, 48 4 C50 24, 42 44, 28 62 Z" fill="#0072FF" />
+          <path d="M32 62 C44 42, 56 30, 66 26 C58 44, 46 54, 32 62 Z" fill="#C084FC" />
+          <polygon points="14,62 46,62 41,96 19,96" fill="url(#officeGradMain)" stroke="#FF6EDB" strokeWidth="1.5" />
+          <rect x="11" y="58" width="38" height="6" rx="2" fill="#0A2B6D" />
         </g>
 
         {/* ==================== 2. EXECUTIVE OFFICE CHAIR (FRONT-LEFT) ==================== */}
@@ -319,21 +321,21 @@ export function SmallSafeVaultBar() {
  * Screenshot 4: Full Communication Centre Modulars & Today's Roster Overview
  */
 const COMM_CENTRE_MODULARS = [
-  { key: 'task-dashboard', label: 'Tasks', icon: LayoutDashboard, color: '#2563eb' },
-  { key: 'todo', label: 'To-Do Board', icon: ListTodo, color: '#ea580c' },
-  { key: 'guide', label: 'Tips & Teamwork', icon: Lightbulb, color: '#65a30d' },
-  { key: 'templates', label: 'Templates', icon: BookMarked, color: '#ca8a04' },
-  { key: 'banter', label: 'Team Banter', icon: MessagesSquare, color: '#db2777' },
-  { key: 'feed', label: 'Team Feed', icon: Radio, color: '#0d9488' },
-  { key: 'shoutouts', label: 'Shoutouts', icon: Sparkles, color: '#f43f5e' },
-  { key: 'video', label: 'Video Calls', icon: Video, color: '#4f46e5' },
-  { key: 'complaints', label: 'Complaints', icon: MessagesSquare, color: '#b91c1c' },
-  { key: 'ai', label: 'AI Compose', icon: Sparkles, color: '#9333ea' },
-  { key: 'diary', label: 'Diary', icon: MessagesSquare, color: '#0ea5e9' },
-  { key: 'inbox', label: 'Inbox', icon: Inbox, color: '#0369a1' },
-  { key: 'email', label: 'Send Email', icon: Mail, color: '#16a34a' },
-  { key: 'shift-notes', label: 'Enter Shift Notes', icon: NotebookPen, color: '#d97706' },
-  { key: 'employee-log', label: 'Employee Log', icon: Briefcase, color: '#c026d3' },
+  { key: 'task-dashboard', label: 'Tasks', icon: LayoutDashboard, color: '#0072FF' },
+  { key: 'todo', label: 'To-Do Board', icon: ListTodo, color: '#0A2B6D' },
+  { key: 'guide', label: 'Tips & Teamwork', icon: Lightbulb, color: '#5A00D6' },
+  { key: 'templates', label: 'Templates', icon: BookMarked, color: '#A100FF' },
+  { key: 'banter', label: 'Team Banter', icon: MessagesSquare, color: '#FF2E9A' },
+  { key: 'feed', label: 'Team Feed', icon: Radio, color: '#A100FF' },
+  { key: 'shoutouts', label: 'Shoutouts', icon: Sparkles, color: '#5A00D6' },
+  { key: 'video', label: 'Video Calls', icon: Video, color: '#0A2B6D' },
+  { key: 'complaints', label: 'Complaints', icon: MessagesSquare, color: '#0072FF' },
+  { key: 'ai', label: 'AI Compose', icon: Sparkles, color: '#00C6FF' },
+  { key: 'diary', label: 'Diary', icon: MessagesSquare, color: '#5A00D6' },
+  { key: 'inbox', label: 'Inbox', icon: Inbox, color: '#A100FF' },
+  { key: 'email', label: 'Send Email', icon: Mail, color: '#FF2E9A' },
+  { key: 'shift-notes', label: 'Enter Shift Notes', icon: NotebookPen, color: '#FF6EDB' },
+  { key: 'employee-log', label: 'Employee Log', icon: Briefcase, color: '#C084FC' },
 ];
 
 function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondScreen }) {

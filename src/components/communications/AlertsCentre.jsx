@@ -49,7 +49,7 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
     <section className="overflow-hidden rounded-2xl border-2 border-red-400/70 bg-card shadow-panel">
       <div
         className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-2 px-3 py-1.5"
-        style={{ '--comm-bar-bg': 'linear-gradient(120deg, #dc2626 0%, #ef4444 52%, #f97316 100%)', color: '#fff' }}
+        style={{ '--comm-bar-bg': 'linear-gradient(120deg, #FF2E9A 0%, #A100FF 52%, #5A00D6 100%)', color: '#fff' }}
       >
         <div className="flex items-center gap-2">
           <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/20 ring-1 ring-white/40">

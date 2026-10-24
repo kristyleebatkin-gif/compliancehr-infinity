@@ -1,6 +1,15 @@
 import { useEffect } from 'react';
 
-const PASTELS = ['#e9d5ff', '#bae6fd', '#bbf7d0', '#fed7aa', '#fbcfe8', '#fef08a', '#c7d2fe', '#a7f3d0', '#fecaca', '#fde68a', '#99f6e4', '#ddd6fe', '#bfdbfe', '#d9f99d', '#fbb6ce', '#fcd5b5'];
+const PASTELS = [
+  'rgba(0, 198, 255, 0.22)',
+  'rgba(0, 114, 255, 0.18)',
+  'rgba(10, 43, 109, 0.14)',
+  'rgba(90, 0, 214, 0.18)',
+  'rgba(161, 0, 255, 0.18)',
+  'rgba(255, 46, 154, 0.18)',
+  'rgba(255, 110, 219, 0.22)',
+  'rgba(192, 132, 252, 0.26)',
+];
 
 // Gives every tab and section header inside the container its own pastel colour.
 export default function useSubjectPastels(ref, loading) {

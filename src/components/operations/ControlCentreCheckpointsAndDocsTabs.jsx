@@ -24,7 +24,7 @@ export function MasterAudit356Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#6d28d9] bg-purple-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#5A00D6] bg-purple-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-purple-950">
             Section 4 — Master Compliance Audit: All 17 Categories &amp; 356 Individual Checkpoints (CHK-001 to CHK-356)
@@ -49,7 +49,7 @@ export function MasterAudit356Tab({
           onClick={() => setSelectedCat('ALL')}
           className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
             selectedCat === 'ALL'
-              ? 'border-[#6d28d9] bg-[#6d28d9] text-white'
+              ? 'border-[#5A00D6] bg-[#5A00D6] text-white'
               : 'border-purple-300 bg-white text-purple-950 hover:bg-purple-50'
           }`}
         >
@@ -62,7 +62,7 @@ export function MasterAudit356Tab({
             onClick={() => setSelectedCat(cat.id)}
             className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
               selectedCat === cat.id
-                ? 'border-[#7c3aed] bg-[#7c3aed] text-white'
+                ? 'border-[#A100FF] bg-[#A100FF] text-white'
                 : 'border-purple-200 bg-white text-blue-950 hover:bg-purple-50'
             }`}
           >
@@ -93,7 +93,7 @@ export function MasterAudit356Tab({
               onClick={() => setChkFilter(val)}
               className={`rounded-lg border px-2.5 py-1 text-[8px] font-black ${
                 chkFilter === val
-                  ? 'border-[#2563eb] bg-[#2563eb] text-white'
+                  ? 'border-[#0072FF] bg-[#0072FF] text-white'
                   : 'border-purple-300 bg-white text-purple-950'
               }`}
             >
@@ -103,7 +103,7 @@ export function MasterAudit356Tab({
         </div>
       </div>
 
-      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#6d28d9]">
+      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#5A00D6]">
         <table className="w-full border-collapse text-left text-[8.5px]">
           <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
             <tr>
@@ -157,7 +157,7 @@ export function MasterAudit356Tab({
                       <Button
                         size="sm"
                         onClick={() => handleVerifyCheckpointEvidence(chk)}
-                        className="h-6 bg-[#2563eb] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
+                        className="h-6 bg-[#0072FF] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
                       >
                         Verify
                       </Button>
@@ -165,7 +165,7 @@ export function MasterAudit356Tab({
                         size="sm"
                         variant="outline"
                         onClick={() => handleCreateCheckpointTask(chk)}
-                        className="h-6 border-[#7c3aed] px-2 text-[7.5px] font-black text-purple-800 hover:bg-purple-50"
+                        className="h-6 border-[#A100FF] px-2 text-[7.5px] font-black text-purple-800 hover:bg-purple-50"
                       >
                         + Corrective Task
                       </Button>
@@ -200,7 +200,7 @@ export function DocumentControl98Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#ca8a04] bg-amber-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#FF2E9A] bg-amber-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-amber-950">
             Section 5 &amp; 25 — Master Document &amp; Document Control Register (All 98 Reconciled Entries · DOC-001 to DOC-098)
@@ -230,7 +230,7 @@ export function DocumentControl98Tab({
               MASTER_98_DOCUMENTS
             )
           }
-          className="h-7 bg-[#ca8a04] px-2.5 text-[8.5px] font-black text-white hover:bg-amber-700"
+          className="h-7 bg-[#FF2E9A] px-2.5 text-[8.5px] font-black text-white hover:bg-amber-700"
         >
           <Download className="mr-1 h-3 w-3" />
           Export 98-Doc Master Register (Excel/CSV)
@@ -262,8 +262,8 @@ export function DocumentControl98Tab({
       </div>
 
       {previewDoc && (
-        <div className="rounded-xl border-4 border-[#7c3aed] bg-white p-3 shadow-lg space-y-2">
-          <div className="border-t-8 border-[#2563eb] bg-purple-50 p-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div className="rounded-xl border-4 border-[#A100FF] bg-white p-3 shadow-lg space-y-2">
+          <div className="border-t-8 border-[#0072FF] bg-purple-50 p-2.5 flex flex-wrap items-center justify-between gap-2">
             <div>
               <span className="text-[8px] font-black uppercase tracking-wider text-purple-700">
                 SECTION 25 APPROVED MASTER DOCUMENT PREVIEW · {previewDoc.docNumber}
@@ -279,14 +279,14 @@ export function DocumentControl98Tab({
               <Button
                 size="sm"
                 onClick={() => handleDownloadWordDoc(previewDoc)}
-                className="h-7 bg-[#2563eb] px-2.5 text-[8px] font-black text-white"
+                className="h-7 bg-[#0072FF] px-2.5 text-[8px] font-black text-white"
               >
                 <Download className="mr-1 h-3 w-3" /> Word (.doc)
               </Button>
               <Button
                 size="sm"
                 onClick={() => window.print()}
-                className="h-7 bg-[#7c3aed] px-2.5 text-[8px] font-black text-white"
+                className="h-7 bg-[#A100FF] px-2.5 text-[8px] font-black text-white"
               >
                 <Printer className="mr-1 h-3 w-3" /> Print / Save PDF
               </Button>
@@ -320,7 +320,7 @@ export function DocumentControl98Tab({
         </div>
       )}
 
-      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#ca8a04]">
+      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#FF2E9A]">
         <table className="w-full border-collapse text-left text-[8.5px]">
           <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
             <tr>
@@ -374,14 +374,14 @@ export function DocumentControl98Tab({
                     <Button
                       size="sm"
                       onClick={() => handleDownloadWordDoc(doc)}
-                      className="h-6 bg-[#2563eb] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
+                      className="h-6 bg-[#0072FF] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
                     >
                       Word (.doc)
                     </Button>
                     <Button
                       size="sm"
                       onClick={() => handleFileDocToPolicyRegister(doc)}
-                      className="h-6 bg-[#7c3aed] px-2 text-[7.5px] font-black text-white hover:bg-purple-700"
+                      className="h-6 bg-[#A100FF] px-2 text-[7.5px] font-black text-white hover:bg-purple-700"
                     >
                       + File to Register
                     </Button>

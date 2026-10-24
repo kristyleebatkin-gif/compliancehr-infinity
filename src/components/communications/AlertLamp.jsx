@@ -26,15 +26,15 @@ const CONFIG = {
   alerts: {
     icon: Siren,
     label: 'Alerts & Live Warnings',
-    colour: '#dc2626',
-    gradient: 'linear-gradient(125deg, #dc2626 0%, #ef4444 55%, #f97316 100%)',
+    colour: '#FF2E9A',
+    gradient: 'linear-gradient(125deg, #FF2E9A 0%, #A100FF 55%, #5A00D6 100%)',
     clear: 'All clear — tap to view alerts',
   },
   logs: {
     icon: History,
     label: 'Automated Alert Log',
-    colour: '#1e3a8a',
-    gradient: 'linear-gradient(125deg, #1e3a8a 0%, #1d4ed8 55%, #2563eb 100%)',
+    colour: '#0A2B6D',
+    gradient: 'linear-gradient(125deg, #0072FF 0%, #0A2B6D 55%, #5A00D6 100%)',
     clear: 'Log quiet — tap to open history',
   },
 };

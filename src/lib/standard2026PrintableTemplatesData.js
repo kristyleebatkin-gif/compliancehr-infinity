@@ -14,7 +14,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 2 — Provider Governance & Operational Management',
     retention: '7 Years (Mandatory Governance Archive)',
     reviewCycle: '12-Monthly (or upon legislative change)',
-    accent: '#4f46e5',
+    accent: '#0072FF',
     metadataFields: [
       { key: 'policyTitle', label: 'Policy / Procedure Title', sample: 'Incident Management & Reportable Incidents Policy 2026' },
       { key: 'policyCode', label: 'Document Control Code', sample: 'POL-SAF-004 (Rev 2026.4)' },
@@ -57,7 +57,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 2 — Human Resource Management & Worker Screening Rules',
     retention: '7 Years Post-Employment',
     reviewCycle: 'Prior to First Rostered Shift & Annual Credential Audit',
-    accent: '#7c3aed',
+    accent: '#0A2B6D',
     metadataFields: [
       { key: 'employeeName', label: 'Employee Full Legal Name', sample: 'Jordan Taylor' },
       { key: 'positionTitle', label: 'Role & Employment Type', sample: 'Disability Support Worker (Part-Time · SCHADS Award)' },
@@ -100,7 +100,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 2 — Workforce Capability, Supervision & Training',
     retention: '7 Years (Employee Personnel File)',
     reviewCycle: 'Quarterly Supervision · Annual Formal Appraisal',
-    accent: '#2563eb',
+    accent: '#5A00D6',
     metadataFields: [
       { key: 'staffName', label: 'Employee Name & Role', sample: 'Jordan Taylor · Support Worker' },
       { key: 'supervisorName', label: 'Supervisor / Team Leader', sample: 'Sarah Mitchell · Team Leader' },
@@ -143,7 +143,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 1 (Rights) & Core Module 3 (Provision of Supports)',
     retention: '7 Years Post-Service Cessation',
     reviewCycle: 'At Intake & Annually / Upon NDIS Plan Reassessment',
-    accent: '#db2777',
+    accent: '#A100FF',
     metadataFields: [
       { key: 'participantName', label: 'Participant Full Name & DOB', sample: 'Alexia Reynolds · DOB: 18/04/1994' },
       { key: 'ndisNumber', label: 'NDIS Participant Number', sample: '430 918 274' },
@@ -186,7 +186,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 1 — Privacy, Dignity, Informed Choice & Consent',
     retention: '7 Years (Mandatory Consent Register)',
     reviewCycle: 'Every 12 Months (or immediately upon withdrawal/variation)',
-    accent: '#e11d48',
+    accent: '#FF2E9A',
     metadataFields: [
       { key: 'participantName', label: 'Participant Full Name & NDIS #', sample: 'Alexia Reynolds · NDIS #430 918 274' },
       { key: 'consentGrantedBy', label: 'Consent Granted By (Self / Nominee)', sample: 'Alexia Reynolds (with Advocate present)' },
@@ -229,7 +229,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 3 — Provision of Supports & Goal Progress Tracking',
     retention: '7 Years (Contemporaneous Service Delivery Evidence)',
     reviewCycle: 'Every Shift + 10-Weekly / 3-Monthly Progress Snapshot',
-    accent: '#0891b2',
+    accent: '#00C6FF',
     metadataFields: [
       { key: 'participantName', label: 'Participant Name & NDIS #', sample: 'Alexia Reynolds · NDIS #430 918 274' },
       { key: 'shiftDateTime', label: 'Shift Date, Start & Finish Time', sample: '23/10/2026 · 09:00 AM – 01:00 PM (4.0 hrs)' },
@@ -272,7 +272,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS (Incident Management and Reportable Incidents) Rules 2018 & WHS Act 2011',
     retention: '7 Years (Minimum Statutory Incident Retention)',
     reviewCycle: 'Within 24 Hours of Awareness · 5-Day Follow-Up · Final Close-Out',
-    accent: '#dc2626',
+    accent: '#FF6EDB',
     metadataFields: [
       { key: 'incidentIdDate', label: 'Incident ID, Date & Time Occurred', sample: 'INC-2026-042 · 22/10/2026 at 02:15 PM' },
       { key: 'personsInvolved', label: 'Participant & Staff Involved', sample: 'Participant: Alexia Reynolds · Staff: Jordan Taylor' },
@@ -315,7 +315,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 2 (Risk Management) & Core Module 3 (Safe Environment)',
     retention: '7 Years (Risk & WHS Register)',
     reviewCycle: 'Mandatory 6-Monthly Review (and post-incident)',
-    accent: '#ea580c',
+    accent: '#C084FC',
     metadataFields: [
       { key: 'riskSubject', label: 'Participant / Site / Activity Assessed', sample: 'Alexia Reynolds — Home Environment & Community Access' },
       { key: 'assessmentType', label: 'Assessment Schedule & Risk ID', sample: 'RSK-2026-104 · Combined Individual & Home 6-Monthly Review' },
@@ -358,7 +358,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Emergency and Disaster Management & WHS Regulations',
     retention: '7 Years (Facility & Emergency Compliance Folder)',
     reviewCycle: 'Every 6 Months (Drills & Kits)',
-    accent: '#b91c1c',
+    accent: '#5A00D6',
     metadataFields: [
       { key: 'siteLocation', label: 'Facility / SIL House / Office Location', sample: 'Main Operations Hub & Participant Residence' },
       { key: 'drillDateType', label: 'Emergency Drill Type & Date Completed', sample: 'Fire Evacuation & Assembly Point Drill · 20/10/2026' },
@@ -401,7 +401,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Pricing Arrangements and Price Limits 2025–26 & ATO Tax Invoice Standards',
     retention: '7 Years (Statutory Financial & NDIS Claim Audit Trail)',
     reviewCycle: 'Weekly Billing Run & Monthly Bank Reconciliation',
-    accent: '#16a34a',
+    accent: '#0072FF',
     metadataFields: [
       { key: 'invoiceNumber', label: 'Invoice / Quote Reference & Issue Date', sample: 'INV-2026-1084 · Issued: 23/10/2026 (Due: 7 Days)' },
       { key: 'participantNdis', label: 'Participant Name & NDIS Number', sample: 'Alexia Reynolds · NDIS #430 918 274' },
@@ -444,7 +444,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS Practice Standards: Core Module 2 — Governance, Risk & Quality Review',
     retention: '7 Years (Corporate Governance Minute Book)',
     reviewCycle: 'Monthly Governance Board · Fortnightly Team Operations',
-    accent: '#d97706',
+    accent: '#A100FF',
     metadataFields: [
       { key: 'meetingTitle', label: 'Meeting Title & Governance Classification', sample: 'Monthly Executive Governance, Risk & Quality Board' },
       { key: 'meetingDateTime', label: 'Date, Time & Location / Video Link', sample: '23/10/2026 · 10:00 AM – 11:30 AM · Executive Boardroom' },
@@ -487,7 +487,7 @@ export const STANDARD_2026_PRINT_TEMPLATES = [
     ndisStandard: 'NDIS (Complaints Management and Resolution) Rules 2018 & Quality Management Standard',
     retention: '7 Years (Complaints & Continuous Improvement Register)',
     reviewCycle: '24h Acknowledgement · 21-Day Resolution SLA · Quarterly Trend Review',
-    accent: '#0d9488',
+    accent: '#FF2E9A',
     metadataFields: [
       { key: 'complaintRefDate', label: 'Reference # & Date Received', sample: 'CMP-2026-019 · Received: 21/10/2026 via Feedback Portal' },
       { key: 'submittedBy', label: 'Submitted By (Name / Anonymous Option)', sample: 'Margaret Reynolds (Participant Nominee / Family)' },

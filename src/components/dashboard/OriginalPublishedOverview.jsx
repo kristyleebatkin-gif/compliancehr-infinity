@@ -11,10 +11,10 @@ import {
 import { format } from 'date-fns';
 
 const QUICK_LINKS = [
-  { to: '/staff', icon: Users, title: 'Staff Profiles', desc: 'Manage your team & credentials', color: '#16a34a' },
-  { to: '/documents', icon: FolderOpen, title: 'Document Vault', desc: 'Track employee & participant documents', color: '#ca8a04' },
-  { to: '/compliance', icon: ShieldCheck, title: 'Compliance Centre', desc: 'Policies, audits & legal requirements', color: '#4f46e5' },
-  { to: '/tasks', icon: ClipboardList, title: 'Tasks & Actions', desc: 'Open compliance & operational actions', color: '#db2777' },
+  { to: '/staff', icon: Users, title: 'Staff Profiles', desc: 'Manage your team & credentials', color: '#0072FF' },
+  { to: '/documents', icon: FolderOpen, title: 'Document Vault', desc: 'Track employee & participant documents', color: '#0A2B6D' },
+  { to: '/compliance', icon: ShieldCheck, title: 'Compliance Centre', desc: 'Policies, audits & legal requirements', color: '#5A00D6' },
+  { to: '/tasks', icon: ClipboardList, title: 'Tasks & Actions', desc: 'Open compliance & operational actions', color: '#FF2E9A' },
 ];
 
 export default function OriginalPublishedOverview() {
@@ -75,11 +75,11 @@ export default function OriginalPublishedOverview() {
   };
 
   const cards = [
-    { label: 'Active staff', value: stats.staff, icon: Users, color: '#16a34a', to: '/staff' },
-    { label: 'Documents on file', value: stats.docs, icon: FolderOpen, color: '#2563eb', to: '/documents' },
-    { label: 'Expiring in 30 days', value: stats.expiring, icon: AlertTriangle, color: '#ea580c', to: '/documents' },
-    { label: 'Open tasks', value: stats.tasks, icon: ClipboardList, color: '#7c3aed', to: '/tasks' },
-    { label: 'Open incidents', value: stats.incidents, icon: AlertTriangle, color: '#dc2626', to: '/incidents' },
+    { label: 'Active staff', value: stats.staff, icon: Users, color: '#0072FF', to: '/staff' },
+    { label: 'Documents on file', value: stats.docs, icon: FolderOpen, color: '#0A2B6D', to: '/documents' },
+    { label: 'Expiring in 30 days', value: stats.expiring, icon: AlertTriangle, color: '#5A00D6', to: '/documents' },
+    { label: 'Open tasks', value: stats.tasks, icon: ClipboardList, color: '#A100FF', to: '/tasks' },
+    { label: 'Open incidents', value: stats.incidents, icon: AlertTriangle, color: '#FF2E9A', to: '/incidents' },
   ];
 
   return (

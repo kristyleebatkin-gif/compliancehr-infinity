@@ -201,7 +201,7 @@ export default function SmartMailroomHub({ onFiled }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#ca8a04] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-[#A100FF] bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -221,7 +221,7 @@ export default function SmartMailroomHub({ onFiled }) {
       <div className="p-3 space-y-2.5 bg-white">
         <form onSubmit={handleApproveAndRoute} className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {/* Step 1: Incoming Document Upload & Auto-Identification */}
-          <div className="rounded-xl border-2 border-[#0ea5e9] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#0072FF] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
             <div className="text-[9px] font-black uppercase text-sky-900">
               1. Incoming File &amp; Automatic Identification
             </div>
@@ -283,7 +283,7 @@ export default function SmartMailroomHub({ onFiled }) {
           </div>
 
           {/* Step 2: Employee / Participant Matching & Duplicate Detection */}
-          <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#5A00D6] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
             <div className="text-[9px] font-black uppercase text-purple-900">
               2. Profile Matching &amp; Duplicate Detection
             </div>
@@ -352,7 +352,7 @@ export default function SmartMailroomHub({ onFiled }) {
           </div>
 
           {/* Step 3: Verification, Approval & Processing History */}
-          <div className="rounded-xl border-2 border-[#ca8a04] bg-amber-50/40 p-2.5 flex flex-col justify-between space-y-2" style={{ borderTopWidth: '4px' }}>
+          <div className="rounded-xl border-2 border-[#A100FF] bg-amber-50/40 p-2.5 flex flex-col justify-between space-y-2" style={{ borderTopWidth: '4px' }}>
             <div>
               <div className="text-[9px] font-black uppercase text-amber-900">
                 3. Review, Approval &amp; Vault Storage
@@ -371,7 +371,7 @@ export default function SmartMailroomHub({ onFiled }) {
             <Button
               type="submit"
               disabled={routing}
-              className="w-full bg-[#ca8a04] text-xs font-black text-white hover:bg-amber-700"
+              className="w-full bg-[#A100FF] text-xs font-black text-white hover:bg-amber-700"
             >
               <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
               {routing ? 'Routing to Register...' : 'Approve & Store in Target Register'}
@@ -381,7 +381,7 @@ export default function SmartMailroomHub({ onFiled }) {
 
         {/* Full Mailroom Processing History */}
         {history.length > 0 && (
-          <div className="rounded-xl border-2 border-[#7c3aed] overflow-hidden">
+          <div className="rounded-xl border-2 border-[#5A00D6] overflow-hidden">
             <div className="px-3 py-1 text-[8px] font-black uppercase text-white" style={{ background: HEADER_GRADIENT }}>
               Smart Mailroom Full Processing History
             </div>

@@ -3,17 +3,17 @@ import { base44 } from '@/api/base44Client';
 import { ClipboardList, Loader2, PlayCircle, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 const priorityTone = {
-  Low: 'bg-emerald-100 text-emerald-800',
-  Medium: 'bg-chart-2/15 text-foreground',
-  High: 'bg-orange-100 text-orange-800',
-  Urgent: 'bg-red-100 text-red-800',
+  Low: 'bg-[#00C6FF]/15 text-[#0072FF]',
+  Medium: 'bg-[#C084FC]/20 text-[#0A2B6D]',
+  High: 'bg-[#A100FF]/15 text-[#5A00D6]',
+  Urgent: 'bg-[#FF2E9A]/15 text-[#FF2E9A]',
 };
 
 const tiles = [
-  { key: 'open', label: 'Open', from: '#2563eb', to: '#0ea5e9', Icon: ClipboardList, statuses: ['Pending', 'Open', 'Pending Approval'] },
-  { key: 'progress', label: 'In Progress', from: '#d97706', to: '#ca8a04', Icon: PlayCircle, statuses: ['In Progress'] },
-  { key: 'overdue', label: 'Overdue', from: '#dc2626', to: '#f97316', Icon: AlertTriangle, statuses: null },
-  { key: 'done', label: 'Completed', from: '#16a34a', to: '#14b8a6', Icon: CheckCircle2, statuses: ['Completed'] },
+  { key: 'open', label: 'Open', from: '#0072FF', to: '#0A2B6D', Icon: ClipboardList, statuses: ['Pending', 'Open', 'Pending Approval'] },
+  { key: 'progress', label: 'In Progress', from: '#5A00D6', to: '#A100FF', Icon: PlayCircle, statuses: ['In Progress'] },
+  { key: 'overdue', label: 'Overdue', from: '#FF2E9A', to: '#FF6EDB', Icon: AlertTriangle, statuses: null },
+  { key: 'done', label: 'Completed', from: '#00C6FF', to: '#0072FF', Icon: CheckCircle2, statuses: ['Completed'] },
 ];
 
 export default function CommTaskDash() {
@@ -43,7 +43,7 @@ export default function CommTaskDash() {
 
   return (
     <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'linear-gradient(120deg, #b45309 0%, #d97706 50%, #eab308 100%)', color: '#fff' }}>
+      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'var(--header-gradient)', color: '#fff' }}>
         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
           <ClipboardList className="h-4 w-4 text-white" />
         </span>

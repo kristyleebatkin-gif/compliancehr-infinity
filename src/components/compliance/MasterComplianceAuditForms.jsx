@@ -223,44 +223,44 @@ export function SingleMasterComplianceAuditForm({
 
   const theme = isGold
     ? {
-        outerBorder: 'border-amber-400',
-        pillBarGradient: 'linear-gradient(90deg, #fde047 0%, #f59e0b 50%, #facc15 100%)',
-        pillBarText: 'text-purple-950',
-        sectionRibbon: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 55%, #fde047 100%)',
-        sectionRibbonText: 'text-purple-950',
-        circleIconBg: '#3b0764',
-        circleIconRing: 'ring-amber-300',
-        cardBorder: 'border-amber-300',
-        cardTint: 'bg-amber-50/55',
-        cardRowAlt: 'bg-amber-100/45',
-        labelIconBg: 'bg-purple-950 text-amber-300',
-        stepBadgeBg: 'bg-amber-400 text-purple-950 border border-amber-600',
-        tableHeaderGradient: 'linear-gradient(90deg, #3b0764 0%, #581c87 50%, #4c1d95 100%)',
-        tableSubHeaderBg: 'bg-amber-100/80 text-purple-950 border-amber-300',
-        tableRowEven: 'bg-amber-50/40',
+        outerBorder: 'border-[#0072FF]',
+        pillBarGradient: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #5A00D6 100%)',
+        pillBarText: 'text-white',
+        sectionRibbon: 'linear-gradient(90deg, #0072FF 0%, #0A2B6D 50%, #5A00D6 100%)',
+        sectionRibbonText: 'text-white',
+        circleIconBg: '#0A2B6D',
+        circleIconRing: 'ring-[#00C6FF]',
+        cardBorder: 'border-[#C084FC]/60',
+        cardTint: 'bg-[#F5F0FF]',
+        cardRowAlt: 'bg-[#EDE9FE]/60',
+        labelIconBg: 'bg-[#0A2B6D] text-[#00C6FF]',
+        stepBadgeBg: 'bg-[#0072FF] text-white border border-[#0A2B6D]',
+        tableHeaderGradient: 'linear-gradient(90deg, #0A2B6D 0%, #0072FF 50%, #5A00D6 100%)',
+        tableSubHeaderBg: 'bg-[#F5F0FF] text-[#0A2B6D] border-[#C084FC]',
+        tableRowEven: 'bg-[#F5F0FF]/60',
         tableRowOdd: 'bg-white',
-        tableBorder: 'border-amber-200',
-        pagePillBg: 'bg-purple-950 text-white',
+        tableBorder: 'border-[#C084FC]/50',
+        pagePillBg: 'bg-[#0A2B6D] text-white',
       }
     : {
-        outerBorder: 'border-purple-500',
-        pillBarGradient: 'linear-gradient(90deg, #f9a8d4 0%, #a855f7 45%, #ec4899 100%)',
+        outerBorder: 'border-[#A100FF]',
+        pillBarGradient: 'linear-gradient(90deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
         pillBarText: 'text-white',
-        sectionRibbon: 'linear-gradient(90deg, #6d28d9 0%, #a855f7 52%, #ec4899 100%)',
+        sectionRibbon: 'linear-gradient(90deg, #5A00D6 0%, #A100FF 52%, #FF2E9A 100%)',
         sectionRibbonText: 'text-white',
-        circleIconBg: '#3b0764',
-        circleIconRing: 'ring-pink-300',
-        cardBorder: 'border-purple-300',
-        cardTint: 'bg-purple-50/60',
-        cardRowAlt: 'bg-purple-100/50',
-        labelIconBg: 'bg-purple-900 text-pink-200',
-        stepBadgeBg: 'bg-pink-600 text-white border border-pink-400',
-        tableHeaderGradient: 'linear-gradient(90deg, #311068 0%, #5b21b6 50%, #4c1d95 100%)',
-        tableSubHeaderBg: 'bg-purple-100/80 text-purple-950 border-purple-300',
-        tableRowEven: 'bg-purple-50/40',
+        circleIconBg: '#5A00D6',
+        circleIconRing: 'ring-[#FF6EDB]',
+        cardBorder: 'border-[#C084FC]/60',
+        cardTint: 'bg-[#F5F0FF]',
+        cardRowAlt: 'bg-[#EDE9FE]/60',
+        labelIconBg: 'bg-[#5A00D6] text-[#FF6EDB]',
+        stepBadgeBg: 'bg-[#FF2E9A] text-white border border-[#FF6EDB]',
+        tableHeaderGradient: 'linear-gradient(90deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
+        tableSubHeaderBg: 'bg-[#F5F0FF] text-[#0A2B6D] border-[#C084FC]',
+        tableRowEven: 'bg-[#F5F0FF]/60',
         tableRowOdd: 'bg-white',
-        tableBorder: 'border-purple-200',
-        pagePillBg: 'bg-purple-900 text-white',
+        tableBorder: 'border-[#C084FC]/50',
+        pagePillBg: 'bg-[#5A00D6] text-white',
       };
 
   return (
@@ -274,21 +274,21 @@ export function SingleMasterComplianceAuditForm({
         >
           {isGold ? (
             <>
-              <path d="M0,0 L230,0 C175,26 110,55 0,78 Z" fill="#f59e0b" opacity="0.88" />
-              <path d="M0,0 L185,0 C135,22 80,45 0,60 Z" fill="#581c87" opacity="0.92" />
-              <path d="M0,0 L140,0 C95,15 50,28 0,38 Z" fill="#fde047" opacity="0.9" />
-              <path d="M600,0 L370,0 C425,26 490,55 600,78 Z" fill="#fde047" opacity="0.85" />
-              <path d="M600,0 L415,0 C465,22 520,45 600,60 Z" fill="#581c87" opacity="0.92" />
-              <path d="M600,0 L460,0 C505,15 550,28 600,38 Z" fill="#f59e0b" opacity="0.9" />
+              <path d="M0,0 L230,0 C175,26 110,55 0,78 Z" fill="#00C6FF" opacity="0.88" />
+              <path d="M0,0 L185,0 C135,22 80,45 0,60 Z" fill="#0A2B6D" opacity="0.92" />
+              <path d="M0,0 L140,0 C95,15 50,28 0,38 Z" fill="#0072FF" opacity="0.9" />
+              <path d="M600,0 L370,0 C425,26 490,55 600,78 Z" fill="#00C6FF" opacity="0.85" />
+              <path d="M600,0 L415,0 C465,22 520,45 600,60 Z" fill="#0A2B6D" opacity="0.92" />
+              <path d="M600,0 L460,0 C505,15 550,28 600,38 Z" fill="#5A00D6" opacity="0.9" />
             </>
           ) : (
             <>
-              <path d="M0,0 L235,0 C175,28 115,58 0,82 Z" fill="#ec4899" opacity="0.85" />
-              <path d="M0,0 L190,0 C140,22 85,46 0,62 Z" fill="#4338ca" opacity="0.92" />
-              <path d="M0,0 L140,0 C95,15 50,28 0,38 Z" fill="#38bdf8" opacity="0.85" />
-              <path d="M600,0 L365,0 C425,28 485,58 600,82 Z" fill="#ec4899" opacity="0.85" />
-              <path d="M600,0 L410,0 C460,22 515,46 600,62 Z" fill="#4338ca" opacity="0.92" />
-              <path d="M600,0 L460,0 C505,15 550,28 600,38 Z" fill="#a855f7" opacity="0.9" />
+              <path d="M0,0 L235,0 C175,28 115,58 0,82 Z" fill="#FF2E9A" opacity="0.85" />
+              <path d="M0,0 L190,0 C140,22 85,46 0,62 Z" fill="#5A00D6" opacity="0.92" />
+              <path d="M0,0 L140,0 C95,15 50,28 0,38 Z" fill="#00C6FF" opacity="0.85" />
+              <path d="M600,0 L365,0 C425,28 485,58 600,82 Z" fill="#FF6EDB" opacity="0.85" />
+              <path d="M600,0 L410,0 C460,22 515,46 600,62 Z" fill="#5A00D6" opacity="0.92" />
+              <path d="M600,0 L460,0 C505,15 550,28 600,38 Z" fill="#A100FF" opacity="0.9" />
             </>
           )}
         </svg>
@@ -690,17 +690,17 @@ export function SingleMasterComplianceAuditForm({
         >
           {isGold ? (
             <>
-              <path d="M0,60 L260,60 C190,42 110,22 0,8 Z" fill="#581c87" opacity="0.9" />
-              <path d="M0,60 L340,60 C260,46 160,30 0,20 Z" fill="#f59e0b" opacity="0.82" />
-              <path d="M600,60 L340,60 C410,42 490,22 600,8 Z" fill="#f59e0b" opacity="0.88" />
-              <path d="M600,60 L430,60 C485,46 540,30 600,18 Z" fill="#581c87" opacity="0.92" />
+              <path d="M0,60 L260,60 C190,42 110,22 0,8 Z" fill="#0A2B6D" opacity="0.9" />
+              <path d="M0,60 L340,60 C260,46 160,30 0,20 Z" fill="#00C6FF" opacity="0.82" />
+              <path d="M600,60 L340,60 C410,42 490,22 600,8 Z" fill="#0072FF" opacity="0.88" />
+              <path d="M600,60 L430,60 C485,46 540,30 600,18 Z" fill="#5A00D6" opacity="0.92" />
             </>
           ) : (
             <>
-              <path d="M0,60 L260,60 C190,42 110,22 0,8 Z" fill="#311068" opacity="0.92" />
-              <path d="M0,60 L340,60 C260,46 160,30 0,20 Z" fill="#ec4899" opacity="0.78" />
-              <path d="M600,60 L340,60 C410,42 490,22 600,8 Z" fill="#7c3aed" opacity="0.88" />
-              <path d="M600,60 L430,60 C485,46 540,30 600,18 Z" fill="#311068" opacity="0.92" />
+              <path d="M0,60 L260,60 C190,42 110,22 0,8 Z" fill="#5A00D6" opacity="0.92" />
+              <path d="M0,60 L340,60 C260,46 160,30 0,20 Z" fill="#FF2E9A" opacity="0.78" />
+              <path d="M600,60 L340,60 C410,42 490,22 600,8 Z" fill="#A100FF" opacity="0.88" />
+              <path d="M600,60 L430,60 C485,46 540,30 600,18 Z" fill="#0A2B6D" opacity="0.92" />
             </>
           )}
         </svg>

@@ -21,7 +21,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Employee Profiles',
     category: 'People & Profiles',
     path: '/our-employees',
-    color: '#2563eb',
+    color: '#0072FF',
     icon: Users,
     description: 'Staff directory, HR files, NDIS worker screening, contracts & badges.',
     highlights: [
@@ -35,7 +35,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Participant Profiles',
     category: 'People & Profiles',
     path: '/our-participants',
-    color: '#e11d48',
+    color: '#0A2B6D',
     icon: Heart,
     description: 'Participant profiles, NDIS plans, goals, consents, medications & safeguards.',
     highlights: [
@@ -49,7 +49,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'My General Profile',
     category: 'People & Profiles',
     path: '/my-profile',
-    color: '#db2777',
+    color: '#5A00D6',
     icon: UserRound,
     description: 'Personal profile details, assigned work, my documents, availability & staff tag.',
     highlights: [
@@ -63,7 +63,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Comms & Shift Notes',
     category: 'Operations & Comms',
     path: '/communications',
-    color: '#0891b2',
+    color: '#A100FF',
     icon: MessagesSquare,
     description: 'Live alerts, shift notes, employee log, team feed, banter, inbox & AI compose.',
     highlights: [
@@ -77,7 +77,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Tasks & To-Do',
     category: 'Operations & Comms',
     path: '/tasks',
-    color: '#ef4444',
+    color: '#FF2E9A',
     icon: ListTodo,
     description: 'Assigned tasks, priority queue, digital sign-offs, overdue alerts & leaderboard.',
     highlights: [
@@ -91,7 +91,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Rostering & Shifts',
     category: 'Operations & Comms',
     path: '/roster',
-    color: '#6366f1',
+    color: '#A100FF',
     icon: Calendar,
     description: 'Daily shift roster, worker screening validation, leave feed & timesheets.',
     highlights: [
@@ -105,7 +105,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Compliance & Intelligence',
     category: 'Compliance & Safety',
     path: '/compliance',
-    color: '#6d28d9',
+    color: '#5A00D6',
     icon: ShieldCheck,
     description: '98.7% Business Health & Compliance Intelligence · 8 Pillars · 17 Audit Categories · 356 Checkpoints · 12 Printable A4 Docs.',
     highlights: [
@@ -120,7 +120,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Incidents',
     category: 'Compliance & Safety',
     path: '/incidents',
-    color: '#dc2626',
+    color: '#0A2B6D',
     icon: Siren,
     description: 'Incident register, 24h/5d NDIS notifications, investigations & root-cause actions.',
     highlights: [
@@ -134,7 +134,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Risks & Safety',
     category: 'Compliance & Safety',
     path: '/risks',
-    color: '#ea580c',
+    color: '#0072FF',
     icon: AlertTriangle,
     description: 'Organisational, clinical & participant risk assessments and control measures.',
     highlights: [
@@ -148,7 +148,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Training & Certs',
     category: 'Workforce & Safe',
     path: '/training',
-    color: '#0d9488',
+    color: '#00C6FF',
     icon: Award,
     description: 'Mandatory staff training modules, competency quizzes & expiring certificates.',
     highlights: [
@@ -162,7 +162,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Company Safe',
     category: 'Workforce & Safe',
     path: '/company-safe',
-    color: '#7c3aed',
+    color: '#FF6EDB',
     icon: FolderLock,
     description: 'Business identity, NDIS registration credentials, policies & document vault.',
     highlights: [
@@ -176,7 +176,7 @@ export const MODULAR_SCREEN_DECKS = [
     shortLabel: 'Invoicing & Finance',
     category: 'Workforce & Safe',
     path: '/invoicing',
-    color: '#16a34a',
+    color: '#C084FC',
     icon: DollarSign,
     description: 'NDIS claims, client invoices, service quotes, receipts & bank reconciliation.',
     highlights: [
