@@ -28,7 +28,7 @@ import { MasterAudit356Tab, DocumentControl98Tab } from '@/components/operations
 import { EndOfShiftWorkflowTab, DevelopmentRegister31Tab } from '@/components/operations/ControlCentreEndOfShiftAndDevTabs';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 
 const COMPLETION_13_ITEMS = [
   'All existing modules reviewed',
@@ -612,29 +612,29 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
       {activeTab === 'control-centre' && (
         <div className="p-3 space-y-3 bg-white">
           {/* 12 Live Operational Register Telemetry Tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
             {[
-              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', hex: '#2563eb', sub: 'Screening & Profiles' },
-              { label: 'Participants', value: counts.participants, route: '/our-participants', hex: '#e11d48', sub: 'Plans, Goals & Consents' },
-              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', hex: '#6366f1', sub: 'Daily/Weekly Schedule' },
-              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', hex: '#0891b2', sub: 'Mandatory Progress' },
-              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', hex: '#dc2626', sub: '24h/5d NDIS SLA' },
-              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', hex: '#ea580c', sub: 'ISO 31000 Matrix' },
-              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', hex: '#ef4444', sub: 'Overdue & Approvals' },
-              { label: 'Active Policies', value: counts.policies, route: '/compliance', hex: '#6d28d9', sub: 'Version Controlled' },
-              { label: 'Vault Documents', value: counts.documents, route: '/documents', hex: '#ca8a04', sub: 'Expiry Monitored' },
-              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', hex: '#7c3aed', sub: 'Roster Integrated' },
-              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', hex: '#22c55e', sub: 'Continuous Improvement' },
-              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', hex: '#16a34a', sub: 'NDIS Price Validated' },
+              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', hex: '#0072FF', sub: 'Screening & Profiles' },
+              { label: 'Participants', value: counts.participants, route: '/our-participants', hex: '#0A2B6D', sub: 'Plans, Goals & Consents' },
+              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', hex: '#5A00D6', sub: 'Daily/Weekly Schedule' },
+              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', hex: '#A100FF', sub: 'Mandatory Progress' },
+              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', hex: '#FF2E9A', sub: '24h/5d NDIS SLA' },
+              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', hex: '#A100FF', sub: 'ISO 31000 Matrix' },
+              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', hex: '#5A00D6', sub: 'Overdue & Approvals' },
+              { label: 'Active Policies', value: counts.policies, route: '/compliance', hex: '#0A2B6D', sub: 'Version Controlled' },
+              { label: 'Vault Documents', value: counts.documents, route: '/documents', hex: '#0072FF', sub: 'Expiry Monitored' },
+              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', hex: '#00C6FF', sub: 'Roster Integrated' },
+              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', hex: '#FF6EDB', sub: 'Continuous Improvement' },
+              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', hex: '#C084FC', sub: 'NDIS Price Validated' },
             ].map((m) => (
               <Link
                 key={m.label}
                 to={m.route}
-                className="rounded-xl border p-2 transition-all hover:-translate-y-0.5 hover:shadow-md bg-white"
+                className="rounded-xl border p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md bg-white"
                 style={{
-                  borderColor: m.hex,
-                  borderTopWidth: '4px',
-                  background: `linear-gradient(145deg, ${m.hex}14 0%, #ffffff 82%)`,
+                  borderColor: 'rgba(192, 132, 252, 0.45)',
+                  borderTopWidth: '3px',
+                  borderTopColor: m.hex,
                 }}
               >
                 <div className="flex items-center justify-between">

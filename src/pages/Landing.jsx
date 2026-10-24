@@ -17,15 +17,15 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="app-readable relative min-h-screen overflow-hidden bg-white font-elegant antialiased">
-      {/* Original published pastel wash spread across the landing page */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-violet-100/70 via-rose-50/60 to-cyan-100/70" />
+    <div className="app-readable relative min-h-screen overflow-hidden bg-[#F5F0FF] font-elegant text-[#0A2B6D] antialiased">
+      {/* Pale lavender background wash with subtle sky-blue, lilac, and magenta ambient accents */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#F5F0FF] via-[#FAF5FF] to-[#F5F0FF]" />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-10%] top-[12%] h-96 w-96 rounded-full bg-fuchsia-200/45 blur-3xl" />
-        <div className="absolute right-[-8%] top-[32%] h-96 w-96 rounded-full bg-amber-100/60 blur-3xl" />
-        <div className="absolute left-[18%] top-[54%] h-80 w-80 rounded-full bg-cyan-200/50 blur-3xl" />
-        <div className="absolute right-[12%] top-[74%] h-96 w-96 rounded-full bg-violet-200/45 blur-3xl" />
-        <div className="absolute left-[-6%] top-[90%] h-80 w-80 rounded-full bg-rose-200/45 blur-3xl" />
+        <div className="absolute left-[-10%] top-[12%] h-96 w-96 rounded-full bg-[#C084FC]/20 blur-3xl" />
+        <div className="absolute right-[-8%] top-[32%] h-96 w-96 rounded-full bg-[#00C6FF]/15 blur-3xl" />
+        <div className="absolute left-[18%] top-[54%] h-80 w-80 rounded-full bg-[#FF6EDB]/15 blur-3xl" />
+        <div className="absolute right-[12%] top-[74%] h-96 w-96 rounded-full bg-[#C084FC]/20 blur-3xl" />
+        <div className="absolute left-[-6%] top-[90%] h-80 w-80 rounded-full bg-[#0072FF]/12 blur-3xl" />
       </div>
 
       {/* Original Published Top Navigation merged with Current Showcase Links */}

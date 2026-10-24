@@ -24,7 +24,7 @@ import ModularScreenDataSelector, { MODULAR_SCREEN_DECKS } from '@/components/sa
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 
-export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 
 const DEFAULT_SOFTWARE_LOGO = DEFAULT_LOGO;
 
