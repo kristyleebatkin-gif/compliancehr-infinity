@@ -408,17 +408,17 @@ export default function PricingSection({ compact = false }) {
           <div className="lg:col-span-9 space-y-1.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                $355 DIGITAL AUDIT DOC · $495 PRINTED BINDER · $2,490 FULL 6-BINDER PRINTED BOX SET
+                PROFESSIONAL BUSINESS COMPLIANCE DOCUMENTS PACKAGE: $999 OUTRIGHT OR $125/MO (24-MONTH PLAN)
               </span>
               <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black text-white">
-                ALL 125+ DIGITAL DOCS ($1,495 VALUE) INCLUDED FREE IN MONTHLY PLANS
+                EXTENSIVE 125+ DIGITAL DOCS ALSO INCLUDED FREE IN FULL APP PLANS ($660–$1,035/MO)
               </span>
             </div>
             <h4 className="text-xs sm:text-sm font-black text-blue-950">
-              Every 2026 Compliance Document You Need (125+ Policies, Contracts, Intake Packs, Consents, Risks &amp; Checklists) — Digital or Professionally Printed &amp; Bound!
+              Professional Business Compliance Documents Package — $999 Outright or $125/Month on a 24-Month Subscription Plan for Full Digital Suite Access!
             </h4>
             <p className="text-[8px] font-semibold leading-snug text-blue-950">
-              Need someone to print, tab-index, bind, and courier your compliance folders? Order the **Master Audit Checklist** (**$355 Digital** or **$495 Printed &amp; Bound Binder**), the **Complete 125+ Document Digital Suite** (**$1,495** or **$0 FREE inside any monthly plan**), or the **Complete 6-Binder Printed &amp; Tab-Indexed Office Box Set Delivered** (**$2,490 standalone**, or just **$995 print-only upgrade** for monthly subscribers)!
+              Our **Professional Business Compliance Documents Package** provides **extensive documentation covering almost every document** your business needs to prepare for and complete compliance audits (125+ policies, contracts, intake packs, consents, risk forms, registers &amp; 356-checkpoint checklists). Available for **$999 outright** or **$125/month on a 24-month business subscription plan** for full digital suite access (or **$1,994** with 6 printed &amp; bound office binders delivered). **Please ensure your team checks all relevant and required standards for your business so there is no doubt of your compliance audit outcome of success!**
             </p>
             <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
               <a

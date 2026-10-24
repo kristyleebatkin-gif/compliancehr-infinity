@@ -150,29 +150,52 @@ export const PRINT_AND_DOCUMENT_PACKAGES = [
   },
   {
     id: 'all-2026-docs-digital',
-    badge: 'ALL 125+ DIGITAL DOCS',
-    name: '3. Complete 2026 Digital Compliance Document Library (All 6 Binders · 125+ Docs)',
-    format: 'Every Document Needed for 2026 Compliance (Policies, HR, Participant, WHS, Finance & SOPs)',
-    docPrice: 1495,
+    badge: 'PROFESSIONAL BUSINESS COMPLIANCE DOCUMENTS PACKAGE · $999 OUTRIGHT OR $125/MO',
+    name: '3. Professional Business Compliance Documents Package — Full Digital Suite (All 6 Binders · 125+ Docs)',
+    format: 'Extensive Digital Suite Covering Almost Every Compliance Document to Help Complete Your Audits — $999 Outright OR $125/mo (24-Month Plan)',
+    docPrice: 999,
+    monthlySubPrice: 125,
+    monthlySubTermMonths: 24,
     printFee: 0,
-    totalPrice: 1495,
-    subNote: 'OR $0 (100% INCLUDED FREE) inside every Smart Enhanced Monthly App Subscription!',
+    totalPrice: 999,
+    priceDisplay: '$999 Outright OR $125/mo',
+    subNote: '$999 Outright Purchase OR $125/month on a 24-Month Business Subscription Plan (or $0 FREE in Full App Plans)',
     color: '#2563eb',
+    featured: true,
     highlights: [
-      'All 125+ 2026-compliant policies, contracts, intake packs, consents, risk forms & SOPs',
-      '1-Click Smart-Fill with your organisation name, ABN, logo & key personnel',
-      'Includes the $355 Master Compliance Audit Checklist (CHR-AUD-001 & 002)',
+      'Flexible Business Access: $999 Outright OR $125/month on a 24-month subscription plan for full digital suite access',
+      'Extensive 125+ document library covering almost every document required to help your business complete compliance audits',
+      '1-Click Smart-Fill with your organisation name, ABN, logo & key personnel + $355 Master Audit Checklists included',
+      'Check all relevant & specific regulatory requirements for your business so there is no doubt of your compliance audit outcome of success',
+    ],
+  },
+  {
+    id: 'all-2026-docs-digital-monthly',
+    badge: '24-MONTH DIGITAL SUBSCRIPTION · $125/MONTH',
+    name: '3B. Professional Business Compliance Documents Package — $125/mo Digital Suite (24-Month Plan)',
+    format: 'Full Digital Suite Access (125+ Extensive Audit & Compliance Documents) on a 24-Month Business Subscription Plan',
+    docPrice: 125,
+    printFee: 0,
+    totalPrice: 125,
+    priceDisplay: '$125 / month',
+    subNote: '24-Month Business Subscription Plan for Full Digital Suite Access (or $999 Outright anytime)',
+    color: '#4f46e5',
+    highlights: [
+      'Just $125/month on a 24-month business subscription plan for immediate full digital suite access',
+      'Covers almost every compliance policy, contract, intake pack, consent, risk form, register & SOP manual',
+      'Extensive documentation designed to help your team prepare for and complete NDIS, HR & WHS audits',
+      'Review and verify all relevant & required items for your scope so there is no doubt of a successful audit outcome',
     ],
   },
   {
     id: 'all-2026-docs-printed-box',
     badge: 'MOST POPULAR PRINT PACK · 6 BINDERS DELIVERED',
     name: '4. Complete 2026 Printed & Tab-Indexed Master Compliance 6-Binder Office Box Set',
-    format: 'All 125+ Compliance Documents Professionally Printed, Tab-Indexed & Delivered in 6 Arch Binders',
-    docPrice: 1495,
+    format: 'All 125+ Extensive Compliance Documents Professionally Printed, Tab-Indexed & Delivered in 6 Arch Binders',
+    docPrice: 999,
     printFee: 995,
-    totalPrice: 2490,
-    subNote: '$1,495 Full 125+ Doc Suite + $995 Commercial Colour Printing, 6 Binders, Lamination & Courier',
+    totalPrice: 1994,
+    subNote: '$999 Professional Business Compliance Documents Package + $995 Commercial Colour Printing, 6 Binders, Lamination & Courier',
     color: '#db2777',
     featured: true,
     highlights: [
@@ -315,14 +338,14 @@ export default function Complete2026DocumentPrintStore() {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="font-body text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-                Every Document Needed for 2026 Compliance · Digital Smart-Fill &amp; Professional Printed Binder Ordering
+                Professional Business Compliance Documents Package · $999 Outright or $125/Month (24-Month Digital Suite Plan)
               </span>
-              <span className="rounded-full bg-white/20 px-2 py-0.5 font-body text-[8px] font-black text-white">
-                125+ COMPLIANT 2026 DOCUMENTS · 6 PRINTED ARCH BINDERS · DELIVERED TO YOUR DOOR
+              <span className="rounded-full bg-amber-300 px-2 py-0.5 font-body text-[8px] font-black text-blue-950">
+                $999 OUTRIGHT OR $125/MO (24-MO PLAN) · EXTENSIVE 125+ AUDIT DOCUMENTS
               </span>
             </div>
             <p className="font-body text-[8.5px] font-bold text-white">
-              Not just the app and not just audit checklists — get EVERY 2026 policy, contract, intake pack, consent, risk form, register &amp; SOP manual digitally or professionally printed, bound &amp; shipped!
+              Extensive documentation covering almost every compliance document needed to help complete your audits — check all relevant &amp; required standards for your business so there is no doubt of your compliance audit outcome of success!
             </p>
           </div>
         </div>
@@ -346,26 +369,48 @@ export default function Complete2026DocumentPrintStore() {
           </span>
           <div>
             <div className="font-body text-[10.5px] font-black text-blue-950">
-              Why Our Printed Hard-Copy Packages Include Dedicated Commercial Print, Binding &amp; Courier Pricing
+              Professional Business Compliance Documents Package: $999 Outright or $125/Month (24-Month Digital Suite Plan)
             </div>
             <p className="font-body text-[8px] font-semibold leading-snug text-blue-950">
-              Printing 1,200+ full-colour pages across **125+ 2026-compliant documents**, assembling **6 heavy-duty Arch Lever Binders** with custom mylar tab dividers, laminating emergency &amp; charter wall posters, and shipping via tracked courier requires real commercial printing &amp; labour. Our pricing transparently separates the **Digital Document Value** (which is **100% FREE** inside every monthly app subscription!) from the **Professional Printing, Binding &amp; Delivery Service ($140–$995)**.
+              Access our **extensive 125+ document compliance library**—covering **almost every document** your business needs to prepare for and complete audits—for **$999 outright** or **$125/month on a 24-month subscription plan** for full digital suite access (or included free inside our $660–$1,035/mo Smart Enhanced App Plans). **Audit Outcome Assurance:** Please ensure your team checks and completes all relevant and required documents specific to your registration scope and regulatory obligations so there is **no doubt of your compliance audit outcome of success**.
             </p>
           </div>
         </div>
         <div className="lg:col-span-4 grid grid-cols-3 gap-1 text-center">
           <div className="rounded-lg border border-purple-300 bg-white p-1.5">
-            <div className="font-editorial text-sm font-black text-purple-900">125+</div>
-            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">2026 Compliant Docs</div>
+            <div className="font-editorial text-sm font-black text-purple-900">$999</div>
+            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">Outright Digital Suite</div>
           </div>
           <div className="rounded-lg border border-pink-300 bg-white p-1.5">
-            <div className="font-editorial text-sm font-black text-pink-700">6 Binders</div>
-            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">Printed &amp; Tabbed</div>
+            <div className="font-editorial text-sm font-black text-pink-700">$125/mo</div>
+            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">24-Month Digital Plan</div>
           </div>
           <div className="rounded-lg border border-emerald-300 bg-white p-1.5">
-            <div className="font-editorial text-sm font-black text-emerald-700">$0 Digital</div>
-            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">In Monthly Plans</div>
+            <div className="font-editorial text-sm font-black text-emerald-700">125+ Docs</div>
+            <div className="font-body text-[6.8px] font-extrabold uppercase text-blue-950">Extensive Audit Suite</div>
           </div>
+        </div>
+      </div>
+
+      {/* Audit Outcome Success & Comprehensive Verification Guidance Banner */}
+      <div className="rounded-xl border-2 border-emerald-500 bg-gradient-to-r from-emerald-50/90 via-white to-blue-50/90 p-2 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-start sm:items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm">
+              <ShieldCheck className="h-4 w-4" />
+            </span>
+            <div>
+              <div className="font-body text-[9.5px] font-black uppercase tracking-wider text-emerald-950">
+                Extensive Documentation Built for Audit Success — Verify Every Relevant Requirement for Complete Confidence
+              </div>
+              <p className="font-body text-[7.8px] font-bold text-blue-950 leading-snug">
+                This extensive package includes **almost every compliance document** across Governance, NDIS Practice Standards, HR, Participant Safeguarding, WHS, Emergency Management, Finance, and 45 Module SOPs to help you complete your audits. To guarantee **there is no doubt of your compliance audit outcome of success**, businesses must carefully review, tailor, and check off all relevant and mandatory requirements that apply to their specific services, state legislation, and registration groups.
+              </p>
+            </div>
+          </div>
+          <span className="rounded-full bg-emerald-600 px-2.5 py-1 font-body text-[7.5px] font-black uppercase tracking-wider text-white">
+            ✓ CHECK ALL RELEVANT REQUIREMENTS FOR 100% AUDIT SUCCESS
+          </span>
         </div>
       </div>
 
@@ -494,12 +539,12 @@ export default function Complete2026DocumentPrintStore() {
                   </p>
 
                   {/* Transparent Price Breakdown */}
-                  <div className="mt-1.5 flex items-baseline gap-1.5">
+                  <div className="mt-1.5 flex flex-wrap items-baseline gap-1.5">
                     <span className="font-editorial text-xl sm:text-2xl font-black text-blue-950">
-                      ${pkg.totalPrice.toLocaleString()}
+                      {pkg.priceDisplay || `$${pkg.totalPrice.toLocaleString()}`}
                     </span>
                     <span className="font-body text-[7.3px] font-extrabold text-purple-900">
-                      AUD {pkg.printFee > 0 ? '(Printed & Delivered)' : '(Instant Digital)'}
+                      AUD {pkg.printFee > 0 ? '(Printed & Delivered)' : pkg.monthlySubPrice ? '(Outright or 24-Mo Plan)' : '(Digital Access)'}
                     </span>
                   </div>
                   <div className="rounded border border-purple-200 bg-white/90 px-1.5 py-0.5 font-body text-[7px] font-extrabold text-blue-950">
@@ -570,7 +615,7 @@ export default function Complete2026DocumentPrintStore() {
               >
                 {PRINT_AND_DOCUMENT_PACKAGES.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.name} — ${p.totalPrice.toLocaleString()} AUD
+                    {p.name} — {p.priceDisplay || `$${p.totalPrice.toLocaleString()}`} AUD
                   </option>
                 ))}
               </select>

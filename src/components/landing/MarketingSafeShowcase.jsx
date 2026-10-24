@@ -90,7 +90,7 @@ export default function MarketingSafeShowcase() {
               href="#complete-2026-docs-print-store"
               className="rounded-full bg-white/15 px-2.5 py-1 text-[8px] font-extrabold text-white hover:bg-white/25"
             >
-              2. All 125+ 2026 Docs &amp; Printed Binders
+              2. Business Docs Package ($999 or $125/mo)
             </a>
             <a
               href="#screen-by-screen-audit"
