@@ -348,7 +348,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
         'MASTER 1-CLICK EXECUTIVE OPERATIONS SWEEP COMPLETED',
         `Executed all 3 operational pillars: Compliance & Audit Verification + Staff/Roster/Task Dispatch + Incident/Risk/Expiry Radar (${counts.staff} Staff · ${counts.participants} Participants · ${counts.shifts} Shifts).`,
         'All 3 Pillars',
-        '#db2777'
+        '#FF2E9A'
       );
     } finally {
       setRunningMaster(false);
@@ -379,7 +379,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: 'All 12 Standard 2026 Printable Office Templates in 1 A4 Book',
       description: 'Downloads the complete 12-template 2026 A4 Office Master Book (Service Agreement, Incident, Risk, Screening & Consent).',
       buttonLabel: 'Download 12-Template Book',
-      color: '#7c3aed',
+      color: '#5A00D6',
       icon: FileText,
       link: '/compliance',
     },
@@ -392,7 +392,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: `Auto-populate & file in Company Safe (${counts.submissions} filed)`,
       description: 'Creates and approves a timestamped 2026 Executive Compliance Verification Record directly in the FormSubmission register.',
       buttonLabel: 'File Smart-Fill Record Now',
-      color: '#0d9488',
+      color: '#00C6FF',
       icon: FolderLock,
       link: '/company-safe',
     },
@@ -405,7 +405,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: '104 Server Functions · 65 Workflows · 6 Validation Gates',
       description: 'Exports the A4 Infinity Core Engine Architecture & Live Telemetry Report for executive and auditor review.',
       buttonLabel: 'Export Core Engine PDF',
-      color: '#2563eb',
+      color: '#0072FF',
       icon: Sparkles,
       link: '/compliance',
     },
@@ -474,7 +474,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: `Monitor ${counts.incidents} Incidents & Commission Timers`,
       description: 'Audits all logged incidents for mandatory 24-hour initial notification and 5-day follow-up NDIS Commission compliance.',
       buttonLabel: 'Verify Incident SLAs',
-      color: '#dc2626',
+      color: '#FF2E9A',
       icon: Siren,
       link: '/incidents',
     },
@@ -487,7 +487,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: `Audit ${counts.risks} Risks & ISO 31000 Hierarchy`,
       description: 'Evaluates all active risks across Elimination, Minimisation, Isolation & Staff Training controls and triggers threshold alerts.',
       buttonLabel: 'Run Risk Control Sweep',
-      color: '#ea580c',
+      color: '#FF6EDB',
       icon: AlertTriangle,
       link: '/risks',
     },
@@ -500,7 +500,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       subtitle: `Scan ${counts.documents} Credentials & ${counts.policies} Policies`,
       description: 'Triggers complianceExpiryScan across staff credentials, certificates, policies & participant plan review horizons.',
       buttonLabel: 'Scan Expiry Horizons',
-      color: '#16a34a',
+      color: '#A100FF',
       icon: Clock,
       link: '/documents',
     },

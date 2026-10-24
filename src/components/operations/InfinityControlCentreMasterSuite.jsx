@@ -570,15 +570,15 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         {/* Navigation Switcher for All Priority 0, 1, 2 & Best-In-Class Master Pillars */}
         <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-1">
           {[
-            { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry & Queue', icon: Building2, hex: '#4f46e5' },
-            { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `17 Cats · ${evidencedCount}/356`, icon: ClipboardCheck, hex: '#6d28d9' },
-            { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText, hex: '#ca8a04' },
-            { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out & Handover', icon: Clock, hex: '#6366f1' },
-            { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency & Sign-Off', icon: Award, hex: '#0d9488' },
-            { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Classify & Route', icon: Layers, hex: '#0ea5e9' },
-            { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate & Twin Sim', icon: Sparkles, hex: '#8b5cf6' },
-            { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS · CAPA', icon: Wrench, hex: '#16a34a' },
-            { id: 'dev-register-31', label: '9. Dev Register (31)', sub: '17 Cols & 15-Pt Check', icon: CheckSquare, hex: '#db2777' },
+            { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry & Queue', icon: Building2, hex: '#0072FF' },
+            { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `17 Cats · ${evidencedCount}/356`, icon: ClipboardCheck, hex: '#0A2B6D' },
+            { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText, hex: '#5A00D6' },
+            { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out & Handover', icon: Clock, hex: '#A100FF' },
+            { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency & Sign-Off', icon: Award, hex: '#FF2E9A' },
+            { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Classify & Route', icon: Layers, hex: '#A100FF' },
+            { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate & Twin Sim', icon: Sparkles, hex: '#5A00D6' },
+            { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS · CAPA', icon: Wrench, hex: '#0A2B6D' },
+            { id: 'dev-register-31', label: '9. Dev Register (31)', sub: '17 Cols & 15-Pt Check', icon: CheckSquare, hex: '#0072FF' },
           ].map((tab) => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
@@ -742,7 +742,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   { role: 'Auditor', scope: 'Consented Evidence Portal' },
                   { role: 'Custom Roles', scope: 'HR / Finance / Quality / Intake' },
                 ].map((r, i) => {
-                  const rolePalette = ['#6366f1', '#e11d48', '#2563eb', '#0891b2', '#6d28d9', '#db2777', '#1d4ed8', '#0d9488'];
+                  const rolePalette = ['#00C6FF', '#0072FF', '#0A2B6D', '#5A00D6', '#A100FF', '#FF2E9A', '#FF6EDB', '#C084FC'];
                   const hex = rolePalette[i % rolePalette.length];
                   return (
                     <div key={r.role} className="rounded-lg border bg-white p-1.5" style={{ borderColor: `${hex}66`, borderTopWidth: '3px', borderTopColor: hex }}>
@@ -765,8 +765,8 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       className="rounded border p-1 text-center"
                       style={{
                         background: hex,
-                        color: hex === '#F4EAFB' ? '#4f46e5' : '#ffffff',
-                        borderColor: '#7c3aed',
+                        color: hex === '#C084FC' || hex === '#00C6FF' || hex === '#FF6EDB' ? '#0A2B6D' : '#ffffff',
+                        borderColor: '#5A00D6',
                       }}
                     >
                       <div className="text-[6.5px] font-black uppercase truncate">{name}</div>

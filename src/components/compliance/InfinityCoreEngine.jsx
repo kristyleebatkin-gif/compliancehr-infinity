@@ -24,7 +24,7 @@ export const AUTOMATION_PIPELINES = [
     trigger: 'On Incident / Hazard / Data Breach Creation',
     action: 'Calculates 24-hour & 5-day NDIS Commission deadlines, routes alerts to Compliance Manager & creates follow-up tasks.',
     status: 'LIVE · 24/7',
-    color: '#dc2626',
+    color: '#FF2E9A',
     path: '/incidents',
   },
   {
@@ -36,7 +36,7 @@ export const AUTOMATION_PIPELINES = [
     trigger: 'Daily 06:00 AM Schedule + On Document Change',
     action: 'Scans Blue Card, NDIS Worker Screening, Police Check, CPR & First Aid; dispatches 14/30/60/90-day renewal alerts.',
     status: 'LIVE · 24/7',
-    color: '#2563eb',
+    color: '#0072FF',
     path: '/our-employees',
   },
   {
@@ -48,7 +48,7 @@ export const AUTOMATION_PIPELINES = [
     trigger: 'On Certificate, Document or Overdue Task Update',
     action: 'Recalculates real-time Staff Risk Score across HR evidence, overdue tasks & training; flags high-risk thresholds.',
     status: 'LIVE · 24/7',
-    color: '#ea580c',
+    color: '#FF6EDB',
     path: '/risks',
   },
   {
@@ -96,7 +96,7 @@ export const AUTOMATION_PIPELINES = [
     trigger: 'On Demand AI Prompt + Course Completion',
     action: 'Builds NDIS-aligned training modules & quizzes, issues verified PDF certificates & updates staff HR files.',
     status: 'LIVE · 24/7',
-    color: '#0d9488',
+    color: '#00C6FF',
     path: '/training',
   },
   {
@@ -128,7 +128,7 @@ export const SMART_FILL_ENGINES = [
     title: '12 Standard 2026 Printable Office Templates (A4 Studio)',
     coverage: 'NDIS Service Agreement, Incident 24h/5d, Risk Matrix, Worker Screening, Consent & Handover',
     output: 'Generates both Smart-Filled Live Records and Blank Ruled A4 Office Masters + 12-Template Master Book PDF.',
-    color: '#db2777',
+    color: '#FF2E9A',
     link: '/compliance',
     badge: '12 A4 Templates',
   },
@@ -146,7 +146,7 @@ export const SMART_FILL_ENGINES = [
     title: 'Predictive 14 / 30 / 60 / 90-Day Expiry & Renewal Radar',
     coverage: 'EmployeeDocument, Certificate, Policy, InsurancePolicy, LeaseRecord & Participant Plan End Dates',
     output: 'Forecasts upcoming expiries across 4 horizon windows and triggers automated renewal workflows before lapse.',
-    color: '#16a34a',
+    color: '#A100FF',
     link: '/documents',
     badge: 'Predictive Radar',
   },
@@ -236,7 +236,7 @@ export default function InfinityCoreEngine({ compact = false }) {
           telemetry.expiredDocs === 0
             ? `100% CLEARED (${telemetry.staff} Staff)`
             : `${telemetry.expiredDocs} EXPIRY FLAGGED`,
-        color: '#2563eb',
+        color: '#0072FF',
         ruleSummary: `Verifies NDIS Worker Screening, Blue Card, Police Check & First Aid across ${telemetry.staff} staff and ${telemetry.documents} HR documents before shift publication.`,
         path: '/our-employees',
       },
@@ -246,7 +246,7 @@ export default function InfinityCoreEngine({ compact = false }) {
         standard: 'NDIS (Incident Management) Rules',
         passed: true,
         badge: `${telemetry.incidents} INCIDENTS MONITORED`,
-        color: '#dc2626',
+        color: '#FF2E9A',
         ruleSummary: `Enforces mandatory 24-hour initial notification and 5-day follow-up submission timers across ${telemetry.incidents} logged incident records.`,
         path: '/incidents',
       },
@@ -256,7 +256,7 @@ export default function InfinityCoreEngine({ compact = false }) {
         standard: 'ISO 31000 & WHS Controls',
         passed: true,
         badge: `${telemetry.risks} RISKS (${telemetry.highRisks} HIGH/CRIT)`,
-        color: '#ea580c',
+        color: '#FF6EDB',
         ruleSummary: `Validates Elimination, Minimisation, Isolation & Staff Training controls across ${telemetry.risks} active risks and participant profiles.`,
         path: '/risks',
       },
@@ -364,9 +364,9 @@ export default function InfinityCoreEngine({ compact = false }) {
 
   const PILLAR_TABS = [
     { id: 'all', label: 'All 3 Core Engines (Unified View)', icon: Cpu, color: '#4f46e5' },
-    { id: 'automation', label: '1. AI & Automation Hub (104 Functions · 65 Workflows)', icon: Zap, color: '#7c3aed' },
-    { id: 'validation', label: '2. Real-Time Compliance, Risk & Roster Validation', icon: ShieldCheck, color: '#db2777' },
-    { id: 'smartfill', label: '3. Smart-Fill Document, Audit & Predictive Alert Engine', icon: Sparkles, color: '#0d9488' },
+    { id: 'automation', label: '1. AI & Automation Hub (104 Functions · 65 Workflows)', icon: Zap, color: '#5A00D6' },
+    { id: 'validation', label: '2. Real-Time Compliance, Risk & Roster Validation', icon: ShieldCheck, color: '#FF2E9A' },
+    { id: 'smartfill', label: '3. Smart-Fill Document, Audit & Predictive Alert Engine', icon: Sparkles, color: '#00C6FF' },
   ];
 
   return (
@@ -463,13 +463,13 @@ export default function InfinityCoreEngine({ compact = false }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1">
           {[
             { label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', color: '#4f46e5', icon: Cpu },
-            { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', color: '#7c3aed', icon: Zap },
-            { label: 'Connected Modules', value: '45', sub: 'Unified Data Bus', color: '#2563eb', icon: Layers },
-            { label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', color: '#db2777', icon: ShieldCheck },
-            { label: 'Smart-Fill Docs', value: '125+', sub: '2026 A4 & Digital', color: '#0d9488', icon: FileText },
-            { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', color: '#ea580c', icon: Award },
-            { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, color: '#16a34a', icon: Users },
-            { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, color: '#dc2626', icon: Activity },
+            { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', color: '#5A00D6', icon: Zap },
+            { label: 'Connected Modules', value: '45', sub: 'Unified Data Bus', color: '#0072FF', icon: Layers },
+            { label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', color: '#FF2E9A', icon: ShieldCheck },
+            { label: 'Smart-Fill Docs', value: '125+', sub: '2026 A4 & Digital', color: '#00C6FF', icon: FileText },
+            { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', color: '#FF6EDB', icon: Award },
+            { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, color: '#A100FF', icon: Users },
+            { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, color: '#FF2E9A', icon: Activity },
           ].map((stat) => {
             const Icon = stat.icon;
             return (
@@ -643,7 +643,7 @@ export default function InfinityCoreEngine({ compact = false }) {
                       </span>
                       <span
                         className="rounded-full px-1.5 py-0.5 text-[6.5px] font-black text-white"
-                        style={{ background: gate.passed ? '#16a34a' : '#ea580c' }}
+                        style={{ background: gate.passed ? '#A100FF' : '#FF6EDB' }}
                       >
                         {gate.badge}
                       </span>

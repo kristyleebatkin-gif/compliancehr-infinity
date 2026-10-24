@@ -15,14 +15,14 @@ const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
 export const REPLACED_SOFTWARE_STACK = [
-  { tool: 'Standalone NDIS Audit Consultant & Templates', typicalCost: '$1,200/mo', color: '#6d28d9' },
-  { tool: 'HR Information System & Digital Contracts', typicalCost: '$450/mo', color: '#7c3aed' },
-  { tool: 'Shift Rostering & Award/Timesheet Software', typicalCost: '$550/mo', color: '#4f46e5' },
-  { tool: 'NDIS Price Guide Invoicing & Claiming Tool', typicalCost: '$400/mo', color: '#16a34a' },
-  { tool: 'Incident, Risk & WHS Compliance Software', typicalCost: '$480/mo', color: '#dc2626' },
-  { tool: 'LMS Staff Training & Certificate Generator', typicalCost: '$390/mo', color: '#0d9488' },
-  { tool: 'Team Messaging, Diary & Task Boards', typicalCost: '$320/mo', color: '#0891b2' },
-  { tool: 'Document Vault, Read-Receipts & E-Sign', typicalCost: '$290/mo', color: '#ca8a04' },
+  { tool: 'Standalone NDIS Audit Consultant & Templates', typicalCost: '$1,200/mo', color: '#0072FF' },
+  { tool: 'HR Information System & Digital Contracts', typicalCost: '$450/mo', color: '#0A2B6D' },
+  { tool: 'Shift Rostering & Award/Timesheet Software', typicalCost: '$550/mo', color: '#5A00D6' },
+  { tool: 'NDIS Price Guide Invoicing & Claiming Tool', typicalCost: '$400/mo', color: '#A100FF' },
+  { tool: 'Incident, Risk & WHS Compliance Software', typicalCost: '$480/mo', color: '#FF2E9A' },
+  { tool: 'LMS Staff Training & Certificate Generator', typicalCost: '$390/mo', color: '#A100FF' },
+  { tool: 'Team Messaging, Diary & Task Boards', typicalCost: '$320/mo', color: '#5A00D6' },
+  { tool: 'Document Vault, Read-Receipts & E-Sign', typicalCost: '$290/mo', color: '#00C6FF' },
 ];
 
 export const MUST_HAVE_PILLARS = [
@@ -31,7 +31,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'NEW · VALUED AT $355',
     title: '1. $355 Master Compliance Audit Checklist Suite (CHR-AUD-001 & 002)',
     subtitle: '17 Audit Categories · 356 Checkpoints · 11 Interactive & Printable Pages',
-    color: '#6d28d9',
+    color: '#0072FF',
     icon: ClipboardCheck,
     items: [
       '17 Audit Categories & 356 Checkpoints across 11 structured pages',
@@ -47,7 +47,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'INTERACTIVE VISUALS',
     title: '2. Dual Interactive Workspace: Office View + Profile View',
     subtitle: 'Executive Wall Scene, Desk Equipment & Custom Modular Data Selector',
-    color: '#2563eb',
+    color: '#0A2B6D',
     icon: Building2,
     items: [
       'Switch live between Enhanced Office View, General Profile View, or Side-by-Side',
@@ -63,7 +63,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'UNIFIED DIRECTORY',
     title: '3. Complete Employee & Participant Profile Lifecycle',
     subtitle: 'Intake-to-Profile Automation, Screening Alerts & 3-Part Consents',
-    color: '#e11d48',
+    color: '#5A00D6',
     icon: Users,
     items: [
       'Consolidated People Directory with 1-click Intake-to-Profile onboarding',
@@ -79,7 +79,7 @@ export const MUST_HAVE_PILLARS = [
     badge: '16 COMMS MODULARS',
     title: '4. 16-Modular Communication Centre & Shared To-Do Command',
     subtitle: 'Diaries, Shift Notes, Branded Email, Video Calls & Gamified Tasks',
-    color: '#0891b2',
+    color: '#A100FF',
     icon: MessagesSquare,
     items: [
       'Unified Communication Diary, Shift Handover Notes & Employee Logs',
@@ -95,7 +95,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'NDIS OPERATIONS',
     title: '5. NDIS Rostering, Timesheets, Price-Guide Invoicing & Payroll',
     subtitle: 'End-to-End Shift Planning, PRODA Claims, Quotes & Bank Match',
-    color: '#16a34a',
+    color: '#FF2E9A',
     icon: CalendarClock,
     items: [
       'Smart Roster Board with worker screening checks, availability & coverage heatmap',
@@ -111,7 +111,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'SAFEGUARDING & WHS',
     title: '6. Incident Clinic, Risk Matrix & Emergency Readiness',
     subtitle: '24h / 5-Day NDIS Commission Timers, Take-5s, Drills & MSDS',
-    color: '#dc2626',
+    color: '#A100FF',
     icon: AlertTriangle,
     items: [
       'NDIS Reportable Incident Clinic with 24-hour & 5-day Commission deadline timers',
@@ -127,7 +127,7 @@ export const MUST_HAVE_PILLARS = [
     badge: 'HR & AI ACADEMY',
     title: '7. HR Paperwork Hub, LMS Training Academy & Certificates',
     subtitle: 'Digital Contracts, 360° Appraisals, AI Quizzes & Branded Certificates',
-    color: '#0d9488',
+    color: '#5A00D6',
     icon: GraduationCap,
     items: [
       'HR Paperwork Hub: Employment Contracts, Position Descriptions & Digital Signing',
@@ -143,7 +143,7 @@ export const MUST_HAVE_PILLARS = [
     badge: '100+ FUNCTIONS · 65+ WORKFLOWS',
     title: '8. 24/7 Autonomous Compliance Engine & AI Copilots',
     subtitle: 'Powered by 2,500 Message Credits & 20,000 Integration Credits on Elite Pack',
-    color: '#db2777',
+    color: '#00C6FF',
     icon: Cpu,
     items: [
       '65+ live automated workflows running scheduled expiry scans & escalations',
@@ -215,30 +215,29 @@ export default function MustHaveFunctionsReview() {
       </div>
 
       {/* Executive KPI Counter Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
         {[
-          { val: '45', label: 'Connected Modules', color: '#4f46e5' },
-          { val: '17', label: 'Audit Categories', color: '#db2777' },
-          { val: '356', label: 'Audit Checkpoints', color: '#7c3aed' },
-          { val: '$999 / $125m', label: '125+ Docs Suite', color: '#ea580c' },
-          { val: '100+', label: 'Server Functions', color: '#0ea5e9' },
-          { val: '65+', label: 'Live Workflows', color: '#0d9488' },
-          { val: '115+', label: 'Secured Entities', color: '#16a34a' },
-          { val: '+$160/m', label: 'Elite Pack Included', color: '#e11d48' },
+          { val: '45', label: 'Connected Modules', color: '#0072FF' },
+          { val: '17', label: 'Audit Categories', color: '#0A2B6D' },
+          { val: '356', label: 'Audit Checkpoints', color: '#5A00D6' },
+          { val: '$999 / $125m', label: '125+ Docs Suite', color: '#A100FF' },
+          { val: '100+', label: 'Server Functions', color: '#FF2E9A' },
+          { val: '65+', label: 'Live Workflows', color: '#FF6EDB' },
+          { val: '115+', label: 'Secured Entities', color: '#00C6FF' },
+          { val: '+$160/m', label: 'Elite Pack Included', color: '#C084FC' },
         ].map((stat) => (
           <div
             key={stat.label}
-            className="rounded-lg border bg-white px-2 py-1 text-center shadow-sm"
+            className="rounded-lg border border-[#C084FC]/50 bg-white px-2 py-1.5 text-center shadow-2xs"
             style={{
-              borderColor: stat.color,
+              borderTopColor: stat.color,
               borderTopWidth: '3px',
-              background: `linear-gradient(145deg, ${stat.color}14, #ffffff)`,
             }}
           >
             <div className="font-editorial text-sm sm:text-base font-black" style={{ color: stat.color }}>
               {stat.val}
             </div>
-            <div className="text-[7px] font-extrabold uppercase tracking-wider text-blue-950">
+            <div className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
               {stat.label}
             </div>
           </div>
