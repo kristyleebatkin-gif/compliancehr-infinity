@@ -18,12 +18,26 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
   const [saving, setSaving] = useState(false);
   const [fileUri, setFileUri] = useState('');
   const [fileName, setFileName] = useState('');
+  const [draftId, setDraftId] = useState('');
   const [data, setData] = useState(EMPTY_EXTRACTED);
 
-  const reset = () => { setFile(null); setFileUri(''); setFileName(''); setData(EMPTY_EXTRACTED); };
+  const reset = (keepRecord = false) => {
+    if (!keepRecord && draftId) {
+      base44.entities.Receipt.delete(draftId).catch(() => {});
+    }
+    setFile(null);
+    setFileUri('');
+    setFileName('');
+    setDraftId('');
+    setData(EMPTY_EXTRACTED);
+  };
 
   const pickFile = async (selected) => {
     if (!selected) return;
+    if (draftId) {
+      base44.entities.Receipt.delete(draftId).catch(() => {});
+      setDraftId('');
+    }
     setFile(selected);
     setScanning(true);
     setData(EMPTY_EXTRACTED);
@@ -43,9 +57,16 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
           toast({ title: 'PDF conversion skipped', description: 'The receipt is stored as its original image.' });
         }
       }
+      const draft = await base44.entities.Receipt.create({
+        description: selected.name || 'Scanned receipt',
+        file_uri: storedUri,
+        file_name: storedName,
+        status: 'Unreconciled',
+      });
+      setDraftId(draft?.id || '');
       setFileUri(storedUri);
       setFileName(storedName);
-      const res = await base44.functions.invoke('scanReceipt', { file_uri: imageUri });
+      const res = await base44.functions.invoke('scanReceipt', { receipt_id: draft?.id || '', file_uri: storedUri });
       const scan = res.data || {};
       if (scan.error) {
         toast({ title: 'Scan incomplete', description: scan.error });
@@ -74,17 +95,20 @@ export default function ReceiptScanner({ open, onOpenChange, onSaved }) {
     if (!data.description.trim()) return;
     setSaving(true);
     try {
-      const record = await base44.entities.Receipt.create({
+      const payload = {
         ...data,
         amount: data.amount === '' ? undefined : Number(data.amount),
         gst_amount: data.gst_amount === '' ? undefined : Number(data.gst_amount),
         file_uri: fileUri,
         file_name: fileName,
-      });
+      };
+      const record = draftId
+        ? await base44.entities.Receipt.update(draftId, payload)
+        : await base44.entities.Receipt.create(payload);
       await fileReceiptToAssetRegister(record, data.paid_by);
       onSaved();
       onOpenChange(false);
-      reset();
+      reset(true);
       toast({ title: 'Receipt stored', description: 'The scanned receipt and its details are saved in the hub.' });
     } finally {
       setSaving(false);

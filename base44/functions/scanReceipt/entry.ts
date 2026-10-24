@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 const SCHEMA = {
   type: 'object',
@@ -22,15 +23,29 @@ export default async function(req) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await req.json();
-    const fileUri = String(body.file_uri || '').trim();
-    if (!fileUri) return Response.json({ error: 'file_uri is required' }, { status: 400 });
+    const receiptId = String(body.receipt_id || '').trim();
+    const requestedFileUri = String(body.file_uri || '').trim();
+    if (!receiptId) return Response.json({ error: 'receipt_id is required' }, { status: 400 });
+
+    // Resolve the receipt file through a caller-scoped Receipt read so entity RLS applies.
+    const receipt = await base44.entities.Receipt.get(receiptId).catch(() => null);
+    const storedFileUri = String(receipt?.file_uri || '').trim();
+    if (!receipt || !storedFileUri) {
+      return Response.json({ error: 'Receipt file not found' }, { status: 403 });
+    }
+    if (receipt.created_by_id && receipt.created_by_id !== user.id && !hasAnyRole(user, MANAGEMENT_ROLES)) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+    if (requestedFileUri && requestedFileUri !== storedFileUri) {
+      return Response.json({ error: 'File URI does not match receipt record' }, { status: 403 });
+    }
+    if (/^https?:\/\//i.test(storedFileUri)) {
+      return Response.json({ error: 'Only private receipt files may be scanned' }, { status: 400 });
+    }
 
     const core = base44.asServiceRole.integrations.Core;
-    let fileUrl = fileUri;
-    if (!/^https?:\/\//.test(fileUri)) {
-      const signed = await core.CreateFileSignedUrl({ file_uri: fileUri });
-      fileUrl = signed.signed_url;
-    }
+    const signed = await core.CreateFileSignedUrl({ file_uri: storedFileUri });
+    const fileUrl = signed.signed_url;
 
     const result = await core.ExtractDataFromUploadedFile({
       file_url: fileUrl,

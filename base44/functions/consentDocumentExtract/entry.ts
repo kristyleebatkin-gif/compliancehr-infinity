@@ -15,28 +15,43 @@ export default async function(req) {
 
     const body = await req.json();
     const kind = body.entity_type === 'staff' ? 'staff' : 'participant';
-    const profileId = String(body.profile_id || '');
-    const documentId = String(body.document_id || '');
-    const fileUri = String(body.file_uri || '');
-    if (!profileId || !fileUri) return Response.json({ error: 'profile_id and file_uri are required' }, { status: 400 });
+    const profileId = String(body.profile_id || '').trim();
+    const documentId = String(body.document_id || '').trim();
+    const requestedFileUri = String(body.file_uri || '').trim();
+    if (!profileId || !documentId) {
+      return Response.json({ error: 'profile_id and document_id are required' }, { status: 400 });
+    }
 
     const service = base44.asServiceRole;
     const Entity = kind === 'staff' ? service.entities.StaffProfile : service.entities.ParticipantProfile;
     const profile = await Entity.get(profileId);
     if (!profile) return Response.json({ error: 'Profile not found' }, { status: 404 });
-    if (!hasAnyRole(user, CONSENT_ROLES) && (profile.email || '') !== (user.email || '')) {
+    const hasConsentRole = hasAnyRole(user, CONSENT_ROLES);
+    if (!hasConsentRole && (profile.email || '') !== (user.email || '')) {
       return Response.json({ error: 'Consent access required' }, { status: 403 });
     }
 
-    // The uploaded copy is kept in the vault document record; the profile entries below reference it.
+    // Resolve the uploaded document through a caller-scoped read (enforcing entity RLS)
+    // and verify it belongs to the referenced profile before signing its stored file_uri.
     const documentEntity = kind === 'staff' ? 'EmployeeDocument' : 'ParticipantDocument';
-    let documentTitle = '';
-    if (documentId) {
-      const doc = await service.entities[documentEntity].get(documentId).catch(() => null);
-      documentTitle = doc?.title || doc?.document_type || '';
+    const doc = await base44.entities[documentEntity].get(documentId).catch(() => null);
+    const docProfileId = kind === 'staff' ? String(doc?.employee_id || '') : String(doc?.participant_id || '');
+    const storedFileUri = String(doc?.file_uri || '').trim();
+    if (!doc || docProfileId !== profileId || !storedFileUri) {
+      return Response.json({ error: 'Document not found for this profile' }, { status: 403 });
     }
+    if (!hasConsentRole && doc.created_by_id && doc.created_by_id !== user.id) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+    if (requestedFileUri && requestedFileUri !== storedFileUri) {
+      return Response.json({ error: 'File URI does not match document record' }, { status: 403 });
+    }
+    if (/^https?:\/\//i.test(storedFileUri)) {
+      return Response.json({ error: 'Only private vault files may be extracted' }, { status: 400 });
+    }
+    const documentTitle = doc.title || doc.document_type || '';
 
-    const { signed_url: signedUrl } = await service.integrations.Core.CreateFileSignedUrl({ file_uri: fileUri });
+    const { signed_url: signedUrl } = await service.integrations.Core.CreateFileSignedUrl({ file_uri: storedFileUri });
     const extraction = await service.integrations.Core.InvokeLLM({
       prompt: `This is a document uploaded to the document hub of an Australian NDIS provider for ${kind === 'staff' ? 'an employee' : 'a participant'}${documentTitle ? ` (filed as "${documentTitle}")` : ''}. Read it and extract:
 1. Whether it records any consent decision (audit consent to review records, consent to share information, consent to act as an advocate, or medication consent). List every consent type it covers and the decision recorded.
