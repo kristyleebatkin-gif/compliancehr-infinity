@@ -651,23 +651,23 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
           {/* Central Management Approval Queue + Role & Access Governance */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border-2 border-[#184A9C] bg-[#F4EAFB]/40 p-2.5">
-              <div className="flex items-center justify-between gap-2 border-b border-[#A45CDE]/40 pb-1.5">
+            <div className="rounded-xl border-2 border-[#2563eb] bg-blue-50/40 p-2.5" style={{ borderTopWidth: '4px' }}>
+              <div className="flex items-center justify-between gap-2 border-b border-blue-200 pb-1.5">
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-blue-950">
                     Central Management Approval &amp; Escalation Queue
                   </h3>
-                  <p className="text-[8px] font-semibold text-[#442078]">
+                  <p className="text-[8px] font-semibold text-purple-800">
                     Live pending tasks, sign-offs, and open incident reviews requiring management verification
                   </p>
                 </div>
-                <Badge className="bg-[#7138B6] text-white text-[8px]">
+                <Badge className="bg-[#7c3aed] text-white text-[8px]">
                   {pendingApprovals.length} Active Items
                 </Badge>
               </div>
 
               {pendingApprovals.length === 0 ? (
-                <div className="py-4 text-center text-[9px] font-bold text-[#184A9C]">
+                <div className="py-4 text-center text-[9px] font-bold text-blue-800">
                   All management approvals and incident sign-offs are up to date.
                 </div>
               ) : (
@@ -675,18 +675,18 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   {pendingApprovals.map((item) => (
                     <div
                       key={`${item.entity}-${item.id}`}
-                      className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-[#A45CDE]/50 bg-white px-2.5 py-1.5"
+                      className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-purple-200 bg-white px-2.5 py-1.5"
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <span className="rounded bg-[#F4EAFB] px-1.5 py-0.5 text-[7px] font-black text-[#442078]">
+                          <span className="rounded bg-purple-100 px-1.5 py-0.5 text-[7px] font-black text-purple-900">
                             {item.kind}
                           </span>
-                          <span className="truncate text-[9px] font-black text-[#12214B]">
+                          <span className="truncate text-[9px] font-black text-blue-950">
                             {item.title}
                           </span>
                         </div>
-                        <div className="text-[7.5px] font-semibold text-[#184A9C]">
+                        <div className="text-[7.5px] font-semibold text-blue-700">
                           Status: {item.status} · Priority: {item.priority}
                         </div>
                       </div>
@@ -701,7 +701,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                         </Button>
                         <Link
                           to={item.route}
-                          className="inline-flex h-6 items-center rounded border border-[#184A9C] px-2 text-[8px] font-black text-[#184A9C] hover:bg-[#F4EAFB]"
+                          className="inline-flex h-6 items-center rounded border border-blue-600 px-2 text-[8px] font-black text-blue-700 hover:bg-blue-50"
                         >
                           Open
                         </Link>
@@ -775,12 +775,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
           </div>
 
           {/* Section 24 — 29 Module-Specific Semantic Colours Launch Strip */}
-          <div className="rounded-xl border border-[#A45CDE] bg-[#F4EAFB]/25 p-2">
+          <div className="rounded-xl border-2 border-[#db2777] bg-pink-50/30 p-2" style={{ borderTopWidth: '4px' }}>
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-[8px] font-black uppercase tracking-wider text-[#12214B]">
+              <span className="text-[8px] font-black uppercase tracking-wider text-blue-950">
                 Section 24 — 29 Module-Specific Semantic Colours (Separated from Urgency Status Badges)
               </span>
-              <span className="text-[7.5px] font-bold text-[#7138B6]">
+              <span className="text-[7.5px] font-bold text-purple-800">
                 Click any domain to open its live operational workspace
               </span>
             </div>
@@ -790,11 +790,15 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   key={mc.module}
                   to={mc.path}
                   className="flex items-center gap-1.5 rounded-md border bg-white px-1.5 py-1 hover:shadow-sm"
-                  style={{ borderColor: mc.hex, borderLeftWidth: '4px' }}
+                  style={{
+                    borderColor: mc.hex,
+                    borderLeftWidth: '4px',
+                    background: `linear-gradient(135deg, ${mc.hex}12 0%, #ffffff 85%)`,
+                  }}
                 >
                   <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: mc.hex }} />
                   <div className="min-w-0">
-                    <div className="truncate text-[7.5px] font-black text-[#12214B]">{mc.module}</div>
+                    <div className="truncate text-[7.5px] font-black text-blue-950">{mc.module}</div>
                     <div className="truncate text-[6.5px] font-semibold" style={{ color: mc.hex }}>
                       {mc.toneName} · {mc.hex}
                     </div>
