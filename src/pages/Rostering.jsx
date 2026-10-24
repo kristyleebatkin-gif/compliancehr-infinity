@@ -35,6 +35,7 @@ import RosterLabourForecast from '@/components/rostering/RosterLabourForecast';
 import CalendarSyncDialog from '@/components/rostering/CalendarSyncDialog';
 import RosterOpsOverview from '@/components/rostering/RosterOpsOverview';
 import RosterLeaveFeed from '@/components/rostering/RosterLeaveFeed';
+import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
 import { RefreshCw, Repeat, BarChart3 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { expandRecurrence } from '@/lib/rostering';
@@ -334,7 +335,8 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
           )}
           {!profile && <><RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
-          <RosterLabourForecast shifts={boardShifts} /></>}
+          <RosterLabourForecast shifts={boardShifts} />
+          <BestInClassBenchmarkSuite onRefresh={refresh} /></>}
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
