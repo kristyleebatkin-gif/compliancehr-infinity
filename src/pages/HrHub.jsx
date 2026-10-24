@@ -18,6 +18,7 @@ import PayrollHub from '@/components/payroll/PayrollHub';
 import HrDashboardNavigation from '@/components/hr/HrDashboardNavigation';
 import HrEmployeeFiles from '@/components/hr/HrEmployeeFiles';
 import MyPayroll from '@/components/payroll/MyPayroll';
+import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -274,6 +275,11 @@ export default function HrHub({ profile, embedded = false } = {}) {
         {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-2">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
       </ModuleShell>
       </Tabs>
+      {isManager && !embedded && (
+        <div className="pt-2">
+          <MasterSkillsAndInstructionsStudio onChanged={load} />
+        </div>
+      )}
     </div>
   );
 }

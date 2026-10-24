@@ -236,6 +236,22 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       )}
       {profileKind === 'participant' && profile && <ParticipantAssessmentRecords participant={profile} />}
 
+      <div className="rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/40 p-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+            Section 11 — 5×5 Inherent &amp; Residual Risk Governance (Eliminate · Minimise · Isolate · Training · Compliance)
+          </h3>
+          <p className="text-[10px] font-semibold text-[#442078]">
+            High and Critical risks automatically link to Individual (3-monthly) and Home (monthly) review schedules and closed-loop Continuous Improvement actions.
+          </p>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="rounded-full bg-[#12214B] px-2.5 py-0.5 text-[10px] font-black text-white">
+            {counts.High + counts.Critical} High / Critical Risks
+          </span>
+        </div>
+      </div>
+
       <CommonRiskLibrary onAdded={load} />
 
       <TakeFiveRegister />

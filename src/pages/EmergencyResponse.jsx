@@ -110,6 +110,20 @@ export default function EmergencyResponse({ embedded = false } = {}) {
       <EmergencyDrillDialog open={open} onOpenChange={setOpen} form={form} onChange={setForm} saving={saving} onSave={save} />
       {embedded && !employee && <RegisterInsights module="emergency" />}
 
+      <div className="rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/40 p-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+            Section 17 — Emergency &amp; Business Continuity Readiness (Category 13 Audit Standard)
+          </h3>
+          <p className="text-[10px] font-semibold text-[#442078]">
+            Tracks 6-monthly fire &amp; evacuation drills, smoke alarm &amp; extinguisher tests, natural disaster kits, PEEPs, and visitor sign-in/out logs.
+          </p>
+        </div>
+        <Badge className="bg-[#12214B] text-white text-[10px]">
+          {drills.length} Drills · {checks.length} Safety Checks
+        </Badge>
+      </div>
+
       {!employee && <EmergencyQuickDial />}
 
       {!employee && <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

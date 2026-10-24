@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import StatusBadge from '@/components/StatusBadge';
 import EmptyState from '@/components/EmptyState';
 import { ClipboardCheck, Loader2, Plus, Eye } from 'lucide-react';
+import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -91,12 +92,17 @@ export default function AuditorsPortal() {
         <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
         <>
-          <Tabs defaultValue="audits">
-            <TabsList>
+          <Tabs defaultValue="master-356">
+            <TabsList className="flex flex-wrap h-auto gap-1.5">
+              <TabsTrigger value="master-356">356-Checkpoint &amp; 98-Doc Evidence Register</TabsTrigger>
               <TabsTrigger value="audits">Audits</TabsTrigger>
               <TabsTrigger value="actions">Corrective actions</TabsTrigger>
               <TabsTrigger value="observations">Observation log</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="master-356" className="mt-4">
+              <InfinityControlCentreMasterSuite initialTab="master-audit-356" compact />
+            </TabsContent>
 
             <TabsContent value="audits" className="mt-4 space-y-2">
               {audits.length === 0 ? (

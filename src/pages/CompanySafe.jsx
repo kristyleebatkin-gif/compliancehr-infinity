@@ -56,7 +56,14 @@ const SAFE_MODULES = [
 ];
 
 export default function CompanySafe() {
-  const [openArea, setOpenArea] = useState({});
+  const [openArea, setOpenArea] = useState({
+    identity: true,
+    evidence: true,
+    badges: true,
+    registrations: true,
+    documents: true,
+    posture: true,
+  });
   const toggle = (k) => setOpenArea((prev) => ({ ...prev, [k]: !prev[k] }));
 
   return (

@@ -226,6 +226,53 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
       >
       {embedded && <RegisterInsights module="incidents" />}
 
+      <div className="rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/40 p-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+            Section 11 — NDIS 24-Hour &amp; 5-Day Statutory Reportable Incident Escalation &amp; Closed-Loop CAPA
+          </h3>
+          <p className="text-[10px] font-semibold text-[#442078]">
+            Reportable incidents (Death, Serious Injury, Abuse/Neglect, Unlawful Contact, Sexual Misconduct, Unauthorised Restrictive Practice) require 24-hour NDIS Commission notification &amp; 5-day follow-up.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="rounded-full bg-red-600 px-2.5 py-0.5 text-[10px] font-black text-white">
+            {items.filter((i) => i.requires_ndis_report || i.severity === 'Critical' || i.severity === 'High').length} High/Reportable
+          </span>
+          {canReview && (
+            <Button
+              size="sm"
+              className="h-7 bg-[#12214B] text-[10px] font-black text-white hover:bg-[#184A9C]"
+              onClick={async () => {
+                const highIncidents = items.filter((i) => (i.requires_ndis_report || i.severity === 'Critical' || i.severity === 'High') && i.status !== 'Closed');
+                const target = highIncidents[0] || items[0];
+                if (!target) {
+                  toast({ title: 'No incident available to escalate' });
+                  return;
+                }
+                await base44.entities.QualityItem.create({
+                  title: `CAPA: ${target.title || target.incident_id || 'Incident Follow-up'}`,
+                  source: 'Incident',
+                  category: 'Safety & Clinical Governance',
+                  status: 'In Progress',
+                  priority: 'High',
+                  owner: 'Compliance Administrator',
+                  due_date: new Date(Date.now() + 5 * 86400000).toISOString().slice(0, 10),
+                  description: `Closed-loop corrective action linked to Incident ${target.incident_id || target.id}: ${target.description || ''}`,
+                  action_plan: target.immediate_actions || 'Complete root-cause investigation, verify NDIS Commission 5-day report, and update participant risk controls.',
+                });
+                toast({
+                  title: 'Linked CAPA Created in Quality Register',
+                  description: `Corrective action created for "${target.title}".`,
+                });
+              }}
+            >
+              Escalate Latest High/Reportable Incident to CAPA
+            </Button>
+          )}
+        </div>
+      </div>
+
       <HealthMedicationResponse />
 
       <SafetyOperationsDashboard />
