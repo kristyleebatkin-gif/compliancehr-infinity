@@ -89,32 +89,32 @@ export default function Assistant() {
         icon={Bot}
         moduleKey="assistant"
       />
-      <AdvancedIntelligenceAndToolsSuite />
-      <AssistantHints />
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         {AGENTS.map((a) => {
           const Icon = a.icon;
           return (
             <button
               key={a.name}
               onClick={() => setAgent(a)}
-              className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full opacity-20 blur-2xl transition-opacity group-hover:opacity-35" style={{ backgroundColor: a.to }} />
-              <div className="flex items-start gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow-md" style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})` }}>
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white shadow-md" style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})` }}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-bold text-foreground">{a.label}</div>
-                  <div className="mt-0.5 text-[11px] leading-4 text-foreground/55">{a.tagline}</div>
-                  <div className="mt-1 text-[11px] font-bold text-foreground">Start chatting →</div>
+                  <div className="text-sm font-extrabold text-foreground">{a.label}</div>
+                  <div className="mt-1 text-xs leading-relaxed text-foreground/65">{a.tagline}</div>
+                  <div className="mt-2 inline-flex items-center gap-1 text-xs font-extrabold text-primary">Start chatting →</div>
                 </div>
               </div>
             </button>
           );
         })}
       </div>
+      <AssistantHints />
+      <AdvancedIntelligenceAndToolsSuite />
 
       {/* What the assistants can complete */}
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm">

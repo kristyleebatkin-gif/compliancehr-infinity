@@ -117,8 +117,6 @@ export default function Training({ profile, embedded = false } = {}) {
       >
       {loadError && <p role="alert" className="text-sm text-destructive">{loadError}<Button variant="outline" onClick={load}>Retry</Button></p>}
 
-      <MasterSkillsAndInstructionsStudio onChanged={load} />
-
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
       <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/25 via-card to-teal/25 shadow-sm">
@@ -148,11 +146,14 @@ export default function Training({ profile, embedded = false } = {}) {
       </div>
 
       {view === 'skills' ? (
-        loading ? (
-          <div className="py-12 text-center text-sm text-foreground/40">Loading skills gaps...</div>
-        ) : (
-          <SkillsGapAnalytics completions={allCompletions} />
-        )
+        <div className="space-y-4">
+          <MasterSkillsAndInstructionsStudio onChanged={load} />
+          {loading ? (
+            <div className="py-12 text-center text-sm text-foreground/40">Loading skills gaps...</div>
+          ) : (
+            <SkillsGapAnalytics completions={allCompletions} />
+          )}
+        </div>
       ) : view === 'insights' ? (
         loading ? (
           <div className="py-12 text-center text-sm text-foreground/40">Loading insights...</div>

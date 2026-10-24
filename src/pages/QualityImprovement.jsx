@@ -183,7 +183,7 @@ export default function QualityImprovement() {
       />
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <QualityToolbar tabs={TABS} activeTab={activeTab} onAdd={openNewFor} onExport={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab))), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)} />
+        <QualityToolbar tabs={TABS} activeTab={activeTab} onAdd={openNewFor} onExport={() => exportItems(items.filter((i) => matchesTab(i, TABS.find((t) => t.value === activeTab) || TABS[0])), `${activeTab.toLowerCase().replace(/ /g, '-')}-register.csv`)} />
         {TABS.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="mt-2 space-y-2">
 
@@ -198,9 +198,10 @@ export default function QualityImprovement() {
             )}
           </TabsContent>
         ))}
+        <TabsContent value="benchmark" className="mt-3">
+          <BestInClassBenchmarkSuite onRefresh={load} />
+        </TabsContent>
       </Tabs>
-
-      <BestInClassBenchmarkSuite onRefresh={load} />
 
       <QualityItemDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} users={users} onSaved={load} defaultType={defaultType} />
     </div>

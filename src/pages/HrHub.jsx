@@ -272,14 +272,10 @@ export default function HrHub({ profile, embedded = false } = {}) {
         <TabsContent value="paperwork" className="mt-2">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
         {isManager && <TabsContent value="file-completeness" className="mt-2"><StaffFileCompletenessWidget /></TabsContent>}
         {isManager && <TabsContent value="templates" className="mt-2"><HrTemplatesLibrary /></TabsContent>}
+        {isManager && <TabsContent value="skills" className="mt-2"><MasterSkillsAndInstructionsStudio onChanged={load} /></TabsContent>}
         {(isManager || payrollVisible) && <TabsContent value="payroll" className="mt-2">{isManager ? <PayrollHub embedded /> : <MyPayroll />}</TabsContent>}
       </ModuleShell>
       </Tabs>
-      {isManager && !embedded && (
-        <div className="pt-2">
-          <MasterSkillsAndInstructionsStudio onChanged={load} />
-        </div>
-      )}
     </div>
   );
 }

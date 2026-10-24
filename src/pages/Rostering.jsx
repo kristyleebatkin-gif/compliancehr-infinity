@@ -335,9 +335,14 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
           )}
           {!profile && <><RosterWeeklySignOff shifts={boardShifts} weekStart={weekStart} />
           <RosterExceptions shifts={boardShifts} onEdit={openEdit} />
-          <RosterLabourForecast shifts={boardShifts} />
-          <BestInClassBenchmarkSuite onRefresh={refresh} /></>}
+          <RosterLabourForecast shifts={boardShifts} /></>}
         </TabsContent>
+
+        {!profile && (
+          <TabsContent value="benchmark" className="mt-4">
+            <BestInClassBenchmarkSuite onRefresh={refresh} />
+          </TabsContent>
+        )}
 
         <TabsContent value="calendar" className="mt-4 space-y-4">
           <div className="module-filter-bar flex flex-wrap items-center">

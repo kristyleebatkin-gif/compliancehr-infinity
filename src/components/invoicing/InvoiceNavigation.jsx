@@ -10,6 +10,7 @@ export default function InvoiceNavigation({ onGenerate }) {
       <TabsTrigger data-dashboard-tab={undefined} value="invoices" className="finance-tone-primary min-h-8 flex-1 px-2 text-[11px]">Invoices</TabsTrigger>
       <TabsTrigger data-dashboard-tab={undefined} value="bank" className="finance-tone-evidence min-h-8 flex-1 px-2 text-[11px]">Bank Reconciliation</TabsTrigger>
       <TabsTrigger data-dashboard-tab={undefined} value="finance" className="finance-tone-safe min-h-8 flex-1 px-2 text-[11px]">Finance Summary</TabsTrigger>
+      <TabsTrigger data-dashboard-tab={undefined} value="proda-xero" className="finance-tone-primary min-h-8 flex-1 px-2 text-[11px]">PRODA, Xero &amp; SCHADS Suite</TabsTrigger>
     </TabsList>
   </div>;
 }

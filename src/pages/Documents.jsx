@@ -221,14 +221,16 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       {embedded && !profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="vault-document-tabs flex w-fit flex-nowrap justify-start">
+        <TabsList className="vault-document-tabs flex flex-wrap h-auto gap-1.5 justify-start">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
+          {!profile && <TabsTrigger value="smart-mailroom">Smart Mailroom (Auto-Classify)</TabsTrigger>}
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
+          {!profile && canViewUploads && <TabsTrigger value="vault-uploads">Vault Uploads &amp; Templates</TabsTrigger>}
+          {!profile && canViewDataControl && <TabsTrigger value="data-control">Data Control &amp; Breaches</TabsTrigger>}
         </TabsList>
 
-        {!profile && <div className="mt-2 space-y-2"><SmartMailroomHub onFiled={load} /><DocumentsDashboard role={me?.role} focus={focus} /></div>}
-
-        <TabsContent value="documents" className="mt-2 space-y-2">
+        <TabsContent value="documents" className="mt-3 space-y-3">
+          {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
       <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
         <EmployeeDocumentDialog
           open={open}
@@ -316,17 +318,32 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </>
       )}
 
-      {!profile && canViewUploads && <><div id="vault-vault" className="scroll-mt-24">
-      <VaultUploads />
-      </div></>}
         </TabsContent>
+
+        {!profile && (
+          <TabsContent value="smart-mailroom" className="mt-3">
+            <SmartMailroomHub onFiled={load} />
+          </TabsContent>
+        )}
 
         <TabsContent value="expiry-calendar" className="mt-4">
           <ExpiryCalendar docs={docs} pdocs={pdocs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
         </TabsContent>
-      </Tabs>
 
-      {!profile && canViewDataControl && <DataControlPanel />}
+        {!profile && canViewUploads && (
+          <TabsContent value="vault-uploads" className="mt-3">
+            <div id="vault-vault" className="scroll-mt-24">
+              <VaultUploads />
+            </div>
+          </TabsContent>
+        )}
+
+        {!profile && canViewDataControl && (
+          <TabsContent value="data-control" className="mt-3">
+            <DataControlPanel />
+          </TabsContent>
+        )}
+      </Tabs>
         </>
       )}
     </div>

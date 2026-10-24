@@ -90,41 +90,53 @@ const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints',
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
 const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 
-// Tab order: NDIS Standards Map first, then the audit checklist and audit reports.
+// Organized into clear functional groups so every register and suite is easy to find.
+const TAB_GROUPS = [
+  { id: 'all', label: 'All Compliance Areas' },
+  { id: 'executive', label: 'Executive & AI Suites', keys: ['control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
+  { id: 'audits', label: 'NDIS Standards & Audits', keys: ['standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
+  { id: 'policies', label: 'Policies, Legal & Templates', keys: ['policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
+  { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
+  { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
+  { id: 'tasks', label: 'Tasks & Activity', keys: ['quick-tasks', 'task-kanban', 'activity-feed'] },
+];
+
 const TABS = [
-  ['one-click-operations', 'Infinity One-Click Operations Deck'],
-  ['infinity-core-engine', 'Infinity Core Engine (104 Functions & 65 Workflows)'],
-  ['health-intelligence', 'Business Health & Compliance Intelligence'],
   ['standards-map', 'NDIS Standards Map'],
-  ['printable-2026-templates', '2026 Printable Office Templates (A4)'],
-  ['screen-audit-2026', '45-Screen 2026 Smart-Fill Audit'],
-  ['master-checklist', 'Master Checklist'],
-  ['audits', 'Audits'],
-  ['audit-report-list', 'Internal Audit Report List'],
-  ['weekly-audit-reports', 'Weekly Audit Reports'],
-  ['executive-summary', 'Executive Summary'],
-  ['quick-tasks', 'Quick Tasks'],
-  ['task-kanban', 'Task Kanban'],
-  ['issues', 'Compliance Issues'],
-  ['readiness', 'Readiness Dashboard'],
-  ['trend-charts', 'Trend Charts'],
-  ['risk-status', 'Risk & Status Dashboard'],
-  ['kits-drills', 'Kits & Drills Checklists'],
-  ['visitors', 'Visitor Sign In/Out'],
   ['policies', 'Policies'],
   ['requirements', 'Legal Requirements'],
-  ['checklists', 'Working Checklists'],
+  ['control-centre', 'Infinity Control Centre (356 Checks & 98 Docs)'],
+  ['one-click-operations', '1-Click Operations Deck'],
+  ['infinity-core-engine', 'Infinity Core Engine'],
+  ['health-intelligence', 'Health & Readiness Intelligence'],
+  ['master-checklist', 'Master Checklist'],
+  ['master-audit-forms', 'Master Audit Checklists (A4)'],
+  ['printable-2026-templates', '2026 Printable Office Templates'],
+  ['screen-audit-2026', '45-Screen Smart-Fill Audit'],
+  ['audits', 'Audits'],
   ['internal-audits', 'Internal Audit Register'],
-  ['participant-reviews', 'Participant Reviews'],
+  ['audit-report-list', 'Audit Report List'],
+  ['weekly-audit-reports', 'Weekly Audit Reports'],
+  ['executive-summary', 'Executive Summary'],
+  ['issues', 'Compliance Issues'],
+  ['readiness', 'Readiness Dashboard'],
+  ['checklists', 'Working Checklists'],
   ['consents', 'Consent Register'],
   ['form-templates', 'Form Templates'],
-  ['cert-renewals', 'Certification Renewals'],
-  ['renewal-calendar', 'Renewal Calendar'],
+  ['participant-reviews', 'Participant Reviews'],
   ['staff-compliance', 'Staff Compliance'],
   ['worker-screening', 'Worker Screening'],
-  ['risk-heatmap', 'Risk Heatmap'],
+  ['cert-renewals', 'Certification Renewals'],
+  ['renewal-calendar', 'Renewal Calendar'],
   ['onboarding-progress', 'Onboarding Progress'],
   ['staff-bulk-actions', 'Staff Bulk Actions'],
+  ['risk-status', 'Risk & Status Dashboard'],
+  ['risk-heatmap', 'Risk Heatmap'],
+  ['trend-charts', 'Trend Charts'],
+  ['kits-drills', 'Kits & Drills Checklists'],
+  ['visitors', 'Visitor Sign In/Out'],
+  ['quick-tasks', 'Quick Tasks'],
+  ['task-kanban', 'Task Kanban'],
   ['activity-feed', 'Activity Feed'],
 ];
 
@@ -179,6 +191,8 @@ export default function ComplianceHub() {
   const [rForm, setRForm] = useState({ title: '', category: '', jurisdiction: 'Australia', authority: '', purpose: '', status: 'Current', next_review: '', official_url: '' });
   const [selPolicies, setSelPolicies] = useState([]);
   const [applyingPolicies, setApplyingPolicies] = useState(false);
+  const [tabGroup, setTabGroup] = useState('all');
+  const [activeTab, setActiveTab] = useState('standards-map');
 
   const togglePolicy = (id, checked) => {
     setSelPolicies((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
@@ -279,32 +293,63 @@ export default function ComplianceHub() {
         )}
       />
 
-      <InfinityControlCentreMasterSuite />
+      {/* Category Filter Bar for clean, organized Compliance navigation */}
+      <div className="rounded-2xl border border-border/70 bg-white p-3 shadow-sm space-y-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-foreground/80">
+            Compliance &amp; Governance Workspaces
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {TAB_GROUPS.map((g) => (
+              <button
+                key={g.id}
+                type="button"
+                onClick={() => {
+                  setTabGroup(g.id);
+                  if (g.keys && !g.keys.includes(activeTab)) {
+                    setActiveTab(g.keys[0]);
+                  }
+                }}
+                className={`rounded-full border px-3 py-1 text-xs font-bold transition-all ${
+                  tabGroup === g.id
+                    ? 'gradient-brand border-transparent text-white shadow-sm'
+                    : 'border-border bg-muted/40 text-foreground/80 hover:bg-muted'
+                }`}
+              >
+                {g.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <InfinityOneClickOperations />
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="h-auto flex-wrap justify-start gap-1.5 rounded-xl border border-border/60 bg-muted/30 p-1.5 shadow-none">
+            {TABS.filter(([value]) => {
+              if (tabGroup === 'all') return true;
+              const grp = TAB_GROUPS.find((x) => x.id === tabGroup);
+              return grp?.keys?.includes(value);
+            }).map(([value, label]) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className={`rounded-lg px-3 py-1.5 text-xs font-bold text-foreground/80 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value] || 'data-[state=active]:from-indigo-600 data-[state=active]:to-violet-600'}`}
+              >
+                {label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-      <InfinityCoreEngine />
+          <TabsContent value="control-centre" className="mt-3">
+            <InfinityControlCentreMasterSuite />
+          </TabsContent>
 
-      <BusinessHealthComplianceIntelligenceDashboard />
+          <TabsContent value="master-audit-forms" className="mt-3">
+            <MasterComplianceAuditForms />
+          </TabsContent>
 
-      <MasterComplianceAuditForms />
-
-      <Tabs defaultValue="infinity-core-engine">
-        <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
-          {TABS.map(([value, label]) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className={`rounded-lg px-2.5 py-1 text-xs font-semibold text-foreground/70 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value]}`}
-            >
-              {label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        <TabsContent value="one-click-operations" className="mt-2">
-          <InfinityOneClickOperations />
-        </TabsContent>
+          <TabsContent value="one-click-operations" className="mt-3">
+            <InfinityOneClickOperations />
+          </TabsContent>
 
         <TabsContent value="infinity-core-engine" className="mt-2">
           <InfinityCoreEngine />
@@ -586,7 +631,8 @@ export default function ComplianceHub() {
         <TabsContent value="activity-feed" className="mt-2">
           <ComplianceActivityFeed />
         </TabsContent>
-      </Tabs>
+        </Tabs>
+      </div>
 
       <NewVersionDialog policy={newVersionPolicy} open={!!newVersionPolicy} onOpenChange={(o) => { if (!o) setNewVersionPolicy(null); }} onChanged={load} />
       <PolicyHistoryDialog policy={historyPolicy} open={!!historyPolicy} onOpenChange={(o) => { if (!o) setHistoryPolicy(null); }} />

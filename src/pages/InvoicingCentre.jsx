@@ -202,9 +202,10 @@ export default function InvoicingCentre() {
         <TabsContent value="finance">
           <FinanceSummary />
         </TabsContent>
+        <TabsContent value="proda-xero" className="mt-3">
+          <BestInClassBenchmarkSuite onRefresh={load} />
+        </TabsContent>
       </Tabs>
-
-      <BestInClassBenchmarkSuite onRefresh={load} />
 
       <InvoiceBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} onSaved={load} invoiceCount={invoices.length} />
 

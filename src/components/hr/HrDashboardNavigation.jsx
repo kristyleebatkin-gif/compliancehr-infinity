@@ -9,6 +9,7 @@ const ITEMS = [
   { key: 'paperwork', label: 'Contracts & PDs', Icon: FileSignature, tone: 'from-chart-5/40 to-chart-5/20 text-chart-5', hint: 'Employment paperwork' },
   { key: 'file-completeness', label: 'File completeness', Icon: FolderCheck, tone: 'from-hr-evidence/40 to-hr-evidence/20 text-hr-evidence', hint: 'Required employee evidence' },
   { key: 'templates', label: 'Templates library', Icon: Library, tone: 'from-danger/40 to-danger/20 text-danger', hint: 'HR document templates' },
+  { key: 'skills', label: 'Master skills & 17-pt', Icon: ClipboardCheck, tone: 'from-teal/40 to-teal/20 text-teal', hint: 'Competency & sign-offs' },
   { key: 'payroll', label: 'Payroll', Icon: Wallet, tone: 'from-safe/40 to-safe/20 text-safe', hint: 'Pay and employee records' },
 ];
 export default function HrDashboardNavigation({ isManager, payrollVisible }) {

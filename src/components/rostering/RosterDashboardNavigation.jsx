@@ -13,6 +13,7 @@ const ITEMS = [
   ['shift-details', 'Shift details', ClipboardList, 'from-teal/40 to-teal/20 text-teal', 'Participant shift information'],
   ['leave', 'Leave', CalendarPlus, 'from-warning/40 to-warning/20 text-warning', 'Staff leave and absences'],
   ['availability', 'Availability', CalendarPlus, 'from-chart-5/40 to-chart-5/20 text-chart-5', 'Staff availability'],
+  ['benchmark', 'SCHADS & PRODA Suite', ClipboardCheck, 'from-primary/40 to-primary/20 text-primary', 'Award forecaster & PRODA CSV'],
   ['payroll', 'Payroll report', Wallet, 'from-safe/40 to-safe/20 text-safe', 'Payroll tools and shift reports'],
 ];
 export default function RosterDashboardNavigation({ profile, profileKind }) {

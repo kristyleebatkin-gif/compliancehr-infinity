@@ -106,7 +106,7 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
 ];
 
-export default function ExecutiveOperationsCentre({ defaultSuite = 'all' }) {
+export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }) {
   const [activeSuite, setActiveSuite] = useState(defaultSuite);
   const [kpi, setKpi] = useState({
     staff: 0,
