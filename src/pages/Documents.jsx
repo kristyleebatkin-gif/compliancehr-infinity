@@ -32,6 +32,7 @@ import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialo
 import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
+import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -225,7 +226,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
         </TabsList>
 
-        {!profile && <div className="mt-2"><DocumentsDashboard role={me?.role} focus={focus} /></div>}
+        {!profile && <div className="mt-2 space-y-2"><SmartMailroomHub onFiled={load} /><DocumentsDashboard role={me?.role} focus={focus} /></div>}
 
         <TabsContent value="documents" className="mt-2 space-y-2">
       <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />

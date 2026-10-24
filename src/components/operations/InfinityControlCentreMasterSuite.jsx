@@ -20,6 +20,9 @@ import {
   BASE44_15_VERIFICATION_CHECKS,
   buildAll356Checkpoints,
 } from '@/lib/masterControlAndAuditData';
+import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';
+import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
+import AdvancedIntelligenceAndToolsSuite from '@/components/operations/AdvancedIntelligenceAndToolsSuite';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #12214B 0%, #184A9C 35%, #442078 68%, #7138B6 86%, #DC4BA9 100%)';
@@ -561,37 +564,55 @@ export default function InfinityControlCentreMasterSuite() {
           </div>
         </div>
 
-        {/* Navigation Switcher for the 5 Core Master Pillars */}
-        <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+        {/* Navigation Switcher for All Priority 0, 1 & 2 Master Pillars */}
+        <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
           {[
             {
               id: 'control-centre',
-              label: '1. Infinity Control Centre',
-              sub: '19 Live Indicators & Approval Queue',
+              label: '1. Control Centre',
+              sub: 'Live Telemetry & Queue',
               icon: Building2,
             },
             {
               id: 'master-audit-356',
-              label: '2. Master Audit (356 Checks)',
-              sub: `17 Categories · ${evidencedCount}/356 Evidenced`,
+              label: '2. 356 Audit Checks',
+              sub: `17 Cats · ${evidencedCount}/356`,
               icon: ClipboardCheck,
             },
             {
               id: 'document-control-98',
-              label: '3. Document Control (98 Docs)',
-              sub: 'Word, PDF & Excel Register',
+              label: '3. 98 Master Docs',
+              sub: 'Word, PDF & Excel',
               icon: FileText,
             },
             {
               id: 'end-of-shift',
-              label: '4. End-of-Shift & Shift Notes',
-              sub: 'Clock-Out, Notes & Handover',
+              label: '4. End-of-Shift',
+              sub: 'Clock-Out & Handover',
               icon: Clock,
             },
             {
+              id: 'skills-17-point',
+              label: '5. Skills & 17-Pt Guide',
+              sub: 'Competency & Sign-Off',
+              icon: Award,
+            },
+            {
+              id: 'smart-mailroom',
+              label: '6. Smart Mailroom',
+              sub: 'Auto-Classify & Route',
+              icon: Layers,
+            },
+            {
+              id: 'advanced-ai-tools',
+              label: '7. AI & 12 Tools',
+              sub: 'Human Gate & Twin Sim',
+              icon: Sparkles,
+            },
+            {
               id: 'dev-register-31',
-              label: '5. Development Register (31)',
-              sub: '17 Columns & 15-Pt Verification',
+              label: '8. Dev Register (31)',
+              sub: '17 Cols & 15-Pt Check',
               icon: CheckSquare,
             },
           ].map((tab) => {
@@ -1367,7 +1388,28 @@ export default function InfinityControlCentreMasterSuite() {
         </div>
       )}
 
-      {/* ==================== TAB 5: DEVELOPMENT REGISTER & 15-POINT BASE44 VERIFICATION (SECTIONS 29, 30, 31) ==================== */}
+      {/* ==================== TAB 5: MASTER SKILLS & 17-POINT SKILL INSTRUCTIONS (SECTIONS 13 & 14) ==================== */}
+      {activeTab === 'skills-17-point' && (
+        <div className="p-2 bg-white">
+          <MasterSkillsAndInstructionsStudio onChanged={loadLiveTelemetry} />
+        </div>
+      )}
+
+      {/* ==================== TAB 6: SMART MAILROOM & DOCUMENT INTELLIGENCE (SECTION 16) ==================== */}
+      {activeTab === 'smart-mailroom' && (
+        <div className="p-2 bg-white">
+          <SmartMailroomHub onFiled={loadLiveTelemetry} />
+        </div>
+      )}
+
+      {/* ==================== TAB 7: INFINITY AI ASSISTANT, SKILLS LIBRARY & 12 ADVANCED TOOLS (SECTIONS 26, 27, 28) ==================== */}
+      {activeTab === 'advanced-ai-tools' && (
+        <div className="p-2 bg-white">
+          <AdvancedIntelligenceAndToolsSuite />
+        </div>
+      )}
+
+      {/* ==================== TAB 8: DEVELOPMENT REGISTER & 15-POINT BASE44 VERIFICATION (SECTIONS 29, 30, 31) ==================== */}
       {activeTab === 'dev-register-31' && (
         <div className="p-3 space-y-3 bg-white">
           {/* Section 29 — 15-Point Base44 Verification Grid */}

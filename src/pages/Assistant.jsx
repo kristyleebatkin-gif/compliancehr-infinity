@@ -3,6 +3,7 @@ import ModuleShell from '@/components/module/ModuleShell';
 import AssistantChat from '@/components/assistant/AssistantChat';
 import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2 } from 'lucide-react';
 import AssistantHints from '@/components/assistant/AssistantHints';
+import AdvancedIntelligenceAndToolsSuite from '@/components/operations/AdvancedIntelligenceAndToolsSuite';
 
 const AGENTS = [
   {
@@ -88,6 +89,7 @@ export default function Assistant() {
         icon={Bot}
         moduleKey="assistant"
       />
+      <AdvancedIntelligenceAndToolsSuite />
       <AssistantHints />
       <div className="grid gap-2 sm:grid-cols-2">
         {AGENTS.map((a) => {
