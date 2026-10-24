@@ -209,11 +209,11 @@ export default function PricingSection({ compact = false }) {
   return (
     <section
       id="pricing"
-      className="rounded-2xl border-2 border-purple-600 bg-white p-2 sm:p-3 shadow-md space-y-2"
+      className={`${compact ? '' : 'mx-auto max-w-6xl'} scroll-mt-16 rounded-3xl border-2 border-purple-600 bg-white p-4 sm:p-6 shadow-xl space-y-5`}
     >
       {/* Top Gradient Header Banner */}
       <div
-        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
+        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3.5 text-white shadow-md"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex items-center gap-2 min-w-0">
@@ -276,8 +276,8 @@ export default function PricingSection({ compact = false }) {
             <div className="text-[10.5px] font-black text-blue-950">
               Smart Enhanced All-In-One Compliance Pack — Every Plan Includes the $160/mo Elite Plan + $355 Master Audit Checklist
             </div>
-            <div className="text-[8px] font-bold text-purple-900">
-              Each user tier combines our standard ComplianceHR Infinity platform rate ($500–$875/mo) + <span className="font-black text-pink-700">$160/mo Elite Plan</span> (2,500 Message Credits &amp; 20,000 Integration Credits) + the <span className="font-black text-purple-950">$355 Master Compliance Audit Checklist (`CHR-AUD-001` &amp; `CHR-AUD-002`)</span>. Start with a <span className="font-black text-blue-950">14-Day Free Trial ($0 upfront)</span>!
+            <div className="text-xs font-bold text-purple-900">
+              Each user tier combines our standard ComplianceHR Infinity platform rate ($500–$875/mo) + <span className="font-black text-pink-700">$160/mo Elite Plan</span> (2,500 Message Credits &amp; 20,000 Integration Credits) + the <span className="font-black text-purple-950">$355 Master Compliance Audit Checklist (CHR-AUD-001 &amp; CHR-AUD-002)</span>. Start with a <span className="font-black text-blue-950">14-Day Free Trial ($0 upfront)</span>!
             </div>
           </div>
         </div>
@@ -298,8 +298,8 @@ export default function PricingSection({ compact = false }) {
         </div>
       </div>
 
-      {/* 6 Smart Enhanced Subscription Cards Grid — Zero Wasted Space */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-1.5 items-stretch">
+      {/* 6 Smart Enhanced Subscription Cards Grid — Balanced 3-Column Executive Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
         {COMPLIANCE_HR_PACKAGES.map((pkg) => {
           const displayPrice =
             billing === 'monthly'
@@ -308,12 +308,12 @@ export default function PricingSection({ compact = false }) {
           return (
             <div
               key={pkg.id}
-              className={`flex flex-col justify-between rounded-xl border-2 bg-white p-2 shadow-sm transition-all ${
+              className={`flex flex-col justify-between rounded-2xl border-2 bg-white p-4 sm:p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg ${
                 pkg.featured ? 'ring-2 ring-pink-500 shadow-md' : ''
               }`}
               style={{
                 borderColor: pkg.color,
-                borderTopWidth: '4px',
+                borderTopWidth: '5px',
                 background: pkg.featured
                   ? 'linear-gradient(155deg, rgba(219,39,119,0.12) 0%, rgba(124,58,237,0.08) 45%, #ffffff 90%)'
                   : `linear-gradient(155deg, ${pkg.color}12 0%, #ffffff 80%)`,
@@ -379,14 +379,14 @@ export default function PricingSection({ compact = false }) {
                 </ul>
               </div>
 
-              <div className="mt-2 pt-1 border-t border-purple-100">
+              <div className="mt-4 pt-3 border-t border-purple-100">
                 <Link
                   to="/register"
-                  className="flex w-full items-center justify-center gap-1 rounded-lg px-2 py-1 text-[8px] font-black text-white shadow-sm transition-transform hover:-translate-y-0.5"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-black text-white shadow-sm transition-transform hover:-translate-y-0.5"
                   style={{ background: pkg.featured ? SQUISHED_GRADIENT : pkg.color }}
                 >
                   Start 14-Day Free Trial
-                  <ArrowRight className="h-2.5 w-2.5" />
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>

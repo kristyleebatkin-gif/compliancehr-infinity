@@ -313,14 +313,18 @@
       height: 2rem;
     }
   }
-  /* Modern, professional legibility floor: elevate sub-10px text classes across all modules while preserving colour schemes */
-  .app-readable :is([class*="text-[6"], [class*="text-[7"]) {
-    font-size: 0.6875rem !important;
-    line-height: 1.05rem !important;
-  }
-  .app-readable :is([class*="text-[8"], [class*="text-[9"]) {
+  /* Modern, professional legibility floor: elevate sub-10px text classes across all screens (public & workspace) while preserving colour schemes */
+  :is(body, .app-readable) :is([class*="text-[6"], [class*="text-[7"]) {
     font-size: 0.75rem !important;
     line-height: 1.15rem !important;
+  }
+  :is(body, .app-readable) :is([class*="text-[8"], [class*="text-[9"]) {
+    font-size: 0.8125rem !important;
+    line-height: 1.25rem !important;
+  }
+  :is(body, .app-readable) [class*="text-[10"] {
+    font-size: 0.8125rem !important;
+    line-height: 1.25rem !important;
   }
   .module-action-bar :is(button, a) {
     min-height: 2rem;

@@ -17,7 +17,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white font-elegant antialiased">
+    <div className="app-readable relative min-h-screen overflow-hidden bg-white font-elegant antialiased">
       {/* Original published pastel wash spread across the landing page */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-violet-100/70 via-rose-50/60 to-cyan-100/70" />
       <div className="pointer-events-none absolute inset-0">

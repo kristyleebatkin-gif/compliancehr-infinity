@@ -18,10 +18,10 @@ const CHR_LOGO =
 
 export default function MarketingSafeShowcase({ embedded = false }) {
   return (
-    <div className="w-full bg-white p-1 space-y-1.5">
+    <div className={embedded ? 'mx-auto max-w-6xl px-4 md:px-8 space-y-6' : 'w-full bg-white p-3 sm:p-4 space-y-4'}>
       {/* High-Converting Sales Navigation + Pitch Header (sticky only when standalone) */}
       <header
-        className={`${embedded ? 'relative' : 'sticky top-0 z-40'} rounded-xl border-2 border-amber-300 px-3 py-1.5 text-white shadow-md`}
+        className={`${embedded ? 'relative' : 'sticky top-0 z-40'} rounded-2xl border-2 border-amber-300 px-4 py-3 text-white shadow-md`}
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -114,9 +114,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
       </header>
 
       {/* Flagship Sales Hero Ribbon: Why Every Provider Needs a ComplianceHR Infinity Subscription */}
-      <section className="rounded-2xl border-2 border-purple-600 bg-gradient-to-r from-blue-50/90 via-white to-pink-50/90 p-2 sm:p-2.5 shadow-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center">
-          <div className="lg:col-span-3 flex flex-col items-center justify-center rounded-xl border-2 border-purple-400 bg-white p-2 text-center shadow-sm">
+      <section className="rounded-2xl border-2 border-purple-600 bg-gradient-to-r from-blue-50/90 via-white to-pink-50/90 p-4 sm:p-5 shadow-md">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div className="lg:col-span-3 flex flex-col items-center justify-center rounded-xl border-2 border-purple-400 bg-white p-3 text-center shadow-sm">
             <div className="h-24 sm:h-28 w-full flex items-center justify-center">
               <Image
                 src={CHR_LOGO}

@@ -62,7 +62,7 @@ export default function PublicVolunteer() {
   }
 
   return (
-    <div className="min-h-screen bg-background px-4 py-10 font-elegant antialiased sm:py-16">
+    <div className="app-readable min-h-screen bg-white px-4 py-10 font-elegant antialiased sm:py-16">
       <div className="mx-auto w-full max-w-xl space-y-4">
         <div className="flex items-center justify-between rounded-2xl px-4 py-3 text-white shadow-md" style={{ background: 'var(--header-gradient)' }}>
           <div className="flex items-center gap-3">

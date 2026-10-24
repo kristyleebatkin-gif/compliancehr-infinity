@@ -298,47 +298,153 @@ export default function AppLayout() {
             </div>
           </div>
 
-          {/* Global Switcher: Both Views Side-by-Side, Office View, or View Profiles */}
-          <div
-            className="flex items-center gap-1 rounded-full p-1 shadow-sm"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <button
-              type="button"
-              onClick={() => switchWorkspaceView('both')}
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                workspaceView === 'both'
-                  ? 'bg-white text-blue-950 shadow-sm'
-                  : 'text-white hover:bg-white/15'
-              }`}
+          {/* Global Switcher + Search + Notifications + User Menu */}
+          <div className="flex items-center gap-2">
+            <div className="hidden lg:block w-56">
+              <GlobalSearch />
+            </div>
+
+            <div
+              className="flex items-center gap-1 rounded-full p-1 shadow-sm"
+              style={{ background: SQUISHED_GRADIENT }}
             >
-              <Building2 className="h-3.5 w-3.5 text-blue-600" />
-              Both Views
-            </button>
-            <button
-              type="button"
-              onClick={() => switchWorkspaceView('office')}
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                workspaceView === 'office'
-                  ? 'bg-white text-blue-950 shadow-sm'
-                  : 'text-white hover:bg-white/15'
-              }`}
-            >
-              <Building2 className="h-3.5 w-3.5 text-pink-600" />
-              Office View
-            </button>
-            <button
-              type="button"
-              onClick={() => switchWorkspaceView('profiles')}
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                workspaceView === 'profiles'
-                  ? 'bg-white text-purple-950 shadow-sm'
-                  : 'text-white hover:bg-white/15'
-              }`}
-            >
-              <Users className="h-3.5 w-3.5 text-purple-600" />
-              View Profiles
-            </button>
+              <button
+                type="button"
+                onClick={() => switchWorkspaceView('both')}
+                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                  workspaceView === 'both'
+                    ? 'bg-white text-blue-950 shadow-sm'
+                    : 'text-white hover:bg-white/15'
+                }`}
+              >
+                <Building2 className="h-3.5 w-3.5 text-blue-600" />
+                <span className="hidden sm:inline">Both Views</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => switchWorkspaceView('office')}
+                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                  workspaceView === 'office'
+                    ? 'bg-white text-blue-950 shadow-sm'
+                    : 'text-white hover:bg-white/15'
+                }`}
+              >
+                <Building2 className="h-3.5 w-3.5 text-pink-600" />
+                <span className="hidden sm:inline">Office View</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => switchWorkspaceView('profiles')}
+                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                  workspaceView === 'profiles'
+                    ? 'bg-white text-purple-950 shadow-sm'
+                    : 'text-white hover:bg-white/15'
+                }`}
+              >
+                <Users className="h-3.5 w-3.5 text-purple-600" />
+                <span className="hidden sm:inline">View Profiles</span>
+              </button>
+            </div>
+
+            {/* Notifications Bell */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setNotifOpen((v) => !v);
+                  setUserMenuOpen(false);
+                }}
+                aria-label="Notifications"
+                className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-violet-200 bg-white text-violet-800 shadow-2xs transition-colors hover:bg-violet-50"
+              >
+                <Bell className="h-4 w-4" />
+                {unread > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-pink-600 px-1 text-[10px] font-black text-white">
+                    {unread}
+                  </span>
+                )}
+              </button>
+              {notifOpen && (
+                <div className="absolute right-0 top-11 z-50 w-80 rounded-2xl border-2 border-violet-200 bg-white p-3 shadow-xl">
+                  <div className="mb-2 flex items-center justify-between border-b border-violet-100 pb-2">
+                    <span className="text-xs font-extrabold text-violet-950">Notifications</span>
+                    {unread > 0 && (
+                      <button
+                        type="button"
+                        onClick={markAllRead}
+                        className="text-xs font-bold text-pink-600 hover:underline"
+                      >
+                        Mark all read
+                      </button>
+                    )}
+                  </div>
+                  <div className="max-h-64 space-y-1.5 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <p className="py-4 text-center text-xs text-muted-foreground">All caught up — no notifications.</p>
+                    ) : (
+                      notifications.map((n) => (
+                        <div
+                          key={n.id}
+                          className={`rounded-xl border p-2.5 text-xs ${
+                            n.read ? 'border-violet-100 bg-white' : 'border-pink-200 bg-pink-50/50 font-semibold'
+                          }`}
+                        >
+                          <div className="font-bold text-foreground">{n.title || 'Update'}</div>
+                          {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  <Link
+                    to="/notifications"
+                    className="mt-2 block rounded-lg bg-violet-50 py-1.5 text-center text-xs font-bold text-violet-800 hover:bg-violet-100"
+                  >
+                    View all notifications
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* User Avatar & Quick Menu */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setUserMenuOpen((v) => !v);
+                  setNotifOpen(false);
+                }}
+                aria-label="User menu"
+                className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-xs font-black text-white shadow-sm"
+              >
+                {initials}
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 top-11 z-50 w-56 rounded-2xl border-2 border-violet-200 bg-white p-3 shadow-xl space-y-2">
+                  <div className="border-b border-violet-100 pb-2">
+                    <div className="truncate text-xs font-extrabold text-foreground">{user?.full_name || 'ComplianceHR User'}</div>
+                    <div className="truncate text-[11px] text-muted-foreground">{user?.email || role}</div>
+                    <span className="mt-1 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold text-violet-900">
+                      {role}
+                    </span>
+                  </div>
+                  <Link
+                    to="/my-profile"
+                    className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-foreground hover:bg-violet-50"
+                  >
+                    <User className="h-3.5 w-3.5 text-violet-600" />
+                    My Profile
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-50"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 

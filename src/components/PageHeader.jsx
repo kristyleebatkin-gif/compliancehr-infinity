@@ -30,15 +30,15 @@ export default function PageHeader({ title, subtitle, action, icon: Icon = Layou
           </div>
         </div>
       </div>
-      <div className={cn('flex flex-wrap items-center border border-border/60 bg-card shadow-sm', compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2')}>
+      <div className={cn('flex flex-wrap items-center border border-violet-200 bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-3 py-2' : 'gap-2.5 rounded-xl p-2.5')}>
         <ModuleComplianceStrip path={seg} />
         {beforeAudit}
-        <div className="flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3">
+        {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1.5' : 'gap-2', actionClassName)}>{action}</div>}
+        <div className={cn('module-audit-buttons ml-auto flex shrink-0 items-center gap-1.5 [&>button]:h-8 [&>button]:gap-1.5 [&>button]:px-3 [&>button]:text-xs [&>button_svg]:mr-0 [&>button_svg]:size-3.5', auditClassName)}>
           <ModuleAuditChecklistButton />
           <ModuleAuditButton />
         </div>
         {afterAudit}
-        {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>{action}</div>}
       </div>
       {under}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
