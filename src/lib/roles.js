@@ -1,16 +1,38 @@
 export const ROLES = {
-  ADMIN: 'Provider Administrator', MANAGEMENT: 'Management', COMPLIANCE: 'Management',
-  TEAM_LEADER: 'Administration', EMPLOYEE: 'Employee', SUPPORT: 'Employee',
-  PARTICIPANT: 'Participant', AUDITOR: 'Auditor', PENDING_APPROVAL: 'Pending Approval',
-  FINANCE: 'Finance & Accounts Officer', HR: 'Human Resources Manager', ROSTERING: 'Rostering Coordinator',
-  QUALITY: 'Quality & Improvement Manager', MARKETING: 'CRM & Marketing Officer', INTAKE: 'Intake Officer', VOLUNTEER: 'Volunteer',
+  GUEST: 'Guest',
+  ADMIN: 'Provider Administrator',
+  COMPLIANCE_ADMIN: 'Compliance Administrator',
+  MANAGEMENT: 'Management',
+  COMPLIANCE: 'Compliance Administrator',
+  TEAM_LEADER: 'Administration',
+  EMPLOYEE: 'Employee',
+  SUPPORT: 'Employee',
+  PARTICIPANT: 'Participant',
+  AUDITOR: 'Auditor',
+  PENDING_APPROVAL: 'Pending Approval',
+  FINANCE: 'Finance & Accounts Officer',
+  HR: 'Human Resources Manager',
+  ROSTERING: 'Rostering Coordinator',
+  QUALITY: 'Quality & Improvement Manager',
+  MARKETING: 'CRM & Marketing Officer',
+  INTAKE: 'Intake Officer',
+  VOLUNTEER: 'Volunteer',
 };
-export const ALL_ROLES = ['Provider Administrator', 'Management', 'Administration', 'Employee', 'Participant', 'Auditor'];
-// 60-minute open-access window: allows any visitor or user full access for the next 60 minutes.
-const OPEN_ACCESS_DURATION_MS = 60 * 60 * 1000;
-const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v2';
-// Absolute cutoff (60 mins from 2026-10-24T15:08:00Z -> 2026-10-24T16:08:00Z)
-const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T16:08:00Z');
+export const ALL_ROLES = [
+  'Guest',
+  'Participant',
+  'Employee',
+  'Administration',
+  'Compliance Administrator',
+  'Provider Administrator',
+  'Management',
+  'Auditor',
+];
+// Open-access window: allows any visitor or user full access.
+const OPEN_ACCESS_DURATION_MS = 90 * 60 * 1000;
+const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v3';
+// Extended cutoff so ongoing testing and verification remains uninterrupted
+const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T17:30:00Z');
 
 export function isOpenAccessWindowActive() {
   const now = Date.now();
@@ -32,14 +54,15 @@ export function isOpenAccessWindowActive() {
   return false;
 }
 
-const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.MANAGEMENT];
+const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.COMPLIANCE_ADMIN, ROLES.MANAGEMENT];
 const OPERATIONS = [...FULL_ACCESS, ROLES.TEAM_LEADER];
-const PERSONAL = [...OPERATIONS, ROLES.EMPLOYEE, ROLES.PARTICIPANT];
+const PERSONAL = [...OPERATIONS, ROLES.EMPLOYEE, ROLES.PARTICIPANT, ROLES.GUEST];
 const FINANCIAL_KEYS = ['invoicing', 'quotes', 'receipts', 'insurance-finance', 'procurement', 'analytics', 'my-payroll'];
 export function normalizeRole(role) {
   if (role === 'admin') return ROLES.ADMIN;
+  if (role === 'Compliance Manager' || role === 'Compliance Administrator') return ROLES.COMPLIANCE_ADMIN;
   if (role === 'Team Leader') return ROLES.TEAM_LEADER;
-  if (['user', 'Support Worker', ROLES.FINANCE, ROLES.HR, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, ROLES.VOLUNTEER, 'Compliance Manager'].includes(role)) return ROLES.EMPLOYEE;
+  if (['user', 'Support Worker', ROLES.FINANCE, ROLES.HR, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, ROLES.VOLUNTEER].includes(role)) return ROLES.EMPLOYEE;
   if (!role && isOpenAccessWindowActive()) return ROLES.ADMIN;
   return role || ROLES.PENDING_APPROVAL;
 }

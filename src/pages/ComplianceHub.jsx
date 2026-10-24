@@ -54,6 +54,7 @@ import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standar
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
+import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 import KitDrillChecklists from '@/components/compliance/KitDrillChecklists';
 import VisitorSignInOut from '@/components/compliance/VisitorSignInOut';
 import AuditReportList from '@/components/compliance/AuditReportList';
@@ -277,6 +278,8 @@ export default function ComplianceHub() {
           </>
         )}
       />
+
+      <InfinityControlCentreMasterSuite />
 
       <InfinityOneClickOperations />
 

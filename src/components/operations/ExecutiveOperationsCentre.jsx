@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
+import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
@@ -284,6 +285,9 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'all' }) {
           </div>
         </div>
       </div>
+
+      {/* ==================== SUITE 0: INFINITY CONTROL CENTRE, 356 CHECKS, 98 DOCS & 31 DEV REGISTER ==================== */}
+      {activeSuite === 'all' && <InfinityControlCentreMasterSuite />}
 
       {/* ==================== SUITE 1: INFINITY ONE-CLICK OPERATIONS DECK ==================== */}
       {(activeSuite === 'all' || activeSuite === 'one-click') && <InfinityOneClickOperations />}
