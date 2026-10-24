@@ -39,15 +39,15 @@ export default function PublicComplaint() {
   return (
     <div className="min-h-screen bg-background px-4 py-10 font-elegant antialiased sm:py-16">
       <div className="mx-auto w-full max-w-xl space-y-4">
-        <div className="flex items-center justify-between rounded-2xl border-2 border-[#12214B] bg-[#12214B] px-4 py-3 text-white shadow-md">
+        <div className="flex items-center justify-between rounded-2xl px-4 py-3 text-white shadow-md" style={{ background: 'var(--header-gradient)' }}>
           <div className="flex items-center gap-3">
             <img src={COMPANY_LOGO_URL} alt={COMPANY_NAME} className="h-10 w-10 rounded-lg border border-white/30 bg-white object-contain p-0.5" />
             <div>
-              <div className="text-sm font-black tracking-tight">{COMPANY_NAME}</div>
-              <div className="text-[10px] font-semibold text-[#F4EAFB]">{COMPANY_SLOGAN}</div>
+              <div className="text-sm font-black tracking-tight text-white">{COMPANY_NAME}</div>
+              <div className="text-[10px] font-semibold text-white/95">{COMPANY_SLOGAN}</div>
             </div>
           </div>
-          <Link to="/" className="rounded-lg bg-white/15 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/25">
+          <Link to="/" className="rounded-lg bg-white px-3 py-1.5 text-xs font-extrabold text-violet-900 shadow-sm hover:bg-violet-50">
             Home
           </Link>
         </div>

@@ -151,7 +151,7 @@ const TAB_TONES = {
   'checklists': 'data-[state=active]:from-blue-500 data-[state=active]:to-indigo-400',
   'audit-report-list': 'data-[state=active]:from-indigo-500 data-[state=active]:to-blue-400',
   'weekly-audit-reports': 'data-[state=active]:from-blue-400 data-[state=active]:to-cyan-400',
-  'internal-audits': 'data-[state=active]:from-slate-500 data-[state=active]:to-zinc-400',
+  'internal-audits': 'data-[state=active]:from-indigo-600 data-[state=active]:to-violet-500',
   'participant-reviews': 'data-[state=active]:from-purple-500 data-[state=active]:to-indigo-400',
   'consents': 'data-[state=active]:from-teal-400 data-[state=active]:to-emerald-400',
   'form-templates': 'data-[state=active]:from-orange-400 data-[state=active]:to-rose-400',
@@ -162,7 +162,7 @@ const TAB_TONES = {
   'risk-heatmap': 'data-[state=active]:from-red-500 data-[state=active]:to-rose-400',
   'onboarding-progress': 'data-[state=active]:from-emerald-400 data-[state=active]:to-teal-400',
   'staff-bulk-actions': 'data-[state=active]:from-fuchsia-400 data-[state=active]:to-purple-400',
-  'activity-feed': 'data-[state=active]:from-zinc-500 data-[state=active]:to-slate-400',
+  'activity-feed': 'data-[state=active]:from-pink-500 data-[state=active]:to-violet-500',
 };
 
 

@@ -11,7 +11,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #12214B 0%, #184A9C 35%, #442078 68%, #7138B6 88%, #DC4BA9 100%)';
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
 const SCHADS_LEVELS = [
   { code: 'SCHADS 2.1', baseRate: 34.18, label: 'Level 2 Paypoint 1 — Direct Support Worker' },
@@ -397,12 +397,12 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#12214B] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#F4EAFB] px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-[#12214B]">
-              <Sparkles className="h-3 w-3 text-[#7138B6]" /> 2026 BEST-IN-CLASS BENCHMARK &amp; INTEGRATION SUITE
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-blue-950">
+              <Sparkles className="h-3 w-3 text-purple-700" /> 2026 BEST-IN-CLASS BENCHMARK &amp; INTEGRATION SUITE
             </span>
             <h2 className="mt-0.5 text-sm sm:text-base font-black text-white">
               Closed-Loop CAPA · PRODA/Xero Claiming · SCHADS Labour Forecaster · Offline Field Capture · Custom AI Skill Builder
@@ -413,7 +413,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               size="sm"
               onClick={handleSeedBenchmarkPack}
               disabled={seeding}
-              className="h-7 bg-amber-300 px-2.5 text-[8.5px] font-black text-[#12214B] hover:bg-amber-200"
+              className="h-7 bg-amber-300 px-2.5 text-[8.5px] font-black text-blue-950 hover:bg-amber-200"
             >
               <Database className="mr-1 h-3 w-3" />
               {seeding ? 'Loading Pack...' : 'Load 2026 NDIS/SCHADS Benchmark Data Pack'}
@@ -428,9 +428,9 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
             <Button
               size="sm"
               onClick={handleExportAccountingJournal}
-              className="h-7 bg-[#F4EAFB] px-2.5 text-[8.5px] font-black text-[#12214B] hover:bg-white"
+              className="h-7 bg-white px-2.5 text-[8.5px] font-black text-purple-950 hover:bg-purple-50"
             >
-              <Download className="mr-1 h-3 w-3 text-[#7138B6]" /> Xero / MYOB Journal CSV
+              <Download className="mr-1 h-3 w-3 text-purple-700" /> Xero / MYOB Journal CSV
             </Button>
           </div>
         </div>
@@ -438,17 +438,17 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
 
       <div className="p-3 grid grid-cols-1 lg:grid-cols-2 gap-2.5 bg-white">
         {/* Pillar 1: Closed-Loop CAPA & Immutable Audit Trail (Vanta / SafetyCulture Standard) */}
-        <div className="rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/30 p-2.5 space-y-2">
+        <div className="rounded-xl border-2 border-[#22c55e] bg-emerald-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-black uppercase text-[#12214B]">
+              <h3 className="text-xs font-black uppercase text-emerald-950">
                 1. Closed-Loop Corrective Actions (CAPA) &amp; Immutable Audit Trail
               </h3>
-              <p className="text-[7.5px] font-semibold text-[#442078]">
+              <p className="text-[7.5px] font-semibold text-purple-800">
                 Cannot close without assigned Owner + verified Evidence Reference + immutable StatusLog entry
               </p>
             </div>
-            <Badge className="bg-[#12214B] text-white text-[7.5px]">SafetyCulture / Vanta Standard</Badge>
+            <Badge className="bg-[#16a34a] text-white text-[7.5px]">SafetyCulture / Vanta Standard</Badge>
           </div>
 
           <form onSubmit={handleCreateClosedLoopCapa} className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
@@ -471,7 +471,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 placeholder="Evidence Doc Ref *"
                 className="h-7 text-xs bg-white"
               />
-              <Button type="submit" size="sm" className="h-7 bg-[#12214B] px-2.5 text-[8px] font-black text-white">
+              <Button type="submit" size="sm" className="h-7 bg-[#16a34a] px-2.5 text-[8px] font-black text-white hover:bg-emerald-700">
                 + Log CAPA
               </Button>
             </div>
@@ -481,11 +481,11 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
             {capaItems.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-[#A45CDE]/50 bg-white px-2 py-1 text-[8px]"
+                className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-emerald-200 bg-white px-2 py-1 text-[8px]"
               >
                 <div className="min-w-0 flex-1">
-                  <div className="truncate font-black text-[#12214B]">{item.title}</div>
-                  <div className="truncate text-[7px] text-[#442078]">
+                  <div className="truncate font-black text-blue-950">{item.title}</div>
+                  <div className="truncate text-[7px] text-purple-800">
                     Owner: {item.nominated_to || 'Compliance Admin'} · Status: {item.status}
                   </div>
                 </div>
@@ -507,22 +507,22 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 2: SCHADS Award Labour Cost & NDIS Margin Forecaster (Lumary / Deputy Standard) */}
-        <div className="rounded-xl border-2 border-[#184A9C] bg-white p-2.5 space-y-2">
+        <div className="rounded-xl border-2 border-[#6366f1] bg-indigo-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-black uppercase text-[#12214B]">
+              <h3 className="text-xs font-black uppercase text-indigo-950">
                 2. SCHADS Award Labour Cost &amp; NDIS Margin Forecaster
               </h3>
-              <p className="text-[7.5px] font-semibold text-[#442078]">
+              <p className="text-[7.5px] font-semibold text-purple-800">
                 Single-source SCHADS penalty multipliers (Sat 1.5x, Sun 2.0x, PH 2.5x, Evening 1.25x, Casual +25%, Super 11.5%)
               </p>
             </div>
-            <Badge className="bg-[#184A9C] text-white text-[7.5px]">Lumary / Deputy Standard</Badge>
+            <Badge className="bg-[#6366f1] text-white text-[7.5px]">Lumary / Deputy Standard</Badge>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[8px]">
             <div>
-              <label className="font-bold text-[#12214B]">SCHADS Classification</label>
+              <label className="font-bold text-blue-950">SCHADS Classification</label>
               <select
                 value={schadsLevel}
                 onChange={(e) => setSchadsLevel(e.target.value)}
@@ -536,7 +536,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               </select>
             </div>
             <div>
-              <label className="font-bold text-[#12214B]">Shift Penalty Loading</label>
+              <label className="font-bold text-blue-950">Shift Penalty Loading</label>
               <select
                 value={penaltyType}
                 onChange={(e) => setPenaltyType(e.target.value)}
@@ -550,28 +550,28 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               </select>
             </div>
             <div>
-              <label className="font-bold text-[#12214B]">Shift Duration (Hrs)</label>
+              <label className="font-bold text-blue-950">Shift Duration (Hrs)</label>
               <Input
                 type="number"
                 value={shiftHours}
                 onChange={(e) => setShiftHours(e.target.value)}
-                className="h-7 text-xs"
+                className="h-7 text-xs bg-white"
               />
             </div>
             <div>
-              <label className="font-bold text-[#12214B]">NDIS Claim Rate ($/hr)</label>
+              <label className="font-bold text-blue-950">NDIS Claim Rate ($/hr)</label>
               <Input
                 type="number"
                 step="0.01"
                 value={ndisBillRate}
                 onChange={(e) => setNdisBillRate(e.target.value)}
-                className="h-7 text-xs"
+                className="h-7 text-xs bg-white"
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[#A45CDE] bg-[#F4EAFB]/40 px-2.5 py-1.5 text-[8.5px]">
-            <label className="flex items-center gap-1 font-bold text-[#12214B]">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-indigo-200 bg-white px-2.5 py-1.5 text-[8.5px]">
+            <label className="flex items-center gap-1 font-bold text-blue-950">
               <input
                 type="checkbox"
                 checked={casualLoading}
@@ -579,7 +579,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               />
               <span>Include 25% Casual Loading</span>
             </label>
-            <span className="font-black text-[#12214B]">
+            <span className="font-black text-blue-950">
               Loaded Cost (incl. Super): ${hourlyWageCost.toFixed(2)}/hr · Total Wage: ${totalShiftWage.toFixed(2)}
             </span>
             <span className="font-black text-emerald-800">
@@ -589,13 +589,13 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 3: Offline-First Mobile Field Capture Queue (SafetyCulture Thumb-First Pattern) */}
-        <div className="rounded-xl border-2 border-[#442078] bg-white p-2.5 space-y-2">
+        <div className="rounded-xl border-2 border-[#ea580c] bg-orange-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-black uppercase text-[#12214B]">
+              <h3 className="text-xs font-black uppercase text-orange-950">
                 3. Offline-First Mobile Field Capture (Take-5, Vehicle &amp; Site Checks)
               </h3>
-              <p className="text-[7.5px] font-semibold text-[#442078]">
+              <p className="text-[7.5px] font-semibold text-purple-800">
                 Queues inspections locally when offline in the field and syncs in 1 click to live SafetyCheck registers
               </p>
             </div>
@@ -624,16 +624,16 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               value={fieldEntry.worker}
               onChange={(e) => setFieldEntry({ ...fieldEntry, worker: e.target.value })}
               placeholder="Worker Name"
-              className="h-7 text-xs"
+              className="h-7 text-xs bg-white"
             />
             <div className="flex gap-1">
               <Input
                 value={fieldEntry.location}
                 onChange={(e) => setFieldEntry({ ...fieldEntry, location: e.target.value })}
                 placeholder="Site / Vehicle Rego"
-                className="h-7 text-xs"
+                className="h-7 text-xs bg-white"
               />
-              <Button type="submit" size="sm" className="h-7 bg-[#442078] px-2.5 text-[8px] font-black text-white">
+              <Button type="submit" size="sm" className="h-7 bg-[#ea580c] px-2.5 text-[8px] font-black text-white hover:bg-orange-700">
                 Queue
               </Button>
             </div>
@@ -641,17 +641,17 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
         </div>
 
         {/* Pillar 4: Custom AI Skill Builder (Section 27) */}
-        <div className="rounded-xl border-2 border-[#7138B6] bg-[#F4EAFB]/30 p-2.5 space-y-2">
+        <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-black uppercase text-[#12214B]">
+              <h3 className="text-xs font-black uppercase text-purple-950">
                 4. Custom AI Skill &amp; Guardrail Builder (Section 27)
               </h3>
-              <p className="text-[7.5px] font-semibold text-[#442078]">
+              <p className="text-[7.5px] font-semibold text-purple-800">
                 Create role-scoped AI skills with versioned instructions and mandatory human approval requirements
               </p>
             </div>
-            <Badge className="bg-[#7138B6] text-white text-[7.5px]">
+            <Badge className="bg-[#7c3aed] text-white text-[7.5px]">
               {customSkills.length + 4} Active Skills
             </Badge>
           </div>
@@ -669,7 +669,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               placeholder="Role-specific instructions & source rules..."
               className="h-7 text-xs bg-white"
             />
-            <Button type="submit" size="sm" className="h-7 bg-[#7138B6] px-2.5 text-[8px] font-black text-white">
+            <Button type="submit" size="sm" className="h-7 bg-[#7c3aed] px-2.5 text-[8px] font-black text-white hover:bg-purple-700">
               + Save Custom AI Skill
             </Button>
           </form>
@@ -679,7 +679,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
               {customSkills.map((cs) => (
                 <span
                   key={cs.id}
-                  className="rounded-md border border-[#7138B6] bg-white px-2 py-0.5 text-[7.5px] font-black text-[#12214B]"
+                  className="rounded-md border border-purple-300 bg-white px-2 py-0.5 text-[7.5px] font-black text-purple-950"
                 >
                   {cs.id}: {cs.name} ({cs.version}) · {cs.guardrail}
                 </span>

@@ -28,7 +28,7 @@ import { MasterAudit356Tab, DocumentControl98Tab } from '@/components/operations
 import { EndOfShiftWorkflowTab, DevelopmentRegister31Tab } from '@/components/operations/ControlCentreEndOfShiftAndDevTabs';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #12214B 0%, #184A9C 35%, #442078 68%, #7138B6 86%, #DC4BA9 100%)';
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
 const COMPLETION_13_ITEMS = [
   'All existing modules reviewed',
@@ -46,9 +46,9 @@ const COMPLETION_13_ITEMS = [
   'Management acceptance recorded',
 ];
 
-export default function InfinityControlCentreMasterSuite() {
+export default function InfinityControlCentreMasterSuite({ initialTab = 'control-centre' } = {}) {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('control-centre');
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [loading, setLoading] = useState(false);
 
   // Live database counts & approval queue records
@@ -504,14 +504,14 @@ export default function InfinityControlCentreMasterSuite() {
   ).length;
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#12214B] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
       {/* ==================== MASTER HEADER BANNER ==================== */}
       <div className="px-4 py-3 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#F4EAFB] px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#12214B]">
-                <ShieldCheck className="h-3 w-3 text-[#7138B6]" /> PRIORITY 0–2 MASTER CONTROL &amp; VERIFICATION SUITE
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-blue-950">
+                <ShieldCheck className="h-3 w-3 text-purple-700" /> PRIORITY 0–2 MASTER CONTROL &amp; VERIFICATION SUITE
               </span>
               <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[8px] font-black text-white">
                 ● 17 CATEGORIES · 356 CHECKPOINTS · 98 CONTROLLED DOCS · 31 DEV REGISTER ITEMS
@@ -520,7 +520,7 @@ export default function InfinityControlCentreMasterSuite() {
             <h2 className="mt-1 text-base sm:text-lg font-black tracking-tight text-white">
               Infinity Control Centre, 356-Checkpoint Audit, 98-Document Control &amp; Base44 Development Register
             </h2>
-            <p className="text-[9px] font-bold text-[#F4EAFB]">
+            <p className="text-[9px] font-bold text-amber-100">
               Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
             </p>
           </div>
@@ -559,9 +559,9 @@ export default function InfinityControlCentreMasterSuite() {
                   all356Checkpoints
                 )
               }
-              className="h-7 bg-[#F4EAFB] px-2.5 text-[9px] font-black text-[#12214B] hover:bg-white"
+              className="h-7 bg-white px-2.5 text-[9px] font-black text-purple-950 hover:bg-purple-50"
             >
-              <Download className="mr-1 h-3 w-3 text-[#7138B6]" />
+              <Download className="mr-1 h-3 w-3 text-purple-700" />
               Export 356 Checkpoints (Excel/CSV)
             </Button>
           </div>
@@ -570,60 +570,15 @@ export default function InfinityControlCentreMasterSuite() {
         {/* Navigation Switcher for All Priority 0, 1, 2 & Best-In-Class Master Pillars */}
         <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-1">
           {[
-            {
-              id: 'control-centre',
-              label: '1. Control Centre',
-              sub: 'Live Telemetry & Queue',
-              icon: Building2,
-            },
-            {
-              id: 'master-audit-356',
-              label: '2. 356 Audit Checks',
-              sub: `17 Cats · ${evidencedCount}/356`,
-              icon: ClipboardCheck,
-            },
-            {
-              id: 'document-control-98',
-              label: '3. 98 Master Docs',
-              sub: 'Word, PDF & Excel',
-              icon: FileText,
-            },
-            {
-              id: 'end-of-shift',
-              label: '4. End-of-Shift',
-              sub: 'Clock-Out & Handover',
-              icon: Clock,
-            },
-            {
-              id: 'skills-17-point',
-              label: '5. Skills & 17-Pt',
-              sub: 'Competency & Sign-Off',
-              icon: Award,
-            },
-            {
-              id: 'smart-mailroom',
-              label: '6. Smart Mailroom',
-              sub: 'Auto-Classify & Route',
-              icon: Layers,
-            },
-            {
-              id: 'advanced-ai-tools',
-              label: '7. AI & 12 Tools',
-              sub: 'Human Gate & Twin Sim',
-              icon: Sparkles,
-            },
-            {
-              id: 'best-in-class',
-              label: '8. Best-In-Class',
-              sub: 'PRODA · SCHADS · CAPA',
-              icon: Wrench,
-            },
-            {
-              id: 'dev-register-31',
-              label: '9. Dev Register (31)',
-              sub: '17 Cols & 15-Pt Check',
-              icon: CheckSquare,
-            },
+            { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry & Queue', icon: Building2, hex: '#4f46e5' },
+            { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `17 Cats · ${evidencedCount}/356`, icon: ClipboardCheck, hex: '#6d28d9' },
+            { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText, hex: '#ca8a04' },
+            { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out & Handover', icon: Clock, hex: '#6366f1' },
+            { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency & Sign-Off', icon: Award, hex: '#0d9488' },
+            { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Classify & Route', icon: Layers, hex: '#0ea5e9' },
+            { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate & Twin Sim', icon: Sparkles, hex: '#8b5cf6' },
+            { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS · CAPA', icon: Wrench, hex: '#16a34a' },
+            { id: 'dev-register-31', label: '9. Dev Register (31)', sub: '17 Cols & 15-Pt Check', icon: CheckSquare, hex: '#db2777' },
           ].map((tab) => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
@@ -634,17 +589,17 @@ export default function InfinityControlCentreMasterSuite() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
                   active
-                    ? 'border-[#DC4BA9] bg-white text-[#12214B] shadow-md ring-2 ring-[#DC4BA9]'
-                    : 'border-white/25 bg-white/10 text-white hover:bg-white/20'
+                    ? 'border-pink-500 bg-white text-blue-950 shadow-md ring-2 ring-amber-300'
+                    : 'border-white/30 bg-white/15 text-white hover:bg-white/25'
                 }`}
               >
                 <div className="flex items-center gap-1.5">
-                  <Icon className={`h-3.5 w-3.5 shrink-0 ${active ? 'text-[#7138B6]' : 'text-[#F4EAFB]'}`} />
-                  <span className={`truncate text-[9.5px] font-black ${active ? 'text-[#12214B]' : 'text-white'}`}>
+                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: active ? tab.hex : '#fde68a' }} />
+                  <span className={`truncate text-[9.5px] font-black ${active ? 'text-blue-950' : 'text-white'}`}>
                     {tab.label}
                   </span>
                 </div>
-                <div className={`mt-0.5 truncate text-[7.5px] font-bold ${active ? 'text-[#442078]' : 'text-[#F4EAFB]'}`}>
+                <div className={`mt-0.5 truncate text-[7.5px] font-bold ${active ? 'text-purple-800' : 'text-white/95'}`}>
                   {tab.sub}
                 </div>
               </button>
@@ -659,24 +614,28 @@ export default function InfinityControlCentreMasterSuite() {
           {/* 12 Live Operational Register Telemetry Tiles */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1.5">
             {[
-              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', hex: '#881337', sub: 'Screening & Profiles' },
-              { label: 'Participants', value: counts.participants, route: '/our-participants', hex: '#0284C7', sub: 'Plans, Goals & Consents' },
-              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', hex: '#347AE0', sub: 'Daily/Weekly Schedule' },
-              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', hex: '#2563EB', sub: 'Mandatory Progress' },
-              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', hex: '#DC2626', sub: '24h/5d NDIS SLA' },
-              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', hex: '#D97706', sub: 'ISO 31000 Matrix' },
-              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', hex: '#4F46E5', sub: 'Overdue & Approvals' },
-              { label: 'Active Policies', value: counts.policies, route: '/compliance', hex: '#6B21A8', sub: 'Version Controlled' },
-              { label: 'Vault Documents', value: counts.documents, route: '/documents', hex: '#4338CA', sub: 'Expiry Monitored' },
-              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', hex: '#0D9488', sub: 'Roster Integrated' },
-              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', hex: '#0F766E', sub: 'Continuous Improvement' },
-              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', hex: '#15803D', sub: 'NDIS Price Validated' },
+              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', hex: '#2563eb', sub: 'Screening & Profiles' },
+              { label: 'Participants', value: counts.participants, route: '/our-participants', hex: '#e11d48', sub: 'Plans, Goals & Consents' },
+              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', hex: '#6366f1', sub: 'Daily/Weekly Schedule' },
+              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', hex: '#0891b2', sub: 'Mandatory Progress' },
+              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', hex: '#dc2626', sub: '24h/5d NDIS SLA' },
+              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', hex: '#ea580c', sub: 'ISO 31000 Matrix' },
+              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', hex: '#ef4444', sub: 'Overdue & Approvals' },
+              { label: 'Active Policies', value: counts.policies, route: '/compliance', hex: '#6d28d9', sub: 'Version Controlled' },
+              { label: 'Vault Documents', value: counts.documents, route: '/documents', hex: '#ca8a04', sub: 'Expiry Monitored' },
+              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', hex: '#7c3aed', sub: 'Roster Integrated' },
+              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', hex: '#22c55e', sub: 'Continuous Improvement' },
+              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', hex: '#16a34a', sub: 'NDIS Price Validated' },
             ].map((m) => (
               <Link
                 key={m.label}
                 to={m.route}
                 className="rounded-xl border p-2 transition-all hover:-translate-y-0.5 hover:shadow-md bg-white"
-                style={{ borderColor: m.hex, borderTopWidth: '4px' }}
+                style={{
+                  borderColor: m.hex,
+                  borderTopWidth: '4px',
+                  background: `linear-gradient(145deg, ${m.hex}14 0%, #ffffff 82%)`,
+                }}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[7.5px] font-black uppercase tracking-wider" style={{ color: m.hex }}>
@@ -684,8 +643,8 @@ export default function InfinityControlCentreMasterSuite() {
                   </span>
                   <ArrowRight className="h-3 w-3" style={{ color: m.hex }} />
                 </div>
-                <div className="mt-0.5 text-base font-black text-[#12214B]">{m.value}</div>
-                <div className="text-[7px] font-bold text-[#442078]">{m.sub}</div>
+                <div className="mt-0.5 text-base font-black text-blue-950">{m.value}</div>
+                <div className="text-[7px] font-bold text-purple-800">{m.sub}</div>
               </Link>
             ))}
           </div>

@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #12214B 0%, #184A9C 40%, #442078 75%, #7138B6 100%)';
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
 function autoClassifyDocument(fileName = '', title = '') {
   const text = `${fileName} ${title}`.toLowerCase();
@@ -201,12 +201,12 @@ export default function SmartMailroomHub({ onFiled }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#12214B] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-[#ca8a04] bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#F4EAFB] px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-[#12214B]">
-              <Inbox className="h-3 w-3 text-[#7138B6]" /> SECTION 16 — SMART MAILROOM &amp; DOCUMENT INTELLIGENCE
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-blue-950">
+              <Inbox className="h-3 w-3 text-purple-700" /> SECTION 16 — SMART MAILROOM &amp; DOCUMENT INTELLIGENCE
             </span>
             <h2 className="mt-0.5 text-sm sm:text-base font-black text-white">
               Incoming Document Collection, Auto-Classification, Person Matching, Duplicate Detection &amp; Register Routing
@@ -221,27 +221,27 @@ export default function SmartMailroomHub({ onFiled }) {
       <div className="p-3 space-y-2.5 bg-white">
         <form onSubmit={handleApproveAndRoute} className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {/* Step 1: Incoming Document Upload & Auto-Identification */}
-          <div className="rounded-xl border border-[#A45CDE] bg-[#F4EAFB]/30 p-2.5 space-y-2">
-            <div className="text-[9px] font-black uppercase text-[#442078]">
+          <div className="rounded-xl border-2 border-[#0ea5e9] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+            <div className="text-[9px] font-black uppercase text-sky-900">
               1. Incoming File &amp; Automatic Identification
             </div>
             <div>
-              <label className="text-[8px] font-bold text-[#12214B]">
+              <label className="text-[8px] font-bold text-blue-950">
                 Attach Incoming File (Private Encrypted Vault Storage)
               </label>
               <input
                 type="file"
                 onChange={handleFileChange}
-                className="mt-0.5 block w-full text-[9px] text-[#12214B]"
+                className="mt-0.5 block w-full text-[9px] text-blue-950"
               />
               {uploading && (
-                <div className="text-[8px] font-bold text-[#7138B6]">
+                <div className="text-[8px] font-bold text-purple-700">
                   Uploading &amp; running automatic classification...
                 </div>
               )}
             </div>
             <div>
-              <label className="text-[8px] font-bold text-[#12214B]">Document Title *</label>
+              <label className="text-[8px] font-bold text-blue-950">Document Title *</label>
               <Input
                 value={mailItem.title}
                 onChange={(e) => {
@@ -260,7 +260,7 @@ export default function SmartMailroomHub({ onFiled }) {
             </div>
             <div className="grid grid-cols-2 gap-1.5">
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Suggested Classification</label>
+                <label className="text-[8px] font-bold text-blue-950">Suggested Classification</label>
                 <Input
                   value={mailItem.docType}
                   onChange={(e) => setMailItem({ ...mailItem, docType: e.target.value })}
@@ -268,7 +268,7 @@ export default function SmartMailroomHub({ onFiled }) {
                 />
               </div>
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Target Register</label>
+                <label className="text-[8px] font-bold text-blue-950">Target Register</label>
                 <select
                   value={mailItem.targetRegister}
                   onChange={(e) => setMailItem({ ...mailItem, targetRegister: e.target.value })}
@@ -283,13 +283,13 @@ export default function SmartMailroomHub({ onFiled }) {
           </div>
 
           {/* Step 2: Employee / Participant Matching & Duplicate Detection */}
-          <div className="rounded-xl border border-[#A45CDE] bg-white p-2.5 space-y-2">
-            <div className="text-[9px] font-black uppercase text-[#442078]">
+          <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+            <div className="text-[9px] font-black uppercase text-purple-900">
               2. Profile Matching &amp; Duplicate Detection
             </div>
             <div className="grid grid-cols-2 gap-1.5">
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Subject Type</label>
+                <label className="text-[8px] font-bold text-blue-950">Subject Type</label>
                 <select
                   value={mailItem.personType}
                   onChange={(e) => setMailItem({ ...mailItem, personType: e.target.value, personName: '' })}
@@ -300,7 +300,7 @@ export default function SmartMailroomHub({ onFiled }) {
                 </select>
               </div>
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Matched Person</label>
+                <label className="text-[8px] font-bold text-blue-950">Matched Person</label>
                 <input
                   list="smart-mailroom-people"
                   value={mailItem.personName}
@@ -318,20 +318,20 @@ export default function SmartMailroomHub({ onFiled }) {
 
             <div className="grid grid-cols-2 gap-1.5">
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Document Owner</label>
+                <label className="text-[8px] font-bold text-blue-950">Document Owner</label>
                 <Input
                   value={mailItem.assignedOwner}
                   onChange={(e) => setMailItem({ ...mailItem, assignedOwner: e.target.value })}
-                  className="h-7 text-xs"
+                  className="h-7 text-xs bg-white"
                 />
               </div>
               <div>
-                <label className="text-[8px] font-bold text-[#12214B]">Expiry / Review Date</label>
+                <label className="text-[8px] font-bold text-blue-950">Expiry / Review Date</label>
                 <Input
                   type="date"
                   value={mailItem.expiryDate}
                   onChange={(e) => setMailItem({ ...mailItem, expiryDate: e.target.value })}
-                  className="h-7 text-xs"
+                  className="h-7 text-xs bg-white"
                 />
               </div>
             </div>
@@ -352,12 +352,12 @@ export default function SmartMailroomHub({ onFiled }) {
           </div>
 
           {/* Step 3: Verification, Approval & Processing History */}
-          <div className="rounded-xl border border-[#A45CDE] bg-[#F4EAFB]/30 p-2.5 flex flex-col justify-between space-y-2">
+          <div className="rounded-xl border-2 border-[#ca8a04] bg-amber-50/40 p-2.5 flex flex-col justify-between space-y-2" style={{ borderTopWidth: '4px' }}>
             <div>
-              <div className="text-[9px] font-black uppercase text-[#442078]">
+              <div className="text-[9px] font-black uppercase text-amber-900">
                 3. Review, Approval &amp; Vault Storage
               </div>
-              <label className="mt-1 block text-[8px] font-bold text-[#12214B]">
+              <label className="mt-1 block text-[8px] font-bold text-blue-950">
                 Verification Notes
               </label>
               <Input
@@ -371,7 +371,7 @@ export default function SmartMailroomHub({ onFiled }) {
             <Button
               type="submit"
               disabled={routing}
-              className="w-full bg-[#12214B] text-xs font-black text-white hover:bg-[#184A9C]"
+              className="w-full bg-[#ca8a04] text-xs font-black text-white hover:bg-amber-700"
             >
               <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
               {routing ? 'Routing to Register...' : 'Approve & Store in Target Register'}
@@ -381,17 +381,17 @@ export default function SmartMailroomHub({ onFiled }) {
 
         {/* Full Mailroom Processing History */}
         {history.length > 0 && (
-          <div className="rounded-xl border border-[#12214B] overflow-hidden">
-            <div className="bg-[#12214B] px-3 py-1 text-[8px] font-black uppercase text-white">
+          <div className="rounded-xl border-2 border-[#7c3aed] overflow-hidden">
+            <div className="px-3 py-1 text-[8px] font-black uppercase text-white" style={{ background: HEADER_GRADIENT }}>
               Smart Mailroom Full Processing History
             </div>
-            <div className="max-h-32 overflow-y-auto divide-y divide-[#A45CDE]/30 bg-white text-[8px]">
+            <div className="max-h-32 overflow-y-auto divide-y divide-purple-200 bg-white text-[8px]">
               {history.map((h) => (
                 <div key={h.id} className="flex flex-wrap items-center justify-between gap-2 px-3 py-1">
-                  <span className="font-black text-[#12214B]">
+                  <span className="font-black text-blue-950">
                     {h.id} · {h.title} ({h.docType})
                   </span>
-                  <span className="font-semibold text-[#442078]">
+                  <span className="font-semibold text-purple-800">
                     Matched: {h.personName} → {h.targetRegister} · Owner: {h.owner}
                   </span>
                   <span className="font-mono text-emerald-700 font-bold">

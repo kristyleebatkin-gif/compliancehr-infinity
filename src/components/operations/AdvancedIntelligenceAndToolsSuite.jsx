@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #12214B 0%, #184A9C 36%, #442078 70%, #7138B6 88%, #DC4BA9 100%)';
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
 const AI_DOMAINS_12 = [
   {
@@ -208,12 +208,12 @@ export default function AdvancedIntelligenceAndToolsSuite() {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#12214B] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#F4EAFB] px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-[#12214B]">
-              <Sparkles className="h-3 w-3 text-[#7138B6]" /> PRIORITY 2 — SECTIONS 26, 27 &amp; 28 ADVANCED INTELLIGENCE SUITE
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-blue-950">
+              <Sparkles className="h-3 w-3 text-purple-700" /> PRIORITY 2 — SECTIONS 26, 27 &amp; 28 ADVANCED INTELLIGENCE SUITE
             </span>
             <h2 className="mt-0.5 text-sm sm:text-base font-black text-white">
               Infinity AI Assistant (Human-in-the-Loop), AI Skills Library &amp; 12 Advanced Business Tools
@@ -228,8 +228,8 @@ export default function AdvancedIntelligenceAndToolsSuite() {
       <div className="p-3 space-y-3 bg-white">
         {/* Section 26: Infinity AI Assistant with Source References & Human Approval Gate */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
-          <div className="rounded-xl border-2 border-[#442078] bg-[#F4EAFB]/35 p-2.5 space-y-2">
-            <div className="text-[9.5px] font-black uppercase text-[#12214B]">
+          <div className="rounded-xl border-2 border-[#8b5cf6] bg-purple-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+            <div className="text-[9.5px] font-black uppercase text-purple-950">
               Section 26 — Source-Grounded AI Drafting &amp; Mandatory Human Approval Gate
             </div>
             <div className="flex flex-wrap gap-1">
@@ -240,8 +240,8 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                   onClick={() => handleSelectDomain(d)}
                   className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
                     selectedDomain.id === d.id
-                      ? 'border-[#12214B] bg-[#12214B] text-white'
-                      : 'border-[#A45CDE] bg-white text-[#12214B]'
+                      ? 'border-[#7c3aed] bg-[#7c3aed] text-white'
+                      : 'border-purple-200 bg-white text-blue-950'
                   }`}
                 >
                   {d.label}
@@ -249,7 +249,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
               ))}
             </div>
 
-            <div className="text-[8px] font-bold text-[#184A9C]">
+            <div className="text-[8px] font-bold text-blue-700">
               Authorised Source Reference: <span className="font-mono">{selectedDomain.sourceRef}</span> → Target Register:{' '}
               <span className="font-mono">{selectedDomain.targetEntity}</span>
             </div>
@@ -258,11 +258,11 @@ export default function AdvancedIntelligenceAndToolsSuite() {
               rows={3}
               value={draftText}
               onChange={(e) => setDraftText(e.target.value)}
-              className="w-full rounded-lg border border-[#A45CDE] bg-white p-2 text-xs font-medium text-[#12214B]"
+              className="w-full rounded-lg border border-purple-200 bg-white p-2 text-xs font-medium text-blue-950"
             />
 
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <label className="flex items-center gap-1.5 text-[8px] font-black text-[#12214B]">
+              <label className="flex items-center gap-1.5 text-[8px] font-black text-blue-950">
                 <input
                   type="checkbox"
                   checked={humanApproved}
@@ -274,7 +274,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                 size="sm"
                 disabled={!humanApproved || committing}
                 onClick={handleCommitApprovedAiOutput}
-                className="h-7 bg-[#12214B] px-3 text-[8px] font-black text-white hover:bg-[#184A9C]"
+                className="h-7 bg-[#7c3aed] px-3 text-[8px] font-black text-white hover:bg-purple-700"
               >
                 <CheckCircle2 className="mr-1 h-3 w-3" />
                 {committing ? 'Saving...' : `Approve & Commit to ${selectedDomain.targetEntity}`}
@@ -283,31 +283,31 @@ export default function AdvancedIntelligenceAndToolsSuite() {
           </div>
 
           {/* Section 27: AI Skills Library & Scenario Planning Simulator */}
-          <div className="rounded-xl border-2 border-[#184A9C] bg-white p-2.5 space-y-2">
-            <div className="text-[9.5px] font-black uppercase text-[#12214B]">
+          <div className="rounded-xl border-2 border-[#0369a1] bg-sky-50/40 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+            <div className="text-[9.5px] font-black uppercase text-sky-950">
               Section 27 — AI Skills Library (Guardrails, Permissions &amp; Versioning)
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {AI_SKILLS_LIBRARY.map((ag) => (
-                <div key={ag.id} className="rounded-lg border border-[#A45CDE]/60 bg-[#F4EAFB]/25 p-1.5 text-[7.5px]">
+                <div key={ag.id} className="rounded-lg border border-sky-200 bg-white p-1.5 text-[7.5px]">
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-[#12214B]">{ag.name}</span>
-                    <span className="font-mono font-bold text-[#7138B6]">{ag.version}</span>
+                    <span className="font-black text-blue-950">{ag.name}</span>
+                    <span className="font-mono font-bold text-purple-700">{ag.version}</span>
                   </div>
-                  <div className="mt-0.5 text-[#442078]"><strong>Scope:</strong> {ag.roleScope}</div>
-                  <div className="text-[#184A9C]"><strong>Guardrail:</strong> {ag.permissions}</div>
+                  <div className="mt-0.5 text-purple-800"><strong>Scope:</strong> {ag.roleScope}</div>
+                  <div className="text-blue-700"><strong>Guardrail:</strong> {ag.permissions}</div>
                 </div>
               ))}
             </div>
 
             {/* Tool #7: Interactive Scenario Planning & Digital Twin Simulator */}
-            <div className="rounded-lg border border-[#12214B] bg-[#F4EAFB]/40 p-2">
-              <div className="text-[8.5px] font-black uppercase text-[#12214B]">
+            <div className="rounded-lg border border-purple-300 bg-purple-50/60 p-2">
+              <div className="text-[8.5px] font-black uppercase text-purple-950">
                 Digital Business Twin &amp; Scenario Planning Simulator (Section 28)
               </div>
               <div className="mt-1 grid grid-cols-3 gap-1.5 text-[8px]">
                 <div>
-                  <label className="font-bold text-[#442078]">Active Participants</label>
+                  <label className="font-bold text-purple-800">Active Participants</label>
                   <Input
                     type="number"
                     value={simParticipants}
@@ -316,7 +316,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-[#442078]">Avg Support Hrs/Wk</label>
+                  <label className="font-bold text-purple-800">Avg Support Hrs/Wk</label>
                   <Input
                     type="number"
                     value={simHoursPerWeek}
@@ -325,7 +325,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-[#442078]">Avg NDIS Rate ($/hr)</label>
+                  <label className="font-bold text-purple-800">Avg NDIS Rate ($/hr)</label>
                   <Input
                     type="number"
                     value={simHourlyRate}
@@ -334,7 +334,7 @@ export default function AdvancedIntelligenceAndToolsSuite() {
                   />
                 </div>
               </div>
-              <div className="mt-1.5 flex flex-wrap items-center justify-between text-[8.5px] font-black text-[#12214B]">
+              <div className="mt-1.5 flex flex-wrap items-center justify-between text-[8.5px] font-black text-blue-950">
                 <span>Projected Weekly Revenue: ${weeklyRevenue.toLocaleString()}</span>
                 <span>Required Cleared Support Workers: {requiredWorkers} FTE</span>
               </div>
@@ -344,21 +344,26 @@ export default function AdvancedIntelligenceAndToolsSuite() {
 
         {/* Section 28: All 12 Advanced Business Tools Matrix */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5">
-          {ADVANCED_TOOLS_12.map((tool) => (
-            <Link
-              key={tool.name}
-              to={tool.route}
-              className="rounded-xl border border-[#A45CDE] bg-white p-2 transition-all hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[8.5px] font-black text-[#12214B]">{tool.name}</span>
-                <span className="rounded bg-[#F4EAFB] px-1.5 py-0.5 text-[6.5px] font-black text-[#7138B6]">
-                  {tool.badge}
-                </span>
-              </div>
-              <p className="mt-1 text-[7.5px] font-semibold text-[#442078] leading-tight">{tool.desc}</p>
-            </Link>
-          ))}
+          {ADVANCED_TOOLS_12.map((tool, i) => {
+            const palette = ['#4f46e5', '#db2777', '#0ea5e9', '#0d9488', '#ea580c', '#7c3aed', '#16a34a', '#ca8a04'];
+            const c = palette[i % palette.length];
+            return (
+              <Link
+                key={tool.name}
+                to={tool.route}
+                className="rounded-xl border bg-white p-2 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ borderColor: c, borderTopWidth: '3px', background: `linear-gradient(145deg, ${c}12 0%, #ffffff 85%)` }}
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[8.5px] font-black text-blue-950">{tool.name}</span>
+                  <span className="rounded px-1.5 py-0.5 text-[6.5px] font-black text-white" style={{ background: c }}>
+                    {tool.badge}
+                  </span>
+                </div>
+                <p className="mt-1 text-[7.5px] font-semibold text-purple-800 leading-tight">{tool.desc}</p>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

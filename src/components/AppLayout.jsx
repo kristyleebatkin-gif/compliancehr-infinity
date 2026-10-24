@@ -134,7 +134,9 @@ export default function AppLayout() {
     location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
 
   const navLabel = (item) => (item.key === 'my-profile' ? (role === ROLES.PARTICIPANT ? 'My participant profile' : 'My employee profile') : item.label);
-  const currentLabel = (() => { const found = PRIMARY_NAV.find((i) => isActive(i.path)); return found ? navLabel(found) : 'Dashboard'; })();
+  const activeNavItem = PRIMARY_NAV.find((i) => isActive(i.path));
+  const currentLabel = activeNavItem ? navLabel(activeNavItem) : 'Dashboard';
+  const currentModuleColour = moduleKeyColour(activeNavItem?.key || 'dashboard');
   const initials = (user?.full_name || 'CH')
     .split(' ')
     .filter(Boolean)
@@ -346,7 +348,7 @@ export default function AppLayout() {
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />
-          <div className="app-dashboard-canvas min-w-0">
+          <div className="app-dashboard-canvas min-w-0" style={{ '--module-colour': currentModuleColour }}>
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>
@@ -359,22 +361,27 @@ export default function AppLayout() {
           {visibleBottom.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);
+            const modColor = moduleKeyColour(item.key);
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[10px] font-semibold transition-colors ${
-                  active ? 'bg-brand/10 text-brand' : 'text-foreground/50'
+                className={`flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[10px] font-bold transition-colors ${
+                  active ? 'shadow-sm' : 'text-foreground/75'
                 }`}
+                style={{
+                  color: active ? modColor : undefined,
+                  background: active ? `${modColor}18` : undefined,
+                }}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className="h-5 w-5" style={{ color: modColor }} />
                 <span className="max-w-full truncate">{navLabel(item)}</span>
               </Link>
             );
           })}
           <button
             onClick={() => setMoreOpen(true)}
-            className="flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] font-medium text-foreground/50"
+            className="flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-[10px] font-bold text-violet-700"
           >
             <MoreHorizontal className="h-5 w-5" />
             More
@@ -386,7 +393,7 @@ export default function AppLayout() {
             <div className="absolute inset-0 bg-foreground/40" onClick={() => setMoreOpen(false)} />
             <div className="absolute bottom-0 left-0 right-0 max-h-[70vh] overflow-y-auto rounded-t-2xl bg-background p-4 pb-8">
               <div className="mb-3 flex items-center justify-between">
-                <div className="text-base font-semibold">More</div>
+                <div className="text-base font-extrabold text-violet-900">All Modules</div>
                 <button onClick={() => setMoreOpen(false)} className="rounded-lg p-1 hover:bg-brand/5">
                   <X className="h-5 w-5" />
                 </button>
@@ -396,13 +403,22 @@ export default function AppLayout() {
                   .filter((i) => !BOTTOM_NAV.some((b) => b.path === i.path))
                   .map((item) => {
                     const Icon = item.icon;
+                    const modColor = moduleKeyColour(item.key);
                     return (
                       <Link
                         key={item.path}
                         to={item.path}
-                        className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 p-3 text-xs font-medium text-foreground/70 hover:bg-brand/5"
+                        className="flex flex-col items-center gap-1.5 rounded-xl border p-3 text-xs font-extrabold text-foreground hover:shadow-sm"
+                        style={{
+                          borderColor: `${modColor}55`,
+                          borderTopWidth: '3px',
+                          borderTopColor: modColor,
+                          background: `linear-gradient(145deg, ${modColor}18, #ffffff)`,
+                        }}
                       >
-                        <Icon className="h-5 w-5 text-brand" />
+                        <span className="flex h-7 w-7 items-center justify-center rounded-lg text-white shadow-sm" style={{ background: modColor }}>
+                          <Icon className="h-4 w-4" />
+                        </span>
                         {navLabel(item)}
                       </Link>
                     );

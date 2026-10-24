@@ -10,7 +10,7 @@ import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 
 const HEADER_GRADIENT =
-  'linear-gradient(120deg, #12214B 0%, #184A9C 38%, #442078 72%, #7138B6 90%, #DC4BA9 100%)';
+  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
 
 export const MASTER_SKILLS_REGISTER = [
   {
@@ -266,12 +266,12 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-[#12214B] bg-white shadow-xl">
+    <section className="overflow-hidden rounded-2xl border-4 border-[#0d9488] bg-white shadow-xl">
       <div className="px-4 py-2.5 text-white" style={{ background: HEADER_GRADIENT }}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#F4EAFB] px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-[#12214B]">
-              <BookOpen className="h-3 w-3 text-[#7138B6]" /> SECTIONS 13 &amp; 14 — MASTER SKILLS REGISTER &amp; 17-POINT SKILL INSTRUCTIONS
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-blue-950">
+              <BookOpen className="h-3 w-3 text-purple-700" /> SECTIONS 13 &amp; 14 — MASTER SKILLS REGISTER &amp; 17-POINT SKILL INSTRUCTIONS
             </span>
             <h2 className="mt-0.5 text-sm sm:text-base font-black text-white">
               {businessName} — Business-Specific Skill Assessments, 17-Point Instructions &amp; Supervisor Competency Sign-Off
@@ -283,7 +283,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
               value={businessName}
               onChange={(e) => handleSaveBusinessName(e.target.value)}
               placeholder="Configurable Business Name"
-              className="h-7 w-48 bg-white text-xs font-black text-[#12214B]"
+              className="h-7 w-48 bg-white text-xs font-black text-blue-950"
             />
             <Button
               size="sm"
@@ -314,9 +314,9 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
                   MASTER_SKILLS_REGISTER
                 )
               }
-              className="h-7 bg-[#F4EAFB] px-2.5 text-[8.5px] font-black text-[#12214B] hover:bg-white"
+              className="h-7 bg-white px-2.5 text-[8.5px] font-black text-purple-950 hover:bg-purple-50"
             >
-              <Download className="mr-1 h-3 w-3 text-[#7138B6]" /> Export Master Skills Register (CSV)
+              <Download className="mr-1 h-3 w-3 text-purple-700" /> Export Master Skills Register (CSV)
             </Button>
           </div>
         </div>
@@ -326,7 +326,7 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
         {/* Skill Selector Strip */}
         <div className="flex flex-wrap items-center gap-1.5">
           <div className="relative flex-1 min-w-[180px]">
-            <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-[#442078]" />
+            <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-teal-700" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -341,8 +341,8 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
               onClick={() => setRoleFilter(r)}
               className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
                 roleFilter === r
-                  ? 'border-[#12214B] bg-[#12214B] text-white'
-                  : 'border-[#A45CDE] bg-white text-[#12214B]'
+                  ? 'border-[#0d9488] bg-[#0d9488] text-white'
+                  : 'border-teal-300 bg-white text-blue-950'
               }`}
             >
               {r === 'ALL' ? 'All Roles' : r}
@@ -360,16 +360,16 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
                 onClick={() => setSelectedSkill(skl)}
                 className={`rounded-xl border p-2 text-left transition-all ${
                   active
-                    ? 'border-2 border-[#7138B6] bg-[#F4EAFB]/70 shadow-sm'
-                    : 'border-[#A45CDE]/60 bg-white hover:bg-[#F4EAFB]/30'
+                    ? 'border-2 border-[#0d9488] bg-teal-50/70 shadow-sm'
+                    : 'border-teal-200 bg-white hover:bg-teal-50/30'
                 }`}
               >
                 <div className="flex items-center justify-between gap-1">
-                  <span className="font-mono text-[8px] font-black text-[#7138B6]">{skl.id}</span>
-                  <Badge className="bg-[#12214B] text-white text-[7px]">{skl.roleCategory}</Badge>
+                  <span className="font-mono text-[8px] font-black text-teal-700">{skl.id}</span>
+                  <Badge className="bg-[#0d9488] text-white text-[7px]">{skl.roleCategory}</Badge>
                 </div>
-                <div className="mt-0.5 text-[9.5px] font-black text-[#12214B]">{skl.skillName}</div>
-                <p className="mt-0.5 line-clamp-2 text-[7.5px] font-semibold text-[#442078]">
+                <div className="mt-0.5 text-[9.5px] font-black text-blue-950">{skl.skillName}</div>
+                <p className="mt-0.5 line-clamp-2 text-[7.5px] font-semibold text-purple-800">
                   {skl.description}
                 </p>
               </button>
@@ -379,26 +379,26 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
 
         {/* Full 17-Point Skill Instruction Sheet + Practical Competency Sign-Off */}
         {selectedSkill && (
-          <div className="rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/25 p-3 space-y-2.5">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#A45CDE] pb-2">
+          <div className="rounded-xl border-2 border-[#0d9488] bg-teal-50/30 p-3 space-y-2.5" style={{ borderTopWidth: '4px' }}>
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-teal-200 pb-2">
               <div>
-                <span className="text-[8px] font-black uppercase text-[#7138B6]">
+                <span className="text-[8px] font-black uppercase text-teal-800">
                   17-POINT STRUCTURED SKILL INSTRUCTION &amp; PRACTICAL COMPETENCY PROTOCOL ({selectedSkill.id})
                 </span>
-                <h3 className="text-sm font-black text-[#12214B]">{selectedSkill.skillName}</h3>
+                <h3 className="text-sm font-black text-blue-950">{selectedSkill.skillName}</h3>
               </div>
               <div className="flex items-center gap-1.5">
                 <Button
                   size="sm"
                   onClick={() => handleDownloadSkillWord(selectedSkill)}
-                  className="h-7 bg-[#184A9C] px-2.5 text-[8px] font-black text-white"
+                  className="h-7 bg-[#2563eb] px-2.5 text-[8px] font-black text-white"
                 >
                   <FileText className="mr-1 h-3 w-3" /> Download Word (.doc)
                 </Button>
                 <Button
                   size="sm"
                   onClick={() => window.print()}
-                  className="h-7 bg-[#7138B6] px-2.5 text-[8px] font-black text-white"
+                  className="h-7 bg-[#7c3aed] px-2.5 text-[8px] font-black text-white"
                 >
                   <Printer className="mr-1 h-3 w-3" /> Print A4 Sheet
                 </Button>
@@ -425,20 +425,20 @@ export default function MasterSkillsAndInstructionsStudio({ onChanged }) {
                 ['16. Supervisor Approval Authority', selectedSkill.supervisorApproval],
                 ['17. Scheduled Review Date', selectedSkill.reviewDate],
               ].map(([label, val]) => (
-                <div key={label} className="rounded-lg border border-[#A45CDE]/70 bg-white p-2">
-                  <div className="font-black uppercase text-[#442078] text-[7.5px]">{label}</div>
-                  <div className="mt-0.5 whitespace-pre-line font-semibold text-[#12214B]">{val}</div>
+                <div key={label} className="rounded-lg border border-teal-200 bg-white p-2">
+                  <div className="font-black uppercase text-teal-800 text-[7.5px]">{label}</div>
+                  <div className="mt-0.5 whitespace-pre-line font-semibold text-blue-950">{val}</div>
                 </div>
               ))}
             </div>
 
             {/* Supervisor Practical Competency Sign-Off Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#442078] bg-white p-2.5">
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0d9488] bg-white p-2.5">
               <div>
-                <div className="text-[9px] font-black uppercase text-[#12214B]">
+                <div className="text-[9px] font-black uppercase text-blue-950">
                   Supervisor Practical Demonstration &amp; Competency Sign-Off
                 </div>
-                <div className="text-[7.5px] font-semibold text-[#442078]">
+                <div className="text-[7.5px] font-semibold text-purple-800">
                   Saves verified TrainingCompletion + issues active Certificate in the live database
                 </div>
               </div>

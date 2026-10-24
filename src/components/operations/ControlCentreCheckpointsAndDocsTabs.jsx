@@ -24,12 +24,12 @@ export function MasterAudit356Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#442078] bg-[#F4EAFB]/40 p-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#6d28d9] bg-purple-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
         <div>
-          <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+          <h3 className="text-xs font-black uppercase tracking-wider text-purple-950">
             Section 4 — Master Compliance Audit: All 17 Categories &amp; 356 Individual Checkpoints (CHK-001 to CHK-356)
           </h3>
-          <p className="text-[8px] font-semibold text-[#442078]">
+          <p className="text-[8px] font-semibold text-purple-800">
             Rule Enforced: Checkpoints are never marked compliant based solely on a template — live operational evidence counts are verified per register.
           </p>
         </div>
@@ -49,8 +49,8 @@ export function MasterAudit356Tab({
           onClick={() => setSelectedCat('ALL')}
           className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
             selectedCat === 'ALL'
-              ? 'border-[#12214B] bg-[#12214B] text-white'
-              : 'border-[#A45CDE] bg-white text-[#12214B] hover:bg-[#F4EAFB]'
+              ? 'border-[#6d28d9] bg-[#6d28d9] text-white'
+              : 'border-purple-300 bg-white text-purple-950 hover:bg-purple-50'
           }`}
         >
           All 17 Categories (356)
@@ -62,8 +62,8 @@ export function MasterAudit356Tab({
             onClick={() => setSelectedCat(cat.id)}
             className={`rounded-lg border px-2 py-1 text-[8px] font-black ${
               selectedCat === cat.id
-                ? 'border-[#7138B6] bg-[#7138B6] text-white'
-                : 'border-[#A45CDE]/60 bg-white text-[#12214B] hover:bg-[#F4EAFB]'
+                ? 'border-[#7c3aed] bg-[#7c3aed] text-white'
+                : 'border-purple-200 bg-white text-blue-950 hover:bg-purple-50'
             }`}
           >
             {cat.id}: {cat.title.slice(0, 26)} ({cat.checkpointCount})
@@ -73,7 +73,7 @@ export function MasterAudit356Tab({
 
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-[#442078]" />
+          <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-purple-700" />
           <Input
             value={chkSearch}
             onChange={(e) => setChkSearch(e.target.value)}
@@ -93,8 +93,8 @@ export function MasterAudit356Tab({
               onClick={() => setChkFilter(val)}
               className={`rounded-lg border px-2.5 py-1 text-[8px] font-black ${
                 chkFilter === val
-                  ? 'border-[#184A9C] bg-[#184A9C] text-white'
-                  : 'border-[#A45CDE] bg-white text-[#12214B]'
+                  ? 'border-[#2563eb] bg-[#2563eb] text-white'
+                  : 'border-purple-300 bg-white text-purple-950'
               }`}
             >
               {label}
@@ -103,45 +103,45 @@ export function MasterAudit356Tab({
         </div>
       </div>
 
-      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#12214B]">
+      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#6d28d9]">
         <table className="w-full border-collapse text-left text-[8.5px]">
-          <thead className="sticky top-0 z-10 bg-[#12214B] text-white">
+          <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
             <tr>
-              <th className="p-1.5 font-black">ID</th>
-              <th className="p-1.5 font-black">Category</th>
-              <th className="p-1.5 font-black">Checkpoint Subject &amp; Legislation</th>
-              <th className="p-1.5 font-black">Req. Doc</th>
-              <th className="p-1.5 font-black">Operational Evidence</th>
-              <th className="p-1.5 font-black">Assessment Status</th>
-              <th className="p-1.5 font-black">Actions</th>
+              <th className="p-1.5 font-black text-white">ID</th>
+              <th className="p-1.5 font-black text-white">Category</th>
+              <th className="p-1.5 font-black text-white">Checkpoint Subject &amp; Legislation</th>
+              <th className="p-1.5 font-black text-white">Req. Doc</th>
+              <th className="p-1.5 font-black text-white">Operational Evidence</th>
+              <th className="p-1.5 font-black text-white">Assessment Status</th>
+              <th className="p-1.5 font-black text-white">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#A45CDE]/30 bg-white">
+          <tbody className="divide-y divide-purple-200 bg-white">
             {filteredCheckpoints.map((chk) => {
               const evidenced =
                 chk.hasOperationalEvidence || chk.assessmentResult === 'Operationally Evidenced';
               return (
-                <tr key={chk.id} className="hover:bg-[#F4EAFB]/40">
-                  <td className="p-1.5 font-mono font-black text-[#12214B] whitespace-nowrap">
+                <tr key={chk.id} className="hover:bg-purple-50/60">
+                  <td className="p-1.5 font-mono font-black text-blue-950 whitespace-nowrap">
                     {chk.id}
                   </td>
-                  <td className="p-1.5 font-bold text-[#442078]">
-                    <span className="rounded bg-[#F4EAFB] px-1.5 py-0.5 text-[7.5px] font-black">
+                  <td className="p-1.5 font-bold text-purple-800">
+                    <span className="rounded bg-purple-100 px-1.5 py-0.5 text-[7.5px] font-black text-purple-900">
                       {chk.categoryId}
                     </span>
                   </td>
                   <td className="p-1.5">
-                    <div className="font-black text-[#12214B]">{chk.subject}</div>
-                    <div className="text-[7.5px] font-semibold text-[#184A9C]">{chk.legislation}</div>
+                    <div className="font-black text-blue-950">{chk.subject}</div>
+                    <div className="text-[7.5px] font-semibold text-blue-700">{chk.legislation}</div>
                   </td>
-                  <td className="p-1.5 font-mono font-black text-[#7138B6] whitespace-nowrap">
+                  <td className="p-1.5 font-mono font-black text-purple-700 whitespace-nowrap">
                     {chk.requiredDocCode}
                   </td>
                   <td className="p-1.5">
-                    <div className="font-bold text-[#12214B]">
+                    <div className="font-bold text-blue-950">
                       Register: <span className="uppercase">{chk.evidenceEntity}</span> ({chk.evidenceCount} live records)
                     </div>
-                    <div className="text-[7px] text-[#442078]">{chk.gapIdentified}</div>
+                    <div className="text-[7px] text-purple-800">{chk.gapIdentified}</div>
                   </td>
                   <td className="p-1.5">
                     <span
@@ -157,7 +157,7 @@ export function MasterAudit356Tab({
                       <Button
                         size="sm"
                         onClick={() => handleVerifyCheckpointEvidence(chk)}
-                        className="h-6 bg-[#184A9C] px-2 text-[7.5px] font-black text-white hover:bg-[#12214B]"
+                        className="h-6 bg-[#2563eb] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
                       >
                         Verify
                       </Button>
@@ -165,13 +165,13 @@ export function MasterAudit356Tab({
                         size="sm"
                         variant="outline"
                         onClick={() => handleCreateCheckpointTask(chk)}
-                        className="h-6 border-[#7138B6] px-2 text-[7.5px] font-black text-[#7138B6] hover:bg-[#F4EAFB]"
+                        className="h-6 border-[#7c3aed] px-2 text-[7.5px] font-black text-purple-800 hover:bg-purple-50"
                       >
                         + Corrective Task
                       </Button>
                       <Link
                         to={chk.route}
-                        className="inline-flex h-6 items-center rounded border border-[#12214B] px-1.5 text-[7.5px] font-black text-[#12214B]"
+                        className="inline-flex h-6 items-center rounded border border-blue-600 px-1.5 text-[7.5px] font-black text-blue-800"
                       >
                         Register
                       </Link>
@@ -200,13 +200,13 @@ export function DocumentControl98Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#12214B] bg-[#F4EAFB]/50 p-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#ca8a04] bg-amber-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
         <div>
-          <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+          <h3 className="text-xs font-black uppercase tracking-wider text-amber-950">
             Section 5 &amp; 25 — Master Document &amp; Document Control Register (All 98 Reconciled Entries · DOC-001 to DOC-098)
           </h3>
-          <p className="text-[8px] font-semibold text-[#442078]">
-            Reconciled with all 356 Audit Checkpoints · Approved Dark Navy (#12214B) &amp; Deep Purple (#442078) Document Styling · Word (.doc), PDF &amp; Excel Register Exports
+          <p className="text-[8px] font-semibold text-purple-900">
+            Reconciled with all 356 Audit Checkpoints · Branded ComplianceHR Infinity Document Styling · Word (.doc), PDF &amp; Excel Register Exports
           </p>
         </div>
         <Button
@@ -230,7 +230,7 @@ export function DocumentControl98Tab({
               MASTER_98_DOCUMENTS
             )
           }
-          className="h-7 bg-[#12214B] px-2.5 text-[8.5px] font-black text-white hover:bg-[#184A9C]"
+          className="h-7 bg-[#ca8a04] px-2.5 text-[8.5px] font-black text-white hover:bg-amber-700"
         >
           <Download className="mr-1 h-3 w-3" />
           Export 98-Doc Master Register (Excel/CSV)
@@ -239,7 +239,7 @@ export function DocumentControl98Tab({
 
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-[#442078]" />
+          <Search className="pointer-events-none absolute left-2.5 top-2 h-3.5 w-3.5 text-purple-700" />
           <Input
             value={docSearch}
             onChange={(e) => setDocSearch(e.target.value)}
@@ -250,7 +250,7 @@ export function DocumentControl98Tab({
         <select
           value={docCatFilter}
           onChange={(e) => setDocCatFilter(e.target.value)}
-          className="h-7 rounded-md border border-[#A45CDE] bg-white px-2 text-xs font-bold text-[#12214B]"
+          className="h-7 rounded-md border border-purple-300 bg-white px-2 text-xs font-bold text-blue-950"
         >
           <option value="ALL">All 17 Audit Categories ({MASTER_98_DOCUMENTS.length} Docs)</option>
           {MASTER_17_AUDIT_CATEGORIES.map((c) => (
@@ -262,16 +262,16 @@ export function DocumentControl98Tab({
       </div>
 
       {previewDoc && (
-        <div className="rounded-xl border-4 border-[#12214B] bg-white p-3 shadow-lg space-y-2">
-          <div className="border-t-8 border-[#12214B] bg-[#F4EAFB] p-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div className="rounded-xl border-4 border-[#7c3aed] bg-white p-3 shadow-lg space-y-2">
+          <div className="border-t-8 border-[#2563eb] bg-purple-50 p-2.5 flex flex-wrap items-center justify-between gap-2">
             <div>
-              <span className="text-[8px] font-black uppercase tracking-wider text-[#7138B6]">
+              <span className="text-[8px] font-black uppercase tracking-wider text-purple-700">
                 SECTION 25 APPROVED MASTER DOCUMENT PREVIEW · {previewDoc.docNumber}
               </span>
-              <h4 className="text-sm font-black text-[#12214B]">
+              <h4 className="text-sm font-black text-blue-950">
                 {previewDoc.code}: {previewDoc.title}
               </h4>
-              <p className="text-[8px] font-bold text-[#184A9C]">
+              <p className="text-[8px] font-bold text-blue-700">
                 Version: {previewDoc.version} · Issue: {previewDoc.issueDate} · Review: {previewDoc.reviewDate} · Approved By: {previewDoc.approvedBy}
               </p>
             </div>
@@ -279,14 +279,14 @@ export function DocumentControl98Tab({
               <Button
                 size="sm"
                 onClick={() => handleDownloadWordDoc(previewDoc)}
-                className="h-7 bg-[#184A9C] px-2.5 text-[8px] font-black text-white"
+                className="h-7 bg-[#2563eb] px-2.5 text-[8px] font-black text-white"
               >
                 <Download className="mr-1 h-3 w-3" /> Word (.doc)
               </Button>
               <Button
                 size="sm"
                 onClick={() => window.print()}
-                className="h-7 bg-[#7138B6] px-2.5 text-[8px] font-black text-white"
+                className="h-7 bg-[#7c3aed] px-2.5 text-[8px] font-black text-white"
               >
                 <Printer className="mr-1 h-3 w-3" /> Print / Save PDF
               </Button>
@@ -301,50 +301,50 @@ export function DocumentControl98Tab({
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-[8.5px]">
-            <div className="rounded-lg border border-[#A45CDE] p-2">
-              <div className="font-black text-[#442078] uppercase">1. Subject &amp; Purpose</div>
-              <p className="mt-0.5 text-[#12214B]">{previewDoc.purpose}</p>
+            <div className="rounded-lg border border-purple-200 p-2">
+              <div className="font-black text-purple-800 uppercase">1. Subject &amp; Purpose</div>
+              <p className="mt-0.5 text-blue-950">{previewDoc.purpose}</p>
             </div>
-            <div className="rounded-lg border border-[#A45CDE] p-2">
-              <div className="font-black text-[#442078] uppercase">2. Procedures &amp; Responsibilities</div>
-              <p className="mt-0.5 text-[#12214B]">{previewDoc.responsibilities}</p>
+            <div className="rounded-lg border border-purple-200 p-2">
+              <div className="font-black text-purple-800 uppercase">2. Procedures &amp; Responsibilities</div>
+              <p className="mt-0.5 text-blue-950">{previewDoc.responsibilities}</p>
             </div>
-            <div className="rounded-lg border border-[#A45CDE] p-2">
-              <div className="font-black text-[#442078] uppercase">3. Reconciled Audit Checkpoints</div>
-              <p className="mt-0.5 font-mono font-bold text-[#184A9C]">
+            <div className="rounded-lg border border-purple-200 p-2">
+              <div className="font-black text-purple-800 uppercase">3. Reconciled Audit Checkpoints</div>
+              <p className="mt-0.5 font-mono font-bold text-blue-700">
                 {previewDoc.linkedCheckpoints.join(', ')}
               </p>
-              <p className="mt-1 text-[#442078]">{previewDoc.requiredFields}</p>
+              <p className="mt-1 text-purple-800">{previewDoc.requiredFields}</p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#12214B]">
+      <div className="max-h-[420px] overflow-auto rounded-xl border-2 border-[#ca8a04]">
         <table className="w-full border-collapse text-left text-[8.5px]">
-          <thead className="sticky top-0 z-10 bg-[#442078] text-white">
+          <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
             <tr>
-              <th className="p-1.5 font-black">Code</th>
-              <th className="p-1.5 font-black">Doc Number</th>
-              <th className="p-1.5 font-black">Controlled Document Title</th>
-              <th className="p-1.5 font-black">Type / Audience</th>
-              <th className="p-1.5 font-black">Version &amp; Review</th>
-              <th className="p-1.5 font-black">Linked Checkpoints</th>
-              <th className="p-1.5 font-black">Actions (Word / PDF / Register)</th>
+              <th className="p-1.5 font-black text-white">Code</th>
+              <th className="p-1.5 font-black text-white">Doc Number</th>
+              <th className="p-1.5 font-black text-white">Controlled Document Title</th>
+              <th className="p-1.5 font-black text-white">Type / Audience</th>
+              <th className="p-1.5 font-black text-white">Version &amp; Review</th>
+              <th className="p-1.5 font-black text-white">Linked Checkpoints</th>
+              <th className="p-1.5 font-black text-white">Actions (Word / PDF / Register)</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#A45CDE]/30 bg-white">
+          <tbody className="divide-y divide-purple-200 bg-white">
             {filtered98Docs.map((doc) => (
-              <tr key={doc.code} className="hover:bg-[#F4EAFB]/40">
-                <td className="p-1.5 font-mono font-black text-[#12214B] whitespace-nowrap">
+              <tr key={doc.code} className="hover:bg-purple-50/50">
+                <td className="p-1.5 font-mono font-black text-blue-950 whitespace-nowrap">
                   {doc.code}
                 </td>
-                <td className="p-1.5 font-mono font-bold text-[#184A9C] whitespace-nowrap">
+                <td className="p-1.5 font-mono font-bold text-blue-700 whitespace-nowrap">
                   {doc.docNumber}
                 </td>
                 <td className="p-1.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-black text-[#12214B]">{doc.title}</span>
+                    <span className="font-black text-blue-950">{doc.title}</span>
                     {doc.confidential && (
                       <span className="rounded bg-rose-100 px-1.5 py-0.5 text-[7px] font-black text-rose-800">
                         Confidential
@@ -352,13 +352,13 @@ export function DocumentControl98Tab({
                     )}
                   </div>
                 </td>
-                <td className="p-1.5 text-[#442078] font-semibold">
+                <td className="p-1.5 text-purple-800 font-semibold">
                   {doc.docType} · {doc.audience}
                 </td>
                 <td className="p-1.5 whitespace-nowrap">
-                  <span className="font-black text-[#12214B]">{doc.version}</span> · Due {doc.reviewDate}
+                  <span className="font-black text-blue-950">{doc.version}</span> · Due {doc.reviewDate}
                 </td>
-                <td className="p-1.5 font-mono text-[7.5px] font-bold text-[#7138B6]">
+                <td className="p-1.5 font-mono text-[7.5px] font-bold text-purple-700">
                   {doc.linkedCheckpoints.join(', ')}
                 </td>
                 <td className="p-1.5 whitespace-nowrap">
@@ -367,21 +367,21 @@ export function DocumentControl98Tab({
                       size="sm"
                       variant="outline"
                       onClick={() => setPreviewDoc(doc)}
-                      className="h-6 border-[#12214B] px-2 text-[7.5px] font-black text-[#12214B]"
+                      className="h-6 border-blue-600 px-2 text-[7.5px] font-black text-blue-800"
                     >
                       <Eye className="mr-1 h-2.5 w-2.5" /> Inspect
                     </Button>
                     <Button
                       size="sm"
                       onClick={() => handleDownloadWordDoc(doc)}
-                      className="h-6 bg-[#184A9C] px-2 text-[7.5px] font-black text-white hover:bg-[#12214B]"
+                      className="h-6 bg-[#2563eb] px-2 text-[7.5px] font-black text-white hover:bg-blue-700"
                     >
                       Word (.doc)
                     </Button>
                     <Button
                       size="sm"
                       onClick={() => handleFileDocToPolicyRegister(doc)}
-                      className="h-6 bg-[#7138B6] px-2 text-[7.5px] font-black text-white hover:bg-[#442078]"
+                      className="h-6 bg-[#7c3aed] px-2 text-[7.5px] font-black text-white hover:bg-purple-700"
                     >
                       + File to Register
                     </Button>
