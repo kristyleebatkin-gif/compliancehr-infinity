@@ -34,7 +34,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     yearly: 7920,
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
-    color: '#db2777',
+    color: '#FF2E9A',
     featured: true,
     tagline:
       'Base $500/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
@@ -81,7 +81,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     yearly: 9420,
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
-    color: '#2563eb',
+    color: '#0072FF',
     tagline:
       'Base $625/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
@@ -104,7 +104,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     yearly: 10170,
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
-    color: '#0d9488',
+    color: '#0A2B6D',
     tagline:
       'Base $688/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
@@ -127,7 +127,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     yearly: 10920,
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
-    color: '#ea580c',
+    color: '#A100FF',
     tagline:
       'Base $750/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
@@ -150,7 +150,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     yearly: 12420,
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
-    color: '#16a34a',
+    color: '#00C6FF',
     tagline:
       'Base $875/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
@@ -169,7 +169,7 @@ export const CORE_PLATFORM_BENEFITS = [
     icon: ShieldCheck,
     title: 'Smart Enhanced All-In-One Pack (+$160/mo Elite Included)',
     desc: 'Every tier now includes the $160/mo Elite Plan (2,500 message credits & 20,000 integration credits) plus the $355 Master Compliance Audit Document.',
-    color: '#db2777',
+    color: '#FF2E9A',
   },
   {
     icon: ClipboardCheck,
@@ -181,25 +181,25 @@ export const CORE_PLATFORM_BENEFITS = [
     icon: Layers,
     title: 'All 45 Connected Modules + Dual Views',
     desc: 'Switch seamlessly between the Enhanced Executive Office View and General Profile View with custom modular screen selectors.',
-    color: '#2563eb',
+    color: '#0072FF',
   },
   {
     icon: Zap,
     title: '14-Day Free Trial ($0 Upfront Test Mode)',
     desc: 'Build and test your application with zero upfront costs, then scale into the Smart Enhanced All-In-One tier that matches your team size.',
-    color: '#0d9488',
+    color: '#0A2B6D',
   },
   {
     icon: Lock,
     title: 'Strict Role-Based NDIS & HR Security',
     desc: 'Granular permissions across 115+ entities for Admins, Team Leaders, Support Workers, Finance, HR, Participants and Auditors.',
-    color: '#ea580c',
+    color: '#A100FF',
   },
   {
     icon: RefreshCw,
     title: '65+ Workflows & 100+ Server Functions',
     desc: '20,000 integration credits power automated NDIS timers, expiry scans, shift alerts, 30-action reports, and AI copilots.',
-    color: '#16a34a',
+    color: '#00C6FF',
   },
 ];
 

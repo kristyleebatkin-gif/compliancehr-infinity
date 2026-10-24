@@ -18,7 +18,7 @@ import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScree
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 
 const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 

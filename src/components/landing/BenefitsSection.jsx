@@ -11,20 +11,20 @@ const BENEFITS = [
   { icon: Lock, title: 'Secure & Role-Based', desc: 'Granular access keeps sensitive data protected and private.' },
 ];
 const HAIRLINES = [
-  'from-violet-500 to-fuchsia-400',
-  'from-rose-500 to-orange-400',
-  'from-blue-500 to-cyan-400',
-  'from-emerald-500 to-teal-400',
-  'from-amber-500 to-orange-400',
-  'from-fuchsia-500 to-violet-400',
+  'from-[#0072FF] to-[#0A2B6D]',
+  'from-[#0A2B6D] to-[#5A00D6]',
+  'from-[#5A00D6] to-[#A100FF]',
+  'from-[#A100FF] to-[#FF2E9A]',
+  'from-[#FF2E9A] to-[#FF6EDB]',
+  'from-[#5A00D6] to-[#0072FF]',
 ];
 const CHIP_STYLES = [
-  'from-violet-100 to-fuchsia-100 text-violet-700 dark:from-violet-500/20 dark:to-fuchsia-500/20 dark:text-violet-300',
-  'from-rose-100 to-orange-100 text-rose-700 dark:from-rose-500/20 dark:to-orange-500/20 dark:text-rose-300',
-  'from-blue-100 to-cyan-100 text-blue-700 dark:from-blue-500/20 dark:to-cyan-500/20 dark:text-blue-300',
-  'from-emerald-100 to-teal-100 text-emerald-700 dark:from-emerald-500/20 dark:to-teal-500/20 dark:text-emerald-300',
-  'from-amber-100 to-orange-100 text-amber-700 dark:from-amber-500/20 dark:to-orange-500/20 dark:text-amber-300',
-  'from-violet-100 to-fuchsia-100 text-violet-700 dark:from-violet-500/20 dark:to-fuchsia-500/20 dark:text-violet-300',
+  'from-[#0072FF] to-[#0A2B6D] text-white',
+  'from-[#0A2B6D] to-[#5A00D6] text-white',
+  'from-[#5A00D6] to-[#A100FF] text-white',
+  'from-[#A100FF] to-[#FF2E9A] text-white',
+  'from-[#FF2E9A] to-[#FF6EDB] text-white',
+  'from-[#5A00D6] to-[#0072FF] text-white',
 ];
 
 export default function BenefitsSection() {

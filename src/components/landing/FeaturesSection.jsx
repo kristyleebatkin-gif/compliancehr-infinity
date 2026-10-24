@@ -16,18 +16,18 @@ import {
 import Reveal from '@/components/landing/Reveal';
 
 const FEATURES = [
-  { icon: Users, title: 'Workforce Records', desc: 'Maintain staff profiles, employment documents, certificates, teams and consent-aware audit access.', color: '#16a34a' },
-  { icon: Heart, title: 'Participant Records', desc: 'Centralise participant profiles, support plans, agreements, and folder compliance checklists.', color: '#8b5cf6' },
-  { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, manage shifts, availability, handovers, approvals, vehicle checks and payable hours.', color: '#2563eb' },
-  { icon: BriefcaseBusiness, title: 'Employee Performance Reviews', desc: 'Complete online appraisals, manage review schedules and maintain connected employment records.', color: '#7c3aed' },
-  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'Build professional NDIS invoices from rostered shifts, apply price-guide items and generate payroll-ready reports.', color: '#0f766e' },
-  { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate, and resolve incidents with automatic alerts and full audit trails.', color: '#ef4444' },
-  { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess, and treat risks and hazards with a live register and mitigation tracking.', color: '#f97316' },
-  { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions, and stay on top of expiring certifications automatically.', color: '#d946ef' },
-  { icon: BadgeCheck, title: 'NDIS Provider Governance', desc: 'Store registration certificates and groups, schedule audits and renewals, receive reminders and open official Commission portals.', color: '#4338ca' },
-  { icon: ClipboardCheck, title: 'Express Audit & Certification', desc: 'Complete internal audits in minutes from checklists with evidence attached, generate branded reports, manage NDIS deadlines and prepare printable file checklists.', color: '#4f46e5' },
-  { icon: MapPinned, title: 'Community Referral', desc: 'Find essential crisis contacts, verified provider contacts and nearby community services from a postcode.', color: '#0284c7' },
-  { icon: Sparkles, title: 'Automation & Spreadsheet Exchange', desc: 'Use assisted checks, scheduled reminders and secure Excel import, preview and export across connected modules.', color: '#be185d' },
+  { icon: Users, title: 'Workforce Records', desc: 'Maintain staff profiles, employment documents, certificates, teams and consent-aware audit access.', color: '#0072FF' },
+  { icon: Heart, title: 'Participant Records', desc: 'Centralise participant profiles, support plans, agreements, and folder compliance checklists.', color: '#0A2B6D' },
+  { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, manage shifts, availability, handovers, approvals, vehicle checks and payable hours.', color: '#5A00D6' },
+  { icon: BriefcaseBusiness, title: 'Employee Performance Reviews', desc: 'Complete online appraisals, manage review schedules and maintain connected employment records.', color: '#A100FF' },
+  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'Build professional NDIS invoices from rostered shifts, apply price-guide items and generate payroll-ready reports.', color: '#FF2E9A' },
+  { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate, and resolve incidents with automatic alerts and full audit trails.', color: '#A100FF' },
+  { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess, and treat risks and hazards with a live register and mitigation tracking.', color: '#5A00D6' },
+  { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions, and stay on top of expiring certifications automatically.', color: '#0A2B6D' },
+  { icon: BadgeCheck, title: 'NDIS Provider Governance', desc: 'Store registration certificates and groups, schedule audits and renewals, receive reminders and open official Commission portals.', color: '#0072FF' },
+  { icon: ClipboardCheck, title: 'Express Audit & Certification', desc: 'Complete internal audits in minutes from checklists with evidence attached, generate branded reports, manage NDIS deadlines and prepare printable file checklists.', color: '#00C6FF' },
+  { icon: MapPinned, title: 'Community Referral', desc: 'Find essential crisis contacts, verified provider contacts and nearby community services from a postcode.', color: '#FF6EDB' },
+  { icon: Sparkles, title: 'Automation & Spreadsheet Exchange', desc: 'Use assisted checks, scheduled reminders and secure Excel import, preview and export across connected modules.', color: '#C084FC' },
 ];
 
 export default function FeaturesSection() {

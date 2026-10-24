@@ -28,8 +28,8 @@ export default function RosterMiniOverview() {
       <div
         className="comm-panel-bar relative flex flex-wrap items-center justify-between gap-1.5 px-2 py-1 text-white"
         style={{
-          background: 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)',
-          '--comm-bar-bg': 'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)',
+          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)',
+          '--comm-bar-bg': 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)',
           color: '#fff',
         }}
       >

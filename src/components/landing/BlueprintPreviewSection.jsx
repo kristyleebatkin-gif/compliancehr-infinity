@@ -12,7 +12,7 @@ import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import Reveal from '@/components/landing/Reveal';
 
 const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean).map((m) => [m.label, m.blurb, m.key]);
@@ -20,27 +20,27 @@ const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean).map((m) => [
 const APP_MODULE_GROUPS = [
   {
     title: 'People, intake and profiles',
-    color: '#7c3aed',
+    color: '#0072FF',
     modules: pick('dashboard', 'intake', 'staff', 'participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'),
   },
   {
     title: 'Service delivery and workforce',
-    color: '#2563eb',
+    color: '#0A2B6D',
     modules: pick('communications', 'incidents', 'risks', 'rostering', 'goals', 'tasks', 'emergency-response'),
   },
   {
     title: 'Compliance, safety and evidence',
-    color: '#0d9488',
+    color: '#5A00D6',
     modules: pick('compliance', 'documents', 'company-safe', 'training', 'certificates', 'quality', 'feedback', 'meetings'),
   },
   {
     title: 'Business, finance and growth',
-    color: '#16a34a',
+    color: '#A100FF',
     modules: pick('invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'analytics', 'human-resources', 'crm', 'projects'),
   },
   {
     title: 'Information, providers and access',
-    color: '#ea580c',
+    color: '#FF2E9A',
     modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'help', 'user-guides', 'assistant'),
   },
 ];

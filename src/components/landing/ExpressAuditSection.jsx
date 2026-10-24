@@ -14,7 +14,7 @@ import {
 import Reveal from '@/components/landing/Reveal';
 
 const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 
 const FLOW = [
   {
@@ -22,36 +22,36 @@ const FLOW = [
     step: '01',
     title: 'Open a checklist',
     text: 'Pick any area — participants, staff, governance or safety — from the built-in audit checklist library.',
-    color: '#2563eb',
+    color: '#0072FF',
   },
   {
     icon: Upload,
     step: '02',
     title: 'Answer and attach evidence',
     text: 'Tick each item and attach the exact document, scan, photo or register entry as your evidence.',
-    color: '#7c3aed',
+    color: '#5A00D6',
   },
   {
     icon: FileCheck2,
     step: '03',
     title: 'Raise corrective actions',
     text: 'Anything not compliant becomes a corrective action, filed straight into the continuous improvement register.',
-    color: '#db2777',
+    color: '#A100FF',
   },
   {
     icon: FileText,
     step: '04',
     title: 'Generate the report',
     text: 'One tap produces your branded audit report, logged in the Internal Audit Register and ready for NDIS verification or certification.',
-    color: '#0d9488',
+    color: '#FF2E9A',
   },
 ];
 
 const PROOF = [
-  { icon: Timer, text: 'Internal audits completed in minutes, not days', color: '#2563eb' },
-  { icon: FolderCheck, text: 'Every document in every section, audited in one pass', color: '#7c3aed' },
-  { icon: ScanLine, text: 'Evidence, scans and receipts captured as you go', color: '#db2777' },
-  { icon: BadgeCheck, text: 'Reports, registers and CSV exports ready for your NDIS auditor', color: '#16a34a' },
+  { icon: Timer, text: 'Internal audits completed in minutes, not days', color: '#0072FF' },
+  { icon: FolderCheck, text: 'Every document in every section, audited in one pass', color: '#5A00D6' },
+  { icon: ScanLine, text: 'Evidence, scans and receipts captured as you go', color: '#A100FF' },
+  { icon: BadgeCheck, text: 'Reports, registers and CSV exports ready for your NDIS auditor', color: '#FF2E9A' },
 ];
 
 const VERBS = ['Store', 'Copy', 'Use', 'Audit', 'Share', 'Scan', 'Send', 'Sort', 'File', 'Report'];

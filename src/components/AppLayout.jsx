@@ -148,7 +148,7 @@ export default function AppLayout() {
     <div className="flex h-full min-h-0 flex-col">
       <div
         className="shrink-0 px-3.5 py-3 text-white"
-        style={{ background: 'linear-gradient(120deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%)' }}
+        style={{ background: 'var(--header-gradient)' }}
       >
         <div className="flex items-center gap-2.5">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR INFINITY" className="h-9 w-9 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />

@@ -26,10 +26,10 @@ const STEPS = [
   },
 ];
 const ACCENTS = [
-  { chip: 'from-violet-100 to-fuchsia-100 text-violet-700 dark:from-violet-500/20 dark:to-fuchsia-500/20 dark:text-violet-300', rule: 'from-violet-500 to-fuchsia-400', ghost: 'text-violet-100 dark:text-violet-500/15' },
-  { chip: 'from-blue-100 to-cyan-100 text-blue-700 dark:from-blue-500/20 dark:to-cyan-500/20 dark:text-blue-300', rule: 'from-blue-500 to-cyan-400', ghost: 'text-blue-100 dark:text-blue-500/15' },
-  { chip: 'from-emerald-100 to-teal-100 text-emerald-700 dark:from-emerald-500/20 dark:to-teal-500/20 dark:text-emerald-300', rule: 'from-emerald-500 to-teal-400', ghost: 'text-emerald-100 dark:text-emerald-500/15' },
-  { chip: 'from-orange-100 to-rose-100 text-orange-700 dark:from-orange-500/20 dark:to-rose-500/20 dark:text-orange-300', rule: 'from-orange-500 to-rose-400', ghost: 'text-orange-100 dark:text-orange-500/15' },
+  { chip: 'from-[#0072FF] to-[#0A2B6D] text-white', rule: 'from-[#0072FF] to-[#0A2B6D]', ghost: 'text-[#C084FC]/25' },
+  { chip: 'from-[#0A2B6D] to-[#5A00D6] text-white', rule: 'from-[#0A2B6D] to-[#5A00D6]', ghost: 'text-[#C084FC]/25' },
+  { chip: 'from-[#5A00D6] to-[#A100FF] text-white', rule: 'from-[#5A00D6] to-[#A100FF]', ghost: 'text-[#C084FC]/25' },
+  { chip: 'from-[#A100FF] to-[#FF2E9A] text-white', rule: 'from-[#A100FF] to-[#FF2E9A]', ghost: 'text-[#FF6EDB]/25' },
 ];
 
 export default function QuickStartSection() {
