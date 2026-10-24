@@ -713,19 +713,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
 
             {/* Section 3: 7 Core User Roles + Section 23/24 Approved Brand & Module Palette */}
-            <div className="rounded-xl border-2 border-[#442078] bg-white p-2.5 space-y-2">
-              <div className="flex items-center justify-between border-b border-[#A45CDE]/40 pb-1.5">
+            <div className="rounded-xl border-2 border-[#7c3aed] bg-purple-50/30 p-2.5 space-y-2" style={{ borderTopWidth: '4px' }}>
+              <div className="flex items-center justify-between border-b border-purple-200 pb-1.5">
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-[#12214B]">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-blue-950">
                     Section 3 Role Governance &amp; Section 23–24 Approved Visual Identity
                   </h3>
-                  <p className="text-[8px] font-semibold text-[#442078]">
+                  <p className="text-[8px] font-semibold text-purple-800">
                     7 Core Roles + Custom Roles · View/Edit/Submit/Approve Separation · Approved Palette
                   </p>
                 </div>
                 <Link
                   to="/users"
-                  className="inline-flex items-center gap-1 rounded-lg bg-[#12214B] px-2 py-1 text-[8px] font-black text-white hover:bg-[#184A9C]"
+                  className="inline-flex items-center gap-1 rounded-lg bg-[#7c3aed] px-2 py-1 text-[8px] font-black text-white hover:bg-purple-700"
                 >
                   <Lock className="h-2.5 w-2.5" /> Manage Roles &amp; Access
                 </Link>
@@ -741,17 +741,21 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   { role: 'Provider Administrator', scope: 'Full Executive Control' },
                   { role: 'Auditor', scope: 'Consented Evidence Portal' },
                   { role: 'Custom Roles', scope: 'HR / Finance / Quality / Intake' },
-                ].map((r) => (
-                  <div key={r.role} className="rounded-lg border border-[#A45CDE]/50 bg-[#F4EAFB]/40 p-1.5">
-                    <div className="text-[8px] font-black text-[#12214B]">{r.role}</div>
-                    <div className="text-[7px] font-semibold text-[#442078]">{r.scope}</div>
-                  </div>
-                ))}
+                ].map((r, i) => {
+                  const rolePalette = ['#6366f1', '#e11d48', '#2563eb', '#0891b2', '#6d28d9', '#db2777', '#1d4ed8', '#0d9488'];
+                  const hex = rolePalette[i % rolePalette.length];
+                  return (
+                    <div key={r.role} className="rounded-lg border bg-white p-1.5" style={{ borderColor: `${hex}66`, borderTopWidth: '3px', borderTopColor: hex }}>
+                      <div className="text-[8px] font-black" style={{ color: hex }}>{r.role}</div>
+                      <div className="text-[7px] font-semibold text-purple-900">{r.scope}</div>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Approved Section 23 Brand Palette Swatches */}
               <div className="pt-1">
-                <div className="text-[7.5px] font-black uppercase tracking-wider text-[#12214B] mb-1">
+                <div className="text-[7.5px] font-black uppercase tracking-wider text-blue-950 mb-1">
                   Approved ComplianceHR Infinity Brand Palette (Section 23) &amp; 29 Module Accents (Section 24)
                 </div>
                 <div className="grid grid-cols-4 sm:grid-cols-8 gap-1">
@@ -761,8 +765,8 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       className="rounded border p-1 text-center"
                       style={{
                         background: hex,
-                        color: hex === '#F4EAFB' ? '#12214B' : '#ffffff',
-                        borderColor: '#12214B',
+                        color: hex === '#F4EAFB' ? '#4f46e5' : '#ffffff',
+                        borderColor: '#7c3aed',
                       }}
                     >
                       <div className="text-[6.5px] font-black uppercase truncate">{name}</div>
