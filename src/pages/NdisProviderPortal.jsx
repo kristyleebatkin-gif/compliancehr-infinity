@@ -8,6 +8,7 @@ import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import NdisDeadlineTracker from '@/components/ndis/NdisDeadlineTracker';
 import GovernanceControlsRegister from '@/components/ndis/GovernanceControlsRegister';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
 
 const PORTALS = [
   { name: 'myplace Provider Portal', url: 'https://www.myplace.ndis.gov.au', icon: Landmark, desc: 'The NDIA provider portal for claims, payment requests, bulk billing and viewing participant plan information. Sign in with your own PRODA / myplace credentials.' },
@@ -34,6 +35,7 @@ export default function NdisProviderPortal() {
       </div>
 
       <NdisPortalCards portals={PORTALS} />
+      <BestInClassBenchmarkSuite />
     </div>
   );
 }

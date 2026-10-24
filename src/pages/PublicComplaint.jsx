@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, MessageCircleWarning, ShieldCheck } from 'lucide-react';
+import { COMPANY_LOGO_URL, COMPANY_NAME, COMPANY_SLOGAN } from '@/lib/companyBranding';
 
 // Public complaint form: anyone visiting the provider's site can raise a
 // complaint without logging in. Creates the record through publicSubmissions.
@@ -37,7 +38,19 @@ export default function PublicComplaint() {
 
   return (
     <div className="min-h-screen bg-background px-4 py-10 font-elegant antialiased sm:py-16">
-      <div className="mx-auto w-full max-w-xl">
+      <div className="mx-auto w-full max-w-xl space-y-4">
+        <div className="flex items-center justify-between rounded-2xl border-2 border-[#12214B] bg-[#12214B] px-4 py-3 text-white shadow-md">
+          <div className="flex items-center gap-3">
+            <img src={COMPANY_LOGO_URL} alt={COMPANY_NAME} className="h-10 w-10 rounded-lg border border-white/30 bg-white object-contain p-0.5" />
+            <div>
+              <div className="text-sm font-black tracking-tight">{COMPANY_NAME}</div>
+              <div className="text-[10px] font-semibold text-[#F4EAFB]">{COMPANY_SLOGAN}</div>
+            </div>
+          </div>
+          <Link to="/" className="rounded-lg bg-white/15 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/25">
+            Home
+          </Link>
+        </div>
         {reference ? (
           <div className="rounded-3xl border border-emerald-200 bg-white p-8 text-center shadow-xl shadow-emerald-500/10 dark:border-emerald-500/20 dark:bg-card">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/15">

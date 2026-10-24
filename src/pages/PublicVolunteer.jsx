@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, HeartHandshake } from 'lucide-react';
+import { COMPANY_LOGO_URL, COMPANY_NAME, COMPANY_SLOGAN } from '@/lib/companyBranding';
 
 // Public volunteer / student placement interest form. Creates a
 // VolunteerInterest record through publicSubmissions (service-role endpoint).
@@ -62,7 +63,20 @@ export default function PublicVolunteer() {
 
   return (
     <div className="min-h-screen bg-background px-4 py-10 font-elegant antialiased sm:py-16">
-      <div className="mx-auto w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-violet-500/10 sm:p-8 dark:border-white/10 dark:bg-card">
+      <div className="mx-auto w-full max-w-xl space-y-4">
+        <div className="flex items-center justify-between rounded-2xl border-2 border-[#12214B] bg-[#12214B] px-4 py-3 text-white shadow-md">
+          <div className="flex items-center gap-3">
+            <img src={COMPANY_LOGO_URL} alt={COMPANY_NAME} className="h-10 w-10 rounded-lg border border-white/30 bg-white object-contain p-0.5" />
+            <div>
+              <div className="text-sm font-black tracking-tight">{COMPANY_NAME}</div>
+              <div className="text-[10px] font-semibold text-[#F4EAFB]">{COMPANY_SLOGAN}</div>
+            </div>
+          </div>
+          <Link to="/" className="rounded-lg bg-white/15 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/25">
+            Home
+          </Link>
+        </div>
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-violet-500/10 sm:p-8 dark:border-white/10 dark:bg-card">
         <div className="flex items-center gap-3">
           <div className="rounded-xl bg-teal-500/10 p-2.5"><HeartHandshake className="h-5 w-5 text-teal-600" /></div>
           <div>
@@ -139,6 +153,7 @@ export default function PublicVolunteer() {
             {sending ? 'Submitting...' : 'Submit interest'}
           </Button>
         </div>
+      </div>
       </div>
     </div>
   );
