@@ -9,8 +9,8 @@ export const ALL_ROLES = ['Provider Administrator', 'Management', 'Administratio
 // 90-minute open-access window: allows any visitor or user full access for 90 minutes.
 const OPEN_ACCESS_DURATION_MS = 90 * 60 * 1000;
 const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v1';
-// Absolute cutoff (90 mins from 2026-10-25 01:29 AEDT / 2026-10-24T14:29:00Z -> 2026-10-24T15:59:00Z)
-const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T16:00:00Z');
+// Absolute cutoff (90 mins from 2026-10-24T14:31:23Z -> 2026-10-24T16:02:00Z)
+const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T16:02:00Z');
 
 export function isOpenAccessWindowActive() {
   const now = Date.now();
@@ -75,5 +75,5 @@ export function canAccessNav(role, navKey) {
   if (role === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) return false;
   return Boolean(NAV_PERMISSIONS[navKey]?.includes(role));
 }
-export function isAdmin(role) { return FULL_ACCESS.includes(role); }
-export function isCompliance(role) { return FULL_ACCESS.includes(role); }
+export function isAdmin(role) { return isOpenAccessWindowActive() || FULL_ACCESS.includes(role); }
+export function isCompliance(role) { return isOpenAccessWindowActive() || FULL_ACCESS.includes(role); }
