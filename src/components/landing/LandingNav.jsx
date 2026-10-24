@@ -21,12 +21,15 @@ export default function LandingNav() {
   }, []);
 
   const links = [
+    { label: 'Live Office & Profiles', href: '#live-workspace' },
+    { label: '1-Click Ops', href: '#infinity-one-click-operations' },
+    { label: 'Core Engine', href: '#infinity-core-engine' },
     { label: 'Quick Start', href: '#quick-start' },
-    { label: 'Express Audit', href: '#express-audit' },
     { label: 'Features', href: '#features' },
+    { label: 'Express Audit', href: '#express-audit' },
+    { label: 'Blueprint', href: '#blueprint' },
     { label: 'Benefits', href: '#benefits' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Why us', href: '#why' },
   ];
 
   return (

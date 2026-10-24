@@ -11,11 +11,12 @@ import PricingSection from '@/components/landing/PricingSection';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
+import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
-export default function MarketingSafeShowcase() {
+export default function MarketingSafeShowcase({ embedded = false }) {
   return (
     <div className="w-full bg-white p-1 space-y-1.5">
       {/* Sticky High-Converting Sales Navigation + Pitch Header */}
@@ -229,6 +230,11 @@ export default function MarketingSafeShowcase() {
         </div>
       </section>
 
+      {/* Flagship Infinity Control Centre (356 Audit Checkpoints · 98 Docs · Approvals · Role Governance) */}
+      <div id="infinity-control-centre" className="scroll-mt-16">
+        <InfinityControlCentreMasterSuite />
+      </div>
+
       {/* Flagship Infinity One-Click Operations & Executive Command Deck */}
       <InfinityOneClickOperations />
 
@@ -238,7 +244,7 @@ export default function MarketingSafeShowcase() {
       {/* Flagship Business Health & Compliance Intelligence Dashboard */}
       <BusinessHealthComplianceIntelligenceDashboard />
 
-      {/* Section 1: Interactive Executive Office + General Profile + $355 Dual Master Compliance Audit Checklists */}
+      {/* Section 1: Interactive Executive Office + General Profile + Dual Master Compliance Audit Checklists */}
       <div id="live-workspace" className="scroll-mt-14">
         <ExecutiveWallScene showAllModulesMinimised={true} />
       </div>
@@ -249,37 +255,41 @@ export default function MarketingSafeShowcase() {
       {/* Section 3: Comprehensive 45-Screen 2026 Smart-Fill Audit & 1-Click Task Completion Studio */}
       <ScreenByScreenMasterAudit2026 />
 
-      {/* Section 4: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}
-      <PricingSection />
+      {!embedded && (
+        <>
+          {/* Section 4: Smart Enhanced All-In-One Monthly Subscription Packages ($660–$1,035/mo including +$160/mo Elite Plan) */}
+          <PricingSection />
 
-      {/* Compact High-Converting Footer Bar */}
-      <footer
-        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <div className="flex items-center gap-2">
-          <div className="flex h-7 w-10 items-center justify-center overflow-hidden rounded bg-white p-0.5">
-            <Image src={CHR_LOGO} alt="ComplianceHR Infinity" fittingType="fit" className="h-full w-full object-contain" />
-          </div>
-          <div className="text-[8px] font-extrabold">
-            <div>Software: ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success.</div>
-            <div className="text-amber-200">
-              Developer: Kristy Lee Whelan · North QLD · 0402 165 668 · kristyleebatkin@live.com.au
+          {/* Compact High-Converting Footer Bar */}
+          <footer
+            className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
+            style={{ background: SQUISHED_GRADIENT }}
+          >
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-10 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+                <Image src={CHR_LOGO} alt="ComplianceHR Infinity" fittingType="fit" className="h-full w-full object-contain" />
+              </div>
+              <div className="text-[8px] font-extrabold">
+                <div>Software: ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success.</div>
+                <div className="text-amber-200">
+                  Developer: Kristy Lee Whelan · North QLD · 0402 165 668 · kristyleebatkin@live.com.au
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          <Link to="/report-complaint" className="rounded-full bg-white/15 px-2.5 py-0.5 text-[7.5px] font-extrabold text-white hover:bg-white/25">
-            Public Complaint Portal
-          </Link>
-          <Link to="/volunteer-apply" className="rounded-full bg-white/15 px-2.5 py-0.5 text-[7.5px] font-extrabold text-white hover:bg-white/25">
-            Volunteer Application
-          </Link>
-          <Link to="/register" className="rounded-full bg-amber-300 px-3 py-0.5 text-[8px] font-black text-blue-950">
-            Start 14-Day Free Trial ($0 Upfront)
-          </Link>
-        </div>
-      </footer>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Link to="/report-complaint" className="rounded-full bg-white/15 px-2.5 py-0.5 text-[7.5px] font-extrabold text-white hover:bg-white/25">
+                Public Complaint Portal
+              </Link>
+              <Link to="/volunteer-apply" className="rounded-full bg-white/15 px-2.5 py-0.5 text-[7.5px] font-extrabold text-white hover:bg-white/25">
+                Volunteer Application
+              </Link>
+              <Link to="/register" className="rounded-full bg-amber-300 px-3 py-0.5 text-[8px] font-black text-blue-950">
+                Start 14-Day Free Trial ($0 Upfront)
+              </Link>
+            </div>
+          </footer>
+        </>
+      )}
     </div>
   );
 }
