@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Building2, Zap, Cpu, Activity, ShieldCheck, FileText, BookOpen, Layers,
   Users, Heart, CalendarClock, Siren, AlertTriangle, ClipboardCheck,
-  Sparkles, Download, ArrowRight, CheckCircle2, FolderOpen, Vault,
+  Sparkles, Download, ArrowRight, CheckCircle2, FolderOpen, Vault, Megaphone,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
@@ -16,6 +16,8 @@ import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standar
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
+import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
+import PricingSection from '@/components/landing/PricingSection';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 
 const SQUISHED_GRADIENT =
@@ -98,16 +100,25 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'print-store',
-    label: '8. Complete 2026 Document & 6-Binder Print Store',
-    shortLabel: '125+ Doc Print Store',
+    label: '8. Professional Business Compliance Documents Store ($999 Outright or $125/mo)',
+    shortLabel: 'Document Package Store',
     icon: BookOpen,
     color: '#16a34a',
-    badge: '6 Binder Volumes',
-    description: '125+ 2026 compliance documents and custom-branded 6-binder executive office sets.',
+    badge: '$999 or $125/mo',
+    description: '125+ 2026 compliance documents across 6 Binders — $999 outright or $125/month on a 24-month subscription plan.',
+  },
+  {
+    id: 'campaign-studio',
+    label: '9. Ready-to-Launch Marketing Flyer Campaign Studio & Pricing',
+    shortLabel: 'Marketing Campaign Studio',
+    icon: Megaphone,
+    color: '#ec4899',
+    badge: '4 Campaign Flyers',
+    description: 'Promote and share 4 ready-to-launch marketing flyers, pricing packages, and downloadable PDF brochures.',
   },
   {
     id: 'module-matrix',
-    label: '9. All Platform Modules & Registers Directory',
+    label: '10. All Platform Modules & Registers Directory',
     shortLabel: 'All Modules Matrix',
     icon: Layers,
     color: '#be123c',
@@ -117,7 +128,16 @@ const EXECUTIVE_RESOURCE_SUITES = [
 ];
 
 export default function ExecutiveOperationsCentre({ defaultSuite = 'all' }) {
-  const [activeSuite, setActiveSuite] = useState(defaultSuite);
+  const location = useLocation();
+  const [activeSuite, setActiveSuite] = useState(() => {
+    const param = new URLSearchParams(location.search).get('suite');
+    return param || defaultSuite;
+  });
+
+  useEffect(() => {
+    const param = new URLSearchParams(location.search).get('suite');
+    if (param) setActiveSuite(param);
+  }, [location.search]);
   const [kpi, setKpi] = useState({
     staff: 0,
     participants: 0,
@@ -332,7 +352,15 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'all' }) {
         <Complete2026DocumentPrintStore />
       )}
 
-      {/* ==================== SUITE 9: ALL MODULES & REGISTERS EXECUTIVE MATRIX ==================== */}
+      {/* ==================== SUITE 9: MARKETING FLYER CAMPAIGN STUDIO & PRICING ==================== */}
+      {(activeSuite === 'all' || activeSuite === 'campaign-studio') && (
+        <div className="space-y-2">
+          <MarketingFlyerCampaign />
+          <PricingSection />
+        </div>
+      )}
+
+      {/* ==================== SUITE 10: ALL MODULES & REGISTERS EXECUTIVE MATRIX ==================== */}
       {(activeSuite === 'all' || activeSuite === 'module-matrix') && (
         <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
           <div className="px-3 py-2 text-white" style={{ background: SQUISHED_GRADIENT }}>

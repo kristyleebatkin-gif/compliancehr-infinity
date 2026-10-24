@@ -220,7 +220,7 @@ export default function MustHaveFunctionsReview() {
           { val: '45', label: 'Connected Modules', color: '#4f46e5' },
           { val: '17', label: 'Audit Categories', color: '#db2777' },
           { val: '356', label: 'Audit Checkpoints', color: '#7c3aed' },
-          { val: '$355', label: 'Master Doc Included', color: '#ea580c' },
+          { val: '$999 / $125m', label: '125+ Docs Suite', color: '#ea580c' },
           { val: '100+', label: 'Server Functions', color: '#0ea5e9' },
           { val: '65+', label: 'Live Workflows', color: '#0d9488' },
           { val: '115+', label: 'Secured Entities', color: '#16a34a' },
@@ -276,14 +276,14 @@ export default function MustHaveFunctionsReview() {
 
         <div className="lg:col-span-3 flex flex-col gap-1 rounded-xl border-2 border-amber-400 bg-white p-2 text-center shadow-sm">
           <div className="text-[7.5px] font-black uppercase tracking-wider text-purple-800">
-            Included Free in Every Plan
+            Only Outright Docs Package (Or Free in Plan)
           </div>
           <div className="flex items-baseline justify-center gap-1">
-            <span className="font-editorial text-xl font-black text-blue-950">$355</span>
-            <span className="text-[7.5px] font-bold text-purple-700">Master Audit Doc</span>
+            <span className="font-editorial text-lg font-black text-blue-950">$999 Outright</span>
+            <span className="text-[7.5px] font-bold text-purple-700">or $125/mo (24m)</span>
           </div>
           <div className="rounded-md bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 text-[7.2px] font-black text-emerald-900">
-            CHR-AUD-001 &amp; CHR-AUD-002 · 17 Categories · 356 Checkpoints
+            125+ Docs · 6 Binders · CHR-AUD-001 &amp; 002
           </div>
           <div className="grid grid-cols-2 gap-1 pt-0.5">
             <a

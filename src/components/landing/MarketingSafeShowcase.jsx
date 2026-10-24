@@ -42,7 +42,7 @@ export default function MarketingSafeShowcase() {
                   ComplianceHR Infinity · Smart Enhanced All-In-One Business &amp; NDIS Super-Platform
                 </span>
                 <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
-                  $355 MASTER AUDIT DOC INCLUDED FREE IN PLANS
+                  DOCS PACKAGE: $999 OUTRIGHT OR $125/MO (24-MO) · FREE IN APP PLANS
                 </span>
                 <span className="rounded-full bg-white/20 px-2 py-0.5 text-[8px] font-black text-white">
                   +$160/MO ELITE INCLUDED ($660–$1,035/MO)
@@ -170,13 +170,13 @@ export default function MarketingSafeShowcase() {
             </h1>
 
             <p className="text-[8.5px] font-bold leading-snug text-blue-950">
-              Stop juggling disconnected spreadsheets, HR folders, rostering apps, and last-minute audit panic. **ComplianceHR Infinity** unites **45 live operational modules**, **16 Communication Centre modulars**, **100+ automated server functions**, **65+ 24/7 workflows**, a **Dual Interactive Office &amp; Profile Workspace**, and the new **$355 Master Compliance Audit Checklist (`CHR-AUD-001` &amp; `CHR-AUD-002` — 17 Categories · 356 Checkpoints · 11 Pages)** into one Smart Enhanced All-In-One Compliance Pack.
+              Stop juggling disconnected spreadsheets, HR folders, rostering apps, and last-minute audit panic. **ComplianceHR Infinity** unites **45 live operational modules**, **16 Communication Centre modulars**, **100+ automated server functions**, **65+ 24/7 workflows**, a **Dual Interactive Office &amp; Profile Workspace**, and our **Professional Business Compliance Documents Package ($999 Outright or $125/month on a 24-month plan — 125+ Documents + Master Audit Checklists `CHR-AUD-001` &amp; `CHR-AUD-002`)** into one Smart Enhanced All-In-One Compliance Pack.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 pt-0.5">
               {[
                 { label: 'Dual Office + Profile Views', sub: 'Interactive Wall & Modular Picker', color: '#2563eb' },
-                { label: '$355 Audit Doc Included', sub: '17 Categories · 356 Checkpoints', color: '#7c3aed' },
+                { label: '$999 Outright or $125/mo Docs', sub: '125+ Docs · 24-Mo Plan Option', color: '#7c3aed' },
                 { label: '+$160/mo Elite Pack Built-In', sub: '2,500 Msg & 20,000 Int. Credits', color: '#db2777' },
                 { label: 'Audit-Ready Every Day', sub: '1-Click Evidence & Board PDFs', color: '#16a34a' },
               ].map((pill) => (
@@ -211,7 +211,7 @@ export default function MarketingSafeShowcase() {
               <ul className="mt-1 space-y-0.5 text-[7.3px] font-bold text-blue-950">
                 <li className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3 shrink-0 text-emerald-600" />
-                  <span>Includes $355 Master Audit Checklist Free</span>
+                  <span>Includes $999 / $125m Docs Suite Free</span>
                 </li>
                 <li className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3 shrink-0 text-blue-600" />

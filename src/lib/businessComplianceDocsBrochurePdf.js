@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 
 /**
  * Generates an Executive A4 PDF Brochure for the Professional Business Compliance Documents Package:
- * - $999 Outright Purchase OR $125/month on a 24-Month Business Subscription Plan for Full Digital Suite Access
+ * - THE ONLY OUTRIGHT DOCUMENT PACKAGE: $999 Outright Purchase OR $125/month on a 24-Month Business Subscription Plan for Full Digital Suite Access
  * - Complete 6-Binder (125+ Document) Breakdown covering almost every compliance document needed for audits
  * - Official Audit Outcome & Regulatory Verification Assurance Notice
  */
@@ -34,7 +34,7 @@ export function downloadBusinessComplianceDocsBrochurePdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
   doc.text(
-    'OFFICIAL 2026 PRODUCT & PRICING BROCHURE · SOFTWARE: COMPLIANCEHR INFINITY',
+    `OFFICIAL 2026 PRODUCT & PRICING BROCHURE · SOFTWARE: ${organisation.toUpperCase()}`,
     M + 3,
     M + 5.2
   );
@@ -60,14 +60,14 @@ export function downloadBusinessComplianceDocsBrochurePdf({
 
   let y = M + 27;
 
-  // Section 1: Two Flexible Ways to Access the Full Digital Suite + Print Options
+  // Section 1: Pricing Options ($999 Outright or $125/Month on a 24-Month Subscription Plan, or Included in Full App Plans)
   doc.setFillColor(37, 99, 235);
   doc.rect(M, y, contentW, 5.5, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
   doc.text(
-    '1. FLEXIBLE BUSINESS PRICING OPTIONS — FULL DIGITAL SUITE ACCESS & PRINTED BINDER UPGRADES',
+    '1. OFFICIAL PACKAGE PRICING — $999 OUTRIGHT OR $125/MONTH (24-MONTH SUBSCRIPTION PLAN)',
     M + 2.5,
     y + 3.9
   );
@@ -75,18 +75,18 @@ export function downloadBusinessComplianceDocsBrochurePdf({
 
   const pricingOptions = [
     {
-      badge: 'OPTION A · OUTRIGHT DIGITAL SUITE',
+      badge: 'OPTION 1 · OUTRIGHT DIGITAL SUITE',
       price: '$999 AUD Outright',
-      sub: 'One-Time Outright Business Licence',
+      sub: 'One-Time Outright Business Purchase',
       bullets: [
         'Immediate lifetime digital access to all 6 Binders (125+ 2026 documents)',
         '1-Click Smart-Fill with your Business Name, ABN, Logo & Key Personnel',
-        'Includes both $355 Master Audit Checklists (CHR-AUD-001 & CHR-AUD-002)',
+        'Includes both Master Audit Checklists (CHR-AUD-001 & CHR-AUD-002 · 356 Checkpoints)',
       ],
       rgb: [37, 99, 235],
     },
     {
-      badge: 'OPTION B · 24-MONTH SUBSCRIPTION PLAN',
+      badge: 'OPTION 2 · 24-MONTH SUBSCRIPTION PLAN',
       price: '$125 / Month',
       sub: '24-Month Business Subscription Plan',
       bullets: [
@@ -97,13 +97,13 @@ export function downloadBusinessComplianceDocsBrochurePdf({
       rgb: [124, 58, 237],
     },
     {
-      badge: 'OPTION C · PRINTED 6-BINDER BOX SET',
-      price: '$1,994 Printed Set',
-      sub: 'Or $0 Digital Inside Full App Plans',
+      badge: 'INCLUDED IN FULL APP SUBSCRIPTIONS',
+      price: '$0 Included Free',
+      sub: 'Inside $660–$1,035/mo Smart Enhanced Plans',
       bullets: [
-        '$999 Digital Document Suite + $995 Commercial Colour Printing & 6 Arch Binders',
-        'Custom-branded spines, mylar tab dividers, laminated posters & courier delivery',
-        'Full Digital Suite is also 100% INCLUDED FREE in $660-$1,035/mo App Plans!',
+        'Full Digital Document Suite (125+ documents) is 100% included in monthly App Plans',
+        'Includes all 45 live operational modules + $160/mo Elite Plan credits',
+        'Start with a 14-Day $0 Upfront Free Trial of ComplianceHR Infinity',
       ],
       rgb: [219, 39, 119],
     },
@@ -286,7 +286,7 @@ export function downloadBusinessComplianceDocsBrochurePdf({
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(6.5);
   const assuranceParagraph =
-    'This Professional Business Compliance Documents Package ($999 Outright or $125/month on a 24-month subscription plan) provides an extensive library of almost every compliance document, policy, contract, consent, register, risk assessment, and checklist needed to help your team prepare for and complete NDIS, HR, WHS, and organisational governance audits. To ensure there is NO DOUBT of your compliance audit outcome of success, your business and key personnel must carefully check, tailor, complete, and verify all relevant and mandatory requirements specific to your registration groups, state/federal legislation, and operational scope prior to audit submission.';
+    'This Professional Business Compliance Documents Package ($999 Outright or $125/month on a 24-month business subscription plan) provides an extensive library of almost every compliance document, policy, contract, consent, register, risk assessment, and checklist needed to help your team prepare for and complete NDIS, HR, WHS, and organisational governance audits. To ensure there is NO DOUBT of your compliance audit outcome of success, your business and key personnel must carefully check, tailor, complete, and verify all relevant and mandatory requirements specific to your registration groups, state/federal legislation, and operational scope prior to audit submission.';
   const wrappedAssurance = doc.splitTextToSize(assuranceParagraph, contentW - 6);
   doc.text(wrappedAssurance, M + 3, y + 9);
 
@@ -299,7 +299,7 @@ export function downloadBusinessComplianceDocsBrochurePdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.2);
   doc.text(
-    '4. ORDER / SUBSCRIPTION SELECTION & AUDIT READINESS ACKNOWLEDGEMENT',
+    '4. PACKAGE SELECTION ($999 OUTRIGHT OR $125/MO 24-MONTH PLAN) & ACKNOWLEDGEMENT',
     M + 2.5,
     y + 3.7
   );
@@ -313,33 +313,33 @@ export function downloadBusinessComplianceDocsBrochurePdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(6.8);
   doc.text(
-    '[  ] $999 AUD Outright — Full Digital Suite Access (All 6 Binders · 125+ Documents)',
+    '[  ] $999 AUD Outright — Professional Business Compliance Documents Package (Full Digital Suite · All 6 Binders · 125+ Docs)',
     M + 3,
-    y + 5
+    y + 5.5
   );
   doc.text(
-    '[  ] $125 / Month (24-Month Business Subscription Plan) — Full Digital Suite Access',
+    '[  ] $125 / Month (24-Month Business Subscription Plan) — Professional Business Compliance Documents Package (Full Digital Suite)',
     M + 3,
-    y + 9.5
+    y + 10.5
   );
   doc.text(
-    '[  ] $1,994 AUD — Complete 6-Binder Printed & Tab-Indexed Office Box Set + Full Digital Suite',
+    '[  ] Full Monthly App Subscription ($660–$1,035/mo Smart Enhanced Plan — Includes Full Digital Document Suite Free)',
     M + 3,
-    y + 14
+    y + 15.2
   );
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(6.5);
   doc.text(
-    `Business Name: ${businessName || '______________________________________'}    ABN: ${abn || '_______________________'}`,
+    `Business Name: ${businessName || 'ComplianceHR Infinity'}    ABN: ${abn || '11769681650'}`,
     M + 3,
-    y + 19.2
+    y + 19.8
   );
   doc.setFont('helvetica', 'bold');
   doc.text(
     'Authorised Representative Signature: _______________________________    Date: ____/____/2026',
     M + 3,
-    y + 23.5
+    y + 23.8
   );
 
   // Footer
@@ -352,5 +352,5 @@ export function downloadBusinessComplianceDocsBrochurePdf({
     H - 4.5
   );
 
-  doc.save('ComplianceHR-2026-Professional-Business-Compliance-Documents-Brochure.pdf');
+  doc.save('ComplianceHR-Infinity-2026-Professional-Business-Compliance-Documents-Brochure.pdf');
 }

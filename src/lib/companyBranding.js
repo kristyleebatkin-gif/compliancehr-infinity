@@ -23,8 +23,14 @@ const composeAddress = (business) => [
   [business?.suburb, business?.state, business?.postcode].filter(Boolean).join(' '),
 ].filter(Boolean).join(', ');
 
+const sanitizeCompanyName = (val) => {
+  const s = String(val || '').trim();
+  if (!s || /choices\s*(nq|north\s*queensland)/i.test(s)) return DEFAULTS.companyName;
+  return s;
+};
+
 const businessToBranding = (business) => ({
-  companyName: business?.business_name || business?.trading_name || '',
+  companyName: sanitizeCompanyName(business?.business_name || business?.trading_name),
   addressLine: composeAddress(business) || '',
   abn: business?.abn || '',
   phone: business?.phone || '',
@@ -48,6 +54,7 @@ async function logoUrlToDataUrl(url) {
 export function getCompanyBranding() {
   try {
     const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    branding.companyName = sanitizeCompanyName(branding.companyName);
     if (!branding.logoUrl || LEGACY_LOGO_URLS.has(branding.logoUrl)) {
       branding.logoUrl = OFFICIAL_LOGO_WITH_SLOGAN_URL;
     }

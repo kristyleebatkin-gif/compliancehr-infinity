@@ -169,7 +169,7 @@ export function SingleMasterComplianceAuditForm({
   onChangeCategory,
   compact = false,
 }) {
-  const isGold = variant === 'gold' || variant === 'choices';
+  const isGold = variant === 'gold';
   const category = AUDIT_CATEGORIES_17[categoryIndex] || AUDIT_CATEGORIES_17[0];
 
   const [meta, setMeta] = useState(() =>
@@ -726,7 +726,7 @@ export function SingleMasterComplianceAuditForm({
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-400 text-purple-950">
                     <MapPin className="h-2 w-2" />
                   </span>
-                  North Queensland · Australia
+                  ComplianceHR Infinity · Australia
                 </span>
               </>
             ) : (
@@ -795,7 +795,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 COMPLIANCEHR INFINITY · MASTER COMPLIANCE AUDIT CHECKLIST (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
               </span>
               <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                $355 STANDALONE DOC · INCLUDED FREE IN SMART ENHANCED PLANS
+                INCLUDED IN $999 OUTRIGHT OR $125/MO (24-MO) DOCS PACKAGE &amp; FULL APP PLANS
               </span>
             </div>
             <div className="truncate text-[7.5px] font-bold text-amber-100">

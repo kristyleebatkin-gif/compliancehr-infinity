@@ -112,137 +112,58 @@ export const COMPLETE_2026_BINDERS = [
 ];
 
 /**
- * 2026 Compliance Document & Professional Print Ordering Packages
- * Pricing carefully accounts for high-grade colour printing, heavy-duty binders,
- * custom mylar tab dividers, lamination, staff assembly time, packaging & tracked courier shipping.
+ * Professional Business Compliance Documents Package:
+ * The ONLY standalone document package is $999 Outright OR $125/month on a 24-Month Business Subscription Plan
+ * for Full Digital Suite Access (also included $0 free inside our $660–$1,035/mo Smart Enhanced App Plans).
  */
 export const PRINT_AND_DOCUMENT_PACKAGES = [
   {
-    id: 'audit-checklist-digital',
-    badge: 'DIGITAL AUDIT DOC',
-    name: '1. Digital 2026 Master Compliance Audit Checklist (CHR-AUD-001 & 002)',
-    format: 'Instant Digital Smart-Fill & Printable PDF (11 Pages · 17 Categories · 356 Checkpoints)',
-    docPrice: 355,
-    printFee: 0,
-    totalPrice: 355,
-    subNote: 'OR $0 (INCLUDED FREE) with any Monthly App Subscription ($660–$1,035/mo)',
-    color: '#6d28d9',
-    highlights: [
-      'Both Executive Gold (CHR-AUD-001) & Infinity Purple (CHR-AUD-002) editions',
-      '17 Audit Categories & 356 Checkpoints across 11 pages',
-      'Interactive Yes / No / N/A ticks + unlimited self-printing licence',
-    ],
-  },
-  {
-    id: 'audit-checklist-printed',
-    badge: 'PRINTED & BOUND BINDER',
-    name: '2. Printed & Tab-Indexed Master Compliance Audit Checklist Binder',
-    format: 'Heavyweight 160gsm Full-Colour Print + Tabbed Audit Presentation Binder + Courier Delivery',
-    docPrice: 355,
-    printFee: 140,
-    totalPrice: 495,
-    subNote: '$355 Audit Checklist + $140 Professional Colour Printing, Binding & Express Shipping',
-    color: '#d97706',
-    highlights: [
-      'Professionally printed in full vibrant colour on heavyweight 160gsm paper',
-      'Presented in a wipe-clean Executive Audit Ring Binder with 17 category tabs',
-      'Includes laminated Compliance Status Key & Express Tracked Courier Delivery',
-    ],
-  },
-  {
     id: 'all-2026-docs-digital',
-    badge: 'PROFESSIONAL BUSINESS COMPLIANCE DOCUMENTS PACKAGE · $999 OUTRIGHT OR $125/MO',
-    name: '3. Professional Business Compliance Documents Package — Full Digital Suite (All 6 Binders · 125+ Docs)',
-    format: 'Extensive Digital Suite Covering Almost Every Compliance Document to Help Complete Your Audits — $999 Outright OR $125/mo (24-Month Plan)',
+    badge: 'OPTION 1 · $999 OUTRIGHT PURCHASE (FULL DIGITAL SUITE)',
+    name: '1. Professional Business Compliance Documents Package — $999 Outright (Full Digital Suite · All 6 Binders · 125+ Docs)',
+    format: 'Extensive Digital Suite Covering Almost Every Compliance Document to Help Complete Your Audits — One-Time $999 Outright Licence',
     docPrice: 999,
     monthlySubPrice: 125,
     monthlySubTermMonths: 24,
     printFee: 0,
     totalPrice: 999,
-    priceDisplay: '$999 Outright OR $125/mo',
-    subNote: '$999 Outright Purchase OR $125/month on a 24-Month Business Subscription Plan (or $0 FREE in Full App Plans)',
+    priceDisplay: '$999 Outright',
+    subNote: 'One-Time $999 Outright Purchase for Full Digital Suite Access (or choose $125/month on a 24-Month Business Subscription Plan)',
     color: '#2563eb',
     featured: true,
     highlights: [
-      'Flexible Business Access: $999 Outright OR $125/month on a 24-month subscription plan for full digital suite access',
-      'Extensive 125+ document library covering almost every document required to help your business complete compliance audits',
-      '1-Click Smart-Fill with your organisation name, ABN, logo & key personnel + $355 Master Audit Checklists included',
+      'Immediate lifetime digital access to all 6 Binders & 125+ extensive 2026 compliance documents',
+      'Covers almost every document required to help your business prepare for and complete NDIS, HR & WHS audits',
+      '1-Click Smart-Fill with your organisation name, ABN, logo & key personnel + Master Audit Checklists (CHR-AUD-001 & 002) included',
       'Check all relevant & specific regulatory requirements for your business so there is no doubt of your compliance audit outcome of success',
     ],
   },
   {
     id: 'all-2026-docs-digital-monthly',
-    badge: '24-MONTH DIGITAL SUBSCRIPTION · $125/MONTH',
-    name: '3B. Professional Business Compliance Documents Package — $125/mo Digital Suite (24-Month Plan)',
-    format: 'Full Digital Suite Access (125+ Extensive Audit & Compliance Documents) on a 24-Month Business Subscription Plan',
+    badge: 'OPTION 2 · $125/MONTH (24-MONTH SUBSCRIPTION PLAN)',
+    name: '2. Professional Business Compliance Documents Package — $125/Month on a 24-Month Business Subscription Plan',
+    format: 'Full Digital Suite Access (All 6 Binders · 125+ Extensive Audit & Compliance Documents) on a 24-Month Business Subscription Plan',
     docPrice: 125,
+    monthlySubPrice: 125,
+    monthlySubTermMonths: 24,
     printFee: 0,
     totalPrice: 125,
     priceDisplay: '$125 / month',
-    subNote: '24-Month Business Subscription Plan for Full Digital Suite Access (or $999 Outright anytime)',
-    color: '#4f46e5',
+    subNote: '24-Month Business Subscription Plan for Full Digital Suite Access (or $999 Outright Purchase anytime)',
+    color: '#7c3aed',
+    featured: true,
     highlights: [
-      'Just $125/month on a 24-month business subscription plan for immediate full digital suite access',
+      'Just $125/month on a 24-month business subscription plan for immediate Day-1 full digital suite access',
       'Covers almost every compliance policy, contract, intake pack, consent, risk form, register & SOP manual',
       'Extensive documentation designed to help your team prepare for and complete NDIS, HR & WHS audits',
       'Review and verify all relevant & required items for your scope so there is no doubt of a successful audit outcome',
-    ],
-  },
-  {
-    id: 'all-2026-docs-printed-box',
-    badge: 'MOST POPULAR PRINT PACK · 6 BINDERS DELIVERED',
-    name: '4. Complete 2026 Printed & Tab-Indexed Master Compliance 6-Binder Office Box Set',
-    format: 'All 125+ Extensive Compliance Documents Professionally Printed, Tab-Indexed & Delivered in 6 Arch Binders',
-    docPrice: 999,
-    printFee: 995,
-    totalPrice: 1994,
-    subNote: '$999 Professional Business Compliance Documents Package + $995 Commercial Colour Printing, 6 Binders, Lamination & Courier',
-    color: '#db2777',
-    featured: true,
-    highlights: [
-      'We do all the printing, sorting, hole-punching, mylar tab-indexing & binder assembly for you',
-      '6 Heavy-Duty Colour-Coded Arch Lever Binders (Governance, HR, Participants, Safety, Finance, SOPs)',
-      'Custom-branded with your Business Name, ABN & Logo on every cover spine & document header',
-      'Includes 10 Pre-Printed Participant Intake Folders + 10 Staff Onboarding Folders + Laminated Wall Posters',
-    ],
-  },
-  {
-    id: 'subscriber-print-upgrade',
-    badge: 'FOR MONTHLY APP SUBSCRIBERS',
-    name: '5. App Subscriber Print-Only Upgrade (6 Printed Binders + Wall Posters Delivered)',
-    format: 'Already on a $660–$1,035/mo Plan? Your Digital Docs are Free — Only Pay for Printing & Delivery!',
-    docPrice: 0,
-    printFee: 995,
-    totalPrice: 995,
-    subNote: 'Digital Suite is $0 for App Subscribers — $995 covers 1,200+ colour pages, 6 binders & courier!',
-    color: '#0d9488',
-    highlights: [
-      'Exclusive rate for active ComplianceHR Infinity Monthly Subscribers ($660–$1,035/mo)',
-      'Covers commercial colour printing of all 125+ documents (1,200+ pages), 6 binders & tabs',
-      'Includes Laminated Emergency/Rights Wall Posters + 20 Laminated Staff ID Badges & Lanyards',
-    ],
-  },
-  {
-    id: 'custom-print-refill',
-    badge: 'PRINT REFILL PACK',
-    name: '6. Printed Onboarding & Safety Station Refill Pack (20 Folders + Visitor/Take-5 Books)',
-    format: '10 Participant Welcome Folders + 10 Staff HR Folders + 5 Take-5 Books + Visitor Sign-In Book',
-    docPrice: 250,
-    printFee: 240,
-    totalPrice: 490,
-    subNote: '$250 Document Pack + $240 Printing, Folder Presentation & Tracked Delivery',
-    color: '#16a34a',
-    highlights: [
-      '10 Printed & Bound Participant Welcome, Service Agreement & 3-Part Consent Folders',
-      '10 Printed & Bound Employee Onboarding, Contract & 100-Point Screening Folders',
-      '5 Printed Pre-Shift Take-5 Safety Pocket Books + 1 Printed Reception Visitor Sign-In Register',
     ],
   },
 ];
 
 export default function Complete2026DocumentPrintStore() {
   const { toast } = useToast();
-  const [selectedPkgId, setSelectedPkgId] = useState('all-2026-docs-printed-box');
+  const [selectedPkgId, setSelectedPkgId] = useState('all-2026-docs-digital');
   const [orderForm, setOrderForm] = useState({
     businessName: '',
     contactName: '',
@@ -450,7 +371,7 @@ export default function Complete2026DocumentPrintStore() {
             What You Get: All 6 Complete 2026 Compliance Binders (125+ Smart-Fill &amp; Print-Ready Documents)
           </span>
           <span className="font-body text-[7.8px] font-extrabold text-purple-800">
-            Order Individual Binders ($360–$440 Printed) or the Full 6-Binder Office Box Set
+            All 6 Binders Included in the $999 Outright or $125/Month (24-Month Plan) Package
           </span>
         </div>
 
@@ -470,7 +391,7 @@ export default function Complete2026DocumentPrintStore() {
                     {b.binderNumber}
                   </span>
                   <span className="font-body text-[7.5px] font-extrabold text-white">
-                    Single Printed Binder: ${b.singleBinderPrintPrice}
+                    Included in $999 Outright / $125m Plan
                   </span>
                 </div>
                 <div className="p-2 space-y-1">
@@ -499,11 +420,11 @@ export default function Complete2026DocumentPrintStore() {
                 </span>
                 <a
                   href="#order-print-pack-form"
-                  onClick={() => setSelectedPkgId('all-2026-docs-printed-box')}
+                  onClick={() => setSelectedPkgId('all-2026-docs-digital')}
                   className="rounded px-2 py-0.5 font-body text-[7px] font-black text-white"
                   style={{ background: b.color }}
                 >
-                  Order Printed
+                  Select $999 / $125m Package
                 </a>
               </div>
             </div>
@@ -514,18 +435,18 @@ export default function Complete2026DocumentPrintStore() {
       {/* Interactive A4 Print-Ready 2026 Standard Document Template Studio */}
       <Standard2026PrintableTemplatesSuite />
 
-      {/* 6 Clear Pricing & Print Ordering Options */}
+      {/* Official Two-Way Pricing: $999 Outright OR $125/Month (24-Month Plan) */}
       <div className="space-y-1.5">
         <div className="flex flex-wrap items-center justify-between gap-1 px-1">
           <span className="font-body text-[9.5px] font-black uppercase tracking-wider text-blue-950">
-            2026 Document &amp; Professional Print Pricing (Covers Printing, Heavy-Duty Binders, Tabs, Lamination &amp; Delivery)
+            Professional Business Compliance Documents Package — Choose $999 Outright or $125/Month (24-Month Subscription Plan)
           </span>
           <span className="font-body text-[7.8px] font-extrabold text-pink-700">
-            Click any package to load it into the Order &amp; Quote Form below
+            Click either option to load it into the Order &amp; Subscription Form below
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {PRINT_AND_DOCUMENT_PACKAGES.map((pkg) => {
             const isSelected = selectedPkgId === pkg.id;
             return (

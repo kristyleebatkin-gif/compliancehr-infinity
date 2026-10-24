@@ -99,8 +99,17 @@ export default function BusinessDetailsCard() {
         const page = await base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 });
         const record = page.items?.[0];
         if (record) {
+          const cleanStr = (v, fallback) =>
+            !v || /choices\s*(nq|north\s*queensland)/i.test(String(v)) ? fallback : v;
           setRecordId(record.id);
-          setForm({ ...EMPTY, ...record });
+          setForm({
+            ...EMPTY,
+            ...record,
+            business_name: cleanStr(record.business_name, 'ComplianceHR Infinity'),
+            trading_name: cleanStr(record.trading_name, 'ComplianceHR Infinity'),
+            contact_person: cleanStr(record.contact_person, 'ComplianceHR Infinity Administration'),
+            authorised_contact_name: cleanStr(record.authorised_contact_name, 'ComplianceHR Infinity Administration'),
+          });
         }
       } finally {
         setLoading(false);

@@ -39,9 +39,13 @@ export default function Standard2026PrintableTemplatesSuite() {
       .then((res) => {
         const b = res?.items?.[0];
         if (b) {
+          const cleanName =
+            !b.business_name || /choices\s*(nq|north\s*queensland)/i.test(b.business_name)
+              ? 'ComplianceHR Infinity'
+              : b.business_name;
           setOrgInfo((prev) => ({
             ...prev,
-            businessName: b.business_name || prev.businessName,
+            businessName: cleanName,
             abn: b.abn || prev.abn,
             ndisReg: b.ndis_registration_number || prev.ndisReg,
             siteName: b.address || prev.siteName,

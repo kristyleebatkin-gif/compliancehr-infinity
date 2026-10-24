@@ -32,6 +32,7 @@ import EmployeeDocumentDialog from '@/components/documents/EmployeeDocumentDialo
 import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
+import Complete2026DocumentPrintStore from '@/components/landing/Complete2026DocumentPrintStore';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -220,9 +221,10 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       {embedded && !profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="vault-document-tabs flex w-fit flex-nowrap justify-start">
+        <TabsList className="vault-document-tabs flex w-fit flex-wrap justify-start">
           <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
           <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
+          <TabsTrigger value="print-store">📚 2026 Document Package Store ($999 / $125m)</TabsTrigger>
         </TabsList>
 
         {!profile && <div className="mt-2"><DocumentsDashboard role={me?.role} focus={focus} /></div>}
@@ -322,6 +324,10 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
 
         <TabsContent value="expiry-calendar" className="mt-4">
           <ExpiryCalendar docs={docs} pdocs={pdocs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
+        </TabsContent>
+
+        <TabsContent value="print-store" className="mt-4">
+          <Complete2026DocumentPrintStore />
         </TabsContent>
       </Tabs>
 
