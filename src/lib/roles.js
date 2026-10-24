@@ -6,11 +6,11 @@ export const ROLES = {
   QUALITY: 'Quality & Improvement Manager', MARKETING: 'CRM & Marketing Officer', INTAKE: 'Intake Officer', VOLUNTEER: 'Volunteer',
 };
 export const ALL_ROLES = ['Provider Administrator', 'Management', 'Administration', 'Employee', 'Participant', 'Auditor'];
-// 90-minute open-access window: allows any visitor or user full access for 90 minutes.
-const OPEN_ACCESS_DURATION_MS = 90 * 60 * 1000;
-const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v1';
-// Absolute cutoff (90 mins from 2026-10-24T14:31:23Z -> 2026-10-24T16:02:00Z)
-const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T16:02:00Z');
+// 60-minute open-access window: allows any visitor or user full access for the next 60 minutes.
+const OPEN_ACCESS_DURATION_MS = 60 * 60 * 1000;
+const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v2';
+// Absolute cutoff (60 mins from 2026-10-24T15:08:00Z -> 2026-10-24T16:08:00Z)
+const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2026-10-24T16:08:00Z');
 
 export function isOpenAccessWindowActive() {
   const now = Date.now();
