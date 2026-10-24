@@ -10,7 +10,6 @@ import { Label } from '@/components/ui/label';
 import { Briefcase, Plus, Trash2, Flame, Trophy, Bell, UserPlus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { downloadCsv } from '@/lib/csvExport';
-import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 
 const STAGES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Won', 'Lost'];
 const STAGE_TONES = {
@@ -153,8 +152,6 @@ export default function CrmHub() {
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
       />
-
-      <MarketingFlyerCampaign />
 
       {followUpsDue.length > 0 && (
         <Card className="border-warning/40 bg-warning/5"><CardContent className="p-4">

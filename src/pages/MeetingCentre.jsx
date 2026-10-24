@@ -26,7 +26,6 @@ import MeetingNavigation from '@/components/meetings/MeetingNavigation';
 import MeetingSearchFilters from '@/components/meetings/MeetingSearchFilters';
 import MeetingMinutesOutstanding from '@/components/meetings/MeetingMinutesOutstanding';
 import MeetingMasterpieceSuite from '@/components/meetings/MeetingMasterpieceSuite';
-import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import '@/components/dashboard/operationsWorkspace.css';
 
@@ -274,10 +273,6 @@ export default function MeetingCentre() {
           ) : (
             <MeetingCalendar meetings={meetings} />
           )}
-        </TabsContent>
-
-        <TabsContent value="flyers" className="mt-2">
-          <MarketingFlyerCampaign />
         </TabsContent>
 
       <Dialog open={open} onOpenChange={setOpen}>

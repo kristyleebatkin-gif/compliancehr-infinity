@@ -43,14 +43,6 @@ export default function MeetingNavigation({ onSchedule }) {
           <CalendarDays className="mr-1 h-3.5 w-3.5" />
           Visual Calendar
         </TabsTrigger>
-        <TabsTrigger
-          data-dashboard-tab={undefined}
-          value="flyers"
-          className="flex-1 text-[11px] font-extrabold"
-        >
-          <Sparkles className="mr-1 h-3.5 w-3.5" />
-          Marketing Flyer Studio
-        </TabsTrigger>
       </TabsList>
     </div>
   );

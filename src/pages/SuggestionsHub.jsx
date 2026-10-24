@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import EmptyState from '@/components/EmptyState';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
-import MarketingFlyerCampaign from '@/components/landing/MarketingFlyerCampaign';
 import { useToast } from '@/components/ui/use-toast';
 import { Eye, Zap, SlidersHorizontal, Sparkles, Mail, Loader2, RefreshCw, Search, AlertTriangle, Clock } from 'lucide-react';
 
@@ -78,8 +77,6 @@ export default function SuggestionsHub() {
       />
 
       <ScreenByScreenMasterAudit2026 />
-
-      <MarketingFlyerCampaign />
 
       {loading && (
         <Card><CardContent className="p-8 flex items-center justify-center gap-2 text-muted-foreground">

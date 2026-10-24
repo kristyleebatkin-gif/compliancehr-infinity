@@ -157,25 +157,9 @@ export default function AppLayout() {
         </div>
       </div>
 
-      <div className="px-3 pb-1.5 space-y-1">
-        <div className="rounded-lg bg-brand/5 px-3 py-1.5 text-xs font-medium text-brand/70">
+      <div className="px-3 pb-2">
+        <div className="rounded-lg bg-brand/5 px-3 py-2 text-xs font-medium text-brand/70">
           {role}
-        </div>
-        <div className="grid grid-cols-1 gap-1 pt-0.5">
-          <Link
-            to="/operations-centre?suite=print-store"
-            className="flex items-center justify-between rounded-lg border border-blue-400 bg-blue-50 px-2.5 py-1.5 text-[10.5px] font-extrabold text-blue-950 shadow-sm hover:bg-blue-100"
-          >
-            <span>📚 Document Store ($999 / $125m)</span>
-            <span className="rounded bg-blue-600 px-1.5 py-0.5 text-[8.5px] text-white">Open</span>
-          </Link>
-          <Link
-            to="/operations-centre?suite=campaign-studio"
-            className="flex items-center justify-between rounded-lg border border-pink-400 bg-pink-50 px-2.5 py-1.5 text-[10.5px] font-extrabold text-pink-950 shadow-sm hover:bg-pink-100"
-          >
-            <span>📣 Marketing Campaign Studio</span>
-            <span className="rounded bg-pink-600 px-1.5 py-0.5 text-[8.5px] text-white">Open</span>
-          </Link>
         </div>
       </div>
 

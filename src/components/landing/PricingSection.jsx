@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers,
-  ClipboardCheck, Lock, RefreshCw, Download,
+  ClipboardCheck, Lock, RefreshCw,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
-import { downloadBusinessComplianceDocsBrochurePdf } from '@/lib/businessComplianceDocsBrochurePdf';
 
 const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #2563eb 0%, #2563eb 45%, #7c3aed 50%, #ec4899 55%, #ec4899 100%)';
@@ -394,58 +393,6 @@ export default function PricingSection({ compact = false }) {
           );
         })}
       </div>
-
-      {/* Standalone $355 Master Compliance Audit Checklist Option vs Free in Subscription */}
-      {!compact && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-amber-400 bg-gradient-to-r from-amber-50 via-white to-purple-50 p-2 shadow-sm">
-          <div className="lg:col-span-3 flex items-center justify-center overflow-hidden rounded-lg border border-purple-300 bg-white p-2 shadow-sm">
-            <Image
-              src={DEFAULT_LOGO}
-              alt="ComplianceHR Infinity Master Compliance Audit Checklists"
-              fittingType="fit"
-              className="h-24 sm:h-28 w-full object-contain"
-            />
-          </div>
-          <div className="lg:col-span-9 space-y-1.5">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                PROFESSIONAL BUSINESS COMPLIANCE DOCUMENTS PACKAGE: $999 OUTRIGHT OR $125/MO (24-MONTH PLAN)
-              </span>
-              <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[7.5px] font-black text-white">
-                EXTENSIVE 125+ DIGITAL DOCS ALSO INCLUDED FREE IN FULL APP PLANS ($660–$1,035/MO)
-              </span>
-            </div>
-            <h4 className="text-xs sm:text-sm font-black text-blue-950">
-              Professional Business Compliance Documents Package — $999 Outright or $125/Month on a 24-Month Subscription Plan for Full Digital Suite Access!
-            </h4>
-            <p className="text-[8px] font-semibold leading-snug text-blue-950">
-              Our **Professional Business Compliance Documents Package** is the **only standalone document package**—providing **extensive documentation covering almost every document** your business needs to prepare for and complete compliance audits (125+ policies, contracts, intake packs, consents, risk forms, registers &amp; 356-checkpoint checklists). Available for **$999 outright** or **$125/month on a 24-month business subscription plan** for full digital suite access (or included $0 free inside our $660–$1,035/mo Smart Enhanced App Plans). **Please ensure your team checks all relevant and required standards for your business so there is no doubt of your compliance audit outcome of success!**
-            </p>
-            <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-              <button
-                type="button"
-                onClick={() => downloadBusinessComplianceDocsBrochurePdf()}
-                className="inline-flex items-center gap-1 rounded-lg border-2 border-blue-600 bg-blue-50 px-2.5 py-1 text-[8px] font-black text-blue-950 shadow-sm hover:bg-blue-100"
-              >
-                <Download className="h-3 w-3 text-blue-700" /> Download $999 / $125m Package Brochure (PDF)
-              </button>
-              <a
-                href="#complete-2026-docs-print-store"
-                className="rounded-lg border-2 border-purple-600 bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 hover:bg-purple-50"
-              >
-                Order Printed 6-Binder Box Set or Digital Suite
-              </a>
-              <Link
-                to="/register"
-                className="inline-flex items-center gap-1 rounded-lg px-3 py-1 text-[8px] font-black text-white shadow-sm"
-                style={{ background: SQUISHED_GRADIENT }}
-              >
-                Claim Digital Suite Free in 14-Day Trial <ArrowRight className="h-2.5 w-2.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Listed Platform-Wide Benefits Grid */}
       <div className="rounded-xl border border-purple-300 bg-purple-50/40 p-2 space-y-1.5">
