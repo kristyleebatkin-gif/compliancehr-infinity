@@ -28,6 +28,7 @@ import StatusDashboard from '@/components/safety/StatusDashboard';
 import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
 import IncidentLog from '@/components/safety/IncidentLog';
 import SafetyOperationsDashboard from '@/components/safety/SafetyOperationsDashboard';
+import IncidentAnalytics from '@/pages/IncidentAnalytics';
 import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import { isOpenIncident } from '@/lib/safetyFilters';
@@ -56,6 +57,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [editingInvestigation, setEditingInvestigation] = useState(null);
   const [savingInvestigation, setSavingInvestigation] = useState(false);
   const [view, setView] = useState('list');
+  const [screenMode, setScreenMode] = useState('both');
 
   useEffect(() => { load(); }, []);
 
@@ -226,6 +228,43 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
       >
       {embedded && <RegisterInsights module="incidents" />}
 
+      {/* Screen Switcher: Incident Clinic & Friendly Incident Analytics */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+          Incident Clinic &amp; Friendly Incident Analytics Workspace
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            ['both', 'Combined Clinic + Friendly Analytics'],
+            ['clinic', 'Screen 1: Incident Clinic & Register'],
+            ['analytics', 'Screen 2: Friendly Incident Analytics'],
+          ].map(([key, label]) => (
+            <Button
+              key={key}
+              size="sm"
+              variant={screenMode === key ? 'default' : 'outline'}
+              className="border-2 border-[#0A2B6D] font-extrabold"
+              onClick={() => setScreenMode(key)}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {(screenMode === 'analytics' || screenMode === 'both') && (
+        <SectionCard
+          collapsible
+          defaultOpen
+          title="Friendly Incident & Safety Support Analytics"
+          description="User-friendly, blame-free charts and safety trends to direct support where it is needed most"
+        >
+          <IncidentAnalytics embedded />
+        </SectionCard>
+      )}
+
+      {screenMode !== 'analytics' && (
+      <div className="space-y-4">
       <div className="rounded-xl border-2 border-[#dc2626] bg-rose-50/70 p-2.5 flex flex-wrap items-center justify-between gap-2" style={{ borderTopWidth: '4px' }}>
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-rose-900">
@@ -477,6 +516,9 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
           </div>
         )}
       </SectionCard>}
+
+      </div>
+      )}
 
       {/* New Investigation modal */}
       {canReview && showInv && (

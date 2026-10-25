@@ -27,7 +27,7 @@ const EMPTY = {
 };
 const STATUSES = ['Planned', 'Ongoing', 'Completed', 'Cancelled'];
 
-export default function ProgramsEvents() {
+export default function ProgramsEvents({ embedded = false } = {}) {
   const { toast } = useToast();
   const [items, setItems] = useState([]);
   const [business, setBusiness] = useState({});
@@ -142,20 +142,34 @@ export default function ProgramsEvents() {
   return (
     <div className="space-y-4">
       <ModuleShell
+        embedded={embedded}
         icon={PartyPopper}
-        title="Program Design Centre"
+        title="Program Design & Community Events Centre"
         subtitle="Design community programs and events, advertise them and invite attendees."
         moduleKey="programs"
         insight={<AutoRegisterInsights placement="header" />}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <Button className="border-2 border-[#0A2B6D] font-extrabold" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add Program / Event</Button>
+            <Button variant="outline" className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D]" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-2 h-4 w-4" />Export Register</Button>
+          </div>
+        }
         small={[['Programs', String(items.filter((i) => i.type === 'Program').length)], ['Events', String(items.filter((i) => i.type === 'Event').length)], ['Upcoming', String(grouped.Upcoming.length)]].map(([label, value]) => (
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
       />
 
-      <div className="flex flex-wrap items-center gap-2">
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add program/event</Button>
-        <Button variant="outline" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-      </div>
+      {embedded && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+            Programs &amp; Events Actions ({items.length} Total · {grouped.Upcoming.length} Upcoming)
+          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" className="border-2 border-[#0A2B6D] font-extrabold" onClick={openNew}><Plus className="mr-1.5 h-4 w-4" />Add Program / Event</Button>
+            <Button size="sm" variant="outline" className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D]" onClick={exportRegister} disabled={loading || items.length === 0}><Download className="mr-1.5 h-4 w-4" />Export Register</Button>
+          </div>
+        </div>
+      )}
 
       {!loading && grouped.Upcoming[0] && (() => {
         const spotlight = grouped.Upcoming[0];

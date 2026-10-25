@@ -4,14 +4,14 @@ import ModuleShell from '@/components/module/ModuleShell';
 import IncidentAnalyticsGuidance from '@/components/incidents/IncidentAnalyticsGuidance';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
-import { Activity } from 'lucide-react';
+import { Activity, HeartHandshake, CheckCircle2, Sparkles } from 'lucide-react';
 import { format, subMonths, startOfMonth } from 'date-fns';
 
-const CATEGORY_COLORS = ['#ef4444', '#f97316', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4'];
+const CATEGORY_COLORS = ['#0072FF', '#5A00D6', '#A100FF', '#FF2E9A', '#00C6FF', '#0A2B6D'];
 
 const MONTHS_BACK = 6;
 
-export default function IncidentAnalytics() {
+export default function IncidentAnalytics({ embedded = false } = {}) {
   const [data, setData] = useState({ trend: [], byCategory: [], byStaff: [], bySeverity: [], byStatus: [], byLocation: [], total: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -51,28 +51,64 @@ export default function IncidentAnalytics() {
 
   const topStaff = data.byStaff[0]?.name;
 
+  const kpiCards = [
+    ['Total Incidents Logged', data.total, 'Constructive safety visibility'],
+    ['High / Critical Priority', data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0), 'Prioritised for immediate support'],
+    ['Active & In-Progress', data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0), 'Guided follow-up underway'],
+    ['Locations Monitored', data.byLocation.length, 'Safe environment tracking'],
+  ];
+
   return (
-    <div className="compact-module mx-auto max-w-6xl p-3 space-y-3">
+    <div className={embedded ? 'space-y-3' : 'compact-module mx-auto max-w-6xl p-3 space-y-3'}>
       <ModuleShell
+        embedded={embedded}
         moduleKey="incident-analytics"
-        title="Incident Analytics"
-        subtitle="Where incidents are happening and who is reporting them, so support can be directed where it is needed."
+        title="Friendly Incident & Safety Support Analytics"
+        subtitle="Supportive, blame-free safety insights showing where extra care, training, or environmental adjustments can help our participants and staff thrive."
         icon={Activity}
-        small={loading ? null : [
-          ['Total incidents logged', data.total],
-          ['High / Critical', data.bySeverity.filter((s) => s.name === 'High' || s.name === 'Critical').reduce((a, b) => a + b.value, 0)],
-          ['Open / investigating', data.byStatus.filter((s) => /open|investigat|progress/i.test(s.name)).reduce((a, b) => a + b.value, 0)],
-          ['Locations involved', data.byLocation.length],
-        ].map(([label, value]) => (
-          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+        small={loading ? null : kpiCards.map(([label, value, sub]) => (
+          <div key={label} className="border-2 border-[#0A2B6D] bg-white">
+            <p className="text-[10px] font-extrabold uppercase tracking-wide text-[#5A00D6]">{label}</p>
+            <p className="mt-1 text-2xl font-extrabold tabular-nums text-[#0A2B6D]">{value}</p>
+            <p className="text-[10px] font-semibold text-[#0072FF]">{sub}</p>
+          </div>
         ))}
       />
 
+      {/* Friendly & Supportive Safety Culture Banner */}
+      <div className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-sm">
+        <div
+          className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2 text-white"
+          style={{ background: 'var(--header-gradient)' }}
+        >
+          <div className="flex items-center gap-2">
+            <HeartHandshake className="h-4 w-4 text-[#00C6FF]" />
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">Positive &amp; Supportive Reporting Culture</span>
+              <h3 className="text-sm font-extrabold text-white">Friendly Incident Analytics — Turning Reports into Care &amp; Prevention</h3>
+            </div>
+          </div>
+          <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#0072FF]" /> No-Blame Learning View
+          </span>
+        </div>
+        {embedded && !loading && (
+          <div className="grid grid-cols-2 gap-2 p-2.5 sm:grid-cols-4 bg-[#F5F0FF]/40">
+            {kpiCards.map(([label, value, sub]) => (
+              <div key={label} className="rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5">
+                <p className="text-[10px] font-extrabold uppercase tracking-wide text-[#5A00D6]">{label}</p>
+                <p className="mt-0.5 text-xl font-extrabold tabular-nums text-[#0A2B6D]">{value}</p>
+                <p className="text-[10px] font-semibold text-[#0072FF]">{sub}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {loading ? (
-        <div className="py-20 text-center text-sm text-foreground/40">Loading analytics...</div>
+        <div className="py-12 text-center text-sm font-bold text-[#0A2B6D]">Loading friendly analytics...</div>
       ) : (
         <>
-
           <IncidentAnalyticsGuidance />
 
           <div className="grid gap-4 md:grid-cols-2">
