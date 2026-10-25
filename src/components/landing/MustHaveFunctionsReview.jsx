@@ -258,14 +258,14 @@ export default function MustHaveFunctionsReview() {
           </p>
         </div>
 
-        <div className="lg:col-span-5 grid grid-cols-2 gap-1">
+        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
           {REPLACED_SOFTWARE_STACK.map((item) => (
             <div
               key={item.tool}
-              className="flex items-center justify-between gap-1 rounded-lg border bg-white px-2 py-1 text-[7.3px] font-extrabold text-blue-950 shadow-sm"
+              className="flex items-center justify-between gap-1.5 rounded-lg border bg-white px-2 py-1 text-[7.3px] font-extrabold text-blue-950 shadow-sm"
               style={{ borderColor: item.color, borderLeftWidth: '3px' }}
             >
-              <span className="truncate">{item.tool}</span>
+              <span className="min-w-0 leading-tight">{item.tool}</span>
               <span className="shrink-0 rounded bg-rose-50 px-1 py-0.5 text-[7px] font-black text-rose-700 line-through">
                 {item.typicalCost}
               </span>
@@ -409,7 +409,7 @@ export default function MustHaveFunctionsReview() {
             Click any module to launch directly
           </span>
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9 gap-1.5">
           {MODULE_DIRECTORY.map((mod, idx) => {
             const c = moduleKeyColour(mod.key);
             const Icon = mod.icon;
@@ -417,16 +417,16 @@ export default function MustHaveFunctionsReview() {
               <Link
                 key={mod.key}
                 to={mod.path}
-                className="flex items-center gap-1 rounded border bg-white px-1.5 py-0.5 text-[7px] font-extrabold text-blue-950 shadow-sm hover:-translate-y-0.5 transition-transform"
+                className="flex items-center gap-1.5 rounded border bg-white px-2 py-1 text-[7px] font-extrabold text-blue-950 shadow-sm hover:-translate-y-0.5 transition-transform"
                 style={{ borderColor: c, borderLeftWidth: '3px' }}
               >
                 <span
-                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
                   style={{ background: c }}
                 >
-                  {Icon ? <Icon className="h-2 w-2" /> : idx + 1}
+                  {Icon ? <Icon className="h-2.5 w-2.5" /> : idx + 1}
                 </span>
-                <span className="truncate">{mod.label}</span>
+                <span className="min-w-0 leading-tight">{mod.label}</span>
               </Link>
             );
           })}

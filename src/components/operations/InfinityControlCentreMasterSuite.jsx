@@ -568,7 +568,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
 
         {/* Navigation Switcher for All Priority 0, 1, 2 & Best-In-Class Master Pillars */}
-        <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-1">
+        <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-1.5">
           {[
             { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry & Queue', icon: Building2, hex: '#0072FF' },
             { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `17 Cats · ${evidencedCount}/356`, icon: ClipboardCheck, hex: '#0A2B6D' },
@@ -758,7 +758,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 <div className="text-[7.5px] font-black uppercase tracking-wider text-blue-950 mb-1">
                   Approved ComplianceHR Infinity Brand Palette (Section 23) &amp; 29 Module Accents (Section 24)
                 </div>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1">
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1">
                   {Object.entries(INFINITY_APPROVED_PALETTE).map(([name, hex]) => (
                     <div
                       key={name}
@@ -769,7 +769,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                         borderColor: '#5A00D6',
                       }}
                     >
-                      <div className="text-[6.5px] font-black uppercase truncate">{name}</div>
+                      <div className="text-[6.5px] font-black uppercase leading-tight">{name}</div>
                       <div className="text-[6.5px] font-mono">{hex}</div>
                     </div>
                   ))}
@@ -780,7 +780,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
           {/* Section 24 — 29 Module-Specific Semantic Colours Launch Strip */}
           <div className="rounded-xl border-2 border-[#db2777] bg-pink-50/30 p-2" style={{ borderTopWidth: '4px' }}>
-            <div className="mb-1 flex items-center justify-between">
+            <div className="mb-1 flex flex-wrap items-center justify-between gap-1">
               <span className="text-[8px] font-black uppercase tracking-wider text-blue-950">
                 Section 24 — 29 Module-Specific Semantic Colours (Separated from Urgency Status Badges)
               </span>
@@ -788,7 +788,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 Click any domain to open its live operational workspace
               </span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
               {SECTION_24_MODULE_COLOURS.map((mc) => (
                 <Link
                   key={mc.module}

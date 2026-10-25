@@ -281,8 +281,8 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="relative z-40 flex shrink-0 items-center justify-between gap-1 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
-          <div className="flex items-center gap-3">
+        <header className="relative z-40 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
             <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
             </button>
@@ -292,14 +292,14 @@ export default function AppLayout() {
               fittingType="fit"
               className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
             />
-            <div className="hidden sm:block">
-              <div className="text-sm font-extrabold tracking-tight font-display text-foreground">{currentLabel}</div>
-              <div className="text-[11px] font-bold text-violet-700">ComplianceHR INFINITY · Complete Control. Greater Confidence. Brighter Success.</div>
+            <div className="hidden min-w-0 sm:block">
+              <div className="text-sm font-extrabold tracking-tight font-display text-foreground leading-tight">{currentLabel}</div>
+              <div className="text-[11px] font-bold text-violet-700 leading-tight">ComplianceHR INFINITY · Complete Control. Greater Confidence. Brighter Success.</div>
             </div>
           </div>
 
           {/* Global Switcher + Search + Notifications + User Menu */}
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <div className="hidden lg:block w-56">
               <GlobalSearch />
             </div>

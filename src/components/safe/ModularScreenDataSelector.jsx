@@ -455,8 +455,8 @@ export default function ModularScreenDataSelector({
         </div>
       </div>
 
-      {/* Core 12 Modular Screen Check-Pills — Zero Gap Grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 gap-0.5">
+      {/* Core 12 Modular Screen Check-Pills */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1">
         {MODULAR_SCREEN_DECKS.map((deck) => {
           const Icon = deck.icon;
           const isChecked = effectiveSelected.includes(deck.key);
@@ -512,7 +512,7 @@ export default function ModularScreenDataSelector({
       {/* Expandable Full 45-Module Selector Drawer */}
       {showAll45Picker && (
         <div className="rounded-lg border border-purple-300 bg-purple-50/40 p-1.5 space-y-1">
-          <div className="grid grid-cols-3 sm:grid-cols-4 gap-0.5 max-h-40 overflow-y-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 max-h-48 overflow-y-auto">
             {MODULE_DIRECTORY.filter((m) =>
               !searchQuery.trim() ||
               m.label.toLowerCase().includes(searchQuery.toLowerCase())

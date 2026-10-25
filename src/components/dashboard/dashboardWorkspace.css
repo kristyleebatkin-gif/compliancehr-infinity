@@ -1,5 +1,5 @@
 /* Shared breathing room for major dashboard surfaces, not small metric tiles. */
-.app-dashboard-canvas { padding: 1cm; }
+.app-dashboard-canvas { padding: 0.75rem; }
 .app-dashboard-canvas > :is(div, section) { padding: 0; }
 .app-dashboard-canvas .dashboard-panel { min-width: 0; }
 .app-dashboard-canvas [role="tabpanel"] > .dashboard-panel { margin-block: .5cm; }
@@ -28,5 +28,6 @@
 .goals-workspace .goals-header-action { min-height: 1.75rem; height: 1.75rem; padding: .25rem .5rem; gap: .25rem; font-size: .6875rem; }
 .goals-workspace .goals-header-action svg { width: .875rem; height: .875rem; margin: 0; }
 .goals-workspace .goal-card { box-shadow: none; }
-@media (min-width: 768px) { .app-dashboard-canvas { padding: 1cm; } }
+@media (min-width: 768px) { .app-dashboard-canvas { padding: 1rem; } }
+@media (min-width: 1280px) { .app-dashboard-canvas { padding: 1cm; } }
 @media print { .app-dashboard-canvas { padding: 0; } .dashboard-panel [hidden] { display: block !important; } }

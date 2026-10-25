@@ -72,7 +72,7 @@ export default function LandingHero() {
             <div className="text-xs font-extrabold text-[#5A00D6]">Email: kristyleebatkin@live.com.au</div>
           </div>
 
-          <h1 className="mt-6 font-editorial text-[2.6rem] font-medium leading-[1.05] tracking-tight text-[#0A2B6D] sm:text-6xl md:text-[4.4rem]">
+          <h1 className="mt-6 font-editorial text-[2.25rem] font-medium leading-[1.08] tracking-tight text-[#0A2B6D] sm:text-5xl md:text-6xl">
             Compliance management,
             <span className="mt-1 block font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">simplified end to end.</span>
           </h1>
@@ -105,7 +105,7 @@ export default function LandingHero() {
             ))}
           </div>
 
-          <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
+          <div className="mt-14 grid gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
             {highlights.map(({ icon: Icon, title, reasons }, index) => (
               <Reveal key={title} delay={index * 0.08} className="group rounded-2xl border border-[#C084FC]/50 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0072FF] to-[#5A00D6] text-white shadow-sm transition-transform group-hover:scale-105">

@@ -128,8 +128,8 @@ export default function SilverScreenSplit() {
         <span className="font-mono text-[9px] font-extrabold">{timeStr}</span>
       </div>
 
-      {/* Two Squashed Halves Inside the Silver Screen */}
-      <div className="grid grid-cols-2 gap-1">
+      {/* Two Halves Inside the Silver Screen */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
         {/* LEFT HALF: LIVE WEATHER UPDATES */}
         <div
           className="flex flex-col justify-between rounded-lg border border-sky-300 p-1.5 text-white shadow-inner"

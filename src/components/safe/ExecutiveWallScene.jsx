@@ -383,7 +383,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
           </Link>
         </div>
 
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
           {COMM_CENTRE_MODULARS.map((item) => {
             const Icon = item.icon;
             return (
@@ -391,7 +391,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                 key={item.key}
                 type="button"
                 onClick={() => onSelectSecondScreen && onSelectSecondScreen(item.key === 'task-dashboard' || item.key === 'todo' ? 'tasks' : 'communications')}
-                className="flex items-center gap-1 rounded border px-1 py-0.5 text-left text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-1 rounded border px-1.5 py-1 text-left text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: `${item.color}88`,
                   borderTopWidth: '2px',
@@ -401,23 +401,23 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                 title={`Select ${item.label} modular screen to review`}
               >
                 <span
-                  className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
+                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
                   style={{ background: item.color }}
                 >
-                  <Icon className="h-2 w-2" />
+                  <Icon className="h-2.5 w-2.5" />
                 </span>
-                <span className="truncate">{item.label}</span>
+                <span className="min-w-0 leading-tight">{item.label}</span>
               </button>
             );
           })}
           {/* Smart Vault right beside Employee Log */}
           <Link
             to="/company-safe"
-            className="flex items-center gap-1 rounded border border-pink-400 px-1 py-0.5 text-[7px] font-extrabold text-white shadow-sm"
+            className="flex items-center gap-1 rounded border border-pink-400 px-1.5 py-1 text-[7px] font-extrabold text-white shadow-sm"
             style={{ background: SQUISHED_GRADIENT }}
             title="ComplianceHR Infinity Smart Vault"
           >
-            <span className="flex h-3 w-3 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
               <Image
                 src={DEFAULT_SOFTWARE_LOGO}
                 alt="ComplianceHR Infinity"
@@ -425,7 +425,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                 className="h-full w-full object-contain"
               />
             </span>
-            <span className="truncate">Smart Vault</span>
+            <span className="min-w-0 leading-tight">Smart Vault</span>
           </Link>
         </div>
 
@@ -794,21 +794,21 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* MAIN BODY: Zero-Gap Layout for Both Views Beside Each Other ('both') or Single View ('office' / 'profiles') */}
-      <div className="bg-white p-1">
+      {/* MAIN BODY: Responsive Layout for Both Views Beside Each Other ('both') or Single View ('office' / 'profiles') */}
+      <div className="bg-white p-1.5">
         <div
           className={
             viewMode === 'both'
-              ? 'grid grid-cols-1 md:grid-cols-12 gap-1 items-stretch'
-              : 'space-y-1'
+              ? 'grid grid-cols-1 xl:grid-cols-12 gap-2 items-stretch'
+              : 'space-y-2'
           }
         >
           {/* ==================== VIEW 1: THE UNIQUE EXECUTIVE OFFICE EXPERIENCE ==================== */}
           {(viewMode === 'both' || viewMode === 'office') && (
             <div
               className={`${
-                viewMode === 'both' ? 'md:col-span-7' : 'w-full'
-              } flex flex-col rounded-xl border-2 border-blue-500 bg-white p-1.5 shadow-sm space-y-1`}
+                viewMode === 'both' ? 'xl:col-span-7' : 'w-full'
+              } flex flex-col rounded-xl border-2 border-blue-500 bg-white p-1.5 shadow-sm space-y-1.5`}
             >
               {/* View 1 Header Badge */}
               <div
@@ -826,10 +826,10 @@ export default function ExecutiveWallScene({
                 </span>
               </div>
 
-              {/* OFFICE WALL WITH HANGING FRAMED SCREENSHOTS — Equal-Height Columns, Zero Gap */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-1 items-stretch">
-                <div className="md:col-span-7 flex flex-col gap-1">
-                  <div className="grid grid-cols-2 gap-1 items-stretch">
+              {/* OFFICE WALL WITH HANGING FRAMED SCREENSHOTS — Equal-Height Columns */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-1.5 items-stretch">
+                <div className="lg:col-span-7 flex flex-col gap-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 items-stretch">
                     {/* PICTURE 1: Updated Logo with Full Slogan Shown */}
                     <WallHangingPictureFrame title="Logo & Full Slogan" className="h-full">
                       <LogoWithFullSloganCard
@@ -858,14 +858,14 @@ export default function ExecutiveWallScene({
                     </WallHangingPictureFrame>
                   </div>
 
-                  {/* PICTURE 3: Screenshot of All 45 Modules Squashed Together (flex-1 so bottom aligns with Silver Screen) */}
+                  {/* PICTURE 3: Screenshot of All 45 Modules (flex-1 so bottom aligns with Silver Screen) */}
                   <WallHangingPictureFrame
-                    title={`${companyName} · All ${MODULE_DIRECTORY.length} Modules Squashed Together`}
+                    title={`${companyName} · All ${MODULE_DIRECTORY.length} Modules`}
                     className="flex-1"
                   >
                     <div className="flex h-full flex-col justify-between gap-1 bg-white">
                       <div
-                        className="flex items-center justify-between rounded px-2 py-0.5 text-white"
+                        className="flex flex-wrap items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
                         style={{ background: SQUISHED_GRADIENT }}
                       >
                         <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold">
@@ -876,7 +876,7 @@ export default function ExecutiveWallScene({
                         </span>
                       </div>
 
-                      <div className="grid flex-1 content-between grid-cols-3 sm:grid-cols-5 gap-0.5">
+                      <div className="grid flex-1 content-between grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
                         {MODULE_DIRECTORY.map((mod) => {
                           const Icon = mod.icon;
                           const colour = moduleKeyColour(mod.key);
@@ -886,7 +886,7 @@ export default function ExecutiveWallScene({
                               key={mod.key}
                               type="button"
                               onClick={() => handleSelectScreenInOffice(mod.key)}
-                              className={`flex items-center gap-1 rounded border bg-white px-1 py-0.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${
+                              className={`flex items-center gap-1 rounded border bg-white px-1.5 py-1 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${
                                 isSelected ? 'ring-1 ring-pink-500 bg-pink-50/40' : ''
                               }`}
                               style={{
@@ -896,12 +896,12 @@ export default function ExecutiveWallScene({
                               title={`Select ${mod.label} modular screen to review`}
                             >
                               <span
-                                className="flex h-3 w-3 shrink-0 items-center justify-center rounded text-white"
+                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
                                 style={{ background: colour }}
                               >
-                                <Icon className="h-2 w-2" />
+                                <Icon className="h-2.5 w-2.5" />
                               </span>
-                              <span className="min-w-0 flex-1 truncate text-[6.8px] font-extrabold text-blue-950 leading-tight">
+                              <span className="min-w-0 flex-1 text-[6.8px] font-extrabold text-blue-950 leading-tight">
                                 {mod.label}
                               </span>
                             </button>
@@ -915,7 +915,7 @@ export default function ExecutiveWallScene({
                 {/* RIGHT SIDE OF THE OFFICE WALL (5 cols):
                     Picture 4: Screenshot of Communication Centre Modulars & Today's Roster Overview
                     with the Squashed Silver Screen mounted directly underneath it */}
-                <div className="md:col-span-5 flex flex-col gap-1">
+                <div className="lg:col-span-5 flex flex-col gap-1.5">
                   <WallHangingPictureFrame title="Communication Centre Modulars & Today's Roster">
                     <CommunicationCentreScreenshot
                       showRosterAbove={showRosterAbove}
@@ -968,7 +968,7 @@ export default function ExecutiveWallScene({
 
           {/* ==================== VIEW 2: GENERAL PROFILE & SELECTABLE MODULAR DATA DISPLAY (BESIDE THE OFFICE VIEW) ==================== */}
           {(viewMode === 'both' || viewMode === 'profiles') && (
-            <div className={viewMode === 'both' ? 'md:col-span-5' : 'w-full'}>
+            <div className={viewMode === 'both' ? 'xl:col-span-5' : 'w-full'}>
               <ProfilesAndDataDisplayColumn
                 logoUrl={frameSrc}
                 companyName={companyName}
