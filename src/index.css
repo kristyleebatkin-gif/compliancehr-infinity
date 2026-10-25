@@ -315,18 +315,22 @@
       height: 2rem;
     }
   }
-  /* Modern, professional legibility floor: elevate sub-10px text classes across all screens while ensuring all words fit comfortably */
+  /* Balanced hierarchy: keep writing under headers slightly smaller and crisp so headers always stand out larger */
   :is(body, .app-readable) :is([class*="text-[6"], [class*="text-[7"]) {
-    font-size: 0.6875rem !important;
-    line-height: 1.05rem !important;
+    font-size: 0.65rem !important;
+    line-height: 0.95rem !important;
   }
   :is(body, .app-readable) :is([class*="text-[8"], [class*="text-[9"]) {
-    font-size: 0.75rem !important;
-    line-height: 1.15rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1.05rem !important;
   }
   :is(body, .app-readable) [class*="text-[10"] {
-    font-size: 0.78125rem !important;
-    line-height: 1.2rem !important;
+    font-size: 0.74rem !important;
+    line-height: 1.1rem !important;
+  }
+  .app-readable :is(.dashboard-panel-body, [role="tabpanel"], main section) p:not(.app-page-header p):not(.dashboard-panel-header p) {
+    font-size: 0.76rem;
+    line-height: 1.2rem;
   }
   /* Prevent words from being clipped or truncated with ellipsis across sections, cards, headers, and buttons */
   .app-readable :is(section, header, footer, main, [role="tabpanel"], .dashboard-panel) .truncate {
@@ -444,14 +448,16 @@
     }
     .compact-tabs [role="tab"] svg, .compact-module [role="tab"] svg { width: 0.875rem; height: 0.875rem; }
   }
-  /* Shared page and section headers: merged blue-purple-pink gradient, circular pattern, borderless, crisp white text, generous modern spacing. */
+  /* Shared page and section headers: highlighted gradient, distinct borders for visual separation, subject design accents, and larger header typography than body text underneath. */
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header),
   .app-readable .safety-workspace .dashboard-panel-header {
     position: relative;
     overflow: hidden;
     background: var(--header-gradient) !important;
     color: #ffffff !important;
-    border: none !important;
+    border: 2px solid #5A00D6 !important;
+    border-bottom: 3px solid #FF2E9A !important;
+    box-shadow: 0 4px 14px -3px rgba(90, 0, 214, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
     font-family: var(--font-body) !important;
   }
   .app-readable :is(.comm-weather-bar, .comm-panel-bar) {
@@ -459,19 +465,22 @@
     overflow: hidden;
     background: var(--comm-bar-bg, var(--header-gradient)) !important;
     color: #ffffff !important;
-    border: none !important;
+    border: 2px solid #5A00D6 !important;
+    border-bottom: 3px solid #FF2E9A !important;
+    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
     font-family: var(--font-body) !important;
   }
   .app-readable .app-page-header {
     box-sizing: border-box;
-    min-height: 4.75rem;
+    min-height: 5rem;
     height: auto !important;
     max-height: none !important;
     padding: 1.125rem 1.375rem !important;
+    border-radius: 1rem !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
-    min-height: 3rem;
+    min-height: 3.25rem;
     height: auto !important;
     max-height: none !important;
     padding: 0.75rem 1.125rem !important;
@@ -506,19 +515,32 @@
     -webkit-font-smoothing: antialiased;
   }
   .app-readable .app-page-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.55rem;
     font-weight: 800;
     line-height: 1.95rem;
     letter-spacing: -0.02em;
   }
   .app-readable .app-page-header p {
-    font-size: 0.875rem;
+    font-size: 0.78rem !important;
     font-weight: 500;
-    line-height: 1.375rem;
-    margin-top: 0.25rem;
+    line-height: 1.2rem !important;
+    margin-top: 0.2rem;
     opacity: 0.95;
     overflow: visible;
     white-space: normal;
+  }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) :is(h1, h2, h3, [data-panel-title]) {
+    font-size: 1.02rem !important;
+    font-weight: 800 !important;
+    line-height: 1.35rem !important;
+    letter-spacing: -0.01em;
+    color: #ffffff !important;
+  }
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) p {
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    line-height: 1.1rem !important;
+    color: rgba(255, 255, 255, 0.94) !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], button, span) {
     color: #ffffff !important;

@@ -2,12 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Building2, Zap, Cpu, Activity, ShieldCheck, FileText, Layers,
-  ClipboardCheck, Sparkles, ArrowRight, Vault,
+  ClipboardCheck, Sparkles, ArrowRight, Vault, CalendarRange,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
+import Rostering from '@/pages/Rostering';
+import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
 import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
@@ -24,18 +26,30 @@ const CHR_LOGO =
 
 const EXECUTIVE_RESOURCE_SUITES = [
   {
-    id: 'all',
-    label: 'All Executive Resources (Full Command View)',
-    shortLabel: 'All Resources',
-    icon: Building2,
+    id: 'roster',
+    label: '1. Live Roster, Shift Coverage & Scheduling Command',
+    shortLabel: '1. Roster & Shifts',
+    subject: 'Rostering & Shifts',
+    icon: CalendarRange,
     color: '#0072FF',
+    badge: '1st Option · Live Roster',
+    description: 'Weekly shift roster board, today’s shifts, open shift fill, staff availability, approvals & labour forecast.',
+  },
+  {
+    id: 'all',
+    label: 'All Executive Resources (Roster First + Full Command View)',
+    shortLabel: 'All Resources (Roster 1st)',
+    subject: 'Full Executive Command',
+    icon: Building2,
+    color: '#5A00D6',
     badge: 'Complete Suite',
-    description: 'View Infinity One-Click Operations alongside every flagship executive resource in one unified command centre.',
+    description: 'View Live Roster first alongside Infinity One-Click Operations and every flagship executive resource.',
   },
   {
     id: 'one-click',
-    label: '1. Infinity One-Click Operations Deck',
-    shortLabel: '1-Click Operations',
+    label: '2. Infinity One-Click Operations Deck',
+    shortLabel: '2. 1-Click Operations',
+    subject: 'Executive Actions',
     icon: Zap,
     color: '#0A2B6D',
     badge: '12 Instant Actions',
@@ -43,8 +57,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'core-engine',
-    label: '2. Infinity Core Engine (104 Functions · 65 Workflows)',
-    shortLabel: 'Infinity Core Engine',
+    label: '3. Infinity Core Engine (104 Functions · 65 Workflows)',
+    shortLabel: '3. Infinity Core Engine',
+    subject: 'AI & Automation',
     icon: Cpu,
     color: '#5A00D6',
     badge: '99.98% Uptime',
@@ -52,8 +67,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'health-intelligence',
-    label: '3. Business Health & Compliance Intelligence',
-    shortLabel: 'Health & NDIS Readiness',
+    label: '4. Business Health & Compliance Intelligence',
+    shortLabel: '4. Health & NDIS Readiness',
+    subject: 'NDIS Practice Standards',
     icon: Activity,
     color: '#A100FF',
     badge: '8 NDIS Standards',
@@ -61,8 +77,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'office-workspace',
-    label: '4. Executive Office & Dual Profile Workspace',
-    shortLabel: 'Executive Office Wall',
+    label: '5. Executive Office & Dual Profile Workspace',
+    shortLabel: '5. Executive Office Wall',
+    subject: 'Office & Profiles',
     icon: Vault,
     color: '#FF2E9A',
     badge: 'Dual Screen View',
@@ -70,8 +87,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'printable-2026',
-    label: '5. Standard 2026 Printable Office Templates (12 A4)',
-    shortLabel: '12 A4 Office Templates',
+    label: '6. Standard 2026 Printable Office Templates (12 A4)',
+    shortLabel: '6. 12 A4 Office Templates',
+    subject: 'Printable A4 Forms',
     icon: FileText,
     color: '#A100FF',
     badge: 'A4 Print Ready',
@@ -79,8 +97,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'master-checklists',
-    label: '6. Master Compliance Audit Checklists (CHR-AUD-001 & 002)',
-    shortLabel: 'Master Audit Checklists',
+    label: '7. Master Compliance Audit Checklists (CHR-AUD-001 & 002)',
+    shortLabel: '7. Master Audit Checklists',
+    subject: 'Audit Checklists',
     icon: ClipboardCheck,
     color: '#5A00D6',
     badge: '17 Cats · 356 Checks',
@@ -88,8 +107,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'screen-audit-2026',
-    label: '7. 45-Screen 2026 Master Audit & Smart-Fill Studio',
-    shortLabel: '45-Screen Audit Studio',
+    label: '8. 45-Screen 2026 Master Audit & Smart-Fill Studio',
+    shortLabel: '8. 45-Screen Audit Studio',
+    subject: '45-Screen Audit',
     icon: Sparkles,
     color: '#00C6FF',
     badge: '45 Modules',
@@ -97,8 +117,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'module-matrix',
-    label: '8. All Platform Modules & Registers Directory',
-    shortLabel: 'All Modules Matrix',
+    label: '9. All Platform Modules & Registers Directory',
+    shortLabel: '9. All Modules Matrix',
+    subject: 'All 45 Modules',
     icon: Layers,
     color: '#FF6EDB',
     badge: `${MODULE_DIRECTORY.length} Modules`,
@@ -141,11 +162,14 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
   return (
     <div className="space-y-2 bg-white">
       {/* ==================== EXECUTIVE OPERATIONS CENTRE MASTER BANNER ==================== */}
-      <div className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
-        <div className="px-3.5 py-2.5 text-white" style={{ background: SQUISHED_GRADIENT }}>
+      <div className="overflow-hidden rounded-2xl border-2 border-[#5A00D6] bg-white shadow-xl">
+        <div
+          className="border-b-4 border-[#FF2E9A] px-4 py-3 text-white shadow-md"
+          style={{ background: SQUISHED_GRADIENT }}
+        >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-md ring-2 ring-amber-300">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 border-white bg-white p-1 shadow-md">
                 <Image
                   src={CHR_LOGO}
                   alt="ComplianceHR Infinity"
@@ -155,18 +179,18 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-blue-950">
-                    <Building2 className="h-3 w-3" /> EXECUTIVE OPERATIONS &amp; RESOURCE COMMAND CENTRE
+                  <span className="inline-flex items-center gap-1 rounded-full border border-white/50 bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                    <Building2 className="h-3 w-3 text-[#00C6FF]" /> SUBJECT: EXECUTIVE OPERATIONS &amp; ROSTER COMMAND
                   </span>
-                  <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[7.5px] font-black text-white">
-                    ● LIVE EXECUTIVE COMMAND · 9 FLAGSHIP SUITES
+                  <span className="rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                    ● ROSTER 1ST OPTION · 10 FLAGSHIP SUITES
                   </span>
                 </div>
-                <h1 className="mt-0.5 text-base sm:text-lg font-black tracking-tight text-white">
-                  ComplianceHR Infinity — Executive Operations Centre &amp; One-Click Resource Hub
+                <h1 className="mt-1 text-lg sm:text-xl font-extrabold tracking-tight text-white">
+                  ComplianceHR Infinity — Executive Operations Centre &amp; Live Roster Hub
                 </h1>
-                <p className="text-[8.5px] font-extrabold text-amber-100">
-                  Software: ComplianceHR Infinity · Business: ComplianceHR Infinity · Developer: Kristy Lee Whelan · Email: kristyleebatkin@live.com.au · Complete Control. Greater Confidence. Brighter Success.
+                <p className="mt-0.5 text-[11px] font-medium text-white/95">
+                  Software: ComplianceHR Infinity · Developer: Kristy Lee Whelan · Complete Control. Greater Confidence. Brighter Success.
                 </p>
               </div>
             </div>
@@ -226,17 +250,20 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
           </div>
 
           {/* Executive Resource Suite Navigator */}
-          <div className="rounded-xl border-2 border-purple-300 bg-purple-50/30 p-1.5">
-            <div className="mb-1 flex flex-wrap items-center justify-between gap-1 px-1">
-              <span className="text-[8.5px] font-black uppercase tracking-wider text-purple-950">
-                Executive Resource Command Switcher — Select Any Resource Suite or View All Together
+          <div className="rounded-xl border-2 border-[#5A00D6]/50 bg-[#F5F0FF] p-2">
+            <div
+              className="mb-2 flex flex-wrap items-center justify-between gap-1.5 rounded-lg border-2 border-[#5A00D6] border-b-4 border-b-[#FF2E9A] px-3 py-1.5 text-white shadow-sm"
+              style={{ background: SQUISHED_GRADIENT }}
+            >
+              <span className="text-xs font-extrabold uppercase tracking-wider text-white">
+                Executive Command Switcher — Option 1: Live Roster &amp; Shift Coverage
               </span>
-              <span className="text-[7.5px] font-extrabold text-pink-700">
-                9 Executive Suites + All {MODULE_DIRECTORY.length} Operational Modules Connected
+              <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold text-white">
+                10 Executive Suites + All {MODULE_DIRECTORY.length} Modules
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
               {EXECUTIVE_RESOURCE_SUITES.map((suite) => {
                 const Icon = suite.icon;
                 const active = activeSuite === suite.id;
@@ -245,39 +272,46 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                     key={suite.id}
                     type="button"
                     onClick={() => setActiveSuite(suite.id)}
-                    className={`flex flex-col justify-between rounded-lg border p-1.5 text-left transition-all ${
+                    className={`flex flex-col justify-between rounded-xl border-2 p-2 text-left transition-all ${
                       active
-                        ? 'ring-2 ring-pink-500 text-white shadow-md'
-                        : 'bg-white text-blue-950 hover:bg-purple-50'
+                        ? 'ring-2 ring-[#FF2E9A] text-white shadow-md'
+                        : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
                     }`}
                     style={
                       active
-                        ? { background: SQUISHED_GRADIENT, borderColor: '#ec4899' }
-                        : { borderColor: suite.color, borderLeftWidth: '4px' }
+                        ? { background: SQUISHED_GRADIENT, borderColor: '#FF2E9A' }
+                        : { borderColor: suite.color, borderTopWidth: '4px' }
                     }
                   >
-                    <div className="flex items-center justify-between gap-1">
+                    <div className="flex items-center justify-between gap-1 border-b pb-1" style={{ borderColor: active ? 'rgba(255,255,255,0.25)' : `${suite.color}35` }}>
                       <span
-                        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded text-white`}
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-2xs"
                         style={{ background: active ? 'rgba(255,255,255,0.25)' : suite.color }}
                       >
-                        <Icon className="h-2.5 w-2.5" />
+                        <Icon className="h-3 w-3" />
                       </span>
                       <span
-                        className={`rounded-full px-1.5 py-0 text-[6.5px] font-black ${
-                          active ? 'bg-amber-300 text-blue-950' : 'bg-purple-100 text-purple-900'
+                        className={`rounded-full px-1.5 py-0.5 text-[9px] font-extrabold uppercase ${
+                          active ? 'bg-white text-[#0A2B6D]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                         }`}
                       >
-                        {suite.badge}
+                        {suite.subject}
                       </span>
                     </div>
                     <div
-                      className={`mt-1 truncate text-[8.5px] font-black leading-tight ${
-                        active ? 'text-white' : 'text-blue-950'
+                      className={`mt-1.5 text-xs font-extrabold leading-snug ${
+                        active ? 'text-white' : 'text-[#0A2B6D]'
                       }`}
                     >
                       {suite.shortLabel}
                     </div>
+                    <p
+                      className={`mt-0.5 line-clamp-2 text-[10px] font-medium leading-tight ${
+                        active ? 'text-white/90' : 'text-[#0A2B6D]/75'
+                      }`}
+                    >
+                      {suite.description}
+                    </p>
                   </button>
                 );
               })}
@@ -286,7 +320,50 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         </div>
       </div>
 
-      {/* ==================== SUITE 0: INFINITY CONTROL CENTRE, 356 CHECKS, 98 DOCS & 31 DEV REGISTER ==================== */}
+      {/* ==================== 1ST OPTION IN OPERATIONS CENTRE: LIVE ROSTER & SHIFT COVERAGE COMMAND ==================== */}
+      {(activeSuite === 'roster' || activeSuite === 'all') && (
+        <section className="overflow-hidden rounded-2xl border-2 border-[#0072FF] bg-white shadow-lg">
+          <div
+            className="flex flex-wrap items-center justify-between gap-2 border-b-4 border-[#FF2E9A] px-4 py-3 text-white shadow-sm"
+            style={{ background: SQUISHED_GRADIENT }}
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border-2 border-white/60 bg-white/20 text-white shadow-sm">
+                <CalendarRange className="h-5 w-5 text-white" />
+              </span>
+              <div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="rounded-full border border-white/45 bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                    1st Option · Subject: Rostering, Shifts &amp; Staff Coverage
+                  </span>
+                  <span className="rounded-full bg-[#00C6FF] px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                    Live Roster Board
+                  </span>
+                </div>
+                <h2 className="mt-0.5 text-base sm:text-lg font-extrabold tracking-tight text-white">
+                  1. Live Roster, Shift Scheduling &amp; Coverage Command Centre
+                </h2>
+                <p className="text-[11px] font-medium text-white/90">
+                  View today&apos;s rostered shifts, weekly shift calendar, open shift fill, staff availability, timesheet approvals, and SCHADS labour forecast.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/roster"
+              className="inline-flex items-center gap-1.5 rounded-xl border-2 border-white bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm hover:bg-[#F5F0FF]"
+            >
+              Open Full Roster Page <ArrowRight className="h-3.5 w-3.5 text-[#5A00D6]" />
+            </Link>
+          </div>
+
+          <div className="space-y-3 p-3">
+            <RosterMiniOverview />
+            <Rostering embedded />
+          </div>
+        </section>
+      )}
+
+      {/* ==================== SUITE: INFINITY CONTROL CENTRE, 356 CHECKS, 98 DOCS & 31 DEV REGISTER ==================== */}
       {activeSuite === 'all' && <InfinityControlCentreMasterSuite />}
 
       {/* ==================== SUITE 1: INFINITY ONE-CLICK OPERATIONS DECK ==================== */}
@@ -322,16 +399,24 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
 
       {/* ==================== SUITE 8: ALL MODULES & REGISTERS EXECUTIVE MATRIX ==================== */}
       {(activeSuite === 'all' || activeSuite === 'module-matrix') && (
-        <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
-          <div className="px-3 py-2 text-white" style={{ background: SQUISHED_GRADIENT }}>
+        <section className="overflow-hidden rounded-2xl border-2 border-[#5A00D6] bg-white shadow-xl">
+          <div
+            className="border-b-4 border-[#FF2E9A] px-4 py-3 text-white shadow-sm"
+            style={{ background: SQUISHED_GRADIENT }}
+          >
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Layers className="h-4 w-4 text-amber-300" />
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/50 bg-white/20 text-white">
+                  <Layers className="h-4 w-4 text-white" />
+                </span>
                 <div>
-                  <h2 className="text-sm font-black uppercase tracking-wider text-white">
+                  <span className="inline-block rounded-full border border-white/40 bg-white/20 px-2 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+                    Subject: Complete Platform Directory ({MODULE_DIRECTORY.length} Modules)
+                  </span>
+                  <h2 className="mt-0.5 text-base font-extrabold tracking-tight text-white">
                     Executive All-Modules Command Matrix ({MODULE_DIRECTORY.length} Connected Modules)
                   </h2>
-                  <p className="text-[8px] font-bold text-amber-100">
+                  <p className="text-[11px] font-medium text-white/90">
                     Direct 1-Click Executive Launchpad to Every Register, Hub, Portal &amp; AI Assistant
                   </p>
                 </div>
@@ -339,7 +424,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 p-1.5 bg-white">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2.5 bg-white">
             {MODULE_DIRECTORY.map((mod) => {
               const Icon = mod.icon;
               const colour = moduleKeyColour(mod.key);
@@ -347,27 +432,36 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                 <Link
                   key={mod.key}
                   to={mod.path}
-                  className="group flex flex-col justify-between rounded-lg border bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  style={{
-                    borderColor: colour,
-                    borderLeftWidth: '4px',
-                    background: `linear-gradient(135deg, ${colour}12 0%, #ffffff 85%)`,
-                  }}
+                  className="group flex flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ borderColor: colour }}
                 >
-                  <div className="flex items-center gap-1.5">
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-sm"
-                      style={{ background: colour }}
-                    >
-                      <Icon className="h-3 w-3" />
-                    </span>
-                    <span className="truncate text-[8.5px] font-black text-blue-950">
-                      {mod.label}
-                    </span>
+                  <div
+                    className="flex items-center justify-between gap-1.5 border-b-2 px-2.5 py-1.5 text-white"
+                    style={{
+                      background: `linear-gradient(120deg, ${colour} 0%, #5A00D6 100%)`,
+                      borderBottomColor: '#FF2E9A',
+                    }}
+                  >
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-white/50 bg-white/20 text-white shadow-2xs">
+                        <Icon className="h-3.5 w-3.5" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[9px] font-extrabold uppercase tracking-wider text-white/90">
+                          {mod.group || 'Module'}
+                        </div>
+                        <div className="text-xs font-extrabold leading-tight text-white">
+                          {mod.label}
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white/90 transition-transform group-hover:translate-x-0.5" />
                   </div>
-                  <p className="mt-1 line-clamp-2 text-[7px] font-semibold text-blue-900/85 leading-tight">
-                    {mod.blurb}
-                  </p>
+                  <div className="p-2 bg-white">
+                    <p className="text-[11px] font-medium text-[#0A2B6D]/85 leading-snug">
+                      {mod.blurb}
+                    </p>
+                  </div>
                 </Link>
               );
             })}
