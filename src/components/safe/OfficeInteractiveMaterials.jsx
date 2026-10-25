@@ -61,11 +61,11 @@ export function LogoBrandedOfficeSecondScreen({
   companyName = 'ComplianceHR Infinity',
 }) {
   const quickScreens = [
-    { key: 'our-staff', label: 'Employee Profiles Screen', path: '/our-employees', color: '#0072FF', summary: 'Live Staff Directory, HR Compliance, Screening, Contracts & Staff ID Badges.' },
-    { key: 'our-participants', label: 'Participant Profiles Screen', path: '/our-participants', color: '#0A2B6D', summary: 'NDIS Plans, Goals, Consents, Medications, Risk Controls & Shift Notes.' },
-    { key: 'communications', label: 'Comms & Shift Notes Screen', path: '/communications', color: '#5A00D6', summary: 'Active Alerts, Automated Log, Shift Notes, Team Feed, Inbox & Smart Vault.' },
-    { key: 'compliance', label: 'Compliance & Audit Screen', path: '/compliance', color: '#A100FF', summary: '8 NDIS Practice Standards, Master Checklists, Evidence Map & Audit Pack PDF.' },
-    { key: 'rostering', label: 'Roster & Shifts Screen', path: '/roster', color: '#FF2E9A', summary: 'Live Shift Coverage, Screening Alerts, Availability, Sign-Off & Invoicing.' },
+    { key: 'rostering', label: '1. Roster & Shifts Screen', path: '/roster', color: '#0072FF', summary: 'Live Shift Coverage, Screening Alerts, Availability, Sign-Off & Invoicing.' },
+    { key: 'our-staff', label: 'Employee Profiles Screen', path: '/our-employees', color: '#0A2B6D', summary: 'Live Staff Directory, HR Compliance, Screening, Contracts & Staff ID Badges.' },
+    { key: 'our-participants', label: 'Participant Profiles Screen', path: '/our-participants', color: '#5A00D6', summary: 'NDIS Plans, Goals, Consents, Medications, Risk Controls & Shift Notes.' },
+    { key: 'communications', label: 'Comms & Shift Notes Screen', path: '/communications', color: '#A100FF', summary: 'Active Alerts, Automated Log, Shift Notes, Team Feed, Inbox & Smart Vault.' },
+    { key: 'compliance', label: 'Compliance & Audit Screen', path: '/compliance', color: '#FF2E9A', summary: '8 NDIS Practice Standards, Master Checklists, Evidence Map & Audit Pack PDF.' },
     { key: 'tasks', label: 'Shared To-Do & Tasks Screen', path: '/tasks', color: '#FF6EDB', summary: 'Team Command Board, Overdue Escalations, Digital Sign-Off & Leaderboard.' },
   ];
 

@@ -6,12 +6,12 @@ import { ChevronDown, ChevronUp, Home, LayoutDashboard, Compass, Sparkles } from
 
 const QUICK_LINKS = [
   { key: 'landing', label: 'Landing Page', path: '/', color: '#5A00D6' },
-  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', color: '#0072FF' },
   { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', color: '#A100FF' },
+  { key: 'rostering', label: '1. Roster & Shifts', path: '/roster', color: '#0072FF' },
+  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', color: '#0A2B6D' },
   { key: 'our-staff', label: 'Employees', path: '/our-employees', color: '#0072FF' },
   { key: 'our-participants', label: 'Participants', path: '/our-participants', color: '#FF2E9A' },
   { key: 'compliance', label: 'Compliance', path: '/compliance', color: '#5A00D6' },
-  { key: 'rostering', label: 'Rostering', path: '/roster', color: '#0A2B6D' },
   { key: 'invoicing', label: 'Invoicing', path: '/invoicing', color: '#00C6FF' },
   { key: 'communications', label: 'Comms', path: '/communications', color: '#A100FF' },
   { key: 'documents', label: 'Documents', path: '/documents', color: '#0072FF' },

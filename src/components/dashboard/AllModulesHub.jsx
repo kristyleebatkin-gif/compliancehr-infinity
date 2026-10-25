@@ -44,7 +44,7 @@ export default function AllModulesHub() {
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {modules.map((module) => {
           const Icon = module.icon;
           const { colour: color, accent } = dashboardModuleColours(module.key);
@@ -53,36 +53,46 @@ export default function AllModulesHub() {
             <Link
               key={module.key}
               to={module.path}
-              className="group relative flex min-h-28 flex-col overflow-hidden rounded-xl border p-2.5 shadow-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl"
+              className="group relative flex flex-col overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
               data-dashboard-module
-              style={{ '--module-color': color, '--module-accent': accent, borderColor: `${color}99`, background: `linear-gradient(125deg, ${color}59, ${color}1f)` }}
+              style={{ '--module-color': color, '--module-accent': accent, borderColor: color }}
             >
-              <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
-              <div className="flex items-start gap-2">
-                <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white transition-transform group-hover:scale-110"
-                  style={{ background: color, boxShadow: `0 8px 20px -8px ${color}aa` }}
-                >
+              {/* Bordered & Highlighted Subject Header Bar (Larger than body text underneath) */}
+              <div
+                className="flex items-center gap-2 border-b-2 px-3 py-2 text-white"
+                style={{
+                  background: `linear-gradient(125deg, ${color} 0%, #5A00D6 85%)`,
+                  borderBottomColor: '#FF2E9A',
+                }}
+              >
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/50 bg-white/20 text-white shadow-sm transition-transform group-hover:scale-105">
                   <Icon className="h-4 w-4" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-bold leading-tight text-foreground">{module.label}</div>
-                  <p className="mt-1 text-[11px] leading-4 text-foreground/60 line-clamp-2">{module.blurb}</p>
+                <div className="min-w-0 flex-1">
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white/90">
+                    Subject: {module.group || 'Operations'}
+                  </div>
+                  <div className="text-sm font-extrabold leading-tight text-white">{module.label}</div>
                 </div>
               </div>
-              <div className="mt-auto flex items-center justify-between gap-1 pt-1.5">
-                {status ? (
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-foreground/55">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: status.dot }} />
-                      <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: status.dot }} />
+
+              {/* Slightly Smaller Body Writing Under the Header */}
+              <div className="flex flex-1 flex-col justify-between p-2.5 bg-white">
+                <p className="text-[11px] font-medium leading-snug text-[#0A2B6D]/80">{module.blurb}</p>
+                <div className="mt-2 flex items-center justify-between gap-1 border-t border-[#C084FC]/30 pt-1.5">
+                  {status ? (
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#0A2B6D]/75">
+                      <span className="relative flex h-2 w-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: status.dot }} />
+                        <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: status.dot }} />
+                      </span>
+                      {status.label}
                     </span>
-                    {status.label}
+                  ) : <span />}
+                  <span className="inline-flex items-center gap-1 text-[10.5px] font-extrabold" style={{ color }}>
+                    Open <ArrowRight className="h-3 w-3" />
                   </span>
-                ) : <span />}
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold opacity-60 transition-opacity group-hover:opacity-100" style={{ color }}>
-                  Open <ArrowRight className="h-3 w-3" />
-                </span>
+                </div>
               </div>
             </Link>
           );

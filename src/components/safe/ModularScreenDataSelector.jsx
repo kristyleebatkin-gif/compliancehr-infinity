@@ -16,12 +16,26 @@ export const FULL_SLOGAN = 'Complete Control. Greater Confidence. Brighter Succe
 
 export const MODULAR_SCREEN_DECKS = [
   {
+    key: 'rostering',
+    label: '1. Rostering & Shift Coverage',
+    shortLabel: '1. Rostering & Shifts',
+    category: 'Rostering & Shifts',
+    path: '/roster',
+    color: '#0072FF',
+    icon: Calendar,
+    description: 'Daily shift roster, worker screening validation, leave feed & timesheets.',
+    highlights: [
+      { id: 'r1', title: 'Weekly Shift Roster & Heat Map', subtitle: 'Live staff allocation, open shifts & sign-off', badge: 'Roster' },
+      { id: 'r2', title: 'Screening Validation & Leave Feed', subtitle: 'Blocks expired credentials & syncs availability', badge: 'Verified' },
+    ],
+  },
+  {
     key: 'our-staff',
     label: 'Employee Profiles & HR',
     shortLabel: 'Employee Profiles',
-    category: 'People & Profiles',
+    category: 'Workforce & HR',
     path: '/our-employees',
-    color: '#0072FF',
+    color: '#0A2B6D',
     icon: Users,
     description: 'Staff directory, HR files, NDIS worker screening, contracts & badges.',
     highlights: [
@@ -33,9 +47,9 @@ export const MODULAR_SCREEN_DECKS = [
     key: 'our-participants',
     label: 'Participant Profiles & Plans',
     shortLabel: 'Participant Profiles',
-    category: 'People & Profiles',
+    category: 'Participants & NDIS',
     path: '/our-participants',
-    color: '#0A2B6D',
+    color: '#5A00D6',
     icon: Heart,
     description: 'Participant profiles, NDIS plans, goals, consents, medications & safeguards.',
     highlights: [
@@ -47,7 +61,7 @@ export const MODULAR_SCREEN_DECKS = [
     key: 'my-profile',
     label: 'General Personal Profile & Work',
     shortLabel: 'My General Profile',
-    category: 'People & Profiles',
+    category: 'Personal Profile & Work',
     path: '/my-profile',
     color: '#5A00D6',
     icon: UserRound,
@@ -61,7 +75,7 @@ export const MODULAR_SCREEN_DECKS = [
     key: 'communications',
     label: 'Communication Centre & Shift Notes',
     shortLabel: 'Comms & Shift Notes',
-    category: 'Operations & Comms',
+    category: 'Communications & Logs',
     path: '/communications',
     color: '#A100FF',
     icon: MessagesSquare,
@@ -75,7 +89,7 @@ export const MODULAR_SCREEN_DECKS = [
     key: 'tasks',
     label: 'Tasks & Shared To-Do Board',
     shortLabel: 'Tasks & To-Do',
-    category: 'Operations & Comms',
+    category: 'Tasks & Shared To-Do',
     path: '/tasks',
     color: '#FF2E9A',
     icon: ListTodo,
@@ -83,20 +97,6 @@ export const MODULAR_SCREEN_DECKS = [
     highlights: [
       { id: 't1', title: 'Shared To-Do Command Board', subtitle: 'Priority tasks, responsible staff & digital sign-off', badge: 'Command' },
       { id: 't2', title: 'Task Competition & Overdue Alerts', subtitle: 'Automated reminders, 30-task reports & rankings', badge: 'Tracked' },
-    ],
-  },
-  {
-    key: 'rostering',
-    label: 'Rostering & Shift Coverage',
-    shortLabel: 'Rostering & Shifts',
-    category: 'Operations & Comms',
-    path: '/roster',
-    color: '#A100FF',
-    icon: Calendar,
-    description: 'Daily shift roster, worker screening validation, leave feed & timesheets.',
-    highlights: [
-      { id: 'r1', title: 'Weekly Shift Roster & Heat Map', subtitle: 'Live staff allocation, open shifts & sign-off', badge: 'Roster' },
-      { id: 'r2', title: 'Screening Validation & Leave Feed', subtitle: 'Blocks expired credentials & syncs availability', badge: 'Verified' },
     ],
   },
   {
@@ -331,8 +331,8 @@ async function fetchLiveScreenRecords(moduleKey) {
 }
 
 export default function ModularScreenDataSelector({
-  selectedModulars = ['our-staff', 'our-participants', 'communications', 'compliance'],
-  activeScreen = 'our-staff',
+  selectedModulars = ['rostering', 'our-staff', 'our-participants', 'communications'],
+  activeScreen = 'rostering',
   onSelectActiveScreen,
   onToggleModular,
   onSelectPreset,
@@ -552,8 +552,8 @@ export default function ModularScreenDataSelector({
         </div>
       )}
 
-      {/* Selected Modular Screen Data Cards — last:odd:col-span-full eliminates any empty grid slot */}
-      <div className={`grid grid-cols-1 ${effectiveSelected.length > 1 && !compact ? 'sm:grid-cols-2' : ''} gap-1`}>
+      {/* Selected Modular Screen Data Cards — Highlighted Bordered Subject Headers + Slightly Smaller Body Writing */}
+      <div className={`grid grid-cols-1 ${effectiveSelected.length > 1 && !compact ? 'sm:grid-cols-2' : ''} gap-2`}>
         {effectiveSelected.map((modKey) => {
           const meta = resolveMeta(modKey);
           const Icon = meta.icon || LayoutGrid;
@@ -566,59 +566,63 @@ export default function ModularScreenDataSelector({
           return (
             <div
               key={modKey}
-              className="last:odd:col-span-full flex flex-col justify-between rounded-lg border bg-white p-1.5"
-              style={{
-                borderColor: meta.color,
-                borderTopWidth: '3px',
-                background: `linear-gradient(145deg, ${meta.color}12 0%, #ffffff 80%)`,
-              }}
+              className="last:odd:col-span-full flex flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-sm"
+              style={{ borderColor: meta.color }}
             >
-              <div>
-                <div className="flex items-center justify-between gap-1 border-b border-purple-100 pb-1">
-                  <div className="flex items-center gap-1 min-w-0">
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-white"
-                      style={{ background: meta.color }}
-                    >
-                      <Icon className="h-3 w-3" />
+              {/* Bordered, Highlighted Modular Subject Header (Larger than writing below) */}
+              <div
+                className="flex items-center justify-between gap-2 border-b-2 px-3 py-2 text-white"
+                style={{
+                  background: `linear-gradient(120deg, ${meta.color} 0%, #5A00D6 70%, #FF2E9A 100%)`,
+                  borderBottomColor: '#FF2E9A',
+                }}
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/60 bg-white/20 text-white shadow-2xs">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <span className="inline-block rounded-full border border-white/40 bg-white/20 px-2 py-0 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                      Subject: {meta.category || 'Operations'}
                     </span>
-                    <div className="min-w-0">
-                      <div className="truncate text-[9px] font-extrabold text-blue-950">
-                        {meta.label}
-                      </div>
-                      <div className="truncate text-[7px] font-bold text-purple-800">
-                        {meta.description}
-                      </div>
+                    <div className="mt-0.5 text-sm font-extrabold leading-tight text-white">
+                      {meta.label}
                     </div>
                   </div>
-                  <Link
-                    to={meta.path || '/dashboard'}
-                    className="shrink-0 inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[7px] font-extrabold text-white"
-                    style={{ background: meta.color }}
-                  >
-                    Open <ExternalLink className="h-2 w-2" />
-                  </Link>
                 </div>
+                <Link
+                  to={meta.path || '/dashboard'}
+                  className="shrink-0 inline-flex items-center gap-1 rounded-full border border-white bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+                >
+                  Open <ExternalLink className="h-2.5 w-2.5 text-[#5A00D6]" />
+                </Link>
+              </div>
 
-                <div className="mt-1 space-y-0.5">
+              {/* Slightly Smaller Body Writing Under the Modular Header */}
+              <div className="p-2.5 space-y-1.5 bg-white">
+                <p className="text-[11px] font-medium text-[#0A2B6D]/85 leading-snug">
+                  {meta.description}
+                </p>
+
+                <div className="space-y-1">
                   {displayRows.slice(0, 3).map((row) => (
                     <Link
                       key={row.id}
                       to={row.to || meta.path || '/dashboard'}
-                      className="flex items-center justify-between gap-1 rounded border border-purple-100 bg-white px-1.5 py-0.5 hover:border-purple-300"
+                      className="flex items-center justify-between gap-1.5 rounded-lg border border-[#C084FC]/45 bg-[#F5F0FF]/50 px-2 py-1 hover:border-[#5A00D6]"
                     >
                       <div className="min-w-0">
-                        <div className="truncate text-[8px] font-extrabold text-blue-950">
+                        <div className="text-[11px] font-bold text-[#0A2B6D] leading-snug">
                           {row.title}
                         </div>
                         {row.subtitle && (
-                          <div className="truncate text-[7px] font-semibold text-purple-800">
+                          <div className="text-[10px] font-medium text-[#5A00D6] leading-tight">
                             {row.subtitle}
                           </div>
                         )}
                       </div>
                       <span
-                        className="shrink-0 rounded-full px-1.5 py-0 text-[6.5px] font-extrabold text-white"
+                        className="shrink-0 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white"
                         style={{ background: meta.color }}
                       >
                         {row.badge}

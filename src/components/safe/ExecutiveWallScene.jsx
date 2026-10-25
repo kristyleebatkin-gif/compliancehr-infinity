@@ -711,8 +711,8 @@ export default function ExecutiveWallScene({
   });
   const [monitorFeed, setMonitorFeed] = useState('overview');
   const [activeDataTab, setActiveDataTab] = useState('modular-picker');
-  const [secondScreenKey, setSecondScreenKey] = useState('our-staff');
-  const [selectedModulars, setSelectedModulars] = useState(['our-staff', 'our-participants', 'communications', 'compliance']);
+  const [secondScreenKey, setSecondScreenKey] = useState('rostering');
+  const [selectedModulars, setSelectedModulars] = useState(['rostering', 'our-staff', 'our-participants', 'communications']);
 
   const handleToggleModular = (modKey) => {
     setSelectedModulars((prev) =>
