@@ -78,11 +78,16 @@ export default function LandingHero() {
             ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation. It saves you time, money and effort, and keeps you NDIS audit prepared, every single day.
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to={authed ? '/dashboard' : '/register'} className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-7 py-3.5 text-base font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl">
-              {authed ? 'Go to Dashboard' : 'Start 14-day free trial'}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link to="/dashboard" className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-7 py-3.5 text-base font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl">
+              Open App Dashboard
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
+            {!authed && (
+              <Link to="/register" className="inline-flex items-center gap-2 rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-6 py-3 text-sm font-bold text-[#5A00D6] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white">
+                Start 14-day free trial
+              </Link>
+            )}
             <a href="#quick-start" className="inline-flex items-center gap-2 rounded-full border border-[#5A00D6]/50 bg-white px-6 py-3 text-sm font-bold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]">View the quick start guide</a>
           </div>
           <p className="mt-5 text-[13px] font-medium tracking-wide text-[#0A2B6D]/65">No credit card required · 14-day free trial · Set up in minutes</p>

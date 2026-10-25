@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
+import QuickAppBar from '@/components/QuickAppBar';
 
 export default function LandingNav() {
   const [open, setOpen] = useState(false);
@@ -45,13 +46,14 @@ export default function LandingNav() {
             </span>
           </Link>
 
-          <div className="hidden shrink-0 items-center gap-3 md:flex">
-            {authed ? (
-              <Link to="/dashboard" className="rounded-full bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-4 py-1.5 text-xs font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">Go to Dashboard</Link>
-            ) : (
+          <div className="hidden shrink-0 items-center gap-2.5 md:flex">
+            <Link to="/dashboard" className="rounded-full bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-4 py-1.5 text-xs font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">
+              Open App Dashboard
+            </Link>
+            {!authed && (
               <>
                 <Link to="/login" className="text-xs font-bold text-[#0A2B6D] transition-colors hover:text-[#5A00D6]">Sign in</Link>
-                <Link to="/register" className="rounded-full bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-4 py-1.5 text-xs font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">Get started</Link>
+                <Link to="/register" className="rounded-full border border-[#5A00D6] bg-white px-3.5 py-1.5 text-xs font-bold text-[#5A00D6] shadow-2xs transition-all hover:bg-[#F5F0FF]">Get started</Link>
               </>
             )}
           </div>
@@ -61,7 +63,7 @@ export default function LandingNav() {
           </button>
         </div>
 
-        <nav className="mt-2 hidden flex-wrap items-center justify-center gap-x-4 gap-y-1.5 border-t border-[#C084FC]/30 pt-2 md:flex">
+        <nav className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 border-t border-[#C084FC]/30 pt-2">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="group relative text-xs font-bold tracking-wide text-[#0A2B6D] transition-colors hover:text-[#5A00D6]">
               {l.label}
@@ -70,6 +72,7 @@ export default function LandingNav() {
           ))}
         </nav>
       </div>
+      <QuickAppBar />
 
       {open && (
         <div className="border-t border-violet-200 bg-white/95 px-4 py-4 backdrop-blur-xl">

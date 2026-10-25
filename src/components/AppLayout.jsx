@@ -19,6 +19,7 @@ import {
 import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import QuickAppBar from '@/components/QuickAppBar';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
@@ -447,6 +448,8 @@ export default function AppLayout() {
             </div>
           </div>
         </header>
+
+        <QuickAppBar />
 
         <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-6xl px-3 md:px-8' : 'mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4'}>
