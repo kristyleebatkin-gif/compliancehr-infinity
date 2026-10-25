@@ -52,14 +52,7 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-border/70">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-48 left-1/2 h-[30rem] w-[72rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400/60 via-fuchsia-300/55 to-cyan-300/60 blur-3xl dark:from-violet-800/30 dark:via-fuchsia-900/20 dark:to-cyan-800/25" />
-        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-amber-300/45 blur-3xl dark:bg-amber-500/10" />
-        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-cyan-300/55 blur-3xl dark:bg-cyan-500/10" />
-      </div>
-      <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none font-editorial text-[22vw] font-bold leading-none text-slate-900/[0.03] dark:text-white/[0.02]">HR</div>
-
+    <section className="relative overflow-hidden border-b border-border/70 bg-white">
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-3xl text-center">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
