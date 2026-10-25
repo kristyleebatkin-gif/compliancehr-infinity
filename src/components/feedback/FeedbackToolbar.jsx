@@ -2,8 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
 import { Download, Plus } from 'lucide-react';
 import '@/components/feedback/feedbackToolbar.css';
 

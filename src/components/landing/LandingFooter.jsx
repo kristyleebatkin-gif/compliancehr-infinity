@@ -36,7 +36,7 @@ export default function LandingFooter() {
 
   return (
     <footer
-      className="relative overflow-hidden border-t-4 border-[#0A2B6D] text-white"
+      className="relative overflow-hidden border-t-2 border-violet-300 text-white"
       style={{ background: SQUISHED_GRADIENT }}
     >
       <div className="relative mx-auto max-w-6xl px-4 py-12 md:px-8">
@@ -53,9 +53,9 @@ export default function LandingFooter() {
               </div>
               <span className="flex min-w-0 flex-col leading-tight">
                 <span className="font-editorial text-xl font-bold tracking-tight text-white">
-                  Compliance<span className="font-editorial-italic text-[#00C6FF]">HR</span>
+                  Compliance<span className="font-editorial-italic text-amber-200">HR</span>
                 </span>
-                <span className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#FF6EDB]">Infinity</span>
+                <span className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.2em] text-amber-200">Infinity</span>
               </span>
             </Link>
             <p className="mt-4 text-xs font-bold leading-relaxed text-white/95">
@@ -64,11 +64,11 @@ export default function LandingFooter() {
           </div>
           {cols.map((c) => (
             <div key={c.title}>
-              <h4 className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#00C6FF]">{c.title}</h4>
+              <h4 className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-amber-200">{c.title}</h4>
               <ul className="mt-3 space-y-2">
                 {c.links.map((l) => (
                   <li key={l}>
-                    <Link to={linkHref(c, l)} className="text-xs font-bold text-white/95 transition-colors hover:text-[#00C6FF]">
+                    <Link to={linkHref(c, l)} className="text-xs font-bold text-white/95 transition-colors hover:text-amber-200">
                       {l}
                     </Link>
                   </li>
@@ -80,11 +80,11 @@ export default function LandingFooter() {
         <div className="mt-8 flex flex-col items-center justify-between gap-2 rounded-2xl border border-white/30 bg-white/10 p-4 text-center sm:flex-row sm:text-left">
           <div className="space-y-0.5 text-xs font-extrabold text-white">
             <div>Software: ComplianceHR Infinity</div>
-            <div className="text-[#00C6FF]">Complete Control. Greater Confidence. Brighter Success.</div>
+            <div className="text-amber-200">Complete Control. Greater Confidence. Brighter Success.</div>
           </div>
           <div className="space-y-0.5 text-xs font-extrabold text-white sm:text-right">
             <div>Developer: Kristy Lee Whelan</div>
-            <div className="text-[#FF6EDB]">Email: kristyleebatkin@live.com.au</div>
+            <div className="text-amber-200">Email: kristyleebatkin@live.com.au</div>
           </div>
         </div>
       </div>

@@ -15,8 +15,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import VolunteerApplications from '@/components/volunteers/VolunteerApplications';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';

@@ -1,8 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { LayoutGrid } from 'lucide-react';
-import ModuleAuditButton from '@/components/ModuleAuditButton';
-import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
@@ -57,14 +55,10 @@ export default function PageHeader({ title, subtitle, subject, action, icon: Ico
           </div>
         </div>
       </div>
-      <div className={cn('flex flex-wrap items-center border-2 border-[#0A2B6D] bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-3 py-2' : 'gap-2.5 rounded-xl p-2.5')}>
+      <div className={cn('flex flex-wrap items-center border-2 border-[#0A2B6D] bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-2.5 py-1.5' : 'gap-2.5 rounded-xl p-2')}>
         <ModuleComplianceStrip path={seg} />
         {beforeAudit}
         {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1.5' : 'gap-2', actionClassName)}>{action}</div>}
-        <div className={cn('module-audit-buttons ml-auto flex shrink-0 items-center gap-1.5 [&>button]:h-8 [&>button]:gap-1.5 [&>button]:px-3 [&>button]:text-xs [&>button_svg]:mr-0 [&>button_svg]:size-3.5', auditClassName)}>
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
-        </div>
         {afterAudit}
       </div>
       {under}

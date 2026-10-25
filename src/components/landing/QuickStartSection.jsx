@@ -41,9 +41,9 @@ export default function QuickStartSection() {
       </div>
       <div className="relative mx-auto max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <div className="relative mx-auto max-w-2xl text-center">
-          <div className="inline-flex rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#5A00D6] shadow-sm">Quick start guide</div>
+          <div className="inline-flex rounded-full border border-violet-200 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 shadow-sm dark:border-violet-500/30 dark:bg-white/5 dark:text-violet-300">Quick start guide</div>
           <h2 className="mt-5 font-editorial text-3xl font-bold tracking-tight text-[#0A2B6D] md:text-[2.6rem] md:leading-tight">
-            Start using <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">ComplianceHR</span> in four steps
+            Start using <span className="font-editorial-italic bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-transparent">ComplianceHR</span> in four steps
           </h2>
           <p className="mt-3 text-base font-medium text-[#0A2B6D]/80">Sign in, open your role-based dashboard and choose the task you need to complete.</p>
         </div>

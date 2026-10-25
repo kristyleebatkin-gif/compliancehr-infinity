@@ -230,11 +230,11 @@ export default function PricingSection({ compact = false }) {
               <span className="text-xs sm:text-sm font-black uppercase tracking-wider">
                 ComplianceHR Infinity · Smart Enhanced All-In-One Compliance Pack Pricing
               </span>
-              <span className="rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+              <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
                 INCLUDES +$160/MO ELITE PLAN &amp; $355 AUDIT DOC
               </span>
             </div>
-            <p className="text-xs font-bold text-white/95">
+            <p className="text-[9px] font-bold text-amber-100">
               All tiers include the $160/mo Elite Plan (2,500 Message Credits &amp; 20,000 Integration Credits) + $355 Master Compliance Audit Doc · {FULL_SLOGAN}
             </p>
           </div>

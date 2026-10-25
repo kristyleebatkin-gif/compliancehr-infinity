@@ -66,12 +66,12 @@ export default function ExpressAuditSection() {
         className="mx-auto rounded-2xl border-2 border-[#0A2B6D] p-6 text-center text-white shadow-md"
         style={{ background: SQUISHED_GRADIENT }}
       >
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/20 px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white">
-          <Timer className="h-3.5 w-3.5 text-[#00C6FF]" />
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-200">
+          <Timer className="h-3.5 w-3.5" />
           The two-minute audit
         </div>
         <h2 className="mt-4 font-editorial text-3xl font-bold tracking-tight text-white md:text-[2.5rem] md:leading-tight">
-          From first question to <span className="font-editorial-italic text-[#00C6FF]">audit-ready report</span> in two minutes.
+          From first question to <span className="font-editorial-italic text-amber-200">audit-ready report</span> in two minutes.
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-white/95">
           The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.

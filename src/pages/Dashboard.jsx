@@ -34,14 +34,14 @@ const HEADINGS = {
 };
 
 const DASHBOARD_SUITES = [
-  { id: 'all', label: 'Full Merged Dashboard', sub: 'All Original & Current Suites Together', icon: Layers, color: '#0072FF' },
-  { id: 'overview', label: 'Original Overview & 45 Modules', sub: 'KPIs · Announcements · Quick Start · Live Trackers', icon: LayoutGrid, color: '#0A2B6D' },
-  { id: 'office-wall', label: 'Interactive Office & Profile Scene', sub: 'Dual Office Wall · Safe · Modular Screens', icon: Building2, color: '#00C6FF' },
-  { id: 'control-centre', label: 'Infinity Control Centre', sub: '356 Audit Checks · 98 Docs · Approvals', icon: ShieldCheck, color: '#5A00D6' },
-  { id: 'one-click', label: '1-Click Operations Deck', sub: '12 Instant Executive Actions', icon: Zap, color: '#FF2E9A' },
-  { id: 'core-engine', label: 'Infinity Core Engine', sub: '104 Functions · 65 Workflows · AI Smart-Fill', icon: Cpu, color: '#A100FF' },
-  { id: 'health-intelligence', label: 'NDIS Health & Readiness', sub: '8 Practice Standards · Predictive Radar', icon: Activity, color: '#0072FF' },
-  { id: 'reviews-trends', label: 'Management & Safety Trends', sub: 'Board Reviews · Incident & Risk Trends', icon: ClipboardCheck, color: '#5A00D6' },
+  { id: 'all', label: 'Full Merged Dashboard', sub: 'All Original & Current Suites Together', icon: Layers, color: '#ea580c' },
+  { id: 'overview', label: 'Original Overview & 45 Modules', sub: 'KPIs · Announcements · Quick Start · Live Trackers', icon: LayoutGrid, color: '#4f46e5' },
+  { id: 'office-wall', label: 'Interactive Office & Profile Scene', sub: 'Dual Office Wall · Safe · Modular Screens', icon: Building2, color: '#0284c7' },
+  { id: 'control-centre', label: 'Infinity Control Centre', sub: '356 Audit Checks · 98 Docs · Approvals', icon: ShieldCheck, color: '#7c3aed' },
+  { id: 'one-click', label: '1-Click Operations Deck', sub: '12 Instant Executive Actions', icon: Zap, color: '#db2777' },
+  { id: 'core-engine', label: 'Infinity Core Engine', sub: '104 Functions · 65 Workflows · AI Smart-Fill', icon: Cpu, color: '#16a34a' },
+  { id: 'health-intelligence', label: 'NDIS Health & Readiness', sub: '8 Practice Standards · Predictive Radar', icon: Activity, color: '#2563eb' },
+  { id: 'reviews-trends', label: 'Management & Safety Trends', sub: 'Board Reviews · Incident & Risk Trends', icon: ClipboardCheck, color: '#0d9488' },
 ];
 
 export default function Dashboard() {
@@ -71,27 +71,24 @@ export default function Dashboard() {
       <SoftwareAndSafeBanner compact />
 
       {/* Unified Dashboard Command Navigator — defaults to Full Merged Dashboard ('all') */}
-      <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-        <div
-          className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
-          style={{ background: 'var(--header-gradient)' }}
-        >
+      <section className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
+        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2 px-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/50 bg-white/20 text-white shadow-sm">
-              <Sparkles className="h-4 w-4 text-[#00C6FF]" />
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg gradient-brand text-white shadow-sm">
+              <Sparkles className="h-4 w-4" />
             </span>
             <div>
-              <h2 className="text-sm font-extrabold text-white">Merged Original &amp; Current Executive Dashboard</h2>
-              <p className="text-xs font-medium text-white/95">Showing all original published widgets and current Infinity suites together — click any card to focus on a single area.</p>
+              <h2 className="text-sm font-extrabold text-foreground">Merged Original &amp; Current Executive Dashboard</h2>
+              <p className="text-xs text-muted-foreground">Showing all original published widgets and current Infinity suites together — click any card to focus on a single area.</p>
             </div>
           </div>
           {viewMode !== 'profiles' && (
-            <span className="rounded-full border border-white bg-[#00C6FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
+            <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-900">
               Workspace Mode: {viewMode === 'office' ? 'Executive Office View' : 'Side-by-Side View'}
             </span>
           )}
         </div>
-        <div className="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-4 xl:grid-cols-8 bg-[#F5F0FF]/35">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
           {DASHBOARD_SUITES.map((s) => {
             const Icon = s.icon;
             const active = activeSuite === s.id;
@@ -100,33 +97,34 @@ export default function Dashboard() {
                 key={s.id}
                 type="button"
                 onClick={() => setActiveSuite(s.id)}
-                className={`flex flex-col items-start justify-between rounded-xl border-2 border-[#0A2B6D] p-2.5 text-left transition-all ${
-                  active ? 'shadow-md ring-2 ring-[#FF2E9A]' : 'hover:-translate-y-0.5 hover:shadow-sm'
+                className={`flex flex-col items-start justify-between rounded-xl border p-2.5 text-left transition-all ${
+                  active ? 'shadow-md ring-2 ring-primary' : 'hover:-translate-y-0.5 hover:shadow-sm'
                 }`}
                 style={{
+                  borderColor: active ? s.color : `${s.color}55`,
                   borderTopWidth: '4px',
                   borderTopColor: s.color,
                   background: active
-                    ? `linear-gradient(135deg, ${s.color}22 0%, #ffffff 90%)`
-                    : '#ffffff',
+                    ? `linear-gradient(135deg, ${s.color}26 0%, ${s.color}10 60%, #ffffff 100%)`
+                    : `linear-gradient(135deg, ${s.color}12 0%, #ffffff 85%)`,
                 }}
               >
                 <div className="flex w-full items-center justify-between gap-1.5">
                   <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D]/40 text-white shadow-sm"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
                     style={{ background: s.color }}
                   >
                     <Icon className="h-4 w-4" />
                   </span>
                   {active && (
-                    <span className="rounded-full px-2 py-0.5 text-[10px] font-extrabold text-white" style={{ background: '#FF2E9A' }}>
+                    <span className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white" style={{ background: s.color }}>
                       Active
                     </span>
                   )}
                 </div>
                 <div className="mt-2 min-w-0 w-full">
-                  <div className="text-xs font-extrabold leading-snug text-[#0A2B6D]">{s.label}</div>
-                  <div className="mt-0.5 text-[10.5px] font-semibold leading-snug text-[#5A00D6]">{s.sub}</div>
+                  <div className="truncate text-xs font-extrabold text-foreground">{s.label}</div>
+                  <div className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">{s.sub}</div>
                 </div>
               </button>
             );

@@ -21,11 +21,11 @@ export default function LandingCTA() {
           HR
         </div>
         <Reveal className="relative">
-          <div className="inline-flex rounded-full border border-white/40 bg-white/20 px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white">
+          <div className="inline-flex rounded-full border border-white/25 bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-200">
             Why ComplianceHR Infinity
           </div>
           <h2 className="mt-4 font-editorial text-3xl font-bold tracking-tight text-white md:text-5xl md:leading-tight">
-            Ready to simplify your <span className="font-editorial-italic text-[#00C6FF]">compliance?</span>
+            Ready to simplify your <span className="font-editorial-italic text-amber-200">compliance?</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/95">
             Join providers who trust ComplianceHR Infinity to keep their records, teams, and participants audit-ready every single day.

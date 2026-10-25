@@ -33,17 +33,19 @@ const FEATURES = [
 export default function FeaturesSection() {
   return (
     <section id="features" className="relative mx-auto my-8 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2rem] border-2 border-[#0A2B6D] bg-white px-4 py-12 sm:py-16 shadow-xl md:px-8">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-300/40 blur-3xl dark:bg-pink-500/10" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/40 blur-3xl dark:bg-blue-500/10" />
       <div className="relative mx-auto max-w-2xl text-center">
-        <div className="inline-flex rounded-full border-2 border-[#0A2B6D] bg-[#F5F0FF] px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#5A00D6]">Latest platform capabilities</div>
-        <h2 className="mt-4 font-editorial text-3xl font-bold tracking-tight text-[#0A2B6D] md:text-[2.6rem] md:leading-tight">
-          An impossible standard, <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">achieved effortlessly</span>
+        <div className="inline-flex rounded-full border border-pink-300 bg-pink-100/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-pink-700 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-300">Latest platform capabilities</div>
+        <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
+          An impossible standard, <span className="font-editorial-italic bg-gradient-to-r from-pink-700 via-violet-600 to-blue-600 bg-clip-text text-transparent">achieved effortlessly</span>
         </h2>
-        <p className="mt-3 text-base font-medium text-[#0A2B6D]/80">One super platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker that shows you are audit prepared, every day.</p>
+        <p className="mt-4 text-lg font-medium text-foreground/65">One super platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker that shows you are audit prepared, every day.</p>
       </div>
       <div className="relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((f, index) => (
           <Reveal key={f.title} delay={(index % 3) * 0.07} className="group relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl" style={{ borderTopWidth: '4px', borderTopColor: f.color }}>
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#0A2B6D]/30 text-white shadow-sm transition-transform group-hover:scale-105" style={{ backgroundColor: f.color }}>
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: `${f.color}16`, color: f.color }}>
               <f.icon className="h-5 w-5" />
             </div>
             <h3 className="mt-4 font-editorial text-lg font-bold text-[#0A2B6D]">{f.title}</h3>

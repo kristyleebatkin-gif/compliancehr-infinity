@@ -85,13 +85,13 @@ export default function BlueprintPreviewSection() {
           className="flex items-center gap-2 border-b-2 border-[#0A2B6D] px-4 py-3 text-white"
           style={{ background: SQUISHED_GRADIENT }}
         >
-          <span className="h-3 w-3 rounded-full bg-[#FF2E9A]" />
-          <span className="h-3 w-3 rounded-full bg-[#C084FC]" />
-          <span className="h-3 w-3 rounded-full bg-[#00C6FF]" />
+          <span className="h-3 w-3 rounded-full bg-rose-300" />
+          <span className="h-3 w-3 rounded-full bg-amber-300" />
+          <span className="h-3 w-3 rounded-full bg-emerald-300" />
           <div className="ml-3 min-w-0 flex-1 rounded-lg bg-white/20 px-3 py-1 text-xs font-bold text-white">
             compliancehrinfinity.com/dashboard
           </div>
-          <span className="hidden rounded-full bg-[#00C6FF] px-3 py-1 text-[10px] font-black text-[#0A2B6D] sm:inline">
+          <span className="hidden rounded-full bg-amber-300 px-3 py-1 text-[10px] font-black text-blue-950 sm:inline">
             LIVE WORKSPACE
           </span>
         </div>

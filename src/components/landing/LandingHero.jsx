@@ -52,7 +52,7 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b-2 border-[#0A2B6D] bg-gradient-to-b from-[#F5F0FF]/55 via-white to-white">
+    <section className="relative overflow-hidden border-b border-border/70 bg-white">
       <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-8 sm:pb-16 sm:pt-12 md:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-48 w-64 sm:h-72 sm:w-[28rem]" fittingType="fit" />
