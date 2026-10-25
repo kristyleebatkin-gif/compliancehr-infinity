@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck } from 'lucide-react';
+import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
@@ -19,6 +19,8 @@ import HrDashboardNavigation from '@/components/hr/HrDashboardNavigation';
 import HrEmployeeFiles from '@/components/hr/HrEmployeeFiles';
 import MyPayroll from '@/components/payroll/MyPayroll';
 import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';
+import Volunteers from '@/pages/Volunteers';
+import HrMediaGoalsHobbiesHub from '@/components/hr/HrMediaGoalsHobbiesHub';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -144,22 +146,44 @@ export default function HrHub({ profile, embedded = false } = {}) {
       <Tabs value={tab} onValueChange={setTab}>
       <ModuleShell
         embedded={embedded}
-        title="HR Hub"
-        subtitle="Leave management, performance reviews and workforce records in one place."
+        title="HR Hub & Volunteering"
+        subtitle="Leave management, performance reviews, Volunteering & Placements, and the TV · Radio · Phone · Computer Goals, Doors & Hobbies Hub."
         icon={UsersRound}
         moduleKey="human-resources"
-        insightModule={isManager ? 'hr' : undefined}
+        insightModule="hr"
         tabs={<HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />}
-        actions={<>
-          <Button size="sm" onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}><Plus className="h-4 w-4" />Log Leave Request</Button>
-          <Button size="sm" variant="outline" onClick={() => downloadCsv('leave-register.csv', [
-            { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
-            { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
-          ], leaves)}>Export CSV</Button>
-        </>}
-        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave and reviews…" />}
+        actions={
+          <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              Quick Leave &amp; Register Actions
+            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                size="sm"
+                className="border-2 border-[#0A2B6D] shadow-sm font-extrabold"
+                onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}
+              >
+                <Plus className="h-4 w-4" />Log Leave Request
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                onClick={() => downloadCsv('leave-register.csv', [
+                  { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
+                  { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
+                ], leaves)}
+              >
+                <Download className="h-4 w-4" />Export CSV
+              </Button>
+            </div>
+          </div>
+        }
+        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave, volunteering and reviews…" />}
         small={tiles}
       >
+        {/* TV, Radio, Phone & Computer Hub for Achieving Goals, Opening Doors & Hobbies */}
+        <HrMediaGoalsHobbiesHub />
 
         <TabsContent value="leave" className="mt-4 space-y-2">
           {embedded && <div className="flex gap-2">
@@ -268,6 +292,8 @@ export default function HrHub({ profile, embedded = false } = {}) {
           {reviewPage.has_more && <Button size="sm" variant="outline" disabled={loading} onClick={() => loadMore('reviews')}>Load more reviews</Button>}
         </TabsContent>
 
+        <TabsContent value="volunteering" className="mt-2"><Volunteers embedded /></TabsContent>
+        <TabsContent value="media-goals" className="mt-2"><HrMediaGoalsHobbiesHub /></TabsContent>
         {isManager && <TabsContent value="performance" className="mt-2"><AppraisalComplianceDashboard /></TabsContent>}
         <TabsContent value="paperwork" className="mt-2">{isManager ? <HrPaperworkPanel /> : <HrEmployeeFiles profile={profile} />}</TabsContent>
         {isManager && <TabsContent value="file-completeness" className="mt-2"><StaffFileCompletenessWidget /></TabsContent>}

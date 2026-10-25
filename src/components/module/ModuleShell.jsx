@@ -23,17 +23,22 @@ export default function ModuleShell({ embedded = false, header, title, subtitle,
   const colour = moduleKeyColour(moduleKey) || '#4f46e5';
   const rows = (
     <div className="space-y-2.5" style={{ '--module-colour': colour }}>
-      {(tabs || actions) && (
-        <div className="flex flex-col" style={{ gap: '0.5cm' }}>
-          {tabs && <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">{tabs}</div>}
-          {actions && <div className="module-shell-actions module-action-bar flex flex-wrap items-center">{actions}</div>}
+      {/* Insight directly under the Audit Register bar and above Employee/Module tiles */}
+      {!insightAfterTiles && insight}
+      {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
+      {actions && (
+        <div className="module-shell-actions module-action-bar flex flex-wrap items-center rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-sm [&_button]:border-2 [&_button]:border-[#0A2B6D]">
+          {actions}
+        </div>
+      )}
+      {tabs && (
+        <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">
+          {tabs}
         </div>
       )}
       {search && <div>{search}</div>}
-      {!insightAfterTiles && insight}
-      {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
-      {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border [&>*]:p-3">{small}</div>}
-      {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border [&>*]:p-4">{medium}</div>}
+      {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3">{small}</div>}
+      {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-4">{medium}</div>}
     </div>
   );
   if (embedded) return <div className="space-y-2.5">{tabs}{children}</div>;

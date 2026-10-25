@@ -23,7 +23,7 @@ import VolunteerDetail from '@/components/volunteers/VolunteerDetail';
 import VolunteerRegisterCard from '@/components/volunteers/VolunteerRegisterCard';
 import '@/components/volunteers/volunteerWorkspace.css';
 
-export default function Volunteers() {
+export default function Volunteers({ embedded = false } = {}) {
   const { toast } = useToast();
   const [volunteers, setVolunteers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -94,6 +94,7 @@ export default function Volunteers() {
   return (
     <div className="volunteer-workspace space-y-4">
       <ModuleShell
+        embedded={embedded}
         title="Volunteering & Student Placement"
         subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
         icon={HeartHandshake}

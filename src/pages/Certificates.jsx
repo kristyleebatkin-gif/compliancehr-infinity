@@ -5,17 +5,25 @@ import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import StatusBadge from '@/components/StatusBadge';
 import { Button } from '@/components/ui/button';
-import { Plus, Award, Pencil, Trash2, Download } from 'lucide-react';
+import { Plus, Award, Pencil, Trash2, Download, Trophy, Users, Heart, Sparkles } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import BulkEditBar from '@/components/documents/BulkEditBar';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import StaffRecognition from '@/components/staff/StaffRecognition';
+import EmployeeJourneyForm from '@/components/profile/EmployeeJourneyForm';
+import ParticipantJourneyBox from '@/components/profile/ParticipantJourneyBox';
 
 export default function Certificates() {
+  const [activeTab, setActiveTab] = useState('all');
   const [query, setQuery] = useState('');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
   const [staffProfiles, setStaffProfiles] = useState([]);
+  const [participantProfiles, setParticipantProfiles] = useState([]);
+  const [selectedStaffId, setSelectedStaffId] = useState('');
+  const [selectedParticipantId, setSelectedParticipantId] = useState('');
   const [form, setForm] = useState({
     certificate_number: '', staff_id: '', staff_name: '', module_title: '', issue_date: '',
     expiry_date: '', score: 0, status: 'Current', issued_by: '',
@@ -27,12 +35,18 @@ export default function Certificates() {
   const load = async () => {
     setLoading(true);
     try {
-      const [certPage, staffPage] = await Promise.all([
+      const [certPage, staffPage, partPage] = await Promise.all([
         base44.entities.Certificate.filter({}, { sort: '-expiry_date', limit: 500 }),
         base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 500 }),
+        base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 500 }).catch(() => ({ items: [] })),
       ]);
+      const sList = staffPage.items || [];
+      const pList = partPage.items || [];
       setItems(certPage.items || []);
-      setStaffProfiles(staffPage.items || []);
+      setStaffProfiles(sList);
+      setParticipantProfiles(pList);
+      if (sList.length && !selectedStaffId) setSelectedStaffId(sList[0].id);
+      if (pList.length && !selectedParticipantId) setSelectedParticipantId(pList[0].id);
     }
     catch (e) { console.error(e); }
     finally { setLoading(false); }
@@ -96,28 +110,183 @@ export default function Certificates() {
 
   const input = "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40";
 
+  const selectedStaff = staffProfiles.find((s) => s.id === selectedStaffId) || staffProfiles[0] || null;
+  const selectedParticipant = participantProfiles.find((p) => p.id === selectedParticipantId) || participantProfiles[0] || null;
+
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8 space-y-4">
-      <ModuleShell
-        title="Certificates"
-        subtitle="Track staff training certificates and expiry"
-        icon={Award}
-        moduleKey="certificates"
-        insightModule="certificates"
-        search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search certificates…" />}
-        actions={<>
-          <Button onClick={openNew}><Plus className="h-4 w-4 mr-1.5" />Issue Certificate</Button>
-          <Button variant="outline" onClick={() => downloadCsv('Certificate-Register.csv', [
-            { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
-            { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
-            { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
-            { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
-          ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
-        </>}
-        small={[['Certificates', items.length], ['Current', items.filter((c) => c.status === 'Current').length], ['Expiring / expired', items.filter((c) => c.status === 'Expiring Soon' || c.status === 'Expired').length]].map(([label, value]) => (
-          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
-        ))}
-      />
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6 space-y-4">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <ModuleShell
+          title="Recognition & My Certificates"
+          subtitle="Employee recognition leaderboard, My Certificates register, Staff Journey milestones, and Participant Journey in one unified showcase."
+          icon={Award}
+          moduleKey="certificates"
+          insightModule="certificates"
+          tabs={
+            <TabsList className="flex flex-wrap gap-1.5 h-auto rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm">
+              <TabsTrigger value="all" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Sparkles className="mr-1.5 h-3.5 w-3.5" /> All Displayed Together
+              </TabsTrigger>
+              <TabsTrigger value="certificates" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Award className="mr-1.5 h-3.5 w-3.5" /> My Certificates ({items.length})
+              </TabsTrigger>
+              <TabsTrigger value="recognition" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Trophy className="mr-1.5 h-3.5 w-3.5" /> Recognition &amp; Leaderboard
+              </TabsTrigger>
+              <TabsTrigger value="staff-journey" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Users className="mr-1.5 h-3.5 w-3.5" /> Staff Journey ({staffProfiles.length})
+              </TabsTrigger>
+              <TabsTrigger value="participant-journey" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Heart className="mr-1.5 h-3.5 w-3.5" /> Participant Journey ({participantProfiles.length})
+              </TabsTrigger>
+            </TabsList>
+          }
+          search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search certificates, staff or modules…" />}
+          actions={
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-sm">
+              <Button className="border-2 border-[#0A2B6D]" onClick={openNew}><Plus className="h-4 w-4 mr-1.5" />Issue Certificate</Button>
+              <Button variant="outline" className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D]" onClick={() => downloadCsv('Certificate-Register.csv', [
+                { key: 'staff_name', label: 'Staff' }, { key: 'module_title', label: 'Module' },
+                { key: 'certificate_number', label: 'Certificate Number' }, { key: 'issue_date', label: 'Issued' },
+                { key: 'expiry_date', label: 'Expiry' }, { key: 'score', label: 'Score (%)' },
+                { key: 'status', label: 'Status' }, { key: 'issued_by', label: 'Issued By' },
+              ], items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
+            </div>
+          }
+          small={[
+            ['My Certificates', items.length],
+            ['Current & Valid', items.filter((c) => c.status === 'Current').length],
+            ['Staff Journeys', staffProfiles.length],
+            ['Participant Journeys', participantProfiles.length],
+          ].map(([label, value]) => (
+            <div key={label} className="border-2 border-[#0A2B6D] bg-white">
+              <p className="text-[10px] font-extrabold uppercase tracking-wide text-[#5A00D6]">{label}</p>
+              <p className="mt-1 text-2xl font-extrabold tabular-nums text-[#0A2B6D]">{loading ? '…' : value}</p>
+            </div>
+          ))}
+        />
+
+        {/* STAFF JOURNEY & PARTICIPANT JOURNEY SIDE-BY-SIDE SHOWCASE */}
+        {(activeTab === 'all' || activeTab === 'staff-journey' || activeTab === 'participant-journey') && (
+          <div className={`grid grid-cols-1 gap-4 ${activeTab === 'all' ? 'lg:grid-cols-2' : ''}`}>
+            {(activeTab === 'all' || activeTab === 'staff-journey') && (
+              <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+                <div
+                  className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+                  style={{ background: 'var(--header-gradient)' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-[#00C6FF]" />
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">Workforce Progression &amp; Milestones</span>
+                      <h3 className="text-sm font-extrabold text-white">Staff Journey &amp; Career Milestones</h3>
+                    </div>
+                  </div>
+                  {staffProfiles.length > 0 && (
+                    <select
+                      aria-label="Select staff member for Staff Journey"
+                      value={selectedStaff?.id || ''}
+                      onChange={(e) => setSelectedStaffId(e.target.value)}
+                      className="rounded-lg border-2 border-white bg-white px-2.5 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                    >
+                      {staffProfiles.map((s) => (
+                        <option key={s.id} value={s.id}>{s.full_name}{s.position ? ` — ${s.position}` : ''}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+                <div className="p-3 bg-[#F5F0FF]/35">
+                  {selectedStaff ? (
+                    <div className="rounded-xl border-2 border-[#0A2B6D] bg-white p-3">
+                      <div className="mb-2 flex flex-wrap items-center justify-between gap-2 border-b border-[#0A2B6D]/20 pb-2">
+                        <div>
+                          <p className="text-sm font-extrabold text-[#0A2B6D]">{selectedStaff.full_name}</p>
+                          <p className="text-xs font-bold text-[#5A00D6]">{selectedStaff.position || selectedStaff.role || 'Staff Member'}</p>
+                        </div>
+                        <StatusBadge value={selectedStaff.status || 'Active'} />
+                      </div>
+                      <EmployeeJourneyForm key={selectedStaff.id} profile={selectedStaff} onUpdated={load} />
+                    </div>
+                  ) : (
+                    <p className="p-4 text-xs font-bold text-[#0A2B6D]">No staff profiles available yet.</p>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {(activeTab === 'all' || activeTab === 'participant-journey') && (
+              <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+                <div
+                  className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+                  style={{ background: 'var(--header-gradient)' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Heart className="h-4 w-4 text-[#FF6EDB]" />
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">Participant Intake &amp; Support Timeline</span>
+                      <h3 className="text-sm font-extrabold text-white">Participant Journey &amp; Support Milestones</h3>
+                    </div>
+                  </div>
+                  {participantProfiles.length > 0 && (
+                    <select
+                      aria-label="Select participant for Participant Journey"
+                      value={selectedParticipant?.id || ''}
+                      onChange={(e) => setSelectedParticipantId(e.target.value)}
+                      className="rounded-lg border-2 border-white bg-white px-2.5 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                    >
+                      {participantProfiles.map((p) => (
+                        <option key={p.id} value={p.id}>{p.full_name}{p.ndis_number ? ` — NDIS ${p.ndis_number}` : ''}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+                <div className="p-3 bg-[#F5F0FF]/35">
+                  {selectedParticipant ? (
+                    <div className="rounded-xl border-2 border-[#0A2B6D] bg-white p-3 space-y-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#0A2B6D]/20 pb-2">
+                        <div>
+                          <p className="text-sm font-extrabold text-[#0A2B6D]">{selectedParticipant.full_name}</p>
+                          <p className="text-xs font-bold text-[#5A00D6]">
+                            {[selectedParticipant.support_type || 'NDIS Participant', selectedParticipant.ndis_number && `NDIS: ${selectedParticipant.ndis_number}`].filter(Boolean).join(' · ')}
+                          </p>
+                        </div>
+                        <StatusBadge value={selectedParticipant.status || 'Active'} />
+                      </div>
+                      <ParticipantJourneyBox key={selectedParticipant.id} profile={selectedParticipant} />
+                    </div>
+                  ) : (
+                    <p className="p-4 text-xs font-bold text-[#0A2B6D]">No participant profiles available yet.</p>
+                  )}
+                </div>
+              </section>
+            )}
+          </div>
+        )}
+
+        {/* RECOGNITION & LEADERBOARD SECTION */}
+        {(activeTab === 'all' || activeTab === 'recognition') && (
+          <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+            <div
+              className="border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+              style={{ background: 'var(--header-gradient)' }}
+            >
+              <div className="flex items-center gap-2">
+                <Trophy className="h-4 w-4 text-[#00C6FF]" />
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">Employee Recognition, Points &amp; Podium</span>
+                  <h3 className="text-sm font-extrabold text-white">Staff Recognition &amp; Achievement Leaderboard</h3>
+                </div>
+              </div>
+            </div>
+            <div className="p-3">
+              <StaffRecognition />
+            </div>
+          </section>
+        )}
+
+        {/* MY CERTIFICATES REGISTER SECTION */}
+        {(activeTab === 'all' || activeTab === 'certificates') && (
+          <div className="space-y-4">
 
       {showForm && (
         <form onSubmit={save} className="rounded-xl border border-border bg-card p-6 space-y-4">
@@ -199,6 +368,9 @@ export default function Certificates() {
           </>
         )}
       </div>
+          </div>
+        )}
+      </Tabs>
     </div>
   );
 }
