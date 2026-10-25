@@ -34,7 +34,7 @@ export default function LandingNav() {
   ];
 
   return (
-    <header className={`sticky top-0 z-40 border-b border-[#C084FC]/45 bg-white/95 backdrop-blur-2xl transition-shadow duration-300 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
+    <header className={`sticky top-0 z-40 border-b border-[#C084FC]/45 bg-white transition-shadow duration-300 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
       <div className="mx-auto max-w-7xl bg-white px-3 py-2.5 md:px-6">
         <div className="flex items-center justify-between gap-3">
           <Link to="/" className="group flex shrink-0 items-center gap-2">
