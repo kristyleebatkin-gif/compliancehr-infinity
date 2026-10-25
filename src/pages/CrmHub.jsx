@@ -28,7 +28,7 @@ const OPEN_STAGES = STAGES.slice(0, 4);
 const today = () => new Date().toISOString().slice(0, 10);
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { maximumFractionDigits: 0 })}`;
 
-export default function CrmHub() {
+export default function CrmHub({ embedded = false } = {}) {
   const { toast } = useToast();
   const [leads, setLeads] = useState([]);
   const [users, setUsers] = useState([]);
@@ -135,6 +135,7 @@ export default function CrmHub() {
   return (
     <div className="space-y-4">
       <ModuleShell
+        embedded={embedded}
         title="CRM & Leads"
         subtitle="Track every enquiry through the sales pipeline: enquiries, proposals, wins and follow-ups."
         icon={Briefcase}

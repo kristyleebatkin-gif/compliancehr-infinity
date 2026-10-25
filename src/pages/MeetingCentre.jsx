@@ -37,7 +37,7 @@ const EMPTY_FORM = {
   chair: '', minute_taker: '', attendees: '', attendee_emails: '', purpose: '', agenda: '', status: 'Scheduled',
 };
 
-export default function MeetingCentre() {
+export default function MeetingCentre({ embedded = false } = {}) {
   const { toast } = useToast();
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -164,6 +164,7 @@ export default function MeetingCentre() {
     <div className="finance-workspace meeting-workspace space-y-4">
       <Tabs defaultValue="register" className="space-y-4">
       <ModuleShell
+        embedded={embedded}
         icon={CalendarDays}
         title="Meeting Centre"
         subtitle="Meeting register, calendar, agenda assistant, invites, minutes and follow-up actions."

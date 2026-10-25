@@ -7,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import EmptyState from '@/components/EmptyState';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import Feedback from '@/pages/Feedback';
 import { useToast } from '@/components/ui/use-toast';
-import { Eye, Zap, SlidersHorizontal, Sparkles, Mail, Loader2, RefreshCw, Search, AlertTriangle, Clock } from 'lucide-react';
+import { Eye, Zap, SlidersHorizontal, Sparkles, Mail, Loader2, RefreshCw, Search, AlertTriangle, Clock, MessageSquare } from 'lucide-react';
 
 const GROUPS = [
   { key: 'visualise', label: 'Visualise', icon: Eye, tone: 'text-blue-600 bg-blue-50' },
@@ -23,6 +24,7 @@ export default function SuggestionsHub() {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [emailing, setEmailing] = useState(false);
+  const [screenMode, setScreenMode] = useState('both');
 
   const load = async () => {
     setLoading(true);
@@ -76,7 +78,60 @@ export default function SuggestionsHub() {
         }
       />
 
-      <ScreenByScreenMasterAudit2026 />
+      {/* Screen Switcher: Suggestions Hub + Feedback & Surveys */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
+        <div>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+            Suggestions, Audit &amp; Feedback Workspace
+          </span>
+          <h3 className="text-sm font-extrabold text-[#0A2B6D]">
+            Screen 1: Suggestions &amp; 45-Screen Audit · Screen 2: Feedback &amp; Surveys Register
+          </h3>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            ['both', 'Suggestions + Feedback & Surveys'],
+            ['suggestions', 'Screen 1: Suggestions & 45-Screen Audit'],
+            ['feedback', 'Screen 2: Feedback & Surveys'],
+          ].map(([k, lbl]) => (
+            <Button
+              key={k}
+              size="sm"
+              variant={screenMode === k ? 'default' : 'outline'}
+              className="border-2 border-[#0A2B6D] font-extrabold"
+              onClick={() => setScreenMode(k)}
+            >
+              {lbl}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {(screenMode === 'feedback' || screenMode === 'both') && (
+        <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+          <div
+            className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+            style={{ background: 'var(--header-gradient)' }}
+          >
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4 text-[#00C6FF]" />
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">
+                  Feedback, Complaints &amp; Satisfaction Surveys
+                </span>
+                <h3 className="text-sm font-extrabold text-white">
+                  Feedback &amp; Surveys Hub (Inside Suggestions Hub)
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div className="p-3">
+            <Feedback embedded />
+          </div>
+        </section>
+      )}
+
+      {screenMode !== 'feedback' && <ScreenByScreenMasterAudit2026 />}
 
       {loading && (
         <Card><CardContent className="p-8 flex items-center justify-center gap-2 text-muted-foreground">

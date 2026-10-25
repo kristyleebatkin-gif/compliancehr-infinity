@@ -18,6 +18,8 @@ import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standar
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
+import IncidentAnalytics from '@/pages/IncidentAnalytics';
+import Feedback from '@/pages/Feedback';
 
 const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -116,9 +118,29 @@ const EXECUTIVE_RESOURCE_SUITES = [
     description: 'Screen-by-screen 2026 compliance blueprints with 1-Click Smart-Fill document filing & task creation.',
   },
   {
+    id: 'incident-analytics',
+    label: '9. Friendly Incident & Safety Analytics',
+    shortLabel: '9. Friendly Incident Analytics',
+    subject: 'Safety Analytics',
+    icon: Activity,
+    color: '#0072FF',
+    badge: 'Supportive View',
+    description: 'User-friendly, blame-free incident trends, location hotspots, and supportive safety analytics.',
+  },
+  {
+    id: 'feedback-surveys',
+    label: '10. Feedback, Complaints & Satisfaction Surveys',
+    shortLabel: '10. Feedback & Surveys',
+    subject: 'Feedback & Surveys',
+    icon: Sparkles,
+    color: '#FF2E9A',
+    badge: 'Live Surveys',
+    description: 'Participant and staff feedback register, complaint lifecycle tracking, and satisfaction surveys.',
+  },
+  {
     id: 'module-matrix',
-    label: '9. All Platform Modules & Registers Directory',
-    shortLabel: '9. All Modules Matrix',
+    label: '11. All Platform Modules & Registers Directory',
+    shortLabel: '11. All Modules Matrix',
     subject: 'All 45 Modules',
     icon: Layers,
     color: '#FF6EDB',
@@ -395,6 +417,49 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
       {/* ==================== SUITE 7: 45-SCREEN 2026 MASTER AUDIT & SMART-FILL STUDIO ==================== */}
       {(activeSuite === 'all' || activeSuite === 'screen-audit-2026') && (
         <ScreenByScreenMasterAudit2026 />
+      )}
+
+      {/* ==================== SUITE: FRIENDLY INCIDENT ANALYTICS & FEEDBACK SURVEYS IN OPERATIONS CENTRE ==================== */}
+      {(activeSuite === 'all' || activeSuite === 'incident-analytics' || activeSuite === 'feedback-surveys') && (
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
+          {(activeSuite === 'all' || activeSuite === 'incident-analytics') && (
+            <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-lg">
+              <div
+                className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                <span className="text-sm font-extrabold text-white">
+                  Friendly Incident &amp; Safety Support Analytics (Operations Centre)
+                </span>
+                <Link to="/incident-analytics" className="rounded-lg bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                  Full View
+                </Link>
+              </div>
+              <div className="p-3">
+                <IncidentAnalytics embedded />
+              </div>
+            </section>
+          )}
+
+          {(activeSuite === 'all' || activeSuite === 'feedback-surveys') && (
+            <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-lg">
+              <div
+                className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+                style={{ background: SQUISHED_GRADIENT }}
+              >
+                <span className="text-sm font-extrabold text-white">
+                  Feedback, Complaints &amp; Surveys Register (Operations Centre)
+                </span>
+                <Link to="/feedback" className="rounded-lg bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                  Full View
+                </Link>
+              </div>
+              <div className="p-3">
+                <Feedback embedded />
+              </div>
+            </section>
+          )}
+        </div>
       )}
 
       {/* ==================== SUITE 8: ALL MODULES & REGISTERS EXECUTIVE MATRIX ==================== */}

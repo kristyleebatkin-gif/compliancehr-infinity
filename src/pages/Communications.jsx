@@ -3,7 +3,10 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
+import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb, CalendarDays, MessageSquare } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import MeetingCentre from '@/pages/MeetingCentre';
+import Feedback from '@/pages/Feedback';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -56,6 +59,8 @@ const TABS = [
   ['email', Mail, 'Send Email'],
   ['shift-notes', NotebookPen, 'Shift Notes'],
   ['employee-log', Briefcase, 'Employee Log'],
+  ['meetings', CalendarDays, 'Meetings'],
+  ['feedback', MessageSquare, 'Feedback'],
 ];
 
 const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log'];
@@ -66,6 +71,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const participantOnly = role === ROLES.PARTICIPANT;
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
+  const [commScreen, setCommScreen] = useState('both');
 
   useEffect(() => {
     if (!restricted || profile) return;
@@ -100,20 +106,95 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2">
+              {/* Screen 1 (Communications & Mailbox) + Screen 2 (Meeting Centre & Feedback Surveys) Switcher */}
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    Dual-Screen Communication, Meetings &amp; Feedback Hub
+                  </span>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                    Screen 1: Communications Mailbox &amp; Logs · Screen 2: Meeting Centre &amp; Feedback Surveys
+                  </h3>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    ['both', 'Screen 1 + Screen 2 (Meetings & Feedback)'],
+                    ['screen1', 'Screen 1: Communications & Mailbox'],
+                    ['screen2', 'Screen 2: Meeting Centre & Feedback'],
+                  ].map(([k, lbl]) => (
+                    <Button
+                      key={k}
+                      size="sm"
+                      variant={commScreen === k ? 'default' : 'outline'}
+                      className="border-2 border-[#0A2B6D] font-extrabold"
+                      onClick={() => setCommScreen(k)}
+                    >
+                      {lbl}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
               <CommWeatherBar />
               <CommunicationNavigation tabs={shown} />
-              <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
-              <CommDailyInsight />
-              <CommAuditBar />
-              <CommHintsTips />
-              <CommunicateWell />
-              <CommTaskDash />
-              <CommTeamDash />
-              <CommSharedTodo />
+
+              {/* SCREEN 2 IN COMMUNICATION CENTRE: MEETING CENTRE & FEEDBACK SURVEYS */}
+              {(commScreen === 'screen2' || commScreen === 'both') && (
+                <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
+                  <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+                    <div
+                      className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2 text-white"
+                      style={{ background: 'var(--header-gradient)' }}
+                    >
+                      <span className="text-xs font-extrabold text-white">
+                        Screen 2A · Meeting Centre (Agendas, Minutes &amp; Actions)
+                      </span>
+                      <span className="rounded-full bg-[#00C6FF] px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                        Screen 2
+                      </span>
+                    </div>
+                    <div className="p-2.5">
+                      <MeetingCentre embedded />
+                    </div>
+                  </section>
+
+                  <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+                    <div
+                      className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2 text-white"
+                      style={{ background: 'var(--header-gradient)' }}
+                    >
+                      <span className="text-xs font-extrabold text-white">
+                        Screen 2B · Feedback &amp; Surveys Register
+                      </span>
+                      <span className="rounded-full bg-[#FF2E9A] px-2 py-0.5 text-[9.5px] font-extrabold text-white">
+                        Screen 2
+                      </span>
+                    </div>
+                    <div className="p-2.5">
+                      <Feedback embedded />
+                    </div>
+                  </section>
+                </div>
+              )}
+
+              {commScreen !== 'screen2' && (
+                <>
+                  <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
+                  <CommDailyInsight />
+                  <CommAuditBar />
+                  <CommHintsTips />
+                  <CommunicateWell />
+                  <CommTaskDash />
+                  <CommTeamDash />
+                  <CommSharedTodo />
+                </>
+              )}
             </div>
           )}
         >
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
+        <TabsContent value="meetings"><MeetingCentre embedded /></TabsContent>
+        <TabsContent value="feedback"><Feedback embedded /></TabsContent>
         <TabsContent value="logs"><AutomatedLogs /></TabsContent>
         <TabsContent value="diary">
           {effProfile ? (effKind === 'participant' ? <ProfileCommDiary participant={effProfile} /> : <StaffCommPanel staff={effProfile} />)

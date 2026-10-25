@@ -5,8 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { KanbanSquare, Plus, Trash2, ChevronLeft, ChevronRight, CircleCheck } from 'lucide-react';
+import { KanbanSquare, Plus, Trash2, ChevronLeft, ChevronRight, CircleCheck, Briefcase } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
+import CrmHub from '@/pages/CrmHub';
 import '@/components/dashboard/brightActions.css';
 
 const COLUMNS = ['Planning', 'Active', 'On Hold', 'Complete'];
@@ -19,6 +20,7 @@ const COL_TONES = {
 const today = () => new Date().toISOString().slice(0, 10);
 
 export default function ProjectsHub() {
+  const [screenPage, setScreenPage] = useState('both');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -72,17 +74,19 @@ export default function ProjectsHub() {
   return (
     <div className="space-y-4">
       <ModuleShell
-        title="Projects Hub"
-        subtitle="Business improvement projects, growth initiatives and internal builds - tracked from planning to complete."
+        title="Projects Hub & CRM Leads Pipeline"
+        subtitle="Page 1: Business improvement projects & milestones · Page 2 (2nd Screen): CRM & Leads sales pipeline."
         icon={KanbanSquare}
         moduleKey="projects"
-        actions={<>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New project</Button>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => downloadCsv('projects.csv', [
-            { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
-            { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
-          ], projects)}>Export CSV</Button>
-        </>}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" variant="outline" className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D]" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />New Project</Button>
+            <Button size="sm" variant="outline" className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D]" onClick={() => downloadCsv('projects.csv', [
+              { label: 'Project', key: 'name' }, { label: 'Owner', key: 'owner' }, { label: 'Status', key: 'status' },
+              { label: 'Priority', key: 'priority' }, { label: 'Due', key: 'due_date' }, { label: 'Progress (%)', key: 'progress' },
+            ], projects)}>Export CSV</Button>
+          </div>
+        }
         small={[
           ['Active projects', active.length],
           ['Planning', projects.filter((p) => p.status === 'Planning').length],
@@ -92,6 +96,35 @@ export default function ProjectsHub() {
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
       />
+
+      {/* Page 1 (Projects) & Page 2 (CRM & Leads) Screen Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
+        <div>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+            Projects &amp; Growth Dual-Screen Workspace
+          </span>
+          <h3 className="text-sm font-extrabold text-[#0A2B6D]">
+            Page 1: Projects Hub Board · Page 2 (2nd Screen): CRM &amp; Leads Pipeline
+          </h3>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            ['both', 'Page 1 (Projects) + Page 2 (CRM & Leads)'],
+            ['page1', 'Page 1: Projects Hub Only'],
+            ['page2', 'Page 2 (2nd Screen): CRM & Leads'],
+          ].map(([key, label]) => (
+            <Button
+              key={key}
+              size="sm"
+              variant={screenPage === key ? 'default' : 'outline'}
+              className="border-2 border-[#0A2B6D] font-extrabold"
+              onClick={() => setScreenPage(key)}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
 
 
 
@@ -118,7 +151,7 @@ export default function ProjectsHub() {
         </CardContent></Card>
       )}
 
-      {loading ? (
+      {screenPage !== 'page2' && (loading ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading projects...</CardContent></Card>
       ) : projects.length === 0 ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No projects yet. Create your first business improvement project above.</CardContent></Card>
@@ -175,6 +208,34 @@ export default function ProjectsHub() {
             );
           })}
         </div>
+      ))}
+
+      {/* 2ND PAGE OF SCREEN IN PROJECTS: CRM & LEADS PIPELINE */}
+      {(screenPage === 'page2' || screenPage === 'both') && (
+        <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+          <div
+            className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+            style={{ background: 'var(--header-gradient)' }}
+          >
+            <div className="flex items-center gap-2">
+              <Briefcase className="h-4 w-4 text-[#00C6FF]" />
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">
+                  2nd Page of Screen · Projects &amp; Growth Hub
+                </span>
+                <h3 className="text-sm font-extrabold text-white">
+                  Page 2 — CRM &amp; Leads Pipeline (Enquiries, Proposals, Wins &amp; Follow-Ups)
+                </h3>
+              </div>
+            </div>
+            <span className="rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+              Page 2 · CRM &amp; Leads
+            </span>
+          </div>
+          <div className="p-3">
+            <CrmHub embedded />
+          </div>
+        </section>
       )}
     </div>
   );

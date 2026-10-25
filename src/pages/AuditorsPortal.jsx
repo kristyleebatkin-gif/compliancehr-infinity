@@ -23,7 +23,7 @@ function StatTile({ label, value, tone }) {
   );
 }
 
-export default function AuditorsPortal() {
+export default function AuditorsPortal({ embedded = false } = {}) {
   const [data, setData] = useState(null);
   const [observations, setObservations] = useState([]);
   const [form, setForm] = useState({ observation: '', related_audit: '', category: 'General Note' });
@@ -74,6 +74,7 @@ export default function AuditorsPortal() {
   return (
     <div className="space-y-5">
       <ModuleShell
+        embedded={embedded}
         icon={ClipboardCheck}
         title="Auditor Portal"
         subtitle="Live read-only collaboration view for internal and external auditors: compliance evidence, audits, corrective actions and observation log."

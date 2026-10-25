@@ -85,6 +85,7 @@ import WeeklyAuditReports from '@/components/compliance/WeeklyAuditReports';
 import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTracker';
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
+import AuditorsPortal from '@/pages/AuditorsPortal';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -94,7 +95,7 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 const TAB_GROUPS = [
   { id: 'all', label: 'All Compliance Areas' },
   { id: 'executive', label: 'Executive & AI Suites', keys: ['control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
-  { id: 'audits', label: 'NDIS Standards & Audits', keys: ['standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
+  { id: 'audits', label: 'NDIS Standards & Audits', keys: ['auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
   { id: 'policies', label: 'Policies, Legal & Templates', keys: ['policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
   { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
   { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
@@ -102,6 +103,7 @@ const TAB_GROUPS = [
 ];
 
 const TABS = [
+  ['auditor-portal', 'Screen 2: Auditor Portal'],
   ['standards-map', 'NDIS Standards Map'],
   ['policies', 'Policies'],
   ['requirements', 'Legal Requirements'],
@@ -193,6 +195,7 @@ export default function ComplianceHub() {
   const [applyingPolicies, setApplyingPolicies] = useState(false);
   const [tabGroup, setTabGroup] = useState('all');
   const [activeTab, setActiveTab] = useState('standards-map');
+  const [screenView, setScreenView] = useState('both');
 
   const togglePolicy = (id, checked) => {
     setSelPolicies((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
@@ -293,8 +296,63 @@ export default function ComplianceHub() {
         )}
       />
 
+      {/* Screen 1 (Compliance Centre) & Screen 2 (Auditor Portal) Switcher Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
+        <div>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+            Dual-Screen Compliance &amp; Auditor Workspace
+          </span>
+          <h3 className="text-sm font-extrabold text-[#0A2B6D]">
+            Screen 1: Compliance &amp; Report Centre · Screen 2: Live Auditor Portal
+          </h3>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            ['both', 'Screen 1 + Screen 2 (Auditor Portal)'],
+            ['screen1', 'Screen 1: Compliance & Report Centre'],
+            ['screen2', 'Screen 2: Auditor Portal Only'],
+          ].map(([key, label]) => (
+            <Button
+              key={key}
+              size="sm"
+              variant={screenView === key ? 'default' : 'outline'}
+              className="border-2 border-[#0A2B6D] font-extrabold"
+              onClick={() => setScreenView(key)}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* SECOND SCREEN: AUDITOR PORTAL IN COMPLIANCE */}
+      {(screenView === 'screen2' || screenView === 'both') && (
+        <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
+          <div
+            className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
+            style={{ background: 'var(--header-gradient)' }}
+          >
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90">
+                Second Screen · Compliance &amp; Report Centre
+              </span>
+              <h3 className="text-sm font-extrabold text-white">
+                Screen 2 — Live Auditor Portal (356 Checkpoints, Evidence, Corrective Actions &amp; Observations)
+              </h3>
+            </div>
+            <span className="rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+              Screen 2 Active
+            </span>
+          </div>
+          <div className="p-3">
+            <AuditorsPortal embedded />
+          </div>
+        </section>
+      )}
+
       {/* Category Filter Bar for clean, organized Compliance navigation */}
-      <div className="rounded-2xl border border-border/70 bg-white p-3 shadow-sm space-y-2.5">
+      {screenView !== 'screen2' && (
+      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-xs font-extrabold uppercase tracking-wider text-foreground/80">
             Compliance &amp; Governance Workspaces
@@ -338,6 +396,10 @@ export default function ComplianceHub() {
               </TabsTrigger>
             ))}
           </TabsList>
+
+          <TabsContent value="auditor-portal" className="mt-3">
+            <AuditorsPortal embedded />
+          </TabsContent>
 
           <TabsContent value="control-centre" className="mt-3">
             <InfinityControlCentreMasterSuite />
@@ -633,6 +695,7 @@ export default function ComplianceHub() {
         </TabsContent>
         </Tabs>
       </div>
+      )}
 
       <NewVersionDialog policy={newVersionPolicy} open={!!newVersionPolicy} onOpenChange={(o) => { if (!o) setNewVersionPolicy(null); }} onChanged={load} />
       <PolicyHistoryDialog policy={historyPolicy} open={!!historyPolicy} onOpenChange={(o) => { if (!o) setHistoryPolicy(null); }} />
