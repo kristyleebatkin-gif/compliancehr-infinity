@@ -339,51 +339,67 @@ const COMM_CENTRE_MODULARS = [
 ];
 
 function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondScreen }) {
+  const [hasAlertMail, setHasAlertMail] = useState(false);
+  const [mailAlertCount, setMailAlertCount] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      base44.entities.Notification.count({ read: false }).catch(() => 0),
+      base44.entities.CommunicationEntry.count({ issues_concerns: { $exists: true, $ne: '' } }).catch(() => 0),
+    ]).then(([u, f]) => {
+      if (!active) return;
+      const total = (u || 0) + (f || 0);
+      setMailAlertCount(total);
+      setHasAlertMail(total > 0);
+    });
+    return () => { active = false; };
+  }, []);
+
   return (
     <div className="space-y-1 bg-white">
       {showRosterAbove && <RosterMiniOverview />}
 
-      <div className="rounded-lg border border-blue-300 bg-white p-1.5 space-y-1">
+      <div className="rounded-lg border-2 border-[#0A2B6D] bg-white p-1.5 space-y-1.5">
         <div
-          className="flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
+          className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D] px-2 py-1 text-white"
           style={{ background: SQUISHED_GRADIENT }}
         >
           <div className="flex items-center gap-1">
             <MessagesSquare className="h-3 w-3 text-white" />
-            <span className="text-[8.5px] font-extrabold text-white">
-              Communication Centre Modulars
+            <span className="text-[9px] font-extrabold text-white">
+              Communication Mailbox &amp; Compact Function Squares
             </span>
           </div>
           <Link
             to="/communications"
-            className="rounded bg-white px-1.5 py-0 text-[7.5px] font-extrabold text-purple-900 hover:bg-pink-50"
+            className="rounded bg-white px-1.5 py-0 text-[7.5px] font-extrabold text-[#0A2B6D] hover:bg-pink-50"
           >
-            Open Centre
+            Open Mailbox
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-1">
-          <Link
-            to="/communications"
-            className="flex items-center justify-between rounded border border-red-400 bg-red-600 px-1.5 py-0.5 text-[7.5px] font-extrabold text-white"
-          >
-            <span className="inline-flex items-center gap-1 truncate">
-              <Siren className="h-2.5 w-2.5 shrink-0" /> Active Alerts
-            </span>
-            <span className="rounded bg-white px-1 text-[7px] font-extrabold text-red-700">LIVE</span>
-          </Link>
-          <Link
-            to="/communications"
-            className="flex items-center justify-between rounded border border-blue-400 bg-blue-900 px-1.5 py-0.5 text-[7.5px] font-extrabold text-white"
-          >
-            <span className="inline-flex items-center gap-1 truncate">
-              <History className="h-2.5 w-2.5 shrink-0" /> Automated Log
-            </span>
-            <span className="rounded bg-white px-1 text-[7px] font-extrabold text-blue-900">LOG</span>
-          </Link>
-        </div>
+        {/* Colour-Changing Alert Mailbox */}
+        <Link
+          to="/communications"
+          className="flex items-center justify-between gap-1.5 rounded-lg border-2 border-[#0A2B6D] px-2 py-1.5 text-white shadow-2xs transition-all"
+          style={{
+            background: hasAlertMail
+              ? 'linear-gradient(125deg, #FF2E9A 0%, #dc2626 55%, #A100FF 100%)'
+              : 'linear-gradient(125deg, #0A2B6D 0%, #0072FF 65%, #00C6FF 100%)',
+          }}
+        >
+          <span className="inline-flex items-center gap-1.5 text-[8.5px] font-extrabold">
+            <Mail className={`h-3.5 w-3.5 shrink-0 ${hasAlertMail ? 'animate-bounce text-amber-200' : 'text-white'}`} />
+            {hasAlertMail ? `Alert Mailbox (${mailAlertCount} Active Alerts)` : 'Communications Mailbox (All Clear)'}
+          </span>
+          <span className="rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+            {hasAlertMail ? 'ALERT COLOUR' : 'CLEAR'}
+          </span>
+        </Link>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
+        {/* Small Square Function Buttons — Just Big Enough to Press */}
+        <div className="flex flex-wrap gap-1">
           {COMM_CENTRE_MODULARS.map((item) => {
             const Icon = item.icon;
             return (
@@ -391,33 +407,32 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                 key={item.key}
                 type="button"
                 onClick={() => onSelectSecondScreen && onSelectSecondScreen(item.key === 'task-dashboard' || item.key === 'todo' ? 'tasks' : 'communications')}
-                className="flex items-center gap-1 rounded border px-1.5 py-1 text-left text-[7px] font-extrabold text-blue-950 transition-all hover:-translate-y-0.5"
+                className="flex h-11 w-14 flex-col items-center justify-center gap-0.5 rounded-lg border-2 border-[#0A2B6D] bg-white p-1 text-center text-[6.8px] font-extrabold text-[#0A2B6D] transition-all hover:-translate-y-0.5"
                 style={{
-                  borderColor: `${item.color}88`,
-                  borderTopWidth: '2px',
+                  borderTopWidth: '3px',
                   borderTopColor: item.color,
-                  background: `linear-gradient(165deg, ${item.color}22 0%, #ffffff 90%)`,
+                  background: `linear-gradient(165deg, ${item.color}18 0%, #ffffff 90%)`,
                 }}
                 title={`Select ${item.label} modular screen to review`}
               >
                 <span
-                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
                   style={{ background: item.color }}
                 >
                   <Icon className="h-2.5 w-2.5" />
                 </span>
-                <span className="min-w-0 leading-tight">{item.label}</span>
+                <span className="w-full truncate leading-tight">{item.label}</span>
               </button>
             );
           })}
-          {/* Smart Vault right beside Employee Log */}
+          {/* Smart Vault Compact Square */}
           <Link
             to="/company-safe"
-            className="flex items-center gap-1 rounded border border-pink-400 px-1.5 py-1 text-[7px] font-extrabold text-white shadow-sm"
+            className="flex h-11 w-14 flex-col items-center justify-center gap-0.5 rounded-lg border-2 border-[#0A2B6D] p-1 text-center text-[6.8px] font-extrabold text-white shadow-2xs"
             style={{ background: SQUISHED_GRADIENT }}
             title="ComplianceHR Infinity Smart Vault"
           >
-            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+            <span className="flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
               <Image
                 src={DEFAULT_SOFTWARE_LOGO}
                 alt="ComplianceHR Infinity"
@@ -425,7 +440,7 @@ function CommunicationCentreScreenshot({ showRosterAbove = true, onSelectSecondS
                 className="h-full w-full object-contain"
               />
             </span>
-            <span className="min-w-0 leading-tight">Smart Vault</span>
+            <span className="w-full truncate leading-tight">Vault</span>
           </Link>
         </div>
 

@@ -120,12 +120,14 @@ export default function SilverScreenSplit() {
         border: '2px solid #94a3b8',
       }}
     >
-      {/* Squashed Silver Screen Top Bezel Bar */}
-      <div className="mb-1 flex items-center justify-between rounded-t-lg bg-gradient-to-r from-blue-700 via-purple-700 to-pink-600 px-2 py-0.5 text-white">
+      {/* Squashed Silver Screen Top Bezel Bar: Time, Date, Weather & Services */}
+      <div className="mb-1 flex flex-wrap items-center justify-between gap-1 rounded-t-lg border border-[#0A2B6D] bg-gradient-to-r from-blue-700 via-purple-700 to-pink-600 px-2 py-1 text-white">
         <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider">
-          <Tv className="h-2.5 w-2.5" /> Silver Screen · Weather &amp; NDIS News
+          <Tv className="h-2.5 w-2.5" /> Time · Date · Weather · Services
         </span>
-        <span className="font-mono text-[9px] font-extrabold">{timeStr}</span>
+        <span className="font-mono text-[9px] font-extrabold">
+          {now.toLocaleDateString('en-AU', { timeZone: 'Australia/Sydney', weekday: 'short', day: 'numeric', month: 'short' })} · {timeStr}
+        </span>
       </div>
 
       {/* Two Halves Inside the Silver Screen */}
@@ -162,26 +164,42 @@ export default function SilverScreenSplit() {
           </div>
         </div>
 
-        {/* RIGHT HALF: LIVE NDIS NEWS & UPDATES */}
-        <div className="flex flex-col justify-between rounded-lg border border-pink-300 bg-white p-1.5 text-foreground shadow-inner">
+        {/* RIGHT HALF: LIVE SERVICES & NDIS UPDATES */}
+        <div className="flex flex-col justify-between rounded-lg border-2 border-[#0A2B6D] bg-white p-1.5 text-foreground shadow-inner">
           <div className="mb-0.5 flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-purple-900">
-              <Newspaper className="h-2.5 w-2.5 text-pink-600" /> NDIS News
+            <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              <Newspaper className="h-2.5 w-2.5 text-pink-600" /> Active Services &amp; NDIS
             </span>
             <Link
-              to="/ndis-updates"
+              to="/referrals"
               className="inline-flex items-center gap-0.5 rounded bg-pink-100 px-1 py-0 text-[7.5px] font-extrabold text-pink-800 hover:bg-pink-200"
             >
-              Open <ExternalLink className="h-2 w-2" />
+              Services <ExternalLink className="h-2 w-2" />
             </Link>
+          </div>
+          <div className="mb-1 flex flex-wrap gap-0.5">
+            {[
+              { label: 'Daily Living', to: '/our-participants' },
+              { label: 'Community', to: '/programs' },
+              { label: 'Roster 24/7', to: '/roster' },
+              { label: 'Referrals', to: '/referrals' },
+            ].map((srv) => (
+              <Link
+                key={srv.label}
+                to={srv.to}
+                className="rounded border border-[#0A2B6D] bg-[#F5F0FF] px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D] hover:bg-purple-100"
+              >
+                {srv.label}
+              </Link>
+            ))}
           </div>
           <ul className="space-y-0.5">
             {ndisItems.slice(0, 2).map((item, idx) => (
               <li
                 key={item.id || idx}
-                className="flex items-center justify-between gap-1 rounded border border-purple-200 bg-purple-50/70 px-1 py-0 text-[8px]"
+                className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D] bg-purple-50/70 px-1 py-0 text-[8px]"
               >
-                <span className="truncate font-extrabold text-blue-950">
+                <span className="truncate font-extrabold text-[#0A2B6D]">
                   {item.title || item.headline || 'NDIS Update'}
                 </span>
                 <span className="shrink-0 rounded bg-purple-200/80 px-1 py-0 text-[7px] font-extrabold text-purple-900">
