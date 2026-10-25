@@ -1,116 +1,73 @@
-/* My Profile: each tab and section header is its own solid pastel colour (set per item by useSubjectPastels), no borders, black text. Page header is untouched. */
+/* My Profile: Dark Blue (#0A2B6D) boxes around every section and item, with clear visual separation and 8-colour Infinity palette accents. */
 html body .my-profile-pastels [data-dashboard-tab],
 html body .my-profile-pastels .app-section-card-header {
-  background: var(--subject-pastel, #e9d5ff) !important;
-  background-image: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
+  background: var(--header-gradient) !important;
+  color: #ffffff !important;
+  border: 2px solid #0A2B6D !important;
+  border-bottom: 3px solid #FF2E9A !important;
+  box-shadow: 0 2px 8px -2px rgba(10, 43, 109, 0.25) !important;
 }
-/* No borders on section wrappers or header rows. */
-html body .my-profile-pastels [data-dashboard-tabs],
-html body .my-profile-pastels .employee-directory-tile,
-html body .my-profile-pastels .employee-directory-my-profile,
-html body .my-profile-pastels .staff-compliance-summary,
-html body .my-profile-pastels [data-profile-tone],
-html body .my-profile-pastels details,
-html body .my-profile-pastels details > summary,
-html body .my-profile-pastels [data-dashboard-tab] * {
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
-}
-/* Catch-all: no visible borders on any box, row, card, table or tile (form fields and the page header keep theirs). */
-html body .my-profile-pastels :is(div, section, article, aside, nav, ul, li, table, thead, tbody, tr, th, td, summary, details, header, fieldset, p, span, a, [role="tablist"], [role="tab"], [role="tabpanel"]):not(.app-page-header):not(.app-page-header *) {
-  border-color: transparent !important;
-  outline-color: transparent !important;
-  box-shadow: none !important;
-}
-html body .my-profile-pastels :is(.border, .border-t, .border-b, .border-l, .border-r, .ring-1, .ring-2):not(.app-page-header *) {
-  border-color: transparent !important;
-  --tw-ring-color: transparent !important;
-}
-/* About Me, Employee Journey, Communication Logs and the Logged sections share one box size. */
-html body .my-profile-pastels .profile-uniform-box {
-  height: 9.5rem !important;
-  overflow-y: auto !important;
-  box-sizing: border-box;
-}
-/* One flat colour per box: inner headers/panels take the box colour (inputs and buttons keep their own look). */
-html body .my-profile-pastels .profile-uniform-box :is(summary, div, section, span, p, h3, h4, li, header) {
-  background: transparent !important;
-  background-image: none !important;
-}
-/* 8-Colour Palette per box: skyBlue #00C6FF · blue #0072FF · darkBlue #0A2B6D · darkPurple #5A00D6 · purple #A100FF · pink #FF2E9A · magenta #FF6EDB · lightPurpleLilac #C084FC */
-html body .my-profile-pastels .profile-uniform-box { color: #0A2B6D !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #ffffff !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="journey"] { background: rgba(0, 198, 255, 0.24) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { background: rgba(0, 114, 255, 0.18) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: rgba(255, 46, 154, 0.18) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: rgba(255, 110, 219, 0.24) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: rgba(161, 0, 255, 0.18) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] { background: rgba(192, 132, 252, 0.28) !important; }
-/* Left-hand forms: 8-colour palette repeating, with white outline. */
-html body .my-profile-pastels .profile-left-fill > details {
+
+/* Dark blue box around every profile section, details panel, and uniform box */
+html body .my-profile-pastels .profile-uniform-box,
+html body .my-profile-pastels .profile-left-fill > details,
+html body .my-profile-pastels .profile-left-fill > :not(details),
+html body .my-profile-pastels details[data-profile-tone],
+html body .my-profile-pastels section[data-profile-tone],
+html body .my-profile-pastels .profile-dark-blue-box {
+  border: 2px solid #0A2B6D !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 2px 8px -2px rgba(10, 43, 109, 0.14) !important;
   color: #0A2B6D !important;
-  border: 3px solid #fff !important;
-  border-color: #fff !important;
 }
-html body .my-profile-pastels .profile-left-fill > details :is(summary, div, section, span, p, h3, h4, li, details) {
-  background: transparent !important;
-  background-image: none !important;
+
+/* Dark blue box around individual items inside profile sections */
+html body .my-profile-pastels .profile-uniform-box li,
+html body .my-profile-pastels .profile-left-fill li,
+html body .my-profile-pastels .profile-item-box {
+  border: 1.5px solid #0A2B6D !important;
+  border-radius: 0.5rem !important;
+  background: #ffffff !important;
+  color: #0A2B6D !important;
 }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+1) { background: rgba(0, 198, 255, 0.22) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+2) { background: rgba(0, 114, 255, 0.18) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+3) { background: rgba(10, 43, 109, 0.14) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+4) { background: rgba(90, 0, 214, 0.18) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+5) { background: rgba(161, 0, 255, 0.18) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+6) { background: rgba(255, 46, 154, 0.18) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+7) { background: rgba(255, 110, 219, 0.22) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n) { background: rgba(192, 132, 252, 0.26) !important; }
-/* Left-hand forms stretch so the column ends level with the logs on the right. */
-html body .my-profile-pastels .profile-left-fill > :not(:first-child) {
-  flex: 1 1 auto;
-}
-html body .my-profile-pastels .profile-left-fill > details[open] { flex-grow: 0; }
-/* Staff Information + Staff Onboarding: half height each, together level with Employee Journey. */
-html body .my-profile-pastels .profile-left-fill > details[data-profile-half] {
-  height: calc((9.5rem - 0.75rem) / 2) !important;
-}
-/* Left-hand boxes match the right-hand box size. */
-html body .my-profile-pastels .profile-left-fill > details {
-  height: 9.5rem !important;
-  flex: 0 0 auto !important;
+
+/* Uniform box sizing */
+html body .my-profile-pastels .profile-uniform-box {
+  min-height: 9.5rem;
+  max-height: 15rem;
   overflow-y: auto !important;
   box-sizing: border-box;
 }
-/* Staff badge preview at the bottom of the left column matches the box size too. */
-html body .my-profile-pastels .profile-left-fill > :not(details) {
-  height: 9.5rem !important;
-  flex: 0 0 auto !important;
-  overflow-y: auto !important;
-  box-sizing: border-box;
-}
-/* White border around each of those boxes (overrides the no-border rules above). */
-html body .my-profile-pastels .profile-uniform-box.profile-uniform-box.profile-uniform-box {
-  border: 3px solid #fff !important;
-  border-color: #fff !important;
-}
-/* Section headers are all the same compact size (as Staff Information). */
+
+/* 8-Colour Palette backgrounds for profile boxes */
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #ffffff !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="journey"] { background: rgba(0, 198, 255, 0.16) !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { background: rgba(0, 114, 255, 0.12) !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: rgba(255, 46, 154, 0.12) !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: rgba(255, 110, 219, 0.16) !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: rgba(161, 0, 255, 0.12) !important; }
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] { background: rgba(192, 132, 252, 0.20) !important; }
+
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+1) { background: rgba(0, 198, 255, 0.15) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+2) { background: rgba(0, 114, 255, 0.12) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+3) { background: rgba(10, 43, 109, 0.08) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+4) { background: rgba(90, 0, 214, 0.12) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+5) { background: rgba(161, 0, 255, 0.12) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+6) { background: rgba(255, 46, 154, 0.12) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+7) { background: rgba(255, 110, 219, 0.15) !important; }
+html body .my-profile-pastels .profile-left-fill > details:nth-child(8n) { background: rgba(192, 132, 252, 0.18) !important; }
+
+/* Section headers stand out larger than the writing underneath */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
-  min-height: 1.75rem !important;
-  max-height: none !important;
-  padding-top: 0.25rem !important;
-  padding-bottom: 0.25rem !important;
-  font-size: 0.75rem !important;
+  min-height: 2.25rem !important;
+  padding: 0.4rem 0.75rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
 }
 html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span) {
-  font-size: 0.75rem !important;
-  line-height: 1rem !important;
-}
-html body .my-profile-pastels :is([data-dashboard-tab], .app-section-card-header),
-html body .my-profile-pastels :is([data-dashboard-tab], .app-section-card-header) :is(h1, h2, h3, h4, p, span, button, a, svg) {
-  color: #000 !important;
-  text-shadow: none !important;
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2rem !important;
 }

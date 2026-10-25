@@ -14,7 +14,8 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
     details: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} />,
     approvedParticipants: <ApprovedParticipantProfiles />,
   }), ...extraModules].flatMap((module) => employeeTiles && module.key === 'details' ? [
-    { ...module, label: 'Documents', content: <OurProfileData personal contentOnly profile={profile} kind={kind} /> },
+    { ...module, key: 'details', label: kind === 'staff' ? 'My Profile & Profession' : 'My Participant Profile', content: details || <OurProfileData profile={profile} kind={kind} onUpdated={onUpdated} /> },
+    { ...module, key: 'intake-docs', label: 'Intake Documents', content: <OurProfileData personal contentOnly profile={profile} kind={kind} /> },
     { key: 'forms', label: 'Fillable Forms', Icon: FileText, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="forms" /> },
     { key: 'files', label: 'File Checklist', Icon: ClipboardList, content: <OurProfileData personal contentOnly profile={profile} kind={kind} initialTab="files" /> },
   ] : [module]).map((module) => ({ ...module, content: moduleOverrides[module.key] || module.content }));

@@ -22,33 +22,43 @@ import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { logUserAction } from '@/lib/actionLog';
 import { UserRound, BriefcaseBusiness } from 'lucide-react';
 
 const STAFF_FIELDS = [
-  ['phone', 'Phone', 'input'],
-  ['address', 'Address', 'input'],
-  ['emergency_contact', 'Emergency Contact', 'input'],
-  ['emergency_contact_phone', 'Emergency Contact Phone', 'input'],
-  ['car_rego', 'Car Registration (Rego)', 'input'],
-  ['banking_details', 'Banking Details (BSB, Account, Name)', 'textarea'],
-  ['superannuation_details', 'Superannuation Details', 'textarea'],
-  ['about_me', 'About Me', 'textarea'],
-  ['skills', 'Skills & Qualifications', 'textarea'],
+  ['position', 'Profession / Position Title', 'input', 'Profession, Role & Qualifications'],
+  ['position_level', 'Classification / Level', 'input', 'Profession, Role & Qualifications'],
+  ['skills', 'Skills & Qualifications', 'textarea', 'Profession, Role & Qualifications'],
+  ['phone', 'Phone', 'input', 'Personal Contact & Address'],
+  ['address', 'Home Address', 'input', 'Personal Contact & Address'],
+  ['emergency_contact', 'Emergency Contact Name', 'input', 'Emergency Contact Information'],
+  ['emergency_contact_phone', 'Emergency Contact Phone', 'input', 'Emergency Contact Information'],
+  ['car_rego', 'Car Registration (Rego)', 'input', 'Payroll, Banking & Vehicle'],
+  ['banking_details', 'Banking Details (BSB, Account, Name)', 'textarea', 'Payroll, Banking & Vehicle'],
+  ['superannuation_details', 'Superannuation Details', 'textarea', 'Payroll, Banking & Vehicle'],
+  ['about_me', 'About Me', 'textarea', 'About Me & Personal Summary'],
 ];
 
 const PARTICIPANT_FIELDS = [
-  ['phone', 'Phone', 'input'],
-  ['address', 'Address', 'input'],
-  ['emergency_contact', 'Emergency Contact', 'input'],
-  ['emergency_contact_phone', 'Emergency Contact Phone', 'input'],
-  ['about_me', 'About Me', 'textarea'],
-  ['likes', 'Likes', 'textarea'],
-  ['dislikes', 'Dislikes', 'textarea'],
+  ['support_type', 'Type of Support Provided', 'input', 'NDIS Plan & Support Details'],
+  ['ndis_number', 'NDIS Number', 'input', 'NDIS Plan & Support Details'],
+  ['plan_manager', 'Plan Manager', 'input', 'NDIS Plan & Support Details'],
+  ['support_coordinator', 'Support Coordinator', 'input', 'NDIS Plan & Support Details'],
+  ['phone', 'Phone', 'input', 'Participant Contact & Address'],
+  ['address', 'Home Address', 'input', 'Participant Contact & Address'],
+  ['emergency_contact', 'Emergency Contact Name', 'input', 'Emergency Contact & Advocate'],
+  ['emergency_contact_phone', 'Emergency Contact Phone', 'input', 'Emergency Contact & Advocate'],
+  ['advocate_representative', 'Advocate / Representative', 'input', 'Emergency Contact & Advocate'],
+  ['routine', 'Daily Routine & Support Preferences', 'textarea', 'Preferences, Routine & About Me'],
+  ['likes', 'Likes & Interests', 'textarea', 'Preferences, Routine & About Me'],
+  ['dislikes', 'Dislikes & Triggers to Avoid', 'textarea', 'Preferences, Routine & About Me'],
+  ['about_me', 'About Me', 'textarea', 'Preferences, Routine & About Me'],
 ];
 
 export default function MyProfile() {
   const { user: account } = useAuth();
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -119,6 +129,7 @@ export default function MyProfile() {
       }
       setSaved(true);
       await load();
+      queryClient.invalidateQueries();
     } finally {
       setSaving(false);
     }
@@ -151,26 +162,38 @@ export default function MyProfile() {
         subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
         showAlerts={false}
       />
-      <SoftwareAndSafeBanner compact />
-
-      {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views">
-        <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My employee profile</Button>
-        <Button data-dashboard-tab="" data-dashboard-tone="pink" aria-pressed={tab === 'participant-details'} variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My participant profile</Button>
+      {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views" className="flex flex-wrap gap-2">
+        <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My Employee Profile &amp; Profession</Button>
+        <Button data-dashboard-tab="" data-dashboard-tone="pink" aria-pressed={tab === 'participant-details'} variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My Participant Profile &amp; NDIS Plan</Button>
       </nav>}
       {loadError ? <ProfileLoadError error={loadError} onRetry={load} /> : !(tab === 'participant-details' ? participantProfile : profile) ? <EmptyState icon={UserRound} title="Profile not set up yet" message={isParticipant ? 'Your support team will set up your profile, then you can view and edit it here.' : 'Ask HR to create your staff profile, then you can view and edit it here.'} /> : (() => {
         const secondary = tab === 'participant-details' && participantProfile;
         const person = secondary || profile;
         const kind = (secondary || isParticipant) ? 'participant' : 'staff';
+        const formBlock = (
+          <PersonalProfileForm
+            kind={kind}
+            fields={secondary ? PARTICIPANT_FIELDS : fields}
+            form={secondary ? participantForm : form}
+            onChange={secondary ? setParticipantField : setField}
+            onSave={secondary ? saveParticipant : save}
+            saving={saving}
+            saved={saved}
+            readOnly={!!secondary && !canEditParticipant}
+          />
+        );
         return <OurProfileWorkspace key={person.id} profile={person} kind={kind} onUpdated={load} ourView={false} personal
-          header={<PersonalProfileHeader profile={person} kind={kind} showIdentity={kind !== 'staff'} onUpdated={(updated) => {
+          header={<PersonalProfileHeader profile={person} kind={kind} showIdentity={true} topFormSection={formBlock} onUpdated={(updated) => {
             if (secondary) { setParticipantProfile(updated); setParticipantForm((current) => ({ ...current, about_me: updated.about_me || '' })); }
             else { setProfile(updated); setForm((current) => ({ ...current, about_me: updated.about_me || '' })); }
+            load();
           }} />}
-          details={<OurProfileData personal profile={person} kind={kind} initialTab={tab === 'forms' ? 'forms' : 'details'} detailsContent={<PersonalProfileForm fields={secondary ? PARTICIPANT_FIELDS : fields} form={secondary ? participantForm : form} onChange={secondary ? setParticipantField : setField} onSave={secondary ? saveParticipant : save} saving={saving} saved={saved} readOnly={!!secondary && !canEditParticipant} />} />}
+          details={<OurProfileData personal profile={person} kind={kind} initialTab={tab === 'forms' ? 'forms' : 'details'} detailsContent={formBlock} />}
           moduleOverrides={{ documents: <MyDocuments embedded />, 'name-tag': <NameTags embedded /> }}
           extraModules={[{ key: 'work', label: 'My Work', Icon: BriefcaseBusiness, content: <StaffHome embedded /> }]}
         />;
       })()}
+      <SoftwareAndSafeBanner compact />
     </div>
   );
 }

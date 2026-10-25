@@ -36,6 +36,7 @@ import CommunicationNavigation from '@/components/communications/CommunicationNa
 import CommGuide, { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommAuditBar from '@/components/communications/CommAuditBar';
+import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import ExecutiveWallScene, { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/commCentreTheme.css';
 
@@ -98,9 +99,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
-            <div className="space-y-1">
-              <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
+            <div className="space-y-2">
+              <CommWeatherBar />
               <CommunicationNavigation tabs={shown} />
+              <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
               <CommDailyInsight />
               <CommAuditBar />
               <CommHintsTips />
