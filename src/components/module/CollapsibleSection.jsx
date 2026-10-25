@@ -8,7 +8,7 @@ export default function CollapsibleSection({ title, subject, children, defaultOp
   const accent = moduleColour(title || 'ComplianceHR');
   return (
     <section
-      className="overflow-hidden rounded-2xl border-2 border-[#C084FC]/70 bg-card shadow-panel"
+      className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-panel"
       style={{ borderTop: `4px solid ${accent}` }}
     >
       <button

@@ -114,9 +114,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
       </header>
 
       {/* Flagship Sales Hero Ribbon: Why Every Provider Needs a ComplianceHR Infinity Subscription */}
-      <section className="rounded-2xl border border-[#C084FC]/60 bg-white p-4 sm:p-5 shadow-sm">
+      <section className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 sm:p-5 shadow-md" style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-          <div className="lg:col-span-3 flex flex-col items-center justify-center rounded-xl border border-[#C084FC]/50 bg-[#F5F0FF] p-3 text-center shadow-2xs">
+          <div className="lg:col-span-3 flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] p-3.5 text-center shadow-sm">
             <div className="h-24 sm:h-28 w-full flex items-center justify-center">
               <Image
                 src={CHR_LOGO}
@@ -179,7 +179,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </div>
           </div>
 
-          <div className="lg:col-span-3 flex flex-col justify-between gap-1.5 rounded-xl border border-[#C084FC]/60 bg-[#F5F0FF] p-3 shadow-2xs">
+          <div className="lg:col-span-3 flex flex-col justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] p-3.5 shadow-sm">
             <div>
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-[#FF2E9A] px-2 py-0.5 text-[7px] font-black uppercase tracking-wider text-white">

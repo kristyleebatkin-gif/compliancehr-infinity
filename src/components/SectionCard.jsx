@@ -53,7 +53,7 @@ export default function SectionCard({ title, subject, description, action, child
   return (
     <div
       className={cn(
-        'dashboard-panel relative overflow-hidden rounded-2xl border-2 border-[#C084FC]/70 bg-card shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
+        'dashboard-panel relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
         className
       )}
       style={{

@@ -52,16 +52,16 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-border/70 bg-white">
-      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:pb-24 sm:pt-20 md:px-8 md:pt-28">
-        <div className="mx-auto max-w-3xl text-center">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-56 w-72 sm:h-96 sm:w-[36rem]" fittingType="fit" />
+    <section className="relative overflow-hidden border-b-2 border-[#0A2B6D] bg-gradient-to-b from-[#F5F0FF]/55 via-white to-white">
+      <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-8 sm:pb-16 sm:pt-12 md:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR Infinity logo" className="mx-auto h-48 w-64 sm:h-72 sm:w-[28rem]" fittingType="fit" />
 
-          <div className="mx-auto mt-5 max-w-xl rounded-2xl border border-[#C084FC]/60 bg-white p-4 text-center shadow-sm space-y-1">
+          <div className="mx-auto mt-4 max-w-xl rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center shadow-md space-y-1" style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}>
             <div className="text-sm sm:text-base font-extrabold text-[#0A2B6D]">Software: ComplianceHR Infinity</div>
             <div className="text-xs sm:text-sm font-extrabold text-[#5A00D6]">Complete Control. Greater Confidence.</div>
             <div className="text-xs sm:text-sm font-extrabold text-[#FF2E9A]">Brighter Success</div>
-            <div className="pt-1.5 border-t border-[#C084FC]/40 text-xs font-extrabold text-[#0A2B6D]">Developer: Kristy Lee Whelan</div>
+            <div className="pt-1.5 border-t border-[#0A2B6D]/20 text-xs font-extrabold text-[#0A2B6D]">Developer: Kristy Lee Whelan</div>
             <div className="text-xs font-extrabold text-[#5A00D6]">Email: kristyleebatkin@live.com.au</div>
           </div>
 
@@ -94,18 +94,18 @@ export default function LandingHero() {
 
           <ModuleChipStrip />
 
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {STATS.map((stat, index) => (
-              <Reveal key={stat.label} delay={index * 0.06} className="rounded-2xl border border-[#C084FC]/50 bg-white px-4 py-3.5 text-center shadow-sm">
-                <div className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text font-editorial text-2xl font-semibold text-transparent">{stat.value}</div>
-                <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0A2B6D]/70">{stat.label}</div>
+              <Reveal key={stat.label} delay={index * 0.06} className="rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-3.5 text-center shadow-sm" style={{ borderTopWidth: '4px', borderTopColor: ['#0072FF', '#5A00D6', '#A100FF', '#FF2E9A'][index % 4] }}>
+                <div className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text font-editorial text-2xl font-extrabold text-transparent">{stat.value}</div>
+                <div className="mt-0.5 text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#0A2B6D]">{stat.label}</div>
               </Reveal>
             ))}
           </div>
 
-          <div className="mt-14 grid gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
             {highlights.map(({ icon: Icon, title, reasons }, index) => (
-              <Reveal key={title} delay={index * 0.08} className="group rounded-2xl border border-[#C084FC]/50 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Reveal key={title} delay={index * 0.08} className="group rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style={{ borderTopWidth: '4px', borderTopColor: ['#0072FF', '#5A00D6', '#FF2E9A'][index % 3] }}>
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0072FF] to-[#5A00D6] text-white shadow-sm transition-transform group-hover:scale-105">
                   <Icon className="h-5 w-5" />
                 </div>

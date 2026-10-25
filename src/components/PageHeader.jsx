@@ -57,7 +57,7 @@ export default function PageHeader({ title, subtitle, subject, action, icon: Ico
           </div>
         </div>
       </div>
-      <div className={cn('flex flex-wrap items-center border border-violet-200 bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-3 py-2' : 'gap-2.5 rounded-xl p-2.5')}>
+      <div className={cn('flex flex-wrap items-center border-2 border-[#0A2B6D] bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-3 py-2' : 'gap-2.5 rounded-xl p-2.5')}>
         <ModuleComplianceStrip path={seg} />
         {beforeAudit}
         {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1.5' : 'gap-2', actionClassName)}>{action}</div>}

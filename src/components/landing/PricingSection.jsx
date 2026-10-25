@@ -209,11 +209,11 @@ export default function PricingSection({ compact = false }) {
   return (
     <section
       id="pricing"
-      className={`${compact ? '' : 'mx-auto max-w-6xl'} scroll-mt-16 rounded-3xl border-2 border-purple-600 bg-white p-4 sm:p-6 shadow-xl space-y-5`}
+      className={`${compact ? '' : 'mx-auto max-w-6xl'} scroll-mt-16 rounded-3xl border-2 border-[#0A2B6D] bg-white p-4 sm:p-6 shadow-xl space-y-5`}
     >
       {/* Top Gradient Header Banner */}
       <div
-        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3.5 text-white shadow-md"
+        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-white shadow-md"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex items-center gap-2 min-w-0">
@@ -230,11 +230,11 @@ export default function PricingSection({ compact = false }) {
               <span className="text-xs sm:text-sm font-black uppercase tracking-wider">
                 ComplianceHR Infinity · Smart Enhanced All-In-One Compliance Pack Pricing
               </span>
-              <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
+              <span className="rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
                 INCLUDES +$160/MO ELITE PLAN &amp; $355 AUDIT DOC
               </span>
             </div>
-            <p className="text-[9px] font-bold text-amber-100">
+            <p className="text-xs font-bold text-white/95">
               All tiers include the $160/mo Elite Plan (2,500 Message Credits &amp; 20,000 Integration Credits) + $355 Master Compliance Audit Doc · {FULL_SLOGAN}
             </p>
           </div>
