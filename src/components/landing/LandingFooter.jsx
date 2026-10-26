@@ -21,15 +21,15 @@ export default function LandingFooter() {
         <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-2 pb-2.5 sm:px-3 sm:pt-2.5 sm:pb-3 text-center">
           <Link to="/" className="mx-auto flex w-full flex-col items-center justify-center text-center">
             <div
-              className="mt-2 sm:mt-2.5 mx-auto relative overflow-hidden w-[13.5rem] sm:w-[17rem] md:w-[20rem] bg-white"
-              style={{ aspectRatio: '100 / 50' }}
+              className="mt-3.5 sm:mt-4 mx-auto relative overflow-hidden w-[13.5rem] sm:w-[17rem] md:w-[20rem] bg-white"
+              style={{ aspectRatio: '100 / 46' }}
             >
               <img
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                 alt="ComplianceHR Infinity logo"
                 className="w-full pointer-events-none select-none"
                 style={{
-                  marginTop: '-5.5%',
+                  marginTop: '-9.5%',
                 }}
               />
               <span
@@ -49,8 +49,8 @@ export default function LandingFooter() {
               />
             </div>
 
-            <div className="mt-3 sm:mt-4 mb-2 sm:mb-2.5 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
-              <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+            <div className="mt-1.5 sm:mt-2 mb-2 sm:mb-2.5 relative z-10 mx-auto inline-flex max-w-full flex-col items-center justify-center text-center">
+              <div className="mx-auto flex items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                 <span className="mx-auto block whitespace-nowrap text-center">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -62,7 +62,7 @@ export default function LandingFooter() {
                 </span>
               </div>
 
-              <div className="mt-1 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-xs sm:text-sm md:text-base lg:text-lg font-extrabold">
+              <div className="mt-1 mx-auto flex w-[96%] items-center justify-between gap-x-1.5 bg-transparent text-center text-[10px] sm:text-sm md:text-[15.5px] lg:text-[18.5px] font-extrabold tracking-wide whitespace-nowrap">
                 <span className="text-[#0072FF]">Complete Control.</span>
                 <span className="text-[#5A00D6]">Greater Confidence.</span>
                 <span className="text-[#FF2E9A]">Brighter Success.</span>

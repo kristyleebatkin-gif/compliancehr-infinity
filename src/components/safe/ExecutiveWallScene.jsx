@@ -56,14 +56,14 @@ export function ComplianceHrPhotoFrame() {
     <WallHangingPictureFrame title="1. Fixed Logo & Brand Slogan">
       <div className="flex h-full flex-col items-center justify-center rounded-xl bg-white p-1.5 text-center space-y-1">
         <div
-          className="mx-auto relative overflow-hidden w-[7.5rem] sm:w-[8.5rem] bg-white"
-          style={{ aspectRatio: '100 / 50' }}
+          className="mt-1 mx-auto relative overflow-hidden w-[7.5rem] sm:w-[8.5rem] bg-white"
+          style={{ aspectRatio: '100 / 46' }}
         >
           <img
             src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
             alt="ComplianceHR Infinity logo"
             className="w-full pointer-events-none select-none"
-            style={{ marginTop: '-5.5%' }}
+            style={{ marginTop: '-9.5%' }}
           />
           <span
             aria-hidden="true"
