@@ -213,10 +213,10 @@ export default function PricingSection() {
             >
               <div className="rounded-[9px] bg-white px-4 py-2.5 text-center">
                 <p
-                  className="mx-auto text-center text-xs sm:text-sm md:text-base font-extrabold text-black"
+                  className="mx-auto text-center text-[11px] sm:text-xs md:text-sm font-extrabold text-black"
                   style={{ color: '#000000' }}
                 >
-                  Every user tier includes full access to the ComplianceHR app, full access to all documents, 1,200 Message Credits, 50,000 Integration Credits, dedicated support, and Elite Package Tokens valued at $160 per a month.
+                  Every Smart Enhanced user tier includes full access to the ComplianceHR app, full access to over 100 documents downloadable at any stage &amp; tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message Credits, 50,000 Integration Credits, support, and Elite Package Tokens valued at $160/mo.
                 </p>
               </div>
             </div>
@@ -292,119 +292,130 @@ export default function PricingSection() {
           </div>
         </div>
 
-        {/* 6 Smart Enhanced Subscription Cards Grid — Package Name on Line 1, Users on Line 2, Just Title in White Box, All White Areas Framed & All Symbols Lined Up in App Design Colour */}
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch text-center">
+        {/* 6 Smart Enhanced Subscription Cards Grid — 50% Smaller & Lit Up in Glowing White Lights + Includes $999 Document Suite Words */}
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 items-stretch text-center">
           {COMPLIANCE_HR_PACKAGES.map((pkg, pIdx) => {
             return (
               <div
                 key={pkg.id}
-                className="flex h-full rounded-2xl p-[4px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="flex h-full rounded-2xl p-[3px] transition-all hover:-translate-y-0.5"
+                style={{
+                  background: TOP_BORDER_GRADIENT,
+                  boxShadow:
+                    '0 0 18px 4px rgba(255, 255, 255, 0.98), 0 0 12px 2px rgba(0, 198, 255, 0.55)',
+                }}
               >
                 <div
-                  className="flex h-full w-full flex-col justify-between rounded-[13px] p-4 text-center space-y-3"
+                  className="flex h-full w-full flex-col justify-between rounded-[12px] p-2 text-center space-y-1.5"
                   style={{ background: UNIFORM_SPRAY_BG }}
                 >
-                  <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                    {/* Top Header: Package Name on Top Line & Users on 2nd Line Underneath (No Price) */}
+                  <div className="flex flex-1 flex-col justify-between space-y-1.5">
+                    {/* Glowing White Lights Bar at Top of Subscription Card */}
+                    <div className="flex items-center justify-center gap-1.5">
+                      {[0, 1, 2].map((b) => (
+                        <span
+                          key={b}
+                          className="h-2 w-2 rounded-full border border-white bg-white"
+                          style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                        />
+                      ))}
+                      <span className="rounded-full bg-white px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        WHITE LIGHTS ON
+                      </span>
+                    </div>
+
+                    {/* 50% Smaller Top Header */}
                     <div
-                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      className="w-full rounded-lg p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1.5 rounded-[9px] px-3 py-2 text-center text-white"
+                        className="gradient-brand flex min-h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center text-white"
                         style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                       >
-                        <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center justify-center gap-1.5">
                           <span
-                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                            className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                             style={{ borderColor: getAppBorderView(pIdx) }}
                           >
-                            <Award className="h-3.5 w-3.5" style={{ color: getSymbolView(pIdx).iconColor }} />
+                            <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(pIdx).iconColor }} />
                           </span>
                           <span
-                            className="text-xs sm:text-sm font-extrabold tracking-wide leading-tight text-white"
+                            className="text-[10.5px] font-extrabold tracking-wide leading-tight text-white"
                             style={{ color: '#FFFFFF' }}
                           >
                             {pkg.packageName}
                           </span>
                         </div>
-                        <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-0.5 text-[11px] font-extrabold leading-none text-[#5A00D6]">
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#5A00D6]">
                           {pkg.users}
                         </span>
                       </div>
                     </div>
 
-                    {/* White Area Framed in App-Design Coloured Border: Package Title & Monthly Price (No Yearly Sums) */}
+                    {/* 50% Smaller Package Title & Monthly Price + $999 Doc Words */}
                     <div
-                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      className="w-full rounded-lg p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex min-h-[86px] flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-3 py-2.5 text-center">
+                      <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
                         <h3
-                          className="font-editorial text-sm sm:text-base font-extrabold leading-snug bg-clip-text text-transparent text-center"
+                          className="font-editorial text-xs font-extrabold leading-tight bg-clip-text text-transparent text-center"
                           style={{ backgroundImage: getTitleGradientView(pIdx) }}
                         >
                           {pkg.name}
                         </h3>
-                        <span className="font-editorial text-lg sm:text-xl font-extrabold text-[#5A00D6]">
+                        <span className="font-editorial text-sm font-extrabold text-[#5A00D6]">
                           ${pkg.monthly.toLocaleString()} per a month
+                        </span>
+                        <span className="text-[8px] font-extrabold text-[#0072FF] leading-tight">
+                          Includes 100+ Tailored Docs (WHS, Risk, Incident, Medication, Intake, Policies &amp; Registers)
                         </span>
                       </div>
                     </div>
 
-                    {/* 2-Row Credit Pills With App-Design Coloured Borders & Lined-Up App-Coloured Symbols */}
-                    <div className="grid grid-cols-1 grid-rows-2 gap-1.5">
+                    {/* 50% Smaller Credit Pills */}
+                    <div className="grid grid-cols-2 gap-1">
                       <div
-                        className="rounded-xl p-[2.5px] shadow-2xs"
+                        className="rounded-lg p-[1.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[38px] items-center gap-2.5 rounded-[9px] bg-white px-3 py-1">
-                          <span
-                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(pIdx) }}
-                          >
-                            <Zap className="h-3.5 w-3.5" style={{ color: getSymbolView(pIdx).iconColor }} />
-                          </span>
-                          <span className="flex-1 text-center text-xs font-extrabold text-[#0A2B6D]">
+                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
+                          <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx).iconColor }} />
+                          <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.messageCredits}
                           </span>
                         </div>
                       </div>
                       <div
-                        className="rounded-xl p-[2.5px] shadow-2xs"
+                        className="rounded-lg p-[1.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[38px] items-center gap-2.5 rounded-[9px] bg-white px-3 py-1">
-                          <span
-                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(pIdx + 1) }}
-                          >
-                            <Layers className="h-3.5 w-3.5" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
-                          </span>
-                          <span className="flex-1 text-center text-xs font-extrabold text-[#5A00D6]">
+                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
+                          <Layers className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
+                          <span className="text-[8.5px] font-extrabold text-[#5A00D6] leading-tight">
                             {pkg.integrationCredits}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* 6-Row Benefits List — All White Areas Framed in App-Design Colour & All Symbols Lined Up in App-Design Colour */}
-                    <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1.5 pt-0.5">
-                      {pkg.benefits.map((b, bIdx) => {
+                    {/* 50% Smaller Benefits List */}
+                    <ul className="grid flex-1 grid-cols-1 gap-1 pt-0.5">
+                      {pkg.benefits.slice(0, 4).map((b, bIdx) => {
                         const sym = getSymbolView(pIdx * 2 + bIdx);
                         return (
                           <li
                             key={b}
-                            className="flex min-h-[54px] rounded-xl p-[2.5px] shadow-2xs"
+                            className="flex min-h-[26px] rounded-lg p-[1.5px] shadow-2xs"
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
-                            <div className="flex h-full w-full items-center gap-2.5 rounded-[9px] bg-white px-3 py-1 text-center text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
+                            <div className="flex h-full w-full items-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                               <span
-                                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                                 style={{ borderColor: getAppBorderView(pIdx * 2 + bIdx) }}
                               >
-                                <Check className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                                <Check className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                               </span>
                               <span className="flex-1 text-center text-[#0A2B6D]">{b}</span>
                             </div>
@@ -414,23 +425,18 @@ export default function PricingSection() {
                     </ul>
                   </div>
 
-                  {/* Bottom CTA With App-Design Coloured Symbol */}
-                  <div className="pt-2.5 border-t border-[#0A2B6D]/20">
+                  {/* 50% Smaller Bottom CTA */}
+                  <div className="pt-1 border-t border-[#0A2B6D]/20">
                     <div
-                      className="rounded-full p-[2.5px] shadow-sm"
+                      className="rounded-full p-[1.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <Link
                         to="/register"
-                        className="gradient-brand inline-flex h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold text-white transition-all hover:-translate-y-0.5"
+                        className="gradient-brand inline-flex h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:-translate-y-0.5"
                         style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
                       >
-                        <span
-                          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                          style={{ borderColor: getAppBorderView(pIdx + 1) }}
-                        >
-                          <ArrowRight className="h-3.5 w-3.5" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
-                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                         <span style={{ color: '#FFFFFF' }}>Start 14-Day Free Trial</span>
                       </Link>
                     </div>

@@ -51,20 +51,20 @@ const PACKS = [
     priceMain: '$760',
     priceSuffix: 'per month',
     subtitle:
-      'Per month, up to 20 users · Includes Elite Package Tokens, valued at $160 per a month · Full access to ComplianceHR app, full access to all documents, 1,200 message credits, 50,000 integration credits & support',
+      'Per month, up to 20 users · Includes Elite Package Tokens ($160/mo value) · Full access to ComplianceHR app & over 100 downloadable documents tailored to Business Details (WHS, Risk, Incident, Medication, Support Plan, Consents, Intake, Policies, Procedures, Registers & Business Plans)',
     bullets: [
       '1. Includes Elite Package Tokens valued at $160 per a month (1,200 Message Credits & 50,000 Integration Credits)',
-      '2. Full access to ComplianceHR app, full access to all documents & dedicated support',
-      '3. All 46 Connected Modules + Dual Interactive Office & Profile Workspace Views',
-      '4. Smart Rostering, NDIS Price-Guide Invoicing, Payroll & 24h & 5d Incident Timers',
-      '5. 14-Day $0 Upfront Free Trial + Consent-Gated External NDIS Auditor Portal',
+      '2. Full access to over 100 documents downloadable at any stage & tailored to Business Details',
+      '3. Includes WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control & Continuity',
+      '4. Includes Staff Training, Consents, Intake (Employee & Participant), Progress, Skills, Review, Policies, Registers & Business Plans',
+      '5. All 46 Connected Modules + Smart Rostering, NDIS Invoicing, Payroll & 14-Day Free Trial',
     ],
-    importantInfoTitle: 'Important Subscription Info & Accurate Tier Pricing',
+    importantInfoTitle: 'Important Subscription Info & Included Document Suite',
     importantInfoRows: [
       'Up to 20 Users: $760 per a month · 21–30 Users: $820 per a month',
       '31–40 Users: $920 per a month · 41–50 Users: $999 per a month',
       '51–100 Users: $1,100 per a month · 101+ Users: $1,220 per a month',
-      'Full access to app & all documents · 1,200 message credits · 50,000 integration credits · Support',
+      'Includes 100+ tailored documents (WHS, Risk, Incident, Medication, Intake, Policies, Registers & Business Plans) + 1,200 Msg & 50,000 Int. Credits',
     ],
     primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
     secondaryCta: { label: 'View All 6 User Tiers', href: '#pricing' },
@@ -172,8 +172,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </div>
           </div>
 
-          {/* 4 High-Impact Subscriber Flat Screens — Lighting Up One at a Time & Changing Every 30 Secs (Centered Info, No Master Doc Mention) */}
-          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+          {/* 4 High-Impact Subscriber Flat Screens — Made 25% Smaller */}
+          <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
             {[
               {
                 screenLabel: 'FLAT SCREEN 01 · PLATFORM VALUE',
@@ -410,44 +410,44 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 : null;
               return (
                 <div key={screen.screenLabel} className="flex h-full flex-col items-center justify-between">
-                  {/* Flat Screen Monitor Frame — Lights Up One at a Time */}
+                  {/* Flat Screen Monitor Frame — 25% Smaller */}
                   <div
-                    className={`flex h-full w-full flex-1 flex-col justify-between rounded-2xl border-[3px] p-2.5 transition-all duration-300 ${
+                    className={`flex h-full w-full flex-1 flex-col justify-between rounded-xl border-[2.5px] p-1.5 transition-all duration-300 ${
                       isLit
-                        ? 'bg-[#0072FF] -translate-y-0.5 ring-4 ring-[#00C6FF]/75 shadow-xl'
-                        : 'bg-[#0A2B6D] shadow-md'
+                        ? 'bg-[#0072FF] -translate-y-0.5 ring-3 ring-[#00C6FF]/75 shadow-lg'
+                        : 'bg-[#0A2B6D] shadow-sm'
                     }`}
                     style={{ borderColor: borderCol }}
                   >
-                    {/* Top Monitor Bezel Bar — Flat Screen & 30s Flat on Top in One Single Line */}
-                    <div className="mb-1.5 flex h-[20px] w-full flex-nowrap items-center justify-between gap-1 px-1.5 whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
-                        <Monitor className="h-3 w-3 text-[#00C6FF] shrink-0" />
-                        <span>FLAT SCREEN 0{idx + 1}{isLit ? ' · LIT UP ✦' : ''}</span>
+                    {/* Top Monitor Bezel Bar */}
+                    <div className="mb-1 flex h-[16px] w-full flex-nowrap items-center justify-between gap-1 px-1 whitespace-nowrap">
+                      <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+                        <Monitor className="h-2.5 w-2.5 text-[#00C6FF] shrink-0" />
+                        <span>FLAT SCREEN 0{idx + 1}{isLit ? ' · LIT ✦' : ''}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0.5 text-[8.5px] font-extrabold text-white whitespace-nowrap">
-                        <Radio className="h-2.5 w-2.5 text-[#FF2E9A] shrink-0" />
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-1.5 py-0 text-[7.5px] font-extrabold text-white whitespace-nowrap">
+                        <Radio className="h-2 w-2 text-[#FF2E9A] shrink-0" />
                         <span>30s · {(activeBenefitIdx % 5) + 1}/5</span>
                       </span>
                     </div>
 
-                    {/* Inner Monitor Display — All Sections Lined Up, Symbols & Writing in App Design Colour */}
+                    {/* Inner Monitor Display — 25% Smaller */}
                     <div
-                      className="flex flex-1 rounded-xl p-[2.5px]"
+                      className="flex flex-1 rounded-lg p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[32px_78px_60px_1fr] gap-2 rounded-[10px] p-3 text-center"
+                        className="grid h-full w-full grid-cols-1 grid-rows-[24px_56px_44px_1fr] gap-1.5 rounded-[8px] p-2 text-center"
                         style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
                       >
-                        {/* Centered Reason Banner Framed in App-Design Coloured Border */}
+                        {/* Centered Reason Banner */}
                         <div
-                          className="flex h-[32px] w-full rounded-full p-[2px]"
+                          className="flex h-[24px] w-full rounded-full p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-white px-2.5 py-0.5">
+                          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-white px-2 py-0">
                             <span
-                              className="text-center text-[9.5px] font-extrabold uppercase tracking-wider"
+                              className="text-center text-[8px] font-extrabold uppercase tracking-wider"
                               style={{ color: sym.iconColor }}
                             >
                               Reason #{(activeBenefitIdx % 5) + 1} of 5
@@ -455,7 +455,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                             <button
                               type="button"
                               onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                              className="absolute right-1.5 rounded-full bg-[#5A00D6] px-2 py-0.5 text-[8px] font-extrabold text-white hover:opacity-90"
+                              className="absolute right-1 rounded-full bg-[#5A00D6] px-1.5 py-0 text-[7px] font-extrabold text-white hover:opacity-90"
                               style={{ color: '#FFFFFF' }}
                             >
                               Next ▸
@@ -463,21 +463,21 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Centered Icon + Title Box ("&" Placed on Second Line) */}
+                        {/* Centered Icon + Title Box */}
                         <div
-                          className="flex h-[78px] w-full rounded-xl p-[2px] shadow-2xs"
+                          className="flex h-[56px] w-full rounded-lg p-[1.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                            <div className="flex items-center justify-center gap-2">
+                          <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
+                            <div className="flex items-center justify-center gap-1.5">
                               <span
-                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                                 style={{ borderColor: getAppBorderView(idx + 1) }}
                               >
-                                <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                                <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                               </span>
                               <div
-                                className="text-center text-xs sm:text-[13px] font-extrabold leading-tight"
+                                className="text-center text-[10.5px] font-extrabold leading-tight"
                                 style={{ color: sym.iconColor }}
                               >
                                 {titleAmpParts ? (
@@ -490,41 +490,41 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 )}
                               </div>
                             </div>
-                            <div className="text-center text-[10px] font-extrabold text-[#5A00D6]">
+                            <div className="text-center text-[8.5px] font-extrabold text-[#5A00D6] leading-tight">
                               {activeReason.sub}
                             </div>
                           </div>
                         </div>
 
-                        {/* Centered Summary Explanation Framed in App-Design Coloured Border */}
+                        {/* Centered Summary Explanation */}
                         <div
-                          className="flex h-[60px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                          className="flex h-[44px] w-full rounded-lg p-[2px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                            <p className="text-center text-[10.5px] font-extrabold leading-snug text-[#5A00D6]">
+                          <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-white px-2 py-1 text-center">
+                            <p className="text-center text-[9px] font-extrabold leading-tight text-[#5A00D6]">
                               {activeReason.detail}
                             </p>
                           </div>
                         </div>
 
-                        {/* 3 Centered Subscriber Proof Points With App-Design Coloured Symbols & Writing */}
-                        <ul className="grid w-full grid-cols-1 grid-rows-3 gap-1.5 text-center">
+                        {/* 3 Centered Subscriber Proof Points */}
+                        <ul className="grid w-full grid-cols-1 grid-rows-3 gap-1 text-center">
                           {activeReason.points.map((pt, ptIdx) => {
                             const ptSym = getSymbolView(idx + ptIdx + 2);
                             const ptAmp = pt.includes(' & ') ? pt.split(' & ') : null;
                             return (
                               <li
                                 key={pt}
-                                className="flex min-h-[42px] rounded-xl p-[2px] shadow-2xs"
+                                className="flex min-h-[30px] rounded-lg p-[1.5px] shadow-2xs"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight">
+                                <div className="flex h-full w-full items-center justify-center gap-1 rounded-[7px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold leading-tight">
                                   <span
-                                    className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
+                                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
                                     style={{ borderColor: getAppBorderView(idx + ptIdx) }}
                                   >
-                                    <CheckCircle2 className="h-2.5 w-2.5" style={{ color: ptSym.iconColor }} />
+                                    <CheckCircle2 className="h-2 w-2" style={{ color: ptSym.iconColor }} />
                                   </span>
                                   <span className="text-center" style={{ color: ptSym.iconColor }}>
                                     {ptAmp ? (
@@ -545,9 +545,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     </div>
 
                     {/* Bottom Monitor Channel Dots */}
-                    <div className="mt-1.5 flex items-center justify-between px-2">
-                      <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white/90">
-                        CHANGES EVERY 30 SECS
+                    <div className="mt-1 flex items-center justify-between px-1.5">
+                      <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white/90">
+                        30S CYCLE
                       </span>
                       <div className="flex items-center gap-1">
                         {[0, 1, 2, 3, 4].map((dot) => (
@@ -565,9 +565,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     </div>
                   </div>
                   {/* Flat Screen Monitor Stand Neck & Base */}
-                  <div className="h-2 w-6 bg-[#0A2B6D]" />
+                  <div className="h-1.5 w-5 bg-[#0A2B6D]" />
                   <div
-                    className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
+                    className="h-1 w-12 rounded-full border border-[#0A2B6D]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   />
                 </div>

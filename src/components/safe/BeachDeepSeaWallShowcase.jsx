@@ -25,20 +25,23 @@ const THREE_SCENE_LIST = [
 export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact = true }) {
   const [scene, setScene] = useState(defaultScene);
 
+  const BLUE_WHITE_SPRAY_BG =
+    'radial-gradient(circle at 16% 24%, rgba(0, 198, 255, 0.52) 0%, transparent 48%), radial-gradient(circle at 84% 72%, rgba(0, 114, 255, 0.38) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95) 0%, #E0F2FE 100%)';
+
   return (
     <div
       data-preserve-theme="true"
-      className="preserve-island-theme rounded-3xl p-[4px] shadow-lg"
+      className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[20px] bg-white p-3.5 sm:p-4 space-y-4 text-center">
-        {/* Enlarged Header + 1. Tropical, 2. Sunny, 3. Deep Displayed in a Usual Centered Vertical List Order */}
+      <div className="rounded-[14px] bg-white p-2 sm:p-2.5 space-y-2 text-center">
+        {/* 50% Smaller Header + Three Listed Activities With Spray Blue & White Background + Smaller Interactive Bar Tiles */}
         <div
-          className="w-full rounded-2xl p-[3.5px] shadow-sm"
+          className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-col items-center justify-center rounded-[13px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-3">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+          <div className="flex flex-col items-center justify-center rounded-[10px] bg-white px-3 py-2 text-center space-y-1.5">
+            <h2 className="font-editorial text-base sm:text-xl md:text-2xl font-extrabold leading-tight tracking-tight">
               <span className="text-[#0A2B6D]">Interactive </span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 Treasure Hunt, Beach Scene
@@ -48,25 +51,33 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               </span>
             </h2>
 
-            {/* 1. Tropical, 2. Sunny, 3. Deep Sentences in Usual Centered List Order */}
-            <ol className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-2 text-center">
-              {THREE_SCENE_LIST.map((line, idx) => (
+            {/* Three Listed Activities With Spray Blue and White Background */}
+            <ol
+              className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-1 rounded-xl border-2 border-[#0072FF]/35 p-1.5 text-center"
+              style={{ background: BLUE_WHITE_SPRAY_BG }}
+            >
+              {THREE_SCENE_LIST.map((line) => (
                 <li
                   key={line}
-                  className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="w-full rounded-lg p-[1.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-4 py-1.5 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                    {line}
+                  <div
+                    className="flex min-h-[24px] w-full items-center justify-center rounded-[6px] px-2.5 py-0.5 text-center text-[10px] sm:text-xs font-extrabold text-[#0A2B6D]"
+                    style={{ background: BLUE_WHITE_SPRAY_BG }}
+                  >
+                    <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-[#0A2B6D] shadow-2xs">
+                      {line}
+                    </span>
                   </div>
                 </li>
               ))}
             </ol>
 
-            {/* 5 Interactive Scene Tiles: Row 1 of Three + Row 2 of Two (1. Treasure Hunt Tile Identical to Others) */}
-            <div className="w-full space-y-2 pt-1">
-              {/* Row 1 of Three */}
-              <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2">
+            {/* Smaller Interactive Bar Tiles */}
+            <div className="w-full space-y-1 pt-0.5">
+              {/* Row 1 of Three (Smaller) */}
+              <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1">
                 {SCENE_MODES.slice(0, 3).map((m, idx) => {
                   const Icon = m.icon;
                   const active = scene === m.id;
@@ -74,22 +85,22 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                   return (
                     <div
                       key={m.id}
-                      className="rounded-full p-[2.5px] shadow-2xs"
+                      className="rounded-full p-[1.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <button
                         type="button"
                         onClick={() => setScene(m.id)}
-                        className={`gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white transition-all ${
-                          active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                        className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
+                          active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                         }`}
                         style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                       >
                         <span
-                          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                           style={{ borderColor: getAppBorderView(idx) }}
                         >
-                          <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                          <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                         </span>
                         <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
                           {m.label}
@@ -100,8 +111,8 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                 })}
               </div>
 
-              {/* Row 2 of Two */}
-              <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* Row 2 of Two (Smaller) */}
+              <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-1">
                 {SCENE_MODES.slice(3).map((m, idx) => {
                   const Icon = m.icon;
                   const active = scene === m.id;
@@ -109,22 +120,22 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                   return (
                     <div
                       key={m.id}
-                      className="rounded-full p-[2.5px] shadow-2xs"
+                      className="rounded-full p-[1.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <button
                         type="button"
                         onClick={() => setScene(m.id)}
-                        className={`gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white transition-all ${
-                          active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                        className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
+                          active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                         }`}
                         style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
                       >
                         <span
-                          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                           style={{ borderColor: getAppBorderView(idx + 3) }}
                         >
-                          <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                          <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                         </span>
                         <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
                           {m.label}
@@ -135,7 +146,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                 })}
 
                 <div
-                  className="rounded-full p-[2.5px] shadow-2xs"
+                  className="rounded-full p-[1.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <button
@@ -147,14 +158,14 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                         false
                       )
                     }
-                    className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm"
+                    className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
                     style={{ background: getHeaderView(5), color: '#FFFFFF' }}
                   >
                     <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                       style={{ borderColor: getAppBorderView(5) }}
                     >
-                      <Trophy className="h-3.5 w-3.5" style={{ color: getSymbolView(5).iconColor }} />
+                      <Trophy className="h-2.5 w-2.5" style={{ color: getSymbolView(5).iconColor }} />
                     </span>
                     <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
                       Play Victory Fanfare
@@ -166,65 +177,74 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
           </div>
         </div>
 
-        {/* 1. TREASURE HUNT SCENE */}
-        {(scene === 'treasure' || scene === 'all') && (
-          <div className="space-y-2">
-            <div
-              className="w-full rounded-full p-[2.5px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
+        {/* 50% Smaller Scenes Container (Side-by-Side 3-Column Compact Grid When 'all' Is Selected) */}
+        <div className={scene === 'all' ? 'grid grid-cols-1 lg:grid-cols-3 gap-2 items-start' : 'space-y-1.5'}>
+          {/* 1. TREASURE HUNT SCENE (50% Smaller) */}
+          {(scene === 'treasure' || scene === 'all') && (
+            <div className="space-y-1 overflow-hidden rounded-xl border border-[#0A2B6D]/20 p-1">
               <div
-                className="gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
-                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                className="w-full rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span style={{ color: '#FFFFFF' }}>
-                  🏖️ SCENE 1 OF 3 · TROPICAL TREASURE HUNT ISLAND PATH &amp; CHEST PRIZES
-                </span>
+                <div
+                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>
+                    🏖️ 1. TREASURE HUNT ISLAND PATH
+                  </span>
+                </div>
+              </div>
+              <div className="max-h-[260px] overflow-y-auto">
+                <KidsZoneTreasurePath compact={true} />
               </div>
             </div>
-            <KidsZoneTreasurePath compact={compact} />
-          </div>
-        )}
+          )}
 
-        {/* 2. BEACH SCENE (SHORELINE COMMAND CENTER) */}
-        {(scene === 'shoreline' || scene === 'all') && (
-          <div className="space-y-2">
-            <div
-              className="w-full rounded-full p-[2.5px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
+          {/* 2. BEACH SCENE (50% Smaller) */}
+          {(scene === 'shoreline' || scene === 'all') && (
+            <div className="space-y-1 overflow-hidden rounded-xl border border-[#0A2B6D]/20 p-1">
               <div
-                className="gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                className="w-full rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span style={{ color: '#FFFFFF' }}>
-                  🌴 SCENE 2 OF 3 · SUNNY BEACH SCENE &amp; SHORELINE TEAM COMMAND CENTER
-                </span>
+                <div
+                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>
+                    🌴 2. SUNNY BEACH SHORELINE COMMAND
+                  </span>
+                </div>
+              </div>
+              <div className="max-h-[260px] overflow-y-auto">
+                <ShorelineCommandCenter compact={true} />
               </div>
             </div>
-            <ShorelineCommandCenter compact={compact} />
-          </div>
-        )}
+          )}
 
-        {/* 3. DEEP BLUE SEA SCENE */}
-        {(scene === 'deep-sea' || scene === 'all') && (
-          <div className="space-y-2">
-            <div
-              className="w-full rounded-full p-[2.5px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
+          {/* 3. DEEP BLUE SEA SCENE (50% Smaller) */}
+          {(scene === 'deep-sea' || scene === 'all') && (
+            <div className="space-y-1 overflow-hidden rounded-xl border border-[#0A2B6D]/20 p-1">
               <div
-                className="gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
-                style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+                className="w-full rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span style={{ color: '#FFFFFF' }}>
-                  🤿 SCENE 3 OF 3 · DEEP BLUE SEA SCUBA PROGRESS &amp; MILESTONE REWARDS
-                </span>
+                <div
+                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
+                  style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>
+                    🤿 3. DEEP BLUE SEA SCUBA PROGRESS
+                  </span>
+                </div>
+              </div>
+              <div className="max-h-[260px] overflow-y-auto">
+                <DeepSeaScubaProgress compact={true} />
               </div>
             </div>
-            <DeepSeaScubaProgress compact={compact} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

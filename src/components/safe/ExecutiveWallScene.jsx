@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Lock, FolderLock, MessagesSquare, Mail,
   Building2, LogIn, Monitor, Columns, Users, CalendarClock, CheckCircle2, ArrowRight,
+  Tablet, Sun, Clock, Calendar,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
@@ -230,181 +231,191 @@ function CommunicationAndMailboxTabs() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="3. Communication Tab & 4. Mailbox Tab">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-white">
-        {/* 3. Communication Tab */}
-        <div
-          className="rounded-xl p-[4px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="flex h-full flex-col items-center justify-between gap-2 rounded-[9px] p-3 text-center"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
-            <div
-              className="w-full rounded-lg p-[2.5px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div className="flex items-center justify-center gap-2 rounded-[7px] bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D]">
-                <span
-                  className="h-2.5 w-2.5 rounded-full bg-white"
-                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
-                />
-                <MessagesSquare className="h-4 w-4 text-[#5A00D6]" />
-                <span>Communication Tab</span>
+    <WallHangingPictureFrame title="3. iPad (Date, Time & Weather) + Red Letterbox & 4. Mini Communication Board">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white">
+        {/* Left Column: iPad With Date, Time & Weather on Top + Red-Lit Letterbox Underneath It */}
+        <div className="flex flex-col justify-between gap-1.5">
+          {/* Top: iPad With Date, Time & Weather (With Mailbox Status Pill Beside It) */}
+          <div className="rounded-xl border-[2.5px] border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-sm">
+            <div className="mb-1 flex items-center justify-between px-1.5">
+              <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+                <Tablet className="h-2.5 w-2.5 text-[#00C6FF]" />
+                IPAD · DATE, TIME &amp; WEATHER
+              </span>
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-1.5 py-0 text-[7.5px] font-extrabold text-white"
+                style={{ backgroundColor: hasAlertMail ? '#EF4444' : '#0072FF' }}
+              >
+                <Mail className="h-2 w-2 text-white" />
+                {hasAlertMail ? `${mailAlertCount} Mail` : '0 Mail'}
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-1 rounded-lg bg-white p-1.5 text-center">
+              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
+                <Calendar className="mx-auto h-3 w-3 text-[#0A2B6D]" />
+                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                  27 Oct 2026
+                </div>
+              </div>
+              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
+                <Clock className="mx-auto h-3 w-3 text-[#0A2B6D]" />
+                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                  09:30 AM
+                </div>
+              </div>
+              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
+                <Sun className="mx-auto h-3 w-3 text-[#0A2B6D]" />
+                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                  24°C Sunny
+                </div>
               </div>
             </div>
-            <div
-              className="w-full rounded-lg p-[2.5px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-extrabold text-[#5A00D6]">
-                Shift handover notes, team broadcasts, diary entries &amp; instant staff communications.
-              </div>
-            </div>
-            <Link
-              to="/communications"
-              className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-              style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-            >
-              <span style={{ color: '#FFFFFF' }}>Open Communication Tab</span>
-              <ArrowRight className="h-3 w-3 text-white" />
-            </Link>
           </div>
-        </div>
 
-        {/* 4. Mailbox Tab — Interactive Mailbox That Lights Up Bright Pink & Opens With Letters Coming Out When You Have Mail */}
-        <div
-          className="rounded-xl p-[4.5px] transition-all duration-300"
-          style={{
-            background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT,
-            boxShadow: hasAlertMail
-              ? '0 0 22px 6px rgba(255, 46, 154, 0.9), 0 0 10px 2px #FF6EDB'
-              : undefined,
-          }}
-        >
+          {/* Underneath iPad: Letterbox That Lights Up in Bright RED When It Has Mail */}
           <div
-            className="flex h-full flex-col items-center justify-between gap-2 rounded-[9px] p-3 text-center"
-            style={{ background: UNIFORM_SPRAY_BG }}
+            className="rounded-xl p-[3.5px] transition-all duration-300"
+            style={{
+              background: hasAlertMail ? '#EF4444' : TOP_BORDER_GRADIENT,
+              boxShadow: hasAlertMail
+                ? '0 0 20px 5px rgba(239, 68, 68, 0.92), 0 0 10px 2px #EF4444'
+                : undefined,
+            }}
           >
             <div
-              className="w-full rounded-lg p-[2.5px]"
-              style={{ background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT }}
+              className="flex flex-col items-center justify-between gap-1 rounded-[8px] p-1.5 text-center"
+              style={{ background: UNIFORM_SPRAY_BG }}
             >
-              <div className="flex items-center justify-between gap-1.5 rounded-[7px] bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D]">
-                <div className="flex items-center gap-1.5">
+              <div className="flex w-full items-center justify-between gap-1 rounded-md bg-white px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                <div className="flex items-center gap-1">
                   <span
-                    className="h-3 w-3 shrink-0 rounded-full border border-white"
+                    className="h-2.5 w-2.5 shrink-0 rounded-full border border-white"
                     style={{
-                      backgroundColor: hasAlertMail ? '#FF2E9A' : '#FFFFFF',
+                      backgroundColor: hasAlertMail ? '#EF4444' : '#FFFFFF',
                       boxShadow: hasAlertMail
-                        ? '0 0 12px 4px #FF2E9A, 0 0 18px 6px #FF6EDB'
-                        : '0 0 8px 2px #FFFFFF',
+                        ? '0 0 12px 4px #EF4444, 0 0 16px 5px #EF4444'
+                        : '0 0 6px 2px #FFFFFF',
                     }}
                   />
-                  <Mail className="h-4 w-4 text-[#FF2E9A]" />
-                  <span>4. Mailbox Tab</span>
+                  <Mail className="h-3 w-3 text-[#EF4444]" />
+                  <span>Red Letterbox Under iPad</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setHasAlertMail((prev) => !prev)}
-                  className="rounded-full px-2 py-0.5 text-[8.5px] font-extrabold text-white"
-                  style={{ background: hasAlertMail ? '#FF2E9A' : '#5A00D6' }}
+                  className="rounded-full px-2 py-0.5 text-[7.5px] font-extrabold text-white"
+                  style={{ background: hasAlertMail ? '#EF4444' : '#0A2B6D' }}
                 >
-                  {hasAlertMail ? 'PINK MAIL LIT ✦' : 'Test Mail'}
+                  {hasAlertMail ? 'RED MAIL LIT ✦' : 'Test Mail'}
                 </button>
               </div>
-            </div>
 
-            {/* Illustrated Mailbox That Lights Up Bright Pink, Opens Its Door & Letters Come Out When You Have Mail */}
-            <div
-              className="w-full rounded-lg p-[2.5px]"
-              style={{ background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT }}
-            >
-              <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1.5 text-center">
+              <div className="flex w-full flex-col items-center justify-center rounded-md bg-white px-1.5 py-1 text-center">
                 <svg
-                  viewBox="0 0 220 78"
-                  className="h-16 w-full max-w-[210px]"
-                  aria-label="Interactive Bright Pink Mailbox with Opening Door and Flying Letters"
+                  viewBox="0 0 220 68"
+                  className="h-11 w-full max-w-[175px]"
+                  aria-label="Interactive Red Letterbox with Opening Door and Flying Letters"
                 >
-                  {/* Bright Pink Aura Behind Mailbox When Mail Arrives */}
                   {hasAlertMail && (
                     <ellipse
                       cx="105"
-                      cy="40"
-                      rx="88"
-                      ry="34"
-                      fill="#FF2E9A"
-                      fillOpacity="0.18"
+                      cy="35"
+                      rx="85"
+                      ry="28"
+                      fill="#EF4444"
+                      fillOpacity="0.22"
                     />
                   )}
-                  {/* Mailbox Post */}
-                  <rect x="66" y="54" width="12" height="22" rx="2" fill="#0A2B6D" />
-                  {/* Mailbox Body (Lights Up Bright Pink When Mail Present) */}
+                  <rect x="66" y="46" width="10" height="20" rx="2" fill="#0A2B6D" />
                   <path
-                    d="M32 54 L32 30 Q32 14 50 14 L104 14 Q120 14 120 30 L120 54 Z"
-                    fill={hasAlertMail ? '#FF2E9A' : '#0072FF'}
+                    d="M32 46 L32 24 Q32 10 50 10 L104 10 Q120 10 120 24 L120 46 Z"
+                    fill={hasAlertMail ? '#EF4444' : '#0072FF'}
                     stroke="#0A2B6D"
                     strokeWidth="2.5"
                   />
-                  {/* Raised Flag When Has Mail */}
                   {hasAlertMail ? (
                     <g>
-                      <rect x="52" y="4" width="3.5" height="22" fill="#0A2B6D" />
-                      <polygon points="55.5,4 74,9 55.5,15" fill="#FF2E9A" stroke="#0A2B6D" strokeWidth="1.2" />
-                    </g>
-                  ) : (
-                    <rect x="52" y="24" width="18" height="3.5" fill="#0A2B6D" />
-                  )}
-                  {/* Open Mailbox Door & Letters Flying Out When Has Mail */}
-                  {hasAlertMail ? (
-                    <g>
-                      {/* Dark Open Mouth */}
-                      <ellipse cx="118" cy="36" rx="7" ry="16" fill="#0A2B6D" />
-                      {/* Hinged Door Swung Open */}
+                      <rect x="52" y="2" width="3" height="18" fill="#0A2B6D" />
+                      <polygon points="55,2 72,7 55,12" fill="#EF4444" stroke="#0A2B6D" strokeWidth="1.2" />
+                      <ellipse cx="118" cy="30" rx="6" ry="14" fill="#0A2B6D" />
                       <path
-                        d="M120 52 L144 64 L148 56 L122 44 Z"
-                        fill="#FF6EDB"
+                        d="M120 44 L142 54 L146 47 L122 37 Z"
+                        fill="#EF4444"
                         stroke="#0A2B6D"
-                        strokeWidth="2"
+                        strokeWidth="1.8"
                       />
-                      {/* Letter 1 Emerging */}
-                      <g transform="translate(124, 16) rotate(-8)">
-                        <rect width="32" height="20" rx="2.5" fill="#FFFFFF" stroke="#FF2E9A" strokeWidth="2" />
-                        <polyline points="2,2 16,12 30,2" fill="none" stroke="#5A00D6" strokeWidth="1.8" />
+                      <g transform="translate(124, 12) rotate(-8)">
+                        <rect width="28" height="17" rx="2" fill="#FFFFFF" stroke="#EF4444" strokeWidth="2" />
+                        <polyline points="2,2 14,10 26,2" fill="none" stroke="#EF4444" strokeWidth="1.6" />
                       </g>
-                      {/* Letter 2 Flying Out */}
-                      <g transform="translate(158, 6) rotate(6)">
-                        <rect width="34" height="21" rx="2.5" fill="#FFFFFF" stroke="#0072FF" strokeWidth="2" />
-                        <polyline points="2,2 17,12 32,2" fill="none" stroke="#FF2E9A" strokeWidth="1.8" />
-                        <circle cx="27" cy="15" r="3" fill="#FF2E9A" />
-                      </g>
-                      {/* Letter 3 Sliding Out */}
-                      <g transform="translate(166, 34) rotate(12)">
-                        <rect width="30" height="19" rx="2.5" fill="#FFFFFF" stroke="#5A00D6" strokeWidth="2" />
-                        <polyline points="2,2 15,11 28,2" fill="none" stroke="#0072FF" strokeWidth="1.8" />
+                      <g transform="translate(154, 4) rotate(6)">
+                        <rect width="30" height="18" rx="2" fill="#FFFFFF" stroke="#0A2B6D" strokeWidth="2" />
+                        <polyline points="2,2 15,10 28,2" fill="none" stroke="#EF4444" strokeWidth="1.6" />
                       </g>
                     </g>
                   ) : (
-                    /* Closed Mailbox Door */
-                    <rect x="114" y="18" width="6" height="34" rx="2" fill="#FFFFFF" stroke="#0A2B6D" strokeWidth="1.5" />
+                    <rect x="114" y="14" width="6" height="30" rx="2" fill="#FFFFFF" stroke="#0A2B6D" strokeWidth="1.5" />
                   )}
                 </svg>
-                <div className="text-[10px] font-extrabold text-[#FF2E9A]">
+                <div className="text-[8.5px] font-extrabold text-[#EF4444]">
                   {hasAlertMail
-                    ? `Mailbox Open & Lit Bright Pink (${mailAlertCount} Letters Out)`
-                    : 'Mailbox Closed · Click Test Mail to Open'}
+                    ? `Letterbox Lit Red (${mailAlertCount} Letters Out)`
+                    : 'Letterbox Closed'}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (Where Mailbox Was): Mini Communication Board */}
+        <div
+          className="rounded-xl p-[3.5px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div
+            className="flex h-full flex-col items-center justify-between gap-1.5 rounded-[9px] p-2 text-center"
+            style={{ background: UNIFORM_SPRAY_BG }}
+          >
+            <div
+              className="w-full rounded-lg p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="flex items-center justify-center gap-1.5 rounded-[6px] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+                <span
+                  className="h-2.5 w-2.5 rounded-full bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
+                />
+                <MessagesSquare className="h-3.5 w-3.5 text-[#0A2B6D]" />
+                <span>Mini Communication Board</span>
+              </div>
+            </div>
+
+            <div className="w-full flex-1 space-y-1 rounded-lg border border-[#0A2B6D]/20 bg-white p-2 text-left">
+              {[
+                { tag: 'Shift Note', text: 'Morning SIL handover signed off · 100% meds verified' },
+                { tag: 'Broadcast', text: 'All staff: NDIS 2026 Practice Standards briefing live' },
+                { tag: 'Team Diary', text: '3 participant goal progress notes synced today' },
+                { tag: 'Inbox SLA', text: 'Zero overdue messages · 24h response SLA active' },
+              ].map((msg) => (
+                <div
+                  key={msg.tag}
+                  className="flex items-center justify-between gap-1.5 rounded-md border border-[#0A2B6D]/15 bg-[#F5F0FF]/60 px-2 py-1 text-[8.5px] font-extrabold text-[#0A2B6D]"
+                >
+                  <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[7.5px] text-white">
+                    {msg.tag}
+                  </span>
+                  <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
+                </div>
+              ))}
             </div>
 
             <Link
               to="/communications"
-              className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-              style={{ background: hasAlertMail ? '#FF2E9A' : getHeaderView(2), color: '#FFFFFF' }}
+              className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white"
+              style={{ background: getHeaderView(0), color: '#FFFFFF' }}
             >
-              <span style={{ color: '#FFFFFF' }}>Open Mailbox Tab</span>
-              <ArrowRight className="h-3 w-3 text-white" />
+              <span style={{ color: '#FFFFFF' }}>Open Mini Communication Board</span>
+              <ArrowRight className="h-2.5 w-2.5 text-white" />
             </Link>
           </div>
         </div>
@@ -651,35 +662,34 @@ export default function ExecutiveWallScene({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3.5">
-      {/* Header + Fitted Mode Tiles Underneath */}
+    <div className="relative overflow-hidden rounded-xl bg-white p-1.5 sm:p-2 space-y-2">
+      {/* 50% Smaller Dual Executive Office Header + Mode Tiles */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white p-4 text-center space-y-3">
+        <div className="flex flex-col items-center justify-center rounded-[9px] bg-white p-2 text-center space-y-1.5">
           <div
-            className="w-full rounded-full p-[3px] shadow-2xs"
+            className="w-full rounded-full p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-5 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-xs font-extrabold tracking-wide text-white"
               style={{ background: getHeaderView(7), color: '#FFFFFF' }}
             >
               <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
                 style={{ borderColor: getAppBorderView(7) }}
               >
-                <Building2 className="h-4 w-4" style={{ color: getSymbolView(7).iconColor }} />
+                <Building2 className="h-2.5 w-2.5" style={{ color: getSymbolView(7).iconColor }} />
               </span>
               <span style={{ color: '#FFFFFF' }}>
-                {companyName} · Dual Executive Office &amp; Profile Workspace
+                {companyName} · Dual Executive Office &amp; Profile Workspace (50% Compact)
               </span>
             </div>
           </div>
 
-          {/* 4 Action Tiles Underneath Header — Generously Sized So Every Word Fits Cleanly */}
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+          <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1.5">
             {LAYOUT_CHOICES.map((choice, idx) => {
               const Icon = choice.icon;
               const active = viewMode === choice.id;
@@ -687,22 +697,22 @@ export default function ExecutiveWallScene({
               return (
                 <div
                   key={choice.id}
-                  className="rounded-full p-[3px] shadow-2xs"
+                  className="rounded-full p-[2px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <button
                     type="button"
                     onClick={() => selectMode(choice.id)}
-                    className={`gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold text-white transition-all ${
+                    className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
                       active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                     }`}
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
                     <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                       style={{ borderColor: getAppBorderView(idx) }}
                     >
-                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                      <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                     </span>
                     <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
                       {choice.label}
@@ -713,19 +723,19 @@ export default function ExecutiveWallScene({
             })}
 
             <div
-              className="rounded-full p-[3px] shadow-2xs"
+              className="rounded-full p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <Link
                 to="/login"
-                className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold text-white transition-all hover:opacity-95"
+                className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
                 style={{ background: getHeaderView(3), color: '#FFFFFF' }}
               >
                 <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                   style={{ borderColor: getAppBorderView(3) }}
                 >
-                  <LogIn className="h-3.5 w-3.5" style={{ color: getSymbolView(3).iconColor }} />
+                  <LogIn className="h-2.5 w-2.5" style={{ color: getSymbolView(3).iconColor }} />
                 </span>
                 <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
                   Sign In
@@ -736,34 +746,28 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Streamlined Executive Office Workspace:
-          1. Logo Section (Fixed)
-          2. Today's Overview with Picture of Roster (Instead of Modulars)
-          3. Communication Tab & 4. Mailbox Tab
-          5. Silver Screen
-          6. Office Screen 2
-          7. Desk PC Screen */}
+      {/* 50% Smaller Dual Executive Office Workspace Body */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[12px] bg-white p-3.5 space-y-3.5">
-          {/* Top Row: (1) Fixed Logo Section + (2) Today's Overview with Picture of Roster */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
-            <div className="lg:col-span-5 flex flex-col">
+        <div className="rounded-[9px] bg-white p-2 space-y-2">
+          {/* Top Row: (1) Fixed Logo + (2) Today's Overview + (3/4) iPad + Red Letterbox + Mini Communication Board */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
+            <div className="lg:col-span-3 flex flex-col">
               <ComplianceHrPhotoFrame logoUrl={frameSrc} />
             </div>
-            <div className="lg:col-span-7 flex flex-col">
+            <div className="lg:col-span-4 flex flex-col">
               <TodaysRosterPictureCard />
+            </div>
+            <div className="lg:col-span-5 flex flex-col">
+              <CommunicationAndMailboxTabs />
             </div>
           </div>
 
-          {/* Middle Row: (3) Communication Tab & (4) Mailbox Tab + (5) Silver Screen */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
-            <div className="lg:col-span-6 flex flex-col">
-              <CommunicationAndMailboxTabs />
-            </div>
-            <div className="lg:col-span-6 flex flex-col">
+          {/* Bottom Compact Row: (5) Silver Screen + (6) Office Screen 2 + (7) Desk PC Screen */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
+            <div className="lg:col-span-4 flex flex-col max-h-[220px] overflow-y-auto">
               <WallHangingPictureFrame
                 title="5. Silver Screen · Weather & NDIS News"
                 frameAccent={TOP_BORDER_GRADIENT}
@@ -772,21 +776,21 @@ export default function ExecutiveWallScene({
                 <SilverScreenSplit />
               </WallHangingPictureFrame>
             </div>
+            <div className="lg:col-span-4 flex flex-col max-h-[220px] overflow-y-auto">
+              <LogoBrandedOfficeSecondScreen
+                logoUrl={frameSrc}
+                selectedScreen={secondScreenKey}
+                onSelectScreen={setSecondScreenKey}
+                companyName={companyName}
+              />
+            </div>
+            <div className="lg:col-span-4 flex flex-col justify-center">
+              <OfficeEquipmentWithInteractiveScreen
+                selectedMonitorFeed={monitorFeed}
+                onSelectMonitorFeed={setMonitorFeed}
+              />
+            </div>
           </div>
-
-          {/* 6. Office Screen 2 */}
-          <LogoBrandedOfficeSecondScreen
-            logoUrl={frameSrc}
-            selectedScreen={secondScreenKey}
-            onSelectScreen={setSecondScreenKey}
-            companyName={companyName}
-          />
-
-          {/* 7. Desk PC Screen */}
-          <OfficeEquipmentWithInteractiveScreen
-            selectedMonitorFeed={monitorFeed}
-            onSelectMonitorFeed={setMonitorFeed}
-          />
         </div>
       </div>
     </div>
