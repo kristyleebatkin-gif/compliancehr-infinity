@@ -82,8 +82,8 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* App Name & Slogan Centred Evenly Between Logo and NDIS Badge */}
-              <div className="-mt-2 sm:-mt-2.5 mb-3 sm:mb-3.5 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+              {/* App Name & Slogan Closer to Logo with Increased Space Above NDIS Badge */}
+              <div className="-mt-4 sm:-mt-5 mb-6 sm:mb-7 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
                 <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
                     Compliance
