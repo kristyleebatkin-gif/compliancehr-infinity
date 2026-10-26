@@ -145,13 +145,13 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading Sized to Fit on One Line + Black Sentence Underneath */}
+        {/* Smaller Start Header Sized to Fit Cleanly in Space + Black Sentence Underneath */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
+          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-2.5 sm:p-3 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
-            <h2 className="mx-auto w-full text-center font-editorial text-lg sm:text-2xl md:text-[26px] lg:text-4xl font-extrabold tracking-tight leading-snug sm:whitespace-nowrap">
+          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-2.5 sm:px-5 sm:py-3 text-center space-y-1">
+            <h2 className="mx-auto w-full text-center font-editorial text-sm sm:text-lg md:text-xl lg:text-2xl font-extrabold tracking-tight leading-snug whitespace-nowrap">
               <span className="text-[#0A2B6D]">Start Using Compliance</span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
@@ -161,7 +161,7 @@ export default function QuickStartSection() {
               </span>
             </h2>
             <p
-              className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold leading-relaxed text-black"
+              className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug text-black"
               style={{ color: '#000000' }}
             >
               From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
@@ -169,36 +169,36 @@ export default function QuickStartSection() {
           </div>
         </div>
 
-        {/* Stretched Banner — Reduced Header so "Guide" Fits on Same Line + Sticky Notes & Flip All on One Row Together */}
+        {/* Stretched Banner — Sticky Notes & Flip All Smaller & Centred in the Middle */}
         <div
-          className="flex min-h-[76px] w-full flex-col items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-4 sm:px-6 py-2.5 text-white shadow-sm"
+          className="flex min-h-[54px] w-full flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] px-3 sm:px-5 py-1.5 text-white shadow-sm"
           style={{ background: getHeaderView(4), color: '#FFFFFF' }}
         >
-          <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white whitespace-nowrap">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-2xs">
-              <Compass className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+          <div className="flex items-center justify-center gap-1.5 font-editorial text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white whitespace-nowrap">
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white shadow-2xs">
+              <Compass className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span className="text-center whitespace-nowrap" style={{ color: '#FFFFFF' }}>
               Our Quick 4-Step Start Guide
             </span>
           </div>
 
-          <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
+          <div className="flex w-full flex-nowrap items-center justify-center gap-2">
             <div
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
+              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
-              <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+              <Pin className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
               <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
             </div>
 
             <button
               type="button"
               onClick={cycleAllNotes}
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
+              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
-              <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+              <RefreshCw className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
               <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
             </button>
           </div>

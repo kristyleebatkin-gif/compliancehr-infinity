@@ -33,35 +33,35 @@ export default function LandingHero() {
   const highlights = [
     {
       icon: Users,
-      badge: 'PILLAR 1 · PEOPLE & PROFILES',
-      title: 'People Connected',
+      badge: 'PILLAR 1 · PEOPLE & ROSTER',
+      title: 'People & Shifts',
       reasons: [
         'Staff, participants & volunteers in one hub',
         'Intake flows straight into live profiles',
         'Consents, screening & certs auto-tracked',
-        'Teams, workers & supervisors visible live',
+        'Rosters, shift notes & teams synced live',
       ],
     },
     {
       icon: BarChart3,
-      badge: 'PILLAR 2 · ROSTER & FINANCE',
-      title: 'Operations Connected',
+      badge: 'PILLAR 2 · FINANCE & OPS',
+      title: 'Ops Connected',
       reasons: [
-        'Rosters, shift notes, invoices & payroll',
+        'NDIS invoices, payroll & claim matching',
         'Registers, alerts & reminders run 24/7',
-        'Every action & shift note logged live',
         'Quotes, receipts, assets & POs reconciled',
+        'Every shift note & action logged live',
       ],
     },
     {
       icon: ShieldCheck,
-      badge: 'PILLAR 3 · NDIS & GOVERNANCE',
-      title: 'Audit Confidence',
+      badge: 'PILLAR 3 · NDIS & AUDIT',
+      title: 'Audit Ready',
       reasons: [
-        'Two-minute audits with branded PDF packs',
+        '2-min audits & 30-action PDF batch packs',
         'Evidence attached ready for NDIS auditors',
         'Live trackers prove daily full compliance',
-        'Corrective actions tracked to completion',
+        'Corrective actions & risks tracked live',
       ],
     },
   ];
@@ -97,41 +97,48 @@ export default function LandingHero() {
                 ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
               </p>
 
-              {/* Live Maintenance Tracker Underneath the Governance Sentence */}
+              {/* Assets Above & Centred + Live Compliance Tracker Underneath */}
               <div
-                className="w-full rounded-2xl p-[3px] shadow-2xs"
+                className="w-full rounded-2xl p-[2.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 rounded-[13px] bg-white px-4 py-2 text-center">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="h-3 w-3 shrink-0 rounded-full bg-[#10B981]"
-                      style={{ boxShadow: '0 0 10px 3px #10B981' }}
-                    />
-                    <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      Live Maintenance Tracker
-                    </span>
-                    <span className="rounded-full bg-[#10B981] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
-                      100% LIVE
-                    </span>
+                <div className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] bg-white px-3 py-2 text-center">
+                  {/* Assets Centred Above Live Compliance Tracker */}
+                  <div className="flex w-full justify-center">
+                    <Link
+                      to="/assets"
+                      className="gradient-brand inline-flex items-center justify-center gap-1.5 rounded-full px-3.5 py-0.5 text-[10px] font-extrabold text-white shadow-2xs"
+                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                    >
+                      <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
+                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    </Link>
                   </div>
-                  <div className="flex-1 min-w-[140px] max-w-md h-2.5 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
-                    <div
-                      className="h-full rounded-full"
-                      style={{
-                        width: '100%',
-                        background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
-                      }}
-                    />
+
+                  {/* Live Compliance Tracker Centred Underneath */}
+                  <div className="flex w-full flex-wrap items-center justify-center gap-2">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <span
+                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#10B981]"
+                        style={{ boxShadow: '0 0 10px 3px #10B981' }}
+                      />
+                      <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        Live Compliance Tracker
+                      </span>
+                      <span className="rounded-full bg-[#10B981] px-2 py-0 text-[9px] font-extrabold text-white">
+                        100% LIVE
+                      </span>
+                    </div>
+                    <div className="w-full max-w-md h-2 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: '100%',
+                          background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
+                        }}
+                      />
+                    </div>
                   </div>
-                  <Link
-                    to="/assets"
-                    className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
-                    style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                  >
-                    <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
-                    <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  </Link>
                 </div>
               </div>
             </div>
@@ -161,33 +168,33 @@ export default function LandingHero() {
             </Link>
           </div>
 
-          {/* 4 Small Stat Tiles — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
-          <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4">
+          {/* 4 Small Stat Tiles — Uniformly Aligned Sections Across All 4 Tiles */}
+          <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4 items-stretch">
             {STATS.map((stat, index) => (
               <Reveal
                 key={stat.label}
                 delay={index * 0.05}
-                className="flex rounded-xl p-[2px] shadow-2xs"
+                className="flex h-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex w-full flex-col justify-between gap-1 rounded-[9px] p-1 text-center"
+                  className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] p-1 text-center"
                   style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                 >
                   <div
-                    className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-2 py-0.5 text-white"
+                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-2 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
                     <Sparkles className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                    <span className="font-editorial text-xs font-extrabold leading-none text-white" style={{ color: '#FFFFFF' }}>
+                    <span className="font-editorial text-[11px] font-extrabold leading-none text-white" style={{ color: '#FFFFFF' }}>
                       {stat.value}
                     </span>
                   </div>
                   <div
-                    className="w-full rounded-md p-[1.5px]"
+                    className="flex h-[24px] w-full rounded-md p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="rounded-[4px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold uppercase tracking-wide text-[#0A2B6D]">
+                    <div className="flex h-full w-full items-center justify-center rounded-[4px] bg-white px-1 text-center text-[7px] font-extrabold uppercase tracking-wide text-[#0A2B6D] whitespace-nowrap">
                       {stat.label}
                     </div>
                   </div>
@@ -196,41 +203,41 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Pillar Tiles — 50% Smaller, App-Coloured Header, Pink/Blue/Purple Spray Between Outer & Writing Borders, White Background & Dark Blue Writing */}
-          <div className="grid w-full gap-2 text-center md:grid-cols-3 items-stretch">
+          {/* 3 Minimised Pillar Tiles — Smaller Words to Fit Cleanly on One Line, Centred & Aligned */}
+          <div className="grid w-full gap-1.5 text-center md:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => (
               <Reveal
                 key={title}
                 delay={index * 0.07}
-                className="flex h-full flex-col rounded-xl p-[2.5px] shadow-sm transition-all hover:-translate-y-0.5"
+                className="flex h-full flex-col rounded-xl p-[2px] shadow-sm transition-all hover:-translate-y-0.5"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-1 flex-col justify-between rounded-[9px] p-1.5 space-y-1"
+                  className="flex h-full flex-1 flex-col justify-between rounded-[9px] p-1 space-y-1"
                   style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                 >
                   {/* App-Coloured Pillar Header Tile */}
                   <div
-                    className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-lg px-2 py-0.5 text-center text-white"
+                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 text-center text-white whitespace-nowrap"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
                     <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                    <span className="text-[8px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                    <span className="text-[7px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
                       {badge} · {title}
                     </span>
                   </div>
 
-                  {/* 4 Compact Rows: White Background & Dark Blue Writing Inside App-Design Border */}
-                  <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-1">
+                  {/* 4 Compact Rows: Smaller Text So Every Word Fits Cleanly */}
+                  <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-0.5">
                     {reasons.map((r) => (
                       <li
                         key={r}
-                        className="flex min-h-[22px] rounded-md p-[1.5px]"
+                        className="flex h-[20px] rounded p-[1px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex h-full w-full items-center gap-1 rounded-[4px] bg-white px-2 py-0.5 text-left text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                          <span className="flex-1 text-[#0A2B6D]">{r}</span>
+                        <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1.5 text-center text-[7px] font-extrabold leading-none text-[#0A2B6D] whitespace-nowrap">
+                          <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                          <span className="text-[#0A2B6D]">{r}</span>
                         </div>
                       </li>
                     ))}
@@ -238,7 +245,7 @@ export default function LandingHero() {
 
                   <Link
                     to="/dashboard"
-                    className="gradient-brand inline-flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0.5 text-[8px] font-extrabold text-white"
+                    className="gradient-brand inline-flex h-[18px] w-full items-center justify-center gap-1 rounded-full border border-white px-2 text-[7px] font-extrabold text-white"
                     style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
                   >
                     <span style={{ color: '#FFFFFF' }}>Explore in Dashboard</span>

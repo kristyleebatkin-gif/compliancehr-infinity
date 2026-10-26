@@ -399,46 +399,36 @@ const ACCESS_LEVELS = [
   },
 ];
 
-// Reusable uniform section/group header bar — Title on Line 1, optional secondLine on Line 2, and badgeText at the bottom of the header
+// Reusable uniform section/group header bar — Reduced to One Single Line
 function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, viewIndex = 0 }) {
   return (
     <div
-      className="w-full rounded-2xl p-[3px] shadow-2xs"
+      className="w-full rounded-xl p-[2px] shadow-2xs"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div
-        className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1.5 rounded-[13px] px-4 py-2.5 text-center text-white"
+        className="gradient-brand flex min-h-[30px] w-full flex-wrap items-center justify-between gap-1.5 rounded-[10px] px-3 py-1 text-center text-white"
         style={{ background: getHeaderView(viewIndex), color: '#FFFFFF' }}
       >
-        <div className="flex flex-col items-center justify-center text-center">
-          <div className="flex items-center justify-center gap-2.5">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-            </span>
+        <div className="flex items-center justify-center gap-1.5 mx-auto">
+          <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+            <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+          </span>
+          <span
+            className="text-[9.5px] sm:text-[11px] font-extrabold tracking-wide text-white whitespace-nowrap"
+            style={{ color: '#FFFFFF' }}
+          >
+            {title}{secondLine ? ` · ${secondLine}` : ''}
+          </span>
+          {badgeText ? (
             <span
-              className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white whitespace-nowrap"
+              className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0 text-[8px] font-extrabold text-white whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
-              {title}
-            </span>
-          </div>
-          {secondLine ? (
-            <span
-              className="mt-0.5 text-xs sm:text-sm font-extrabold tracking-wide text-white"
-              style={{ color: '#FFFFFF' }}
-            >
-              {secondLine}
+              {badgeText}
             </span>
           ) : null}
         </div>
-        {badgeText ? (
-          <span
-            className="shrink-0 rounded-full border border-white bg-white/20 px-3.5 py-0.5 text-[10.5px] font-extrabold text-white"
-            style={{ color: '#FFFFFF' }}
-          >
-            {badgeText}
-          </span>
-        ) : null}
       </div>
     </div>
   );
@@ -537,6 +527,16 @@ export default function BlueprintPreviewSection() {
         .laptop-beat-b {
           animation: laptopDanceB 1.15s infinite ease-in-out;
         }
+        @keyframes clockwiseWalk {
+          0%   { transform: translate(0px, -2px); }
+          25%  { transform: translate(2.5px, 0px); }
+          50%  { transform: translate(0px, 2px); }
+          75%  { transform: translate(-2.5px, 0px); }
+          100% { transform: translate(0px, -2px); }
+        }
+        .laptop-clockwise-walk {
+          animation: clockwiseWalk 6s linear infinite;
+        }
       `}</style>
 
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
@@ -604,20 +604,18 @@ export default function BlueprintPreviewSection() {
                       viewIndex={0}
                     />
 
-                    <div className="flex flex-1 flex-col justify-between gap-1.5">
+                    <div className="grid flex-1 grid-cols-1 grid-rows-5 gap-1.5">
                       {DATA_FLOWS.map((flow, fIdx) => (
                         <div
                           key={flow.label}
-                          className="rounded-xl p-[2px] shadow-2xs overflow-hidden"
+                          className="flex h-full rounded-xl p-[2px] shadow-2xs overflow-hidden"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex flex-col items-center justify-center gap-1 rounded-[9px] px-2.5 py-1.5 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
+                          {/* White Background in the Flow */}
+                          <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2 py-1 text-center">
                             {/* App-Design Coloured Flow Heading Bar */}
                             <span
-                              className="gradient-brand inline-flex items-center justify-center rounded-full px-3 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-white"
+                              className="gradient-brand inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
                               style={{ background: getHeaderView(fIdx), color: '#FFFFFF' }}
                             >
                               {flow.label}
@@ -633,7 +631,7 @@ export default function BlueprintPreviewSection() {
                                 return (
                                   <React.Fragment key={item}>
                                     <span
-                                      className="rounded-full px-2 py-0.5 text-[8.5px] font-extrabold text-white whitespace-nowrap"
+                                      className="rounded-full px-2 py-0.5 text-[8px] font-extrabold text-white whitespace-nowrap"
                                       style={{
                                         backgroundColor: flowTile.bg,
                                         color: '#FFFFFF',
@@ -642,7 +640,7 @@ export default function BlueprintPreviewSection() {
                                       {item}
                                     </span>
                                     {index < flow.steps.length - 1 && (
-                                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#5A00D6]" />
+                                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
                                     )}
                                   </React.Fragment>
                                 );
@@ -655,12 +653,12 @@ export default function BlueprintPreviewSection() {
                   </div>
                 </div>
 
-                {/* Right Column: Access Follows Role — 50% Smaller Live HD Flat Screen TVs With App-Design Coloured Header Tiles */}
+                {/* Right Column: Access Follows Role — 5 Live HD Flat Screen TVs Lined Up Row-for-Row With Left Flows */}
                 <div
-                  className="lg:col-span-6 rounded-2xl p-[3px] shadow-2xs flex"
+                  className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex w-full flex-col justify-between rounded-[11px] bg-white p-2 space-y-1.5">
+                  <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
                     <UniformBlueprintHeader
                       icon={Lock}
                       title="Access Follows Role (Live TV Channels)"
@@ -668,58 +666,57 @@ export default function BlueprintPreviewSection() {
                       viewIndex={5}
                     />
 
-                    {/* 5 Role Permission Levels Centered Inside 50% Smaller Flat Screen TVs With App-Coloured Headers */}
-                    <div className="grid grid-cols-1 gap-1.5">
+                    {/* 5 Role Permission Levels Lined Up in 5 Equal Grid Rows With Dark Blue Writing */}
+                    <div className="grid flex-1 grid-cols-1 grid-rows-5 gap-1.5">
                       {ACCESS_LEVELS.map((lvl, idx) => {
                         const borderCol = getAppBorderView(idx + 2);
                         return (
-                          <div key={lvl.title} className="flex flex-col items-center">
+                          <div
+                            key={lvl.title}
+                            className="flex h-full w-full flex-col justify-between rounded-xl border-2 bg-[#0072FF] p-1 ring-1 ring-[#00C6FF]/80 shadow-sm"
+                            style={{ borderColor: borderCol }}
+                          >
+                            {/* App-Coloured Flat Screen TV Bezel Header */}
                             <div
-                              className="w-full rounded-xl border-2 bg-[#0072FF] p-1.5 ring-1 ring-[#00C6FF]/80 shadow-sm"
-                              style={{ borderColor: borderCol }}
+                              className="gradient-brand mb-0.5 flex items-center justify-between rounded-full px-2 py-0 text-white"
+                              style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                             >
-                              {/* App-Coloured Flat Screen TV Bezel Header */}
-                              <div
-                                className="gradient-brand mb-1 flex items-center justify-between rounded-full px-2 py-0.5 text-white"
-                                style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                              >
-                                <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
-                                  <Tv className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                                  <span style={{ color: '#FFFFFF' }}>{lvl.channelBadge} · LIT UP ✦</span>
-                                </span>
-                                <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold text-white">
-                                  <Radio className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                                  <span style={{ color: '#FFFFFF' }}>{lvl.channelProgram}</span>
-                                </span>
-                              </div>
+                              <span className="flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
+                                <Tv className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                                <span style={{ color: '#FFFFFF' }}>{lvl.channelBadge} · LIT UP ✦</span>
+                              </span>
+                              <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-white">
+                                <Radio className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                                <span style={{ color: '#FFFFFF' }}>{lvl.channelProgram}</span>
+                              </span>
+                            </div>
 
-                              {/* Inner Flat Screen TV Display — App-Coloured Header Tile + Compact Description */}
+                            {/* Inner Flat Screen TV Display — White Background & Dark Blue Writing */}
+                            <div
+                              className="flex flex-1 rounded-lg p-[1.5px]"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
                               <div
-                                className="rounded-lg p-[1.5px]"
-                                style={{ background: TOP_BORDER_GRADIENT }}
+                                className="flex h-full w-full flex-col items-center justify-between gap-0.5 rounded-[6px] px-1.5 py-0.5 text-center"
+                                style={{ background: UNIFORM_SPRAY_BG }}
                               >
                                 <div
-                                  className="flex flex-col items-center justify-center gap-1 rounded-[7px] px-2 py-1 text-center"
-                                  style={{ background: UNIFORM_SPRAY_BG }}
+                                  className="gradient-brand flex w-full items-center justify-between gap-1 rounded px-1.5 py-0 text-[7.5px] font-extrabold text-white"
+                                  style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
                                 >
-                                  <div
-                                    className="gradient-brand flex w-full items-center justify-between gap-1 rounded-md px-2 py-0.5 text-[8px] font-extrabold text-white"
-                                    style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
-                                  >
-                                    <span className="inline-flex items-center gap-1 text-white">
-                                      <ShieldCheck className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                                      <span style={{ color: '#FFFFFF' }}>{lvl.title}</span>
-                                    </span>
-                                    <span className="text-[7px] font-extrabold text-white/95" style={{ color: '#FFFFFF' }}>
-                                      {lvl.scopeBadge}
-                                    </span>
-                                  </div>
+                                  <span className="inline-flex items-center gap-1 text-white">
+                                    <ShieldCheck className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                                    <span style={{ color: '#FFFFFF' }}>{lvl.title}</span>
+                                  </span>
+                                  <span className="text-[6.5px] font-extrabold text-white/95" style={{ color: '#FFFFFF' }}>
+                                    {lvl.scopeBadge}
+                                  </span>
+                                </div>
 
-                                  <div className="w-full rounded-[6px] bg-white px-2 py-0.5 text-center">
-                                    <p className="mx-auto text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                                      {lvl.desc}
-                                    </p>
-                                  </div>
+                                <div className="flex flex-1 w-full items-center justify-center rounded bg-white px-1.5 py-0.5 text-center">
+                                  <p className="mx-auto text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                    {lvl.desc}
+                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -855,52 +852,59 @@ export default function BlueprintPreviewSection() {
                         return (
                           <div
                             key={mod.key}
-                            className={`flex h-full flex-col items-center justify-between ${danceClass}`}
+                            className={`flex h-full flex-col items-center justify-between laptop-clockwise-walk ${danceClass}`}
                             style={{
-                              animationDelay: `${(idx % 6) * 0.12}s`,
+                              animationDelay: `${(idx % 8) * 0.45}s`,
                             }}
                           >
-                            {/* Top Laptop Lid & Screen — 50% Smaller */}
+                            {/* Minimised Live Module Laptop — Lit Up in Glowing White & Walking Clockwise */}
                             <div
-                              className="group flex w-full flex-1 flex-col rounded-t-xl border-2 bg-[#0A2B6D] p-1.5 shadow-2xs"
-                              style={{ borderColor: borderCol }}
+                              className="group flex w-full flex-1 flex-col rounded-t-xl border-2 bg-[#0A2B6D] p-1 shadow-sm"
+                              style={{
+                                borderColor: borderCol,
+                                boxShadow:
+                                  '0 0 14px 3px rgba(255, 255, 255, 0.98), 0 0 10px 2px rgba(0, 198, 255, 0.55)',
+                              }}
                             >
-                              <div className="mb-1 flex h-[14px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
-                                <span className="inline-flex items-center gap-0.5 text-[7px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
-                                  <Laptop className="h-2 w-2 text-[#00C6FF] shrink-0" />
-                                  <span>LAPTOP {String(idx + 1).padStart(2, '0')}</span>
+                              <div className="mb-0.5 flex h-[12px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-0.5 text-[6.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+                                  <span
+                                    className="h-1.5 w-1.5 rounded-full bg-white"
+                                    style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
+                                  />
+                                  <span>MOD {String(idx + 1).padStart(2, '0')}</span>
                                 </span>
-                                <span className="inline-flex items-center gap-0.5 text-[7px] font-extrabold text-[#FF6EDB] whitespace-nowrap">
-                                  <Youtube className="h-2.5 w-2.5 text-[#FF2E9A] shrink-0" />
-                                  <span>LIVE</span>
+                                <span className="inline-flex items-center gap-0.5 text-[6.5px] font-extrabold text-white whitespace-nowrap">
+                                  <Youtube className="h-2 w-2 text-[#FF2E9A] shrink-0" />
+                                  <span>WHITE LIT ✦</span>
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen — App-Coloured Module Header */}
+                              {/* Inner Minimised Laptop Screen */}
                               <div
-                                className="flex flex-1 rounded-lg p-[1.5px]"
+                                className="flex flex-1 rounded-md p-[1px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
                                 <div
-                                  className="flex h-full w-full flex-col justify-between gap-1 rounded-[7px] p-1.5 text-center"
+                                  className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[5px] p-1 text-center"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
                                   <Link
                                     to={mod.path}
-                                    className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                                    className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded px-1 py-0.5 text-center text-white"
                                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                                   >
-                                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                                    <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                                    <span className="text-[7.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
                                       {mod.label}
                                     </span>
                                   </Link>
 
                                   <Link
                                     to={mod.path}
-                                    className="flex flex-1 items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center"
+                                    className="flex flex-1 items-center justify-center rounded bg-white px-1 py-0.5 text-center"
                                   >
-                                    <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                    <p className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                                       {mod.blurb}
                                     </p>
                                   </Link>
@@ -908,7 +912,7 @@ export default function BlueprintPreviewSection() {
                                   {/* Compact YouTube Clip Strip */}
                                   <div className="w-full">
                                     {isEmbedOpen ? (
-                                      <div className="w-full overflow-hidden rounded-md border border-[#0A2B6D] bg-[#0A2B6D] aspect-video">
+                                      <div className="w-full overflow-hidden rounded border border-[#0A2B6D] bg-[#0A2B6D] aspect-video">
                                         <iframe
                                           title={ytClip.title}
                                           src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
@@ -921,13 +925,13 @@ export default function BlueprintPreviewSection() {
                                       <button
                                         type="button"
                                         onClick={() => setActiveVideoLaptopKey(mod.key)}
-                                        className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-center text-[7.5px] font-extrabold text-white"
+                                        className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-1.5 py-0 text-center text-[6.5px] font-extrabold text-white"
                                         style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
                                       >
                                         <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
                                           ♫ {ytClip.title}
                                         </span>
-                                        <Play className="h-2.5 w-2.5 shrink-0 fill-white text-white" />
+                                        <Play className="h-2 w-2 shrink-0 fill-white text-white" />
                                       </button>
                                     )}
                                   </div>
@@ -937,7 +941,7 @@ export default function BlueprintPreviewSection() {
 
                             <div className="flex w-[104%] flex-col items-center">
                               <div
-                                className="flex h-1.5 w-full items-center justify-center rounded-b-lg border border-[#0A2B6D]"
+                                className="flex h-1 w-full items-center justify-center rounded-b-lg border border-[#0A2B6D]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               />
                             </div>

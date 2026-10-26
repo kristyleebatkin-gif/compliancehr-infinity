@@ -571,8 +571,8 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* 50% Smaller 8 Must-Have Pillars Grid — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Headers, White Box & Dark Blue Writing */}
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-center items-stretch">
+        {/* Reduced & Centred 8 Must-Have Pillars Grid — Pink/Blue/Purple Spray, App-Coloured Headers, White Box & Dark Blue Writing */}
+        <div className="mx-auto grid w-full grid-cols-2 sm:grid-cols-4 gap-1.5 text-center items-stretch justify-center">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
             const ipadBorder = getAppBorderView(pIdx);
@@ -580,73 +580,52 @@ export default function MustHaveFunctionsReview() {
             return (
               <div
                 key={pillar.id}
-                className="flex h-full flex-col justify-between rounded-[16px] border-[3px] bg-[#0A2B6D] p-1.5 shadow-md"
+                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl border-2 bg-[#0A2B6D] p-1 shadow-2xs text-center"
                 style={{ borderColor: ipadBorder }}
               >
                 {/* Top iPad Camera & Status Bar */}
-                <div className="mb-1 flex h-[14px] items-center justify-between px-1.5">
-                  <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
+                <div className="mb-0.5 flex h-[12px] items-center justify-between px-1">
+                  <span className="flex items-center gap-1 text-[6.5px] font-extrabold uppercase tracking-wider text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                    iPad Pro · Pillar 0{pIdx + 1}
+                    iPad · Pillar 0{pIdx + 1}
                   </span>
-                  <div className="flex items-center gap-1">
-                    <span className="text-[7px] font-extrabold text-white/85">5G · 100%</span>
-                    <span className="h-1.5 w-2.5 rounded-xs border border-white bg-[#10B981]" />
-                  </div>
+                  <span className="text-[6.5px] font-extrabold text-white/85">5G · 100%</span>
                 </div>
 
-                {/* Inner iPad Retina Screen — Pink/Blue/Purple Spray Between Outer & Title Borders */}
+                {/* Inner iPad Retina Screen — Minimised & Centred */}
                 <div
-                  className="flex flex-1 rounded-[12px] p-[2px] shadow-inner"
+                  className="flex flex-1 rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full flex-col justify-between rounded-[10px] p-1.5 space-y-1"
+                    className="flex h-full w-full flex-col items-center justify-between rounded-[7px] p-1 space-y-0.5 text-center"
                     style={{ background: sprayBg }}
                   >
-                    <div className="flex flex-1 flex-col justify-between space-y-1">
-                      <div className="space-y-1">
-                        {/* App-Coloured Pillar Badge Bar */}
-                        <span
-                          className="gradient-brand inline-flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
-                          style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                        >
-                          <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                          <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
+                    <div className="flex w-full flex-1 flex-col items-center justify-between space-y-0.5 text-center">
+                      {/* App-Coloured Pillar Header Bar */}
+                      <div
+                        className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-white"
+                        style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
+                      >
+                        <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                        <span className="text-center text-white" style={{ color: '#FFFFFF' }}>
+                          {pillar.title}
                         </span>
-
-                        {/* App-Coloured Header for Pillar Title + White Dark-Blue Subtitle Box */}
-                        <div
-                          className="w-full rounded-lg p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="overflow-hidden rounded-[6px] bg-white">
-                            <div
-                              className="gradient-brand px-2 py-1 text-center text-[9px] font-extrabold leading-tight text-white"
-                              style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
-                            >
-                              <span style={{ color: '#FFFFFF' }}>{pillar.title}</span>
-                            </div>
-                            <div className="bg-white px-2 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                              {pillar.subtitle}
-                            </div>
-                          </div>
-                        </div>
                       </div>
 
-                      {/* 6 Compact Bullet Rows Framed in App-Design Border With White Background & Dark Blue Writing */}
-                      <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1">
-                        {pillar.items.map((item, iIdx) => {
+                      {/* 4 Centred Compact Bullet Rows With White Background & Dark Blue Writing */}
+                      <ul className="grid w-full flex-1 grid-cols-1 grid-rows-4 gap-0.5 text-center">
+                        {pillar.items.slice(0, 4).map((item, iIdx) => {
                           const idx = pIdx * 3 + iIdx;
                           return (
                             <li
                               key={item}
-                              className="flex min-h-[26px] rounded-lg p-[1.5px] shadow-2xs"
+                              className="flex min-h-[20px] rounded p-[1px]"
                               style={{ background: getHeaderView(idx) }}
                             >
-                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                                <span className="flex-1 text-center text-[#0A2B6D]">
+                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1 py-0.5 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
+                                <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                                <span className="flex-1 text-center text-[#0A2B6D] line-clamp-1">
                                   {item}
                                 </span>
                               </div>
@@ -656,18 +635,18 @@ export default function MustHaveFunctionsReview() {
                       </ul>
                     </div>
 
-                    {/* 50% Smaller Footer Bar Framed in App-Design Colour */}
+                    {/* Minimised Centred Footer Bar */}
                     <div
-                      className="rounded-full p-[1.5px]"
+                      className="w-full rounded-full p-[1px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-[22px] items-center justify-between rounded-full bg-white px-2 py-0.5">
-                        <span className="text-[8px] font-extrabold text-[#0A2B6D]">
-                          From $760/mo Plan
+                      <div className="flex h-[18px] items-center justify-between rounded-full bg-white px-1.5">
+                        <span className="text-[7px] font-extrabold text-[#0A2B6D]">
+                          $760/mo
                         </span>
                         <Link
                           to="/register"
-                          className="gradient-brand inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] px-2 py-0 text-[8px] font-extrabold text-white"
+                          className="gradient-brand inline-flex items-center gap-0.5 rounded-full px-1.5 py-0 text-[7px] font-extrabold text-white"
                           style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>Activate</span>
@@ -676,11 +655,6 @@ export default function MustHaveFunctionsReview() {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                {/* Bottom iPad Home Indicator Bar */}
-                <div className="mt-1 flex h-[6px] items-center justify-center">
-                  <span className="h-1 w-10 rounded-full bg-white/80" />
                 </div>
               </div>
             );

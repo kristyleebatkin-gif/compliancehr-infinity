@@ -619,8 +619,8 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             </div>
           </div>
 
-          {/* 8 Group Filter Tiles Under Search — Help Tile Replaced With Money Tile, App-Coloured Background & White Writing */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+          {/* Smaller 8 Group Filter Buttons Under Search */}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-1">
             {[
               'All',
               'Overview',
@@ -635,8 +635,8 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               return (
                 <div
                   key={grp}
-                  className={`rounded-full p-[2.5px] shadow-2xs transition-all ${
-                    active ? 'ring-2 ring-[#0A2B6D] scale-[1.02]' : ''
+                  className={`rounded-full p-[1.5px] shadow-2xs transition-all ${
+                    active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
                   style={{
                     background:
@@ -646,10 +646,10 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   <button
                     type="button"
                     onClick={() => setSelectedGroup(grp)}
-                    className="gradient-brand flex h-[38px] w-full items-center justify-center rounded-full px-3 text-center text-xs font-extrabold text-white transition-all hover:opacity-95"
+                    className="gradient-brand flex h-[22px] w-full items-center justify-center rounded-full px-1.5 text-center text-[8.5px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
-                    <span className="text-center font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    <span className="truncate text-center font-extrabold text-white" style={{ color: '#FFFFFF' }}>
                       {grp}
                     </span>
                   </button>
@@ -831,69 +831,68 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               }}
             >
               <div
-                className="flex h-full w-full flex-col justify-between gap-1 overflow-hidden rounded-[10px] p-1.5 text-center"
+                className="flex h-full w-full flex-col justify-between gap-0.5 overflow-hidden rounded-[8px] p-1 text-center"
                 style={{ background: sprayBg }}
               >
                 {/* Section 1: 50% Smaller App-Coloured Header Bar */}
                 <div
-                  className="gradient-brand flex min-h-[26px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
+                  className="gradient-brand flex h-[20px] w-full items-center justify-between gap-1 rounded px-1.5 text-white"
                   style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                 >
-                  <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                    <span>#{index + 1} · {mod.label}</span>
+                  <span className="inline-flex items-center gap-0.5 text-[7px] font-extrabold text-white truncate" style={{ color: '#FFFFFF' }}>
+                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="truncate">#{index + 1} {mod.label}</span>
                   </span>
                   <Link
                     to={mod.path}
-                    className="inline-flex shrink-0 items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
+                    className="inline-flex shrink-0 items-center justify-center gap-0.5 rounded-full bg-white px-1 py-0 text-[6px] font-extrabold text-[#0A2B6D]"
                   >
-                    Open <ExternalLink className="h-2 w-2 text-[#0A2B6D]" />
+                    Open
                   </Link>
                 </div>
 
-                {/* Section 2: White Box Framed in App-Design Border With Dark Blue Writing */}
+                {/* Section 2: White Box With Dark Blue Writing */}
                 <div
-                  className="w-full rounded-lg p-[1.5px]"
+                  className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
-                    <span className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                  <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
+                    <span className="truncate text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                       {bp.smartDoc2026}
                     </span>
                   </div>
                 </div>
 
-                {/* Section 3: Compact Live Maintenance Tracker */}
+                {/* Section 3: Assets Centred Above Live Compliance Tracker */}
                 <div
-                  className="w-full rounded-lg p-[1.5px]"
+                  className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index + 1) }}
                 >
                   <Link
                     to="/assets"
-                    className="flex items-center justify-between gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center"
+                    className="flex flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center"
                   >
-                    <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-[#0A2B6D]">
+                    <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">
+                      {maintenanceStats.assets} Assets Current
+                    </span>
+                    <span className="inline-flex items-center justify-center gap-0.5 text-[6.5px] font-extrabold text-[#0A2B6D]">
                       <span
                         className="h-1.5 w-1.5 rounded-full bg-[#10B981]"
-                        style={{ boxShadow: '0 0 6px 1px #10B981' }}
+                        style={{ boxShadow: '0 0 5px 1px #10B981' }}
                       />
-                      <span>Maintenance 100%</span>
-                    </span>
-                    <span className="text-[7px] font-extrabold text-[#0A2B6D]">
-                      {maintenanceStats.assets} Assets
+                      <span>Live Compliance Tracker</span>
                     </span>
                   </Link>
                 </div>
 
-                {/* Section 4: 50% Smaller Bottom Action Buttons (Doc, Task, Done) */}
-                <div className="grid grid-cols-3 gap-1">
+                {/* Section 4: 50% Smaller Bottom Action Buttons */}
+                <div className="grid grid-cols-3 gap-0.5">
                   <button
                     type="button"
                     onClick={() => openSmartFillDoc(mod)}
-                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[6.5px] font-extrabold text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <Wand2 className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>Doc</span>
                   </button>
 
@@ -901,10 +900,9 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                     type="button"
                     disabled={creatingTaskKey === `${mod.key}-open`}
                     onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[6.5px] font-extrabold text-white"
                     style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
                   >
-                    <PlusCircle className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>Task</span>
                   </button>
 
@@ -912,10 +910,9 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                     type="button"
                     disabled={creatingTaskKey === `${mod.key}-done`}
                     onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[6.5px] font-extrabold text-white"
                     style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
                   >
-                    <CheckCircle2 className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>Done</span>
                   </button>
                 </div>

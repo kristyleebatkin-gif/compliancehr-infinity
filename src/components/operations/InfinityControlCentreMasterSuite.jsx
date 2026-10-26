@@ -774,36 +774,27 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </span>
                     </div>
 
-                    {/* 50% Smaller Label & Number Value With Pure White Background */}
+                    {/* 50% Smaller Label & Number Value With Pure White Background & Dark Blue Writing */}
                     <div
-                      className="w-full rounded-lg p-[1.5px]"
+                      className="w-full rounded p-[1px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div className="flex min-h-[30px] flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                        <span
-                          className="text-[8px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
-                          style={{ backgroundImage: getTitleGradientView(idx) }}
-                        >
+                      <div className="flex min-h-[24px] flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
+                        <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D] leading-tight">
                           {m.label}
                         </span>
-                        <div
-                          className="font-editorial text-xs font-extrabold leading-tight bg-clip-text text-transparent"
-                          style={{ backgroundImage: getTitleGradientView(idx + 1) }}
-                        >
+                        <div className="font-editorial text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
                           {m.value}
                         </div>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Sub-Label */}
+                    {/* 50% Smaller Sub-Label With Dark Blue Writing */}
                     <div
-                      className="w-full rounded-lg p-[1.5px]"
+                      className="w-full rounded p-[1px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
-                      <div
-                        className="flex min-h-[18px] items-center justify-center rounded-[6px] bg-white px-1.5 py-0 text-center text-[8px] font-extrabold leading-tight"
-                        style={{ color: getSymbolView(idx + 2).iconColor }}
-                      >
+                      <div className="flex min-h-[16px] items-center justify-center rounded-[3px] bg-white px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                         {m.sub}
                       </div>
                     </div>

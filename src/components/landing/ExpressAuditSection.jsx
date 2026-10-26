@@ -240,25 +240,23 @@ export default function ExpressAuditSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5">
-        {/* Heading Strictly in Two Lines + Black Subheading */}
+        {/* Smaller Heading Sized to Fit Cleanly in Space + Black Subheading */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
-            <h2 className="font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">
-              <span className="block sm:whitespace-nowrap">
-                <span className="text-[#0A2B6D]">From first question to </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  audit-ready report
-                </span>
-              </span>
-              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+          <div className="w-full rounded-[10px] bg-white px-3 py-2.5 sm:px-5 sm:py-3 text-center space-y-1">
+            <h2 className="font-editorial text-sm sm:text-lg md:text-xl lg:text-2xl font-extrabold tracking-tight leading-snug">
+              <span className="text-[#0A2B6D]">From first question to </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                audit-ready report
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                 in two minutes.
               </span>
             </h2>
             <p
-              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
+              className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug text-black"
               style={{ color: '#000000' }}
             >
               The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
@@ -268,51 +266,51 @@ export default function ExpressAuditSection() {
 
         {/* "See the Audit Engine" Above "The Two-Minute Express Audit" */}
         <div
-          className="w-full rounded-full p-[3px] shadow-sm"
+          className="w-full rounded-full p-[2px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <Link
             to="/compliance"
-            className="gradient-brand flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white transition-all hover:-translate-y-0.5"
+            className="gradient-brand flex min-h-[28px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[11px] font-extrabold tracking-wide text-white transition-all hover:-translate-y-0.5"
             style={{ background: getHeaderView(7), color: '#FFFFFF' }}
           >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+            <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+              <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>See the Audit Engine</span>
           </Link>
         </div>
 
-        {/* Stretched Banner — Sticky Notes & Flip All Squished Together on One Single Line */}
+        {/* Stretched Banner — Sticky Notes & Flip All Smaller & Centred in the Middle */}
         <div
-          className="w-full rounded-2xl p-[3px] shadow-sm"
+          className="w-full rounded-2xl p-[2.5px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[76px] w-full flex-col items-center justify-between gap-2 rounded-[13px] px-4 sm:px-6 py-2.5 text-white"
+            className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-1.5 rounded-[13px] px-3 sm:px-5 py-1.5 text-white"
             style={{ background: getHeaderView(6), color: '#FFFFFF' }}
           >
-            <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Timer className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            <div className="flex items-center justify-center gap-1.5 font-editorial text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <Timer className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>The Two-Minute Express Audit</span>
             </div>
-            <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
+            <div className="flex w-full flex-nowrap items-center justify-center gap-2">
               <div
-                className="inline-flex items-center gap-1 rounded-full border-2 border-white bg-white/20 px-2.5 py-0.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <Pin className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
               </div>
               <button
                 type="button"
                 onClick={cycleAllStepNotes}
-                className="inline-flex items-center gap-1 rounded-full border-2 border-white bg-white/20 px-2.5 py-0.5 text-[10px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <RefreshCw className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
               </button>
             </div>

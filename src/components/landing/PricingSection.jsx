@@ -151,23 +151,23 @@ export const COMPLIANCE_HR_PACKAGES = [
 export const CORE_PLATFORM_BENEFITS = [
   {
     icon: ShieldCheck,
-    title: 'Smart Enhanced All-In-One Elite Package',
-    desc: 'Every tier includes Elite Package Tokens valued at $160/mo (1,200 message credits & 50,000 integration credits), full access to all documents & support.',
+    title: 'Smart Enhanced Elite Pack & Safety Docs',
+    desc: 'Includes $160/mo Elite Tokens, 1,200 message & 50,000 integration credits, plus WHS, Risk, Incident, Medication, Waste, Support Plan & Infection Control docs.',
   },
   {
     icon: ClipboardCheck,
-    title: '$999 or $125/mo (24m Contract) · 100+ Docs',
-    desc: 'Full access to over 100 documents downloadable at any stage, tailored to Business Details (no payment plan on $999): WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training Modules, Consents, Intake Employee & Participant, Progress, Skill Assessments, Review, Conflict, Safe Meal Management, Policies, Procedures, Registers & Business Plans.',
+    title: '$999 Outright or $125/mo (24m) · 100+ Docs',
+    desc: 'Full access to 100+ documents downloadable at any stage & tailored to Business Details (no payment plan on $999): Continuity, Service Delivery & Safe Meal Management.',
   },
   {
     icon: Layers,
-    title: 'Full Access to All 46 Live App Modules',
-    desc: 'Switch seamlessly between the Enhanced Executive Office View and General Profile View with custom screen selectors.',
+    title: '46 Live Modules + HR, Intake & Policy Docs',
+    desc: 'Dual Office & Profile Views plus Staff Training, Consents, Employee & Participant Intake, Progress, Skills, Review, Policies, Procedures, Registers & Business Plans.',
   },
   {
     icon: Zap,
     title: '14-Day Free Trial & Dedicated Support',
-    desc: 'Experience full access to the ComplianceHR app, all documents, and dedicated compliance support from day one.',
+    desc: 'Experience full access to the ComplianceHR app, all 100+ tailored documents, and dedicated compliance support from day one.',
   },
   {
     icon: Lock,
@@ -177,7 +177,7 @@ export const CORE_PLATFORM_BENEFITS = [
   {
     icon: RefreshCw,
     title: '50,000 Integration & 1,200 Message Credits',
-    desc: '50,000 integration credits and 1,200 message credits power automated NDIS timers, expiry scans, shift alerts, 30-action reports, and AI copilots.',
+    desc: 'Powers automated 24h/5d NDIS timers, expiry scans, shift alerts, 30-action PDF batch reports, and AI copilots.',
   },
 ];
 

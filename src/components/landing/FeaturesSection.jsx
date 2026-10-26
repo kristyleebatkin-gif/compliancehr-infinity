@@ -350,44 +350,39 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* Stretched Banner — Reduced Header, "12 Connected Engines" on Line 2, and Sticky Notes + Flip All Beside Each Other on One Line */}
+        {/* Stretched Banner — "12 Connected Engines" Beside "Latest Platform Capabilities" on Top Line + Sticky & Flip Smaller in Middle */}
         <div
-          className="w-full rounded-3xl p-[3px] shadow-sm"
+          className="w-full rounded-2xl p-[2.5px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[82px] w-full flex-col items-center justify-between gap-2 rounded-[21px] px-4 sm:px-6 py-2.5 text-center text-white"
+            className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-1.5 rounded-[14px] px-3 sm:px-5 py-1.5 text-center text-white"
             style={{ background: getHeaderView(5), color: '#FFFFFF' }}
           >
-            <div className="flex flex-col items-center justify-center leading-tight">
-              <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                  <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span className="text-center" style={{ color: '#FFFFFF' }}>
-                  Latest Platform Capabilities
-                </span>
-              </div>
-              <span className="mt-0.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                · 12 Connected Engines
+            <div className="flex items-center justify-center gap-1.5 font-editorial text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white whitespace-nowrap">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+              </span>
+              <span className="text-center whitespace-nowrap" style={{ color: '#FFFFFF' }}>
+                Latest Platform Capabilities · 12 Connected Engines
               </span>
             </div>
 
-            <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
+            <div className="flex w-full flex-nowrap items-center justify-center gap-2">
               <div
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <Pin className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
               </div>
               <button
                 type="button"
                 onClick={cycleAllNotes}
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <RefreshCw className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
               </button>
             </div>

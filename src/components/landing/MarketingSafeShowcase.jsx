@@ -442,12 +442,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex h-full w-full flex-col justify-between gap-1 rounded-[7px] p-1.5 text-center"
+                        className="grid h-full w-full grid-cols-1 grid-rows-[20px_42px_36px_1fr] gap-1 rounded-[7px] p-1.5 text-center"
                         style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
                       >
-                        {/* App-Design Coloured Flat Screen Reason Header Tile */}
+                        {/* Row 1: App-Design Coloured Flat Screen Reason Header Tile */}
                         <div
-                          className="gradient-brand relative flex min-h-[20px] w-full items-center justify-center rounded-full px-2 py-0.5 text-white"
+                          className="gradient-brand relative flex h-[20px] w-full items-center justify-center rounded-full px-2 text-white"
                           style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                         >
                           <span className="text-center text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
@@ -463,50 +463,50 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </button>
                         </div>
 
-                        {/* App-Design Coloured Flat Screen Title Header Tile */}
+                        {/* Row 2: App-Design Coloured Flat Screen Title Header Tile (Aligned Height) */}
                         <div
-                          className="w-full rounded-lg p-[1.5px]"
+                          className="flex h-[42px] w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="overflow-hidden rounded-[6px] bg-white">
+                          <div className="flex h-full w-full flex-col justify-between overflow-hidden rounded-[6px] bg-white">
                             <div
-                              className="gradient-brand flex items-center justify-center gap-1 px-2 py-1 text-center text-white"
+                              className="gradient-brand flex h-[22px] items-center justify-center gap-1 px-1.5 text-center text-white"
                               style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
                             >
-                              <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                              <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                              <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                              <span className="truncate text-[8px] font-extrabold leading-none text-white" style={{ color: '#FFFFFF' }}>
                                 {activeReason.title}
                               </span>
                             </div>
-                            <div className="bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                            <div className="flex h-[17px] items-center justify-center bg-white px-1 text-center text-[7px] font-extrabold text-[#0A2B6D] leading-none truncate">
                               {activeReason.sub}
                             </div>
                           </div>
                         </div>
 
-                        {/* Compact Summary Explanation Framed in App-Design Border */}
+                        {/* Row 3: Compact Summary Explanation Framed in App-Design Border (Aligned Height) */}
                         <div
-                          className="w-full rounded-lg p-[1.5px]"
+                          className="flex h-[36px] w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-1 text-center">
-                            <p className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                          <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                            <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                               {activeReason.detail}
                             </p>
                           </div>
                         </div>
 
-                        {/* 3 Compact Subscriber Proof Points — White Background & Dark Blue Writing */}
-                        <ul className="grid w-full grid-cols-1 grid-rows-3 gap-1 text-center">
+                        {/* Row 4: 3 Lined-Up Subscriber Proof Points — White Background & Dark Blue Writing */}
+                        <ul className="grid h-full w-full grid-cols-1 grid-rows-3 gap-1 text-center">
                           {activeReason.points.map((pt) => (
                             <li
                               key={pt}
-                              className="flex min-h-[22px] rounded-md p-[1.5px]"
+                              className="flex h-[24px] rounded-md p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                                <span className="text-center text-[#0A2B6D]">
+                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] bg-white px-1.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                                <span className="truncate text-center text-[#0A2B6D]">
                                   {pt}
                                 </span>
                               </div>
@@ -626,34 +626,30 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </button>
                             </div>
 
-                            {/* All 5 Package Benefits — Compact Rows */}
+                            {/* All 5 Package Benefits — Lined Up in Equal Rows With Dark Blue Writing */}
                             <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
                               {pack.bullets.map((line, idx) => {
-                                const sym = getSymbolView(pIdx * 3 + idx);
                                 const borderCol = getAppBorderView(pIdx * 3 + idx);
                                 const isCurrent = idx === activeBenefitIdx % 5;
                                 return (
                                   <li
                                     key={line}
                                     onClick={() => setActiveBenefitIdx(idx)}
-                                    className="flex min-h-[26px] cursor-pointer rounded-lg p-[1.5px] shadow-2xs transition-all"
+                                    className="flex h-[26px] cursor-pointer rounded-lg p-[1.5px] shadow-2xs transition-all"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
-                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 py-0.5 text-center ${
-                                        isCurrent ? 'bg-white ring-1 ring-[#FF2E9A]' : 'bg-white/95'
+                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 text-center ${
+                                        isCurrent ? 'bg-white ring-1 ring-[#FF2E9A]' : 'bg-white'
                                       }`}
                                     >
                                       <span
                                         className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <CheckCircle2 className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
+                                        <CheckCircle2 className="h-2.5 w-2.5 text-[#0A2B6D]" />
                                       </span>
-                                      <span
-                                        className="flex-1 text-center text-[8px] font-extrabold leading-tight"
-                                        style={{ color: sym.iconColor }}
-                                      >
+                                      <span className="flex-1 truncate text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                                         {line}
                                       </span>
                                     </div>
@@ -693,22 +689,22 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* 3. Compact Package Info & Prices Below TV — Bright Pink & White Spray + Compliance in Logo Colour + Outright on 2nd Line */}
+                    {/* 3. Lined-Up Package Info & Prices Below TV — Bright Pink & White Spray + Dark Blue Writing */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-xl p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex h-full w-full flex-col justify-between gap-1.5 rounded-[9px] p-2 text-center"
+                        className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] p-2 text-center"
                         style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                       >
-                        {/* Compact Price Box */}
+                        {/* Row 1: Aligned Price Box */}
                         <div
-                          className="w-full rounded-lg p-[1.5px] shadow-2xs"
+                          className="flex h-[64px] w-full rounded-lg p-[1.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center space-y-0.5">
-                            <div className="font-editorial text-xs font-extrabold uppercase tracking-wider">
+                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
+                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider">
                               <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                                 Compliance
                               </span>
@@ -721,69 +717,45 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 </span>
                               ) : null}
                             </div>
-                            <div className="flex flex-col items-center justify-center leading-tight">
-                              <div className="flex flex-wrap items-baseline justify-center gap-1">
-                                <span
-                                  className="font-editorial text-base sm:text-lg font-extrabold bg-clip-text text-transparent"
-                                  style={{ backgroundImage: getTitleGradientView(pIdx) }}
-                                >
-                                  {pack.priceMain}
-                                </span>
-                                {pack.id === 'pack-1' && (
-                                  <span
-                                    className="text-[9.5px] font-extrabold"
-                                    style={{ color: getSymbolView(pIdx + 2).iconColor }}
-                                  >
-                                    {pack.priceSuffix}
-                                  </span>
-                                )}
-                              </div>
-                              {pack.id === 'pack-2' && (
-                                <span
-                                  className="text-[9px] font-extrabold"
-                                  style={{ color: getSymbolView(pIdx + 2).iconColor }}
-                                >
-                                  Outright · {pack.priceSuffix}
-                                </span>
-                              )}
+                            <div className="flex flex-wrap items-baseline justify-center gap-1 leading-none">
+                              <span className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                                {pack.priceMain}
+                              </span>
+                              <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                                {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
+                              </span>
                             </div>
-                            <p
-                              className="text-center text-[8px] font-extrabold leading-tight"
-                              style={{ color: getSymbolView(pIdx + 1).iconColor }}
-                            >
+                            <p className="truncate text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                               {pack.subtitle}
                             </p>
                           </div>
                         </div>
 
-                        {/* Compact Important Info Header */}
+                        {/* Row 2: Aligned Important Info Header */}
                         <div
-                          className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-[8.5px] font-extrabold uppercase tracking-wider text-white"
+                          className="gradient-brand flex h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 text-center text-[8px] font-extrabold uppercase tracking-wider text-white"
                           style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
                         >
                           <CheckCircle2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                           <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                         </div>
 
-                        {/* 4 Compact Rows */}
+                        {/* Row 3: 4 Aligned Rows With Dark Blue Writing */}
                         <div className="grid grid-cols-1 grid-rows-4 gap-1">
-                          {pack.importantInfoRows.map((info, iIdx) => {
-                            const iSym = getSymbolView(pIdx + iIdx);
-                            return (
-                              <div
-                                key={info}
-                                className="flex min-h-[24px] rounded-lg p-[1.5px] shadow-2xs"
-                                style={{ background: TOP_BORDER_GRADIENT }}
-                              >
-                                <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold leading-tight">
-                                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: iSym.iconColor }} />
-                                  <span className="flex-1 text-center" style={{ color: iSym.iconColor }}>
-                                    {info}
-                                  </span>
-                                </div>
+                          {pack.importantInfoRows.map((info) => (
+                            <div
+                              key={info}
+                              className="flex h-[24px] rounded-lg p-[1.5px] shadow-2xs"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
+                              <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                                <span className="flex-1 truncate text-center text-[#0A2B6D]">
+                                  {info}
+                                </span>
                               </div>
-                            );
-                          })}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>

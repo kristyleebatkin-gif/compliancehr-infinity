@@ -744,70 +744,62 @@ export default function InfinityOneClickOperations({ compact = false }) {
               }}
             >
               <div
-                className="grid h-full w-full grid-cols-1 grid-rows-[22px_38px_40px_24px] gap-1 rounded-[9px] p-1.5 text-center"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="grid h-full w-full grid-cols-1 grid-rows-[18px_32px_32px_20px] gap-1 rounded-[9px] p-1 text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                }}
               >
-                {/* Section 1: 50% Smaller Header Pill With Glowing White Light & SYS READY */}
+                {/* Section 1: Reduced SYS READY Header Pill */}
                 <div
-                  className="gradient-brand flex h-[22px] w-full items-center justify-between gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider leading-none text-white whitespace-nowrap"
+                  className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded-full px-1.5 text-[7px] font-extrabold uppercase tracking-wider leading-none text-white whitespace-nowrap"
                   style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                 >
                   <span className="inline-flex items-center gap-1 truncate">
                     <span
-                      className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
-                      style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-white bg-white"
+                      style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
                     />
-                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                     <span className="truncate" style={{ color: '#FFFFFF' }}>
                       {op.code}
                     </span>
                   </span>
-                  <span
-                    className="rounded-full bg-white px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
-                  >
+                  <span className="rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold text-[#0A2B6D]">
                     SYS READY
                   </span>
                 </div>
 
-                {/* Section 2: 50% Smaller Centered Card Title Box With White Light */}
-                <div className="flex h-[38px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
+                {/* Section 2: Centered Card Title Box With Dark Blue Writing */}
+                <div className="flex h-[32px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
                   <div className="flex items-center justify-center gap-1 w-full">
                     <span
                       className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
                     />
-                    <h3
-                      className="font-editorial text-[8.5px] font-extrabold leading-tight bg-clip-text text-transparent text-center line-clamp-1"
-                      style={{ backgroundImage: getTitleGradientView(idx) }}
-                    >
+                    <h3 className="font-editorial text-[8px] font-extrabold leading-tight text-[#0A2B6D] text-center line-clamp-1">
                       {op.title}
                     </h3>
                   </div>
-                  <div
-                    className="text-center text-[7.5px] font-extrabold leading-tight line-clamp-1"
-                    style={{ color: sym.iconColor }}
-                  >
+                  <div className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-1">
                     {op.subtitle}
                   </div>
                 </div>
 
-                {/* Section 3: 50% Smaller Centered Description Box */}
-                <div className="flex h-[40px] w-full items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                  <p
-                    className="text-center text-[7.5px] font-bold leading-tight line-clamp-2"
-                    style={{ color: symSub.iconColor }}
-                  >
+                {/* Section 3: Centered Description Box With Dark Blue Writing */}
+                <div className="flex h-[32px] w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
+                  <p className="text-center text-[7px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
                     {op.description}
                   </p>
                 </div>
 
-                {/* Section 4: 50% Smaller Aligned Action Buttons Row */}
-                <div className="flex h-[24px] items-center justify-between gap-1 pt-0.5">
+                {/* Section 4: Compact Action Buttons Row */}
+                <div className="flex h-[20px] items-center justify-between gap-1">
                   <button
                     type="button"
                     onClick={() => runOperation(op)}
                     disabled={isRunning}
-                    className="gradient-brand inline-flex h-[20px] flex-1 items-center justify-center gap-1 rounded-full px-1.5 text-[7.5px] font-extrabold text-white shadow-2xs transition-transform active:scale-95 disabled:opacity-60 whitespace-nowrap"
+                    className="gradient-brand inline-flex h-[18px] flex-1 items-center justify-center gap-0.5 rounded-full px-1 text-[7px] font-extrabold text-white shadow-2xs whitespace-nowrap"
                     style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                   >
                     <Play
@@ -821,9 +813,8 @@ export default function InfinityOneClickOperations({ compact = false }) {
 
                   <Link
                     to={op.link}
-                    className="gradient-brand inline-flex h-[20px] shrink-0 items-center justify-center gap-0.5 rounded-full px-1.5 text-[7.5px] font-extrabold text-white"
+                    className="gradient-brand inline-flex h-[18px] shrink-0 items-center justify-center gap-0.5 rounded-full px-1.5 text-[7px] font-extrabold text-white"
                     style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
-                    title="Open connected register"
                   >
                     <span style={{ color: '#FFFFFF' }}>Open</span>
                     <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
@@ -835,101 +826,84 @@ export default function InfinityOneClickOperations({ compact = false }) {
         })}
       </div>
 
-      {/* 5. 50% Smaller Live Executive One-Click Execution Log With Glowing White Lights on Titles & SYS READY */}
+      {/* 5. Reduced Live Executive One-Click Execution Log With Dark Blue Writing & Glowing White Lights */}
       <div
-        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+        className="w-full rounded-xl p-[2px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[9px] bg-white p-2 space-y-1.5 text-center">
+        <div className="rounded-[9px] bg-white p-1.5 space-y-1 text-center">
           <div
-            className="w-full rounded-xl p-[2px] shadow-2xs"
+            className="w-full rounded-lg p-[1.5px] shadow-2xs"
             style={{
               background: TOP_BORDER_GRADIENT,
-              boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96)',
+              boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.95)',
             }}
           >
             <div
-              className="gradient-brand flex min-h-[30px] flex-wrap items-center justify-center gap-2 rounded-[9px] px-3 py-1 text-center text-white"
+              className="gradient-brand flex min-h-[24px] flex-wrap items-center justify-center gap-1.5 rounded-[7px] px-2.5 py-0.5 text-center text-white"
               style={{ background: getHeaderView(2), color: '#FFFFFF' }}
             >
               <span
-                className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
-                style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 16px 4px #00C6FF' }}
+                className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
               />
-              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <CheckCircle2 className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
               <span
-                className="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white"
+                className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide text-white"
                 style={{ color: '#FFFFFF' }}
               >
                 LIVE EXECUTIVE 1-CLICK EXECUTION AUDIT TRAIL ({executionLog.length} EVENTS) · SYS READY
               </span>
               <span
-                className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
-                style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 16px 4px #00C6FF' }}
+                className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 items-stretch">
-            {executionLog.slice(0, compact ? 2 : 4).map((entry, eIdx) => {
-              const eSym = getSymbolView(eIdx);
-              return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1 items-stretch">
+            {executionLog.slice(0, compact ? 2 : 4).map((entry, eIdx) => (
+              <div
+                key={entry.id}
+                className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
                 <div
-                  key={entry.id}
-                  className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                  className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[7px] p-1 text-center"
                   style={{
-                    background: TOP_BORDER_GRADIENT,
-                    boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.92)',
+                    background:
+                      'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
                   }}
                 >
+                  {/* Top App-Coloured Header Bar */}
                   <div
-                    className="flex h-full w-full flex-col justify-between gap-1 rounded-[9px] p-1.5 text-center"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                    className="gradient-brand flex items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
+                    style={{ background: getHeaderView(eIdx), color: '#FFFFFF' }}
                   >
-                    {/* Top Row With Glowing White Lights on OPS-SYS-READY & Timestamp */}
-                    <div className="flex items-center justify-between gap-1.5 rounded-full bg-white px-2 py-0.5">
-                      <span className="inline-flex items-center gap-1 text-[8px] font-extrabold" style={{ color: eSym.iconColor }}>
-                        <span
-                          className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                          style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
-                        />
-                        <span>{entry.code} · SYS READY</span>
-                      </span>
+                    <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
                       <span
-                        className="font-mono text-[8px] font-extrabold"
-                        style={{ color: getSymbolView(eIdx + 1).iconColor }}
-                      >
-                        {entry.time}
-                      </span>
-                    </div>
-
-                    {/* Title Box With Glowing White Light */}
-                    <div className="flex items-center justify-center gap-1 rounded-[6px] bg-white px-2 py-0.5 text-center">
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
+                        className="h-1.5 w-1.5 shrink-0 rounded-full bg-white"
+                        style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
                       />
-                      <span
-                        className="text-[9px] font-extrabold bg-clip-text text-transparent"
-                        style={{ backgroundImage: getTitleGradientView(eIdx) }}
-                      >
-                        {entry.pillar} · {entry.title}
-                      </span>
-                    </div>
+                      <span>{entry.code} · SYS READY</span>
+                    </span>
+                    <span className="font-mono text-[7px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                      {entry.time}
+                    </span>
+                  </div>
 
-                    {/* Detail Box */}
-                    <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
-                      <p
-                        className="text-center text-[8px] font-bold leading-tight"
-                        style={{ color: eSym.iconColor }}
-                      >
-                        {entry.detail}
-                      </p>
+                  {/* White Box With Dark Blue Writing */}
+                  <div className="rounded bg-white px-2 py-0.5 text-center">
+                    <div className="text-[8px] font-extrabold text-[#0A2B6D]">
+                      {entry.pillar} · {entry.title}
                     </div>
+                    <p className="text-center text-[7.5px] font-bold leading-tight text-[#0A2B6D]">
+                      {entry.detail}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>
