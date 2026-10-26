@@ -66,44 +66,28 @@ export default function LandingFooter() {
           }}
         >
           <div className="flex flex-col items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-center">
-            {/* One Logo Above App Name (Big Enough to See) + Centred App Name + Slogan Directly Under App Name (With App-Coloured Borders Restored) */}
+            {/* One Logo Above App Name (Big Enough to See) + Centred App Name + Slogan Directly Under App Name (Inner Borders Removed) */}
             <Link to="/" className="flex flex-col items-center justify-center text-center">
-              <div
-                className="flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-2xl p-[3px] shadow-md"
-                style={{
-                  background:
-                    'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
-                }}
-              >
-                <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[13px] bg-white p-0.5">
-                  <Image
-                    src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                    alt="ComplianceHR Infinity logo"
-                    className="h-full w-full object-contain"
-                    fittingType="fit"
-                  />
-                </div>
+              <div className="flex h-28 w-28 sm:h-36 sm:w-36 items-center justify-center bg-white">
+                <Image
+                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                  alt="ComplianceHR Infinity logo"
+                  className="h-full w-full object-contain"
+                  fittingType="fit"
+                />
               </div>
 
-              <div
-                className="mt-2 inline-flex items-center justify-center rounded-2xl p-[3px] shadow-sm"
-                style={{
-                  background:
-                    'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
-                }}
-              >
-                <span className="rounded-[13px] bg-white px-4 sm:px-5 py-1.5 font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
-                  Compliance
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    HR
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Infinity
-                  </span>
+              <span className="mt-1 bg-white px-2 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
+                Compliance
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  HR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
                 </span>
-              </div>
+              </span>
 
-              <div className="mt-1.5 rounded-full bg-white px-3 py-0.5 text-xs sm:text-sm font-extrabold tracking-wide">
+              <div className="mt-1.5 bg-white px-2 text-xs sm:text-sm font-extrabold tracking-wide">
                 <span className="text-[#0072FF]">Complete Control.</span>{' '}
                 <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -111,7 +95,7 @@ export default function LandingFooter() {
             </Link>
 
             {/* NDIS & Aged care Documentation & Compliance Placed Just Above Open, Landing and Signed In (Just Smaller) */}
-            <div className="flex w-full flex-col items-center justify-center gap-1.5 border-t border-[#0A2B6D]/20 pt-2">
+            <div className="flex w-full flex-col items-center justify-center gap-1.5 pt-1">
               <span
                 className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
                 style={{
