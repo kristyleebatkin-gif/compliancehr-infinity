@@ -13,6 +13,7 @@ import {
   Send,
   Share2,
   Sparkles,
+  Tablet,
   Timer,
   Upload,
   Vault,
@@ -92,10 +93,10 @@ export default function ExpressAuditSection() {
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5">
         {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
+          <div className="w-full rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
             <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
               <span className="text-[#0A2B6D]">From first question to </span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -111,30 +112,40 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* "See the Audit Engine" Above "The Two-Minute Express Audit" — Just Smaller in Height/Size, Same Full Length */}
-        <Link
-          to="/compliance"
-          className="flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white shadow-sm transition-all hover:-translate-y-0.5"
-          style={{ background: getHeaderView(7) }}
+        {/* "See the Audit Engine" Above "The Two-Minute Express Audit" */}
+        <div
+          className="w-full rounded-full p-[3px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <ArrowRight className="h-3 w-3 text-white" />
-          </span>
-          <span className="text-center">See the Audit Engine</span>
-        </Link>
+          <Link
+            to="/compliance"
+            className="gradient-brand flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white transition-all hover:-translate-y-0.5"
+            style={{ background: getHeaderView(7), color: '#FFFFFF' }}
+          >
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>See the Audit Engine</span>
+          </Link>
+        </div>
 
         {/* Stretched Side-to-Side "The Two-Minute Express Audit" Underneath */}
         <div
-          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(6) }}
+          className="w-full rounded-full p-[3px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Timer className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">The Two-Minute Express Audit</span>
+          <div
+            className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            style={{ background: getHeaderView(6), color: '#FFFFFF' }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Timer className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>The Two-Minute Express Audit</span>
+          </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles — White Background, App Design Coloured Borders, Dark Blue Writing & Symbols */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — Styled as Compact iPad Screens */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -146,19 +157,39 @@ export default function ExpressAuditSection() {
               return (
                 <div
                   key={v.label}
-                  className="rounded-full p-[2.5px] shadow-sm"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex flex-col justify-between rounded-2xl border-[2.5px] bg-[#0A2B6D] p-1.5 shadow-sm"
+                  style={{ borderColor: borderCol }}
                 >
-                  <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-full bg-white px-2.5 py-1.5 text-center text-[#0A2B6D]">
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                      style={{ borderColor: borderCol }}
-                    >
-                      <Icon className="h-3.5 w-3.5 text-[#0A2B6D]" />
+                  {/* Top iPad Camera Dot */}
+                  <div className="mb-1 flex items-center justify-between px-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+                    <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white/90">
+                      iPad
                     </span>
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      {v.label}
-                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                  </div>
+
+                  {/* Inner iPad Display */}
+                  <div
+                    className="rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2 py-1.5 text-center text-[#0A2B6D]">
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                        style={{ borderColor: borderCol }}
+                      >
+                        <Icon className="h-3.5 w-3.5 text-[#0A2B6D]" />
+                      </span>
+                      <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        {v.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom iPad Home Indicator */}
+                  <div className="mt-1 flex justify-center">
+                    <span className="h-1 w-6 rounded-full bg-white/80" />
                   </div>
                 </div>
               );
@@ -166,8 +197,8 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Tiles Above Steps — Pink, Purple & Blue Spray Background with App Design Coloured Border */}
-        <div className="grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4 text-left">
+        {/* 2. Top 4 Tiles Above Steps — Styled as Full iPad Screens */}
+        <div className="grid w-full gap-3.5 sm:grid-cols-2 lg:grid-cols-4 text-left items-stretch">
           {PROOF.map(({ icon: Icon, text }, idx) => {
             const sym = getSymbolView(idx + 3);
             const borderCol = getAppBorderView(idx + 3);
@@ -175,22 +206,46 @@ export default function ExpressAuditSection() {
             return (
               <div
                 key={text}
-                className="flex h-full rounded-2xl p-[3px] shadow-sm"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="flex h-full flex-col justify-between rounded-[22px] border-[3.5px] bg-[#0A2B6D] p-2.5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                style={{ borderColor: borderCol }}
               >
+                {/* Top iPad Bezel Bar & Camera */}
+                <div className="mb-1.5 flex items-center justify-between px-2">
+                  <span className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+                    <Tablet className="h-3 w-3 text-[#00C6FF]" />
+                    iPad Screen 0{idx + 1}
+                  </span>
+                  <span className="h-2 w-2 rounded-full bg-white/80 ring-2 ring-[#00C6FF]/50" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[8.5px] font-extrabold text-white">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                    AUDIT READY
+                  </span>
+                </div>
+
+                {/* Inner iPad Screen */}
                 <div
-                  className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-4 py-3 text-[#0A2B6D]"
-                  style={{ background: sprayBg }}
+                  className="flex flex-1 rounded-2xl p-[2.5px]"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <span
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                    style={{ borderColor: borderCol }}
+                  <div
+                    className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-3.5 py-3 text-[#0A2B6D]"
+                    style={{ background: sprayBg }}
                   >
-                    <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                  </span>
-                  <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
-                    {text}
-                  </span>
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      style={{ borderColor: borderCol }}
+                    >
+                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                      {text}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Bottom iPad Home Bar */}
+                <div className="mt-1.5 flex justify-center">
+                  <span className="h-1 w-12 rounded-full bg-white/80" />
                 </div>
               </div>
             );
