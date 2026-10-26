@@ -12,9 +12,6 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-const PINK_BLUE_PURPLE_SPRAY =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF';
-
 const STATS = [
   { value: `${MODULE_DIRECTORY.length}`, label: 'Connected Modules' },
   { value: '2 min', label: 'Express Internal Audits' },
@@ -72,7 +69,7 @@ export default function LandingHero() {
       >
         <div
           className="flex w-full flex-col items-center justify-center rounded-[16px] px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4"
-          style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+          style={{ background: '#FFFFFF' }}
         >
           {/* Enlarged Compliance Management Title & Dark Blue Paragraph + App-Coloured Outline Under Words */}
           <div
@@ -161,7 +158,7 @@ export default function LandingHero() {
             </Link>
           </div>
 
-          {/* 4 Small Stat Tiles — Pink/Blue/Purple Spray Between Borders & White Inside Writing Areas */}
+          {/* 4 Small Stat Tiles — Brand Gradient Borders & White Backgrounds */}
           <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4 items-stretch">
             {STATS.map((stat, index) => (
               <Reveal
@@ -172,7 +169,7 @@ export default function LandingHero() {
               >
                 <div
                   className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] p-1 text-center"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                  style={{ background: '#FFFFFF' }}
                 >
                   <div
                     className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-2 text-white"
@@ -196,7 +193,7 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Minimised Pillar Tiles — Pink/Blue/Purple Spray Between Borders & White Inside Writing Areas */}
+          {/* 3 Minimised Pillar Tiles — Brand Gradient Borders & White Backgrounds */}
           <div className="grid w-full gap-1.5 text-center md:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => (
               <Reveal
@@ -207,7 +204,7 @@ export default function LandingHero() {
               >
                 <div
                   className="flex h-full flex-1 flex-col justify-between rounded-[9px] p-1 space-y-1"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                  style={{ background: '#FFFFFF' }}
                 >
                   {/* App-Coloured Pillar Header Tile */}
                   <div
