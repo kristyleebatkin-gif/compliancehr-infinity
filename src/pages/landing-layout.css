@@ -32,3 +32,14 @@
 @media (prefers-reduced-motion: reduce) {
   .landing-page *, .landing-page *::before, .landing-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+/* Give the opening section a clear business hierarchy. */
+.landing-page .landing-hero > div { padding: 3px; box-shadow: 0 8px 28px #A100FF12; }
+.landing-page .landing-hero > div > div { padding: clamp(1rem, 3vw, 2.5rem); gap: 1.5rem; }
+.landing-page .landing-hero h1 { font-family: inherit; font-size: clamp(1.875rem, 4.5vw, 3.75rem); line-height: 1.15; }
+.landing-page .landing-hero h1 + div p { font-size: 1rem; line-height: 1.75; font-weight: 500; padding: 1rem; }
+.landing-page .landing-hero ul { gap: .5rem; }
+.landing-page .landing-hero ul li > div { justify-content: flex-start; text-align: left; gap: .5rem; }
+.landing-page .landing-hero ul svg { width: 16px; height: 16px; }
+.landing-page .landing-hero [class*="md:grid-cols-3"] { gap: 1rem; }
+.landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child { padding: .5rem; }
+.landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child span { font-size: 1.5rem; }
