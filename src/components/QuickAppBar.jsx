@@ -8,19 +8,22 @@ import {
   CalendarClock, Target, GraduationCap, Briefcase,
 } from 'lucide-react';
 
-// Mixed-up full-colour palette so adjacent buttons never share the same background
-const MIXED_FULL_COLOURS = [
-  { bg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #FF2E9A 0%, #A100FF 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)', text: '#0A2B6D' },
-  { bg: 'linear-gradient(135deg, #5A00D6 0%, #A100FF 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #0A2B6D 0%, #5A00D6 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #A100FF 0%, #FF2E9A 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #FF6EDB 0%, #FF2E9A 100%)', text: '#0A2B6D' },
-  { bg: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)', text: '#ffffff' },
+// Mixed-up vibrant app colours for icon badges & top borders — while text always sits on a crisp WHITE background!
+const MIXED_COLOURS = [
+  '#0072FF',
+  '#FF2E9A',
+  '#5A00D6',
+  '#00C6FF',
+  '#A100FF',
+  '#0A2B6D',
+  '#FF6EDB',
+  '#0072FF',
+  '#5A00D6',
+  '#FF2E9A',
+  '#A100FF',
+  '#00C6FF',
 ];
 
-// 18 Quick Links (3 rows of 6 on each line), each in mixed full colour!
 const QUICK_LINKS = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles },
@@ -59,66 +62,76 @@ export default function QuickAppBar() {
           'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 38%, #A100FF 60%, #FF2E9A 82%, #0072FF 100%)',
       }}
     >
-      <div className="mx-auto max-w-7xl px-3 py-2 md:px-6">
-        <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white/95 p-2.5 shadow-md ring-2 ring-[#00C6FF] space-y-2">
-          {/* Top Control Row: Landing Page BEFORE Quick App Bar Icon + All 46 Modules Icon Beside It */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D]/20 pb-2">
+      <div className="w-full px-[0.5cm] py-2">
+        <div
+          className="rounded-2xl border-2 border-[#0A2B6D] p-2.5 shadow-md ring-2 ring-[#00C6FF] space-y-2"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(0,114,255,0.22) 0%, rgba(90,0,214,0.25) 50%, rgba(255,46,154,0.22) 100%)',
+          }}
+        >
+          {/* Top Control Row: Landing Page BEFORE Quick App Bar Icon + All 46 Modules Beside It */}
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-2xs">
             <div className="flex flex-wrap items-center gap-2">
-              {/* Landing Page placed right BEFORE Quick App Bar icon */}
               <Link
                 to="/"
                 onClick={() => setShowAllModules(false)}
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-gradient-to-r from-[#FF2E9A] via-[#A100FF] to-[#5A00D6] px-3 py-1 text-xs font-extrabold text-white shadow-sm ring-2 ring-[#FF6EDB] transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#FF2E9A] transition-transform hover:-translate-y-0.5 hover:bg-[#FFF0F8]"
               >
-                <Home className="h-3.5 w-3.5 text-white" />
-                Landing Page
+                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#FF2E9A] text-white">
+                  <Home className="h-3.5 w-3.5 text-white" />
+                </span>
+                <span>Landing Page</span>
               </Link>
 
-              <span
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white shadow-sm"
-                style={{ background: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)' }}
-              >
-                <Compass className="h-3.5 w-3.5 text-[#00C6FF]" />
-                Quick App Bar
+              <span className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
+                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#0072FF] text-white">
+                  <Compass className="h-3.5 w-3.5 text-white" />
+                </span>
+                <span>Quick App Bar</span>
               </span>
 
               <button
                 type="button"
                 onClick={() => setShowAllModules((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold text-white shadow-sm transition-transform hover:-translate-y-0.5"
-                style={{ background: 'linear-gradient(120deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)' }}
+                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
               >
-                <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
-                All {MODULE_DIRECTORY.length} Modules
-                {showAllModules ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#5A00D6] text-white">
+                  <Sparkles className="h-3.5 w-3.5 text-white" />
+                </span>
+                <span>All {MODULE_DIRECTORY.length} Modules</span>
+                {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-[#0A2B6D]" /> : <ChevronDown className="h-3.5 w-3.5 text-[#0A2B6D]" />}
               </button>
             </div>
 
-            <span className="rounded-full border border-[#0A2B6D] bg-[#F5F0FF] px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
-              6 Per Line · Full Mixed App Colours
+            <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+              6 Per Line · Full Mixed App Colours · Crisp White Labels
             </span>
           </div>
 
-          {/* 6-Per-Line Grid of Quick App Links in Mixed Full Colours */}
+          {/* 6-Per-Line Grid of Quick App Links — Mixed Full-Colour Badges + Crisp White Background Behind Dark Blue Text */}
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
               const Icon = item.icon;
-              const palette = MIXED_FULL_COLOURS[idx % MIXED_FULL_COLOURS.length];
+              const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setShowAllModules(false)}
-                  className={`flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-[10.5px] font-extrabold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
-                    active ? 'ring-2 ring-[#00C6FF]' : ''
+                  className={`flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
+                    active ? 'ring-2 ring-[#FF2E9A]' : ''
                   }`}
-                  style={{ background: palette.bg, color: palette.text }}
+                  style={{ borderTopWidth: '4px', borderTopColor: accent }}
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-white/50 bg-black/20 text-white shadow-2xs">
-                    <Icon className="h-3 w-3 text-white" />
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-2xs"
+                    style={{ backgroundColor: accent }}
+                  >
+                    <Icon className="h-3.5 w-3.5 text-white" />
                   </span>
-                  <span className="min-w-0 flex-1 leading-tight" style={{ color: palette.text }}>
+                  <span className="min-w-0 flex-1 rounded bg-white px-1 leading-tight text-[#0A2B6D]">
                     {item.label}
                   </span>
                 </Link>
@@ -127,14 +140,11 @@ export default function QuickAppBar() {
           </div>
         </div>
 
-        {/* All 46 Actual App Modules Drawer — 6 on Each Line in Mixed Full Colours */}
+        {/* All 46 Actual App Modules Drawer — 6 on Each Line with Crisp White Background Behind Dark Blue Text */}
         {showAllModules && (
           <div className="mt-2 max-h-[72vh] overflow-y-auto rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-xl">
-            <div
-              className="mb-2.5 flex items-center justify-between rounded-xl border-2 border-[#0A2B6D] px-3 py-2 text-white"
-              style={{ background: 'var(--header-gradient)' }}
-            >
-              <div className="text-xs font-extrabold uppercase tracking-wider text-white">
+            <div className="mb-2.5 flex items-center justify-between rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3 py-2">
+              <div className="rounded bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 All {MODULE_DIRECTORY.length} Actual App Modules (6 Per Line · Full Mixed Colours)
               </div>
               <button
@@ -149,19 +159,22 @@ export default function QuickAppBar() {
             <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
               {MODULE_DIRECTORY.map((mod, idx) => {
                 const Icon = mod.icon;
-                const palette = MIXED_FULL_COLOURS[idx % MIXED_FULL_COLOURS.length];
+                const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
                 return (
                   <Link
                     key={mod.key}
                     to={mod.path}
                     onClick={() => setShowAllModules(false)}
-                    className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-[10.5px] font-extrabold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                    style={{ background: palette.bg, color: palette.text }}
+                    className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                    style={{ borderTopWidth: '4px', borderTopColor: accent }}
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white/50 bg-black/20 text-white shadow-2xs">
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-2xs"
+                      style={{ backgroundColor: accent }}
+                    >
                       <Icon className="h-3.5 w-3.5 text-white" />
                     </span>
-                    <span className="min-w-0 flex-1 leading-tight" style={{ color: palette.text }}>
+                    <span className="min-w-0 flex-1 rounded bg-white px-1 leading-tight text-[#0A2B6D]">
                       {mod.label}
                     </span>
                   </Link>

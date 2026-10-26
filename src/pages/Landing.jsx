@@ -26,30 +26,32 @@ export default function Landing() {
       {/* Top Navigation with App-Coloured Background to Page Edges, Longer Brand Name, 6-Per-Line Full-Colour Features & Quick App Bar */}
       <LandingNav />
 
-      <main className="relative z-10 space-y-5 px-2 pb-8 pt-2 sm:px-4">
-        {/* 1. Hero (Larger Logo, Redesigned Software Card, Bright Pink Start Guide, 6-Per-Line Full-Colour Modules, 4 Stats & 3 Pillars) */}
+      <main className="relative z-10 space-y-5 pb-8">
+        {/* 1. Hero — 0.5cm from side of page under Quick App Bar */}
         <LandingHero />
 
-        {/* 2. Compliance in 4 Steps (Quick Start Guide) */}
-        <QuickStartSection />
+        <div className="w-full px-[0.5cm] space-y-5">
+          {/* 2. Compliance in 4 Steps (Quick Start Guide) */}
+          <QuickStartSection />
 
-        {/* 3. An Impossible Standard, Achieved Effortlessly (12 Core Capabilities — 6 per line in mixed full colours) */}
-        <FeaturesSection />
+          {/* 3. An Impossible Standard, Achieved Effortlessly (12 Core Capabilities — 6 per line in mixed full colours) */}
+          <FeaturesSection />
 
-        {/* 4. From First Question to Audit-Ready Report in Two Minutes (Express Audit) */}
-        <ExpressAuditSection />
+          {/* 4. From First Question to Audit-Ready Report in Two Minutes (Express Audit) */}
+          <ExpressAuditSection />
 
-        {/* 5. Accurate Map of the App -> Minimised Colourful Connections & Access Info -> Colourful Live Workspace */}
-        <BlueprintPreviewSection />
+          {/* 5. Accurate Map of the App -> Minimised Colourful Connections & Access Info -> Colourful Live Workspace */}
+          <BlueprintPreviewSection />
 
-        {/* 6. Why Providers Choose ComplianceHR */}
-        <BenefitsSection />
+          {/* 6. Why Providers Choose ComplianceHR */}
+          <BenefitsSection />
 
-        {/* 7. All Marketing & Sales Materials Ordered After "Why Providers Choose ComplianceHR" */}
-        <MarketingSafeShowcase embedded />
+          {/* 7. All Marketing & Sales Materials Ordered After "Why Providers Choose ComplianceHR" */}
+          <MarketingSafeShowcase embedded />
 
-        {/* 8. Final Call-To-Action */}
-        <LandingCTA />
+          {/* 8. Final Call-To-Action */}
+          <LandingCTA />
+        </div>
       </main>
 
       {/* Multi-Column Footer */}

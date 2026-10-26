@@ -1009,9 +1009,8 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Beach, Treasure Hunt, Shoreline & Deep Sea Scuba Wall Showcase + Compact Master Audit Report */}
-      <div className="bg-white px-1 pb-1 space-y-1">
-        <BeachDeepSeaWallShowcase defaultScene="deep-sea" compact={true} />
+      {/* Compact Master Audit Report (Beach & Deep Sea Scene is rendered once in its dedicated showcase) */}
+      <div className="bg-white px-1 pb-1">
         <MasterComplianceAuditForms compact={true} smallFeatured={true} />
       </div>
 

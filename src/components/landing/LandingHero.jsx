@@ -8,10 +8,10 @@ import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { Image } from '@/components/ui/image';
 
 const STATS = [
-  { value: `${MODULE_DIRECTORY.length}`, label: 'connected modules', bg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)', text: '#ffffff' },
-  { value: '2 min', label: 'express internal audits', bg: 'linear-gradient(135deg, #5A00D6 0%, #A100FF 100%)', text: '#ffffff' },
-  { value: 'Live', label: 'compliance & expiry trackers', bg: 'linear-gradient(135deg, #FF2E9A 0%, #5A00D6 100%)', text: '#ffffff' },
-  { value: '24/7', label: 'automated reminders & alerts', bg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)', text: '#0A2B6D' },
+  { value: `${MODULE_DIRECTORY.length}`, label: 'connected modules', color: '#0072FF' },
+  { value: '2 min', label: 'express internal audits', color: '#5A00D6' },
+  { value: 'Live', label: 'compliance & expiry trackers', color: '#FF2E9A' },
+  { value: '24/7', label: 'automated reminders & alerts', color: '#A100FF' },
 ];
 
 export default function LandingHero() {
@@ -63,135 +63,141 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b-4 border-[#0A2B6D] bg-gradient-to-b from-[#F5F0FF] via-white to-[#FFF0F8]">
-      <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-5 sm:pb-10 sm:pt-7 md:px-8">
-        <div className="mx-auto max-w-5xl text-center">
-          {/* Larger ComplianceHR Infinity Logo with App-Coloured Border + Redesigned Software Banner */}
-          <div className="mx-auto flex flex-col items-center gap-3.5">
-            <div
-              className="inline-flex items-center justify-center rounded-3xl border-4 border-[#0A2B6D] p-3 shadow-xl ring-4 ring-[#FF2E9A]/80"
-              style={{
-                background:
-                  'linear-gradient(135deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
-              }}
-            >
-              <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white px-5 py-3 shadow-inner">
-                <Image
-                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                  alt="ComplianceHR Infinity logo"
-                  className="h-52 w-80 sm:h-64 sm:w-[28rem] md:h-72 md:w-[34rem] rounded-xl"
-                  fittingType="fit"
-                />
-              </div>
+    <section className="relative overflow-hidden border-b-4 border-[#0A2B6D] bg-gradient-to-b from-[#E8DEFF] via-white to-[#FFF0F8]">
+      {/* 0.5cm from side of page under Quick App Bar */}
+      <div className="relative w-full px-[0.5cm] pb-8 pt-4">
+        <div className="w-full text-center">
+          {/* Full-Width Logo & Border Showcase Box 0.5cm from Side of Page */}
+          <div
+            className="w-full rounded-3xl border-4 border-[#0A2B6D] p-3 shadow-xl ring-2 ring-[#FF2E9A]"
+            style={{
+              background:
+                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-4 shadow-inner">
+              <Image
+                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                alt="ComplianceHR Infinity logo"
+                className="h-56 w-full max-w-2xl sm:h-72 md:h-80 rounded-xl"
+                fittingType="fit"
+              />
             </div>
 
-            {/* Upgraded Software ("Soft") Section — Sleek App-Coloured Executive Identity Card */}
-            <div
-              className="mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md ring-2 ring-[#5A00D6]/50"
-            >
-              <div
-                className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D] px-4 py-1.5 text-white"
-                style={{ background: 'var(--header-gradient)' }}
-              >
-                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-white">
-                  <Award className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  Software: ComplianceHR Infinity
-                </span>
-                <span className="rounded-full border border-white/50 bg-[#FF2E9A] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
-                  Official NDIS &amp; Workforce Platform
-                </span>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-2 bg-gradient-to-r from-[#F5F0FF] via-white to-[#FFF0F8] px-4 py-2">
-                <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                  Complete Control. <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-                  <span className="text-[#FF2E9A]">Brighter Success.</span>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold text-[#0A2B6D]">
-                  <span className="rounded-lg border border-[#0A2B6D] bg-[#0072FF] px-2.5 py-0.5 text-white">
-                    Developer: Kristy Lee Whelan
+            {/* Software Bar — Fitted & Displayed Cleanly Inside the Full-Width Frame with White Background Behind Dark Blue Writing */}
+            <div className="mt-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 shadow-md">
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-3 items-center text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0072FF] text-white">
+                    <Award className="h-4 w-4 text-white" />
                   </span>
-                  <a
-                    href="mailto:kristyleebatkin@live.com.au"
-                    className="inline-flex items-center gap-1 rounded-lg border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-0.5 text-white hover:bg-[#FF2E9A]"
-                  >
-                    <Mail className="h-3 w-3 text-[#00C6FF]" />
-                    kristyleebatkin@live.com.au
-                  </a>
+                  <div className="bg-white">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      Official Software Platform
+                    </div>
+                    <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                      Software: ComplianceHR Infinity
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-center">
+                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
+                    Executive Mission
+                  </div>
+                  <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                    Complete Control. <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+                    <span className="text-[#FF2E9A]">Brighter Success.</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5">
+                  <div className="bg-white text-center md:text-right">
+                    <div className="text-xs font-extrabold text-[#0A2B6D]">
+                      Developer: Kristy Lee Whelan
+                    </div>
+                    <a
+                      href="mailto:kristyleebatkin@live.com.au"
+                      className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#5A00D6] underline hover:text-[#FF2E9A]"
+                    >
+                      <Mail className="h-3 w-3 text-[#0072FF]" />
+                      kristyleebatkin@live.com.au
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <h1 className="mt-5 font-editorial text-3xl font-bold leading-tight tracking-tight text-[#0A2B6D] sm:text-4xl md:text-5xl">
-            Compliance management,{' '}
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              simplified end to end.
-            </span>
-          </h1>
+          {/* Headline & Intro on Crisp White Panel */}
+          <div className="mt-4 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-4 shadow-md">
+            <h1 className="font-editorial text-3xl font-bold leading-tight tracking-tight text-[#0A2B6D] sm:text-4xl md:text-5xl">
+              Compliance management,{' '}
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                simplified end to end.
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-2.5 max-w-3xl text-sm sm:text-base font-semibold leading-relaxed text-[#0A2B6D]/90">
-            ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
-          </p>
+            <p className="mx-auto mt-2 max-w-4xl rounded-xl bg-white px-2 text-sm sm:text-base font-bold leading-relaxed text-[#0A2B6D]">
+              ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
+            </p>
 
-          {/* Primary Action Buttons — App Border around Open App Dashboard + Bright Pink Quick Start Guide */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              to="/dashboard"
-              className="group inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] px-6 py-2.5 text-sm font-extrabold text-white shadow-lg ring-2 ring-[#00C6FF] transition-all hover:-translate-y-0.5 hover:shadow-xl"
-            >
-              Open App Dashboard
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            {!authed && (
+            {/* Primary Action Buttons */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <Link
-                to="/register"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-[#00C6FF] px-5 py-2.5 text-sm font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white"
+                to="/dashboard"
+                className="group inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-6 py-2.5 text-sm font-extrabold text-[#0A2B6D] shadow-lg ring-2 ring-[#0072FF] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
               >
-                Start 14-day free trial
+                Open App Dashboard
+                <ArrowRight className="h-4 w-4 text-[#0072FF] transition-transform group-hover:translate-x-0.5" />
               </Link>
-            )}
-            <a
-              href="#quick-start"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-6 py-2.5 text-sm font-extrabold text-white shadow-lg ring-2 ring-[#FF6EDB] transition-all hover:-translate-y-0.5 hover:bg-[#A100FF]"
-            >
-              <Sparkles className="h-4 w-4 text-white" />
-              View the quick start guide
-            </a>
+              {!authed && (
+                <Link
+                  to="/register"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-5 py-2.5 text-sm font-extrabold text-[#5A00D6] shadow-sm ring-2 ring-[#5A00D6] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+                >
+                  Start 14-day free trial
+                </Link>
+              )}
+              <a
+                href="#quick-start"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-6 py-2.5 text-sm font-extrabold text-white shadow-lg ring-2 ring-[#FF6EDB] transition-all hover:-translate-y-0.5 hover:bg-[#A100FF]"
+              >
+                <Sparkles className="h-4 w-4 text-white" />
+                View the quick start guide
+              </a>
+            </div>
+            <p className="mt-2 text-xs font-extrabold tracking-wide text-[#0A2B6D]">
+              No credit card required · 14-day free trial · Set up in minutes
+            </p>
           </div>
-          <p className="mt-2 text-xs font-extrabold tracking-wide text-[#5A00D6]">
-            No credit card required · 14-day free trial · Set up in minutes
-          </p>
 
-          {/* 46 Actual App Modules — 6 Per Line in Full Mixed App Colours */}
+          {/* 46 Actual App Modules — 6 Per Line with Mixed App Colours & Crisp White Labels */}
           <ModuleChipStrip />
 
-          {/* 4 Small Full-Colour Stat Tiles */}
+          {/* 4 Small Stat Tiles — White Background Behind Dark Blue Text */}
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {STATS.map((stat, index) => (
               <Reveal
                 key={stat.label}
                 delay={index * 0.05}
-                className="rounded-2xl border-2 border-[#0A2B6D] px-3 py-3 text-center shadow-md"
-                style={{ background: stat.bg, color: stat.text }}
+                className="rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-3 text-center shadow-md"
+                style={{ borderTopWidth: '5px', borderTopColor: stat.color }}
               >
                 <div
                   className="font-editorial text-2xl font-extrabold"
-                  style={{ color: stat.text }}
+                  style={{ color: stat.color }}
                 >
                   {stat.value}
                 </div>
-                <div
-                  className="mt-0.5 text-[11px] font-extrabold uppercase tracking-wider"
-                  style={{ color: stat.text }}
-                >
+                <div className="mt-0.5 rounded bg-white px-1 text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   {stat.label}
                 </div>
               </Reveal>
             ))}
           </div>
 
-          {/* 3 Upgraded Pillar Tiles Under the 4 Small Tiles */}
+          {/* 3 Upgraded Pillar Tiles Under the 4 Small Tiles — White Background Behind All Dark Blue Text */}
           <div className="mt-5 grid gap-4 text-left sm:grid-cols-3">
             {highlights.map(({ icon: Icon, badge, title, color, headerBg, reasons }, index) => (
               <Reveal
@@ -201,7 +207,7 @@ export default function LandingHero() {
               >
                 <div>
                   <div
-                    className="flex items-center gap-2.5 border-b-2 border-[#0A2B6D] px-4 py-3 text-white"
+                    className="gradient-brand flex items-center gap-2.5 border-b-2 border-[#0A2B6D] px-4 py-3 text-white"
                     style={{ background: headerBg }}
                   >
                     <span
@@ -211,7 +217,7 @@ export default function LandingHero() {
                       <Icon className="h-5 w-5 text-white" />
                     </span>
                     <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                      <div className="text-[10px] font-extrabold uppercase tracking-wider text-white">
                         {badge}
                       </div>
                       <div className="font-editorial text-lg font-extrabold text-white leading-tight">
@@ -220,29 +226,28 @@ export default function LandingHero() {
                     </div>
                   </div>
 
-                  <ul className="space-y-1.5 p-3.5">
+                  <ul className="space-y-1.5 bg-white p-3.5">
                     {reasons.map((r) => (
                       <li
                         key={r}
-                        className="flex items-start gap-2 rounded-xl border border-[#C084FC]/60 bg-[#F5F0FF]/80 px-2.5 py-1.5 text-xs font-bold leading-snug text-[#0A2B6D]"
+                        className="flex items-start gap-2 rounded-xl border border-[#0A2B6D]/30 bg-white px-2.5 py-1.5 text-xs font-extrabold leading-snug text-[#0A2B6D] shadow-2xs"
                       >
                         <CheckCircle2
                           className="mt-0.5 h-4 w-4 shrink-0"
                           style={{ color }}
                         />
-                        <span>{r}</span>
+                        <span className="bg-white text-[#0A2B6D]">{r}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="border-t border-[#C084FC]/50 bg-white px-4 py-2 text-right">
+                <div className="border-t border-[#0A2B6D]/20 bg-white px-4 py-2 text-right">
                   <Link
                     to="/dashboard"
-                    className="inline-flex items-center gap-1 text-xs font-extrabold"
-                    style={{ color }}
+                    className="inline-flex items-center gap-1 rounded bg-white px-2 py-0.5 text-xs font-extrabold text-[#0A2B6D] hover:underline"
                   >
-                    Explore in Dashboard <ArrowRight className="h-3.5 w-3.5" />
+                    Explore in Dashboard <ArrowRight className="h-3.5 w-3.5" style={{ color }} />
                   </Link>
                 </div>
               </Reveal>

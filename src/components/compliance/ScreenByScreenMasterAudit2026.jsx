@@ -678,8 +678,8 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
         </div>
       )}
 
-      {/* 45-Module Screen-by-Screen Audit Cards Grid */}
-      <div className={`grid grid-cols-1 ${compact ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'} gap-1.5`}>
+      {/* Compact 45-Module Screen-by-Screen Audit Cards Grid — Smaller Cards & Crisp White Backgrounds Behind Dark Blue Text */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
         {filteredModules.map((mod, index) => {
           const colour = moduleKeyColour(mod.key);
           const Icon = mod.icon || Layers;
@@ -690,96 +690,77 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             easiestTaskFlow: 'Open module → Smart-fill record → Complete & sign off task.',
             nextTaskTitle: `Complete ${mod.label} compliance verification`,
           };
-          const grpLabel = groupMap[mod.key] || 'Platform';
 
           return (
             <div
               key={mod.key}
-              className="flex flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-sm"
-              style={{ borderColor: colour }}
+              className="flex flex-col justify-between overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm"
+              style={{ borderTopWidth: '4px', borderTopColor: colour }}
             >
-              {/* Card Header with App Gradient + Module Accent & Crisp White Body Font */}
+              {/* Compact White Header with Full-Colour Badge & Clear Dark Blue Writing */}
               <div>
-                <div
-                  className="app-section-card-header flex items-center justify-between gap-1.5 px-2.5 py-1.5 text-white"
-                  style={{ background: HEADER_GRADIENT }}
-                >
+                <div className="flex items-center justify-between gap-1 border-b border-[#0A2B6D]/20 bg-white px-2 py-1.5">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-sm ring-1 ring-white/50"
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#0A2B6D] text-white shadow-2xs"
                       style={{ background: colour }}
                     >
                       <Icon className="h-3 w-3 text-white" />
                     </span>
-                    <div className="min-w-0">
-                      <div className="truncate font-body text-[9.5px] font-black text-white">
-                        #{index + 1} · {mod.label}
-                      </div>
-                      <div className="truncate font-body text-[7px] font-bold text-white">
-                        {grpLabel} · Route: {mod.path}
-                      </div>
-                    </div>
+                    <span className="rounded bg-white text-[10px] font-extrabold leading-tight text-[#0A2B6D]">
+                      #{index + 1} {mod.label}
+                    </span>
                   </div>
                   <Link
                     to={mod.path}
-                    className="shrink-0 inline-flex items-center gap-0.5 rounded-full bg-white/20 px-2 py-0.5 font-body text-[7px] font-black text-white hover:bg-white/30"
+                    className="shrink-0 inline-flex items-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
                   >
-                    Open Screen <ExternalLink className="h-2.5 w-2.5 text-white" />
+                    Open <ExternalLink className="h-2.5 w-2.5 text-[#0072FF]" />
                   </Link>
                 </div>
 
-                {/* Structured 4-Part Screen Audit Body */}
-                <div className="p-2 space-y-1 text-[7.6px]">
-                  <div className="rounded-md border border-purple-100 bg-purple-50/40 px-1.5 py-1">
-                    <span className="font-black uppercase tracking-wider text-purple-900">1. What is the Topic: </span>
-                    <span className="font-bold text-blue-950">{bp.topic}</span>
+                {/* Compact Structured Screen Audit Body on Crisp White */}
+                <div className="space-y-1 bg-white p-1.5 text-[9.5px] leading-snug text-[#0A2B6D]">
+                  <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                    <span className="font-extrabold text-[#5A00D6]">Topic: </span>
+                    <span className="font-bold text-[#0A2B6D]">{bp.topic}</span>
                   </div>
 
-                  <div className="rounded-md border border-blue-100 bg-blue-50/40 px-1.5 py-1">
-                    <span className="font-black uppercase tracking-wider text-blue-900">2. What is in There: </span>
-                    <span className="font-semibold text-blue-950">{bp.inside}</span>
-                  </div>
-
-                  <div className="rounded-md border border-pink-200 bg-pink-50/40 px-1.5 py-1">
-                    <span className="font-black uppercase tracking-wider text-pink-900">3. 2026 Smart-Fill Doc: </span>
-                    <span className="font-bold text-blue-950">{bp.smartDoc2026}</span>
-                  </div>
-
-                  <div className="rounded-md border border-emerald-200 bg-emerald-50/40 px-1.5 py-1">
-                    <span className="font-black uppercase tracking-wider text-emerald-900">4. Easiest Task Flow: </span>
-                    <span className="font-semibold text-blue-950">{bp.easiestTaskFlow}</span>
+                  <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                    <span className="font-extrabold text-[#0072FF]">Smart Doc: </span>
+                    <span className="font-bold text-[#0A2B6D]">{bp.smartDoc2026}</span>
                   </div>
                 </div>
               </div>
 
-              {/* 1-Click Action Bar: Smart-Fill 2026 Doc | Add Task | Complete Task Now */}
-              <div className="grid grid-cols-3 gap-1 border-t border-purple-100 bg-purple-50/30 p-1.5">
+              {/* Compact 1-Click Action Bar */}
+              <div className="grid grid-cols-3 gap-1 border-t border-[#0A2B6D]/20 bg-white p-1">
                 <button
                   type="button"
                   onClick={() => openSmartFillDoc(mod)}
-                  className="flex items-center justify-center gap-0.5 rounded border border-purple-300 bg-white px-1.5 py-1 font-body text-[7px] font-black text-purple-950 hover:bg-purple-100"
+                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
                 >
-                  <Wand2 className="h-2.5 w-2.5 text-pink-600" />
-                  Smart-Fill Doc
+                  <Wand2 className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                  Doc
                 </button>
                 <button
                   type="button"
                   disabled={creatingTaskKey === `${mod.key}-open`}
                   onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                  className="flex items-center justify-center gap-0.5 rounded border border-blue-300 bg-white px-1.5 py-1 font-body text-[7px] font-black text-blue-950 hover:bg-blue-50"
+                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
                 >
-                  <PlusCircle className="h-2.5 w-2.5 text-blue-600" />
-                  Plan Task
+                  <PlusCircle className="h-2.5 w-2.5 text-[#0072FF]" />
+                  Task
                 </button>
                 <button
                   type="button"
                   disabled={creatingTaskKey === `${mod.key}-done`}
                   onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                  className="flex items-center justify-center gap-0.5 rounded px-1.5 py-1 font-body text-[7px] font-black text-white shadow-sm"
-                  style={{ background: colour }}
+                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  style={{ borderTopWidth: '2px', borderTopColor: colour }}
                 >
-                  <CheckCircle2 className="h-2.5 w-2.5 text-white" />
-                  Complete Task
+                  <CheckCircle2 className="h-2.5 w-2.5" style={{ color: colour }} />
+                  Done
                 </button>
               </div>
             </div>

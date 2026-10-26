@@ -71,11 +71,11 @@ export default function ExpressAuditSection() {
   return (
     <section
       id="express-audit"
-      className="relative mx-auto max-w-6xl scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-gradient-to-br from-[#F5F0FF] via-white to-[#EDE9FE] px-4 py-8 sm:py-10 shadow-xl md:px-8"
+      className="relative w-full scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white px-4 py-6 shadow-xl md:px-6"
       style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}
     >
       <div
-        className="mx-auto rounded-2xl border-2 border-[#0A2B6D] p-5 text-center text-white shadow-md"
+        className="gradient-brand mx-auto rounded-2xl border-2 border-[#0A2B6D] p-5 text-center text-white shadow-md"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-[#FF2E9A] px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white">

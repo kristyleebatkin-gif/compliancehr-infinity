@@ -5,35 +5,37 @@ import DeepSeaScubaProgress from '@/components/goals/DeepSeaScubaProgress';
 import ShorelineCommandCenter from '@/components/hr/ShorelineCommandCenter';
 import { playShorelineVictoryFanfare } from '@/components/hr/shorelineSoundAndRewards';
 
+// Ordered with Beach Scenes FIRST, then Deep Blue Sea SECOND!
 const SCENE_MODES = [
-  { id: 'deep-sea', label: '🤿 Deep Sea Scuba Progress', icon: Anchor },
-  { id: 'treasure', label: '🏖️ Kids Zone · Treasure Hunt Path', icon: Compass },
+  { id: 'all', label: '✨ Beach Scene + Deep Blue Sea (1 of Each)', icon: Layers },
+  { id: 'treasure', label: '🏖️ 1. Beach Scene · Treasure Island', icon: Compass },
+  { id: 'deep-sea', label: '🤿 2. Deep Blue Sea · Scuba Progress', icon: Anchor },
   { id: 'shoreline', label: '🌴 Staff Shoreline Command', icon: Sun },
-  { id: 'all', label: '✨ All 3 Beach & Deep Sea Views', icon: Layers },
 ];
 
-export default function BeachDeepSeaWallShowcase({ defaultScene = 'deep-sea', compact = true }) {
+export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact = true }) {
   const [scene, setScene] = useState(defaultScene);
 
   return (
-    <div className="rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-sm space-y-2">
+    <div className="rounded-3xl border-2 border-[#0A2B6D] bg-white p-3 shadow-lg space-y-3">
+      {/* Header Bar with White Pill Behind Dark Blue Writing */}
       <div
-        className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-[#0A2B6D] px-2.5 py-1.5 text-white"
+        className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3.5 py-2.5 text-white shadow-md"
         style={{
           background:
             'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 40%, #A100FF 65%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex items-center gap-1.5">
-          <span className="rounded bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase text-[#0A2B6D]">
-            Base-44 Theme Deck
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-lg border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-[#0A2B6D]">
+            Beach &amp; Deep Blue Sea Suite
           </span>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-white">
-            Tropical Beach, Treasure Hunt, Deep Sea Scuba &amp; Shoreline Wall Scene
+          <span className="rounded-lg border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+            1. Tropical Beach Treasure Island First → 2. Deep Blue Sea Scuba Progress Second
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1.5">
           {SCENE_MODES.map((m) => {
             const Icon = m.icon;
             const active = scene === m.id;
@@ -42,13 +44,13 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'deep-sea', co
                 key={m.id}
                 type="button"
                 onClick={() => setScene(m.id)}
-                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold transition-all ${
+                className={`inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-2.5 py-1 text-[10px] font-extrabold transition-all ${
                   active
-                    ? 'bg-white text-[#0A2B6D] shadow-sm'
-                    : 'bg-white/15 text-white hover:bg-white/25'
+                    ? 'bg-[#FF2E9A] text-white shadow-sm ring-2 ring-white'
+                    : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
                 }`}
               >
-                <Icon className="h-2.5 w-2.5" />
+                <Icon className="h-3 w-3" />
                 {m.label}
               </button>
             );
@@ -57,21 +59,40 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'deep-sea', co
             type="button"
             onClick={() =>
               playShorelineVictoryFanfare(
-                'Triple Beach, Scuba & Shoreline Trophy',
+                'Beach & Deep Blue Sea Trophy',
                 'Executive Wall Grand Victory',
                 false
               )
             }
-            className="inline-flex items-center gap-1 rounded-full border border-white bg-[#FFE066] px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-sm hover:bg-white"
+            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm hover:bg-white"
           >
-            <Trophy className="h-2.5 w-2.5" /> Victory Fanfare
+            <Trophy className="h-3 w-3" /> Victory Fanfare
           </button>
         </div>
       </div>
 
-      {(scene === 'deep-sea' || scene === 'all') && <DeepSeaScubaProgress compact={compact} />}
-      {(scene === 'treasure' || scene === 'all') && <KidsZoneTreasurePath compact={compact} />}
-      {(scene === 'shoreline' || scene === 'all') && <ShorelineCommandCenter compact={compact} />}
+      {/* 1. BEACH SCENE FIRST (Treasure Island Path) */}
+      {(scene === 'treasure' || scene === 'all') && (
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
+            <span>🏖️ SCENE 1 OF 2: TROPICAL BEACH TREASURE ISLAND</span>
+          </div>
+          <KidsZoneTreasurePath compact={compact} />
+        </div>
+      )}
+
+      {/* Optional Shoreline View when selected */}
+      {scene === 'shoreline' && <ShorelineCommandCenter compact={compact} />}
+
+      {/* 2. DEEP BLUE SEA SECOND (Deep Sea Scuba Progress) */}
+      {(scene === 'deep-sea' || scene === 'all') && (
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
+            <span>🤿 SCENE 2 OF 2: DEEP BLUE SEA SCUBA PROGRESS</span>
+          </div>
+          <DeepSeaScubaProgress compact={compact} />
+        </div>
+      )}
     </div>
   );
 }

@@ -3,16 +3,20 @@ import { Link } from 'react-router-dom';
 import { Home, Sparkles } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 
-// Mixed full-colour gradients so every module card is vibrant and adjacent tiles contrast
-const MIXED_MODULE_GRADIENTS = [
-  { bg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #FF2E9A 0%, #A100FF 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)', text: '#0A2B6D' },
-  { bg: 'linear-gradient(135deg, #5A00D6 0%, #A100FF 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #0A2B6D 0%, #5A00D6 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #A100FF 0%, #FF2E9A 100%)', text: '#ffffff' },
-  { bg: 'linear-gradient(135deg, #FF6EDB 0%, #FF2E9A 100%)', text: '#0A2B6D' },
-  { bg: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)', text: '#ffffff' },
+// Mixed vibrant colours for borders & icon badges while text always sits on a crisp WHITE background!
+const MIXED_COLOURS = [
+  '#0072FF',
+  '#FF2E9A',
+  '#5A00D6',
+  '#00C6FF',
+  '#A100FF',
+  '#0A2B6D',
+  '#FF6EDB',
+  '#0072FF',
+  '#A100FF',
+  '#FF2E9A',
+  '#00C6FF',
+  '#5A00D6',
 ];
 
 export default function ModuleChipStrip() {
@@ -44,18 +48,15 @@ export default function ModuleChipStrip() {
 
   return (
     <div
-      className="mx-auto mt-6 max-w-6xl rounded-3xl border-2 border-[#0A2B6D] p-3.5 shadow-lg"
+      className="mt-5 w-full rounded-3xl border-2 border-[#0A2B6D] p-3 shadow-lg"
       style={{
         background:
           'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
       }}
     >
       <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white/95 p-3 shadow-md">
-        <div
-          className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3.5 py-2 text-white shadow-sm"
-          style={{ background: 'var(--header-gradient)' }}
-        >
-          <span className="text-xs font-extrabold uppercase tracking-wider text-white">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2 shadow-2xs">
+          <span className="rounded-lg bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
             All {MODULE_DIRECTORY.length} Live App Modules · 6 Per Line · Full Mixed App Colours
           </span>
           <span className="rounded-full border border-[#0A2B6D] bg-[#00C6FF] px-3 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
@@ -66,16 +67,16 @@ export default function ModuleChipStrip() {
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
           {fullGridItems.map((m, idx) => {
             const Icon = m.icon;
-            const palette = MIXED_MODULE_GRADIENTS[idx % MIXED_MODULE_GRADIENTS.length];
+            const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
             const inner = (
               <>
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/60 bg-black/20 text-white shadow-sm transition-transform group-hover:scale-105">
+                <span
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
+                  style={{ backgroundColor: accent }}
+                >
                   <Icon className="h-4 w-4 text-white" />
                 </span>
-                <span
-                  className="min-w-0 flex-1 text-left text-[10.5px] font-extrabold leading-tight"
-                  style={{ color: palette.text }}
-                >
+                <span className="min-w-0 flex-1 rounded bg-white px-1 text-left text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
                   {m.label}
                 </span>
               </>
@@ -87,8 +88,8 @@ export default function ModuleChipStrip() {
                   key={m.key}
                   href={m.href}
                   title={m.blurb}
-                  className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  style={{ background: palette.bg, color: palette.text }}
+                  className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                  style={{ borderTopWidth: '4px', borderTopColor: accent }}
                 >
                   {inner}
                 </a>
@@ -100,8 +101,8 @@ export default function ModuleChipStrip() {
                 key={m.key}
                 to={m.path}
                 title={m.blurb}
-                className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: palette.bg, color: palette.text }}
+                className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                style={{ borderTopWidth: '4px', borderTopColor: accent }}
               >
                 {inner}
               </Link>

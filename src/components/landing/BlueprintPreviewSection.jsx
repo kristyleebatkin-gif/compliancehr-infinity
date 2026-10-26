@@ -76,12 +76,12 @@ export default function BlueprintPreviewSection() {
   return (
     <section
       id="blueprint"
-      className="relative mx-auto max-w-6xl scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-gradient-to-br from-[#F5F0FF] via-white to-[#FFF0F8] px-4 py-8 sm:py-10 shadow-xl md:px-8 space-y-5"
+      className="relative w-full scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white px-4 py-6 shadow-xl md:px-6 space-y-5"
       style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}
     >
       {/* Top Heading Banner: An Accurate Map of the ComplianceHR Infinity App */}
       <Reveal
-        className="mx-auto rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-center text-white shadow-md"
+        className="gradient-brand mx-auto rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-center text-white shadow-md"
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="mx-auto inline-flex rounded-full border border-white/40 bg-white/20 px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-white">

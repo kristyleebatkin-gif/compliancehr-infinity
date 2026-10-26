@@ -411,29 +411,23 @@ export default function MustHaveFunctionsReview() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1.5">
           {MODULE_DIRECTORY.map((mod, idx) => {
-            const mixedBgs = [
-              { bg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)', text: '#ffffff' },
-              { bg: 'linear-gradient(135deg, #FF2E9A 0%, #A100FF 100%)', text: '#ffffff' },
-              { bg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)', text: '#0A2B6D' },
-              { bg: 'linear-gradient(135deg, #5A00D6 0%, #A100FF 100%)', text: '#ffffff' },
-              { bg: 'linear-gradient(135deg, #0A2B6D 0%, #5A00D6 100%)', text: '#ffffff' },
-              { bg: 'linear-gradient(135deg, #A100FF 0%, #FF2E9A 100%)', text: '#ffffff' },
-              { bg: 'linear-gradient(135deg, #FF6EDB 0%, #FF2E9A 100%)', text: '#0A2B6D' },
-              { bg: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)', text: '#ffffff' },
-            ];
-            const palette = mixedBgs[idx % mixedBgs.length];
+            const mixedColors = ['#0072FF', '#FF2E9A', '#5A00D6', '#00C6FF', '#A100FF', '#0A2B6D'];
+            const accent = mixedColors[idx % mixedColors.length];
             const Icon = mod.icon;
             return (
               <Link
                 key={mod.key}
                 to={mod.path}
-                className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-[10px] font-extrabold shadow-sm hover:-translate-y-0.5 transition-transform"
-                style={{ background: palette.bg, color: palette.text }}
+                className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm hover:-translate-y-0.5 transition-transform"
+                style={{ borderTopWidth: '4px', borderTopColor: accent }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-white/50 bg-black/20 text-white shadow-2xs">
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#0A2B6D] text-white shadow-2xs"
+                  style={{ backgroundColor: accent }}
+                >
                   {Icon ? <Icon className="h-3 w-3 text-white" /> : idx + 1}
                 </span>
-                <span className="min-w-0 flex-1 leading-tight" style={{ color: palette.text }}>
+                <span className="min-w-0 flex-1 rounded bg-white px-0.5 leading-tight text-[#0A2B6D]">
                   {mod.label}
                 </span>
               </Link>
