@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Home, Sparkles } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 
-// Mixed vibrant colours for borders & icon badges while text always sits on a crisp WHITE background!
+// Mixed vibrant colours for borders & circular icon badges while every module box is the EXACT SAME SIZE!
 const MIXED_COLOURS = [
   '#0072FF',
   '#FF2E9A',
@@ -54,29 +54,27 @@ export default function ModuleChipStrip() {
           'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
       }}
     >
-      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white/95 p-3 shadow-md">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2 shadow-2xs">
+      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md">
+        <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-center shadow-2xs">
           <span className="rounded-lg bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            All {MODULE_DIRECTORY.length} Live App Modules · 6 Per Line · Full Mixed App Colours
-          </span>
-          <span className="rounded-full border border-[#0A2B6D] bg-[#00C6FF] px-3 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-            Click Any Module to Open
+            All {MODULE_DIRECTORY.length} Live App Modules · 6 Per Line
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
+        {/* Every module card has fixed uniform h-12 height, circular icon badge, and identical dimensions */}
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
           {fullGridItems.map((m, idx) => {
             const Icon = m.icon;
             const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
             const inner = (
               <>
                 <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
                   style={{ backgroundColor: accent }}
                 >
-                  <Icon className="h-4 w-4 text-white" />
+                  <Icon className="h-3.5 w-3.5 text-white" />
                 </span>
-                <span className="min-w-0 flex-1 rounded bg-white px-1 text-left text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[10.5px] font-extrabold text-[#0A2B6D]">
                   {m.label}
                 </span>
               </>
@@ -88,7 +86,7 @@ export default function ModuleChipStrip() {
                   key={m.key}
                   href={m.href}
                   title={m.blurb}
-                  className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                  className="group flex h-12 w-full items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                   style={{ borderTopWidth: '4px', borderTopColor: accent }}
                 >
                   {inner}
@@ -101,7 +99,7 @@ export default function ModuleChipStrip() {
                 key={m.key}
                 to={m.path}
                 title={m.blurb}
-                className="group flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                className="group flex h-12 w-full items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                 style={{ borderTopWidth: '4px', borderTopColor: accent }}
               >
                 {inner}

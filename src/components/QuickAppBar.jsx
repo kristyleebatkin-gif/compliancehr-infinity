@@ -8,7 +8,7 @@ import {
   CalendarClock, Target, GraduationCap, Briefcase,
 } from 'lucide-react';
 
-// Mixed-up vibrant app colours for icon badges & top borders — while text always sits on a crisp WHITE background!
+// Mixed-up vibrant app colours for circular icon badges while text sits on a crisp WHITE background!
 const MIXED_COLOURS = [
   '#0072FF',
   '#FF2E9A',
@@ -70,46 +70,40 @@ export default function QuickAppBar() {
               'linear-gradient(135deg, rgba(0,114,255,0.22) 0%, rgba(90,0,214,0.25) 50%, rgba(255,46,154,0.22) 100%)',
           }}
         >
-          {/* Top Control Row: Landing Page BEFORE Quick App Bar Icon + All 46 Modules Beside It */}
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-2xs">
-            <div className="flex flex-wrap items-center gap-2">
-              <Link
-                to="/"
-                onClick={() => setShowAllModules(false)}
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#FF2E9A] transition-transform hover:-translate-y-0.5 hover:bg-[#FFF0F8]"
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#FF2E9A] text-white">
-                  <Home className="h-3.5 w-3.5 text-white" />
-                </span>
-                <span>Landing Page</span>
-              </Link>
-
-              <span className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
-                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#0072FF] text-white">
-                  <Compass className="h-3.5 w-3.5 text-white" />
-                </span>
-                <span>Quick App Bar</span>
+          {/* Centered Top Control Row: Landing Page | Quick App Bar | All 46 Modules (Extra design details removed!) */}
+          <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs">
+            <Link
+              to="/"
+              onClick={() => setShowAllModules(false)}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#FF2E9A] transition-transform hover:-translate-y-0.5 hover:bg-[#FFF0F8]"
+            >
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF2E9A] text-white">
+                <Home className="h-3.5 w-3.5 text-white" />
               </span>
+              <span>Landing Page</span>
+            </Link>
 
-              <button
-                type="button"
-                onClick={() => setShowAllModules((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#5A00D6] text-white">
-                  <Sparkles className="h-3.5 w-3.5 text-white" />
-                </span>
-                <span>All {MODULE_DIRECTORY.length} Modules</span>
-                {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-[#0A2B6D]" /> : <ChevronDown className="h-3.5 w-3.5 text-[#0A2B6D]" />}
-              </button>
-            </div>
-
-            <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
-              6 Per Line · Full Mixed App Colours · Crisp White Labels
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0072FF] text-white">
+                <Compass className="h-3.5 w-3.5 text-white" />
+              </span>
+              <span>Quick App Bar</span>
             </span>
+
+            <button
+              type="button"
+              onClick={() => setShowAllModules((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+            >
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5A00D6] text-white">
+                <Sparkles className="h-3.5 w-3.5 text-white" />
+              </span>
+              <span>All {MODULE_DIRECTORY.length} Modules</span>
+              {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-[#0A2B6D]" /> : <ChevronDown className="h-3.5 w-3.5 text-[#0A2B6D]" />}
+            </button>
           </div>
 
-          {/* 6-Per-Line Grid of Quick App Links — Mixed Full-Colour Badges + Crisp White Background Behind Dark Blue Text */}
+          {/* 6-Per-Line Grid of Quick App Module Items — Uniform Height, Circular Icons & Clean Fit */}
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
@@ -120,18 +114,17 @@ export default function QuickAppBar() {
                   key={item.path}
                   to={item.path}
                   onClick={() => setShowAllModules(false)}
-                  className={`flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
+                  className={`flex h-10 items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
                     active ? 'ring-2 ring-[#FF2E9A]' : ''
                   }`}
-                  style={{ borderTopWidth: '4px', borderTopColor: accent }}
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-2xs"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                     style={{ backgroundColor: accent }}
                   >
                     <Icon className="h-3.5 w-3.5 text-white" />
                   </span>
-                  <span className="min-w-0 flex-1 rounded bg-white px-1 leading-tight text-[#0A2B6D]">
+                  <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[#0A2B6D]">
                     {item.label}
                   </span>
                 </Link>
@@ -140,17 +133,17 @@ export default function QuickAppBar() {
           </div>
         </div>
 
-        {/* All 46 Actual App Modules Drawer — 6 on Each Line with Crisp White Background Behind Dark Blue Text */}
+        {/* All 46 Actual App Modules Drawer — Uniform Size, Circular Icons & Crisp White Background */}
         {showAllModules && (
           <div className="mt-2 max-h-[72vh] overflow-y-auto rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-xl">
             <div className="mb-2.5 flex items-center justify-between rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3 py-2">
               <div className="rounded bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                All {MODULE_DIRECTORY.length} Actual App Modules (6 Per Line · Full Mixed Colours)
+                All {MODULE_DIRECTORY.length} Live App Modules
               </div>
               <button
                 type="button"
                 onClick={() => setShowAllModules(false)}
-                className="rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
               >
                 Close
               </button>
@@ -165,16 +158,15 @@ export default function QuickAppBar() {
                     key={mod.key}
                     to={mod.path}
                     onClick={() => setShowAllModules(false)}
-                    className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
-                    style={{ borderTopWidth: '4px', borderTopColor: accent }}
+                    className="flex h-10 items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                   >
                     <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-2xs"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                       style={{ backgroundColor: accent }}
                     >
                       <Icon className="h-3.5 w-3.5 text-white" />
                     </span>
-                    <span className="min-w-0 flex-1 rounded bg-white px-1 leading-tight text-[#0A2B6D]">
+                    <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[#0A2B6D]">
                       {mod.label}
                     </span>
                   </Link>

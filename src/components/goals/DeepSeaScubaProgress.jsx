@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Award, Sparkles, Anchor, Volume2, VolumeX, Gift, Plus } from 'lucide-react';
+import { Sparkles, Anchor, Volume2, VolumeX, Gift, Plus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -105,97 +105,71 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-lg"
+      className="relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-3 shadow-lg"
       style={{
         background: 'linear-gradient(160deg, #0072FF 0%, #0A2B6D 45%, #00C6FF 100%)',
       }}
     >
-      {/* Deep Blue Sea Header — Crisp White Background Behind Dark Blue Text! */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2.5 shadow-md">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
+      {/* Compact Deep Blue Sea Header on Crisp White */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-sm">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-              <Anchor className="h-3 w-3 text-white" /> Deep Blue Sea · Participant View
+              <Anchor className="h-3 w-3 text-white" /> Deep Blue Sea
             </span>
-            <h3 className="rounded bg-white text-sm sm:text-base font-extrabold text-[#0A2B6D]">
-              🤿 Deep Blue Sea Scuba Progress &amp; 100% Custom Milestone Rewards
+            <h3 className="rounded bg-white text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+              🤿 Deep Sea Scuba Progress &amp; 100% Custom Milestone Rewards
             </h3>
           </div>
-          <p className="mt-0.5 rounded bg-white text-xs font-bold text-[#0A2B6D]">
-            176px neon-aqua scuba cylinders · 44×44px yellow submarine slider · Underwater bubble &amp; fanfare audio + custom 100% rewards!
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
             onClick={() => setSoundMuted((m) => !m)}
-            className={`inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2.5 py-1 text-xs font-extrabold transition-all ${
+            className={`inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold transition-all ${
               soundMuted
                 ? 'bg-white text-[#0A2B6D]'
-                : 'bg-[#00C6FF] text-[#0A2B6D] shadow-sm'
+                : 'bg-[#00C6FF] text-[#0A2B6D] shadow-2xs'
             }`}
-            title="Toggle underwater sonar, bubble & 100% milestone fanfare sounds"
           >
-            {soundMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-            {soundMuted ? 'Sound Effects Muted' : 'Ocean Sound FX: ON'}
+            {soundMuted ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+            {soundMuted ? 'Muted' : 'Ocean FX: ON'}
           </button>
 
-          <Badge className="border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-xs font-extrabold text-[#0A2B6D]">
-            Fleet Dive Average: {avgDepth}%
+          <Badge className="border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+            Avg: {avgDepth}%
           </Badge>
         </div>
       </div>
 
       {/* Live 100% Milestone Celebration Banner */}
       {celebrationBanner && (
-        <div
-          className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 text-[#0A2B6D] shadow-lg"
-        >
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-[#FFE066] text-2xl shadow">
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 text-[#0A2B6D] shadow-md">
+          <div className="flex items-center gap-2">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] text-xl">
               {celebrationBanner.rewardIcon}
             </span>
-            <div className="bg-white">
-              <div className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                <Sparkles className="h-3.5 w-3.5" /> 100% Scuba Tank Full · Milestone Reward Hatched!
+            <div className="bg-white text-xs">
+              <div className="font-extrabold text-[#5A00D6]">
+                100% Tank Full · {celebrationBanner.rewardTitle} Unlocked!
               </div>
-              <div className="text-sm font-extrabold text-[#0A2B6D]">
-                {celebrationBanner.participant} unlocked <span className="underline">{celebrationBanner.rewardTitle}</span> ({celebrationBanner.rewardBadge})
-              </div>
-              <div className="text-xs font-bold text-[#0A2B6D]">
-                Goal completed: “{celebrationBanner.goalTitle}”
-              </div>
+              <div className="font-bold text-[#0A2B6D]">“{celebrationBanner.goalTitle}”</div>
             </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Button
-              size="sm"
-              onClick={() =>
-                playDeepSeaMilestoneFanfare(
-                  celebrationBanner.goalTitle,
-                  celebrationBanner.rewardTitle,
-                  soundMuted
-                )
-              }
-              className="border-2 border-[#0A2B6D] bg-[#0072FF] text-white"
-            >
-              <Volume2 className="h-3.5 w-3.5" /> Replay Fanfare
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setCelebrationBanner(null)}
-              className="border-2 border-[#0A2B6D] bg-white text-[#0A2B6D]"
-            >
-              Dismiss
-            </Button>
-          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setCelebrationBanner(null)}
+            className="h-7 border-2 border-[#0A2B6D] bg-white px-2.5 text-[10px] font-extrabold text-[#0A2B6D]"
+          >
+            Dismiss
+          </Button>
         </div>
       )}
 
-      {/* Scuba Cylinders Grid — Crisp White Cards Inside the Deep Blue Sea Arena so Dark Blue Writing is 100% Clear! */}
-      <div className={`mt-3 grid grid-cols-1 gap-3 ${compact ? 'sm:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+      {/* Fitted 3-Column Scuba Cylinders Grid — Compact Height & Clean Fit on Tablet & Desktop */}
+      <div className="mt-2.5 grid grid-cols-1 gap-2.5 md:grid-cols-3">
         {displayedGoals.map((g, idx) => {
           const pct = getPct(g);
           const isHatched = pct >= 100;
@@ -205,17 +179,16 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
           return (
             <div
               key={g.id}
-              className="flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md"
+              className="flex flex-col justify-between rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md"
               style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}
             >
-              <div className="flex items-start gap-3">
-                {/* 176px Vertical Neon-Aqua Glass Scuba Cylinder */}
-                <div className="flex flex-col items-center">
-                  <div className="h-2.5 w-7 rounded-t-md border-2 border-[#0A2B6D] bg-[#00C6FF]" />
+              <div className="flex items-start gap-2.5">
+                {/* Compact 110px Vertical Neon-Aqua Scuba Cylinder */}
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="h-2 w-5 rounded-t border border-[#0A2B6D] bg-[#00C6FF]" />
                   <div
-                    style={{ height: 176, width: 56 }}
-                    className="relative flex h-[176px] w-[56px] shrink-0 flex-col justify-end overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-[#031026] shadow-md"
-                    title="176px Neon-Aqua Glass Scuba Cylinder"
+                    style={{ height: 110, width: 42 }}
+                    className="relative flex h-[110px] w-[42px] shrink-0 flex-col justify-end overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#031026] shadow-sm"
                   >
                     <div
                       className="w-full transition-all duration-500"
@@ -224,38 +197,35 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                         background: isHatched
                           ? 'linear-gradient(180deg, #00F5D4 0%, #00C6FF 55%, #0072FF 100%)'
                           : 'linear-gradient(180deg, rgba(0,245,212,0.92) 0%, rgba(0,198,255,0.85) 100%)',
-                        boxShadow: 'inset 0 0 14px rgba(255,255,255,0.55)',
                       }}
                     />
-                    <div className="pointer-events-none absolute inset-0 flex flex-col justify-between py-2 px-1 text-[8px] font-extrabold text-white">
+                    <div className="pointer-events-none absolute inset-0 flex flex-col justify-between py-1 px-1 text-[7px] font-extrabold text-white">
                       <span>100%</span>
-                      <span>75%</span>
                       <span>50%</span>
-                      <span>25%</span>
                       <span>0%</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Goal Details on Crisp White Surface */}
-                <div className="min-w-0 flex-1 space-y-1.5 bg-white">
+                <div className="min-w-0 flex-1 space-y-1 bg-white">
                   <div className="flex items-center justify-between gap-1">
-                    <span className="truncate rounded-md border border-[#0A2B6D] bg-[#F5F0FF] px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                    <span className="truncate rounded border border-[#0A2B6D] bg-[#F5F0FF] px-1.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
                       {g.participant_name || 'Participant'}
                     </span>
-                    <span className="rounded-md border border-[#0A2B6D] bg-[#FFE066] px-2 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                    <span className="rounded border border-[#0A2B6D] bg-[#FFE066] px-1.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
                       {pct}%
                     </span>
                   </div>
-                  <p className="rounded bg-white text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                  <p className="rounded bg-white text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
                     {g.goal}
                   </p>
 
-                  {/* Custom Reward Selector Strip on White */}
-                  <div className="rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] p-1.5">
+                  {/* Compact Reward Selector */}
+                  <div className="rounded-lg border border-[#0A2B6D] bg-[#F5F0FF] p-1">
                     <div className="mb-1 flex items-center justify-between gap-1">
-                      <span className="inline-flex items-center gap-1 rounded bg-white px-1.5 py-0.5 text-[9.5px] font-extrabold uppercase text-[#0A2B6D]">
-                        <Gift className="h-3 w-3 text-[#5A00D6]" /> 100% Reward:
+                      <span className="inline-flex items-center gap-0.5 rounded bg-white px-1 py-0 text-[8.5px] font-extrabold uppercase text-[#0A2B6D]">
+                        <Gift className="h-2.5 w-2.5 text-[#5A00D6]" /> Reward:
                       </span>
                       <button
                         type="button"
@@ -263,13 +233,13 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                           setEditingGoalId(isEditingThis ? null : g.id);
                           setCustomPrizeDraft(reward.customNote || '');
                         }}
-                        className="inline-flex items-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1.5 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] hover:bg-[#FFE066]"
+                        className="inline-flex items-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0 text-[8px] font-extrabold text-[#0A2B6D] hover:bg-[#FFE066]"
                       >
-                        <Plus className="h-2.5 w-2.5" /> Custom Prize
+                        <Plus className="h-2 w-2" /> Custom
                       </button>
                     </div>
 
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-0.5">
                       {DEEP_SEA_REWARD_CATALOG.map((item) => {
                         const selected = reward.id === item.id;
                         return (
@@ -281,10 +251,10 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                               playScubaBubbleSound(85, soundMuted);
                             }}
                             title={`Choose ${item.title}`}
-                            className={`flex h-7 w-7 items-center justify-center rounded-lg border-2 text-sm transition-transform ${
+                            className={`flex h-6 w-6 items-center justify-center rounded border text-xs ${
                               selected
-                                ? 'scale-105 border-[#0A2B6D] bg-[#FFE066]'
-                                : 'border-[#0A2B6D]/30 bg-white opacity-80 hover:opacity-100'
+                                ? 'border-[#0A2B6D] bg-[#FFE066]'
+                                : 'border-[#0A2B6D]/30 bg-white opacity-80'
                             }`}
                           >
                             {item.icon}
@@ -294,17 +264,17 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                     </div>
 
                     {isEditingThis && (
-                      <div className="mt-1.5 flex gap-1">
+                      <div className="mt-1 flex gap-1">
                         <Input
                           value={customPrizeDraft}
                           onChange={(e) => setCustomPrizeDraft(e.target.value)}
-                          placeholder="e.g. Beach Gelato Outing"
-                          className="h-7 border-[#0A2B6D] bg-white px-2 text-[11px] text-[#0A2B6D]"
+                          placeholder="Custom prize…"
+                          className="h-6 border-[#0A2B6D] bg-white px-1.5 text-[10px] text-[#0A2B6D]"
                         />
                         <Button
                           size="sm"
                           onClick={() => saveCustomPrizeNote(g.id)}
-                          className="h-7 px-2 text-[10px] font-extrabold"
+                          className="h-6 px-2 text-[9px] font-extrabold"
                         >
                           Save
                         </Button>
@@ -312,25 +282,13 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                     )}
                   </div>
 
-                  {/* 100% Milestone Reward Card */}
-                  {isHatched ? (
-                    <div className="mt-1.5 flex items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-sm">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] text-xl">
-                          {reward.icon}
-                        </span>
-                        <div className="min-w-0 bg-white">
-                          <div className="flex items-center gap-1 text-[10px] font-extrabold uppercase text-[#5A00D6]">
-                            <Sparkles className="h-3 w-3 text-[#FF2E9A]" /> 100% Reward Unlocked!
-                          </div>
-                          <div className="truncate text-[11px] font-extrabold text-[#0A2B6D]">
-                            {reward.customNote || reward.title}
-                          </div>
-                          <div className="text-[9.5px] font-bold text-[#0A2B6D]">
-                            {reward.badge}
-                          </div>
-                        </div>
-                      </div>
+                  {/* Reward Status Line */}
+                  <div className="flex items-center justify-between gap-1 rounded-lg border border-[#0A2B6D] bg-white px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                    <span className="truncate">
+                      {isHatched ? '🎉 Unlocked: ' : 'Next: '}
+                      <span className="text-[#5A00D6]">{reward.icon} {reward.customNote || reward.title}</span>
+                    </span>
+                    {isHatched && (
                       <button
                         type="button"
                         onClick={() =>
@@ -340,31 +298,26 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                             soundMuted
                           )
                         }
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] bg-[#FFE066] text-[#0A2B6D] shadow-2xs hover:bg-white"
-                        title="Play 100% Milestone Chime & Fanfare"
+                        className="shrink-0 rounded border border-[#0A2B6D] bg-[#FFE066] p-0.5 text-[#0A2B6D]"
                       >
-                        <Volume2 className="h-3.5 w-3.5" />
+                        <Volume2 className="h-3 w-3" />
                       </button>
-                    </div>
-                  ) : (
-                    <div className="mt-1.5 rounded-xl border border-[#0A2B6D] bg-white p-2 text-[10.5px] font-extrabold text-[#0A2B6D]">
-                      Next at 100%: <span className="text-[#5A00D6]">{reward.icon} {reward.customNote || reward.title}</span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* 44x44px Glowing Yellow Submarine Slider Thumb Control */}
-              <div className="mt-3 border-t border-[#0A2B6D]/20 bg-white pt-2.5">
-                <div className="mb-1 flex items-center justify-between text-[10px] font-extrabold text-[#0A2B6D]">
-                  <span>Slide Submarine Thumb (44×44px)</span>
+              {/* Compact Submarine Slider Control */}
+              <div className="mt-2 border-t border-[#0A2B6D]/20 bg-white pt-1.5">
+                <div className="mb-1 flex items-center justify-between text-[9px] font-extrabold text-[#0A2B6D]">
+                  <span>Submarine Slider</span>
                   <div className="flex gap-1">
                     {[25, 50, 75, 100].map((step) => (
                       <button
                         key={step}
                         type="button"
                         onClick={() => handleDiveChange(g, step, idx)}
-                        className={`rounded border border-[#0A2B6D] px-1.5 py-0.5 text-[9.5px] font-extrabold ${
+                        className={`rounded border border-[#0A2B6D] px-1 py-0 text-[8.5px] font-extrabold ${
                           pct === step
                             ? 'bg-[#FFE066] text-[#0A2B6D]'
                             : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -376,8 +329,8 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                   </div>
                 </div>
 
-                <div className="relative flex h-[44px] items-center">
-                  <div className="h-3 w-full overflow-hidden rounded-full border-2 border-[#0A2B6D] bg-[#031026]">
+                <div className="relative flex h-8 items-center">
+                  <div className="h-2.5 w-full overflow-hidden rounded-full border border-[#0A2B6D] bg-[#031026]">
                     <div
                       className="h-full bg-gradient-to-r from-[#0072FF] via-[#00C6FF] to-[#00F5D4]"
                       style={{ width: `${pct}%` }}
@@ -395,12 +348,11 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                   />
                   <div
                     style={{
-                      width: 44,
-                      height: 44,
-                      left: `calc(${pct}% - ${(pct / 100) * 44}px)`,
+                      width: 30,
+                      height: 30,
+                      left: `calc(${pct}% - ${(pct / 100) * 30}px)`,
                     }}
-                    className="pointer-events-none absolute z-10 flex h-[44px] w-[44px] items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] text-lg shadow-md transition-all"
-                    title="44×44px Glowing Yellow Submarine Slider Thumb"
+                    className="pointer-events-none absolute z-10 flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] text-sm shadow transition-all"
                   >
                     <span role="img" aria-label="Yellow Submarine">🚢</span>
                   </div>

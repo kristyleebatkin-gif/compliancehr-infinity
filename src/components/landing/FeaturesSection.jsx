@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 
-// Mixed full-colour accents + crisp WHITE background behind all dark blue writing!
+// Mixed full-colour circular icons + crisp WHITE background behind all dark blue writing, fitted cleanly across tablet & desktop!
 const FEATURES = [
   { icon: Users, title: 'Workforce Records', desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.', color: '#0072FF' },
   { icon: Heart, title: 'Participant Records', desc: 'Participant profiles, support plans, agreements and folder compliance checklists.', color: '#FF2E9A' },
@@ -43,7 +43,7 @@ export default function FeaturesSection() {
         style={{ background: 'var(--header-gradient)' }}
       >
         <div className="inline-flex rounded-full border border-[#0A2B6D] bg-white px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-          Latest platform capabilities · 6 Per Line · Mixed App Colours
+          Latest platform capabilities · 12 Connected Engines
         </div>
         <h2 className="mt-2 font-editorial text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
           An impossible standard, achieved effortlessly
@@ -53,38 +53,36 @@ export default function FeaturesSection() {
         </p>
       </div>
 
-      {/* 12 Core Capabilities — 6 on Each Line with Mixed Full-Colour Frames & Crisp White Background Behind Dark Blue Text */}
-      <div className="relative mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-6">
+      {/* Responsive Grid that Fits Tablet (3 per row) & Desktop (6 per row) with Equal-Height Cards & Circular Icons */}
+      <div className="relative mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 auto-rows-fr">
         {FEATURES.map((f, index) => (
           <Reveal
             key={f.title}
             delay={(index % 6) * 0.04}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
-            style={{ backgroundColor: f.color }}
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
+            style={{ borderTopWidth: '5px', borderTopColor: f.color }}
           >
-            <div className="flex h-full flex-col justify-between rounded-xl border border-[#0A2B6D] bg-white p-3">
-              <div>
-                <div className="flex items-center justify-between gap-1.5">
-                  <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border-2 border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
-                    style={{ backgroundColor: f.color }}
-                  >
-                    <f.icon className="h-4 w-4 text-white" />
-                  </div>
-                  <span
-                    className="rounded-full border border-[#0A2B6D] px-2 py-0.5 text-[9.5px] font-extrabold text-white"
-                    style={{ backgroundColor: f.color }}
-                  >
-                    #{index + 1}
-                  </span>
+            <div>
+              <div className="flex items-center justify-between gap-2">
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
+                  style={{ backgroundColor: f.color }}
+                >
+                  <f.icon className="h-4 w-4 text-white" />
                 </div>
-                <h3 className="mt-2.5 rounded bg-white font-editorial text-sm font-extrabold leading-snug text-[#0A2B6D]">
-                  {f.title}
-                </h3>
-                <p className="mt-1 rounded bg-white text-[11px] font-bold leading-snug text-[#0A2B6D]">
-                  {f.desc}
-                </p>
+                <span
+                  className="rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                  style={{ backgroundColor: f.color }}
+                >
+                  #{index + 1}
+                </span>
               </div>
+              <h3 className="mt-2.5 rounded bg-white font-editorial text-sm font-extrabold leading-snug text-[#0A2B6D]">
+                {f.title}
+              </h3>
+              <p className="mt-1 rounded bg-white text-xs font-bold leading-snug text-[#0A2B6D]">
+                {f.desc}
+              </p>
             </div>
           </Reveal>
         ))}

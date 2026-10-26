@@ -65,65 +65,81 @@ export default function LandingHero() {
   return (
     <section className="relative overflow-hidden border-b-4 border-[#0A2B6D] bg-gradient-to-b from-[#E8DEFF] via-white to-[#FFF0F8]">
       {/* 0.5cm from side of page under Quick App Bar */}
-      <div className="relative w-full px-[0.5cm] pb-8 pt-4">
+      <div className="relative w-full px-[0.5cm] pb-8 pt-3">
         <div className="w-full text-center">
-          {/* Full-Width Logo & Border Showcase Box 0.5cm from Side of Page */}
+          {/* Full-Width Logo Filled Right to the Border Size (0.5cm from Side of Page) + Clean Centered Software Section */}
           <div
-            className="w-full rounded-3xl border-4 border-[#0A2B6D] p-3 shadow-xl ring-2 ring-[#FF2E9A]"
+            className="w-full rounded-3xl border-4 border-[#0A2B6D] p-2.5 shadow-xl ring-2 ring-[#FF2E9A]"
             style={{
               background:
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-4 shadow-inner">
+            {/* Logo Enlarged to Fill the Border Frame + Centered Name + NDIS & Aged Care Compliance in Bright Pink */}
+            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 shadow-inner">
               <Image
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                 alt="ComplianceHR Infinity logo"
-                className="h-56 w-full max-w-2xl sm:h-72 md:h-80 rounded-xl"
+                className="h-72 w-full sm:h-96 md:h-[420px] rounded-xl object-contain"
                 fittingType="fit"
               />
+              <div className="mt-2 flex flex-col items-center justify-center bg-white pb-1 text-center">
+                <div className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-[#0A2B6D]">
+                  Compliance
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
+                </div>
+                <span className="mt-1 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white shadow-sm">
+                  NDIS &amp; Aged Care Compliance
+                </span>
+              </div>
             </div>
 
-            {/* Software Bar — Fitted & Displayed Cleanly Inside the Full-Width Frame with White Background Behind Dark Blue Writing */}
-            <div className="mt-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 shadow-md">
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-3 items-center text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0072FF] text-white">
+            {/* Fixed, Balanced & Centered Software Section */}
+            <div className="mt-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md">
+              <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3 items-stretch">
+                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}>
+                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
                     <Award className="h-4 w-4 text-white" />
                   </span>
-                  <div className="bg-white">
-                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      Official Software Platform
-                    </div>
-                    <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                      Software: ComplianceHR Infinity
-                    </div>
+                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    Official Software Platform
+                  </div>
+                  <div className="mt-0.5 text-sm font-extrabold text-[#0A2B6D]">
+                    Software: ComplianceHR Infinity
                   </div>
                 </div>
 
-                <div className="rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-center">
+                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#FF2E9A' }}>
+                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#FF2E9A] text-white">
+                    <Sparkles className="h-4 w-4 text-white" />
+                  </span>
                   <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-                    Executive Mission
+                    Executive Mission &amp; Slogan
                   </div>
-                  <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                  <div className="mt-0.5 text-sm font-extrabold text-[#0A2B6D]">
                     Complete Control. <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
                     <span className="text-[#FF2E9A]">Brighter Success.</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5">
-                  <div className="bg-white text-center md:text-right">
-                    <div className="text-xs font-extrabold text-[#0A2B6D]">
-                      Developer: Kristy Lee Whelan
-                    </div>
-                    <a
-                      href="mailto:kristyleebatkin@live.com.au"
-                      className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#5A00D6] underline hover:text-[#FF2E9A]"
-                    >
-                      <Mail className="h-3 w-3 text-[#0072FF]" />
-                      kristyleebatkin@live.com.au
-                    </a>
+                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}>
+                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#5A00D6] text-white">
+                    <Mail className="h-4 w-4 text-white" />
+                  </span>
+                  <div className="text-sm font-extrabold text-[#0A2B6D]">
+                    Developer: Kristy Lee Whelan
                   </div>
+                  <a
+                    href="mailto:kristyleebatkin@live.com.au"
+                    className="mt-0.5 inline-flex items-center gap-1 text-xs font-extrabold text-[#5A00D6] underline hover:text-[#FF2E9A]"
+                  >
+                    kristyleebatkin@live.com.au
+                  </a>
                 </div>
               </div>
             </div>
@@ -172,7 +188,7 @@ export default function LandingHero() {
             </p>
           </div>
 
-          {/* 46 Actual App Modules — 6 Per Line with Mixed App Colours & Crisp White Labels */}
+          {/* 46 Actual App Modules — Exact Same Size Cards, 6 Per Line */}
           <ModuleChipStrip />
 
           {/* 4 Small Stat Tiles — White Background Behind Dark Blue Text */}
@@ -211,7 +227,7 @@ export default function LandingHero() {
                     style={{ background: headerBg }}
                   >
                     <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-2 border-white text-white shadow-sm"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-white text-white shadow-sm"
                       style={{ backgroundColor: color }}
                     >
                       <Icon className="h-5 w-5 text-white" />

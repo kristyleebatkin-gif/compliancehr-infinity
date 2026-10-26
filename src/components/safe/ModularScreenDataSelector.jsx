@@ -552,8 +552,8 @@ export default function ModularScreenDataSelector({
         </div>
       )}
 
-      {/* Selected Modular Screen Data Cards — Highlighted Bordered Subject Headers + Slightly Smaller Body Writing */}
-      <div className={`grid grid-cols-1 ${effectiveSelected.length > 1 && !compact ? 'sm:grid-cols-2' : ''} gap-2`}>
+      {/* Minimised Office Modular Subject Screens — Compact 2-Column Grid with Crisp White Surfaces */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
         {effectiveSelected.map((modKey) => {
           const meta = resolveMeta(modKey);
           const Icon = meta.icon || LayoutGrid;
@@ -566,70 +566,51 @@ export default function ModularScreenDataSelector({
           return (
             <div
               key={modKey}
-              className="last:odd:col-span-full flex flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-sm"
-              style={{ borderColor: meta.color }}
+              className="flex flex-col justify-between overflow-hidden rounded-lg border-2 border-[#0A2B6D] bg-white shadow-2xs"
+              style={{ borderTopWidth: '3px', borderTopColor: meta.color }}
             >
-              {/* Bordered, Highlighted Modular Subject Header (Larger than writing below) */}
-              <div
-                className="flex items-center justify-between gap-2 border-b-2 px-3 py-2 text-white"
-                style={{
-                  background: `linear-gradient(120deg, ${meta.color} 0%, #5A00D6 70%, #FF2E9A 100%)`,
-                  borderBottomColor: '#FF2E9A',
-                }}
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/60 bg-white/20 text-white shadow-2xs">
-                    <Icon className="h-4 w-4" />
+              {/* Compact Minimised Modular Subject Header */}
+              <div className="flex items-center justify-between gap-1.5 border-b border-[#0A2B6D]/20 bg-white px-2 py-1">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                    style={{ background: meta.color }}
+                  >
+                    <Icon className="h-3 w-3 text-white" />
                   </span>
-                  <div className="min-w-0">
-                    <span className="inline-block rounded-full border border-white/40 bg-white/20 px-2 py-0 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                      Subject: {meta.category || 'Operations'}
-                    </span>
-                    <div className="mt-0.5 text-sm font-extrabold leading-tight text-white">
-                      {meta.label}
+                  <div className="min-w-0 bg-white">
+                    <div className="truncate text-[10px] font-extrabold leading-tight text-[#0A2B6D]">
+                      {meta.shortLabel || meta.label}
                     </div>
                   </div>
                 </div>
                 <Link
                   to={meta.path || '/dashboard'}
-                  className="shrink-0 inline-flex items-center gap-1 rounded-full border border-white bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+                  className="shrink-0 inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
                 >
                   Open <ExternalLink className="h-2.5 w-2.5 text-[#5A00D6]" />
                 </Link>
               </div>
 
-              {/* Slightly Smaller Body Writing Under the Modular Header */}
-              <div className="p-2.5 space-y-1.5 bg-white">
-                <p className="text-[11px] font-medium text-[#0A2B6D]/85 leading-snug">
-                  {meta.description}
-                </p>
-
-                <div className="space-y-1">
-                  {displayRows.slice(0, 3).map((row) => (
-                    <Link
-                      key={row.id}
-                      to={row.to || meta.path || '/dashboard'}
-                      className="flex items-center justify-between gap-1.5 rounded-lg border border-[#C084FC]/45 bg-[#F5F0FF]/50 px-2 py-1 hover:border-[#5A00D6]"
+              {/* Minimised Compact Rows (Max 2 items) */}
+              <div className="p-1.5 space-y-1 bg-white">
+                {displayRows.slice(0, 2).map((row) => (
+                  <Link
+                    key={row.id}
+                    to={row.to || meta.path || '/dashboard'}
+                    className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5 hover:bg-[#F5F0FF]"
+                  >
+                    <span className="truncate text-[9.5px] font-bold text-[#0A2B6D]">
+                      {row.title}
+                    </span>
+                    <span
+                      className="shrink-0 rounded-full px-1.5 py-0 text-[8px] font-extrabold text-white"
+                      style={{ background: meta.color }}
                     >
-                      <div className="min-w-0">
-                        <div className="text-[11px] font-bold text-[#0A2B6D] leading-snug">
-                          {row.title}
-                        </div>
-                        {row.subtitle && (
-                          <div className="text-[10px] font-medium text-[#5A00D6] leading-tight">
-                            {row.subtitle}
-                          </div>
-                        )}
-                      </div>
-                      <span
-                        className="shrink-0 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white"
-                        style={{ background: meta.color }}
-                      >
-                        {row.badge}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                      {row.badge}
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
           );

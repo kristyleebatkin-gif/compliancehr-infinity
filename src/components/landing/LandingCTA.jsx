@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Reveal from '@/components/landing/Reveal';
 
@@ -9,34 +9,46 @@ const SQUISHED_GRADIENT =
 
 export default function LandingCTA() {
   const [authed, setAuthed] = useState(false);
-  useEffect(() => { base44.auth.isAuthenticated().then(setAuthed).catch(() => {}); }, []);
+  useEffect(() => {
+    base44.auth.isAuthenticated().then(setAuthed).catch(() => {});
+  }, []);
 
   return (
-    <section id="why" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-12 sm:py-16 md:px-8">
+    <section id="why" className="w-full scroll-mt-16 py-4">
       <div
-        className="relative overflow-hidden rounded-[2rem] border-2 border-[#0A2B6D] px-6 py-12 text-center text-white shadow-2xl md:px-16 md:py-14"
+        className="relative overflow-hidden rounded-3xl border-4 border-[#0A2B6D] p-4 sm:p-6 shadow-2xl ring-2 ring-[#FF2E9A]"
         style={{ background: SQUISHED_GRADIENT }}
       >
-        <div className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none font-editorial text-[14rem] font-bold leading-none text-white/[0.06]">
-          HR
-        </div>
-        <Reveal className="relative">
-          <div className="inline-flex rounded-full border border-white/25 bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-200">
+        {/* Crisp White Inner Card So Every Word is 100% Readable & Never Jammed */}
+        <Reveal className="relative rounded-2xl border-2 border-[#0A2B6D] bg-white px-6 py-8 text-center shadow-lg md:px-12 md:py-10">
+          <div className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-1 text-xs font-extrabold uppercase tracking-widest text-white shadow-sm">
+            <Sparkles className="h-3.5 w-3.5 text-white" />
             Why ComplianceHR Infinity
           </div>
-          <h2 className="mt-4 font-editorial text-3xl font-bold tracking-tight text-white md:text-5xl md:leading-tight">
-            Ready to simplify your <span className="font-editorial-italic text-amber-200">compliance?</span>
+          <h2 className="mt-3 rounded bg-white font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Ready to simplify your{' '}
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              NDIS &amp; Aged Care compliance?
+            </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/95">
+          <p className="mx-auto mt-3 max-w-2xl rounded bg-white text-sm sm:text-base font-bold leading-relaxed text-[#0A2B6D]">
             Join providers who trust ComplianceHR Infinity to keep their records, teams, and participants audit-ready every single day.
           </p>
-          <Link
-            to={authed ? '/dashboard' : '/register'}
-            className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-base font-extrabold text-violet-950 shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl"
-          >
-            {authed ? 'Go to Dashboard' : 'Get started free'}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to={authed ? '/dashboard' : '/register'}
+              className="group inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-7 py-3 text-sm sm:text-base font-extrabold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-[#5A00D6]"
+            >
+              {authed ? 'Go to Dashboard' : 'Get started free'}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-6 py-3 text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-sm hover:bg-[#F5F0FF]"
+            >
+              Open Live Dashboard
+            </Link>
+          </div>
         </Reveal>
       </div>
     </section>

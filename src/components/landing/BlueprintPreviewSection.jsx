@@ -16,8 +16,9 @@ import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import Reveal from '@/components/landing/Reveal';
 
-const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
+// Lighter, brighter headers for Live Workspace (NO dark navy headers!)
+const LIGHT_HEADER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #A100FF 65%, #FF2E9A 100%)';
 
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) =>
@@ -30,26 +31,31 @@ const APP_MODULE_GROUPS = [
   {
     title: 'People, intake and profiles',
     color: '#0072FF',
-    modules: pick('dashboard', 'operations-centre', 'my-profile', ' intake'.trim(), 'our-staff', 'our-participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'),
+    headerBg: 'linear-gradient(90deg, #E0F7FF 0%, #DBEAFE 50%, #F5F0FF 100%)',
+    modules: pick('dashboard', 'operations-centre', 'my-profile', 'intake', 'our-staff', 'our-participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'),
   },
   {
     title: 'Service delivery and workforce',
-    color: '#0A2B6D',
+    color: '#00C6FF',
+    headerBg: 'linear-gradient(90deg, #D8F9FF 0%, #E0F2FE 50%, #F5F0FF 100%)',
     modules: pick('communications', 'incidents', 'incident-analytics', 'risks', 'rostering', 'goals', 'tasks', 'emergency-response'),
   },
   {
     title: 'Compliance, safety and evidence',
-    color: '#5A00D6',
+    color: '#A100FF',
+    headerBg: 'linear-gradient(90deg, #F3E8FF 0%, #EDE9FE 50%, #FCE7F3 100%)',
     modules: pick('compliance', 'auditor-portal', 'documents', 'company-safe', 'training', 'certificates', 'quality', 'feedback', 'meetings'),
   },
   {
     title: 'Business, finance and growth',
-    color: '#A100FF',
+    color: '#FF2E9A',
+    headerBg: 'linear-gradient(90deg, #FCE7F3 0%, #FAE8FF 50%, #F5F0FF 100%)',
     modules: pick('invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'analytics', 'human-resources', 'crm', 'projects'),
   },
   {
     title: 'Information, providers and access',
-    color: '#FF2E9A',
+    color: '#5A00D6',
+    headerBg: 'linear-gradient(90deg, #EDE9FE 0%, #E0E7FF 50%, #E0F7FF 100%)',
     modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'suggestions-hub', 'help', 'user-guides', 'assistant'),
   },
 ];
@@ -79,38 +85,40 @@ export default function BlueprintPreviewSection() {
       className="relative w-full scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white px-4 py-6 shadow-xl md:px-6 space-y-5"
       style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}
     >
-      {/* Top Heading Banner: An Accurate Map of the ComplianceHR Infinity App */}
+      {/* Lighter, Brighter Top Heading Banner */}
       <Reveal
         className="gradient-brand mx-auto rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-center text-white shadow-md"
-        style={{ background: SQUISHED_GRADIENT }}
+        style={{ background: LIGHT_HEADER_GRADIENT }}
       >
-        <div className="mx-auto inline-flex rounded-full border border-white/40 bg-white/20 px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-white">
+        <div className="mx-auto inline-flex rounded-full border border-[#0A2B6D] bg-white px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
           Current platform blueprint · {moduleCount} Connected Modules
         </div>
         <h2 className="mt-2 font-editorial text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
           An accurate map of the ComplianceHR Infinity app
         </h2>
-        <p className="mt-1 text-xs sm:text-sm font-semibold text-white/95">
+        <p className="mt-1 text-xs sm:text-sm font-semibold text-white">
           All {moduleCount} current modules, their purpose, access model and connected information flows in one colourful view.
         </p>
       </Reveal>
 
-      {/* MINIMISED, COLOURFUL, APP-BORDERED "HOW INFORMATION CONNECTS" & "ACCESS FOLLOWS ROLE" — MOVED HERE BEFORE LIVE WORKSPACE */}
-      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md" style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}>
+      {/* MINIMISED, COLOURFUL, APP-BORDERED "HOW INFORMATION CONNECTS" & "ACCESS FOLLOWS ROLE" */}
+      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md" style={{ borderTopWidth: '4px', borderTopColor: '#00C6FF' }}>
         <div
-          className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-1.5 text-white"
-          style={{ background: SQUISHED_GRADIENT }}
+          className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-2"
+          style={{ background: 'linear-gradient(90deg, #E0F7FF 0%, #EDE9FE 50%, #FCE7F3 100%)' }}
         >
           <div className="flex items-center gap-2">
-            <Workflow className="h-4 w-4 text-[#00C6FF]" />
-            <span className="text-xs font-extrabold uppercase tracking-wider text-white">
-              How Information Connects &amp; Role-Based Access Model (Compact Overview)
+            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
+              <Workflow className="h-4 w-4 text-white" />
+            </span>
+            <span className="rounded bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              How Information Connects &amp; Role-Based Access Model
             </span>
           </div>
           <button
             type="button"
             onClick={() => setExpandConnections((v) => !v)}
-            className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold text-white hover:bg-white/30"
+            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
           >
             {expandConnections ? 'Minimise Panel' : 'Expand Panel'}
             {expandConnections ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
@@ -119,13 +127,12 @@ export default function BlueprintPreviewSection() {
 
         {expandConnections && (
           <div className="mt-2.5 grid gap-3 lg:grid-cols-12">
-            {/* Compact Colourful Information Flows (7 cols) */}
-            <div className="lg:col-span-7 rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF]/60 p-2.5 space-y-1.5">
+            <div className="lg:col-span-7 rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF]/50 p-2.5 space-y-1.5">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                <h3 className="rounded bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   🔗 How Information Connects Automatically
                 </h3>
-                <span className="rounded-full bg-[#0072FF] px-2 py-0.5 text-[9.5px] font-extrabold text-white">
+                <span className="rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white">
                   Zero Double-Entry
                 </span>
               </div>
@@ -139,8 +146,8 @@ export default function BlueprintPreviewSection() {
                     {flow.steps.map((item, index) => (
                       <React.Fragment key={item}>
                         <span
-                          className="rounded-md px-2 py-0.5 text-[10px] font-extrabold text-white"
-                          style={{ backgroundColor: flow.color }}
+                          className="rounded-md border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                          style={{ borderTopWidth: '3px', borderTopColor: flow.color }}
                         >
                           {item}
                         </span>
@@ -154,13 +161,12 @@ export default function BlueprintPreviewSection() {
               </div>
             </div>
 
-            {/* Compact Colourful Access Model (5 cols) */}
-            <div className="lg:col-span-5 rounded-xl border-2 border-[#0A2B6D] bg-[#FFF0F8]/60 p-2.5 space-y-1.5">
+            <div className="lg:col-span-5 rounded-xl border-2 border-[#0A2B6D] bg-[#FFF0F8]/50 p-2.5 space-y-1.5">
               <div className="flex items-center justify-between">
-                <h3 className="flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                <h3 className="flex items-center gap-1 rounded bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   <Lock className="h-3.5 w-3.5 text-[#FF2E9A]" /> Access Follows the Person&apos;s Role
                 </h3>
-                <span className="rounded-full bg-[#FF2E9A] px-2 py-0.5 text-[9.5px] font-extrabold text-white">
+                <span className="rounded-full bg-[#FF2E9A] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white">
                   Strict RLS Security
                 </span>
               </div>
@@ -171,11 +177,11 @@ export default function BlueprintPreviewSection() {
                     className="flex items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/40 bg-white px-2.5 py-1 shadow-2xs"
                     style={{ borderLeftWidth: '4px', borderLeftColor: lvl.color }}
                   >
-                    <div className="min-w-0">
+                    <div className="min-w-0 bg-white">
                       <div className="text-[10.5px] font-extrabold text-[#0A2B6D] leading-tight">
                         {lvl.title}
                       </div>
-                      <div className="text-[9.5px] font-semibold text-[#5A00D6] leading-tight">
+                      <div className="text-[9.5px] font-bold text-[#5A00D6] leading-tight">
                         {lvl.desc}
                       </div>
                     </div>
@@ -187,37 +193,34 @@ export default function BlueprintPreviewSection() {
         )}
       </div>
 
-      {/* VIBRANT, MULTI-COLOURED LIVE WORKSPACE WINDOW */}
+      {/* LIVE WORKSPACE WINDOW WITH LIGHTER HEADERS */}
       <div className="relative overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white shadow-xl">
+        {/* Lighter Bright Sky-to-Pink Window Bar */}
         <div
-          className="flex flex-wrap items-center gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5 text-white"
-          style={{ background: SQUISHED_GRADIENT }}
+          className="flex flex-wrap items-center gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5"
+          style={{ background: 'linear-gradient(90deg, #E0F7FF 0%, #EDE9FE 50%, #FCE7F3 100%)' }}
         >
-          <span className="h-3 w-3 rounded-full bg-[#FF2E9A] ring-1 ring-white" />
-          <span className="h-3 w-3 rounded-full bg-[#00C6FF] ring-1 ring-white" />
-          <span className="h-3 w-3 rounded-full bg-[#C084FC] ring-1 ring-white" />
-          <div className="ml-2 min-w-0 flex-1 rounded-lg border border-white/40 bg-white/20 px-3 py-1 text-xs font-extrabold text-white">
+          <span className="h-3 w-3 rounded-full bg-[#FF2E9A] ring-1 ring-[#0A2B6D]" />
+          <span className="h-3 w-3 rounded-full bg-[#00C6FF] ring-1 ring-[#0A2B6D]" />
+          <span className="h-3 w-3 rounded-full bg-[#A100FF] ring-1 ring-[#0A2B6D]" />
+          <div className="ml-2 min-w-0 flex-1 rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
             compliancehrinfinity.com/dashboard — All {moduleCount} Connected Modules
           </div>
-          <span className="rounded-full border border-[#0A2B6D] bg-[#00C6FF] px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs">
+          <span className="rounded-full border-2 border-[#0A2B6D] bg-[#00C6FF] px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs">
             LIVE WORKSPACE
           </span>
         </div>
 
         <div className="grid lg:grid-cols-[220px_1fr]">
-          {/* Colourful Sidebar Preview */}
+          {/* Lighter Pastel Sidebar Preview */}
           <aside
-            className="hidden border-r-2 border-[#0A2B6D] p-3 lg:block"
-            style={{
-              background:
-                'linear-gradient(180deg, rgba(0,114,255,0.10) 0%, rgba(90,0,214,0.12) 50%, rgba(255,46,154,0.10) 100%)',
-            }}
+            className="hidden border-r-2 border-[#0A2B6D] bg-[#F5F0FF]/50 p-3 lg:block"
           >
             <div className="flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-2xs">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg gradient-brand text-white shadow-sm">
-                <ShieldCheck className="h-4 w-4" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0072FF] text-white shadow-sm">
+                <ShieldCheck className="h-4 w-4 text-white" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 bg-white">
                 <div className="truncate text-xs font-extrabold text-[#0A2B6D]">ComplianceHR Infinity</div>
                 <div className="text-[10px] font-extrabold text-[#5A00D6]">Provider Workspace</div>
               </div>
@@ -231,8 +234,7 @@ export default function BlueprintPreviewSection() {
                   style={{ borderTopWidth: '3px', borderTopColor: group.color }}
                 >
                   <div
-                    className="text-[9.5px] font-extrabold uppercase tracking-wider"
-                    style={{ color: group.color }}
+                    className="rounded bg-white text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
                   >
                     {group.title}
                   </div>
@@ -241,7 +243,7 @@ export default function BlueprintPreviewSection() {
                       <Link
                         key={m.key}
                         to={m.path}
-                        className="flex items-center gap-1.5 rounded-md bg-[#F5F0FF] px-1.5 py-0.5 text-[10px] font-bold text-[#0A2B6D] hover:bg-[#EDE9FE]"
+                        className="flex items-center gap-1.5 rounded-md border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[10px] font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
                       >
                         <span
                           className="h-2 w-2 shrink-0 rounded-full"
@@ -256,14 +258,14 @@ export default function BlueprintPreviewSection() {
             </div>
           </aside>
 
-          {/* Colourful Live Workspace Canvas */}
-          <div className="bg-gradient-to-br from-white via-[#F5F0FF]/50 to-[#FFF0F8]/50 p-4 sm:p-5">
+          {/* Live Workspace Canvas with Lighter Group Headers */}
+          <div className="bg-white p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
               <div className="flex items-center gap-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-white shadow-sm">
-                  <LayoutDashboard className="h-5 w-5" />
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0072FF] text-white shadow-sm">
+                  <LayoutDashboard className="h-5 w-5 text-white" />
                 </span>
-                <div>
+                <div className="bg-white">
                   <div className="font-editorial text-lg font-extrabold text-[#0A2B6D]">
                     Organisation Live Workspace
                   </div>
@@ -273,12 +275,12 @@ export default function BlueprintPreviewSection() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-xl border-2 border-[#0A2B6D] bg-[#0072FF] px-2.5 py-1 text-[10.5px] font-extrabold text-white">
-                  <FileSpreadsheet className="h-3.5 w-3.5" />
+                <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                  <FileSpreadsheet className="h-3.5 w-3.5 text-[#0072FF]" />
                   Spreadsheet Exchange
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-xl border-2 border-[#0A2B6D] bg-[#FF2E9A] px-2.5 py-1 text-[10.5px] font-extrabold text-white">
-                  <Sparkles className="h-3.5 w-3.5" />
+                <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                  <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
                   AI Assistant
                 </span>
               </div>
@@ -291,14 +293,18 @@ export default function BlueprintPreviewSection() {
                   className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm"
                   style={{ borderTopWidth: '4px', borderTopColor: group.color }}
                 >
+                  {/* Lighter Pastel Header with Crisp White Pill Behind Dark Blue Title! */}
                   <div
-                    className="mb-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#0A2B6D] px-3 py-1.5 text-white"
-                    style={{ backgroundColor: group.color }}
+                    className="mb-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-1.5"
+                    style={{ background: group.headerBg }}
                   >
-                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-white">
+                    <h3 className="rounded-lg border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                       {group.title}
                     </h3>
-                    <span className="rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                    <span
+                      className="rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                      style={{ backgroundColor: group.color }}
+                    >
                       {group.modules.length} modules
                     </span>
                   </div>
@@ -315,20 +321,19 @@ export default function BlueprintPreviewSection() {
                           style={{
                             borderLeftWidth: '5px',
                             borderLeftColor: modColor,
-                            background: `linear-gradient(135deg, ${modColor}18 0%, #ffffff 82%)`,
                           }}
                         >
                           <span
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D] text-white shadow-sm"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm"
                             style={{ backgroundColor: modColor }}
                           >
                             <Icon className="h-4 w-4 text-white" />
                           </span>
-                          <div className="min-w-0 flex-1">
+                          <div className="min-w-0 flex-1 bg-white">
                             <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
                               {mod.label}
                             </div>
-                            <div className="mt-0.5 text-[10.5px] font-semibold leading-snug text-[#0A2B6D]/85">
+                            <div className="mt-0.5 text-[10.5px] font-semibold leading-snug text-[#0A2B6D]">
                               {mod.blurb}
                             </div>
                           </div>
