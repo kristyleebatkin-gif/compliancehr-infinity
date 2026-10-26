@@ -582,13 +582,13 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                             className="flex flex-col justify-between rounded-[13px] p-3 text-center space-y-2.5"
                             style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
                           >
-                            {/* 30-Second Changing Spotlight Banner — Centered */}
+                            {/* Strict Fixed-Height 30-Second Spotlight Banner */}
                             <div
                               className="w-full rounded-xl p-[2px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="gradient-brand flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-2 text-center text-white sm:flex-row sm:justify-between"
+                                className="gradient-brand flex h-[68px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-1.5 text-center text-white sm:flex-row sm:justify-between"
                                 style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                               >
                                 <div className="min-w-0 flex-1 text-center">
@@ -599,7 +599,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                     {pack.nowPlayingLabel}
                                   </div>
                                   <div
-                                    className="text-xs font-extrabold leading-snug text-white"
+                                    className="text-[11px] font-extrabold leading-tight text-white"
                                     style={{ color: '#FFFFFF' }}
                                   >
                                     {currentSpotlight}
@@ -616,7 +616,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </div>
                             </div>
 
-                            {/* All 5 Package Benefits Listed & Centered on the TV Screen with Equal Row Heights */}
+                            {/* All 5 Package Benefits with Strict Equal Row Heights So Pack 1 & Pack 2 Line Up */}
                             <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1.5 text-center text-xs font-extrabold">
                               {pack.bullets.map((line, idx) => {
                                 const sym = getSymbolView(pIdx * 3 + idx);
@@ -626,11 +626,11 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                   <li
                                     key={line}
                                     onClick={() => setActiveBenefitIdx(idx)}
-                                    className="cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
+                                    className="flex h-[48px] cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
-                                      className={`flex h-full min-h-[42px] items-center justify-center gap-2 rounded-[9px] px-2.5 py-1.5 text-center ${
+                                      className={`flex h-full w-full items-center justify-center gap-2 rounded-[9px] px-2.5 py-1 text-center ${
                                         isCurrent ? 'bg-white ring-2 ring-[#FF2E9A]' : 'bg-white/95'
                                       }`}
                                     >
@@ -640,7 +640,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                       >
                                         <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="flex-1 text-center text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
+                                      <span className="flex-1 text-center text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
                                         {line}
                                       </span>
                                     </div>
@@ -652,7 +652,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         </div>
 
                         {/* Bottom TV Speaker Bar & Channel Dots */}
-                        <div className="mt-2 flex items-center justify-between px-3">
+                        <div className="mt-2 flex h-[20px] items-center justify-between px-3">
                           <span className="text-[9px] font-extrabold tracking-widest text-white">
                             {pack.tvChannel} · CONSTANTLY LIT HD
                           </span>
@@ -680,7 +680,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* Important Package Info & Accurate Prices Placed Directly BELOW the TV Screen — Centered & Aligned */}
+                    {/* Important Package Info & Accurate Prices Below TV — Strict Fixed Heights So Pack 1 & Pack 2 Line Up */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-2xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
@@ -689,12 +689,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         className="flex h-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
                         style={{ background: SPRAY_BGS[(pIdx + 1) % SPRAY_BGS.length] }}
                       >
-                        {/* Centered Price Box Inside App Design Coloured Border */}
+                        {/* Strict Fixed-Height Price Box */}
                         <div
                           className="w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[82px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                          <div className="flex h-[90px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                             <div className="flex flex-wrap items-baseline justify-center gap-2">
                               <span className="text-xs font-extrabold uppercase text-[#0072FF]">
                                 {pack.pricePrefix}
@@ -710,7 +710,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </span>
                             </div>
                             <p
-                              className="mt-1 text-center text-[11px] font-extrabold text-black"
+                              className="mt-1 text-center text-[10.5px] font-extrabold leading-tight text-black"
                               style={{ color: '#000000' }}
                             >
                               {pack.subtitle}
@@ -718,24 +718,24 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Centered Important Info Header & Aligned Bullet Rows Below Screen */}
+                        {/* Strict Fixed-Height Important Info Header & 4 Equal Rows */}
                         <div className="space-y-1.5 text-center">
                           <div
                             className="w-full rounded-lg p-[2px]"
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
                             <div
-                              className="gradient-brand rounded-[6px] px-3 py-1 text-center text-[10.5px] font-extrabold uppercase tracking-wider text-white"
+                              className="gradient-brand flex h-[34px] items-center justify-center rounded-[6px] px-3 text-center text-[10.5px] font-extrabold uppercase tracking-wider text-white"
                               style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
                             >
-                              {pack.importantInfoTitle}
+                              <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                             </div>
                           </div>
                           <div className="grid grid-cols-1 grid-rows-4 gap-1">
                             {pack.importantInfoRows.map((info) => (
                               <div
                                 key={info}
-                                className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1 text-center text-[10.5px] font-extrabold text-black"
+                                className="flex h-[38px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight text-black"
                                 style={{ color: '#000000' }}
                               >
                                 <CheckCircle2 className="h-3 w-3 shrink-0 text-[#5A00D6]" />

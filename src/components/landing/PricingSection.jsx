@@ -301,14 +301,14 @@ export default function PricingSection() {
                       </span>
                     </div>
 
-                    {/* Fixed-Height Title & Price Box in App Design Colours */}
+                    {/* Strict Fixed-Height Title & Price Box in App Design Colours So Every Card Lines Up */}
                     <div
                       className="w-full rounded-xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex min-h-[104px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2.5 text-center space-y-1">
+                      <div className="flex h-[112px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
                         <h3
-                          className="font-editorial text-base sm:text-lg font-extrabold leading-snug bg-clip-text text-transparent text-center"
+                          className="font-editorial text-sm sm:text-base font-extrabold leading-tight bg-clip-text text-transparent text-center"
                           style={{ backgroundImage: getTitleGradientView(pIdx) }}
                         >
                           {pkg.name}
@@ -328,19 +328,19 @@ export default function PricingSection() {
                           </span>
                         </div>
 
-                        <div className="text-[11px] font-extrabold text-[#5A00D6]">
+                        <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
                           ${pkg.previousMonthly}/mo Base + ${pkg.eliteAddon}/mo Elite Pack Included
                         </div>
                       </div>
                     </div>
 
-                    {/* Fixed-Height 2-Row Credit Pills */}
+                    {/* Strict Fixed-Height 2-Row Credit Pills */}
                     <div className="grid grid-cols-1 grid-rows-2 gap-1.5">
                       <div
                         className="rounded-full p-[2px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex h-[32px] items-center justify-center gap-2 rounded-full bg-white px-3 text-xs font-extrabold text-[#0A2B6D]">
+                        <div className="flex h-[34px] items-center justify-center gap-2 rounded-full bg-white px-3 text-xs font-extrabold text-[#0A2B6D]">
                           <Zap className="h-3.5 w-3.5 text-[#0072FF]" />
                           <span>{pkg.messageCredits}</span>
                         </div>
@@ -349,24 +349,24 @@ export default function PricingSection() {
                         className="rounded-full p-[2px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex h-[32px] items-center justify-center gap-2 rounded-full bg-white px-3 text-xs font-extrabold text-[#5A00D6]">
+                        <div className="flex h-[34px] items-center justify-center gap-2 rounded-full bg-white px-3 text-xs font-extrabold text-[#5A00D6]">
                           <Layers className="h-3.5 w-3.5 text-[#FF2E9A]" />
                           <span>{pkg.integrationCredits}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Fixed-Height 6-Row Benefits List So Every Card Lines Up */}
+                    {/* Strict Fixed-Height 6-Row Benefits List So Every Package Card Lines Up Horizontally */}
                     <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1.5 pt-0.5">
                       {pkg.benefits.map((b, bIdx) => {
                         const sym = getSymbolView(pIdx * 2 + bIdx);
                         return (
                           <li
                             key={b}
-                            className="flex h-full min-h-[48px] rounded-xl p-[2px] shadow-2xs"
+                            className="flex h-[54px] rounded-xl p-[2px] shadow-2xs"
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
-                            <div className="flex h-full w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                            <div className="flex h-full w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1 text-center text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
                               <span
                                 className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
                                 style={{ borderColor: getAppBorderView(pIdx * 2 + bIdx) }}

@@ -494,7 +494,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       id="screen-by-screen-audit"
       className="rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header Banner Fitted Cleanly Inside App-Design Coloured Border */}
+      {/* 2026 Screen-by-Screen Header Fitted Better + Black Writing Underneath */}
       <div
         className="w-full rounded-2xl p-[4px] shadow-sm"
         style={{
@@ -502,22 +502,35 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2.5">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-            <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              Audit
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-              of All {MODULE_DIRECTORY.length} Modulars
-            </span>
-          </h2>
+        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-3">
+          <div
+            className="w-full rounded-2xl p-[3px] shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="rounded-[13px] bg-white px-4 py-3 text-center space-y-1.5">
+              <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+                <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Audit
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  of All {MODULE_DIRECTORY.length} Modulars
+                </span>
+              </h2>
 
-          <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold leading-relaxed text-[#0072FF]">
-            Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
-          </p>
+              <p
+                className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
+                style={{ color: '#000000' }}
+              >
+                Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
+              </p>
+            </div>
+          </div>
 
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div
               className="rounded-full p-[2.5px] shadow-2xs"
               style={{
@@ -564,7 +577,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
       <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
-      {/* Search Screens Bar & Group Filter Pills with App-Design Border & Uniform App-Coloured Words */}
+      {/* Search Screens Bar & Centered App-Coloured Filter Tiles Under Search */}
       <div
         className="w-full rounded-2xl p-[3.5px] shadow-sm"
         style={{
@@ -572,7 +585,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col gap-3 rounded-[13px] bg-white p-3.5">
+        <div className="flex flex-col gap-3 rounded-[13px] bg-white p-3.5 text-center">
           {/* Search Bar Inside App Design Coloured Border */}
           <div
             className="w-full rounded-full p-[3px] shadow-2xs"
@@ -593,33 +606,29 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             </div>
           </div>
 
-          {/* Group Filter Pills — App Coloured Words & Similar Uniform Size */}
+          {/* Group Filter Tiles Under Search — Centered Words & All App Design Colour */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
             {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp, idx) => {
               const active = selectedGroup === grp;
               return (
                 <div
                   key={grp}
-                  className="rounded-full p-[2.5px] shadow-2xs"
+                  className={`rounded-full p-[2.5px] shadow-2xs transition-all ${
+                    active ? 'ring-2 ring-[#FF2E9A]' : ''
+                  }`}
                   style={{ background: getHeaderView(idx) }}
                 >
                   <button
                     type="button"
                     onClick={() => setSelectedGroup(grp)}
-                    className={`flex min-h-[36px] w-full items-center justify-center rounded-full px-3 py-1 text-center text-xs font-extrabold transition-all ${
-                      active ? 'ring-2 ring-[#0A2B6D]' : ''
-                    }`}
-                    style={
-                      active
-                        ? { background: getHeaderView(idx), color: '#FFFFFF' }
-                        : {
-                            background:
-                              'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.55) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), #FFFFFF',
-                            color: '#5A00D6',
-                          }
-                    }
+                    className="flex h-[38px] w-full items-center justify-center rounded-full bg-white px-3 text-center text-xs font-extrabold transition-all"
                   >
-                    <span>{grp}</span>
+                    <span
+                      className="text-center font-extrabold bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(idx) }}
+                    >
+                      {grp}
+                    </span>
                   </button>
                 </div>
               );
@@ -803,21 +812,21 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 style={{ background: sprayBg }}
               >
                 <div className="flex flex-1 flex-col justify-between space-y-2">
-                  {/* Fixed-Height Fitted Header with App Design Border */}
+                  {/* Strict Fixed-Height Centered Header That Fits Cleanly Across All 48 Screen Tiles */}
                   <div
                     className="w-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: getHeaderView(index) }}
                   >
                     <div
-                      className="gradient-brand flex min-h-[48px] items-center justify-between gap-1.5 rounded-[9px] px-2.5 py-1.5 text-white"
+                      className="gradient-brand flex h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
                       style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                     >
-                      <div className="flex items-center gap-1.5 min-w-0 text-left">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                          <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <div className="flex items-center justify-center gap-1.5 w-full">
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                         </span>
                         <span
-                          className="text-[11px] font-extrabold leading-tight text-white"
+                          className="text-[10.5px] font-extrabold leading-tight text-center text-white"
                           style={{ color: '#FFFFFF' }}
                         >
                           #{index + 1} {mod.label}
@@ -825,49 +834,47 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                       </div>
                       <Link
                         to={mod.path}
-                        className="shrink-0 inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]"
+                        className="inline-flex items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]"
                       >
-                        Open <ExternalLink className="h-2.5 w-2.5 text-[#0072FF]" />
+                        Open <ExternalLink className="h-2 w-2 text-[#0072FF]" />
                       </Link>
                     </div>
                   </div>
 
-                  {/* Lined-Up Topic & Smart Doc Sections with App Design Borders & Spray Background */}
+                  {/* Strict Fixed-Height Centered White Writing Sections Lined Up With Every Neighbouring Tile */}
                   <div className="grid flex-1 grid-cols-1 grid-rows-2 gap-1.5 text-[10px] leading-snug text-[#0A2B6D]">
                     <div
-                      className="flex h-full rounded-xl p-[2px]"
+                      className="flex h-[68px] rounded-xl p-[2px]"
                       style={{ background: getHeaderView(index) }}
                     >
-                      <div
-                        className="flex h-full min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
-                        style={{ background: sprayBg }}
-                      >
-                        <span className="font-extrabold uppercase tracking-wider text-[9px] text-[#5A00D6]">
+                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                        <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#5A00D6]">
                           Topic
                         </span>
-                        <span className="font-extrabold text-[#0A2B6D]">{bp.topic}</span>
+                        <span className="text-center font-extrabold leading-tight text-[#0A2B6D]">
+                          {bp.topic}
+                        </span>
                       </div>
                     </div>
 
                     <div
-                      className="flex h-full rounded-xl p-[2px]"
+                      className="flex h-[68px] rounded-xl p-[2px]"
                       style={{ background: getHeaderView(index + 1) }}
                     >
-                      <div
-                        className="flex h-full min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
-                        style={{ background: sprayBg }}
-                      >
-                        <span className="font-extrabold uppercase tracking-wider text-[9px] text-[#0072FF]">
+                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                        <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#0072FF]">
                           2026 Smart Doc
                         </span>
-                        <span className="font-extrabold text-[#0A2B6D]">{bp.smartDoc2026}</span>
+                        <span className="text-center font-extrabold leading-tight text-[#0A2B6D]">
+                          {bp.smartDoc2026}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Action Buttons (Doc, Task, Done) with App Design Borders & Spray Background */}
-                <div className="mt-2 grid grid-cols-3 gap-1.5 pt-2 border-t border-[#0A2B6D]/15">
+                {/* Bottom Action Buttons (Doc, Task, Done) in White Inside App Design Borders */}
+                <div className="mt-2 grid h-[32px] grid-cols-3 gap-1.5 pt-1 border-t border-[#0A2B6D]/15">
                   <div
                     className="rounded-full p-[2px]"
                     style={{ background: getHeaderView(index) }}
@@ -875,8 +882,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                     <button
                       type="button"
                       onClick={() => openSmartFillDoc(mod)}
-                      className="flex h-[28px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
-                      style={{ background: sprayBg }}
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
                     >
                       <Wand2 className="h-2.5 w-2.5 text-[#FF2E9A]" />
                       Doc
@@ -891,8 +897,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                       type="button"
                       disabled={creatingTaskKey === `${mod.key}-open`}
                       onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                      className="flex h-[28px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
-                      style={{ background: sprayBg }}
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
                     >
                       <PlusCircle className="h-2.5 w-2.5 text-[#0072FF]" />
                       Task
@@ -907,8 +912,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                       type="button"
                       disabled={creatingTaskKey === `${mod.key}-done`}
                       onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                      className="flex h-[28px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
-                      style={{ background: sprayBg }}
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
                     >
                       <CheckCircle2 className="h-2.5 w-2.5 text-[#5A00D6]" />
                       Done

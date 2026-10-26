@@ -834,24 +834,27 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         }}
       >
         <div className="flex flex-col items-center justify-center gap-3 rounded-[13px] bg-white p-3.5 text-center">
-          {/* Stretched Side-to-Side Header */}
+          {/* Enlarged Better-Looking Side-to-Side Master Compliance Header */}
           <div
-            className="w-full rounded-full p-[2.5px] shadow-2xs"
+            className="w-full rounded-2xl p-[3px] shadow-2xs"
             style={{
               background:
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
             <div
-              className="gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold text-white"
+              className="gradient-brand flex min-h-[60px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-6 py-2.5 text-center text-white"
               style={{ background: getHeaderView(0), color: '#FFFFFF' }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <ClipboardList className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-              </span>
-              <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Master Compliance Audit Checklist · 17 Categories · 356 Checkpoints
-              </span>
+              <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                  <ClipboardList className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+                <span style={{ color: '#FFFFFF' }}>Master Compliance Audit Checklist</span>
+              </div>
+              <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
+              </div>
             </div>
           </div>
 

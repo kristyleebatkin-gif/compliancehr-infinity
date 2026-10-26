@@ -567,21 +567,24 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 2. Enlarged Side-to-Side Banner Directly Under the Writing */}
+      {/* 2. Better-Fitted Infinity One-Click Operations Tile */}
       <div
-        className="w-full rounded-full p-[3px] shadow-sm"
+        className="w-full rounded-2xl p-[3.5px] shadow-sm"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div
-          className="gradient-brand flex min-h-[50px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2.5 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white"
+          className="gradient-brand flex min-h-[60px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-5 py-2.5 text-center text-white"
           style={{ background: getHeaderView(5), color: '#FFFFFF' }}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Zap className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
-          </span>
-          <span className="text-center" style={{ color: '#FFFFFF' }}>
-            Infinity One-Click Operations · 12 Instant Executive Actions Armed
-          </span>
+          <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Zap className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span style={{ color: '#FFFFFF' }}>Infinity One-Click Operations</span>
+          </div>
+          <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+            12 Instant Executive Actions Armed Across All 3 Operational Pillars
+          </div>
         </div>
       </div>
 
@@ -774,33 +777,33 @@ export default function InfinityOneClickOperations({ compact = false }) {
         })}
       </div>
 
-      {/* 5. Live Executive One-Click Execution Log with 2 Side-by-Side OPS-SYS Tiles & Centered Info */}
+      {/* 5. Live Executive One-Click Execution Log — Larger Live Executive Writing & Real-Time Verification Feed Moved Slightly Down */}
       <div
         className="w-full rounded-2xl p-[4px] shadow-sm"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="rounded-[12px] bg-white p-3.5 space-y-3 text-center">
           <div
-            className="w-full rounded-full p-[2.5px] shadow-2xs"
+            className="w-full rounded-2xl p-[3px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex flex-wrap items-center justify-center sm:justify-between gap-2 rounded-full px-4 py-2 text-white"
+              className="gradient-brand flex min-h-[68px] flex-col items-center justify-center gap-1.5 rounded-[13px] px-5 py-2.5 text-center text-white"
               style={{ background: getHeaderView(2), color: '#FFFFFF' }}
             >
-              <div className="flex items-center gap-2">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <CheckCircle2 className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+              <div className="flex items-center justify-center gap-2">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
                 </span>
                 <span
-                  className="text-xs font-extrabold uppercase tracking-wider text-white"
+                  className="text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white"
                   style={{ color: '#FFFFFF' }}
                 >
                   LIVE EXECUTIVE 1-CLICK EXECUTION AUDIT TRAIL ({executionLog.length} EVENTS)
                 </span>
               </div>
               <span
-                className="rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                className="mt-0.5 inline-flex items-center justify-center rounded-full border border-white bg-white/20 px-3.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-white"
                 style={{ color: '#FFFFFF' }}
               >
                 Real-Time Verification Feed

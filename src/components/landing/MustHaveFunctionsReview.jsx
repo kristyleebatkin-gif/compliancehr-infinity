@@ -419,21 +419,43 @@ export default function MustHaveFunctionsReview() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] px-3 py-2.5 text-center"
+                        className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
                         style={{ background: sprayBg }}
                       >
-                        <div className="w-full rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1 text-center text-xs font-extrabold text-[#0A2B6D]">
-                          {item.title}
-                        </div>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                          {item.included}
-                        </span>
-                        <p
-                          className="text-center text-[10.5px] font-bold leading-snug text-black"
-                          style={{ color: '#000000' }}
+                        {/* Section 1: Fixed-Height Title Box Lined Up Across Tile 1 & Tile 2 */}
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: getHeaderView(idx) }}
                         >
-                          {item.detail}
-                        </p>
+                          <div className="flex h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                            {item.title}
+                          </div>
+                        </div>
+
+                        {/* Section 2: Fixed-Height Included Pill Lined Up Across Tile 1 & Tile 2 */}
+                        <div
+                          className="w-full rounded-full p-[2px]"
+                          style={{ background: getHeaderView(idx + 1) }}
+                        >
+                          <div className="flex h-[30px] w-full items-center justify-center rounded-full bg-white px-2.5 text-center text-[10px] font-extrabold text-[#5A00D6]">
+                            {item.included}
+                          </div>
+                        </div>
+
+                        {/* Section 3: Fixed-Height Detail Box Lined Up Across Tile 1 & Tile 2 */}
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: getHeaderView(idx + 2) }}
+                        >
+                          <div className="flex h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
+                            <p
+                              className="text-center text-[10.5px] font-bold leading-tight text-black"
+                              style={{ color: '#000000' }}
+                            >
+                              {item.detail}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
@@ -543,20 +565,20 @@ export default function MustHaveFunctionsReview() {
                           </span>
                         </div>
 
-                        {/* Fixed-Height Heading & Subtitle Box so Pillars 1&2, 3&4, 5&6, 7&8 Line Up */}
+                        {/* Strict Fixed-Height Heading & Subtitle Box so Every Pillar Pair Lines Up Exactly */}
                         <div
                           className="w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[84px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                          <div className="flex h-[96px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                             <h4
-                              className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent"
+                              className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent"
                               style={{ backgroundImage: getTitleGradientView(pIdx) }}
                             >
                               {pillar.title}
                             </h4>
                             <p
-                              className="mt-1 text-[11px] font-bold leading-snug text-black"
+                              className="mt-1 text-[10.5px] font-bold leading-tight text-black"
                               style={{ color: '#000000' }}
                             >
                               {pillar.subtitle}
@@ -565,7 +587,7 @@ export default function MustHaveFunctionsReview() {
                         </div>
                       </div>
 
-                      {/* 6 Equal-Height Bullet Rows Lined Up Across Every Pillar Pair */}
+                      {/* 6 Strict Equal-Height Bullet Rows Lined Up Across Every Pillar & Its Neighbour */}
                       <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1.5 pt-1">
                         {pillar.items.map((item, iIdx) => {
                           const idx = pIdx * 3 + iIdx;
@@ -575,11 +597,11 @@ export default function MustHaveFunctionsReview() {
                           return (
                             <li
                               key={item}
-                              className="flex h-full min-h-[54px] rounded-xl p-[2px] shadow-2xs"
+                              className="flex h-[58px] rounded-xl p-[2px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="flex h-full w-full items-center justify-center gap-2 rounded-[10px] px-2.5 py-1.5 text-center text-[11px] font-extrabold leading-snug text-[#0A2B6D]"
+                                className="flex h-full w-full items-center justify-center gap-2 rounded-[10px] px-2.5 py-1 text-center text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]"
                                 style={{ background: sprayBg }}
                               >
                                 <span
