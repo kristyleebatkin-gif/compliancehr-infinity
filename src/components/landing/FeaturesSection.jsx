@@ -4,11 +4,13 @@ import {
   BadgeCheck,
   BriefcaseBusiness,
   CalendarClock,
+  CheckCircle2,
   ClipboardCheck,
   FileSpreadsheet,
   GraduationCap,
   Heart,
   MapPinned,
+  Pin,
   ShieldAlert,
   Sparkles,
   Users,
@@ -24,26 +26,131 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-const CAPABILITY_SPRAY_BGS = [
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-  'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.56) 0%, transparent 50%), #FFFFFF',
-  'radial-gradient(circle at 16% 28%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 78%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 54% 18%, rgba(56, 189, 248, 0.58) 0%, transparent 50%), #FFFFFF',
-  'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
-];
+const STICKY_NOTE_BG = 'linear-gradient(180deg, #FFF3FA 0%, #FFE4F5 100%)';
+const STICKY_NOTE_BORDER = '#FF2E9A';
+const STICKY_NOTE_TAPE = 'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
 const FEATURES = [
-  { icon: Users, title: 'Workforce Records', desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.' },
-  { icon: Heart, title: 'Participant Records', desc: 'Participant profiles, support plans, agreements and folder compliance checklists.' },
-  { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, shifts, availability, handovers and payable hours.' },
-  { icon: BriefcaseBusiness, title: 'Performance Reviews', desc: 'Online appraisals, review schedules and connected employment records.' },
-  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'NDIS invoices from rostered shifts, price-guide items and payroll reports.' },
-  { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate and resolve incidents with 24h/5d alerts and full audit trails.' },
-  { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess and treat risks and hazards with a live register and controls.' },
-  { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions and stay on top of expiring certifications.' },
-  { icon: BadgeCheck, title: 'NDIS Governance', desc: 'Registration groups, scheduled audits, renewals, reminders and Commission portals.' },
-  { icon: ClipboardCheck, title: 'Express Audit & Certs', desc: 'Complete internal audits in minutes with evidence attached and branded reports.' },
-  { icon: MapPinned, title: 'Community Referral', desc: 'Essential crisis contacts, verified providers and local services by postcode.' },
-  { icon: Sparkles, title: 'Automation & Excel', desc: 'Assisted checks, scheduled reminders and secure Excel import, preview and export.' },
+  {
+    icon: Users,
+    title: 'Workforce Records',
+    desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.',
+    functions: [
+      '100-Point Staff File Completeness',
+      'NDIS Screening & Blue Card expiry alerts',
+      'Instant Staff ID Badge & Name Tag Studio',
+    ],
+  },
+  {
+    icon: Heart,
+    title: 'Participant Records',
+    desc: 'Participant profiles, support plans, agreements and folder compliance checklists.',
+    functions: [
+      '1-Click Intake-to-Profile onboarding',
+      '3-Part Consents (Sharing, Advocacy, Meds)',
+      '10-weekly & 3-monthly review trackers',
+    ],
+  },
+  {
+    icon: CalendarClock,
+    title: 'Rostering & Shift Notes',
+    desc: 'Plan by participant or worker, shifts, availability, handovers and payable hours.',
+    functions: [
+      'SCHADS qualification & fatigue gatekeeper',
+      'Coverage heatmap & labour cost forecast',
+      'Shift handover notes & goal progress sync',
+    ],
+  },
+  {
+    icon: BriefcaseBusiness,
+    title: 'Performance Reviews',
+    desc: 'Online appraisals, review schedules and connected employment records.',
+    functions: [
+      '360° Staff Performance Appraisals',
+      'Digital Employment Contracts & signing',
+      'Automated probation & milestone reminders',
+    ],
+  },
+  {
+    icon: FileSpreadsheet,
+    title: 'Invoicing & Payroll',
+    desc: 'NDIS invoices from rostered shifts, price-guide items and payroll reports.',
+    functions: [
+      'Shift-to-Invoice NDIS Price Guide builder',
+      'Automated Staff Payslips & Pay Runs',
+      'AI Receipt Scanner & Bank Reconciliation',
+    ],
+  },
+  {
+    icon: AlertTriangle,
+    title: 'Incident Clinic',
+    desc: 'Log, investigate and resolve incidents with 24h/5d alerts and full audit trails.',
+    functions: [
+      '24-hour & 5-day NDIS Commission timers',
+      'Root-cause investigation & photo evidence',
+      'Auto-routing to Compliance & Quality',
+    ],
+  },
+  {
+    icon: ShieldAlert,
+    title: 'Risk Management',
+    desc: 'Identify, assess and treat risks and hazards with a live register and controls.',
+    functions: [
+      'ISO 31000 Hierarchy of Controls matrix',
+      '6-monthly Individual & Home Assessments',
+      'Pre-shift Take-5 & vehicle safety checks',
+    ],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Training Tracking',
+    desc: 'Assign modules, track completions and stay on top of expiring certifications.',
+    functions: [
+      'Interactive LMS Learner Portal & streaks',
+      'AI Course Author & AI Competency Quizzes',
+      'Auto-issued signed PDF Certificates',
+    ],
+  },
+  {
+    icon: BadgeCheck,
+    title: 'NDIS Governance',
+    desc: 'Registration groups, scheduled audits, renewals, reminders and Commission portals.',
+    functions: [
+      '8 NDIS Practice Standards control map',
+      'Consent-gated External Auditor Portal',
+      'Live NDIS Commission news & updates',
+    ],
+  },
+  {
+    icon: ClipboardCheck,
+    title: 'Express Audit & Certs',
+    desc: 'Complete internal audits in minutes with evidence attached and branded reports.',
+    functions: [
+      '2-Minute Express Audit generator',
+      '356-Checkpoint Master Audit (CHR-AUD-001)',
+      '1-Click Printable PDF Audit & Board Pack',
+    ],
+  },
+  {
+    icon: MapPinned,
+    title: 'Community Referral',
+    desc: 'Essential crisis contacts, verified providers and local services by postcode.',
+    functions: [
+      'Postcode-matched local referral directory',
+      '24/7 Emergency & Crisis Quick-Dial hub',
+      'Community Council & accessible events',
+    ],
+  },
+  {
+    icon: Sparkles,
+    title: 'Automation & Excel',
+    desc: 'Assisted checks, scheduled reminders and secure Excel import, preview and export.',
+    functions: [
+      '65+ live workflows & 100+ server functions',
+      '30-Action & 30-Task PDF/CSV batch reports',
+      '1-Click CSV/Excel import & export exchange',
+    ],
+  },
 ];
 
 export default function FeaturesSection() {
@@ -54,12 +161,12 @@ export default function FeaturesSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
+        {/* Heading & Subheading in App Design Coloured Border */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
+          <div className="w-full rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
             <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
               <span className="text-[#0A2B6D]">An impossible </span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -80,32 +187,53 @@ export default function FeaturesSection() {
 
         {/* Stretched Side-to-Side "Latest Platform Capabilities · 12 Connected Engines" Underneath Writing */}
         <div
-          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(5) }}
+          className="w-full rounded-full p-[3px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Sparkles className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">Latest Platform Capabilities · 12 Connected Engines</span>
+          <div
+            className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>
+              Latest Platform Capabilities · 12 Connected Engines (Sticky Notes with Functions)
+            </span>
+          </div>
         </div>
 
-        {/* 12 Capability Cards: Sprays of Pink, Blue & Purple Background, Symbols & Numbers Beside Each Other, Headings in App Design Coloured Borders */}
-        <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center">
+        {/* 12 Capability Sticky Notes with Functions */}
+        <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center">
           {FEATURES.map((f, index) => {
             const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
-            const sprayBg = CAPABILITY_SPRAY_BGS[index % CAPABILITY_SPRAY_BGS.length];
             return (
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group flex h-full flex-col rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                style={{
+                  background: STICKY_NOTE_BG,
+                  borderColor: STICKY_NOTE_BORDER,
+                  borderBottomRightRadius: '26px',
+                }}
               >
+                {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-4 text-center space-y-2.5"
-                  style={{ background: sprayBg }}
+                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 shadow-sm"
+                  style={{ background: STICKY_NOTE_TAPE }}
                 >
+                  <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <span
+                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    Capability Note #{index + 1}
+                  </span>
+                </div>
+
+                <div className="flex w-full flex-col items-center space-y-2.5">
                   {/* Symbol and Number Beside Each Other */}
                   <div className="flex items-center justify-center gap-2">
                     <span
@@ -127,16 +255,45 @@ export default function FeaturesSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                    <div className="flex min-h-[40px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
                       <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-[#0A2B6D]">
                         {f.title}
                       </h3>
                     </div>
                   </div>
 
-                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-relaxed text-[#0A2B6D]">
+                  <p
+                    className="text-xs font-bold leading-snug text-black"
+                    style={{ color: '#000000' }}
+                  >
                     {f.desc}
                   </p>
+                </div>
+
+                {/* Live Functions Listed on Each Sticky Note */}
+                <div
+                  className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
+                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      Live Functions Included:
+                    </div>
+                    <ul className="space-y-1">
+                      {f.functions.map((fn) => (
+                        <li
+                          key={fn}
+                          className="flex items-start gap-1.5 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <CheckCircle2
+                            className="mt-0.5 h-3 w-3 shrink-0"
+                            style={{ color: STICKY_NOTE_BORDER }}
+                          />
+                          <span className="text-[#0A2B6D]">{fn}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </Reveal>
             );
