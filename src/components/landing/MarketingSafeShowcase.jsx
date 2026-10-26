@@ -436,14 +436,14 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </span>
                     </div>
 
-                    {/* Inner Monitor Display — 50% Smaller & App-Design Colour Around All Writing */}
+                    {/* Inner Monitor Display — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Headers, White Box & Dark Blue Writing */}
                     <div
                       className="flex flex-1 rounded-lg p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
                         className="flex h-full w-full flex-col justify-between gap-1 rounded-[7px] p-1.5 text-center"
-                        style={{ background: TOP_BORDER_GRADIENT }}
+                        style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
                       >
                         {/* App-Design Coloured Flat Screen Reason Header Tile */}
                         <div
@@ -464,44 +464,54 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         </div>
 
                         {/* App-Design Coloured Flat Screen Title Header Tile */}
-                        <div className="w-full rounded-lg overflow-hidden border border-white/60">
-                          <div
-                            className="gradient-brand flex items-center justify-center gap-1 px-2 py-1 text-center text-white"
-                            style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
-                          >
-                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                            <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                              {activeReason.title}
-                            </span>
-                          </div>
-                          <div className="bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold text-[#5A00D6] leading-tight">
-                            {activeReason.sub}
+                        <div
+                          className="w-full rounded-lg p-[1.5px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="overflow-hidden rounded-[6px] bg-white">
+                            <div
+                              className="gradient-brand flex items-center justify-center gap-1 px-2 py-1 text-center text-white"
+                              style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
+                            >
+                              <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                              <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                {activeReason.title}
+                              </span>
+                            </div>
+                            <div className="bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                              {activeReason.sub}
+                            </div>
                           </div>
                         </div>
 
-                        {/* Compact Summary Explanation */}
-                        <div className="flex w-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
-                          <p className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {activeReason.detail}
-                          </p>
+                        {/* Compact Summary Explanation Framed in App-Design Border */}
+                        <div
+                          className="w-full rounded-lg p-[1.5px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-1 text-center">
+                            <p className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                              {activeReason.detail}
+                            </p>
+                          </div>
                         </div>
 
-                        {/* 3 Compact Subscriber Proof Points */}
+                        {/* 3 Compact Subscriber Proof Points — White Background & Dark Blue Writing */}
                         <ul className="grid w-full grid-cols-1 grid-rows-3 gap-1 text-center">
-                          {activeReason.points.map((pt, ptIdx) => {
-                            const ptSym = getSymbolView(idx + ptIdx + 2);
-                            return (
-                              <li
-                                key={pt}
-                                className="flex min-h-[22px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight"
-                              >
-                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: ptSym.iconColor }} />
-                                <span className="text-center" style={{ color: ptSym.iconColor }}>
+                          {activeReason.points.map((pt) => (
+                            <li
+                              key={pt}
+                              className="flex min-h-[22px] rounded-md p-[1.5px]"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
+                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                                <span className="text-center text-[#0A2B6D]">
                                   {pt}
                                 </span>
-                              </li>
-                            );
-                          })}
+                              </div>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </div>

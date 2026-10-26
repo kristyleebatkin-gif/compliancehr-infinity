@@ -64,14 +64,17 @@ function IpadModuleScreenCard({ item, idx }) {
         <span className="text-[7px] font-extrabold text-white/90">LIVE</span>
       </div>
 
-      {/* Inner iPad Display Screen — 50% Smaller & App-Design Coloured Header */}
+      {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
       <div
         className="flex flex-1 flex-col justify-between gap-1 rounded-[10px] p-1 text-left"
-        style={{ background: TOP_BORDER_GRADIENT }}
+        style={{
+          background:
+            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
+        }}
       >
         {/* App-Coloured Header Bar */}
         <div
-          className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+          className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
           style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
         >
           <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
@@ -83,21 +86,23 @@ function IpadModuleScreenCard({ item, idx }) {
           </span>
         </div>
 
-        {/* Compact Bullet Point Box */}
-        <div className="flex flex-1 items-center rounded-[6px] bg-white px-1.5 py-0.5">
-          <ul className="w-full space-y-0.5">
-            {bullets.slice(0, 2).map((point, bIdx) => {
-              const bSym = getSymbolView(idx + bIdx + 1);
-              return (
-                <li key={bIdx} className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight">
-                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: bSym.iconColor }} />
+        {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
+        <div
+          className="flex flex-1 rounded-md p-[1.5px]"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-1 items-center rounded-[4px] bg-white px-1.5 py-0.5">
+            <ul className="w-full space-y-0.5">
+              {bullets.slice(0, 2).map((point, bIdx) => (
+                <li key={bIdx} className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                  <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                   <span className="min-w-0 flex-1 whitespace-normal break-words text-[#0A2B6D]">
                     {point}
                   </span>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </Link>

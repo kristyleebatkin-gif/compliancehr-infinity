@@ -184,7 +184,7 @@ export default function LandingFooter() {
                 >
                   <div
                     className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                    style={{ background: UNIFORM_SPRAY_BG }}
                   >
                     {/* App-Design Coloured Pill Title */}
                     <div
@@ -197,20 +197,25 @@ export default function LandingFooter() {
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
-                    {/* Crisp White Inner Box With Dark Blue Writing */}
-                    <div className="flex w-full flex-1 items-center justify-center rounded-[7px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
-                      {box.href ? (
-                        <a
-                          href={box.href}
-                          className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D] underline"
-                        >
-                          {box.text}
-                        </a>
-                      ) : (
-                        <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                          {box.text}
-                        </p>
-                      )}
+                    {/* Crisp White Inner Box Framed in App-Design Border With Dark Blue Writing */}
+                    <div
+                      className="w-full flex-1 rounded-lg p-[1.5px]"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                        {box.href ? (
+                          <a
+                            href={box.href}
+                            className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D] underline"
+                          >
+                            {box.text}
+                          </a>
+                        ) : (
+                          <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                            {box.text}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

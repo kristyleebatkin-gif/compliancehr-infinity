@@ -831,152 +831,93 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               }}
             >
               <div
-                className="grid h-full w-full grid-cols-1 grid-rows-[68px_82px_68px_34px] gap-2 overflow-hidden rounded-[13px] p-2.5 text-center"
+                className="flex h-full w-full flex-col justify-between gap-1 overflow-hidden rounded-[10px] p-1.5 text-center"
                 style={{ background: sprayBg }}
               >
-                {/* Section 1: 3 Words Fitted Cleanly on Two Lines at the Top */}
+                {/* Section 1: 50% Smaller App-Coloured Header Bar */}
                 <div
-                  className="flex h-[68px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                  style={{ background: getHeaderView(index) }}
+                  className="gradient-brand flex min-h-[26px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
+                  style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                 >
-                  <div
-                    className="flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-2 py-1 text-center text-white"
-                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                  <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span>#{index + 1} · {mod.label}</span>
+                  </span>
+                  <Link
+                    to={mod.path}
+                    className="inline-flex shrink-0 items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
                   >
-                    {/* Line 1 of Top: Page # + Open */}
-                    <div className="flex w-full items-center justify-between gap-1 px-1">
-                      <span className="inline-flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap" style={{ color: '#FFFFFF' }}>
-                        <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                        Page #{index + 1}
-                      </span>
-                      <Link
-                        to={mod.path}
-                        className="inline-flex items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2 py-0 text-[8px] font-extrabold text-[#5A00D6]"
-                      >
-                        Open <ExternalLink className="h-2 w-2 text-[#0072FF]" />
-                      </Link>
-                    </div>
-                    {/* Line 2 of Top: Module Name */}
-                    <span
-                      className="block w-full text-center text-[10.5px] font-extrabold leading-tight text-white"
-                      style={{ color: '#FFFFFF' }}
-                    >
-                      {mod.label}
-                    </span>
-                  </div>
+                    Open <ExternalLink className="h-2 w-2 text-[#0A2B6D]" />
+                  </Link>
                 </div>
 
-                {/* Section 2: Topic Tile Section With Writing — 3 Words on Two Lines at Top + Governance Sentence Kept */}
+                {/* Section 2: White Box Framed in App-Design Border With Dark Blue Writing */}
                 <div
-                  className="flex h-[82px] w-full rounded-xl p-[2.5px] text-[9.5px] leading-snug"
+                  className="w-full rounded-lg p-[1.5px]"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white px-2 py-1 text-center">
-                    <div className="leading-tight">
-                      <span className="block text-[8px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                        Topic &amp; Governance
-                      </span>
-                      <span className="block text-[8.5px] font-extrabold text-[#0A2B6D]">
-                        {mod.label}
-                      </span>
-                    </div>
-                    <span className="text-center text-[9px] font-extrabold leading-tight text-[#5A00D6]">
+                  <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                    <span className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                       {bp.smartDoc2026}
                     </span>
                   </div>
                 </div>
 
-                {/* Section 3: Live Maintenance Tracker Underneath Topic Tile Section */}
+                {/* Section 3: Compact Live Maintenance Tracker */}
                 <div
-                  className="flex h-[68px] w-full rounded-xl p-[2.5px] text-[9.5px] leading-snug"
+                  className="w-full rounded-lg p-[1.5px]"
                   style={{ background: getHeaderView(index + 1) }}
                 >
                   <Link
                     to="/assets"
-                    className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white px-2 py-1 text-center"
+                    className="flex items-center justify-between gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center"
                   >
-                    <div className="flex items-center justify-center gap-1">
+                    <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-[#0A2B6D]">
                       <span
-                        className="h-2 w-2 rounded-full bg-[#10B981]"
-                        style={{ boxShadow: '0 0 8px 2px #10B981' }}
+                        className="h-1.5 w-1.5 rounded-full bg-[#10B981]"
+                        style={{ boxShadow: '0 0 6px 1px #10B981' }}
                       />
-                      <Wrench className="h-2.5 w-2.5 text-[#0072FF]" />
-                      <span className="font-extrabold uppercase tracking-wider text-[8px] text-[#FF2E9A]">
-                        Live Maintenance Tracker
-                      </span>
-                    </div>
-                    <div className="w-full h-1.5 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: '100%',
-                          background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
-                        }}
-                      />
-                    </div>
-                    <span className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                      {maintenanceStats.assets} Assets · {maintenanceStats.logs} Serviced · 100% Live
+                      <span>Maintenance 100%</span>
+                    </span>
+                    <span className="text-[7px] font-extrabold text-[#0A2B6D]">
+                      {maintenanceStats.assets} Assets
                     </span>
                   </Link>
                 </div>
 
-                {/* Section 4: Fixed-Height Bottom Action Buttons (Doc, Task, Done) in App Design Colours */}
-                <div className="grid h-[34px] grid-cols-3 gap-1.5 pt-1 border-t border-[#0A2B6D]/15">
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-                    }}
+                {/* Section 4: 50% Smaller Bottom Action Buttons (Doc, Task, Done) */}
+                <div className="grid grid-cols-3 gap-1">
+                  <button
+                    type="button"
+                    onClick={() => openSmartFillDoc(mod)}
+                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => openSmartFillDoc(mod)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
-                      style={{ background: getHeaderView(index), color: '#FFFFFF' }}
-                    >
-                      <Wand2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Doc</span>
-                    </button>
-                  </div>
+                    <Wand2 className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>Doc</span>
+                  </button>
 
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-                    }}
+                  <button
+                    type="button"
+                    disabled={creatingTaskKey === `${mod.key}-open`}
+                    onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
+                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      disabled={creatingTaskKey === `${mod.key}-open`}
-                      onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
-                      style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
-                    >
-                      <PlusCircle className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Task</span>
-                    </button>
-                  </div>
+                    <PlusCircle className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>Task</span>
+                  </button>
 
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-                    }}
+                  <button
+                    type="button"
+                    disabled={creatingTaskKey === `${mod.key}-done`}
+                    onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
+                    className="gradient-brand flex h-[20px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-[7.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      disabled={creatingTaskKey === `${mod.key}-done`}
-                      onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
-                      style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
-                    >
-                      <CheckCircle2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Done</span>
-                    </button>
-                  </div>
+                    <CheckCircle2 className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>Done</span>
+                  </button>
                 </div>
               </div>
             </div>

@@ -301,25 +301,24 @@ export default function BenefitsSection() {
                       </p>
                     </div>
 
-                    {/* Compact Functions Box */}
+                    {/* Compact Functions Box — White Background & Dark Blue Writing */}
                     <div
-                      className="rounded-lg border p-1 text-left"
-                      style={{ background: STICKY_NOTE_BG, borderColor: borderCol }}
+                      className="rounded-lg p-[1.5px] text-left"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <ul className="space-y-0.5">
-                        {currentFunctions.map((fn, fIdx) => {
-                          const fSym = getSymbolView(index + fIdx);
-                          return (
+                      <div className="rounded-[5px] bg-white p-1">
+                        <ul className="space-y-0.5">
+                          {currentFunctions.map((fn) => (
                             <li
                               key={fn}
-                              className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
+                              className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
                             >
-                              <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: fSym.iconColor }} />
-                              <span style={{ color: fSym.iconColor }}>{fn}</span>
+                              <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                              <span className="text-[#0A2B6D]">{fn}</span>
                             </li>
-                          );
-                        })}
-                      </ul>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>

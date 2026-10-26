@@ -39,7 +39,8 @@ const EXPRESS_SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.60) 0%, transparent 52%), #FFFFFF',
 ];
 
-const STICKY_NOTE_BG = 'linear-gradient(180deg, #FFF3FA 0%, #FFE4F5 100%)';
+const STICKY_NOTE_BG =
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF';
 const STICKY_NOTE_BORDER = '#FF2E9A';
 const STICKY_NOTE_TAPE = 'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
@@ -318,7 +319,7 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles Above Steps — Halved in Size With App-Coloured Headers */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — Pink/Blue/Purple Spray, App-Coloured Header, White Box & Dark Blue Writing */}
         <div
           className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -328,30 +329,31 @@ export default function ExpressAuditSection() {
               const Icon = v.icon;
               const isLit = litVerbIdx === idx;
               const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx);
+              const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
               return (
                 <div
                   key={v.label}
-                  className={`flex flex-col justify-between rounded-xl border-2 p-1 transition-all duration-300 ${
-                    isLit
-                      ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/75 shadow-md'
-                      : 'bg-[#0A2B6D] shadow-2xs'
-                  }`}
-                  style={{ borderColor: borderCol }}
+                  className="flex flex-col justify-between rounded-xl border-2 p-1 transition-all duration-300"
+                  style={{ borderColor: borderCol, background: sprayBg }}
                 >
-                  <div className="mb-0.5 flex items-center justify-between px-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                    <span className="text-[6.5px] font-extrabold uppercase text-white">
+                  <div
+                    className="gradient-brand mb-1 flex items-center justify-center gap-0.5 rounded px-1 py-0.5 text-white"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                  >
+                    <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="text-[6.5px] font-extrabold uppercase text-white" style={{ color: '#FFFFFF' }}>
                       iPad {idx + 1}
                     </span>
                   </div>
                   <div
-                    className="gradient-brand flex min-h-[28px] flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-0.5 text-center text-white"
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                    className="rounded-md p-[1.5px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                    <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                      {v.label}
-                    </span>
+                    <div className="flex min-h-[20px] items-center justify-center rounded-[4px] bg-white px-1 py-0.5 text-center">
+                      <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        {v.label}
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
@@ -359,22 +361,18 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Proof iPad Screens Above Steps — Halved in Size With App-Coloured Headers */}
+        {/* 2. Top 4 Proof iPad Screens Above Steps — Pink/Blue/Purple Spray, App-Coloured Headers, White Box & Dark Blue Writing */}
         <div className="grid w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {PROOF.map(({ icon: Icon, messages }, idx) => {
-            const sym = getSymbolView(idx + 3);
             const isLit = litProofIdx === idx;
             const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx + 3);
+            const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
             const activeMsg = messages[proofPage % messages.length];
             return (
               <div
                 key={idx}
-                className={`flex h-full flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300 ${
-                  isLit
-                    ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/70 shadow-md'
-                    : 'bg-[#0A2B6D] shadow-2xs'
-                }`}
-                style={{ borderColor: borderCol }}
+                className="flex h-full flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300"
+                style={{ borderColor: borderCol, background: sprayBg }}
               >
                 <div
                   className="gradient-brand mb-1 flex items-center justify-between rounded-full px-2 py-0.5 text-white"
@@ -399,7 +397,7 @@ export default function ExpressAuditSection() {
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="flex min-h-[28px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
-                    <span className="text-[8.5px] font-extrabold leading-tight" style={{ color: sym.iconColor }}>
+                    <span className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                       {activeMsg}
                     </span>
                   </div>
@@ -479,18 +477,15 @@ export default function ExpressAuditSection() {
                 >
                   <div className="rounded-[6px] bg-white p-1.5 text-left">
                     <ul className="space-y-0.5">
-                      {currentNote.functions.map((fn, fIdx) => {
-                        const fSym = getSymbolView(index + fIdx + 2);
-                        return (
-                          <li
-                            key={fn}
-                            className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
-                          >
-                            <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: fSym.iconColor }} />
-                            <span style={{ color: fSym.iconColor }}>{fn}</span>
-                          </li>
-                        );
-                      })}
+                      {currentNote.functions.map((fn) => (
+                        <li
+                          key={fn}
+                          className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                          <span className="text-[#0A2B6D]">{fn}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>

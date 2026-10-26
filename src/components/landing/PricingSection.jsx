@@ -447,72 +447,56 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* 6 Included Platform Pillar Benefits Styled as iPad Screens — All White Writing Areas Framed in App-Design Colour & App-Coloured Symbols */}
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-center items-stretch">
+        {/* 6 Included Platform Pillar Benefits — 50% Smaller, App-Coloured Headers, Pink/Blue/Purple Spray & White Box With Dark Blue Writing */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 text-center items-stretch">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
-            const sym = getSymbolView(idx + 3);
             const borderCol = getAppBorderView(idx + 3);
             return (
               <div
                 key={b.title}
-                className="flex h-full flex-col justify-between rounded-[24px] border-[4px] bg-[#0A2B6D] p-2.5 shadow-md"
+                className="flex h-full flex-col justify-between rounded-[14px] border-2 bg-[#0A2B6D] p-1.5 shadow-2xs"
                 style={{ borderColor: borderCol }}
               >
-                {/* Top iPad Bezel */}
-                <div className="mb-1.5 flex items-center justify-between px-2">
-                  <span className="flex items-center gap-1.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
-                    iPad Screen · Package Pillar 0{idx + 1}
+                <div className="mb-1 flex items-center justify-between px-1">
+                  <span className="flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+                    Pillar 0{idx + 1}
                   </span>
-                  <span className="text-[8.5px] font-extrabold text-white/85">5G · 100%</span>
+                  <span className="text-[6.5px] font-extrabold text-white/85">5G · 100%</span>
                 </div>
 
-                {/* Inner iPad Display — Both White Writing Areas Framed in App-Design Coloured Borders */}
                 <div
-                  className="flex flex-1 rounded-[16px] p-[2.5px]"
+                  className="flex flex-1 rounded-xl p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[13px] p-3.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
+                    {/* App-Design Coloured Header Bar */}
                     <div
-                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                     >
-                      <div className="flex min-h-[50px] items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-1.5 text-center">
-                        <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                          style={{ borderColor: borderCol }}
-                        >
-                          <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                        </span>
-                        <div
-                          className="flex-1 text-center font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent"
-                          style={{ backgroundImage: getTitleGradientView(idx) }}
-                        >
-                          {b.title}
-                        </div>
-                      </div>
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                        {b.title}
+                      </span>
                     </div>
 
+                    {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
                     <div
-                      className="w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                      className="w-full flex-1 rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full min-h-[58px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                        <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                      <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                        <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                           {b.desc}
                         </p>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                {/* Bottom iPad Home Bar */}
-                <div className="mt-1.5 flex items-center justify-center">
-                  <span className="h-1 w-14 rounded-full bg-white/80" />
                 </div>
               </div>
             );

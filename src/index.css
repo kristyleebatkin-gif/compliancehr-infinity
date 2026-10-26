@@ -614,87 +614,28 @@
     box-shadow: 0 10px 25px -5px rgba(10, 43, 109, 0.14) !important;
   }
 
-  /* Small tiles & cards inside grids across all modules (except Treasure Hunt, Beach & Deep Sea) cycle through the 8 mixed full colours:
-     1. Light Blue (#38BDF8) · 2. Medium Pink (#FF2E9A) · 3. Light Purple (#C084FC) · 4. Medium Blue (#0072FF) ·
-     5. Light Pink (#FF85E0) · 6. Violet (#5A00D6) · 7. Dark Pink (#C80064) · 8. Medium Purple (#9333EA) */
+  /* Small tiles & cards inside grids across all modules: 50% more compact, pink/blue/purple spray between outer border and inner content, white inner surface, and dark blue writing (#0A2B6D) */
   :root:not(.dark) .app-dashboard-canvas .grid > :is(
     .rounded-xl.border,
     .rounded-2xl.border,
     .rounded-lg.border,
     .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+1) {
+  ):not(.preserve-island-theme):not(.preserve-island-theme *) {
     border: 2px solid #0A2B6D !important;
-    background-color: #38BDF8 !important;
+    background:
+      radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%),
+      radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%),
+      radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%),
+      #FFFFFF !important;
     color: #0A2B6D !important;
+    padding: 0.375rem !important;
   }
   :root:not(.dark) .app-dashboard-canvas .grid > :is(
     .rounded-xl.border,
     .rounded-2xl.border,
     .rounded-lg.border,
     .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+2) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #FF2E9A !important;
-    color: #FFFFFF !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+3) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #C084FC !important;
-    color: #0A2B6D !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+4) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #0072FF !important;
-    color: #FFFFFF !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+5) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #FF85E0 !important;
-    color: #0A2B6D !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+6) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #5A00D6 !important;
-    color: #FFFFFF !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+7) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #C80064 !important;
-    color: #FFFFFF !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+8) {
-    border: 2px solid #0A2B6D !important;
-    background-color: #9333EA !important;
-    color: #FFFFFF !important;
+  ):not(.preserve-island-theme):not(.preserve-island-theme *) :is(p, span, div, h3, h4):not(.gradient-brand *):not(.app-page-header *):not(.dashboard-panel-header *) {
+    color: #0A2B6D;
   }
 }

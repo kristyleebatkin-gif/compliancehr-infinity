@@ -236,18 +236,18 @@ export default function QuickAppBar() {
                     />
                   </div>
 
-                  {/* Inner iPad Display Screen — 50% Smaller */}
+                  {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
                   <div
                     className="flex flex-1 rounded-xl p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
                       className="flex h-full w-full flex-col justify-between gap-1 rounded-[9px] p-1 text-center"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      style={{ background: isLit ? LIT_IPAD_SPRAY_BG : UNIFORM_IPAD_SPRAY_BG }}
                     >
                       {/* App-Design Coloured Header Bar for Module Title */}
                       <div
-                        className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                        className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
                         style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                       >
                         <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
@@ -256,15 +256,17 @@ export default function QuickAppBar() {
                         </span>
                       </div>
 
-                      {/* Rotating Info Box */}
-                      <div className="flex min-h-[22px] w-full items-center justify-between gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
-                        <span
-                          className="flex-1 text-center text-[7.5px] font-extrabold leading-tight"
-                          style={{ color: sym.iconColor }}
-                        >
-                          {currentSub}
-                        </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: sym.iconColor }} />
+                      {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
+                      <div
+                        className="w-full rounded-md p-[1.5px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex min-h-[20px] w-full items-center justify-between gap-1 rounded-[4px] bg-white px-1.5 py-0.5">
+                          <span className="flex-1 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                            {currentSub}
+                          </span>
+                          <ArrowRight className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                        </div>
                       </div>
                     </div>
                   </div>

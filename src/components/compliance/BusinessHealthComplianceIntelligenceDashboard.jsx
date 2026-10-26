@@ -577,16 +577,19 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     : '0 0 8px 2px rgba(255, 255, 255, 0.85)',
               }}
             >
-              {/* App-Design Colour Outside Between Side Border & Words */}
+              {/* Pink, Blue & Purple Spray Between Outside Border & Writing Title Border */}
               <div
                 className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
-                style={{ background: isGovernanceTile ? '#EAB308' : TOP_BORDER_GRADIENT }}
+                style={{ background: UNIFORM_SPRAY_BG }}
               >
-                {/* One-Line Top Live Tracker / Light Bar With White Light & SYS READY */}
-                <div className="flex w-full items-center justify-between gap-1 rounded-full bg-white px-1.5 py-0.5 whitespace-nowrap">
+                {/* App-Design Coloured Header Bar */}
+                <div
+                  className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-1.5 py-0.5 whitespace-nowrap text-white"
+                  style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                >
                   <span className="inline-flex items-center gap-1 truncate">
                     <span
-                      className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30"
+                      className="h-2 w-2 shrink-0 rounded-full border border-white"
                       style={{
                         backgroundColor: isGovernanceTile ? '#EAB308' : '#FFFFFF',
                         boxShadow: isGovernanceTile
@@ -594,48 +597,46 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           : '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF',
                       }}
                     />
-                    <KpiIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                    <span className="truncate text-[7px] font-extrabold uppercase tracking-tight text-[#0A2B6D]">
+                    <KpiIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="truncate text-[7px] font-extrabold uppercase tracking-tight text-white" style={{ color: '#FFFFFF' }}>
                       {isGovernanceTile ? 'LIVE TRACKER · YELLOW' : k.category}
                     </span>
                   </span>
-                  <span className="text-[6.5px] font-extrabold text-[#0072FF]">SYS READY</span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>SYS READY</span>
                 </div>
 
-                {/* Writing Box 1: Pure White Inside App-Design Coloured Frame With Glowing White Light on Title */}
-                <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                  <div
-                    className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight"
-                    style={{ color: sym.iconColor }}
-                  >
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
-                    />
-                    <span>{k.label}</span>
-                  </div>
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span
-                      className="font-editorial text-xs font-extrabold leading-none bg-clip-text text-transparent"
-                      style={{ backgroundImage: getTitleGradientView(idx) }}
-                    >
-                      {k.value}
-                    </span>
-                    <span
-                      className="text-[7px] font-extrabold"
-                      style={{ color: getSymbolView(idx + 2).iconColor }}
-                    >
-                      {k.badge}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Writing Box 2: Pure White Inside App-Design Coloured Frame */}
+                {/* Writing Box 1: Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
                 <div
-                  className="flex min-h-[20px] w-full items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight"
-                  style={{ color: getSymbolView(idx + 1).iconColor }}
+                  className="w-full rounded-[6px] p-[1.5px]"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  {k.sub}
+                  <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                    <div className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight text-[#0A2B6D]">
+                      <span
+                        className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                        style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                      />
+                      <span>{k.label}</span>
+                    </div>
+                    <div className="flex items-baseline justify-center gap-1">
+                      <span className="font-editorial text-xs font-extrabold leading-none text-[#0A2B6D]">
+                        {k.value}
+                      </span>
+                      <span className="text-[7px] font-extrabold text-[#0A2B6D]">
+                        {k.badge}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Writing Box 2: Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
+                <div
+                  className="w-full rounded-[6px] p-[1.5px]"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex min-h-[20px] w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                    {k.sub}
+                  </div>
                 </div>
               </div>
             </div>
@@ -713,14 +714,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           : '0 0 8px 2px rgba(255, 255, 255, 0.9)',
                       }}
                     >
-                      {/* App-Design Colour (or Yellow for Governance) Between Side Border & White Word Boxes */}
+                      {/* Pink, Blue & Purple Spray Between Outside Border & Writing Title Border */}
                       <button
                         type="button"
                         onClick={() => setSelectedDomainId(dom.id)}
                         className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
-                        style={{
-                          background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
-                        }}
+                        style={{ background: UNIFORM_SPRAY_BG }}
                       >
                         {/* Live Tracker at Top of Tile Fitted on One Line (+ Yellow Light on Governance) */}
                         <div className="flex w-full items-center justify-between gap-1 rounded-full bg-white px-1.5 py-0.5 whitespace-nowrap">
@@ -739,52 +738,62 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           <span className="text-[7px] font-extrabold text-[#0A2B6D]">{dom.score}%</span>
                         </div>
 
-                        {/* One-Line Category Symbol + Header With Glowing White Light */}
+                        {/* App-Design Coloured Header Bar With Glowing White Light */}
                         <div
-                          className="flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 py-0.5 text-[8px] font-extrabold leading-none text-center whitespace-nowrap"
+                          className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 py-0.5 text-[8px] font-extrabold leading-none text-center whitespace-nowrap text-white"
                           style={{
-                            background: isGovernance ? '#FEF08A' : '#FFFFFF',
-                            color: '#0A2B6D',
+                            background: getHeaderView(idx),
+                            color: '#FFFFFF',
                             boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.95)',
                           }}
                         >
                           <span
-                            className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                            className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
                             style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                           />
-                          <DomainIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                          <span className="truncate text-[#0A2B6D]">
+                          <DomainIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
                             {dom.shortName} · {dom.score}%
                           </span>
                         </div>
 
-                        {/* 50% Smaller Writing Box 1 With White Light Next to Title */}
-                        <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                          <div className="flex items-center justify-center gap-1 text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                            <span
-                              className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                              style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 10px 2px #00C6FF' }}
-                            />
-                            <span>{dom.name}</span>
-                          </div>
-                          <div className="text-[7.5px] font-bold text-[#0A2B6D] leading-tight">
-                            {dom.standard}
+                        {/* Writing Box 1: Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
+                        <div
+                          className="w-full rounded-[6px] p-[1.5px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                            <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                              <span
+                                className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                                style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
+                              />
+                              <span>{dom.name}</span>
+                            </div>
+                            <div className="text-[7px] font-bold text-[#0A2B6D] leading-tight">
+                              {dom.standard}
+                            </div>
                           </div>
                         </div>
 
-                        {/* 50% Smaller Writing Box 2: Pure White Inside App-Design Coloured Frame */}
-                        <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                          <div className="h-1 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
-                            <div
-                              className="h-full rounded-full"
-                              style={{
-                                width: `${dom.score}%`,
-                                background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
-                              }}
-                            />
-                          </div>
-                          <div className="text-center text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                            {dom.metricValue}
+                        {/* Writing Box 2: Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
+                        <div
+                          className="w-full rounded-[6px] p-[1.5px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                            <div className="h-1 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
+                              <div
+                                className="h-full rounded-full"
+                                style={{
+                                  width: `${dom.score}%`,
+                                  background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
+                                }}
+                              />
+                            </div>
+                            <div className="text-center text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
+                              {dom.metricValue}
+                            </div>
                           </div>
                         </div>
                       </button>

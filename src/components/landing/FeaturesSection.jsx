@@ -27,7 +27,8 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-const STICKY_NOTE_BG = 'linear-gradient(180deg, #FFF3FA 0%, #FFE4F5 100%)';
+const STICKY_NOTE_BG =
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF';
 const STICKY_NOTE_BORDER = '#FF2E9A';
 const STICKY_NOTE_TAPE = 'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
@@ -458,25 +459,22 @@ export default function FeaturesSection() {
                   </div>
                 </div>
 
-                {/* Compact Live Functions Box */}
+                {/* Compact Live Functions Box — White Background & Dark Blue Writing */}
                 <div
                   className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="rounded-[6px] bg-white p-1 text-left">
                     <ul className="space-y-0.5">
-                      {currentNote.functions.map((fn, fIdx) => {
-                        const fSym = getSymbolView(index + fIdx);
-                        return (
-                          <li
-                            key={fn}
-                            className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
-                          >
-                            <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: fSym.iconColor }} />
-                            <span style={{ color: fSym.iconColor }}>{fn}</span>
-                          </li>
-                        );
-                      })}
+                      {currentNote.functions.map((fn) => (
+                        <li
+                          key={fn}
+                          className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                          <span className="text-[#0A2B6D]">{fn}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
