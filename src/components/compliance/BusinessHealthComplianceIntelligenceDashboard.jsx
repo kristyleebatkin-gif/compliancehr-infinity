@@ -525,8 +525,17 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               </div>
               <Activity className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
               <span className="text-[10px] sm:text-xs font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                Live Executive Command · 98.7% Overall Business Health &amp; Verified 2026 NDIS Audit Readiness
+                Live Executive Command · SYS READY · 98.7% Overall Business Health &amp; Verified 2026 NDIS Audit Readiness
               </span>
+              <div className="flex items-center justify-center gap-1">
+                {[0, 1, 2].map((bulb) => (
+                  <span
+                    key={`r-${bulb}`}
+                    className="h-2 w-2 rounded-full bg-white"
+                    style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -573,30 +582,37 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
                 style={{ background: isGovernanceTile ? '#EAB308' : TOP_BORDER_GRADIENT }}
               >
-                {/* One-Line Top Live Tracker / Light Bar */}
-                <div className="flex w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 py-0.5 whitespace-nowrap">
-                  <span
-                    className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30"
-                    style={{
-                      backgroundColor: isGovernanceTile ? '#EAB308' : '#FFFFFF',
-                      boxShadow: isGovernanceTile
-                        ? '0 0 8px 3px #EAB308'
-                        : '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF',
-                    }}
-                  />
-                  <KpiIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                  <span className="truncate text-[7.5px] font-extrabold uppercase tracking-tight text-[#0A2B6D]">
-                    {isGovernanceTile ? 'LIVE TRACKER · GOV YELLOW' : k.category}
+                {/* One-Line Top Live Tracker / Light Bar With White Light & SYS READY */}
+                <div className="flex w-full items-center justify-between gap-1 rounded-full bg-white px-1.5 py-0.5 whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1 truncate">
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30"
+                      style={{
+                        backgroundColor: isGovernanceTile ? '#EAB308' : '#FFFFFF',
+                        boxShadow: isGovernanceTile
+                          ? '0 0 8px 3px #EAB308'
+                          : '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF',
+                      }}
+                    />
+                    <KpiIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                    <span className="truncate text-[7px] font-extrabold uppercase tracking-tight text-[#0A2B6D]">
+                      {isGovernanceTile ? 'LIVE TRACKER · YELLOW' : k.category}
+                    </span>
                   </span>
+                  <span className="text-[6.5px] font-extrabold text-[#0072FF]">SYS READY</span>
                 </div>
 
-                {/* Writing Box 1: Pure White Inside App-Design Coloured Frame */}
+                {/* Writing Box 1: Pure White Inside App-Design Coloured Frame With Glowing White Light on Title */}
                 <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
                   <div
-                    className="text-[7.5px] font-extrabold uppercase leading-tight"
+                    className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight"
                     style={{ color: sym.iconColor }}
                   >
-                    {k.label}
+                    <span
+                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                    />
+                    <span>{k.label}</span>
                   </div>
                   <div className="flex items-baseline justify-center gap-1">
                     <span

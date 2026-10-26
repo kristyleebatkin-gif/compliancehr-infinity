@@ -822,51 +822,48 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
   return (
     <div
       id="audit-master-doc"
-      className="scroll-mt-14 rounded-2xl border-2 bg-white p-3 shadow-sm space-y-3"
+      className="scroll-mt-14 rounded-xl border-2 bg-white p-1.5 shadow-2xs space-y-1.5"
       style={{ borderColor: getAppBorderView(0) }}
     >
-      {/* Side-to-Side Stretched Master Compliance Header + Lined-Up Full-Width Edition Tiles */}
+      {/* 50% Smaller Master Compliance Header + Lined-Up Switcher Tiles */}
       <div
-        className="w-full rounded-2xl p-[3.5px] shadow-2xs"
+        className="w-full rounded-xl p-[2px] shadow-2xs"
         style={{
           background:
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col items-center justify-center gap-3 rounded-[13px] bg-white p-3.5 text-center">
-          {/* Enlarged Better-Looking Side-to-Side Master Compliance Header */}
+        <div className="flex flex-col items-center justify-center gap-1.5 rounded-[10px] bg-white p-2 text-center">
+          {/* 50% Smaller Master Compliance Header */}
           <div
-            className="w-full rounded-2xl p-[3px] shadow-2xs"
+            className="w-full rounded-xl p-[2px] shadow-2xs"
             style={{
               background:
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
             <div
-              className="gradient-brand flex min-h-[60px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-6 py-2.5 text-center text-white"
+              className="gradient-brand flex min-h-[30px] w-full flex-wrap items-center justify-center gap-1.5 rounded-[9px] px-3 py-1 text-center text-white"
               style={{ background: getHeaderView(0), color: '#FFFFFF' }}
             >
-              <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                  <ClipboardList className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span style={{ color: '#FFFFFF' }}>Master Compliance Audit Checklist</span>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-0.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                <span style={{ color: '#FFFFFF' }}>
-                  17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints
-                </span>
-                <span className="whitespace-nowrap" style={{ color: '#FFFFFF' }}>
-                  11 Interactive Pages
-                </span>
-              </div>
+              <span
+                className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+              />
+              <ClipboardList className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span className="text-xs sm:text-sm font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+                Master Compliance Audit Checklist
+              </span>
+              <span className="text-[9.5px] sm:text-[10.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                · 17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
+              </span>
             </div>
           </div>
 
-          {/* Increased Side-to-Side Switcher Tiles Lined Up Equally */}
+          {/* 50% Smaller Side-to-Side Switcher Tiles */}
           <div
-            className={`grid w-full gap-2.5 ${
-              smallFeatured ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'
+            className={`grid w-full gap-1.5 ${
+              smallFeatured ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'
             }`}
           >
             {[
@@ -879,7 +876,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
               return (
                 <div
                   key={btn.id}
-                  className="rounded-full p-[2.5px] shadow-2xs"
+                  className="rounded-full p-[1.5px] shadow-2xs"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -888,22 +885,20 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   <button
                     type="button"
                     onClick={() => setDisplayMode(btn.id)}
-                    className={`gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold text-white transition-all ${
+                    className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
                       active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                     }`}
                     style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                   >
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
-                    <span style={{ color: '#FFFFFF' }}>{btn.label}</span>
+                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="truncate" style={{ color: '#FFFFFF' }}>{btn.label}</span>
                   </button>
                 </div>
               );
             })}
             {smallFeatured && (
               <div
-                className="rounded-full p-[2.5px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{
                   background:
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -912,13 +907,11 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 <button
                   type="button"
                   onClick={() => setExpanded((v) => !v)}
-                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:opacity-95"
+                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-sm transition-all hover:opacity-95"
                   style={{ background: getHeaderView(4), color: '#FFFFFF' }}
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <CheckCircle2 className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  </span>
-                  <span style={{ color: '#FFFFFF' }}>
+                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="truncate" style={{ color: '#FFFFFF' }}>
                     {expanded ? 'Minimise Master Checklist' : 'Expand Full 11-Page Checklist'}
                   </span>
                 </button>
@@ -928,13 +921,13 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </div>
       </div>
 
-      {/* 6 Horizontal Page Tiles From Side-to-Side: All Sections of Pages Lined Up With Neighbouring Page Tiles */}
+      {/* 50% Smaller 6 Horizontal Page Tiles */}
       {smallFeatured && !expanded && (
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3 auto-rows-fr items-stretch">
+        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 auto-rows-fr items-stretch">
           {AUDIT_CATEGORIES_17.slice(0, 6).map((cat, idx) => (
             <div
               key={cat.number}
-              className="flex h-full rounded-2xl p-[3.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="flex h-full rounded-xl p-[2px] shadow-2xs transition-all hover:-translate-y-0.5"
               style={{ background: getHeaderView(idx) }}
             >
               <button
@@ -943,38 +936,25 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   setCategoryIndex(idx);
                   setExpanded(true);
                 }}
-                className="grid h-full w-full grid-cols-1 grid-rows-[42px_1fr] gap-2 rounded-[13px] p-3 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] p-1.5 text-center"
                 style={{
                   background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
                 }}
               >
-                {/* Section 1: Fixed-Height Top "Page" Tile Bar Styled in App Design Colour */}
+                {/* Section 1: 50% Smaller Top Page Bar */}
                 <div
-                  className="flex h-[42px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-                  }}
+                  className="gradient-brand flex h-[22px] w-full items-center justify-center rounded-md px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-white whitespace-nowrap"
+                  style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                 >
-                  <div
-                    className="gradient-brand flex h-full w-full items-center justify-center rounded-[9px] px-3 py-1 text-center text-xs font-extrabold text-white"
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                  >
-                    <span style={{ color: '#FFFFFF' }}>
-                      Page {cat.page} · {cat.rows.length} Mandatory Audit Checkpoints — Click to Open
-                    </span>
-                  </div>
+                  <span className="truncate" style={{ color: '#FFFFFF' }}>
+                    Page {cat.page} · {cat.rows.length} Checks
+                  </span>
                 </div>
 
-                {/* Section 2: Fixed-Height Title Section Inside App Design Border */}
-                <div
-                  className="flex min-h-[48px] h-full w-full rounded-xl p-[2.5px]"
-                  style={{ background: getHeaderView(idx) }}
-                >
-                  <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center text-xs sm:text-sm font-extrabold text-[#5A00D6]">
-                    {cat.title}
-                  </div>
+                {/* Section 2: 50% Smaller Title Box */}
+                <div className="flex min-h-[28px] h-full w-full items-center justify-center rounded-md bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                  {cat.title}
                 </div>
               </button>
             </div>
@@ -982,14 +962,14 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </div>
       )}
 
-      {/* Quick Category / Page Pill Bar (Pages 1 to 11) in Different Colours */}
+      {/* 50% Smaller Quick Category / Page Pill Bar (Pages 1 to 11) */}
       {expanded && (
         <>
-          <div className="flex flex-wrap items-center justify-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] mr-1">
+          <div className="flex flex-wrap items-center justify-center gap-1 rounded-xl border border-[#0A2B6D] bg-white px-2 py-1">
+            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D] mr-1">
               Audit Category / Page Checks:
             </span>
-            <div className="flex flex-wrap items-center justify-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-center gap-1">
               {AUDIT_CATEGORIES_17.map((cat, idx) => {
                 const tile = getTilePalette(idx);
                 const active = categoryIndex === idx;
@@ -998,8 +978,8 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                     key={cat.number}
                     type="button"
                     onClick={() => setCategoryIndex(idx)}
-                    className={`rounded-full border-2 px-2.5 py-0.5 text-[10px] font-extrabold transition-all ${
-                      active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
+                    className={`rounded-full border px-2 py-0 text-[8.5px] font-extrabold transition-all ${
+                      active ? 'ring-1 ring-[#0A2B6D] shadow-2xs' : ''
                     }`}
                     style={
                       active
@@ -1012,7 +992,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                     }
                     title={cat.title}
                   >
-                    P.{cat.page} ({cat.rows.length} Checks)
+                    P.{cat.page} ({cat.rows.length})
                   </button>
                 );
               })}
@@ -1023,8 +1003,8 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
           <div
             className={
               displayMode === 'both'
-                ? 'grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch'
-                : 'grid grid-cols-1 gap-2'
+                ? 'grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch'
+                : 'grid grid-cols-1 gap-1.5'
             }
           >
             {(displayMode === 'both' || displayMode === 'gold') && (
@@ -1047,79 +1027,47 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </>
       )}
 
-      {/* Bottom Summary Box of Master Audit Checklist — All Styled Like Open All Tile & Arranged Cleanly in Two Lines */}
+      {/* 50% Smaller Bottom Summary Box of Master Audit Checklist */}
       <div
-        className="w-full rounded-2xl p-[3.5px] shadow-2xs"
+        className="w-full rounded-xl p-[2px] shadow-2xs"
         style={{
           background:
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col gap-2 rounded-[13px] bg-white p-3 text-center">
-          {/* Line 1: 11 Structured Pages · 17 NDIS & Governance Categories · 356 Interactive Checkpoints Styled Like Open All Tile */}
+        <div className="flex flex-col gap-1 rounded-[9px] bg-white p-1.5 text-center">
           <div
-            className="w-full rounded-full p-[2px] shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-            }}
+            className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
+            style={{ background: getHeaderView(1), color: '#FFFFFF' }}
           >
-            <div
-              className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs font-extrabold text-white"
-              style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-            >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                <ClipboardList className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-              </span>
-              <span style={{ color: '#FFFFFF' }}>
-                11 Structured Pages · 17 NDIS &amp; Governance Categories · 356 Interactive Checkpoints
-              </span>
-            </div>
+            <ClipboardList className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span style={{ color: '#FFFFFF' }}>
+              11 Structured Pages · 17 NDIS &amp; Governance Categories · 356 Interactive Checkpoints
+            </span>
           </div>
 
-          {/* Line 2: CHR-AUD-001/002 Included Free + Open All 11 Audit Pages Side-by-Side */}
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-1.5">
             <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{
-                background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-              }}
+              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
+              style={{ background: getHeaderView(2), color: '#FFFFFF' }}
             >
-              <div
-                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-1 text-xs font-extrabold text-white"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <CheckCircle2 className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span style={{ color: '#FFFFFF' }}>
-                  CHR-AUD-001 &amp; CHR-AUD-002 Included Free in Plan
-                </span>
-              </div>
+              <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>
+                CHR-AUD-001 &amp; CHR-AUD-002 Included Free in Plan
+              </span>
             </div>
 
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{
-                background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-              }}
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
+              style={{ background: getHeaderView(5), color: '#FFFFFF' }}
             >
-              <button
-                type="button"
-                onClick={() => setExpanded((v) => !v)}
-                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95"
-                style={{ background: getHeaderView(5), color: '#FFFFFF' }}
-              >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span style={{ color: '#FFFFFF' }}>
-                  {expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}
-                </span>
-              </button>
-            </div>
+              <ShieldCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>
+                {expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}
+              </span>
+            </button>
           </div>
         </div>
       </div>

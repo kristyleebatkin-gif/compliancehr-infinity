@@ -27,6 +27,15 @@ export default function InfinityOneClickOperations({ compact = false }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [runningId, setRunningId] = useState(null);
   const [runningMaster, setRunningMaster] = useState(false);
+  const [circleStep, setCircleStep] = useState(0);
+
+  // Move the One-Click Operation tiles slowly around in a circle every 30 seconds
+  useEffect(() => {
+    const circleTimer = setInterval(() => {
+      setCircleStep((prev) => prev + 1);
+    }, 30000);
+    return () => clearInterval(circleTimer);
+  }, []);
 
   // Two initial OPS-SYS entries side-by-side so the 2-column audit trail is balanced and filled
   const [executionLog, setExecutionLog] = useState([
@@ -524,12 +533,38 @@ export default function InfinityOneClickOperations({ compact = false }) {
     },
   ];
 
-  const visibleOps =
+  const baseOps =
     activeCategory === 'all'
       ? compact
         ? ONE_CLICK_OPS.slice(0, 6)
         : ONE_CLICK_OPS
       : ONE_CLICK_OPS.filter((o) => o.pillar === activeCategory);
+
+  // Rotate tiles around in a clockwise circle every 30 seconds:
+  // Top row moves left -> right, right end drops to bottom-right, bottom row moves right -> left, left end rises to top-left
+  const visibleOps = (() => {
+    const n = baseOps.length;
+    if (n <= 1) return baseOps;
+    const shift = ((circleStep % n) + n) % n;
+    // Build clockwise perimeter order for 2-row grid when n is even >= 4
+    if (n >= 4 && n % 2 === 0) {
+      const half = n / 2;
+      const perimeterIndices = [
+        ...Array.from({ length: half }, (_, i) => i), // top row left -> right
+        ...Array.from({ length: half }, (_, i) => n - 1 - i), // bottom row right -> left
+      ];
+      const perimeterItems = perimeterIndices.map((idx) => baseOps[idx]);
+      const rotatedPerimeter = perimeterItems.map(
+        (_, i) => perimeterItems[(i - shift + n) % n]
+      );
+      const gridResult = new Array(n);
+      perimeterIndices.forEach((gridIdx, perimPos) => {
+        gridResult[gridIdx] = rotatedPerimeter[perimPos];
+      });
+      return gridResult;
+    }
+    return baseOps.map((_, i) => baseOps[(i - shift + n) % n]);
+  })();
 
   const CATEGORY_TABS = [
     { id: 'all', label: 'All 12 One-Click Operations', count: 12 },
@@ -541,15 +576,15 @@ export default function InfinityOneClickOperations({ compact = false }) {
   return (
     <section
       id="infinity-one-click-operations"
-      className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-1 sm:p-2 space-y-4 text-center"
+      className="scroll-mt-14 overflow-hidden rounded-xl bg-white p-1.5 sm:p-2 space-y-2 text-center"
     >
-      {/* 1. Enlarged Top Header: "Infinity One-Click Operations" + Centered Audit Packs Writing in Black */}
+      {/* 1. 50% Smaller Top Header: "Infinity One-Click Operations" + Glowing White Lights */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-2">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+        <div className="flex w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
+          <h2 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold leading-tight tracking-tight">
             <span className="text-[#0A2B6D]">Infinity </span>
             <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               One-Click
@@ -560,7 +595,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
           </h2>
 
           <p
-            className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
+            className="mx-auto max-w-4xl text-center text-[10px] sm:text-xs font-extrabold leading-tight text-black"
             style={{ color: '#000000' }}
           >
             Audit Packs, Smart-Fill Docs, Roster &amp; Task Dispatch, and Incident &amp; Risk Sweeps.
@@ -568,68 +603,84 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 2. Better-Fitted Infinity One-Click Operations Tile */}
+      {/* 2. 50% Smaller Infinity One-Click Operations Tile With Glowing White Lights & Circular Orbit Status */}
       <div
-        className="w-full rounded-2xl p-[3.5px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div
-          className="gradient-brand flex min-h-[60px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-5 py-2.5 text-center text-white"
-          style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+          className="gradient-brand flex min-h-[28px] w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-3 py-1 text-center text-white"
+          style={{
+            background: getHeaderView(5),
+            color: '#FFFFFF',
+            boxShadow: '0 0 12px 2px rgba(255, 255, 255, 0.92)',
+          }}
         >
-          <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Zap className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+          <div className="flex items-center gap-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white">
+            <span
+              className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+              style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+            />
+            <Zap className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span style={{ color: '#FFFFFF' }}>
+              Infinity One-Click Operations · 12 Instant Executive Actions Armed
             </span>
-            <span style={{ color: '#FFFFFF' }}>Infinity One-Click Operations</span>
           </div>
-          <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-            12 Instant Executive Actions Armed Across All 3 Operational Pillars
-          </div>
+
+          <button
+            type="button"
+            onClick={() => setCircleStep((prev) => prev + 1)}
+            className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white hover:bg-white/30"
+            style={{ color: '#FFFFFF' }}
+          >
+            <span
+              className="h-2 w-2 rounded-full bg-white"
+              style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
+            />
+            <span style={{ color: '#FFFFFF' }}>
+              ↻ Circular Rotation Active (Every 30s · Step #{circleStep + 1})
+            </span>
+          </button>
         </div>
       </div>
 
-      {/* 3. All 6 Control & Category Tiles Lined Up & Centered */}
+      {/* 3. 50% Smaller 6 Control & Category Tiles */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[12px] bg-white p-3.5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 auto-rows-fr">
+        <div className="rounded-[9px] bg-white p-1.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 auto-rows-fr">
             <div
-              className="flex h-full rounded-full p-[2.5px] shadow-2xs"
+              className="flex h-full rounded-full p-[1.5px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <button
                 type="button"
                 onClick={handleRunMasterAllOperations}
                 disabled={runningMaster}
-                className="gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-2 text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
+                className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
                 style={{ background: getHeaderView(0), color: '#FFFFFF' }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <RefreshCw className={`h-3.5 w-3.5 text-white ${runningMaster ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
-                </span>
-                <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
-                  {runningMaster ? 'Executing All 3 Pillars…' : 'Execute Master 1-Click Sweep (All 3 Pillars)'}
+                <RefreshCw className={`h-2.5 w-2.5 shrink-0 text-white ${runningMaster ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                  {runningMaster ? 'Executing…' : 'Execute Master 1-Click Sweep'}
                 </span>
               </button>
             </div>
 
             <div
-              className="flex h-full rounded-full p-[2.5px] shadow-2xs"
+              className="flex h-full rounded-full p-[1.5px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <Link
                 to="/operations-centre"
-                className="gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-2 text-xs font-extrabold text-white transition-all hover:opacity-95"
+                className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all hover:opacity-95"
                 style={{ background: getHeaderView(1), color: '#FFFFFF' }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <Building2 className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
-                  Open Full Executive Operations Centre
+                <Building2 className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                  Executive Ops Centre
                 </span>
               </Link>
             </div>
@@ -639,13 +690,13 @@ export default function InfinityOneClickOperations({ compact = false }) {
               return (
                 <div
                   key={tab.id}
-                  className="flex h-full rounded-full p-[2.5px] shadow-2xs"
+                  className="flex h-full rounded-full p-[1.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveCategory(tab.id)}
-                    className={`gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-2 text-xs font-extrabold text-white transition-all ${
+                    className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all ${
                       active ? 'ring-2 ring-[#0A2B6D]' : 'opacity-95 hover:opacity-100'
                     }`}
                     style={{
@@ -653,11 +704,11 @@ export default function InfinityOneClickOperations({ compact = false }) {
                       color: '#FFFFFF',
                     }}
                   >
-                    <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                    <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
                       {tab.label}
                     </span>
                     <span
-                      className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0.5 text-[10px] font-extrabold text-white"
+                      className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[8px] font-extrabold text-white"
                       style={{ color: '#FFFFFF' }}
                     >
                       {tab.count}
@@ -670,118 +721,113 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 4. 12 One-Click System Operation Tiles — App Design Colours & Strictly Lined-Up Sections */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 items-stretch text-center">
+      {/* 4. 50% Smaller 12 One-Click System Operation Tiles Moving Slowly in a Clockwise Circle Every 30 Seconds */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch text-center">
         {visibleOps.map((op, idx) => {
           const Icon = op.icon;
           const isRunning = runningId === op.id;
           const borderCol = getAppBorderView(idx);
           const sym = getSymbolView(idx);
           const symSub = getSymbolView(idx + 2);
+          const isOrbitHighlight = idx === circleStep % visibleOps.length;
           return (
             <div
-              key={op.id}
-              className="flex h-full rounded-2xl p-[3.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              key={`${op.id}-${idx}`}
+              className={`flex h-full rounded-xl p-[2.5px] transition-all duration-700 hover:-translate-y-0.5 ${
+                isOrbitHighlight ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
+              }`}
+              style={{
+                background: TOP_BORDER_GRADIENT,
+                boxShadow: isOrbitHighlight
+                  ? '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px #00C6FF'
+                  : '0 0 8px 2px rgba(255, 255, 255, 0.88)',
+              }}
             >
               <div
-                className="grid h-full w-full grid-cols-1 grid-rows-[42px_84px_86px_42px] gap-2.5 rounded-[13px] p-3.5 text-center"
-                style={{ background: UNIFORM_SPRAY_BG }}
+                className="grid h-full w-full grid-cols-1 grid-rows-[22px_38px_40px_24px] gap-1 rounded-[9px] p-1.5 text-center"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                {/* Section 1: Fixed-Height Centered Header Pill With App-Design Coloured Symbol */}
+                {/* Section 1: 50% Smaller Header Pill With Glowing White Light & SYS READY */}
                 <div
-                  className="flex h-[42px] w-full rounded-full p-[2px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="gradient-brand flex h-[22px] w-full items-center justify-between gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider leading-none text-white whitespace-nowrap"
+                  style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                 >
-                  <span
-                    className="gradient-brand inline-flex h-full w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                  >
+                  <span className="inline-flex items-center gap-1 truncate">
                     <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                      style={{ borderColor: borderCol }}
-                    >
-                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                      className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                      style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                    />
+                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="truncate" style={{ color: '#FFFFFF' }}>
+                      {op.code}
                     </span>
-                    <span className="text-center" style={{ color: '#FFFFFF' }}>
-                      {op.code} · {op.pillarLabel}
-                    </span>
+                  </span>
+                  <span
+                    className="rounded-full bg-white px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+                  >
+                    SYS READY
                   </span>
                 </div>
 
-                {/* Section 2: Fixed-Height Centered Card Title Box in App Design Colours */}
-                <div
-                  className="flex h-[84px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                  style={{ background: getHeaderView(idx) }}
-                >
-                  <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                {/* Section 2: 50% Smaller Centered Card Title Box With White Light */}
+                <div className="flex h-[38px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
+                  <div className="flex items-center justify-center gap-1 w-full">
+                    <span
+                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                    />
                     <h3
-                      className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent text-center"
+                      className="font-editorial text-[8.5px] font-extrabold leading-tight bg-clip-text text-transparent text-center line-clamp-1"
                       style={{ backgroundImage: getTitleGradientView(idx) }}
                     >
                       {op.title}
                     </h3>
-                    <div
-                      className="mt-1 text-center text-[11px] font-extrabold"
-                      style={{ color: sym.iconColor }}
-                    >
-                      {op.subtitle}
-                    </div>
+                  </div>
+                  <div
+                    className="text-center text-[7.5px] font-extrabold leading-tight line-clamp-1"
+                    style={{ color: sym.iconColor }}
+                  >
+                    {op.subtitle}
                   </div>
                 </div>
 
-                {/* Section 3: Fixed-Height Centered Description Box Framed in App-Design Coloured Border */}
-                <div
-                  className="flex h-[86px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                  style={{ background: getHeaderView(idx + 1) }}
-                >
-                  <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                    <p
-                      className="text-center text-[11.5px] font-extrabold leading-snug"
-                      style={{ color: symSub.iconColor }}
-                    >
-                      {op.description}
-                    </p>
-                  </div>
+                {/* Section 3: 50% Smaller Centered Description Box */}
+                <div className="flex h-[40px] w-full items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
+                  <p
+                    className="text-center text-[7.5px] font-bold leading-tight line-clamp-2"
+                    style={{ color: symSub.iconColor }}
+                  >
+                    {op.description}
+                  </p>
                 </div>
 
-                {/* Section 4: Fixed-Height Aligned Action Buttons Row in App Design Colours */}
-                <div className="flex h-[42px] items-center justify-between gap-2 border-t border-[#0A2B6D]/20 pt-2">
-                  <div
-                    className="flex-1 rounded-full p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                {/* Section 4: 50% Smaller Aligned Action Buttons Row */}
+                <div className="flex h-[24px] items-center justify-between gap-1 pt-0.5">
+                  <button
+                    type="button"
+                    onClick={() => runOperation(op)}
+                    disabled={isRunning}
+                    className="gradient-brand inline-flex h-[20px] flex-1 items-center justify-center gap-1 rounded-full px-1.5 text-[7.5px] font-extrabold text-white shadow-2xs transition-transform active:scale-95 disabled:opacity-60 whitespace-nowrap"
+                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => runOperation(op)}
-                      disabled={isRunning}
-                      className="gradient-brand inline-flex h-[32px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-transform active:scale-95 disabled:opacity-60 whitespace-nowrap"
-                      style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                    >
-                      <Play
-                        className={`h-3 w-3 fill-current text-white ${isRunning ? 'animate-pulse' : ''}`}
-                        style={{ color: '#FFFFFF' }}
-                      />
-                      <span style={{ color: '#FFFFFF' }}>
-                        {isRunning ? 'Executing…' : op.buttonLabel}
-                      </span>
-                    </button>
-                  </div>
+                    <Play
+                      className={`h-2 w-2 shrink-0 fill-current text-white ${isRunning ? 'animate-pulse' : ''}`}
+                      style={{ color: '#FFFFFF' }}
+                    />
+                    <span className="truncate" style={{ color: '#FFFFFF' }}>
+                      {isRunning ? 'Running…' : op.buttonLabel}
+                    </span>
+                  </button>
 
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                  <Link
+                    to={op.link}
+                    className="gradient-brand inline-flex h-[20px] shrink-0 items-center justify-center gap-0.5 rounded-full px-1.5 text-[7.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
+                    title="Open connected register"
                   >
-                    <Link
-                      to={op.link}
-                      className="gradient-brand inline-flex h-[32px] items-center justify-center gap-1 rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
-                      style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
-                      title="Open connected register"
-                    >
-                      <span style={{ color: '#FFFFFF' }}>Open</span>
-                      <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                    </Link>
-                  </div>
+                    <span style={{ color: '#FFFFFF' }}>Open</span>
+                    <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -789,96 +835,96 @@ export default function InfinityOneClickOperations({ compact = false }) {
         })}
       </div>
 
-      {/* 5. Live Executive One-Click Execution Log — Lined-Up Sections & App Design Colours */}
+      {/* 5. 50% Smaller Live Executive One-Click Execution Log With Glowing White Lights on Titles & SYS READY */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[12px] bg-white p-3.5 space-y-3 text-center">
+        <div className="rounded-[9px] bg-white p-2 space-y-1.5 text-center">
           <div
-            className="w-full rounded-2xl p-[3px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
+            className="w-full rounded-xl p-[2px] shadow-2xs"
+            style={{
+              background: TOP_BORDER_GRADIENT,
+              boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96)',
+            }}
           >
             <div
-              className="gradient-brand flex min-h-[68px] flex-col items-center justify-center gap-1.5 rounded-[13px] px-5 py-2.5 text-center text-white"
+              className="gradient-brand flex min-h-[30px] flex-wrap items-center justify-center gap-2 rounded-[9px] px-3 py-1 text-center text-white"
               style={{ background: getHeaderView(2), color: '#FFFFFF' }}
             >
-              <div className="flex items-center justify-center gap-2">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span
-                  className="text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white"
-                  style={{ color: '#FFFFFF' }}
-                >
-                  LIVE EXECUTIVE 1-CLICK EXECUTION AUDIT TRAIL ({executionLog.length} EVENTS)
-                </span>
-              </div>
               <span
-                className="mt-0.5 inline-flex items-center justify-center rounded-full border border-white bg-white/20 px-3.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-white"
+                className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 16px 4px #00C6FF' }}
+              />
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span
+                className="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white"
                 style={{ color: '#FFFFFF' }}
               >
-                Real-Time Verification Feed
+                LIVE EXECUTIVE 1-CLICK EXECUTION AUDIT TRAIL ({executionLog.length} EVENTS) · SYS READY
               </span>
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 16px 4px #00C6FF' }}
+              />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 items-stretch">
             {executionLog.slice(0, compact ? 2 : 4).map((entry, eIdx) => {
               const eSym = getSymbolView(eIdx);
               return (
                 <div
                   key={entry.id}
-                  className="flex h-full rounded-2xl p-[3px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                  style={{
+                    background: TOP_BORDER_GRADIENT,
+                    boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.92)',
+                  }}
                 >
                   <div
-                    className="grid h-full w-full grid-cols-1 grid-rows-[32px_44px_1fr] gap-2 rounded-[13px] px-4 py-3 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
+                    className="flex h-full w-full flex-col justify-between gap-1 rounded-[9px] p-1.5 text-center"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex h-[32px] flex-wrap items-center justify-center gap-2">
-                      <div className="rounded-full p-[2px]" style={{ background: getHeaderView(eIdx) }}>
+                    {/* Top Row With Glowing White Lights on OPS-SYS-READY & Timestamp */}
+                    <div className="flex items-center justify-between gap-1.5 rounded-full bg-white px-2 py-0.5">
+                      <span className="inline-flex items-center gap-1 text-[8px] font-extrabold" style={{ color: eSym.iconColor }}>
                         <span
-                          className="block rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold"
-                          style={{ color: eSym.iconColor }}
-                        >
-                          {entry.code}
-                        </span>
-                      </div>
-                      <div className="rounded-full p-[2px]" style={{ background: getHeaderView(eIdx + 1) }}>
-                        <span
-                          className="block rounded-full bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold"
-                          style={{ color: getSymbolView(eIdx + 1).iconColor }}
-                        >
-                          {entry.time}
-                        </span>
-                      </div>
+                          className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                          style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
+                        />
+                        <span>{entry.code} · SYS READY</span>
+                      </span>
+                      <span
+                        className="font-mono text-[8px] font-extrabold"
+                        style={{ color: getSymbolView(eIdx + 1).iconColor }}
+                      >
+                        {entry.time}
+                      </span>
                     </div>
 
-                    <div
-                      className="flex h-[44px] w-full rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(eIdx + 2) }}
-                    >
-                      <div
-                        className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs font-extrabold bg-clip-text text-transparent"
+                    {/* Title Box With Glowing White Light */}
+                    <div className="flex items-center justify-center gap-1 rounded-[6px] bg-white px-2 py-0.5 text-center">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
+                      />
+                      <span
+                        className="text-[9px] font-extrabold bg-clip-text text-transparent"
                         style={{ backgroundImage: getTitleGradientView(eIdx) }}
                       >
                         {entry.pillar} · {entry.title}
-                      </div>
+                      </span>
                     </div>
 
-                    <div
-                      className="flex min-h-[60px] w-full rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(eIdx + 3) }}
-                    >
-                      <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
-                        <p
-                          className="text-center text-xs font-extrabold leading-snug"
-                          style={{ color: eSym.iconColor }}
-                        >
-                          {entry.detail}
-                        </p>
-                      </div>
+                    {/* Detail Box */}
+                    <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
+                      <p
+                        className="text-center text-[8px] font-bold leading-tight"
+                        style={{ color: eSym.iconColor }}
+                      >
+                        {entry.detail}
+                      </p>
                     </div>
                   </div>
                 </div>
