@@ -49,51 +49,89 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               1. Tropical Treasure Hunt Island Path → 2. Sunny Beach Shoreline Command Center → 3. Deep Blue Sea Scuba Progress &amp; Milestone Rewards
             </p>
 
-            {/* Scene Switcher Buttons + Victory Fanfare */}
-            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 pt-1">
-              {SCENE_MODES.map((m, idx) => {
-                const Icon = m.icon;
-                const active = scene === m.id;
-                return (
-                  <div
-                    key={m.id}
-                    className="rounded-full p-[2px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setScene(m.id)}
-                      className={`gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold text-white transition-all ${
-                        active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
-                      }`}
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+            {/* 5 Interactive Sentences at the Bottom of the Interactive Border: Row 1 of Three + Row 2 of Two */}
+            <div className="w-full space-y-2 pt-1">
+              {/* Row 1 of Three */}
+              <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2">
+                {SCENE_MODES.slice(0, 3).map((m, idx) => {
+                  const Icon = m.icon;
+                  const active = scene === m.id;
+                  return (
+                    <div
+                      key={m.id}
+                      className="rounded-full p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                      <span className="truncate" style={{ color: '#FFFFFF' }}>{m.label}</span>
-                    </button>
-                  </div>
-                );
-              })}
+                      <button
+                        type="button"
+                        onClick={() => setScene(m.id)}
+                        className={`gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white transition-all ${
+                          active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                        }`}
+                        style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      >
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                        </span>
+                        <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>{m.label}</span>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
 
-              <div
-                className="rounded-full p-[2px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    playShorelineVictoryFanfare(
-                      'Beach & Deep Blue Sea Trophy',
-                      'Executive Wall Grand Victory',
-                      false
-                    )
-                  }
-                  className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold text-white shadow-sm"
-                  style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+              {/* Row 2 of Two */}
+              <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2">
+                {SCENE_MODES.slice(3).map((m, idx) => {
+                  const Icon = m.icon;
+                  const active = scene === m.id;
+                  return (
+                    <div
+                      key={m.id}
+                      className="rounded-full p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setScene(m.id)}
+                        className={`gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white transition-all ${
+                          active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                        }`}
+                        style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
+                      >
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                        </span>
+                        <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>{m.label}</span>
+                      </button>
+                    </div>
+                  );
+                })}
+
+                <div
+                  className="rounded-full p-[2.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <Trophy className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>Play Victory Fanfare</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      playShorelineVictoryFanfare(
+                        'Beach & Deep Blue Sea Trophy',
+                        'Executive Wall Grand Victory',
+                        false
+                      )
+                    }
+                    className="gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm"
+                    style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+                  >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <Trophy className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                      Play Victory Fanfare
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

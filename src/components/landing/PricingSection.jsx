@@ -288,17 +288,25 @@ export default function PricingSection() {
                   style={{ background: UNIFORM_SPRAY_BG }}
                 >
                   <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                    {/* Fixed-Height Top Badges Row */}
-                    <div className="flex h-[32px] items-center justify-between gap-2">
-                      <span
-                        className="gradient-brand rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                    {/* Clean Fitted Top Header of Each Package Card — Never Collides */}
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div
+                        className="gradient-brand flex h-[56px] w-full flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-1.5 text-center text-white"
                         style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                       >
-                        {pkg.badge}
-                      </span>
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#5A00D6]">
-                        {pkg.users}
-                      </span>
+                        <span
+                          className="text-[10.5px] font-extrabold uppercase tracking-wider leading-tight text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          {pkg.badge}
+                        </span>
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-3 py-0.5 text-[10.5px] font-extrabold leading-none text-[#5A00D6]">
+                          {pkg.users}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Strict Fixed-Height Title & Price Box in App Design Colours So Every Card Lines Up */}
@@ -306,7 +314,7 @@ export default function PricingSection() {
                       className="w-full rounded-xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-[112px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
+                      <div className="flex h-[118px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1.5">
                         <h3
                           className="font-editorial text-sm sm:text-base font-extrabold leading-tight bg-clip-text text-transparent text-center"
                           style={{ backgroundImage: getTitleGradientView(pIdx) }}
@@ -328,7 +336,7 @@ export default function PricingSection() {
                           </span>
                         </div>
 
-                        <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                        <div className="rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF] px-3 py-0.5 text-[10.5px] font-extrabold text-[#5A00D6]">
                           ${pkg.previousMonthly}/mo Base + ${pkg.eliteAddon}/mo Elite Pack Included
                         </div>
                       </div>

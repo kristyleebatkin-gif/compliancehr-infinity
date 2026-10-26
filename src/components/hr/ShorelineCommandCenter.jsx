@@ -210,19 +210,19 @@ export default function ShorelineCommandCenter() {
       )}
 
       <div className="mt-3.5 grid grid-cols-1 gap-3.5 lg:grid-cols-12 items-stretch">
-        {/* Left 7 Cols: Centered 16 Beach Heatmap Squares */}
+        {/* Left 7 Cols: Centered 16 Beach Heatmap Squares — 4-Column Grid So Full Staff Names & Areas Fit Cleanly */}
         <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white/95 p-3.5 text-center">
           <div>
-            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2 rounded-full border border-[#0A2B6D]/20 bg-[#FBF7EE] px-4 py-1 text-xs font-extrabold text-[#0A2B6D]">
+            <div className="mb-3 flex flex-col sm:flex-row items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D]/25 bg-[#FBF7EE] px-4 py-2 text-xs font-extrabold text-[#0A2B6D]">
               <span>🏖️ Sand-to-Ocean Workforce Readiness ({avgReadiness}% Avg)</span>
-              <div className="flex items-center gap-1 text-[10px] font-extrabold text-[#0A2B6D]">
-                <span className="rounded-full border border-[#0A2B6D] bg-[#E6D5B8] px-2 py-0.5">0% Sand</span>
+              <div className="flex items-center gap-1.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                <span className="rounded-full border border-[#0A2B6D] bg-[#E6D5B8] px-2.5 py-0.5">0% Sand</span>
                 <span>→</span>
-                <span className="rounded-full border border-[#0A2B6D] bg-[#005F73] px-2 py-0.5 text-white">100% Ocean</span>
+                <span className="rounded-full border border-[#0A2B6D] bg-[#005F73] px-2.5 py-0.5 text-white">100% Ocean</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 justify-items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 items-stretch">
               {squares.map((sq) => {
                 const st = heatmapSquareStyle(sq.pct);
                 return (
@@ -231,12 +231,18 @@ export default function ShorelineCommandCenter() {
                     type="button"
                     onClick={() => cycleSquare(sq.id)}
                     style={st}
-                    className="flex h-[54px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] p-1 text-center shadow-2xs transition-transform hover:scale-105"
+                    className="flex min-h-[68px] w-full flex-col items-center justify-between gap-1 rounded-xl border-2 border-[#0A2B6D] px-2.5 py-2 text-center shadow-2xs transition-transform hover:scale-[1.02]"
                     title={`${sq.staff} · ${sq.area}: ${sq.pct}%`}
                   >
-                    <span className="text-[9px] font-extrabold leading-none">{sq.staff.split(' ')[0]}</span>
-                    <span className="text-[8px] font-bold opacity-90 leading-tight">{sq.area}</span>
-                    <span className="mt-0.5 text-[10px] font-black leading-none">{sq.pct}%</span>
+                    <span className="w-full rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                      {sq.staff}
+                    </span>
+                    <span className="text-[10.5px] font-extrabold leading-tight">
+                      {sq.area}
+                    </span>
+                    <span className="rounded-full border border-current/30 bg-black/15 px-2 py-0.5 text-[10px] font-black leading-none">
+                      {sq.pct}%
+                    </span>
                   </button>
                 );
               })}

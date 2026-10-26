@@ -152,27 +152,17 @@ export default function LandingFooter() {
             </div>
           </div>
 
-          {/* 4 Centered Contact Us Cards with App Design Coloured Borders & Pink/Blue/Purple Spray Background */}
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4 items-stretch text-center">
+          {/* Minimised Contact Us — Software & Developer Tiles Only (2 Balanced Side-by-Side Tiles) */}
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-3.5 sm:grid-cols-2 items-stretch text-center">
             {[
-              {
-                icon: Award,
-                title: 'App Name & Slogan',
-                text: 'ComplianceHR Infinity — Complete Control. Greater Confidence. Brighter Success.',
-              },
               {
                 icon: Cpu,
                 title: 'Software',
-                text: 'ComplianceHR Infinity NDIS & Aged Care Super-Platform',
-              },
-              {
-                icon: FileText,
-                title: 'Software Description',
-                text: 'End-to-end compliance, documentation, rostering, HR, incident, risk, invoicing, training & audit management platform.',
+                text: 'ComplianceHR Infinity — NDIS & Aged Care Documentation & Compliance Super-Platform',
               },
               {
                 icon: Mail,
-                title: 'Developer, Name & Email',
+                title: 'Developer',
                 text: 'Kristy Lee Whelan · kristyleebatkin@live.com.au',
                 href: 'mailto:kristyleebatkin@live.com.au',
               },
@@ -183,41 +173,48 @@ export default function LandingFooter() {
                 <div
                   key={box.title}
                   className="flex h-full rounded-2xl p-[3px] shadow-sm"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  style={{ background: getHeaderView(idx + 1) }}
                 >
                   <div
                     className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3.5 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
-                    <span
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                      style={{ borderColor: getAppBorderView(idx + 4) }}
+                    <div
+                      className="rounded-full p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                    </span>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                      </span>
+                    </div>
 
                     <div
                       className="w-full rounded-xl p-[2px]"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      style={{ background: getHeaderView(idx) }}
                     >
-                      <div className="flex min-h-[38px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center text-xs font-extrabold text-[#0A2B6D]">
+                      <div className="flex h-[38px] items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
                         {box.title}
                       </div>
                     </div>
 
-                    <div className="flex min-h-[54px] w-full flex-1 items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center">
-                      {box.href ? (
-                        <a
-                          href={box.href}
-                          className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6] underline break-all"
-                        >
-                          {box.text}
-                        </a>
-                      ) : (
-                        <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
-                          {box.text}
-                        </p>
-                      )}
+                    <div
+                      className="w-full flex-1 rounded-xl p-[2px]"
+                      style={{ background: getHeaderView(idx + 2) }}
+                    >
+                      <div className="flex h-[52px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                        {box.href ? (
+                          <a
+                            href={box.href}
+                            className="text-center text-xs font-extrabold leading-tight text-[#5A00D6] underline"
+                          >
+                            {box.text}
+                          </a>
+                        ) : (
+                          <p className="text-center text-xs font-extrabold leading-tight text-[#5A00D6]">
+                            {box.text}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

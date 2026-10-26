@@ -1034,31 +1034,81 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </>
       )}
 
-      {/* Bottom Summary Box of Master Audit Checklist */}
+      {/* Bottom Summary Box of Master Audit Checklist — All Styled Like Open All Tile & Arranged Cleanly in Two Lines */}
       <div
-        className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 bg-white px-4 py-2.5 text-center sm:text-left shadow-2xs"
-        style={{ borderColor: getAppBorderView(2) }}
+        className="w-full rounded-2xl p-[3.5px] shadow-2xs"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+        }}
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold text-white"
-            style={{ background: getHeaderView(2) }}
+        <div className="flex flex-col gap-2 rounded-[13px] bg-white p-3 text-center">
+          {/* Line 1: 11 Structured Pages · 17 NDIS & Governance Categories · 356 Interactive Checkpoints Styled Like Open All Tile */}
+          <div
+            className="w-full rounded-full p-[2px] shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+            }}
           >
-            <CheckCircle2 className="h-3.5 w-3.5 text-white" />
-            <span>CHR-AUD-001 &amp; CHR-AUD-002 Included Free in Plan</span>
-          </span>
-          <span className="text-xs font-extrabold text-[#0072FF]">
-            11 Structured Pages · 17 NDIS &amp; Governance Categories · 356 Interactive Checkpoints
-          </span>
+            <div
+              className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs font-extrabold text-white"
+              style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+            >
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <ClipboardList className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+              </span>
+              <span style={{ color: '#FFFFFF' }}>
+                11 Structured Pages · 17 NDIS &amp; Governance Categories · 356 Interactive Checkpoints
+              </span>
+            </div>
+          </div>
+
+          {/* Line 2: CHR-AUD-001/002 Included Free + Open All 11 Audit Pages Side-by-Side */}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2">
+            <div
+              className="rounded-full p-[2px] shadow-2xs"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+              }}
+            >
+              <div
+                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-1 text-xs font-extrabold text-white"
+                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <CheckCircle2 className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+                <span style={{ color: '#FFFFFF' }}>
+                  CHR-AUD-001 &amp; CHR-AUD-002 Included Free in Plan
+                </span>
+              </div>
+            </div>
+
+            <div
+              className="rounded-full p-[2px] shadow-2xs"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setExpanded((v) => !v)}
+                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95"
+                style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+                <span style={{ color: '#FFFFFF' }}>
+                  {expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={() => setExpanded((v) => !v)}
-          className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold text-white"
-          style={{ background: getHeaderView(5) }}
-        >
-          <span>{expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}</span>
-        </button>
       </div>
     </div>
   );

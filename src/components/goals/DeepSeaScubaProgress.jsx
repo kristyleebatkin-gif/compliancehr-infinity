@@ -111,40 +111,49 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
         background: 'linear-gradient(160deg, #0072FF 0%, #0A2B6D 45%, #00C6FF 100%)',
       }}
     >
-      {/* Centered Deep Blue Sea Header on Crisp White */}
-      <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-3 text-center shadow-sm">
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#0072FF] px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-white">
-            <Anchor className="h-3.5 w-3.5 text-white" /> Deep Blue Sea
+      {/* Centered Deep Blue Sea Header Fitted Cleanly Inside App-Design Border */}
+      <div
+        className="w-full rounded-2xl p-[3.5px] shadow-sm"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+        }}
+      >
+        <div className="flex flex-col items-center justify-center gap-2 rounded-[13px] bg-white px-5 py-4 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-[#0072FF] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+            <Anchor className="h-3.5 w-3.5 text-white" />
+            <span>Deep Blue Sea · Scuba Goal Tracker</span>
           </span>
-          <h3 className="font-editorial text-base sm:text-lg md:text-xl font-extrabold text-[#0A2B6D]">
+
+          <h3 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold leading-tight text-[#0A2B6D]">
             🤿 Deep Blue Sea Scuba Progress &amp; 100% Milestone Rewards
           </h3>
-        </div>
-        <p
-          className="mx-auto max-w-3xl text-center text-xs font-extrabold text-black"
-          style={{ color: '#000000' }}
-        >
-          Slide the yellow submarine or tap 25%, 50%, 75% or 100% to fill each neon-aqua scuba tank and unlock custom deep-sea rewards!
-        </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-0.5">
-          <button
-            type="button"
-            onClick={() => setSoundMuted((m) => !m)}
-            className={`inline-flex h-[34px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 text-xs font-extrabold transition-all ${
-              soundMuted
-                ? 'bg-white text-[#0A2B6D]'
-                : 'bg-[#00C6FF] text-[#0A2B6D] shadow-2xs'
-            }`}
+          <p
+            className="mx-auto max-w-3xl text-center text-xs sm:text-sm font-extrabold text-black"
+            style={{ color: '#000000' }}
           >
-            {soundMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-            {soundMuted ? 'Muted' : 'Ocean FX: ON'}
-          </button>
+            Slide the yellow submarine or tap 25%, 50%, 75% or 100% to fill each neon-aqua scuba tank and unlock custom deep-sea rewards!
+          </p>
 
-          <Badge className="h-[34px] rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] px-3.5 text-xs font-extrabold text-[#0A2B6D]">
-            Average Scuba Tank Level: {avgDepth}%
-          </Badge>
+          <div className="grid w-full max-w-xl grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <button
+              type="button"
+              onClick={() => setSoundMuted((m) => !m)}
+              className={`inline-flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-4 text-xs font-extrabold transition-all ${
+                soundMuted
+                  ? 'bg-white text-[#0A2B6D]'
+                  : 'bg-[#00C6FF] text-[#0A2B6D] shadow-2xs'
+              }`}
+            >
+              {soundMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+              {soundMuted ? 'Sound Muted' : 'Ocean FX: ON'}
+            </button>
+
+            <Badge className="flex h-[36px] w-full items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] px-4 text-xs font-extrabold text-[#0A2B6D]">
+              Average Scuba Tank Level: {avgDepth}%
+            </Badge>
+          </div>
         </div>
       </div>
 
