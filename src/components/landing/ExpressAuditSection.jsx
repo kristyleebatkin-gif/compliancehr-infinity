@@ -28,6 +28,13 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+const EXPRESS_SPRAY_BGS = [
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+  'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.65) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.58) 0%, transparent 50%), #FFFFFF',
+  'radial-gradient(circle at 16% 28%, rgba(192, 132, 252, 0.65) 0%, transparent 48%), radial-gradient(circle at 84% 78%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 54% 18%, rgba(56, 189, 248, 0.60) 0%, transparent 50%), #FFFFFF',
+  'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.60) 0%, transparent 52%), #FFFFFF',
+];
+
 const VERBS = [
   { label: 'Store', icon: Vault },
   { label: 'Copy', icon: Copy },
@@ -82,7 +89,7 @@ export default function ExpressAuditSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5">
         {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
         <div
           className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
@@ -104,7 +111,19 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "The Two-Minute Express Audit" Underneath Writing */}
+        {/* "See the Audit Engine" Above "The Two-Minute Express Audit" — Just Smaller in Height/Size, Same Full Length */}
+        <Link
+          to="/compliance"
+          className="flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white shadow-sm transition-all hover:-translate-y-0.5"
+          style={{ background: getHeaderView(7) }}
+        >
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <ArrowRight className="h-3 w-3 text-white" />
+          </span>
+          <span className="text-center">See the Audit Engine</span>
+        </Link>
+
+        {/* Stretched Side-to-Side "The Two-Minute Express Audit" Underneath */}
         <div
           className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
           style={{ background: getHeaderView(6) }}
@@ -115,7 +134,7 @@ export default function ExpressAuditSection() {
           <span className="text-center">The Two-Minute Express Audit</span>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles in App Design Colour Border + App Coloured Background */}
+        {/* 1. Store, Copy & Other Action Tiles — White Background, App Design Coloured Borders, Dark Blue Writing & Symbols */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -123,7 +142,6 @@ export default function ExpressAuditSection() {
           <div className="grid w-full grid-cols-2 gap-2.5 rounded-[12px] bg-white p-3 sm:grid-cols-5 lg:grid-cols-10">
             {VERBS.map((v, idx) => {
               const Icon = v.icon;
-              const sym = getSymbolView(idx);
               const borderCol = getAppBorderView(idx);
               return (
                 <div
@@ -131,17 +149,14 @@ export default function ExpressAuditSection() {
                   className="rounded-full p-[2.5px] shadow-sm"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex h-full w-full items-center justify-center gap-2 rounded-full px-3 py-1.5 text-center text-white"
-                    style={{ background: getHeaderView(idx) }}
-                  >
+                  <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-full bg-white px-2.5 py-1.5 text-center text-[#0A2B6D]">
                     <span
                       className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                       style={{ borderColor: borderCol }}
                     >
-                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                      <Icon className="h-3.5 w-3.5 text-[#0A2B6D]" />
                     </span>
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                       {v.label}
                     </span>
                   </div>
@@ -151,11 +166,12 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. 4 Compact Proof Tiles in App Design Colour Border + App Coloured Background */}
+        {/* 2. Top 4 Tiles Above Steps — Pink, Purple & Blue Spray Background with App Design Coloured Border */}
         <div className="grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4 text-left">
           {PROOF.map(({ icon: Icon, text }, idx) => {
             const sym = getSymbolView(idx + 3);
             const borderCol = getAppBorderView(idx + 3);
+            const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
             return (
               <div
                 key={text}
@@ -163,16 +179,16 @@ export default function ExpressAuditSection() {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-4 py-3 text-white"
-                  style={{ background: getHeaderView(idx + 2) }}
+                  className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-4 py-3 text-[#0A2B6D]"
+                  style={{ background: sprayBg }}
                 >
                   <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                     style={{ borderColor: borderCol }}
                   >
-                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="text-xs font-extrabold leading-snug text-white">
+                  <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
                     {text}
                   </span>
                 </div>
@@ -181,7 +197,7 @@ export default function ExpressAuditSection() {
           })}
         </div>
 
-        {/* 3. 4 Detailed Step Cards in App Design Colour Border + App Coloured Background */}
+        {/* 3. 4 Detailed Step Cards — Slightly Increased Size of Step */}
         <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
@@ -192,22 +208,22 @@ export default function ExpressAuditSection() {
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group flex h-full flex-col rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group flex h-full flex-col rounded-2xl p-[3.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-4 text-white space-y-2.5"
+                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-5 text-white space-y-3"
                   style={{ background: getHeaderView(index + 4) }}
                 >
-                  <div className="flex items-center justify-center gap-2.5">
+                  <div className="flex items-center justify-center gap-3">
                     <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                       style={{ borderColor: borderCol }}
                     >
                       <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                     </span>
                     <span
-                      className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                      className="rounded-full border-2 bg-white px-4 py-1.5 font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-2xs"
                       style={{ borderColor: borderCol }}
                     >
                       Step {item.step}
@@ -218,14 +234,14 @@ export default function ExpressAuditSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
-                      <h3 className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                    <div className="flex min-h-[46px] w-full items-center justify-center rounded-[9px] bg-white px-3.5 py-2 text-center">
+                      <h3 className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]">
                         {item.title}
                       </h3>
                     </div>
                   </div>
 
-                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-relaxed text-white">
+                  <p className="flex-1 flex items-center justify-center text-xs sm:text-[13px] font-bold leading-relaxed text-white">
                     {item.text}
                   </p>
                 </div>
@@ -233,19 +249,6 @@ export default function ExpressAuditSection() {
             );
           })}
         </ol>
-
-        <div className="flex justify-center">
-          <Link
-            to="/compliance"
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(7) }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <ArrowRight className="h-3.5 w-3.5 text-white" />
-            </span>
-            <span>See the Audit Engine</span>
-          </Link>
-        </div>
       </div>
     </section>
   );

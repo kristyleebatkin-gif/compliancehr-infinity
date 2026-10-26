@@ -79,12 +79,12 @@ export default function QuickStartSection() {
                   borderColor: borderCol,
                 }}
               >
-                {/* Top Row: White Symbol & White Step Pill */}
-                <div className="mb-3 flex w-full items-center justify-center gap-2.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-sm">
+                {/* Top Row: White Symbol & Slightly Larger White Step Pill */}
+                <div className="mb-3 flex w-full items-center justify-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-sm">
                     <Icon className="h-5 w-5 text-white" />
                   </span>
-                  <span className="rounded-full border-2 border-white bg-white/20 px-3.5 py-1 font-editorial text-xs font-extrabold text-white shadow-2xs">
+                  <span className="rounded-full border-2 border-white bg-white/20 px-4 py-1.5 font-editorial text-sm sm:text-base font-extrabold text-white shadow-2xs">
                     Step 0{index + 1}
                   </span>
                 </div>

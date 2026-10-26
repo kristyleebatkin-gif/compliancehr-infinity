@@ -71,7 +71,7 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex h-full min-h-[88px] sm:min-h-[96px] items-center gap-3.5 rounded-2xl border-[3px] px-5 py-4 text-base sm:text-lg md:text-xl font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+                  className={`flex h-full min-h-[88px] sm:min-h-[96px] items-center gap-2.5 sm:gap-3 rounded-2xl border-[3px] px-3.5 sm:px-4 py-3.5 text-xs sm:text-[13px] md:text-sm lg:text-[15px] font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg ${
                     active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
                   style={{
@@ -81,12 +81,12 @@ export default function QuickAppBar() {
                   }}
                 >
                   <span
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 bg-white shadow-sm"
+                    className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl border-2 bg-white shadow-sm"
                     style={{ borderColor: borderCol }}
                   >
-                    <Icon className="h-6 w-6" style={{ color: sym.iconColor }} />
+                    <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="min-w-0 flex-1 whitespace-nowrap overflow-hidden text-ellipsis text-left leading-tight text-white">
+                  <span className="min-w-0 flex-1 text-left leading-snug text-white break-words">
                     {item.label}
                   </span>
                 </Link>
