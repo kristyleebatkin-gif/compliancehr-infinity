@@ -190,7 +190,10 @@ export default function PricingSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+      <div
+        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
+        style={{ background: UNIFORM_SPRAY_BG }}
+      >
         {/* Top Package Title Header on One Line + Border & Colour Removed From Writing Underneath */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
@@ -302,7 +305,10 @@ export default function PricingSection() {
                     '0 0 18px 4px rgba(255, 255, 255, 0.98), 0 0 12px 2px rgba(0, 198, 255, 0.55)',
                 }}
               >
-                <div className="flex h-full w-full flex-col justify-between rounded-[12px] bg-white p-2 text-center space-y-1.5">
+                <div
+                  className="flex h-full w-full flex-col justify-between rounded-[12px] p-2 text-center space-y-1.5"
+                  style={{ background: UNIFORM_SPRAY_BG }}
+                >
                   <div className="flex flex-1 flex-col justify-between space-y-1.5">
                     {/* Glowing White Lights Bar at Top of Subscription Card */}
                     <div className="flex items-center justify-center gap-1.5">
@@ -313,10 +319,7 @@ export default function PricingSection() {
                           style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                         />
                       ))}
-                      <span
-                        className="rounded-full border border-[#0A2B6D]/25 px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
-                        style={{ background: UNIFORM_SPRAY_BG }}
-                      >
+                      <span className="rounded-full border border-[#0A2B6D]/25 bg-white px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                         WHITE LIGHTS ON
                       </span>
                     </div>
@@ -452,7 +455,10 @@ export default function PricingSection() {
                 className="flex h-full rounded-2xl p-[3px] shadow-2xs"
                 style={{ background: getHeaderView(idx) }}
               >
-                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] bg-white p-1.5 text-center">
+                <div
+                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] p-1.5 text-center"
+                  style={{ background: UNIFORM_SPRAY_BG }}
+                >
                   {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
                   <div
                     className="gradient-brand flex min-h-[22px] w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"

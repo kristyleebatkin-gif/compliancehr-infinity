@@ -683,15 +683,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 </div>
               </div>
 
-              {/* AI Insight Under Header 1 — Pink/Blue/Purple Spray & Dark Blue Writing */}
+              {/* AI Insight Under Header 1 — Pure White Writing Box */}
               <div
                 className="w-full rounded-lg p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="flex items-center justify-center gap-1 rounded-[6px] px-2 py-0.5 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="flex items-center justify-center gap-1 rounded-[6px] bg-white px-2 py-0.5 text-center">
                   <Sparkles className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
                   <span className="text-[8.5px] sm:text-[9.5px] font-extrabold text-[#0A2B6D] leading-tight">
                     AI Insight: All 8 NDIS Practice Standard pillars exceed 97.9% with 100% worker screening.
@@ -717,17 +714,15 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           : '0 0 8px 2px rgba(255, 255, 255, 0.9)',
                       }}
                     >
-                      {/* White Area Outside Writing Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                      {/* Spray Between Borders & Pure White Inside Writing Boxes */}
                       <button
                         type="button"
                         onClick={() => setSelectedDomainId(dom.id)}
-                        className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1 text-center"
+                        className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
+                        style={{ background: UNIFORM_SPRAY_BG }}
                       >
                         {/* Live Tracker at Top of Tile Fitted on One Line (+ Yellow Light on Governance) */}
-                        <div
-                          className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 px-1.5 py-0.5 whitespace-nowrap"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
+                        <div className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 whitespace-nowrap">
                           <span className="inline-flex items-center gap-1 text-[7px] font-extrabold uppercase text-[#0A2B6D]">
                             <span
                               className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/40"
@@ -762,15 +757,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           </span>
                         </div>
 
-                        {/* Writing Box 1: Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Writing Box 1: Pure White Inside Writing Box */}
                         <div
                           className="w-full rounded-[6px] p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
+                          <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
                             <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                               <span
                                 className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -784,15 +776,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           </div>
                         </div>
 
-                        {/* Writing Box 2: Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Writing Box 2: Pure White Inside Writing Box */}
                         <div
                           className="w-full rounded-[6px] p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[5px] px-1.5 py-0.5 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
+                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[5px] bg-white px-1.5 py-0.5 text-center">
                             <div className="h-1 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
                               <div
                                 className="h-full rounded-full"
@@ -1106,15 +1095,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
                     {/* 5. LEFT (CURRENT WRITING) & RIGHT (6 DIGITAL LIGHT LIVE TRACKERS) — PINK/BLUE/PURPLE SPRAY & DARK BLUE WRITING */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 items-stretch">
-                      {/* Left Column: Current Writing in Dark Blue */}
+                      {/* Left Column: Current Writing on Pure White Background */}
                       <div
                         className="flex rounded-lg p-[2.5px] shadow-2xs"
                         style={{ background: getHeaderView(3) }}
                       >
-                        <div
-                          className="flex w-full flex-col justify-between rounded-[6px] p-1.5 text-left space-y-1"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
+                        <div className="flex w-full flex-col justify-between rounded-[6px] bg-white p-1.5 text-left space-y-1">
                           <div className="flex items-center gap-1 border-b border-[#0A2B6D]/15 pb-0.5">
                             <span
                               className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -1138,7 +1124,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             {selectedDomain.ActionItems.slice(1).map((item) => (
                               <div
                                 key={item}
-                                className="flex items-start gap-1 rounded border border-[#0A2B6D]/20 bg-white/80 px-1 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D] leading-tight"
+                                className="flex items-start gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D] leading-tight"
                               >
                                 <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D] mt-0.5" />
                                 <span>{item}</span>
@@ -1148,13 +1134,16 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         </div>
                       </div>
 
-                      {/* Right Column: 6 Digital Light Live Trackers With White Light on Title */}
+                      {/* Right Column: 6 Digital Light Live Trackers With Pure White Writing Boxes */}
                       <div
                         className="flex rounded-lg p-[2.5px] shadow-2xs"
                         style={{ background: getHeaderView(5) }}
                       >
-                        <div className="flex w-full flex-col justify-between rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
-                          <div className="flex items-center justify-between border-b border-[#0A2B6D]/15 pb-0.5">
+                        <div
+                          className="flex w-full flex-col justify-between rounded-[6px] p-1.5 text-left space-y-0.5"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
+                          <div className="flex items-center justify-between rounded bg-white px-1.5 py-0.5">
                             <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                               <span
                                 className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -1172,8 +1161,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                 <Link
                                   key={rt.label}
                                   to={rt.route}
-                                  className="block rounded border border-[#0A2B6D]/20 px-1 py-0.5 transition-all hover:opacity-95"
-                                  style={{ background: UNIFORM_SPRAY_BG }}
+                                  className="block rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 transition-all hover:opacity-95"
                                 >
                                   <div className="flex items-center justify-between gap-0.5">
                                     <span className="inline-flex items-center gap-0.5 text-[7px] font-extrabold text-[#0A2B6D] truncate">
@@ -1188,7 +1176,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                       }}
                                     />
                                   </div>
-                                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-white">
+                                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-slate-100">
                                     <div
                                       className="h-full rounded-full"
                                       style={{ width: `${rt.trackerPct}%`, background: TOP_BORDER_GRADIENT }}
@@ -1202,7 +1190,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       </div>
                     </div>
 
-                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — Spray Between Borders & Pure White Inside Writing Boxes */}
                     <div className="grid grid-cols-3 gap-1.5 items-stretch">
                       {[
                         { tag: '01 · PHONE', val: '27 Oct · 24°C', to: null },
@@ -1214,7 +1202,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           className="rounded-lg p-[2px]"
                           style={{ background: getHeaderView(dIdx) }}
                         >
-                          <div className="flex h-full flex-col justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center">
+                          <div
+                            className="flex h-full flex-col justify-between gap-0.5 rounded-[6px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             <div
                               className="gradient-brand rounded px-1 py-0 text-[6.5px] font-extrabold uppercase text-white"
                               style={{ background: getHeaderView(dIdx + 1), color: '#FFFFFF' }}
@@ -1224,16 +1215,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             {dev.to ? (
                               <Link
                                 to={dev.to}
-                                className="block rounded border border-[#0A2B6D]/20 px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate"
-                                style={{ background: UNIFORM_SPRAY_BG }}
+                                className="block rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate"
                               >
                                 {dev.val}
                               </Link>
                             ) : (
-                              <div
-                                className="rounded border border-[#0A2B6D]/20 px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate"
-                                style={{ background: UNIFORM_SPRAY_BG }}
-                              >
+                              <div className="rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate">
                                 {dev.val}
                               </div>
                             )}
@@ -1510,10 +1497,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       className="rounded-lg p-[2px]"
                       style={{ background: getHeaderView(aIdx) }}
                     >
-                      <div
-                        className="flex items-center justify-between gap-1.5 rounded-[6px] px-2 py-1 text-left"
-                        style={{ background: UNIFORM_SPRAY_BG }}
-                      >
+                      <div className="flex items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-1 text-left">
                         {/* Left Side: Switch + Real Light + Day Badge + Left-Aligned Writing */}
                         <div className="min-w-0 flex-1 text-left space-y-0.5">
                           <div className="flex items-center justify-start gap-1">

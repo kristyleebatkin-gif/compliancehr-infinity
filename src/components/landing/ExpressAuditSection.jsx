@@ -239,7 +239,10 @@ export default function ExpressAuditSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5">
+      <div
+        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5"
+        style={{ background: STICKY_NOTE_BG }}
+      >
         {/* Top Header With White Background & "The fastest, safest way..." Fitted Cleanly in Three Rows */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
@@ -306,12 +309,15 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles Above Steps — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — Spray Between Borders & White Inside Writing Box */}
         <div
           className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="grid w-full grid-cols-5 gap-1.5 rounded-[9px] bg-white p-1.5 lg:grid-cols-10">
+          <div
+            className="grid w-full grid-cols-5 gap-1.5 rounded-[9px] p-1.5 lg:grid-cols-10"
+            style={{ background: STICKY_NOTE_BG }}
+          >
             {VERBS.map((v, idx) => {
               const Icon = v.icon;
               const isLit = litVerbIdx === idx;
@@ -320,8 +326,8 @@ export default function ExpressAuditSection() {
               return (
                 <div
                   key={v.label}
-                  className="flex flex-col justify-between rounded-xl border-2 bg-white p-1 transition-all duration-300"
-                  style={{ borderColor: borderCol }}
+                  className="flex flex-col justify-between rounded-xl border-2 p-1 transition-all duration-300"
+                  style={{ borderColor: borderCol, background: sprayBg }}
                 >
                   <div
                     className="gradient-brand mb-1 flex items-center justify-center gap-0.5 rounded px-1 py-0.5 text-white"
@@ -336,10 +342,7 @@ export default function ExpressAuditSection() {
                     className="rounded-md p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex min-h-[20px] items-center justify-center rounded-[4px] px-1 py-0.5 text-center"
-                      style={{ background: sprayBg }}
-                    >
+                    <div className="flex min-h-[20px] items-center justify-center rounded-[4px] bg-white px-1 py-0.5 text-center">
                       <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                         {v.label}
                       </span>
@@ -351,7 +354,7 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Proof iPad Screens Above Steps — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* 2. Top 4 Proof iPad Screens Above Steps — Spray Between Borders & White Inside Writing Box */}
         <div className="grid w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {PROOF.map(({ icon: Icon, messages }, idx) => {
             const isLit = litProofIdx === idx;
@@ -361,8 +364,8 @@ export default function ExpressAuditSection() {
             return (
               <div
                 key={idx}
-                className="flex h-full flex-col justify-between rounded-xl border-2 bg-white p-1.5 transition-all duration-300"
-                style={{ borderColor: borderCol }}
+                className="flex h-full flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300"
+                style={{ borderColor: borderCol, background: sprayBg }}
               >
                 <div
                   className="gradient-brand mb-1 flex items-center justify-between rounded-full px-2 py-0.5 text-white"
@@ -386,10 +389,7 @@ export default function ExpressAuditSection() {
                   className="flex flex-1 rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex min-h-[28px] w-full items-center justify-center rounded-[6px] px-2 py-1 text-center"
-                    style={{ background: sprayBg }}
-                  >
+                  <div className="flex min-h-[28px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
                     <span className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                       {activeMsg}
                     </span>
@@ -400,7 +400,7 @@ export default function ExpressAuditSection() {
           })}
         </div>
 
-        {/* 3. Four Audit Steps Placed on 50% Smaller Sticky Notes */}
+        {/* 3. Four Audit Steps Placed on 50% Smaller Sticky Notes — Spray Between Borders & White Inside Writing Box */}
         <ol className="grid w-full gap-1.5 pt-1 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
@@ -413,10 +413,11 @@ export default function ExpressAuditSection() {
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-lg border-2 bg-white p-1 pt-2.5 text-center shadow-2xs transition-all hover:-translate-y-0.5"
+                className="group relative flex h-full flex-col justify-between rounded-lg border-2 p-1 pt-2.5 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: borderCol,
                   borderBottomRightRadius: '12px',
+                  background: STICKY_NOTE_BG,
                 }}
               >
                 <div
@@ -462,10 +463,7 @@ export default function ExpressAuditSection() {
                     className="w-full rounded p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
-                      style={{ background: STICKY_NOTE_BG }}
-                    >
+                    <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
                       <p className="text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                         {currentNote.text}
                       </p>
@@ -477,10 +475,7 @@ export default function ExpressAuditSection() {
                   className="mt-0.5 w-full rounded p-[1px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="rounded-[3px] p-1 text-left"
-                    style={{ background: STICKY_NOTE_BG }}
-                  >
+                  <div className="rounded-[3px] bg-white p-1 text-left">
                     <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => (
                         <li

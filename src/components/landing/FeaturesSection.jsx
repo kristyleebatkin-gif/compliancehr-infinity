@@ -325,7 +325,10 @@ export default function FeaturesSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+      <div
+        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
+        style={{ background: STICKY_NOTE_BG }}
+      >
         {/* "An impossible standard, achieved effortlessly." — Clean White Background */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
@@ -389,10 +392,11 @@ export default function FeaturesSection() {
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group relative flex h-full flex-col justify-between rounded-lg border-2 bg-white p-1 pt-2.5 text-center shadow-2xs transition-all hover:-translate-y-0.5"
+                className="group relative flex h-full flex-col justify-between rounded-lg border-2 p-1 pt-2.5 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: borderCol,
                   borderBottomRightRadius: '12px',
+                  background: STICKY_NOTE_BG,
                 }}
               >
                 {/* 50% Smaller Top Sticky Tape Strip + Fixed Note Count */}
@@ -436,10 +440,7 @@ export default function FeaturesSection() {
                     className="w-full rounded p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
-                      style={{ background: STICKY_NOTE_BG }}
-                    >
+                    <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
                       <p className="text-[6.5px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                         {currentNote.desc}
                       </p>
@@ -451,10 +452,7 @@ export default function FeaturesSection() {
                   className="mt-0.5 w-full rounded p-[1px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="rounded-[3px] p-1 text-left"
-                    style={{ background: STICKY_NOTE_BG }}
-                  >
+                  <div className="rounded-[3px] bg-white p-1 text-left">
                     <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => (
                         <li

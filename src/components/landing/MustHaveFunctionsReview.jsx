@@ -202,7 +202,10 @@ export default function MustHaveFunctionsReview() {
       className="w-full scroll-mt-16 rounded-2xl p-[6px] shadow-md"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-2.5 py-3 sm:px-3.5 sm:py-3.5 text-center space-y-2">
+      <div
+        className="flex w-full flex-col items-center justify-center rounded-[12px] px-2.5 py-3 sm:px-3.5 sm:py-3.5 text-center space-y-2"
+        style={{ background: SPRAY_BGS[0] }}
+      >
         {/* 50% Smaller Heading & 2-Line Subtitle on Clean White Background */}
         <div
           className="w-full rounded-xl p-[3px] shadow-2xs"
@@ -265,7 +268,10 @@ export default function MustHaveFunctionsReview() {
                 className="flex h-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
+                <div
+                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                  style={{ background: sprayBg }}
+                >
                   {/* App-Coloured Header Bar for Title */}
                   <div
                     className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
@@ -275,15 +281,12 @@ export default function MustHaveFunctionsReview() {
                     <span style={{ color: '#FFFFFF' }}>{stat.category}</span>
                   </div>
 
-                  {/* Writing Area Framed in Title Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                  {/* Writing Area Framed in Title Border With Pure White Background & Dark Blue Writing */}
                   <div
                     className="w-full rounded-md p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[4px] px-1.5 py-0.5 text-center"
-                      style={{ background: sprayBg }}
-                    >
+                    <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[4px] bg-white px-1.5 py-0.5 text-center">
                       <div className="font-editorial text-[9.5px] font-extrabold leading-tight text-[#0A2B6D] whitespace-nowrap">
                         {stat.val}
                       </div>
@@ -445,7 +448,10 @@ export default function MustHaveFunctionsReview() {
                       className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="grid h-full w-full grid-cols-1 grid-rows-[26px_22px_1fr] gap-1 rounded-[9px] bg-white p-1.5 text-center">
+                      <div
+                        className="grid h-full w-full grid-cols-1 grid-rows-[26px_22px_1fr] gap-1 rounded-[9px] p-1.5 text-center"
+                        style={{ background: sprayBg }}
+                      >
                         {/* Section 1: App-Coloured Header Bar for Title */}
                         <div
                           className="gradient-brand flex h-[26px] w-full items-center justify-center rounded-md px-2 py-0.5 text-center text-[9px] font-extrabold leading-tight text-white"
@@ -462,15 +468,12 @@ export default function MustHaveFunctionsReview() {
                           <span style={{ color: '#FFFFFF' }}>{item.included}</span>
                         </div>
 
-                        {/* Section 3: Writing Area Framed in Title Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Section 3: Pure White Writing Area */}
                         <div
                           className="flex h-full min-h-[36px] w-full rounded-md p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex h-full w-full items-center justify-center rounded-[4px] px-2 py-1 text-center"
-                            style={{ background: sprayBg }}
-                          >
+                          <div className="flex h-full w-full items-center justify-center rounded-[4px] bg-white px-2 py-1 text-center">
                             <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                               {item.detail}
                             </p>
@@ -485,19 +488,23 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* 50% Smaller Selected Pillar Bar — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* 50% Smaller Selected Pillar Bar — Spray Between Borders & White Inside Writing Area */}
         <div
           className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-1.5 rounded-[9px] bg-white p-1.5">
+          <div
+            className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-1.5 rounded-[9px] p-1.5"
+            style={{ background: SPRAY_BGS[0] }}
+          >
             <div className="rounded-lg p-[2px] shadow-2xs" style={{ background: getHeaderView(0) }}>
               <button
                 type="button"
                 onClick={() => setSelectedPillar('all')}
-                className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center text-[8px] font-extrabold transition-all ${
+                className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
                   selectedPillar === 'all' ? 'ring-2 ring-[#FF2E9A]' : ''
                 }`}
+                style={{ background: SPRAY_BGS[0] }}
               >
                 <div
                   className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
@@ -506,10 +513,7 @@ export default function MustHaveFunctionsReview() {
                   <Layers className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>All 8 Pillars</span>
                 </div>
-                <span
-                  className="w-full rounded border border-[#0A2B6D]/25 px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
-                  style={{ background: SPRAY_BGS[0] }}
-                >
+                <span className="w-full rounded border border-[#0A2B6D]/25 bg-white px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
                   All Categories
                 </span>
               </button>
@@ -537,9 +541,10 @@ export default function MustHaveFunctionsReview() {
                   <button
                     type="button"
                     onClick={() => setSelectedPillar(p.id)}
-                    className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center text-[8px] font-extrabold transition-all ${
+                    className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
                       active ? 'ring-2 ring-[#FF2E9A]' : ''
                     }`}
+                    style={{ background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length] }}
                   >
                     <div
                       className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
@@ -548,10 +553,7 @@ export default function MustHaveFunctionsReview() {
                       <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Pillar {idx + 1}</span>
                     </div>
-                    <span
-                      className="w-full rounded border border-[#0A2B6D]/25 px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
-                      style={{ background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length] }}
-                    >
+                    <span className="w-full rounded border border-[#0A2B6D]/25 bg-white px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
                       {shortCategories[idx]}
                     </span>
                   </button>
@@ -561,7 +563,7 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Reduced & Centred 8 Must-Have Pillars Grid — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* Reduced & Centred 8 Must-Have Pillars Grid — Spray Between Borders & Pure White Inside Writing Boxes */}
         <div className="mx-auto grid w-full grid-cols-2 sm:grid-cols-4 gap-1.5 text-center items-stretch justify-center">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
@@ -572,8 +574,11 @@ export default function MustHaveFunctionsReview() {
                 className="mx-auto flex h-full w-full flex-col justify-between rounded-xl p-[2.5px] shadow-2xs text-center"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                {/* White Area Outside the Inner Writing Borders */}
-                <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white p-1.5 space-y-1 text-center">
+                {/* Pink/Blue/Purple Spray Area Between Outer Border & Inner Writing Borders */}
+                <div
+                  className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 space-y-1 text-center"
+                  style={{ background: sprayBg }}
+                >
                   {/* Top Pillar Status Bar */}
                   <div
                     className="gradient-brand flex h-[18px] w-full items-center justify-between rounded-full px-2 text-white"
@@ -603,7 +608,7 @@ export default function MustHaveFunctionsReview() {
                       </span>
                     </div>
 
-                    {/* 4 Centred Compact Bullet Rows With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* 4 Centred Compact Bullet Rows With Pure White Writing Boxes */}
                     <ul className="grid w-full flex-1 grid-cols-1 grid-rows-4 gap-0.5 text-center">
                       {pillar.items.slice(0, 4).map((item, iIdx) => {
                         const idx = pIdx * 3 + iIdx;
@@ -613,10 +618,7 @@ export default function MustHaveFunctionsReview() {
                             className="flex min-h-[20px] rounded p-[1px]"
                             style={{ background: getHeaderView(idx) }}
                           >
-                            <div
-                              className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] px-1 py-0.5 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
-                              style={{ background: sprayBg }}
-                            >
+                            <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1 py-0.5 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                               <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                               <span className="flex-1 text-center text-[#0A2B6D] line-clamp-1">
                                 {item}
@@ -633,10 +635,7 @@ export default function MustHaveFunctionsReview() {
                     className="w-full rounded-full p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-[18px] items-center justify-between rounded-full px-1.5"
-                      style={{ background: sprayBg }}
-                    >
+                    <div className="flex h-[18px] items-center justify-between rounded-full bg-white px-1.5">
                       <span className="text-[7px] font-extrabold text-[#0A2B6D]">
                         $760/mo
                       </span>

@@ -130,7 +130,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+        <div
+          className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
+          style={{ background: SPRAY_BGS[0] }}
+        >
           {/* Heading & Subtitle on Clean White Background */}
           <div
             className="w-full rounded-2xl p-[3px] shadow-sm"
@@ -446,7 +449,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       className="flex flex-1 rounded-lg p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="grid h-full w-full grid-cols-1 grid-rows-[20px_42px_36px_1fr] gap-1 rounded-[7px] bg-white p-1.5 text-center">
+                      <div
+                        className="grid h-full w-full grid-cols-1 grid-rows-[20px_42px_36px_1fr] gap-1 rounded-[7px] p-1.5 text-center"
+                        style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
+                      >
                         {/* Row 1: App-Design Coloured Flat Screen Reason Header Tile */}
                         <div
                           className="gradient-brand relative flex h-[20px] w-full items-center justify-center rounded-full px-2 text-white"
@@ -480,31 +486,25 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 {activeReason.title}
                               </span>
                             </div>
-                            <div
-                              className="flex h-[17px] items-center justify-center px-1 text-center text-[7px] font-extrabold text-[#0A2B6D] leading-none truncate"
-                              style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
-                            >
+                            <div className="flex h-[17px] items-center justify-center bg-white px-1 text-center text-[7px] font-extrabold text-[#0A2B6D] leading-none truncate">
                               {activeReason.sub}
                             </div>
                           </div>
                         </div>
 
-                        {/* Row 3: Compact Summary Explanation Framed in App-Design Border — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Row 3: Compact Summary Explanation — Pure White Writing Area */}
                         <div
                           className="flex h-[36px] w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex h-full w-full items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
-                            style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
-                          >
+                          <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
                             <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                               {activeReason.detail}
                             </p>
                           </div>
                         </div>
 
-                        {/* Row 4: 3 Lined-Up Subscriber Proof Points — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Row 4: 3 Lined-Up Subscriber Proof Points — Pure White Writing Area */}
                         <ul className="grid h-full w-full grid-cols-1 grid-rows-3 gap-1 text-center">
                           {activeReason.points.map((pt) => (
                             <li
@@ -512,10 +512,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               className="flex h-[24px] rounded-md p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div
-                                className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] px-1.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                                style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
-                              >
+                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] bg-white px-1.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                                 <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                                 <span className="truncate text-center text-[#0A2B6D]">
                                   {pt}
@@ -608,12 +605,15 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </span>
                         </div>
 
-                        {/* Inner TV Screen — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                        {/* Inner TV Screen — Spray Between Borders & Pure White Inside Writing Boxes */}
                         <div
                           className="flex flex-col justify-between rounded-xl p-[2px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex flex-col justify-between rounded-[9px] bg-white p-1.5 text-center space-y-1">
+                          <div
+                            className="flex flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
+                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
+                          >
                             {/* Outright & Subscription Inside Live HD TV Screen With White Background & ComplianceHR Colours in Name & $ Amounts */}
                             <div
                               className="w-full rounded-lg p-[1.5px] shadow-2xs"
@@ -662,7 +662,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </button>
                             </div>
 
-                            {/* All 5 Package Benefits — Lined Up in Equal Rows With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                            {/* All 5 Package Benefits — Pure White Inside Writing Boxes */}
                             <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
                               {pack.bullets.map((line, idx) => {
                                 const borderCol = getAppBorderView(pIdx * 3 + idx);
@@ -675,10 +675,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
-                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 text-center ${
+                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center ${
                                         isCurrent ? 'ring-1 ring-[#FF2E9A]' : ''
                                       }`}
-                                      style={{ background: SPRAY_BGS[(pIdx + idx) % SPRAY_BGS.length] }}
                                     >
                                       <span
                                         className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -731,7 +730,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       className="flex w-full flex-1 flex-col justify-between rounded-xl p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] bg-white p-2 text-center">
+                      <div
+                        className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] p-2 text-center"
+                        style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
+                      >
                         {/* Row 1: Aligned Price Box — White Background & ComplianceHR Colours in Name and $ Amounts */}
                         <div
                           className="flex min-h-[60px] w-full rounded-lg p-[1.5px] shadow-2xs"
@@ -772,18 +774,15 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                         </div>
 
-                        {/* Row 3: 4 Aligned Rows With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                        {/* Row 3: 4 Aligned Rows — Pure White Inside Writing Boxes */}
                         <div className="grid grid-cols-1 grid-rows-4 gap-1">
-                          {pack.importantInfoRows.map((info, iIdx) => (
+                          {pack.importantInfoRows.map((info) => (
                             <div
                               key={info}
                               className="flex h-[24px] rounded-lg p-[1.5px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div
-                                className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                                style={{ background: SPRAY_BGS[(pIdx + iIdx) % SPRAY_BGS.length] }}
-                              >
+                              <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                                 <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
                                 <span className="flex-1 truncate text-center text-[#0A2B6D]">
                                   {info}
@@ -854,7 +853,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4">
+        <div className="rounded-[16px] p-3 sm:p-4" style={{ background: SPRAY_BGS[0] }}>
           <InfinityOneClickOperations />
         </div>
       </div>
@@ -864,7 +863,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4">
+        <div className="rounded-[16px] p-3 sm:p-4" style={{ background: SPRAY_BGS[0] }}>
           <ScreenByScreenMasterAudit2026 />
         </div>
       </div>
@@ -875,15 +874,16 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4">
+        <div className="rounded-[16px] p-3 sm:p-4" style={{ background: SPRAY_BGS[0] }}>
           <BusinessHealthComplianceIntelligenceDashboard />
         </div>
       </div>
 
-      {/* 5. Core Engines — Normal Clean Border */}
+      {/* 5. Core Engines — Normal Clean Border With Spray Between Outer Border & Inner Writing Borders */}
       <div
         id="infinity-core-engine"
-        className="w-full scroll-mt-16 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 sm:p-3 shadow-sm"
+        className="w-full scroll-mt-16 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:p-3 shadow-sm"
+        style={{ background: SPRAY_BGS[0] }}
       >
         <InfinityCoreEngine />
       </div>
@@ -894,7 +894,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4">
+        <div className="rounded-[16px] p-3 sm:p-4" style={{ background: SPRAY_BGS[0] }}>
           <InfinityControlCentreMasterSuite />
         </div>
       </div>
@@ -905,7 +905,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4 space-y-4">
+        <div className="rounded-[16px] p-3 sm:p-4 space-y-4" style={{ background: SPRAY_BGS[0] }}>
           <ExecutiveWallScene showAllModulesMinimised={true} />
           <BeachDeepSeaWallShowcase defaultScene="all" compact={true} />
         </div>

@@ -135,9 +135,12 @@ export default function LandingFooter() {
         className="rounded-3xl p-[10px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-2 sm:px-4 sm:py-2.5 text-center space-y-1.5">
-          {/* Minimised Contact ComplianceHR Infinity on One Line */}
-          <div className="mx-auto flex w-full flex-col items-center justify-center text-center space-y-0.5">
+        <div
+          className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] px-3 py-2 sm:px-4 sm:py-2.5 text-center space-y-1.5"
+          style={{ background: UNIFORM_SPRAY_BG }}
+        >
+          {/* Minimised Contact ComplianceHR Infinity on One Line Inside Pure White Writing Box */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center rounded-xl border border-[#0A2B6D]/25 bg-white px-3 py-1 text-center space-y-0.5">
             <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-sm sm:text-base md:text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
               <span className="mx-auto block whitespace-nowrap text-center">
                 Contact{' '}
@@ -197,7 +200,10 @@ export default function LandingFooter() {
                   className="flex h-full rounded-xl p-[2px] shadow-2xs"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
+                  <div
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                    style={{ background: UNIFORM_SPRAY_BG }}
+                  >
                     {/* App-Design Coloured Pill Title With Coloured Symbol */}
                     <div
                       className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"

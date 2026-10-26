@@ -933,7 +933,11 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   setCategoryIndex(idx);
                   setExpanded(true);
                 }}
-                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] bg-white p-1.5 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] p-1.5 text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                }}
               >
                 {/* Section 1: 50% Smaller Top Page Bar */}
                 <div
@@ -945,18 +949,12 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   </span>
                 </div>
 
-                {/* Section 2: 50% Smaller Title Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                {/* Section 2: Pure White Writing Box */}
                 <div
                   className="flex h-full w-full rounded-md p-[1.5px]"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div
-                    className="flex min-h-[28px] h-full w-full items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight"
-                    style={{
-                      background:
-                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                    }}
-                  >
+                  <div className="flex min-h-[28px] h-full w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                     {cat.title}
                   </div>
                 </div>

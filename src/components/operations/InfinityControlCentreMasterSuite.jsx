@@ -657,7 +657,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   <button
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center"
+                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
+                    }}
                   >
                     {/* App-Theme Tile Header With White Writing & White Spotlights */}
                     <div
@@ -685,13 +689,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       className="w-full rounded-md p-[1.5px] shadow-2xs"
                       style={{ background: getHeaderView(idx) }}
                     >
-                      <div
-                        className="flex w-full flex-col items-center justify-center rounded-[5px] px-1 py-0.5 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
-                        }}
-                      >
+                      <div className="flex w-full flex-col items-center justify-center rounded-[5px] bg-white px-1 py-0.5 text-center">
                         <div className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                           {tab.label}
                         </div>
@@ -708,10 +706,16 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 50% SMALLER TILES WITH APP-THEME HEADERS, WHITE WRITING & WHITE SPOTLIGHTS ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — SPRAY BETWEEN BORDERS & PURE WHITE INSIDE WRITING BOXES ==================== */}
       {activeTab === 'control-centre' && (
-        <div className="p-1.5 space-y-2 bg-white text-center">
-          {/* 12 Live Operational Register Telemetry Tiles — 50% Smaller, App-Theme Headers With White Writing & White Spotlights */}
+        <div
+          className="p-1.5 space-y-2 text-center rounded-xl"
+          style={{
+            background:
+              'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+          }}
+        >
+          {/* 12 Live Operational Register Telemetry Tiles */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
             {[
               { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
@@ -739,7 +743,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 >
                   <Link
                     to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                    }}
                   >
                     {/* App-Theme Header With White Writing & White Spotlights */}
                     <div
@@ -763,18 +771,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </span>
                     </div>
 
-                    {/* 50% Smaller Label & Number Value With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* 50% Smaller Label & Number Value With Pure White Writing Box */}
                     <div
                       className="w-full rounded p-[1px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div
-                        className="flex min-h-[24px] flex-col items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                        }}
-                      >
+                      <div className="flex min-h-[24px] flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
                         <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D] leading-tight">
                           {m.label}
                         </span>
@@ -784,18 +786,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </div>
                     </div>
 
-                    {/* 50% Smaller Sub-Label With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* 50% Smaller Sub-Label With Pure White Writing Box */}
                     <div
                       className="w-full rounded p-[1px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
-                      <div
-                        className="flex min-h-[16px] items-center justify-center rounded-[3px] px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                        }}
-                      >
+                      <div className="flex min-h-[16px] items-center justify-center rounded-[3px] bg-white px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                         {m.sub}
                       </div>
                     </div>

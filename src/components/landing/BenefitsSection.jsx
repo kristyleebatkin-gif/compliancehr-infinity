@@ -186,7 +186,10 @@ export default function BenefitsSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+      <div
+        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
+        style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
+      >
         {/* Heading on One Line & Subheading in Three Neat Lines on Clean White Background */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
@@ -279,12 +282,15 @@ export default function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Pull-Down Projector Screen Canvas — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                {/* Pull-Down Projector Screen Canvas — Spray Between Borders & Pure White Inside Writing Boxes */}
                 <div
                   className="mx-auto flex w-[96%] flex-1 flex-col rounded-b-xl p-[2px] shadow-2xs"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[9px] bg-white p-1.5 text-center">
+                  <div
+                    className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[9px] p-1.5 text-center"
+                    style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
+                  >
                     {/* App-Design Coloured Header Bar With Symbol */}
                     <div
                       className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
@@ -298,30 +304,24 @@ export default function BenefitsSection() {
                       </span>
                     </div>
 
-                    {/* Compact Description Box — Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* Compact Description Box — Pure White Inside Writing Box */}
                     <div
                       className="w-full rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="flex items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
-                        style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
-                      >
+                      <div className="flex items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
                         <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                           {b.desc}
                         </p>
                       </div>
                     </div>
 
-                    {/* Compact Functions Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* Compact Functions Box — Pure White Inside Writing Box */}
                     <div
                       className="rounded-lg p-[1.5px] text-left"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="rounded-[5px] p-1"
-                        style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
-                      >
+                      <div className="rounded-[5px] bg-white p-1">
                         <ul className="space-y-0.5">
                           {currentFunctions.map((fn, fIdx) => (
                             <li

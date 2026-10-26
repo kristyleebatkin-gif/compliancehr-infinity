@@ -73,8 +73,14 @@ function IpadModuleScreenCard({ item, idx }) {
         </span>
       </div>
 
-      {/* Inner iPad Display Screen — White Outside Border, App-Coloured Header, Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
-      <div className="flex flex-1 flex-col justify-between gap-1 rounded-[10px] bg-white p-1 text-left">
+      {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Borders & Pure White Inside Writing Box */}
+      <div
+        className="flex flex-1 flex-col justify-between gap-1 rounded-[10px] p-1 text-left"
+        style={{
+          background:
+            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
+        }}
+      >
         {/* App-Coloured Header Bar With Coloured Symbol */}
         <div
           className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
@@ -91,18 +97,12 @@ function IpadModuleScreenCard({ item, idx }) {
           </span>
         </div>
 
-        {/* Pink/Blue/Purple Spray Writing Box Framed in App-Design Border With Dark Blue Writing */}
+        {/* Pure White Writing Box Framed in App-Design Border With Dark Blue Writing */}
         <div
           className="flex flex-1 rounded-md p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div
-            className="flex flex-1 items-center rounded-[4px] px-1.5 py-0.5"
-            style={{
-              background:
-                'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
-            }}
-          >
+          <div className="flex flex-1 items-center rounded-[4px] bg-white px-1.5 py-0.5">
             <ul className="w-full space-y-0.5">
               {bullets.slice(0, 2).map((point, bIdx) => (
                 <li key={bIdx} className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
@@ -212,7 +212,13 @@ export default function ModuleChipStrip() {
           }
         `}</style>
 
-        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4 overflow-hidden">
+        <div
+          className="flex w-full flex-col items-center justify-center rounded-[16px] px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4 overflow-hidden"
+          style={{
+            background:
+              'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+          }}
+        >
           {/* Top Header in Border with Enlarged "All ComplianceHR modules are Live, Effortless and Simple." */}
           <div
             className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"

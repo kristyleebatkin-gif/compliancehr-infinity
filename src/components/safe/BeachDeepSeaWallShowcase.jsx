@@ -34,8 +34,11 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
       className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[14px] bg-white p-2 sm:p-2.5 space-y-2 text-center">
-        {/* 50% Smaller Header + Three Listed Activities — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+      <div
+        className="rounded-[14px] p-2 sm:p-2.5 space-y-2 text-center"
+        style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+      >
+        {/* 50% Smaller Header + Three Listed Activities — Spray Between Borders & Pure White Inside Writing Boxes */}
         <div
           className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -54,18 +57,15 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               </span>
             </h2>
 
-            {/* Three Listed Activities (Tropical, Sunny & Deep) — White Outside Border, Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
-            <ol className="mx-auto grid w-full grid-cols-1 sm:grid-cols-3 gap-1.5 bg-white text-center items-stretch">
+            {/* Three Listed Activities (Tropical, Sunny & Deep) — Pure White Inside Writing Boxes */}
+            <ol className="mx-auto grid w-full grid-cols-1 sm:grid-cols-3 gap-1.5 text-center items-stretch">
               {THREE_SCENE_LIST.map((line, idx) => (
                 <li
                   key={line}
                   className="flex h-full rounded-full p-[1.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0A2B6D]"
-                    style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                  >
+                  <div className="flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0A2B6D]">
                     <span
                       className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white text-[7px] font-extrabold"
                       style={{
@@ -83,8 +83,8 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               ))}
             </ol>
 
-            {/* All 5 Interactive Bar Tiles Under Sized & Styled Identically — Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
-            <div className="grid w-full grid-cols-2 sm:grid-cols-5 gap-1.5 bg-white pt-0.5 items-stretch">
+            {/* All 5 Interactive Bar Tiles Under Sized & Styled Identically — Pure White Inside Writing Boxes */}
+            <div className="grid w-full grid-cols-2 sm:grid-cols-5 gap-1.5 pt-0.5 items-stretch">
               {SCENE_MODES.map((m, idx) => {
                 const Icon = m.icon;
                 const active = scene === m.id;
@@ -98,10 +98,9 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                     <button
                       type="button"
                       onClick={() => setScene(m.id)}
-                      className={`flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] transition-all ${
+                      className={`flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] transition-all ${
                         active ? 'ring-2 ring-[#FF2E9A] shadow-sm' : 'hover:opacity-95'
                       }`}
-                      style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                     >
                       <span
                         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -130,8 +129,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                       false
                     )
                   }
-                  className="flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                  className="flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs"
                 >
                   <span
                     className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"

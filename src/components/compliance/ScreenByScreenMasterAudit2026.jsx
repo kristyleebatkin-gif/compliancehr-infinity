@@ -819,7 +819,10 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
               }}
             >
-              <div className="flex h-full w-full flex-col justify-between gap-0.5 overflow-hidden rounded-[8px] bg-white p-1 text-center">
+              <div
+                className="flex h-full w-full flex-col justify-between gap-0.5 overflow-hidden rounded-[8px] p-1 text-center"
+                style={{ background: sprayBg }}
+              >
                 {/* Section 1: 50% Smaller App-Coloured Header Bar */}
                 <div
                   className="gradient-brand flex h-[20px] w-full items-center justify-between gap-1 rounded px-1.5 text-white"
@@ -837,30 +840,24 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   </Link>
                 </div>
 
-                {/* Section 2: Pink/Blue/Purple Spray Box With Dark Blue Writing */}
+                {/* Section 2: Pure White Writing Box */}
                 <div
                   className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div
-                    className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
-                    style={{ background: sprayBg }}
-                  >
+                  <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
                     <span className="truncate text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                       {bp.smartDoc2026}
                     </span>
                   </div>
                 </div>
 
-                {/* Section 3: Live Compliance Tracker — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                {/* Section 3: Live Compliance Tracker — Pure White Writing Box */}
                 <div
                   className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index + 1) }}
                 >
-                  <div
-                    className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
-                    style={{ background: sprayBg }}
-                  >
+                  <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
                     <span className="inline-flex items-center justify-center gap-0.5 text-[6.5px] font-extrabold text-[#0A2B6D]">
                       <span
                         className="h-1.5 w-1.5 rounded-full bg-[#10B981]"

@@ -72,7 +72,10 @@ export default function LandingHero() {
         className="rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+        <div
+          className="flex w-full flex-col items-center justify-center rounded-[16px] px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4"
+          style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+        >
           {/* Enlarged Compliance Management Title & Dark Blue Paragraph + App-Coloured Outline Under Words */}
           <div
             className="w-full rounded-2xl p-[4px] shadow-sm"
@@ -160,7 +163,7 @@ export default function LandingHero() {
             </Link>
           </div>
 
-          {/* 4 Small Stat Tiles — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+          {/* 4 Small Stat Tiles — Pink/Blue/Purple Spray Between Borders & White Inside Writing Areas */}
           <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4 items-stretch">
             {STATS.map((stat, index) => (
               <Reveal
@@ -169,7 +172,10 @@ export default function LandingHero() {
                 className="flex h-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] bg-white p-1 text-center">
+                <div
+                  className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] p-1 text-center"
+                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                >
                   <div
                     className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-2 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
@@ -183,10 +189,7 @@ export default function LandingHero() {
                     className="flex h-[24px] w-full rounded-md p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full items-center justify-center rounded-[4px] px-1 text-center text-[7px] font-extrabold uppercase tracking-wide text-[#0A2B6D] whitespace-nowrap"
-                      style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                    >
+                    <div className="flex h-full w-full items-center justify-center rounded-[4px] bg-white px-1 text-center text-[7px] font-extrabold uppercase tracking-wide text-[#0A2B6D] whitespace-nowrap">
                       {stat.label}
                     </div>
                   </div>
@@ -195,7 +198,7 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Minimised Pillar Tiles — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+          {/* 3 Minimised Pillar Tiles — Pink/Blue/Purple Spray Between Borders & White Inside Writing Areas */}
           <div className="grid w-full gap-1.5 text-center md:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => (
               <Reveal
@@ -204,7 +207,10 @@ export default function LandingHero() {
                 className="flex h-full flex-col rounded-xl p-[2px] shadow-sm transition-all hover:-translate-y-0.5"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex h-full flex-1 flex-col justify-between rounded-[9px] bg-white p-1 space-y-1">
+                <div
+                  className="flex h-full flex-1 flex-col justify-between rounded-[9px] p-1 space-y-1"
+                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                >
                   {/* App-Coloured Pillar Header Tile */}
                   <div
                     className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 text-center text-white whitespace-nowrap"
@@ -216,7 +222,7 @@ export default function LandingHero() {
                     </span>
                   </div>
 
-                  {/* 4 Compact Rows: Pink/Blue/Purple Spray & Dark Blue Writing */}
+                  {/* 4 Compact Rows: Pure White Writing Areas */}
                   <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-0.5">
                     {reasons.map((r) => (
                       <li
@@ -224,10 +230,7 @@ export default function LandingHero() {
                         className="flex h-[20px] rounded p-[1px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div
-                          className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] px-1.5 text-center text-[7px] font-extrabold leading-none text-[#0A2B6D] whitespace-nowrap"
-                          style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                        >
+                        <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1.5 text-center text-[7px] font-extrabold leading-none text-[#0A2B6D] whitespace-nowrap">
                           <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                           <span className="text-[#0A2B6D]">{r}</span>
                         </div>
