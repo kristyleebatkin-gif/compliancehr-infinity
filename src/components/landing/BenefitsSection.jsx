@@ -315,17 +315,19 @@ export default function BenefitsSection() {
                         </div>
                       </div>
 
-                      <div className="flex min-h-[58px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-2.5 py-1.5 text-center shadow-2xs">
-                        <p
-                          className="text-center text-[11px] font-extrabold leading-snug text-black"
-                          style={{ color: '#000000' }}
-                        >
-                          {b.desc}
-                        </p>
+                      <div
+                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex min-h-[58px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                          <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                            {b.desc}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Changeable Sticky Note in the Exact Same Design Across All 6 Projector Screens */}
+                    {/* Changeable Sticky Note With App-Design Framed White Area & App-Coloured Symbols */}
                     <div
                       className="relative mt-2 flex w-full flex-col justify-between rounded-2xl border-[2.5px] p-2.5 pt-4 text-left shadow-md"
                       style={{
@@ -348,29 +350,41 @@ export default function BenefitsSection() {
                         </span>
                       </div>
 
-                      <div className="mb-1 flex items-center justify-between gap-1">
-                        <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                          Live Functions:
-                        </span>
-                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
-                          {activeNoteIdx + 1} of {totalNotes}
-                        </span>
-                      </div>
+                      <div
+                        className="w-full rounded-xl p-[2px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="rounded-[9px] bg-white p-2 space-y-1">
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                              Live Functions:
+                            </span>
+                            <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                              {activeNoteIdx + 1} of {totalNotes}
+                            </span>
+                          </div>
 
-                      <ul className="space-y-1">
-                        {currentFunctions.map((fn) => (
-                          <li
-                            key={fn}
-                            className="flex items-start gap-1.5 text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
-                          >
-                            <CheckCircle2
-                              className="mt-0.5 h-3 w-3 shrink-0"
-                              style={{ color: STICKY_NOTE_BORDER }}
-                            />
-                            <span className="text-[#0A2B6D]">{fn}</span>
-                          </li>
-                        ))}
-                      </ul>
+                          <ul className="space-y-1">
+                            {currentFunctions.map((fn) => (
+                              <li
+                                key={fn}
+                                className="flex items-center gap-1.5 text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
+                              >
+                                <span
+                                  className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                  style={{ borderColor: UNIFORM_ICON_BORDER }}
+                                >
+                                  <CheckCircle2
+                                    className="h-2.5 w-2.5"
+                                    style={{ color: STICKY_NOTE_BORDER }}
+                                  />
+                                </span>
+                                <span className="text-[#0A2B6D]">{fn}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

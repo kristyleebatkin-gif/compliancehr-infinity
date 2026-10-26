@@ -458,37 +458,44 @@ export default function FeaturesSection() {
                     </div>
                   </div>
 
-                  {/* Clean White Framed Info Box */}
-                  <div className="flex min-h-[60px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
-                    <p
-                      className="text-xs font-extrabold leading-snug text-black"
-                      style={{ color: '#000000' }}
-                    >
-                      {currentNote.desc}
-                    </p>
+                  {/* White Info Box Framed in App-Design Coloured Border */}
+                  <div
+                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex min-h-[60px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                      <p className="text-xs font-extrabold leading-snug text-[#5A00D6]">
+                        {currentNote.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Sticky Note */}
+                {/* Live Functions Listed on Each Sticky Note With App-Design Coloured Symbol Borders */}
                 <div
                   className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
+                  <div className="rounded-[9px] bg-white p-2.5 text-left space-y-1.5">
                     <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
                       <span>Note {activeNoteIdx + 1}/{f.notes.length}</span>
                     </div>
-                    <ul className="space-y-1">
-                      {currentNote.functions.map((fn) => (
+                    <ul className="space-y-1.5">
+                      {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
-                          className="flex items-start gap-1.5 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                          className="flex items-center gap-2 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
-                          <CheckCircle2
-                            className="mt-0.5 h-3 w-3 shrink-0"
-                            style={{ color: STICKY_NOTE_BORDER }}
-                          />
+                          <span
+                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                            style={{ borderColor: getAppBorderView(index + fIdx) }}
+                          >
+                            <CheckCircle2
+                              className="h-3 w-3"
+                              style={{ color: getSymbolView(index + fIdx).iconColor }}
+                            />
+                          </span>
                           <span className="text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}

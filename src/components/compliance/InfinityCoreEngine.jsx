@@ -504,13 +504,20 @@ export default function InfinityCoreEngine({ compact = false }) {
                   >
                     <Icon className="h-3.5 w-3.5 text-[#0072FF]" />
                   </span>
-                  <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                    {stat.label}
-                  </span>
-                  <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
-                    {stat.value}
+                  <div
+                    className="mt-1.5 w-full rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="rounded-[9px] bg-white px-2 py-1 text-center">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                        {stat.label}
+                      </span>
+                      <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
+                        {stat.value}
+                      </div>
+                      <div className="mt-0.5 text-[9.5px] font-extrabold text-[#0072FF]">{stat.sub}</div>
+                    </div>
                   </div>
-                  <div className="mt-0.5 text-[9.5px] font-extrabold text-[#0072FF]">{stat.sub}</div>
                 </div>
               </div>
             );

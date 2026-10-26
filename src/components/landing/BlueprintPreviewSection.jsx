@@ -613,9 +613,14 @@ export default function BlueprintPreviewSection() {
                             className="flex flex-col items-center justify-center gap-2 rounded-[13px] px-4 py-3 text-center"
                             style={{ background: UNIFORM_SPRAY_BG }}
                           >
-                            <span className="rounded-full border border-[#0A2B6D]/20 bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                              {flow.label}
-                            </span>
+                            <div
+                              className="rounded-full p-[2px] shadow-2xs"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
+                              <span className="block rounded-full bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                                {flow.label}
+                              </span>
+                            </div>
 
                             <div
                               className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1.5 py-1"
@@ -725,13 +730,15 @@ export default function BlueprintPreviewSection() {
                                     </div>
                                   </div>
 
-                                  <div className="w-full max-w-xl rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
-                                    <p
-                                      className="mx-auto text-center text-[11px] font-extrabold leading-snug text-black"
-                                      style={{ color: '#000000' }}
-                                    >
-                                      {lvl.desc}
-                                    </p>
+                                  <div
+                                    className="w-full max-w-xl rounded-xl p-[2.5px] shadow-2xs"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
+                                  >
+                                    <div className="w-full rounded-[9px] bg-white px-3 py-2 text-center">
+                                      <p className="mx-auto text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                                        {lvl.desc}
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -931,21 +938,21 @@ export default function BlueprintPreviewSection() {
                                     </div>
                                   </Link>
 
-                                  {/* 2. Middle: Expanded White Info Box with Full Consistent Description */}
+                                  {/* 2. Middle: Expanded White Info Box Framed in App-Design Coloured Border */}
                                   <Link
                                     to={mod.path}
-                                    className="flex min-h-[96px] w-full flex-1 flex-col items-center justify-between rounded-xl border-2 border-[#0A2B6D]/20 bg-white px-3.5 py-2.5 text-center shadow-2xs"
+                                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <p
-                                      className="text-center text-[11px] font-extrabold leading-relaxed text-black"
-                                      style={{ color: '#000000' }}
-                                    >
-                                      {mod.blurb}
-                                    </p>
-                                    <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
-                                      <span style={{ color: '#FFFFFF' }}>Open {mod.label}</span>
-                                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                                    </span>
+                                    <div className="flex min-h-[96px] w-full flex-col items-center justify-between rounded-[9px] bg-white px-3.5 py-2.5 text-center">
+                                      <p className="text-center text-[11px] font-extrabold leading-relaxed text-[#5A00D6]">
+                                        {mod.blurb}
+                                      </p>
+                                      <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                        <span style={{ color: '#FFFFFF' }}>Open {mod.label}</span>
+                                        <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                                      </span>
+                                    </div>
                                   </Link>
 
                                   {/* 3. Bottom: YouTube Music Video Screen at the Bottom of Every Laptop */}
@@ -998,29 +1005,34 @@ export default function BlueprintPreviewSection() {
                                       )}
                                     </div>
 
-                                    {/* Bottom Screen Control Bar */}
-                                    <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setActiveVideoLaptopKey(isEmbedOpen ? null : mod.key)
-                                        }
-                                        className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
-                                        style={{ color: '#FFFFFF' }}
-                                      >
-                                        <Play className="h-2.5 w-2.5 fill-white text-white" />
-                                        <span style={{ color: '#FFFFFF' }}>
-                                          {isEmbedOpen ? 'Stop Clip' : 'Play Clip'}
-                                        </span>
-                                      </button>
-                                      <a
-                                        href={`https://www.youtube.com/watch?v=${ytClip.videoId}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[9px] font-extrabold text-[#0072FF] underline"
-                                      >
-                                        YouTube ↗
-                                      </a>
+                                    {/* Bottom Screen Control Bar Framed in App-Design Coloured Border */}
+                                    <div
+                                      className="w-full rounded-lg p-[2px]"
+                                      style={{ background: TOP_BORDER_GRADIENT }}
+                                    >
+                                      <div className="flex w-full items-center justify-between gap-2 rounded-[6px] bg-white px-2.5 py-1">
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setActiveVideoLaptopKey(isEmbedOpen ? null : mod.key)
+                                          }
+                                          className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
+                                          style={{ color: '#FFFFFF' }}
+                                        >
+                                          <Play className="h-2.5 w-2.5 fill-white text-white" />
+                                          <span style={{ color: '#FFFFFF' }}>
+                                            {isEmbedOpen ? 'Stop Clip' : 'Play Clip'}
+                                          </span>
+                                        </button>
+                                        <a
+                                          href={`https://www.youtube.com/watch?v=${ytClip.videoId}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[9px] font-extrabold text-[#0072FF] underline"
+                                        >
+                                          YouTube ↗
+                                        </a>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -1097,16 +1109,18 @@ export default function BlueprintPreviewSection() {
                                     </div>
                                   </div>
 
-                                  <div className="flex min-h-[96px] w-full flex-1 flex-col items-center justify-between rounded-xl border-2 border-[#0A2B6D]/20 bg-white px-3.5 py-2.5 text-center shadow-2xs">
-                                    <p
-                                      className="text-center text-[11px] font-extrabold leading-relaxed text-black"
-                                      style={{ color: '#000000' }}
-                                    >
-                                      {yt.blurb}
-                                    </p>
-                                    <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
-                                      <span style={{ color: '#FFFFFF' }}>YouTube Music Stage</span>
-                                    </span>
+                                  <div
+                                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
+                                  >
+                                    <div className="flex min-h-[96px] w-full flex-col items-center justify-between rounded-[9px] bg-white px-3.5 py-2.5 text-center">
+                                      <p className="text-center text-[11px] font-extrabold leading-relaxed text-[#5A00D6]">
+                                        {yt.blurb}
+                                      </p>
+                                      <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                        <span style={{ color: '#FFFFFF' }}>YouTube Music Stage</span>
+                                      </span>
+                                    </div>
                                   </div>
 
                                   <div className="w-full space-y-1.5">
@@ -1145,28 +1159,33 @@ export default function BlueprintPreviewSection() {
                                       )}
                                     </div>
 
-                                    <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setActiveVideoLaptopKey(isLive ? null : yt.id)
-                                        }
-                                        className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
-                                        style={{ color: '#FFFFFF' }}
-                                      >
-                                        <Play className="h-2.5 w-2.5 fill-white text-white" />
-                                        <span style={{ color: '#FFFFFF' }}>
-                                          {isLive ? 'Stop Clip' : 'Play Clip'}
-                                        </span>
-                                      </button>
-                                      <a
-                                        href={`https://www.youtube.com/watch?v=${yt.videoId}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[9px] font-extrabold text-[#0072FF] underline"
-                                      >
-                                        YouTube ↗
-                                      </a>
+                                    <div
+                                      className="w-full rounded-lg p-[2px]"
+                                      style={{ background: TOP_BORDER_GRADIENT }}
+                                    >
+                                      <div className="flex w-full items-center justify-between gap-2 rounded-[6px] bg-white px-2.5 py-1">
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setActiveVideoLaptopKey(isLive ? null : yt.id)
+                                          }
+                                          className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
+                                          style={{ color: '#FFFFFF' }}
+                                        >
+                                          <Play className="h-2.5 w-2.5 fill-white text-white" />
+                                          <span style={{ color: '#FFFFFF' }}>
+                                            {isLive ? 'Stop Clip' : 'Play Clip'}
+                                          </span>
+                                        </button>
+                                        <a
+                                          href={`https://www.youtube.com/watch?v=${yt.videoId}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[9px] font-extrabold text-[#0072FF] underline"
+                                        >
+                                          YouTube ↗
+                                        </a>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

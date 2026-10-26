@@ -722,14 +722,16 @@ export default function InfinityOneClickOperations({ compact = false }) {
                     </div>
                   </div>
 
-                  {/* Fixed-Height Centered Description Box */}
-                  <div className="flex min-h-[74px] w-full flex-1 items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
-                    <p
-                      className="text-center text-xs font-bold leading-snug text-black"
-                      style={{ color: '#000000' }}
-                    >
-                      {op.description}
-                    </p>
+                  {/* Centered Description Box Framed in App-Design Coloured Border */}
+                  <div
+                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex min-h-[74px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                      <p className="text-center text-xs font-bold leading-snug text-[#5A00D6]">
+                        {op.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -777,7 +779,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
         })}
       </div>
 
-      {/* 5. Live Executive One-Click Execution Log — Larger Live Executive Writing & Real-Time Verification Feed Moved Slightly Down */}
+      {/* 5. Live Executive One-Click Execution Log */}
       <div
         className="w-full rounded-2xl p-[4px] shadow-sm"
         style={{ background: TOP_BORDER_GRADIENT }}
@@ -823,24 +825,37 @@ export default function InfinityOneClickOperations({ compact = false }) {
                   style={{ background: UNIFORM_SPRAY_BG }}
                 >
                   <div className="flex flex-wrap items-center justify-center gap-2">
-                    <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                      {entry.code}
-                    </span>
-                    <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold text-[#5A00D6]">
-                      {entry.time}
-                    </span>
+                    <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+                      <span className="block rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                        {entry.code}
+                      </span>
+                    </div>
+                    <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+                      <span className="block rounded-full bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold text-[#5A00D6]">
+                        {entry.time}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="w-full rounded-xl border border-[#0A2B6D]/20 bg-white px-3 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D]">
-                    {entry.pillar} · {entry.title}
-                  </div>
-
-                  <p
-                    className="text-center text-xs font-bold leading-snug text-black"
-                    style={{ color: '#000000' }}
+                  <div
+                    className="w-full rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    {entry.detail}
-                  </p>
+                    <div className="w-full rounded-[9px] bg-white px-3 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D]">
+                      {entry.pillar} · {entry.title}
+                    </div>
+                  </div>
+
+                  <div
+                    className="w-full rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="w-full rounded-[9px] bg-white px-3 py-1.5 text-center">
+                      <p className="text-center text-xs font-bold leading-snug text-[#5A00D6]">
+                        {entry.detail}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

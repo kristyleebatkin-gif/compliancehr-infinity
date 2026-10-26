@@ -268,20 +268,25 @@ export default function QuickAppBar() {
                         </div>
                       </div>
 
-                      {/* Centered 30-Second Rotating Info Box + Open Pill */}
-                      <div className="flex min-h-[36px] w-full items-center justify-between gap-2 rounded-xl border border-[#0A2B6D]/20 bg-white px-2.5 py-1 shadow-2xs">
-                        <span
-                          className="flex-1 text-center text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
-                        >
-                          {currentSub}
-                        </span>
-                        <span
-                          className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
-                          style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                        >
-                          <span style={{ color: '#FFFFFF' }}>Open</span>
-                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                        </span>
+                      {/* Centered 30-Second Rotating Info Box Framed in App-Design Coloured Border */}
+                      <div
+                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex min-h-[36px] w-full items-center justify-between gap-2 rounded-[9px] bg-white px-2.5 py-1">
+                          <span
+                            className="flex-1 text-center text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                          >
+                            {currentSub}
+                          </span>
+                          <span
+                            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
+                            style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                          >
+                            <span style={{ color: '#FFFFFF' }}>Open</span>
+                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -267,17 +267,22 @@ export default function KidsZoneTreasurePath() {
                     )}
                   </div>
 
-                  <div className="space-y-1 text-center">
-                    <div className="flex items-center justify-center gap-1 text-xs font-extrabold text-[#0A2B6D]">
-                      <span>{step.actionLabel}</span>
-                      <Volume2 className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                  <div
+                    className="w-full rounded-xl p-[2px] shadow-2xs"
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <div className="rounded-[9px] bg-white px-2.5 py-1.5 space-y-1 text-center">
+                      <div className="flex items-center justify-center gap-1 text-xs font-extrabold text-[#0A2B6D]">
+                        <span>{step.actionLabel}</span>
+                        <Volume2 className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                      </div>
+                      <p className="text-center text-[11px] font-bold leading-snug text-[#5A00D6]">
+                        {step.copy}
+                      </p>
                     </div>
-                    <p
-                      className="text-center text-[11px] font-bold leading-snug text-black"
-                      style={{ color: '#000000' }}
-                    >
-                      {step.copy}
-                    </p>
                   </div>
                 </div>
               );

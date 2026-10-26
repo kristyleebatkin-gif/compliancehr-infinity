@@ -433,19 +433,24 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[10px] p-3 text-center text-[#0A2B6D]"
                         style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
                       >
-                        {/* Live 30s Reason Banner */}
-                        <div className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5">
-                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                            Reason #{(activeBenefitIdx % 5) + 1} of 5
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                            className="rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-90"
-                            style={{ color: '#FFFFFF' }}
-                          >
-                            Next ▸
-                          </button>
+                        {/* Live 30s Reason Banner Framed in App-Design Coloured Border */}
+                        <div
+                          className="w-full rounded-full p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex w-full items-center justify-between gap-1 rounded-full bg-white px-2.5 py-0.5">
+                            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                              Reason #{(activeBenefitIdx % 5) + 1} of 5
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                              className="rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-90"
+                              style={{ color: '#FFFFFF' }}
+                            >
+                              Next ▸
+                            </button>
+                          </div>
                         </div>
 
                         {/* Centered Icon + Title Box */}
@@ -471,25 +476,35 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Centered Summary Explanation */}
-                        <div className="flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-2.5 py-1.5 text-center">
-                          <p
-                            className="text-center text-[11px] font-extrabold leading-snug text-black"
-                            style={{ color: '#000000' }}
-                          >
-                            {activeReason.detail}
-                          </p>
+                        {/* Centered Summary Explanation Framed in App-Design Coloured Border */}
+                        <div
+                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[52px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                            <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                              {activeReason.detail}
+                            </p>
+                          </div>
                         </div>
 
-                        {/* 3 Centered Subscriber Proof Points */}
-                        <ul className="w-full space-y-1 text-center">
-                          {activeReason.points.map((pt) => (
+                        {/* 3 Centered Subscriber Proof Points Framed in App-Design Coloured Borders */}
+                        <ul className="w-full space-y-1.5 text-center">
+                          {activeReason.points.map((pt, ptIdx) => (
                             <li
                               key={pt}
-                              className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/20 bg-white/95 px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
+                              className="rounded-xl p-[2px] shadow-2xs"
+                              style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <CheckCircle2 className="h-3 w-3 shrink-0 text-[#FF2E9A]" />
-                              <span className="text-center">{pt}</span>
+                              <div className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#0A2B6D]">
+                                <span
+                                  className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                  style={{ borderColor: getAppBorderView(idx + ptIdx) }}
+                                >
+                                  <CheckCircle2 className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                                </span>
+                                <span className="text-center text-[#0A2B6D]">{pt}</span>
+                              </div>
                             </li>
                           ))}
                         </ul>
@@ -709,16 +724,13 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 {pack.priceSuffix}
                               </span>
                             </div>
-                            <p
-                              className="mt-1 text-center text-[10.5px] font-extrabold leading-tight text-black"
-                              style={{ color: '#000000' }}
-                            >
+                            <p className="mt-1 text-center text-[10.5px] font-extrabold leading-tight text-[#5A00D6]">
                               {pack.subtitle}
                             </p>
                           </div>
                         </div>
 
-                        {/* Important Info Header & 4 Equal Rows */}
+                        {/* Important Info Header & 4 Equal Rows Framed in App-Design Coloured Borders */}
                         <div className="space-y-1.5 text-center">
                           <div
                             className="w-full rounded-lg p-[2px]"
@@ -731,15 +743,22 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                             </div>
                           </div>
-                          <div className="grid grid-cols-1 grid-rows-4 gap-1">
-                            {pack.importantInfoRows.map((info) => (
+                          <div className="grid grid-cols-1 grid-rows-4 gap-1.5">
+                            {pack.importantInfoRows.map((info, iIdx) => (
                               <div
                                 key={info}
-                                className="flex min-h-[38px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight text-black"
-                                style={{ color: '#000000' }}
+                                className="rounded-xl p-[2px] shadow-2xs"
+                                style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <CheckCircle2 className="h-3 w-3 shrink-0 text-[#5A00D6]" />
-                                <span className="text-center text-black" style={{ color: '#000000' }}>{info}</span>
+                                <div className="flex min-h-[38px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight text-[#0A2B6D]">
+                                  <span
+                                    className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                    style={{ borderColor: getAppBorderView(pIdx + iIdx) }}
+                                  >
+                                    <CheckCircle2 className="h-2.5 w-2.5 text-[#5A00D6]" />
+                                  </span>
+                                  <span className="text-center text-[#0A2B6D]">{info}</span>
+                                </div>
                               </div>
                             ))}
                           </div>
