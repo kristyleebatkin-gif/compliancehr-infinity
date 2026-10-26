@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  getTilePalette,
   getHeaderView,
   getTitleGradientView,
   getSubheaderColourView,
+  getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 import {
   Zap, ShieldCheck, FileText, Users, CalendarClock, Siren, AlertTriangle,
@@ -543,7 +546,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
       id="infinity-one-click-operations"
       className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header — White Symbols in Header, Different Views of App Design Colours */}
+      {/* Header — Badge & Writing Above Title, App Colours in Title */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
@@ -555,19 +558,19 @@ export default function InfinityOneClickOperations({ compact = false }) {
           <span>Infinity One-Click Operations · 12 Instant Executive Actions Armed</span>
         </span>
 
-        <h2
-          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(5) }}
-        >
-          Infinity One-Click Operations
-        </h2>
-
-        <p
-          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
-          style={{ color: getSubheaderColourView(5) }}
-        >
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
           Audit Packs, Smart-Fill Docs, Roster &amp; Task Dispatch, and Incident &amp; Risk Sweeps.
         </p>
+
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
+          <span className="text-[#0A2B6D]">Infinity </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            One-Click
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            Operations
+          </span>
+        </h2>
 
         <div className="flex flex-wrap items-center justify-center gap-2">
           <button
@@ -591,100 +594,102 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      <div className="bg-white p-1.5 space-y-1.5">
-        {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-between gap-1 rounded-xl border border-purple-300 bg-purple-50/40 p-1">
-          <div className="flex flex-wrap items-center gap-1">
-            {CATEGORY_TABS.map((tab) => {
-              const active = activeCategory === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveCategory(tab.id)}
-                  className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[8px] font-extrabold transition-all ${
-                    active
-                      ? 'border-pink-500 text-white shadow-sm'
-                      : 'border-purple-200 bg-white text-blue-950 hover:bg-purple-100/70'
-                  }`}
-                  style={active ? { background: SQUISHED_GRADIENT } : undefined}
-                >
-                  <span>{tab.label}</span>
-                  <span
-                    className={`rounded-full px-1.5 py-0 text-[7px] font-black ${
-                      active ? 'bg-white text-purple-950' : 'bg-purple-100 text-purple-900'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <span className="px-2 text-[7.5px] font-extrabold text-purple-900">
-            Click any card below to execute the operation immediately in 1 click
-          </span>
+      {/* Unified Design for Everything Under Execute Master 1-Click Sweep */}
+      <div className="bg-white p-2 space-y-3">
+        {/* Category Filter Tabs in Unified Full-Colour Design */}
+        <div
+          className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 bg-white p-2.5 shadow-2xs"
+          style={{ borderColor: getAppBorderView(0) }}
+        >
+          {CATEGORY_TABS.map((tab, idx) => {
+            const active = activeCategory === tab.id;
+            const tile = getTilePalette(idx);
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveCategory(tab.id)}
+                className={`inline-flex min-h-[36px] items-center justify-center gap-2 rounded-full border-2 px-4 py-1 text-xs font-extrabold transition-all ${
+                  active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
+                }`}
+                style={
+                  active
+                    ? { background: getHeaderView(idx), color: '#ffffff', borderColor: '#0A2B6D' }
+                    : {
+                        backgroundColor: tile.bg,
+                        color: tile.text,
+                        borderColor: getAppBorderView(idx),
+                      }
+                }
+              >
+                <span>{tab.label}</span>
+                <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* 12 One-Click Operation Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
-          {visibleOps.map((op) => {
+        {/* 12 One-Click Operation Cards — Exact Same Unified Design */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
+          {visibleOps.map((op, idx) => {
             const Icon = op.icon;
             const isRunning = runningId === op.id;
+            const borderCol = getAppBorderView(idx);
             return (
               <div
                 key={op.id}
-                className="flex flex-col justify-between rounded-xl border bg-white p-2 shadow-sm transition-all hover:shadow-md"
-                style={{
-                  borderColor: op.color,
-                  borderTopWidth: '4px',
-                  background: `linear-gradient(145deg, ${op.color}12 0%, #ffffff 82%)`,
-                }}
+                className="flex h-full flex-col justify-between rounded-2xl border-2 bg-white p-3.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ borderColor: borderCol }}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-1">
-                    <span
-                      className="rounded px-1.5 py-0.5 text-[6.8px] font-black text-white"
-                      style={{ background: op.color }}
-                    >
-                      {op.code} · {op.pillarLabel}
+                <div className="space-y-2">
+                  <span
+                    className="inline-flex min-h-[32px] w-full items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                    style={{ background: getHeaderView(idx) }}
+                  >
+                    <span className="truncate">{op.code} · {op.pillarLabel}</span>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <Icon className="h-3 w-3 text-white" />
                     </span>
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-sm"
-                      style={{ background: op.color }}
-                    >
-                      <Icon className="h-3 w-3" />
-                    </span>
-                  </div>
+                  </span>
 
-                  <h3 className="mt-1 text-[10px] font-black text-blue-950 leading-snug">
+                  <h3
+                    className="font-editorial text-sm font-extrabold leading-snug bg-clip-text text-transparent"
+                    style={{ backgroundImage: getTitleGradientView(idx) }}
+                  >
                     {op.title}
                   </h3>
-                  <div className="text-[7.5px] font-extrabold" style={{ color: op.color }}>
+                  <div className="text-xs font-extrabold text-[#0072FF]">
                     {op.subtitle}
                   </div>
-                  <p className="mt-0.5 text-[7.3px] font-semibold text-blue-900/90 leading-snug">
+                  <p className="text-xs font-bold text-[#0A2B6D] leading-snug">
                     {op.description}
                   </p>
                 </div>
 
-                <div className="mt-2 flex items-center justify-between gap-1 border-t border-purple-100 pt-1.5">
+                <div className="mt-3 flex items-center justify-between gap-2 border-t border-[#0A2B6D]/15 pt-2.5">
                   <button
                     type="button"
                     onClick={() => runOperation(op)}
                     disabled={isRunning}
-                    className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg px-2 py-1 text-[7.8px] font-black text-white shadow-sm transition-transform active:scale-95 disabled:opacity-60"
-                    style={{ background: op.color }}
+                    className="inline-flex min-h-[34px] flex-1 items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold text-white shadow-sm transition-transform active:scale-95 disabled:opacity-60"
+                    style={{ background: getHeaderView(idx + 1) }}
                   >
-                    <Play className={`h-2.5 w-2.5 fill-current ${isRunning ? 'animate-pulse' : ''}`} />
-                    {isRunning ? 'Executing…' : op.buttonLabel}
+                    <Play className={`h-3 w-3 fill-current text-white ${isRunning ? 'animate-pulse' : ''}`} />
+                    <span>{isRunning ? 'Executing…' : op.buttonLabel}</span>
                   </button>
                   <Link
                     to={op.link}
-                    className="inline-flex items-center gap-0.5 rounded-lg border border-purple-200 bg-white px-1.5 py-1 text-[7px] font-extrabold text-purple-950 hover:bg-purple-50"
+                    className="inline-flex min-h-[34px] items-center gap-1 rounded-full border-2 px-3 py-1 text-xs font-extrabold"
+                    style={{
+                      backgroundColor: getTilePalette(idx).bg,
+                      color: getTilePalette(idx).text,
+                      borderColor: borderCol,
+                    }}
                     title="Open connected register"
                   >
-                    Open <ArrowRight className="h-2.5 w-2.5" />
+                    Open <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
               </div>
@@ -692,50 +697,60 @@ export default function InfinityOneClickOperations({ compact = false }) {
           })}
         </div>
 
-        {/* Live Executive One-Click Execution Log */}
-        <div className="rounded-xl border-2 border-indigo-400 bg-white p-1.5">
+        {/* Live Executive One-Click Execution Log in Same Unified Design */}
+        <div
+          className="rounded-2xl border-2 bg-white p-3.5 space-y-2.5 shadow-sm"
+          style={{ borderColor: getAppBorderView(2) }}
+        >
           <div
-            className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2.5 py-1 text-white"
-            style={{ background: SQUISHED_GRADIENT }}
+            className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
+            style={{ background: getHeaderView(2) }}
           >
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-amber-200" />
-              <span className="text-[8.5px] font-black uppercase tracking-wider">
+            <div className="flex items-center gap-2">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <CheckCircle2 className="h-3 w-3 text-white" />
+              </span>
+              <span className="text-xs font-extrabold uppercase tracking-wider">
                 LIVE EXECUTIVE 1-CLICK EXECUTION AUDIT TRAIL ({executionLog.length} EVENTS)
               </span>
             </div>
-            <span className="text-[7px] font-extrabold text-amber-100">
+            <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
               Real-Time Verification Feed
             </span>
           </div>
 
-          <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-1">
-            {executionLog.slice(0, compact ? 2 : 4).map((entry) => (
-              <div
-                key={entry.id}
-                className="flex items-start justify-between gap-2 rounded-lg border bg-purple-50/30 px-2 py-1"
-                style={{ borderColor: entry.color, borderLeftWidth: '3px' }}
-              >
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span
-                      className="rounded px-1 py-0 text-[6.5px] font-black text-white"
-                      style={{ background: entry.color }}
-                    >
-                      {entry.code}
-                    </span>
-                    <span className="text-[7px] font-extrabold text-purple-800">{entry.pillar}</span>
-                    <span className=" truncate text-[8px] font-black text-blue-950">{entry.title}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            {executionLog.slice(0, compact ? 2 : 4).map((entry, idx) => {
+              const tile = getTilePalette(idx + 3);
+              return (
+                <div
+                  key={entry.id}
+                  className="flex items-start justify-between gap-2.5 rounded-2xl border-2 px-3.5 py-2.5 shadow-2xs"
+                  style={{
+                    backgroundColor: tile.bg,
+                    color: tile.text,
+                    borderColor: getAppBorderView(idx + 3),
+                  }}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                        {entry.code}
+                      </span>
+                      <span className="text-[11px] font-extrabold" style={{ color: tile.text }}>
+                        {entry.pillar} · {entry.title}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs font-bold leading-snug" style={{ color: tile.subtext }}>
+                      {entry.detail}
+                    </p>
                   </div>
-                  <p className="mt-0.5 text-[7px] font-semibold text-blue-900/90 leading-tight">
-                    {entry.detail}
-                  </p>
+                  <span className="shrink-0 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold text-[#0A2B6D]">
+                    {entry.time}
+                  </span>
                 </div>
-                <span className="shrink-0 rounded bg-white px-1.5 py-0.5 font-mono text-[6.8px] font-black text-purple-900 border border-purple-200">
-                  {entry.time}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 import { useToast } from '@/components/ui/use-toast';
 import {
@@ -512,29 +513,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
   return (
     <section className="overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
-      {/* ==================== MASTER HEADER BANNER ==================== */}
+      {/* ==================== MASTER HEADER BANNER — 17 CATEGORIES BELOW REFRESH LIVE TELEMETRY ==================== */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-3 shadow-sm">
-        <span
-          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(6) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <ShieldCheck className="h-3.5 w-3.5 text-white" />
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
+          <span className="text-[#0A2B6D]">Infinity </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Control Centre
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            &amp; Master Audit
           </span>
-          <span>17 Categories · 356 Checkpoints · 98 Controlled Docs · 31 Dev Register Items</span>
-        </span>
-
-        <h2
-          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(0) }}
-        >
-          Infinity Control Centre &amp; Master Audit
         </h2>
 
-        <p
-          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
-          style={{ color: getSubheaderColourView(0) }}
-        >
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
           Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
         </p>
 
@@ -580,8 +571,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
           </button>
         </div>
 
-        {/* Navigation Switcher for All 9 Master Pillars in Mixed Full Colours */}
-        <div className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-2">
+        {/* Moved Below Refresh Live Telemetry */}
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{ background: getHeaderView(6) }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <ShieldCheck className="h-3.5 w-3.5 text-white" />
+          </span>
+          <span>17 Categories · 356 Checkpoints · 98 Controlled Docs · 31 Dev Register Items</span>
+        </span>
+
+        {/* Navigation Switcher for All 9 Master Pillars — Better Fitting Rounded-2xl Tiles with App-Coloured Borders */}
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-2 auto-rows-fr">
           {[
             { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry', icon: Building2 },
             { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
@@ -602,19 +604,23 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-2.5 py-1.5 text-left transition-all hover:-translate-y-0.5 ${
+                className={`flex h-full min-h-[48px] items-center gap-2 rounded-2xl border-2 px-3 py-2 text-left transition-all hover:-translate-y-0.5 ${
                   active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'shadow-2xs'
                 }`}
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(idx),
+                }}
               >
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
                   <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                 </span>
-                <div className="min-w-0">
-                  <div className="truncate text-[10px] font-extrabold" style={{ color: tile.text }}>
+                <div className="min-w-0 flex-1">
+                  <div className="whitespace-normal break-words text-[10.5px] font-extrabold leading-tight" style={{ color: tile.text }}>
                     {tab.label}
                   </div>
-                  <div className="truncate text-[8.5px] font-bold" style={{ color: tile.subtext }}>
+                  <div className="whitespace-normal break-words text-[9px] font-bold leading-tight" style={{ color: tile.subtext }}>
                     {tab.sub}
                   </div>
                 </div>
@@ -627,42 +633,47 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
       {/* ==================== TAB 1: INFINITY CONTROL CENTRE (SECTIONS 1, 2, 3, 23, 24) ==================== */}
       {activeTab === 'control-centre' && (
         <div className="p-3 space-y-3 bg-white">
-          {/* 12 Live Operational Register Telemetry Tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
+          {/* 12 Live Operational Register Telemetry Tiles with App-Coloured Borders & Titles in Different App Colour Views */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
             {[
-              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', hex: '#0072FF', sub: 'Screening & Profiles' },
-              { label: 'Participants', value: counts.participants, route: '/our-participants', hex: '#0A2B6D', sub: 'Plans, Goals & Consents' },
-              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', hex: '#5A00D6', sub: 'Daily/Weekly Schedule' },
-              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', hex: '#A100FF', sub: 'Mandatory Progress' },
-              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', hex: '#FF2E9A', sub: '24h/5d NDIS SLA' },
-              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', hex: '#A100FF', sub: 'ISO 31000 Matrix' },
-              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', hex: '#5A00D6', sub: 'Overdue & Approvals' },
-              { label: 'Active Policies', value: counts.policies, route: '/compliance', hex: '#0A2B6D', sub: 'Version Controlled' },
-              { label: 'Vault Documents', value: counts.documents, route: '/documents', hex: '#0072FF', sub: 'Expiry Monitored' },
-              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', hex: '#00C6FF', sub: 'Roster Integrated' },
-              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', hex: '#FF6EDB', sub: 'Continuous Improvement' },
-              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', hex: '#C084FC', sub: 'NDIS Price Validated' },
-            ].map((m) => (
-              <Link
-                key={m.label}
-                to={m.route}
-                className="rounded-xl border p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md bg-white"
-                style={{
-                  borderColor: 'rgba(192, 132, 252, 0.45)',
-                  borderTopWidth: '3px',
-                  borderTopColor: m.hex,
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[7.5px] font-black uppercase tracking-wider" style={{ color: m.hex }}>
-                    {m.label}
-                  </span>
-                  <ArrowRight className="h-3 w-3" style={{ color: m.hex }} />
-                </div>
-                <div className="mt-0.5 text-base font-black text-blue-950">{m.value}</div>
-                <div className="text-[7px] font-bold text-purple-800">{m.sub}</div>
-              </Link>
-            ))}
+              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
+              { label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
+              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', sub: 'Daily/Weekly Schedule' },
+              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', sub: 'Mandatory Progress' },
+              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', sub: '24h/5d NDIS SLA' },
+              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', sub: 'ISO 31000 Matrix' },
+              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', sub: 'Overdue & Approvals' },
+              { label: 'Active Policies', value: counts.policies, route: '/compliance', sub: 'Version Controlled' },
+              { label: 'Vault Documents', value: counts.documents, route: '/documents', sub: 'Expiry Monitored' },
+              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', sub: 'Roster Integrated' },
+              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', sub: 'Continuous Improvement' },
+              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
+            ].map((m, idx) => {
+              const borderCol = getAppBorderView(idx);
+              return (
+                <Link
+                  key={m.label}
+                  to={m.route}
+                  className="rounded-2xl border-2 p-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md bg-white"
+                  style={{
+                    borderColor: borderCol,
+                    borderTopWidth: '5px',
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-1">
+                    <span
+                      className="whitespace-normal break-words text-[10px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
+                      style={{ backgroundImage: getTitleGradientView(idx) }}
+                    >
+                      {m.label}
+                    </span>
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0" style={{ color: borderCol }} />
+                  </div>
+                  <div className="mt-1 font-editorial text-lg font-extrabold text-[#0A2B6D]">{m.value}</div>
+                  <div className="text-[10px] font-bold text-[#0072FF] leading-tight">{m.sub}</div>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Central Management Approval Queue + Role & Access Governance */}

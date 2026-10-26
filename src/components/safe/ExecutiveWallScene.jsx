@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getTilePalette, getHeaderView } from '@/lib/fullColourTiles';
+import { getTilePalette, getHeaderView, getAppBorderView } from '@/lib/fullColourTiles';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import SilverScreenSplit from '@/components/safe/SilverScreenSplit';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
@@ -779,7 +779,8 @@ export default function ExecutiveWallScene({
           <span>{companyName} · Dual Executive Office &amp; Profile Workspace</span>
         </span>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        {/* All 3 View Buttons + Sign In Fitted on One Single Line */}
+        <div className="grid w-full max-w-4xl grid-cols-2 sm:grid-cols-4 items-center justify-center gap-2">
           {LAYOUT_CHOICES.map((choice, idx) => {
             const Icon = choice.icon;
             const active = viewMode === choice.id;
@@ -789,27 +790,35 @@ export default function ExecutiveWallScene({
                 key={choice.id}
                 type="button"
                 onClick={() => selectMode(choice.id)}
-                className={`inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold transition-all ${
+                className={`inline-flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 px-3 py-1 text-xs font-extrabold transition-all ${
                   active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
                 }`}
                 style={
                   active
-                    ? { background: getHeaderView(idx), color: '#ffffff' }
-                    : { backgroundColor: tile.bg, color: tile.text }
+                    ? { background: getHeaderView(idx), color: '#ffffff', borderColor: '#0A2B6D' }
+                    : {
+                        backgroundColor: tile.bg,
+                        color: tile.text,
+                        borderColor: getAppBorderView(idx),
+                      }
                 }
               >
-                <Icon className="h-3.5 w-3.5" style={{ color: active ? '#ffffff' : tile.text }} />
-                <span>{choice.label}</span>
+                <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: active ? '#ffffff' : tile.text }} />
+                <span className="whitespace-nowrap">{choice.label}</span>
               </button>
             );
           })}
           <Link
             to="/login"
-            className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold shadow-2xs"
-            style={{ backgroundColor: getTilePalette(3).bg, color: getTilePalette(3).text }}
+            className="inline-flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 px-3 py-1 text-xs font-extrabold shadow-2xs transition-all hover:-translate-y-0.5"
+            style={{
+              backgroundColor: getTilePalette(3).bg,
+              color: getTilePalette(3).text,
+              borderColor: getAppBorderView(3),
+            }}
           >
-            <LogIn className="h-3.5 w-3.5" style={{ color: getTilePalette(3).text }} />
-            <span>Sign In</span>
+            <LogIn className="h-3.5 w-3.5 shrink-0" style={{ color: getTilePalette(3).text }} />
+            <span className="whitespace-nowrap">Sign In</span>
           </Link>
         </div>
       </div>

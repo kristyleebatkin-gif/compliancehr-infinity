@@ -9,9 +9,12 @@ import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { downloadInfinityCoreEnginePdf } from '@/lib/infinityCoreEnginePdf';
 import {
+  getTilePalette,
   getHeaderView,
   getTitleGradientView,
   getSubheaderColourView,
+  getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const SQUISHED_GRADIENT =
@@ -379,8 +382,23 @@ export default function InfinityCoreEngine({ compact = false }) {
       id="infinity-core-engine"
       className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header — White Symbols in Header, Different Views of App Design Colours */}
+      {/* Header — Title in App Colours at Top, "Infinity Core Engine · 104 Functions" Moved Above Run Core Engine Sweep */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
+          <span className="text-[#0A2B6D]">Infinity </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Core Engine
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            — AI Automation &amp; Real-Time Validation
+          </span>
+        </h2>
+
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
+          Complete Control. Greater Confidence. Brighter Success.
+        </p>
+
+        {/* Moved Directly Above Run Core Engine Sweep */}
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
           style={{ background: getHeaderView(4) }}
@@ -390,20 +408,6 @@ export default function InfinityCoreEngine({ compact = false }) {
           </span>
           <span>Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}</span>
         </span>
-
-        <h2
-          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(4) }}
-        >
-          Infinity Core Engine — AI Automation &amp; Real-Time Validation
-        </h2>
-
-        <p
-          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
-          style={{ color: getSubheaderColourView(4) }}
-        >
-          Complete Control. Greater Confidence. Brighter Success.
-        </p>
 
         <div className="flex flex-wrap items-center justify-center gap-2">
           <button
@@ -438,67 +442,59 @@ export default function InfinityCoreEngine({ compact = false }) {
         </div>
       </div>
 
-      <div className="bg-white p-1.5 space-y-1.5">
+      <div className="bg-white p-2 space-y-3">
         {statusBanner && (
-          <div className="flex items-center justify-between gap-2 rounded-lg border-2 border-emerald-500 bg-emerald-50 px-2.5 py-1 text-[8.5px] font-extrabold text-emerald-950">
+          <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D]">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
               {statusBanner}
             </span>
             <button
               type="button"
               onClick={() => setStatusBanner('')}
-              className="rounded bg-white px-1.5 py-0.5 text-[7.5px] font-black text-emerald-900"
+              className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
             >
               Dismiss
             </button>
           </div>
         )}
 
-        {/* Top Live Telemetry Strip — 8 High-Contrast Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1">
+        {/* Top Live Telemetry Strip — All 8 Tiles Same Design, Same Colour & Centred */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
           {[
-            { label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', color: '#4f46e5', icon: Cpu },
-            { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', color: '#5A00D6', icon: Zap },
-            { label: 'Connected Modules', value: '45', sub: 'Unified Data Bus', color: '#0072FF', icon: Layers },
-            { label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', color: '#FF2E9A', icon: ShieldCheck },
-            { label: 'Smart-Fill Docs', value: '125+', sub: '2026 A4 & Digital', color: '#00C6FF', icon: FileText },
-            { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', color: '#FF6EDB', icon: Award },
-            { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, color: '#A100FF', icon: Users },
-            { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, color: '#FF2E9A', icon: Activity },
+            { label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
+            { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', icon: Zap },
+            { label: 'Connected Modules', value: '46', sub: 'Unified Data Bus', icon: Layers },
+            { label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', icon: ShieldCheck },
+            { label: 'Smart-Fill Docs', value: '125+', sub: '2026 A4 & Digital', icon: FileText },
+            { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', icon: Award },
+            { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, icon: Users },
+            { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, icon: Activity },
           ].map((stat) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
-                className="rounded-lg border bg-white p-1.5 shadow-sm"
-                style={{
-                  borderColor: stat.color,
-                  borderTopWidth: '3px',
-                  background: `linear-gradient(145deg, ${stat.color}12 0%, #ffffff 80%)`,
-                }}
+                className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-[#38BDF8] p-2.5 text-center shadow-sm"
               >
-                <div className="flex items-center justify-between gap-1">
-                  <span className="truncate text-[7px] font-extrabold uppercase tracking-wider text-purple-900">
-                    {stat.label}
-                  </span>
-                  <span
-                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
-                    style={{ background: stat.color }}
-                  >
-                    <Icon className="h-2.5 w-2.5" />
-                  </span>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                  <Icon className="h-3.5 w-3.5 text-[#0072FF]" />
+                </span>
+                <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  {stat.label}
+                </span>
+                <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
+                  {stat.value}
                 </div>
-                <div className="mt-0.5 text-sm font-black leading-none text-blue-950">{stat.value}</div>
-                <div className="mt-0.5 truncate text-[6.8px] font-bold text-purple-800">{stat.sub}</div>
+                <div className="mt-0.5 text-[9.5px] font-bold text-[#0A2B6D]">{stat.sub}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Sub-Engine Switcher Bar + Search */}
-        <div className="flex flex-wrap items-center justify-between gap-1 rounded-xl border border-purple-300 bg-purple-50/40 p-1">
-          <div className="flex flex-wrap items-center gap-1">
+        {/* All 3 Core Engines Switcher Tiles — Same Design, Same Colour & Centred */}
+        <div className="flex flex-col items-center justify-center gap-2.5 rounded-2xl border-2 border-[#0072FF] bg-white p-3">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             {PILLAR_TABS.map((tab) => {
               const Icon = tab.icon;
               const active = activePillar === tab.id;
@@ -507,239 +503,257 @@ export default function InfinityCoreEngine({ compact = false }) {
                   key={tab.id}
                   type="button"
                   onClick={() => setActivePillar(tab.id)}
-                  className={`inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[8px] font-extrabold transition-all ${
-                    active
-                      ? 'border-pink-500 text-white shadow-sm'
-                      : 'border-purple-200 bg-white text-blue-950 hover:bg-purple-100/70'
+                  className={`flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3 py-2 text-center text-xs font-extrabold text-white transition-all ${
+                    active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'opacity-90 hover:opacity-100'
                   }`}
-                  style={active ? { background: SQUISHED_GRADIENT } : undefined}
+                  style={{ background: getHeaderView(0) }}
                 >
-                  <Icon className="h-3 w-3 shrink-0" />
-                  <span>{tab.label}</span>
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                    <Icon className="h-3.5 w-3.5 text-white" />
+                  </span>
+                  <span className="leading-snug">{tab.label}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="relative min-w-[160px] flex-1 max-w-[230px]">
-            <Search className="pointer-events-none absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-purple-600" />
+          <div className="relative w-full max-w-md">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#0072FF]" />
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search functions, workflows, gates…"
-              className="h-6 w-full rounded-lg border border-purple-300 bg-white pl-6 pr-2 text-[8px] font-bold text-blue-950 placeholder:text-purple-400 focus:outline-none"
+              className="h-8 w-full rounded-full border-2 border-[#0072FF] bg-white pl-9 pr-3 text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6]/70 focus:outline-none text-center"
             />
           </div>
         </div>
 
-        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB (104 FUNCTIONS & 65 WORKFLOWS) ==================== */}
+        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
         {(activePillar === 'all' || activePillar === 'automation') && (
-          <div className="rounded-xl border-2 border-indigo-500 bg-white p-1.5 space-y-1">
+          <div
+            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
+            style={{ borderColor: getAppBorderView(0) }}
+          >
             <div
-              className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2.5 py-1 text-white"
-              style={{ background: SQUISHED_GRADIENT }}
+              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
+              style={{ background: getHeaderView(0) }}
             >
-              <div className="flex items-center gap-1.5">
-                <Zap className="h-3.5 w-3.5 text-amber-200" />
-                <span className="text-[9px] font-black uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <Zap className="h-3 w-3 text-white" />
+                </span>
+                <span className="text-xs font-extrabold uppercase tracking-wider">
                   SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB (104 SERVER FUNCTIONS &amp; 65 LIVE WORKFLOWS)
                 </span>
               </div>
-              <span className="rounded-full bg-white px-2 py-0.5 text-[7px] font-black text-blue-950">
+              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
                 Zero-Touch Event &amp; Schedule Pipelines
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
-              {(compact ? filteredPipelines.slice(0, 4) : filteredPipelines).map((pipe) => (
-                <div
-                  key={pipe.code}
-                  className="flex flex-col justify-between rounded-lg border bg-white p-1.5 shadow-sm"
-                  style={{
-                    borderColor: pipe.color,
-                    borderTopWidth: '3px',
-                    background: `linear-gradient(145deg, ${pipe.color}12 0%, #ffffff 82%)`,
-                  }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1">
-                      <span
-                        className="rounded px-1.5 py-0.5 text-[6.8px] font-black text-white"
-                        style={{ background: pipe.color }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 items-stretch">
+              {(compact ? filteredPipelines.slice(0, 4) : filteredPipelines).map((pipe, idx) => {
+                const borderCol = getAppBorderView(idx);
+                return (
+                  <div
+                    key={pipe.code}
+                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
+                    style={{ borderColor: borderCol }}
+                  >
+                    <div>
+                      <div
+                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
+                        style={{ background: getHeaderView(idx) }}
                       >
-                        {pipe.code} · {pipe.category}
-                      </span>
-                      <span className="rounded-full bg-emerald-600 px-1.5 py-0 text-[6.5px] font-black text-white">
-                        {pipe.status}
-                      </span>
+                        <span className="text-[10px] font-extrabold text-white">
+                          {pipe.code} · {pipe.category}
+                        </span>
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
+                          {pipe.status}
+                        </span>
+                      </div>
+                      <div className="p-2.5 space-y-1 bg-white">
+                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                          {pipe.title}
+                        </div>
+                        <div className="text-[10.5px] font-bold text-[#5A00D6]">
+                          <span className="font-extrabold text-[#0A2B6D]">Trigger:</span> {pipe.trigger}
+                        </div>
+                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
+                          {pipe.action}
+                        </p>
+                      </div>
                     </div>
-                    <div className="mt-1 text-[9px] font-extrabold text-blue-950 leading-snug">
-                      {pipe.title}
-                    </div>
-                    <div className="mt-0.5 text-[7.3px] font-bold text-purple-900">
-                      <span className="font-black text-blue-950">Trigger:</span> {pipe.trigger}
-                    </div>
-                    <p className="mt-0.5 text-[7.2px] font-semibold text-blue-900/90 leading-snug">
-                      {pipe.action}
-                    </p>
-                  </div>
 
-                  <div className="mt-1.5 flex items-center justify-between gap-1 border-t border-purple-100 pt-1">
-                    <span className="truncate font-mono text-[6.8px] font-bold text-purple-800">
-                      fn: {pipe.functionName}
-                    </span>
-                    <Link
-                      to={pipe.path}
-                      className="inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[6.8px] font-black text-white"
-                      style={{ background: pipe.color }}
-                    >
-                      Open <ArrowRight className="h-2 w-2" />
-                    </Link>
+                    <div className="flex items-center justify-between gap-1 border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
+                      <span className="truncate font-mono text-[10px] font-extrabold text-[#5A00D6]">
+                        fn: {pipe.functionName}
+                      </span>
+                      <Link
+                        to={pipe.path}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                        style={{ background: borderCol }}
+                      >
+                        Open <ArrowRight className="h-2.5 w-2.5 text-white" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* ==================== PILLAR 2: REAL-TIME COMPLIANCE, RISK & ROSTER VALIDATION ENGINE ==================== */}
+        {/* ==================== PILLAR 2: REAL-TIME COMPLIANCE, RISK & ROSTER VALIDATION ENGINE — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
         {(activePillar === 'all' || activePillar === 'validation') && (
-          <div className="rounded-xl border-2 border-pink-500 bg-white p-1.5 space-y-1">
+          <div
+            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
+            style={{ borderColor: getAppBorderView(1) }}
+          >
             <div
-              className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2.5 py-1 text-white"
-              style={{ background: SQUISHED_GRADIENT }}
+              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
+              style={{ background: getHeaderView(1) }}
             >
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-amber-200" />
-                <span className="text-[9px] font-black uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <ShieldCheck className="h-3 w-3 text-white" />
+                </span>
+                <span className="text-xs font-extrabold uppercase tracking-wider">
                   SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER VALIDATION ENGINE (6 LIVE GATES)
                 </span>
               </div>
-              <span className="rounded-full bg-white px-2 py-0.5 text-[7px] font-black text-pink-950">
+              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
                 Live Database Gatekeeper
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-              {validationGates.map((gate) => (
-                <div
-                  key={gate.code}
-                  className="flex flex-col justify-between rounded-lg border bg-white p-1.5 shadow-sm"
-                  style={{
-                    borderColor: gate.color,
-                    borderLeftWidth: '4px',
-                    background: `linear-gradient(135deg, ${gate.color}12 0%, #ffffff 85%)`,
-                  }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="text-[7px] font-black uppercase tracking-wider" style={{ color: gate.color }}>
-                        {gate.code} · {gate.standard}
-                      </span>
-                      <span
-                        className="rounded-full px-1.5 py-0.5 text-[6.5px] font-black text-white"
-                        style={{ background: gate.passed ? '#A100FF' : '#FF6EDB' }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 items-stretch">
+              {validationGates.map((gate, idx) => {
+                const borderCol = getAppBorderView(idx + 2);
+                return (
+                  <div
+                    key={gate.code}
+                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
+                    style={{ borderColor: borderCol }}
+                  >
+                    <div>
+                      <div
+                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
+                        style={{ background: getHeaderView(idx + 2) }}
                       >
-                        {gate.badge}
-                      </span>
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-white">
+                          {gate.code} · {gate.standard}
+                        </span>
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
+                          {gate.badge}
+                        </span>
+                      </div>
+                      <div className="p-2.5 space-y-1 bg-white">
+                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-tight">
+                          {gate.name}
+                        </div>
+                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
+                          {gate.ruleSummary}
+                        </p>
+                      </div>
                     </div>
-                    <div className="mt-0.5 text-[9.5px] font-extrabold text-blue-950 leading-tight">
-                      {gate.name}
-                    </div>
-                    <p className="mt-0.5 text-[7.3px] font-semibold text-blue-900/90 leading-snug">
-                      {gate.ruleSummary}
-                    </p>
-                  </div>
 
-                  <div className="mt-1.5 flex items-center justify-between border-t border-purple-100 pt-1">
-                    <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-emerald-800">
-                      <CheckCircle2 className="h-2.5 w-2.5 text-emerald-600" /> Active Rule Gate
-                    </span>
-                    <Link
-                      to={gate.path}
-                      className="inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[7px] font-black text-white"
-                      style={{ background: gate.color }}
-                    >
-                      Inspect Register <ArrowRight className="h-2 w-2" />
-                    </Link>
+                    <div className="flex items-center justify-between border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#0072FF]">
+                        <CheckCircle2 className="h-3 w-3 text-[#0072FF]" /> Active Rule Gate
+                      </span>
+                      <Link
+                        to={gate.path}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                        style={{ background: borderCol }}
+                      >
+                        Inspect Register <ArrowRight className="h-2.5 w-2.5 text-white" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE ==================== */}
+        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
         {(activePillar === 'all' || activePillar === 'smartfill') && (
-          <div className="rounded-xl border-2 border-teal-600 bg-white p-1.5 space-y-1">
+          <div
+            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
+            style={{ borderColor: getAppBorderView(2) }}
+          >
             <div
-              className="flex flex-wrap items-center justify-between gap-1 rounded-lg px-2.5 py-1 text-white"
-              style={{ background: SQUISHED_GRADIENT }}
+              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
+              style={{ background: getHeaderView(2) }}
             >
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-amber-200" />
-                <span className="text-[9px] font-black uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <Sparkles className="h-3 w-3 text-white" />
+                </span>
+                <span className="text-xs font-extrabold uppercase tracking-wider">
                   SUB-ENGINE 3 · SMART-FILL DOCUMENT, AUDIT &amp; PREDICTIVE ALERT ENGINE (2026)
                 </span>
               </div>
-              <span className="rounded-full bg-white px-2 py-0.5 text-[7px] font-black text-teal-950">
+              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
                 125+ Docs · 12 A4 Templates · 356 Checkpoints
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
-              {SMART_FILL_ENGINES.map((eng) => (
-                <div
-                  key={eng.code}
-                  className="flex flex-col justify-between rounded-lg border bg-white p-1.5 shadow-sm"
-                  style={{
-                    borderColor: eng.color,
-                    borderTopWidth: '3px',
-                    background: `linear-gradient(145deg, ${eng.color}14 0%, #ffffff 82%)`,
-                  }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1">
-                      <span
-                        className="rounded px-1.5 py-0.5 text-[6.8px] font-black text-white"
-                        style={{ background: eng.color }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 items-stretch">
+              {SMART_FILL_ENGINES.map((eng, idx) => {
+                const borderCol = getAppBorderView(idx + 4);
+                return (
+                  <div
+                    key={eng.code}
+                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
+                    style={{ borderColor: borderCol }}
+                  >
+                    <div>
+                      <div
+                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
+                        style={{ background: getHeaderView(idx + 4) }}
                       >
-                        {eng.code}
-                      </span>
-                      <span className="rounded-full border border-purple-300 bg-purple-50 px-1.5 py-0 text-[6.5px] font-black text-purple-950">
-                        {eng.badge}
-                      </span>
+                        <span className="text-[10px] font-extrabold text-white">
+                          {eng.code}
+                        </span>
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
+                          {eng.badge}
+                        </span>
+                      </div>
+                      <div className="p-2.5 space-y-1 bg-white">
+                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                          {eng.title}
+                        </div>
+                        <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                          {eng.coverage}
+                        </div>
+                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
+                          {eng.output}
+                        </p>
+                      </div>
                     </div>
-                    <div className="mt-1 text-[9px] font-extrabold text-blue-950 leading-snug">
-                      {eng.title}
-                    </div>
-                    <div className="mt-0.5 text-[7.2px] font-extrabold text-purple-900">
-                      {eng.coverage}
-                    </div>
-                    <p className="mt-0.5 text-[7.2px] font-semibold text-blue-900/90 leading-snug">
-                      {eng.output}
-                    </p>
-                  </div>
 
-                  <div className="mt-1.5 flex items-center justify-between gap-1 border-t border-purple-100 pt-1">
-                    <button
-                      type="button"
-                      onClick={handleExportPdf}
-                      className="inline-flex items-center gap-0.5 rounded border border-purple-300 bg-purple-50 px-1.5 py-0.5 text-[6.8px] font-black text-purple-950 hover:bg-purple-100"
-                    >
-                      <Download className="h-2 w-2" /> A4 Report
-                    </button>
-                    <Link
-                      to={eng.link}
-                      className="inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[6.8px] font-black text-white"
-                      style={{ background: eng.color }}
-                    >
-                      Launch Studio <ArrowRight className="h-2 w-2" />
-                    </Link>
+                    <div className="flex items-center justify-between gap-1 border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
+                      <button
+                        type="button"
+                        onClick={handleExportPdf}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                      >
+                        <Download className="h-2.5 w-2.5 text-[#0072FF]" /> A4 Report
+                      </button>
+                      <Link
+                        to={eng.link}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                        style={{ background: borderCol }}
+                      >
+                        Launch Studio <ArrowRight className="h-2.5 w-2.5 text-white" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

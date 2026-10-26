@@ -18,6 +18,7 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const HEADER_GRADIENT =
@@ -361,29 +362,19 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id="business-health-intelligence"
       className="scroll-mt-14 rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Top Banner Header — White Symbol in Header, Different Views of App Design Colours */}
+      {/* Top Banner Header — Title in App Colours, Medium Blue Writing, "Live Executive Command" Moved Under Export Board */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
-        <span
-          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(3) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Activity className="h-3.5 w-3.5 text-white" />
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
+          <span className="text-[#0A2B6D]">Business Health &amp; </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Compliance
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            Intelligence
           </span>
-          <span>Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness</span>
-        </span>
-
-        <h2
-          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(3) }}
-        >
-          Business Health &amp; Compliance Intelligence
         </h2>
 
-        <p
-          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
-          style={{ color: getSubheaderColourView(3) }}
-        >
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
           Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
         </p>
 
@@ -414,6 +405,17 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             <span>Export Board Intelligence Report (A4 PDF)</span>
           </button>
         </div>
+
+        {/* Moved Under Export Board Intelligence Report */}
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{ background: getHeaderView(3) }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Activity className="h-3.5 w-3.5 text-white" />
+          </span>
+          <span>Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness</span>
+        </span>
       </div>
 
       {/* 6 Executive Intelligence KPI Strip */}

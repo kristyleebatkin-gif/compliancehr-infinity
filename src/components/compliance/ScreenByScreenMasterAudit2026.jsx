@@ -15,6 +15,7 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const HEADER_GRADIENT =
@@ -493,29 +494,19 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       id="screen-by-screen-audit"
       className="rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header Banner — White Symbols in Header, Different Views of App Design Colours */}
+      {/* Header Banner — Title in App Colours, "45 Screens Audited" Moved Below "Open 2026 Smart-Fill Doc Studio" */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
-        <span
-          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(2) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <ShieldCheck className="h-3.5 w-3.5 text-white" />
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
+          <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Audit
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            of All {MODULE_DIRECTORY.length} Modulars
           </span>
-          <span>45 Screens Audited · 45 Smart-Fill 2026 Docs · 1-Click Task Completion</span>
-        </span>
-
-        <h2
-          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(2) }}
-        >
-          2026 Screen-by-Screen Audit of All 45 Modulars
         </h2>
 
-        <p
-          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
-          style={{ color: getSubheaderColourView(2) }}
-        >
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
           Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
         </p>
 
@@ -530,14 +521,39 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
           </span>
           <span>Open 2026 Smart-Fill Doc Studio</span>
         </button>
+
+        {/* Moved Below Open 2026 Smart-Fill Doc Studio */}
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{ background: getHeaderView(2) }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <ShieldCheck className="h-3.5 w-3.5 text-white" />
+          </span>
+          <span>{MODULE_DIRECTORY.length} Screens Audited · {MODULE_DIRECTORY.length} Smart-Fill 2026 Docs · 1-Click Task Completion</span>
+        </span>
       </div>
 
       {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
       <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
-      {/* Group Filter Pills in Mixed Full Colours + Search */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-2xs">
-        <div className="flex flex-wrap items-center gap-1.5">
+      {/* Search Screens Bar & Group Filter Pills Placed Directly Above #1 Dashboard Screen */}
+      <div
+        className="flex flex-col gap-2.5 rounded-2xl border-2 bg-white p-3 shadow-2xs"
+        style={{ borderColor: getAppBorderView(1) }}
+      >
+        <div className="relative w-full">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0072FF]" />
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search screens, topics, 2026 Smart-Fill docs or tasks above #1 Dashboard…"
+            className="h-10 w-full rounded-full border-2 border-[#0072FF] bg-white pl-10 pr-4 text-xs sm:text-sm font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6]/70 focus:outline-none"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
           {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp, idx) => {
             const tile = getTilePalette(idx);
             return (
@@ -545,30 +561,23 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 key={grp}
                 type="button"
                 onClick={() => setSelectedGroup(grp)}
-                className={`rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold transition-all ${
+                className={`rounded-full border-2 px-3 py-1 text-xs font-extrabold transition-all ${
                   selectedGroup === grp ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
                 }`}
                 style={
                   selectedGroup === grp
-                    ? { background: getHeaderView(idx), color: '#ffffff' }
-                    : { backgroundColor: tile.bg, color: tile.text }
+                    ? { background: getHeaderView(idx), color: '#ffffff', borderColor: '#0A2B6D' }
+                    : {
+                        backgroundColor: tile.bg,
+                        color: tile.text,
+                        borderColor: getAppBorderView(idx),
+                      }
                 }
               >
                 {grp}
               </button>
             );
           })}
-        </div>
-
-        <div className="relative min-w-[200px] flex-1 max-w-xs">
-          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5A00D6]" />
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search any of the 45 screens, topics, 2026 docs or tasks…"
-            className="h-8 w-full rounded-full border-2 border-[#0A2B6D] bg-white pl-8 pr-3 text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6]/60 focus:outline-none"
-          />
         </div>
       </div>
 
@@ -698,10 +707,29 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
         </div>
       )}
 
-      {/* Compact 45-Module Screen-by-Screen Audit Cards Grid — Smaller Cards & Crisp White Backgrounds Behind Dark Blue Text */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
-        {filteredModules.map((mod, index) => {
-          const colour = moduleKeyColour(mod.key);
+      {/* Full-Width 48-Screen Audit Grid (46 Modules + 2 Master Audit Screens = 48 so 2, 3, 4 & 6 Columns Fill 100% Without Any Gaps) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2.5 auto-rows-fr">
+        {(selectedGroup === 'All' && !search.trim()
+          ? [
+              ...filteredModules,
+              {
+                key: 'master-audit-chr-001',
+                label: 'Master Audit CHR-AUD-001',
+                path: '/compliance',
+                icon: ShieldCheck,
+                blurb: '17 Categories & 356 Checkpoints Governance Edition',
+              },
+              {
+                key: 'master-audit-chr-002',
+                label: 'Workforce Audit CHR-AUD-002',
+                path: '/compliance',
+                icon: Wand2,
+                blurb: '11-Page Workforce & Operations Smart-Fill Edition',
+              },
+            ]
+          : filteredModules
+        ).map((mod, index) => {
+          const borderCol = getAppBorderView(index);
           const Icon = mod.icon || Layers;
           const bp = MODULE_AUDIT_BLUEPRINTS[mod.key] || {
             topic: mod.label,
@@ -714,51 +742,55 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
           return (
             <div
               key={mod.key}
-              className="flex flex-col justify-between overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm"
-              style={{ borderTopWidth: '4px', borderTopColor: colour }}
+              className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              style={{ borderColor: borderCol, borderTopWidth: '5px' }}
             >
-              {/* Compact White Header with Full-Colour Badge & Clear Dark Blue Writing */}
               <div>
-                <div className="flex items-center justify-between gap-1 border-b border-[#0A2B6D]/20 bg-white px-2 py-1.5">
+                <div
+                  className="flex items-center justify-between gap-1.5 px-2.5 py-1.5 text-white"
+                  style={{ background: getHeaderView(index) }}
+                >
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#0A2B6D] text-white shadow-2xs"
-                      style={{ background: colour }}
-                    >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
                       <Icon className="h-3 w-3 text-white" />
                     </span>
-                    <span className="rounded bg-white text-[10px] font-extrabold leading-tight text-[#0A2B6D]">
+                    <span className="text-[10.5px] font-extrabold leading-tight text-white">
                       #{index + 1} {mod.label}
                     </span>
                   </div>
                   <Link
                     to={mod.path}
-                    className="shrink-0 inline-flex items-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                    className="shrink-0 inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]"
                   >
                     Open <ExternalLink className="h-2.5 w-2.5 text-[#0072FF]" />
                   </Link>
                 </div>
 
-                {/* Compact Structured Screen Audit Body on Crisp White */}
-                <div className="space-y-1 bg-white p-1.5 text-[9.5px] leading-snug text-[#0A2B6D]">
-                  <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                <div className="space-y-1.5 bg-white p-2 text-[10px] leading-snug text-[#0A2B6D]">
+                  <div
+                    className="rounded-xl border px-2 py-1"
+                    style={{ borderColor: borderCol }}
+                  >
                     <span className="font-extrabold text-[#5A00D6]">Topic: </span>
                     <span className="font-bold text-[#0A2B6D]">{bp.topic}</span>
                   </div>
 
-                  <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                  <div
+                    className="rounded-xl border px-2 py-1"
+                    style={{ borderColor: borderCol }}
+                  >
                     <span className="font-extrabold text-[#0072FF]">Smart Doc: </span>
                     <span className="font-bold text-[#0A2B6D]">{bp.smartDoc2026}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Compact 1-Click Action Bar */}
-              <div className="grid grid-cols-3 gap-1 border-t border-[#0A2B6D]/20 bg-white p-1">
+              <div className="grid grid-cols-3 gap-1 border-t border-[#0A2B6D]/15 bg-white p-1.5">
                 <button
                   type="button"
                   onClick={() => openSmartFillDoc(mod)}
-                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  className="flex items-center justify-center gap-1 rounded-full border px-1.5 py-1 text-[9px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  style={{ borderColor: borderCol }}
                 >
                   <Wand2 className="h-2.5 w-2.5 text-[#FF2E9A]" />
                   Doc
@@ -767,7 +799,8 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   type="button"
                   disabled={creatingTaskKey === `${mod.key}-open`}
                   onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  className="flex items-center justify-center gap-1 rounded-full border px-1.5 py-1 text-[9px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  style={{ borderColor: borderCol }}
                 >
                   <PlusCircle className="h-2.5 w-2.5 text-[#0072FF]" />
                   Task
@@ -776,10 +809,10 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   type="button"
                   disabled={creatingTaskKey === `${mod.key}-done`}
                   onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                  className="flex items-center justify-center gap-0.5 rounded border border-[#0A2B6D] bg-white px-1 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                  style={{ borderTopWidth: '2px', borderTopColor: colour }}
+                  className="flex items-center justify-center gap-1 rounded-full border px-1.5 py-1 text-[9px] font-extrabold text-white"
+                  style={{ background: borderCol, borderColor: '#0A2B6D' }}
                 >
-                  <CheckCircle2 className="h-2.5 w-2.5" style={{ color: colour }} />
+                  <CheckCircle2 className="h-2.5 w-2.5 text-white" />
                   Done
                 </button>
               </div>
