@@ -400,8 +400,8 @@ export default function InfinityCoreEngine({ compact = false }) {
             </span>
           </div>
 
-          {/* Three Action Tiles Underneath on One Single Line */}
-          <div className="grid w-full grid-cols-3 gap-2">
+          {/* Three Action Tiles Underneath — Responsive & Fitted Without Truncation */}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2">
             <div
               className="rounded-full p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
@@ -410,11 +410,11 @@ export default function InfinityCoreEngine({ compact = false }) {
                 type="button"
                 onClick={handleRunCoreSweep}
                 disabled={sweeping}
-                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
                 style={{ background: getHeaderView(0), color: '#FFFFFF' }}
               >
-                <RefreshCw className={`h-3 w-3 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
-                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                <RefreshCw className={`h-3.5 w-3.5 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>
                   {sweeping ? 'Sweeping…' : 'Run Core Engine Sweep'}
                 </span>
               </button>
@@ -428,11 +428,11 @@ export default function InfinityCoreEngine({ compact = false }) {
                 type="button"
                 onClick={handleLogDiagnosticTask}
                 disabled={creatingTask}
-                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
-                <ClipboardCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                <ClipboardCheck className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>
                   {creatingTask ? 'Logging…' : '1-Click Log Audit Task'}
                 </span>
               </button>
@@ -445,11 +445,11 @@ export default function InfinityCoreEngine({ compact = false }) {
               <button
                 type="button"
                 onClick={handleExportPdf}
-                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
+                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95"
                 style={{ background: getHeaderView(6), color: '#FFFFFF' }}
               >
-                <Download className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                <Download className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>
                   Export Core Engine A4 PDF
                 </span>
               </button>

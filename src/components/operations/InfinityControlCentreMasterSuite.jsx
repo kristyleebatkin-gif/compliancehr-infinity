@@ -727,7 +727,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       className="w-full rounded-xl p-[2px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div className="flex h-[56px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                      <div className="flex min-h-[56px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
                         <span
                           className="text-[9.5px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
@@ -742,10 +742,10 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
                     {/* Sub-Label Inside App Design Coloured Border */}
                     <div
-                      className="w-full rounded-xl p-[2px]"
+                      className="w-full flex-1 rounded-xl p-[2px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
-                      <div className="flex h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
+                      <div className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
                         {m.sub}
                       </div>
                     </div>

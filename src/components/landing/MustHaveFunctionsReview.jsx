@@ -42,32 +42,32 @@ export const WHAT_YOU_GET_ITEMS = [
   {
     title: '125+ NDIS & Aged Care Policies & Forms',
     included: 'Included in $999 Outright & All Plans',
-    detail: 'Every mandatory policy, procedure, intake form & register ready to use',
+    detail: 'Every mandatory policy, procedure, intake form & register ready to use.',
   },
   {
     title: 'Dual Audit Checklists (CHR-AUD-001 & 002)',
     included: '17 Categories · 356 Checkpoints Included',
-    detail: 'Governance & Workforce 11-page interactive & printable audit suites',
+    detail: 'Governance & Workforce 11-page interactive & printable audit suites.',
   },
   {
     title: '6 Structured Compliance Binders',
     included: 'Complete Audit-Ready Binder Volumes',
-    detail: 'Pre-indexed across Governance, HR, Participants, Safety, Rostering & Finance',
+    detail: 'Pre-indexed across Governance, HR, Participants, Safety, Rostering & Finance.',
   },
   {
     title: '12 Printable A4 Executive Office Masters',
     included: '2026 Standard Ruled & Smart-Fill A4 Pack',
-    detail: 'Service Agreements, 24h/5d Incidents, Risk Matrix, Screening & Consents',
+    detail: 'Service Agreements, 24h/5d Incidents, Risk Matrix, Screening & Consents.',
   },
   {
     title: 'Up to 20 Users ($660/mo) to 101+ Users',
     included: 'Replaces $4,080+/mo of Separate Tools',
-    detail: 'All 46 live modules + $160/mo Elite AI tier (2,500 msgs & 20k credits)',
+    detail: 'All 46 live modules + $160/mo Elite AI tier (2,500 msgs & 20k credits).',
   },
   {
     title: '1-Click Smart-Fill Auto-Branding',
     included: 'Logo, ABN, NDIS ID & Signatories',
-    detail: 'Stamps your organisation details across every PDF & CSV export automatically',
+    detail: 'Stamps your organisation details across every PDF & CSV export automatically.',
   },
 ];
 
@@ -422,32 +422,32 @@ export default function MustHaveFunctionsReview() {
                         className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
                         style={{ background: sprayBg }}
                       >
-                        {/* Section 1: Fixed-Height Title Box Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 1: Title Box Lined Up Across Tile 1 & Tile 2 */}
                         <div
                           className="w-full rounded-xl p-[2px]"
                           style={{ background: getHeaderView(idx) }}
                         >
-                          <div className="flex h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                          <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center text-xs font-extrabold leading-tight text-[#0A2B6D]">
                             {item.title}
                           </div>
                         </div>
 
-                        {/* Section 2: Fixed-Height Included Pill Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 2: Included Pill Lined Up Across Tile 1 & Tile 2 */}
                         <div
                           className="w-full rounded-full p-[2px]"
                           style={{ background: getHeaderView(idx + 1) }}
                         >
-                          <div className="flex h-[30px] w-full items-center justify-center rounded-full bg-white px-2.5 text-center text-[10px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[30px] w-full items-center justify-center rounded-full bg-white px-2.5 py-0.5 text-center text-[10px] font-extrabold text-[#5A00D6]">
                             {item.included}
                           </div>
                         </div>
 
-                        {/* Section 3: Fixed-Height Detail Box Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 3: Detail Box Lined Up Across Tile 1 & Tile 2 */}
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full flex-1 rounded-xl p-[2px]"
                           style={{ background: getHeaderView(idx + 2) }}
                         >
-                          <div className="flex h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
+                          <div className="flex h-full min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
                             <p
                               className="text-center text-[10.5px] font-bold leading-tight text-black"
                               style={{ color: '#000000' }}
@@ -549,28 +549,28 @@ export default function MustHaveFunctionsReview() {
                   <div className="flex h-full w-full flex-col justify-between rounded-[15px] bg-white p-3.5">
                     <div className="flex flex-1 flex-col justify-between space-y-2.5">
                       <div className="space-y-2">
-                        {/* Fixed-Height Stretched Pillar Header Badge */}
+                        {/* Stretched Pillar Header Badge — Full Text Always Visible */}
                         <div
                           className="w-full rounded-full p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <span
-                            className="gradient-brand inline-flex h-[36px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                            className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
                             style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                           >
                             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
                               <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                             </span>
-                            <span className="truncate" style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
+                            <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
                           </span>
                         </div>
 
-                        {/* Strict Fixed-Height Heading & Subtitle Box so Every Pillar Pair Lines Up Exactly */}
+                        {/* Equal-Height Heading & Subtitle Box so Every Pillar Pair Lines Up */}
                         <div
                           className="w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-[96px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                          <div className="flex min-h-[98px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                             <h4
                               className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent"
                               style={{ backgroundImage: getTitleGradientView(pIdx) }}
@@ -587,7 +587,7 @@ export default function MustHaveFunctionsReview() {
                         </div>
                       </div>
 
-                      {/* 6 Strict Equal-Height Bullet Rows Lined Up Across Every Pillar & Its Neighbour */}
+                      {/* 6 Equal-Height Bullet Rows Lined Up Across Every Pillar & Its Neighbour */}
                       <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1.5 pt-1">
                         {pillar.items.map((item, iIdx) => {
                           const idx = pIdx * 3 + iIdx;
@@ -597,7 +597,7 @@ export default function MustHaveFunctionsReview() {
                           return (
                             <li
                               key={item}
-                              className="flex h-[58px] rounded-xl p-[2px] shadow-2xs"
+                              className="flex min-h-[58px] rounded-xl p-[2px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div

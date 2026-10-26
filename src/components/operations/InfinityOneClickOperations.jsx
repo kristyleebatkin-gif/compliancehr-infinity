@@ -686,19 +686,19 @@ export default function InfinityOneClickOperations({ compact = false }) {
                 style={{ background: UNIFORM_SPRAY_BG }}
               >
                 <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                  {/* Fixed-Height Centered Header Pill */}
+                  {/* Centered Header Pill — Full Text Fits Without Truncation */}
                   <div
                     className="w-full rounded-full p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <span
-                      className="gradient-brand inline-flex h-[36px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                      className="gradient-brand inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
                       style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                     >
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
                         <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       </span>
-                      <span className="truncate text-center" style={{ color: '#FFFFFF' }}>
+                      <span className="text-center" style={{ color: '#FFFFFF' }}>
                         {op.code} · {op.pillarLabel}
                       </span>
                     </span>

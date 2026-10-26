@@ -456,13 +456,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 style={{ background: getHeaderView(idx) }}
               >
                 <div
-                  className="gradient-brand flex h-[32px] items-center justify-center gap-1.5 rounded-full px-2.5 text-[9.5px] font-extrabold text-white"
+                  className="gradient-brand flex min-h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
                     <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
                   </span>
-                  <span className="truncate" style={{ color: '#FFFFFF' }}>{k.badge}</span>
+                  <span style={{ color: '#FFFFFF' }}>{k.badge}</span>
                 </div>
               </div>
 
@@ -471,7 +471,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 className="w-full rounded-xl p-[2px]"
                 style={{ background: getHeaderView(idx + 1) }}
               >
-                <div className="flex h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
+                <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
                   <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF] leading-tight">
                     {k.label}
                   </div>
@@ -483,10 +483,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
               {/* Writing Box 2 Framed in App Design Border in Different Views */}
               <div
-                className="w-full rounded-xl p-[2px]"
+                className="w-full flex-1 rounded-xl p-[2px]"
                 style={{ background: getHeaderView(idx + 2) }}
               >
-                <div className="flex h-[46px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
+                <div className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
                   {k.sub}
                 </div>
               </div>
@@ -542,13 +542,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           style={{ background: getHeaderView(idx) }}
                         >
                           <div
-                            className="gradient-brand flex h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 text-[9.5px] font-extrabold text-white"
+                            className="gradient-brand flex min-h-[36px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
                             style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                           >
                             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
                               <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
                             </span>
-                            <span className="truncate" style={{ color: '#FFFFFF' }}>
+                            <span style={{ color: '#FFFFFF' }}>
                               {dom.score}% · {dom.status}
                             </span>
                           </div>
@@ -559,7 +559,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           className="w-full rounded-xl p-[2px]"
                           style={{ background: getHeaderView(idx + 1) }}
                         >
-                          <div className="flex h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                          <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
                             <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
                               {dom.name}
                             </div>

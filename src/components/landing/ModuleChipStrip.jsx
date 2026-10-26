@@ -228,7 +228,7 @@ export default function ModuleChipStrip() {
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Layers className="h-3.5 w-3.5 text-white" />
             </span>
-            <span className="text-center">ComplianceHR infinity App Modules (Live)</span>
+            <span className="text-center">ComplianceHR Infinity App Modules (Live)</span>
           </div>
 
           {/* Row 1 of Live iPads */}

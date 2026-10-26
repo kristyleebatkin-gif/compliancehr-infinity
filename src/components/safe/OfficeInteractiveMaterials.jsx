@@ -251,11 +251,11 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
           </div>
           <div className="flex items-center justify-between rounded border border-pink-200 bg-white px-2 py-1">
             <span className="font-bold text-pink-700">Developer</span>
-            <span className="font-extrabold text-pink-950">Chad</span>
+            <span className="font-extrabold text-pink-950">Kristy Lee Whelan</span>
           </div>
           <div className="flex items-center justify-between rounded border border-indigo-200 bg-white px-2 py-1">
             <span className="font-bold text-indigo-700">Email</span>
-            <span className="font-extrabold text-indigo-950 truncate">compliancehr@outlook.com</span>
+            <span className="font-extrabold text-indigo-950 truncate">kristyleebatkin@live.com.au</span>
           </div>
         </div>
       </div>

@@ -78,7 +78,7 @@ export default function LandingFooter() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
               </span>
-              <span className="text-center">NDIS &amp; Aged care Documentation &amp; Compliance</span>
+              <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
             </span>
 
             <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">

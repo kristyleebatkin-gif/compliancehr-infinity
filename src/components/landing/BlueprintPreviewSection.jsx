@@ -192,7 +192,7 @@ const pick = (...keys) =>
 
 const APP_MODULE_GROUPS = [
   {
-    title: 'People, intake and profiles',
+    title: 'People, Intake & Profiles',
     modules: pick(
       'dashboard',
       'operations-centre',
@@ -225,7 +225,7 @@ const APP_MODULE_GROUPS = [
     ],
   },
   {
-    title: 'Service delivery and workforce',
+    title: 'Service Delivery & Workforce',
     modules: pick(
       'communications',
       'incidents',
@@ -256,7 +256,7 @@ const APP_MODULE_GROUPS = [
     ],
   },
   {
-    title: 'Compliance, safety and evidence',
+    title: 'Compliance, Safety & Evidence',
     modules: pick(
       'compliance',
       'auditor-portal',
@@ -280,7 +280,7 @@ const APP_MODULE_GROUPS = [
     ],
   },
   {
-    title: 'Business, finance and growth',
+    title: 'Business, Finance & Growth',
     modules: pick(
       'invoicing',
       'quotes',
@@ -304,7 +304,7 @@ const APP_MODULE_GROUPS = [
     ],
   },
   {
-    title: 'Information, providers and access',
+    title: 'Information, Providers & Access',
     modules: pick(
       'ndis-provider',
       'ndis-news',
@@ -381,7 +381,7 @@ const ACCESS_LEVELS = [
     channelProgram: 'Ch 10 · Frontline Workforce',
     title: 'Employees, Support Workers & Specialist Officers',
     scopeBadge: 'EMPLOYEE / PERSONAL · 31 Workforce Modules',
-    desc: 'Normalized Employee access to My Profile, Employee Directory, Roster & Shifts, Communications, Incidents, Risks, Training, Documents, Receipts & Tasks.',
+    desc: 'Standardised Employee access to My Profile, Employee Directory, Roster & Shifts, Communications, Incidents, Risks, Training, Documents, Receipts & Tasks.',
   },
   {
     channelBadge: 'CHANNEL 2 (ABC) · LIVE HD',
@@ -1049,7 +1049,7 @@ export default function BlueprintPreviewSection() {
                         return (
                           <div
                             key={yt.id}
-                            className={`${yt.visibilityClass} h-full flex-col items-center justify-between laptop-beat-a`}
+                            className={`${yt.visibilityClass} h-full flex-col items-center justify-between ${isPlayingPop ? 'laptop-beat-a' : ''}`}
                           >
                             <div
                               className="flex w-full flex-1 flex-col rounded-t-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"

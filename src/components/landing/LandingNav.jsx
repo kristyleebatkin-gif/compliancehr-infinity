@@ -174,7 +174,7 @@ export default function LandingNav() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
                 </span>
-                <span className="text-center">NDIS &amp; Aged care Documentation &amp; Compliance</span>
+                <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
               </span>
 
               <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
@@ -273,7 +273,7 @@ export default function LandingNav() {
                     >
                       <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                     </span>
-                    <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10.5px] font-extrabold leading-tight text-white">
+                    <span className="min-w-0 flex-1 whitespace-normal break-words text-center text-[10.5px] font-extrabold leading-tight text-white">
                       {l.label}
                     </span>
                   </a>

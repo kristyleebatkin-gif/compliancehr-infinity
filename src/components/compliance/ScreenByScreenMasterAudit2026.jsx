@@ -600,7 +600,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search screens, topics, 2026 Smart-Fill docs or tasks above #1 Dashboard…"
+                placeholder="Search screens, topics, 2026 Smart-Fill documents, or audit tasks…"
                 className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-center text-xs sm:text-sm font-extrabold text-[#5A00D6] placeholder:text-[#5A00D6] focus:outline-none"
               />
             </div>
@@ -812,13 +812,13 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 style={{ background: sprayBg }}
               >
                 <div className="flex flex-1 flex-col justify-between space-y-2">
-                  {/* Strict Fixed-Height Centered Header That Fits Cleanly Across All 48 Screen Tiles */}
+                  {/* Centered Header That Fits Cleanly Across All 48 Screen Tiles */}
                   <div
                     className="w-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: getHeaderView(index) }}
                   >
                     <div
-                      className="gradient-brand flex h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
+                      className="gradient-brand flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
                       style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                     >
                       <div className="flex items-center justify-center gap-1.5 w-full">
@@ -841,10 +841,10 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                     </div>
                   </div>
 
-                  {/* Strict Fixed-Height Centered White Writing Sections Lined Up With Every Neighbouring Tile */}
+                  {/* Centered White Writing Sections Lined Up With Every Neighbouring Tile */}
                   <div className="grid flex-1 grid-cols-1 grid-rows-2 gap-1.5 text-[10px] leading-snug text-[#0A2B6D]">
                     <div
-                      className="flex h-[68px] rounded-xl p-[2px]"
+                      className="flex min-h-[68px] rounded-xl p-[2px]"
                       style={{ background: getHeaderView(index) }}
                     >
                       <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
@@ -858,7 +858,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                     </div>
 
                     <div
-                      className="flex h-[68px] rounded-xl p-[2px]"
+                      className="flex min-h-[68px] rounded-xl p-[2px]"
                       style={{ background: getHeaderView(index + 1) }}
                     >
                       <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
