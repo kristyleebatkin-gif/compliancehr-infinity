@@ -5,7 +5,6 @@ import { base44 } from '@/api/base44Client';
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
-  getTitleGradientView,
   getSubheaderColourView,
 } from '@/lib/fullColourTiles';
 
@@ -35,16 +34,19 @@ export default function LandingCTA() {
           <span className="text-center">Why ComplianceHR Infinity</span>
         </span>
 
-        <h2
-          className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-          style={{ backgroundImage: getTitleGradientView(4) }}
-        >
-          Ready to simplify your NDIS &amp; Aged Care compliance?
+        <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          <span className="text-[#0A2B6D]">Ready to </span>
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            simplify
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            your NDIS &amp; Aged Care compliance?
+          </span>
         </h2>
 
         <p
           className="mx-auto max-w-2xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
-          style={{ color: getSubheaderColourView(4) }}
+          style={{ color: getSubheaderColourView(1) }}
         >
           Join providers who trust ComplianceHR Infinity to keep their records, teams, and participants audit-ready every single day.
         </p>
@@ -69,7 +71,7 @@ export default function LandingCTA() {
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Compass className="h-3.5 w-3.5 text-white" />
             </span>
-            <span>Open Live Dashboard</span>
+            <span>Dashboard</span>
           </Link>
         </div>
       </Reveal>

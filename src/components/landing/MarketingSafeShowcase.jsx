@@ -16,10 +16,46 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+
+const PACKS = [
+  {
+    id: 'pack-1',
+    icon: Sparkles,
+    badge: 'Pack 1 · Smart Enhanced All-In-One Subscription',
+    pricePrefix: 'From',
+    priceMain: '$660',
+    priceSuffix: '/ month',
+    subtitle: 'All 46 live modules + $160/mo Elite Engine Suite + $355 Master Audit Document included',
+    bullets: [
+      'Includes +$160/mo Elite Automation & Intelligence Pack',
+      'Includes $355 Master Compliance Audit Checklist (356 Checkpoints)',
+      'Unlimited Staff, Participant & Auditor Portal Workflows',
+    ],
+    primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
+    secondaryCta: { label: 'View Tier Pricing', href: '#pricing' },
+  },
+  {
+    id: 'pack-2',
+    icon: FileCheck2,
+    badge: 'Pack 2 · Outright Audit & Compliance Doc Pack',
+    pricePrefix: 'Outright',
+    priceMain: '$999',
+    priceSuffix: 'or $125 / month',
+    subtitle: 'Complete 98-Document NDIS & Aged Care Audit Library + $355 Master Audit Checklist',
+    bullets: [
+      'All 98 NDIS & Aged Care Policies, Registers & Intake Forms',
+      'Includes $355 Master Audit Checklist (CHR-AUD-001 & 002)',
+      '12 Printable A4 Office Masters + Smart-Fill Auto-Branding',
+    ],
+    primaryCta: { label: 'Select $999 Outright / $125m Pack', href: '#pricing' },
+    secondaryCta: { label: 'Preview Audit Docs', to: '/compliance' },
+  },
+];
 
 export default function MarketingSafeShowcase({ embedded = false }) {
   return (
@@ -41,13 +77,17 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             <span className="text-center">Executive Marketing &amp; Sales Suite · 14-Day Free Trial</span>
           </span>
 
-          {/* Heading & Subtitle */}
+          {/* Heading with App Colours & Subtitle */}
           <div className="mx-auto max-w-4xl space-y-1.5">
-            <h2
-              className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-clip-text text-transparent"
-              style={{ backgroundImage: getTitleGradientView(1) }}
-            >
-              Why Every Provider Subscribes to ComplianceHR Infinity
+            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight">
+              <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
+              <span className="text-[#0A2B6D]">Compliance</span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                HR
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                Infinity
+              </span>
             </h2>
 
             <p
@@ -72,8 +112,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               return (
                 <div
                   key={p.title}
-                  className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-4 py-2.5 text-left shadow-sm"
-                  style={{ backgroundColor: tile.bg, color: tile.text }}
+                  className="flex items-center justify-center gap-2.5 rounded-2xl border-2 px-4 py-2.5 text-left shadow-sm"
+                  style={{
+                    backgroundColor: tile.bg,
+                    color: tile.text,
+                    borderColor: getAppBorderView(idx + 1),
+                  }}
                 >
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
                     <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
@@ -91,149 +135,116 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             })}
           </div>
 
-          {/* Two Packages Side-by-Side */}
+          {/* Pack 1 and Pack 2 — Exact Same Design Side-by-Side */}
           <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
-            {/* Pack 1 */}
-            <div className="flex flex-col items-center justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 text-center shadow-sm">
-              <div className="w-full space-y-2.5">
-                <span
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{ background: getHeaderView(2) }}
+            {PACKS.map((pack, pIdx) => {
+              const PackIcon = pack.icon;
+              return (
+                <div
+                  key={pack.id}
+                  className="flex h-full flex-col items-center justify-between rounded-2xl border-2 bg-white p-5 text-center shadow-sm"
+                  style={{ borderColor: getAppBorderView(pIdx) }}
                 >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <Sparkles className="h-3 w-3 text-white" />
-                  </span>
-                  <span>Pack 1 · Smart Enhanced All-In-One Subscription</span>
-                </span>
-                <div className="flex items-baseline justify-center gap-1.5 pt-1">
-                  <span className="text-xs font-extrabold text-[#5A00D6]">From</span>
-                  <span
-                    className="font-editorial text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent"
-                    style={{ backgroundImage: getTitleGradientView(0) }}
-                  >
-                    $660
-                  </span>
-                  <span className="text-xs font-extrabold text-[#5A00D6]">/ month</span>
-                </div>
-                <p className="text-xs font-bold" style={{ color: getSubheaderColourView(2) }}>
-                  All 46 live modules + $160/mo Elite Engine Suite + $355 Master Audit Document included
-                </p>
-                <ul className="mx-auto max-w-md space-y-2 pt-1 text-left text-xs font-extrabold">
-                  {[
-                    'Includes +$160/mo Elite Automation & Intelligence Pack',
-                    'Includes $355 Master Compliance Audit Checklist (356 Checkpoints)',
-                    'Unlimited Staff, Participant & Auditor Portal Workflows',
-                  ].map((line, idx) => {
-                    const tile = getTilePalette(idx);
-                    const sym = getSymbolView(idx);
-                    return (
-                      <li
-                        key={line}
-                        className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1.5"
-                        style={{ backgroundColor: tile.bg, color: tile.text }}
+                  <div className="flex flex-1 flex-col items-center justify-between w-full space-y-3">
+                    <span
+                      className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                      style={{ background: getHeaderView(pIdx * 2 + 2) }}
+                    >
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                        <PackIcon className="h-3 w-3 text-white" />
+                      </span>
+                      <span>{pack.badge}</span>
+                    </span>
+
+                    <div className="flex items-baseline justify-center gap-2 pt-1">
+                      <span className="text-xs font-extrabold uppercase text-[#0072FF]">
+                        {pack.pricePrefix}
+                      </span>
+                      <span
+                        className="font-editorial text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent"
+                        style={{ backgroundImage: getTitleGradientView(pIdx) }}
                       >
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                          <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
-                        </span>
-                        <span style={{ color: tile.text }}>{line}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+                        {pack.priceMain}
+                      </span>
+                      <span className="text-xs font-extrabold text-[#5A00D6]">
+                        {pack.priceSuffix}
+                      </span>
+                    </div>
 
-              <div className="mt-4 flex w-full flex-wrap items-center justify-center gap-2.5">
-                <Link
-                  to="/register"
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: getHeaderView(0) }}
-                >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <ArrowRight className="h-3 w-3 text-white" />
-                  </span>
-                  <span>Start 14-Day Free Trial</span>
-                </Link>
-                <a
-                  href="#pricing"
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: getHeaderView(3) }}
-                >
-                  <span>View Tier Pricing</span>
-                </a>
-              </div>
-            </div>
+                    <p className="text-xs font-extrabold text-[#0072FF]">
+                      {pack.subtitle}
+                    </p>
 
-            {/* Pack 2 */}
-            <div className="flex flex-col items-center justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 text-center shadow-sm">
-              <div className="w-full space-y-2.5">
-                <span
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{ background: getHeaderView(4) }}
-                >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <FileCheck2 className="h-3 w-3 text-white" />
-                  </span>
-                  <span>Pack 2 · Outright Audit &amp; Compliance Doc Pack</span>
-                </span>
-                <div className="flex flex-wrap items-baseline justify-center gap-2 pt-1">
-                  <span
-                    className="font-editorial text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent"
-                    style={{ backgroundImage: getTitleGradientView(2) }}
-                  >
-                    $999
-                  </span>
-                  <span className="text-xs font-extrabold uppercase text-[#FF2E9A]">Outright</span>
-                  <span className="text-xs font-extrabold text-[#0A2B6D]">or</span>
-                  <span className="font-editorial text-2xl sm:text-3xl font-extrabold text-[#5A00D6]">$125</span>
-                  <span className="text-xs font-extrabold text-[#5A00D6]">/ month</span>
-                </div>
-                <p className="text-xs font-bold" style={{ color: getSubheaderColourView(3) }}>
-                  Complete 98-Document NDIS &amp; Aged Care Audit Library + $355 Master Audit Checklist
-                </p>
-                <ul className="mx-auto max-w-md space-y-2 pt-1 text-left text-xs font-extrabold">
-                  {[
-                    'All 98 NDIS & Aged Care Policies, Registers & Intake Forms',
-                    'Includes $355 Master Audit Checklist (CHR-AUD-001 & 002)',
-                    '12 Printable A4 Office Masters + Smart-Fill Auto-Branding',
-                  ].map((line, idx) => {
-                    const tile = getTilePalette(idx + 4);
-                    const sym = getSymbolView(idx + 4);
-                    return (
-                      <li
-                        key={line}
-                        className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1.5"
-                        style={{ backgroundColor: tile.bg, color: tile.text }}
+                    <ul className="grid w-full grid-cols-1 auto-rows-fr gap-2 pt-1 text-left text-xs font-extrabold">
+                      {pack.bullets.map((line, idx) => {
+                        const tile = getTilePalette(pIdx * 3 + idx);
+                        const sym = getSymbolView(pIdx * 3 + idx);
+                        return (
+                          <li
+                            key={line}
+                            className="flex h-full items-center gap-2.5 rounded-2xl border-2 px-3.5 py-2"
+                            style={{
+                              backgroundColor: tile.bg,
+                              color: tile.text,
+                              borderColor: getAppBorderView(pIdx * 3 + idx),
+                            }}
+                          >
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                              <CheckCircle2 className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                            </span>
+                            <span style={{ color: tile.text }}>{line}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {pack.primaryCta.to ? (
+                      <Link
+                        to={pack.primaryCta.to}
+                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                        style={{ background: getHeaderView(0) }}
                       >
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                          <FileCheck2 className="h-3 w-3" style={{ color: sym.iconColor }} />
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <ArrowRight className="h-3 w-3 text-white" />
                         </span>
-                        <span style={{ color: tile.text }}>{line}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+                        <span>{pack.primaryCta.label}</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={pack.primaryCta.href}
+                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                        style={{ background: getHeaderView(0) }}
+                      >
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <ArrowRight className="h-3 w-3 text-white" />
+                        </span>
+                        <span>{pack.primaryCta.label}</span>
+                      </a>
+                    )}
 
-              <div className="mt-4 flex w-full flex-wrap items-center justify-center gap-2.5">
-                <a
-                  href="#pricing"
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: getHeaderView(5) }}
-                >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <ArrowRight className="h-3 w-3 text-white" />
-                  </span>
-                  <span>Select $999 Outright / $125m Pack</span>
-                </a>
-                <Link
-                  to="/compliance"
-                  className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: getHeaderView(6) }}
-                >
-                  <span>Preview Audit Docs</span>
-                </Link>
-              </div>
-            </div>
+                    {pack.secondaryCta.to ? (
+                      <Link
+                        to={pack.secondaryCta.to}
+                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                        style={{ background: getHeaderView(3) }}
+                      >
+                        <span>{pack.secondaryCta.label}</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={pack.secondaryCta.href}
+                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                        style={{ background: getHeaderView(3) }}
+                      >
+                        <span>{pack.secondaryCta.label}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

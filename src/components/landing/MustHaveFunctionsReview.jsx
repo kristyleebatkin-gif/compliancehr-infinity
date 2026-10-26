@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ClipboardCheck, Users, CalendarClock,
   AlertTriangle, GraduationCap, MessagesSquare, Building2,
-  CheckCircle2, ArrowRight, Cpu, TrendingUp, BookOpen,
+  CheckCircle2, ArrowRight, Cpu, TrendingUp, BookOpen, Layers, Sparkles,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
@@ -12,6 +12,7 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -31,7 +32,7 @@ export const REPLACED_SOFTWARE_STACK = [
 export const MUST_HAVE_PILLARS = [
   {
     id: 'master-audit-doc',
-    badge: 'NEW · VALUED AT $355',
+    badge: 'PILLAR 1 · VALUED AT $355',
     title: '1. $355 Master Compliance Audit Checklist Suite (CHR-AUD-001 & 002)',
     subtitle: '17 Audit Categories · 356 Checkpoints · 11 Interactive & Printable Pages',
     icon: ClipboardCheck,
@@ -46,22 +47,22 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'dual-workspace',
-    badge: 'INTERACTIVE VISUALS',
+    badge: 'PILLAR 2 · INTERACTIVE VISUALS',
     title: '2. Dual Interactive Workspace: Office View + Profile View',
     subtitle: 'Executive Wall Scene, Desk Equipment & Custom Modular Data Selector',
     icon: Building2,
     items: [
       'Switch live between Enhanced Office View, General Profile View, or Side-by-Side',
       'Interactive Modular Screen & Data Selector: pin up to 6 live modulars at once',
-      'Framed wall art of all 45 modules + 16 Communication Centre modulars',
+      'Framed wall art of all 46 modules + 16 Communication Centre modulars',
       'Split Silver Screen with live local weather & NDIS Commission news',
       'Interactive PC Monitor, Secondary Branded Screen & Company Safe Vault',
-      'Zero-gap, high-contrast Blue-Purple-Pink & 45-module colour architecture',
+      'Zero-gap, high-contrast Blue-Purple-Pink & 46-module colour architecture',
     ],
   },
   {
     id: 'people-profiles',
-    badge: 'UNIFIED DIRECTORY',
+    badge: 'PILLAR 3 · UNIFIED DIRECTORY',
     title: '3. Complete Employee & Participant Profile Lifecycle',
     subtitle: 'Intake-to-Profile Automation, Screening Alerts & 3-Part Consents',
     icon: Users,
@@ -76,7 +77,7 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'comms-command',
-    badge: '16 COMMS MODULARS',
+    badge: 'PILLAR 4 · 16 COMMS MODULARS',
     title: '4. 16-Modular Communication Centre & Shared To-Do Command',
     subtitle: 'Diaries, Shift Notes, Branded Email, Video Calls & Gamified Tasks',
     icon: MessagesSquare,
@@ -91,7 +92,7 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'rostering-finance',
-    badge: 'NDIS OPERATIONS',
+    badge: 'PILLAR 5 · NDIS OPERATIONS',
     title: '5. NDIS Rostering, Timesheets, Price-Guide Invoicing & Payroll',
     subtitle: 'End-to-End Shift Planning, PRODA Claims, Quotes & Bank Match',
     icon: CalendarClock,
@@ -106,7 +107,7 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'safety-incidents',
-    badge: 'SAFEGUARDING & WHS',
+    badge: 'PILLAR 6 · SAFEGUARDING & WHS',
     title: '6. Incident Clinic, Risk Matrix & Emergency Readiness',
     subtitle: '24h / 5-Day NDIS Commission Timers, Take-5s, Drills & MSDS',
     icon: AlertTriangle,
@@ -121,7 +122,7 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'hr-training-ai',
-    badge: 'HR & AI ACADEMY',
+    badge: 'PILLAR 7 · HR & AI ACADEMY',
     title: '7. HR Paperwork Hub, LMS Training Academy & Certificates',
     subtitle: 'Digital Contracts, 360° Appraisals, AI Quizzes & Branded Certificates',
     icon: GraduationCap,
@@ -136,7 +137,7 @@ export const MUST_HAVE_PILLARS = [
   },
   {
     id: 'automation-engine',
-    badge: '100+ FUNCTIONS · 65+ WORKFLOWS',
+    badge: 'PILLAR 8 · 100+ FUNCTIONS',
     title: '8. 24/7 Autonomous Compliance Engine & AI Copilots',
     subtitle: 'Powered by 2,500 Message Credits & 20,000 Integration Credits on Elite Pack',
     icon: Cpu,
@@ -177,17 +178,20 @@ export default function MustHaveFunctionsReview() {
           <span className="text-center">Full Review of Every Must-Have Function · Includes $355 Audit Doc Free</span>
         </span>
 
-        {/* Heading & Subheading */}
+        {/* Heading with App Colours & Subheading */}
         <div className="mx-auto max-w-4xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(0) }}
-          >
-            Complete Review of Every Must-Have Function, Resource &amp; Feature
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">Complete Review of Every </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              Must-Have Function,
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              Resource &amp; Feature
+            </span>
           </h2>
           <p
             className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(0) }}
+            style={{ color: getSubheaderColourView(1) }}
           >
             {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
           </p>
@@ -209,8 +213,12 @@ export default function MustHaveFunctionsReview() {
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] px-2.5 py-2.5 text-center shadow-sm"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="flex flex-col items-center justify-center rounded-2xl border-2 px-2.5 py-2.5 text-center shadow-sm"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(idx),
+                }}
               >
                 <div className="font-editorial text-base sm:text-lg font-extrabold" style={{ color: tile.text }}>
                   {stat.val}
@@ -226,11 +234,14 @@ export default function MustHaveFunctionsReview() {
           })}
         </div>
 
-        {/* Replace 8 Disconnected Subscriptions Card */}
-        <div className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-left shadow-sm">
-          <div className="lg:col-span-4 space-y-2">
+        {/* Replace 8 Disconnected Subscriptions Card + Outright Pack Styled Like Top Section */}
+        <div
+          className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-stretch rounded-2xl border-2 bg-white p-4 text-left shadow-sm"
+          style={{ borderColor: getAppBorderView(0) }}
+        >
+          <div className="lg:col-span-4 flex flex-col justify-center space-y-2">
             <span
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+              className="inline-flex w-fit items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
               style={{ background: getHeaderView(1) }}
             >
               <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
@@ -244,22 +255,26 @@ export default function MustHaveFunctionsReview() {
             >
               Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Subscription
             </h3>
-            <p className="text-xs font-bold leading-relaxed" style={{ color: getSubheaderColourView(1) }}>
+            <p className="text-xs font-bold leading-relaxed text-[#0072FF]">
               Instead of paying for 8 separate HR, rostering, invoicing, LMS, incident, vault, messaging and audit tools, ComplianceHR Infinity unifies all {MODULE_DIRECTORY.length} modules + the $160/mo Elite Plan + the $355 Master Compliance Audit Checklist starting at $660/month.
             </p>
           </div>
 
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-2 content-center">
             {REPLACED_SOFTWARE_STACK.map((item, idx) => {
               const tile = getTilePalette(idx + 1);
               return (
                 <div
                   key={item.tool}
-                  className="flex items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold shadow-2xs"
-                  style={{ backgroundColor: tile.bg, color: tile.text }}
+                  className="flex items-center justify-between gap-2 rounded-2xl border-2 px-3 py-1.5 text-xs font-extrabold shadow-2xs"
+                  style={{
+                    backgroundColor: tile.bg,
+                    color: tile.text,
+                    borderColor: getAppBorderView(idx + 1),
+                  }}
                 >
                   <span className="min-w-0 leading-tight" style={{ color: tile.text }}>{item.tool}</span>
-                  <span className="shrink-0 rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#C80064] line-through">
+                  <span className="shrink-0 rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF] line-through">
                     {item.typicalCost}
                   </span>
                 </div>
@@ -267,110 +282,148 @@ export default function MustHaveFunctionsReview() {
             })}
           </div>
 
+          {/* Outright Docs Package — Styled to Match Top Section in Colours */}
           <div
-            className="lg:col-span-3 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-[#0A2B6D] p-3.5 text-center shadow-2xs"
-            style={{ backgroundColor: getTilePalette(5).bg, color: getTilePalette(5).text }}
+            className="lg:col-span-3 rounded-2xl p-[8px] shadow-md flex"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="text-xs font-extrabold uppercase tracking-wider" style={{ color: getTilePalette(5).text }}>
-              Outright Docs Package
-            </div>
-            <div className="flex items-baseline justify-center gap-1.5">
-              <span className="font-editorial text-xl font-extrabold" style={{ color: getTilePalette(5).text }}>
-                $999 Outright
+            <div className="flex w-full flex-col items-center justify-between gap-2 rounded-[12px] bg-white p-3.5 text-center">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                style={{ background: getHeaderView(0) }}
+              >
+                <Sparkles className="h-3 w-3 text-white" />
+                <span>Outright Docs Package</span>
               </span>
-              <span className="text-xs font-bold" style={{ color: getTilePalette(5).subtext }}>
-                or $125/mo
-              </span>
+
+              <div className="font-editorial text-lg sm:text-xl font-extrabold leading-tight">
+                <span className="text-[#0A2B6D]">$999 </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Outright
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent text-sm">
+                  or $125/mo
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-1 text-[10.5px] font-extrabold">
+                <span className="text-[#0072FF]">125+ Docs.</span>
+                <span className="text-[#5A00D6]">6 Binders.</span>
+                <span className="text-[#FF2E9A]">CHR-AUD-001 &amp; 002.</span>
+              </div>
+
+              <a
+                href="#pricing"
+                className="inline-flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                style={{ background: getHeaderView(2) }}
+              >
+                <span>View Plans</span>
+                <ArrowRight className="h-3.5 w-3.5 text-white" />
+              </a>
             </div>
-            <div className="rounded-full border border-[#0A2B6D] bg-white px-3 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-              125+ Docs · 6 Binders · CHR-AUD-001 &amp; 002
-            </div>
-            <a
-              href="#pricing"
-              className="inline-flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm"
-              style={{ background: getHeaderView(2) }}
-            >
-              <span>View Plans</span>
-              <ArrowRight className="h-3.5 w-3.5 text-white" />
-            </a>
           </div>
         </div>
 
-        {/* Filter Bar for the 8 Must-Have Pillars */}
-        <div className="flex w-full flex-wrap items-center justify-center gap-2">
+        {/* All 8 Pillars + All Button with Icons on One Single Line */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
           <button
             type="button"
             onClick={() => setSelectedPillar('all')}
-            className="inline-flex min-h-[36px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold transition-all"
+            className="inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-full border-2 px-2.5 py-1 text-[11px] font-extrabold transition-all"
             style={
               selectedPillar === 'all'
-                ? { background: getHeaderView(0), color: '#ffffff' }
-                : { backgroundColor: getTilePalette(0).bg, color: getTilePalette(0).text }
+                ? { background: getHeaderView(0), color: '#ffffff', borderColor: '#0A2B6D' }
+                : {
+                    backgroundColor: getTilePalette(0).bg,
+                    color: getTilePalette(0).text,
+                    borderColor: getAppBorderView(0),
+                  }
             }
           >
-            Show All 8 Pillars
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+              <Layers className="h-3 w-3 text-[#0072FF]" />
+            </span>
+            <span className="whitespace-nowrap">All 8 Pillars</span>
           </button>
+
           {MUST_HAVE_PILLARS.map((p, idx) => {
+            const Icon = p.icon;
             const tile = getTilePalette(idx + 1);
+            const sym = getSymbolView(idx + 1);
+            const active = selectedPillar === p.id;
             return (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => setSelectedPillar(p.id)}
-                className="inline-flex min-h-[36px] items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold transition-all"
+                className="inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-full border-2 px-2.5 py-1 text-[11px] font-extrabold transition-all"
                 style={
-                  selectedPillar === p.id
-                    ? { background: getHeaderView(idx), color: '#ffffff' }
-                    : { backgroundColor: tile.bg, color: tile.text }
+                  active
+                    ? { background: getHeaderView(idx + 1), color: '#ffffff', borderColor: '#0A2B6D' }
+                    : {
+                        backgroundColor: tile.bg,
+                        color: tile.text,
+                        borderColor: getAppBorderView(idx + 1),
+                      }
                 }
               >
-                Pillar {idx + 1}
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                  <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                </span>
+                <span className="whitespace-nowrap">Pillar {idx + 1}</span>
               </button>
             );
           })}
         </div>
 
-        {/* 8 Must-Have Pillars Grid */}
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+        {/* 8 Must-Have Pillars Grid — All Designed the Exact Same Way */}
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left items-stretch">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={pillar.id}
-                className="flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm"
+                className="flex h-full flex-col justify-between rounded-2xl border-2 bg-white p-4 shadow-sm"
+                style={{ borderColor: getAppBorderView(pIdx) }}
               >
-                <div>
-                  <span
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
-                    style={{ background: getHeaderView(pIdx) }}
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Icon className="h-3 w-3 text-white" />
+                <div className="flex flex-1 flex-col justify-between space-y-2.5">
+                  <div>
+                    <span
+                      className="inline-flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                      style={{ background: getHeaderView(pIdx) }}
+                    >
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                        <Icon className="h-3 w-3 text-white" />
+                      </span>
+                      <span>{pillar.badge}</span>
                     </span>
-                    <span>{pillar.badge}</span>
-                  </span>
 
-                  <h4
-                    className="mt-2.5 font-editorial text-sm font-extrabold leading-snug bg-clip-text text-transparent"
-                    style={{ backgroundImage: getTitleGradientView(pIdx) }}
-                  >
-                    {pillar.title}
-                  </h4>
-                  <p className="mt-0.5 text-xs font-bold" style={{ color: getSubheaderColourView(pIdx) }}>
-                    {pillar.subtitle}
-                  </p>
+                    <h4
+                      className="mt-2.5 font-editorial text-sm font-extrabold leading-snug bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                    >
+                      {pillar.title}
+                    </h4>
+                    <p className="mt-0.5 text-xs font-bold text-[#0072FF]">
+                      {pillar.subtitle}
+                    </p>
+                  </div>
 
-                  <ul className="mt-2.5 space-y-1.5">
+                  <ul className="grid flex-1 grid-cols-1 auto-rows-fr gap-1.5 pt-1">
                     {pillar.items.map((item, iIdx) => {
                       const tile = getTilePalette(pIdx * 3 + iIdx);
                       const sym = getSymbolView(pIdx * 3 + iIdx);
                       return (
                         <li
                           key={item}
-                          className="flex items-start gap-2 rounded-xl border border-[#0A2B6D] px-2.5 py-1.5 text-xs font-extrabold leading-snug"
-                          style={{ backgroundColor: tile.bg, color: tile.text }}
+                          className="flex h-full items-center gap-2 rounded-xl border-2 px-2.5 py-1.5 text-xs font-extrabold leading-snug"
+                          style={{
+                            backgroundColor: tile.bg,
+                            color: tile.text,
+                            borderColor: getAppBorderView(pIdx * 3 + iIdx),
+                          }}
                         >
-                          <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                             <CheckCircle2 className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                           </span>
                           <span style={{ color: tile.text }}>{item}</span>
@@ -381,7 +434,7 @@ export default function MustHaveFunctionsReview() {
                 </div>
 
                 <div className="mt-4 pt-2.5 border-t border-[#0A2B6D]/20 flex items-center justify-between">
-                  <span className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                  <span className="text-[10.5px] font-extrabold text-[#0072FF]">
                     Included in Plan
                   </span>
                   <Link

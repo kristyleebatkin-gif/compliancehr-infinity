@@ -8,8 +8,8 @@ import {
   getTilePalette,
   getHeaderView,
   getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -182,44 +182,31 @@ export default function PricingSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
-        {/* Centred Badge with White Symbol */}
-        <span
-          className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(6) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <DollarSign className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">Smart Enhanced All-In-One Compliance Pack Pricing</span>
-        </span>
-
-        {/* Heading & Subtitle */}
+        {/* Heading with App Colours & Medium Blue Subtitle */}
         <div className="mx-auto max-w-4xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(3) }}
-          >
-            Transparent Pricing with +$160/mo Elite Plan &amp; $355 Audit Doc Included
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">Transparent Pricing with </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              +$160/mo Elite Plan
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              &amp; $355 Audit Doc Included
+            </span>
           </h2>
-          <p
-            className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(3) }}
-          >
+          <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#0072FF]">
             Every user tier includes 2,500 Message Credits, 20,000 Integration Credits, and the $355 Master Compliance Audit Checklist (CHR-AUD-001 &amp; CHR-AUD-002).
           </p>
         </div>
 
-        {/* Monthly vs Annual Toggle Buttons */}
+        {/* Monthly vs Annual Toggle Buttons in App Colours */}
         <div className="mx-auto flex flex-wrap items-center justify-center gap-2.5">
           <button
             type="button"
             onClick={() => setBilling('monthly')}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold transition-all"
-            style={
-              billing === 'monthly'
-                ? { background: getHeaderView(0), color: '#ffffff' }
-                : { backgroundColor: getTilePalette(0).bg, color: getTilePalette(0).text }
-            }
+            className={`inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all ${
+              billing === 'monthly' ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-90 hover:opacity-100'
+            }`}
+            style={{ background: getHeaderView(0) }}
           >
             <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
               <Sparkles className="h-3 w-3 text-white" />
@@ -230,12 +217,10 @@ export default function PricingSection() {
           <button
             type="button"
             onClick={() => setBilling('yearly')}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold transition-all"
-            style={
-              billing === 'yearly'
-                ? { background: getHeaderView(2), color: '#ffffff' }
-                : { backgroundColor: getTilePalette(2).bg, color: getTilePalette(2).text }
-            }
+            className={`inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all ${
+              billing === 'yearly' ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-90 hover:opacity-100'
+            }`}
+            style={{ background: getHeaderView(2) }}
           >
             <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
               <ShieldCheck className="h-3 w-3 text-white" />
@@ -244,7 +229,18 @@ export default function PricingSection() {
           </button>
         </div>
 
-        {/* 6 Smart Enhanced Subscription Cards Grid */}
+        {/* Smart Enhanced All-In-One Compliance Pack Pricing Badge Moved Under Monthly Subscription */}
+        <span
+          className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+          style={{ background: getHeaderView(6) }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <DollarSign className="h-3.5 w-3.5 text-white" />
+          </span>
+          <span className="text-center">Smart Enhanced All-In-One Compliance Pack Pricing</span>
+        </span>
+
+        {/* 6 Smart Enhanced Subscription Cards Grid with App-Coloured Borders in Different Views */}
         <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch text-left">
           {COMPLIANCE_HR_PACKAGES.map((pkg, pIdx) => {
             const displayPrice =
@@ -255,7 +251,8 @@ export default function PricingSection() {
             return (
               <div
                 key={pkg.id}
-                className="flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="flex flex-col justify-between rounded-2xl border-2 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ borderColor: getAppBorderView(pIdx) }}
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between gap-2">
@@ -266,8 +263,12 @@ export default function PricingSection() {
                       {pkg.badge}
                     </span>
                     <span
-                      className="rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-xs font-extrabold"
-                      style={{ backgroundColor: tierTile.bg, color: tierTile.text }}
+                      className="rounded-full border-2 px-2.5 py-0.5 text-xs font-extrabold"
+                      style={{
+                        backgroundColor: tierTile.bg,
+                        color: tierTile.text,
+                        borderColor: getAppBorderView(pIdx + 1),
+                      }}
                     >
                       {pkg.users}
                     </span>
@@ -292,16 +293,24 @@ export default function PricingSection() {
                   </div>
 
                   <div
-                    className="rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-center text-[11px] font-extrabold"
-                    style={{ backgroundColor: getTilePalette(pIdx + 3).bg, color: getTilePalette(pIdx + 3).text }}
+                    className="rounded-full border-2 px-3 py-1 text-center text-[11px] font-extrabold"
+                    style={{
+                      backgroundColor: getTilePalette(pIdx + 3).bg,
+                      color: getTilePalette(pIdx + 3).text,
+                      borderColor: getAppBorderView(pIdx + 3),
+                    }}
                   >
                     ${pkg.previousMonthly}/mo Base + ${pkg.eliteAddon}/mo Elite Pack Included
                   </div>
 
                   <div className="grid grid-cols-1 gap-1.5">
                     <div
-                      className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold"
-                      style={{ backgroundColor: getTilePalette(pIdx + 1).bg, color: getTilePalette(pIdx + 1).text }}
+                      className="flex items-center gap-2 rounded-full border-2 px-3 py-1 text-xs font-extrabold"
+                      style={{
+                        backgroundColor: getTilePalette(pIdx + 1).bg,
+                        color: getTilePalette(pIdx + 1).text,
+                        borderColor: getAppBorderView(pIdx + 1),
+                      }}
                     >
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                         <Zap className="h-3 w-3 text-[#0072FF]" />
@@ -309,8 +318,12 @@ export default function PricingSection() {
                       <span style={{ color: getTilePalette(pIdx + 1).text }}>{pkg.messageCredits}</span>
                     </div>
                     <div
-                      className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold"
-                      style={{ backgroundColor: getTilePalette(pIdx + 2).bg, color: getTilePalette(pIdx + 2).text }}
+                      className="flex items-center gap-2 rounded-full border-2 px-3 py-1 text-xs font-extrabold"
+                      style={{
+                        backgroundColor: getTilePalette(pIdx + 2).bg,
+                        color: getTilePalette(pIdx + 2).text,
+                        borderColor: getAppBorderView(pIdx + 2),
+                      }}
                     >
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                         <Layers className="h-3 w-3 text-[#FF2E9A]" />
@@ -326,8 +339,12 @@ export default function PricingSection() {
                       return (
                         <li
                           key={b}
-                          className="flex items-start gap-2 rounded-xl border border-[#0A2B6D] px-2.5 py-1.5 text-xs font-extrabold leading-snug"
-                          style={{ backgroundColor: bTile.bg, color: bTile.text }}
+                          className="flex items-start gap-2 rounded-xl border-2 px-2.5 py-1.5 text-xs font-extrabold leading-snug"
+                          style={{
+                            backgroundColor: bTile.bg,
+                            color: bTile.text,
+                            borderColor: getAppBorderView(pIdx * 2 + bIdx),
+                          }}
                         >
                           <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                             <Check className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
@@ -356,7 +373,7 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* Included Platform Benefits Grid in Mixed Full Colours */}
+        {/* Included Platform Benefits Grid in Mixed Full Colours + App-Coloured Borders */}
         <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-left">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
@@ -365,8 +382,12 @@ export default function PricingSection() {
             return (
               <div
                 key={b.title}
-                className="flex items-start gap-2.5 rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-sm"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="flex items-start gap-2.5 rounded-2xl border-2 p-3.5 shadow-sm"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(idx + 3),
+                }}
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
                   <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
