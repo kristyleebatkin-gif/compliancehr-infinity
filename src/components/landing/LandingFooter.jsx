@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Award, Sparkles } from 'lucide-react';
+import { Mail, Award, Sparkles, ShieldCheck } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
 const SQUISHED_GRADIENT =
