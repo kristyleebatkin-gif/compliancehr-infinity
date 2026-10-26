@@ -73,65 +73,62 @@ export default function Dashboard() {
 
       <DashboardGrandCelebrationBar />
 
-      {/* Unified Dashboard Command Navigator — defaults to Full Merged Dashboard ('all') */}
-      <section className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
-        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2 px-1">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg gradient-brand text-white shadow-sm">
-              <Sparkles className="h-4 w-4" />
+      {/* Unified Dashboard Command Navigator — Framed in Top Section Template */}
+      <section
+        className="rounded-3xl p-[12px] shadow-lg"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+        }}
+      >
+        <div className="rounded-[16px] bg-white p-4 sm:p-5 text-center space-y-3">
+          <span
+            className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+            style={{
+              background:
+                'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+            }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+              <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
             </span>
-            <div>
-              <h2 className="text-sm font-extrabold text-foreground">Merged Original &amp; Current Executive Dashboard</h2>
-              <p className="text-xs text-muted-foreground">Showing all original published widgets and current Infinity suites together — click any card to focus on a single area.</p>
-            </div>
-          </div>
-          {viewMode !== 'profiles' && (
-            <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-900">
-              Workspace Mode: {viewMode === 'office' ? 'Executive Office View' : 'Side-by-Side View'}
-            </span>
-          )}
-        </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
-          {DASHBOARD_SUITES.map((s) => {
-            const Icon = s.icon;
-            const active = activeSuite === s.id;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setActiveSuite(s.id)}
-                className={`flex flex-col items-start justify-between rounded-xl border p-2.5 text-left transition-all ${
-                  active ? 'shadow-md ring-2 ring-primary' : 'hover:-translate-y-0.5 hover:shadow-sm'
-                }`}
-                style={{
-                  borderColor: active ? s.color : `${s.color}55`,
-                  borderTopWidth: '4px',
-                  borderTopColor: s.color,
-                  background: active
-                    ? `linear-gradient(135deg, ${s.color}26 0%, ${s.color}10 60%, #ffffff 100%)`
-                    : `linear-gradient(135deg, ${s.color}12 0%, #ffffff 85%)`,
-                }}
-              >
-                <div className="flex w-full items-center justify-between gap-1.5">
+            <span>Merged Original &amp; Current Executive Dashboard</span>
+          </span>
+
+          <p className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+            Showing all original published widgets and current Infinity suites together — click any pill to focus on a single area.
+          </p>
+
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-4">
+            {DASHBOARD_SUITES.map((s) => {
+              const Icon = s.icon;
+              const active = activeSuite === s.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setActiveSuite(s.id)}
+                  className={`flex items-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-left transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
+                    active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
+                  }`}
+                >
                   <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
-                    style={{ background: s.color }}
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                    }}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3.5 w-3.5 text-white" />
                   </span>
-                  {active && (
-                    <span className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white" style={{ background: s.color }}>
-                      Active
-                    </span>
-                  )}
-                </div>
-                <div className="mt-2 min-w-0 w-full">
-                  <div className="truncate text-xs font-extrabold text-foreground">{s.label}</div>
-                  <div className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">{s.sub}</div>
-                </div>
-              </button>
-            );
-          })}
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-extrabold text-[#0A2B6D] leading-tight">{s.label}</div>
+                    <div className="text-[10px] font-bold text-[#5A00D6] leading-tight">{s.sub}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 

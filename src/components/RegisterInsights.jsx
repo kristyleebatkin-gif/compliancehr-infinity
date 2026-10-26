@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Sparkles, RefreshCw, Loader2 } from 'lucide-react';
 
-// AI as a default layer: a live, number-grounded summary on top of every register
-// (what changed, what needs attention, one suggested next action). Silent on failure
-// so a register never breaks because the insight did.
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+
 export default function RegisterInsights({ module, compact = true, wrapSummary = true, recordsClassName }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,13 +23,20 @@ export default function RegisterInsights({ module, compact = true, wrapSummary =
     }
   }, [module]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card px-3.5 py-2 shadow-sm">
-        <Loader2 className="h-3.5 w-3.5 animate-spin text-brand" />
-        <span className="text-xs text-muted-foreground">Reading the register…</span>
+      <div
+        className="rounded-3xl p-[10px] shadow-md"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="flex items-center gap-2 rounded-[14px] bg-white px-4 py-2.5">
+          <Loader2 className="h-4 w-4 animate-spin text-[#5A00D6]" />
+          <span className="text-xs font-extrabold text-[#0A2B6D]">Reading the register…</span>
+        </div>
       </div>
     );
   }
@@ -38,24 +45,56 @@ export default function RegisterInsights({ module, compact = true, wrapSummary =
   const { insights } = data;
 
   return (
-    <div className={`flex items-center gap-2 rounded-xl border border-brand/25 bg-gradient-brand-soft ${compact ? 'px-2.5 py-1' : 'flex-wrap px-3.5 py-2'} ${wrapSummary ? 'flex-wrap' : ''} shadow-sm`}>
-      <span className={`gradient-brand flex shrink-0 items-center justify-center rounded-md shadow-sm ${compact ? 'h-5 w-5' : 'h-6 w-6'}`}><Sparkles className={compact ? 'h-3 w-3 text-white' : 'h-3.5 w-3.5 text-white'} /></span>
-      <p className={`min-w-0 text-foreground ${wrapSummary ? 'flex-[1_1_16rem] whitespace-normal break-words leading-snug' : 'flex-1 truncate'} ${compact ? 'text-xs font-medium' : 'text-sm font-medium'}`} title={insights.summary}>{insights.summary}</p>
-      {compact ? (
-        <span className={`flex items-center gap-1.5 text-[11px] font-semibold tabular-nums text-foreground/60 ${wrapSummary ? 'max-w-full flex-wrap' : 'shrink-0'}`}>
-          {recordsClassName ? <span className={recordsClassName}>{data.total} records</span> : `${data.total} records`} · {data.open} open
-          {data.overdue > 0 && <span className="text-warning">{data.overdue} overdue</span>}
-          {data.expiring > 0 && <span className="text-danger">{data.expiring} due 30d</span>}
+    <div
+      className="rounded-3xl p-[10px] shadow-md"
+      style={{ background: TOP_BORDER_GRADIENT }}
+    >
+      <div
+        className={`flex items-center gap-2.5 rounded-[14px] bg-white ${
+          compact ? 'px-3.5 py-2' : 'flex-wrap px-4 py-2.5'
+        } ${wrapSummary ? 'flex-wrap' : ''}`}
+      >
+        <span
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
+          style={{ background: ICON_GRADIENT }}
+        >
+          <Sparkles className="h-3.5 w-3.5 text-white" />
         </span>
-      ) : (
-        <>
-          <Badge variant="secondary" className="tabular-nums">{data.total} records</Badge>
-          <Badge variant="secondary" className="tabular-nums">{data.open} open</Badge>
-          {data.overdue > 0 && <Badge className="bg-warning/10 text-warning border border-warning/30 tabular-nums">{data.overdue} overdue</Badge>}
-          {data.expiring > 0 && <Badge className="bg-danger/10 text-danger border border-danger/30 tabular-nums">{data.expiring} due in 30 days</Badge>}
-        </>
-      )}
-      <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={load} title="Refresh insight"><RefreshCw className="h-3.5 w-3.5" /></Button>
+        <p
+          className={`min-w-0 font-extrabold text-[#0A2B6D] ${
+            wrapSummary ? 'flex-[1_1_16rem] whitespace-normal break-words leading-snug' : 'flex-1 truncate'
+          } text-xs`}
+          title={insights.summary}
+        >
+          {insights.summary}
+        </p>
+        <span className="flex flex-wrap items-center gap-1.5 text-xs font-extrabold tabular-nums text-[#5A00D6]">
+          <span className={`rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[#0A2B6D] ${recordsClassName || ''}`}>
+            {data.total} records
+          </span>
+          <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[#0072FF]">
+            {data.open} open
+          </span>
+          {data.overdue > 0 && (
+            <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[#A100FF]">
+              {data.overdue} overdue
+            </span>
+          )}
+          {data.expiring > 0 && (
+            <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[#FF2E9A]">
+              {data.expiring} due 30d
+            </span>
+          )}
+        </span>
+        <button
+          type="button"
+          onClick={load}
+          title="Refresh insight"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]"
+        >
+          <RefreshCw className="h-3.5 w-3.5" />
+        </button>
+      </div>
     </div>
   );
 }

@@ -99,7 +99,8 @@ export default function KidsZoneTreasurePath({ compact = false }) {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-md"
+      data-preserve-theme="true"
+      className="preserve-island-theme relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-md"
       style={{
         background: 'linear-gradient(165deg, #00C6FF 0%, #17B8C4 34%, #7FE7DC 52%, #F4E0B2 64%, #E8C988 100%)',
       }}

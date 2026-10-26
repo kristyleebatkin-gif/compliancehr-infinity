@@ -105,7 +105,8 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-3 shadow-lg"
+      data-preserve-theme="true"
+      className="preserve-island-theme relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-3 shadow-lg"
       style={{
         background: 'linear-gradient(160deg, #0072FF 0%, #0A2B6D 45%, #00C6FF 100%)',
       }}

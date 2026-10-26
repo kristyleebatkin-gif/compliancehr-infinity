@@ -146,57 +146,76 @@ export default function AppLayout() {
     .join('') || 'CH';
 
   const sidebarContent = (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="flex h-full min-h-0 flex-col bg-white p-2 space-y-2">
       <div
-        className="shrink-0 px-3.5 py-3 text-white"
-        style={{ background: 'var(--header-gradient)' }}
+        className="shrink-0 rounded-2xl p-[8px] shadow-md"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+        }}
       >
-        <div className="flex items-center gap-2.5">
-          <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png" alt="ComplianceHR INFINITY" className="h-9 w-9 shrink-0 rounded-xl bg-white object-contain p-1 shadow-sm ring-2 ring-white/50" />
-          <div className="min-w-0">
-            <div className="truncate text-xs font-extrabold uppercase tracking-wider text-white">ComplianceHR INFINITY</div>
-            <div className="text-[9.5px] font-bold leading-tight text-white/95">Complete Control. Greater Confidence. Brighter Success.</div>
+        <div className="flex flex-col items-center justify-center rounded-xl bg-white p-2.5 text-center space-y-1">
+          <div className="font-editorial text-base font-extrabold tracking-tight text-[#0A2B6D]">
+            Compliance
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              HR
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              Infinity
+            </span>
           </div>
+          <div className="text-[9.5px] font-extrabold leading-tight">
+            <span className="text-[#0072FF]">Complete Control.</span>{' '}
+            <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+            <span className="text-[#FF2E9A]">Brighter Success.</span>
+          </div>
+          <span
+            className="mt-1 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+            }}
+          >
+            {role}
+          </span>
         </div>
       </div>
 
-      <div className="px-3 pb-2">
-        <div className="rounded-lg bg-brand/5 px-3 py-2 text-xs font-medium text-brand/70">
-          {role}
-        </div>
-      </div>
-
-      <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-2">
+      <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 py-1 space-y-3">
         {NAV_GROUPS.map((group) => {
           const items = visiblePrimary.filter((item) => group.keys.includes(item.key) && !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff')));
           if (!items.length) return null;
           return (
-            <div key={group.label} className="mb-2.5">
-              <div className="mb-1 px-3 pt-1 text-[10px] font-semibold uppercase tracking-wider text-foreground/40">{group.label}</div>
-              <div className="space-y-0.5">
+            <div key={group.label} className="space-y-1.5">
+              <div
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+                }}
+              >
+                {group.label}
+              </div>
+              <div className="space-y-1">
                 {items.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.path);
-                  const modColor = moduleKeyColour(item.key);
                   return (
                     <Link
                       key={item.path}
                       to={item.path}
-                      className={`group relative flex items-center gap-2.5 rounded-xl border px-3 py-2 text-sm transition-all ${
-                        active ? 'font-extrabold shadow-sm' : 'font-bold text-foreground/80 hover:shadow-sm'
+                      className={`group relative flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
+                        active ? 'ring-2 ring-[#FF2E9A]' : ''
                       }`}
-                      style={{
-                        borderColor: active ? `${modColor}88` : `${modColor}30`,
-                        background: active
-                          ? `linear-gradient(125deg, ${modColor}33, ${modColor}14)`
-                          : `linear-gradient(125deg, ${modColor}14, ${modColor}06)`,
-                      }}
                     >
                       <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-white shadow-sm transition-transform group-hover:scale-110"
-                        style={{ background: modColor }}
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                        }}
                       >
-                        <Icon className="h-3.5 w-3.5" />
+                        <Icon className="h-3 w-3 text-white" />
                       </span>
                       <span className="truncate">{navLabel(item)}</span>
                     </Link>
@@ -208,16 +227,16 @@ export default function AppLayout() {
         })}
       </nav>
 
-      <div className="shrink-0 border-t border-brand/10 px-3 py-3">
-        <div className="mb-1 px-3">
-          <div className="truncate text-sm font-semibold">{user?.full_name || 'User'}</div>
-          <div className="truncate text-xs text-foreground/50">{user?.email || ''}</div>
+      <div className="shrink-0 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 space-y-1.5">
+        <div className="px-1">
+          <div className="truncate text-xs font-extrabold text-[#0A2B6D]">{user?.full_name || 'User'}</div>
+          <div className="truncate text-[11px] font-bold text-[#5A00D6]">{user?.email || ''}</div>
         </div>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-foreground/70 hover:bg-brand/5 hover:text-brand transition-colors"
+          className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF] transition-colors"
         >
-          <LogOut className="h-4 w-4" />
+          <LogOut className="h-3.5 w-3.5 text-[#FF2E9A]" />
           Sign out
         </button>
       </div>
@@ -267,8 +286,8 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="app-readable flex h-dvh overflow-hidden app-workspace-bg">
-      <aside className="app-sidebar-bg hidden w-64 shrink-0 border-r border-brand/10 md:flex">
+    <div className="app-readable flex h-dvh overflow-hidden bg-white">
+      <aside className="hidden w-64 shrink-0 border-r-4 border-[#0A2B6D] bg-white md:flex">
         {sidebarContent}
       </aside>
 

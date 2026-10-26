@@ -121,7 +121,8 @@ export default function ShorelineCommandCenter({ compact = false }) {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm"
+      data-preserve-theme="true"
+      className="preserve-island-theme relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm"
       style={{
         background: 'linear-gradient(180deg, #FBF7EE 0%, #F3E9D2 100%)',
       }}

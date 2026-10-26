@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Eye, ExternalLink, FileText, FolderOpen, Loader2 } from 'lucide-react';
-import { differenceInCalendarDays, format } from 'date-fns';
+import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { safeUrl } from '@/lib/safeUrl';
 import '@/components/employeeDocumentsCompact.css';
 
-// Module documents footer: shows the documents that belong to the module the
-// user is in, neatly at the bottom of the page. Modules without their own
-// document set show nothing, so the list stays accurate to the module.
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+
 const MODULE_DOCS = [
   {
     match: '/our-employees',
@@ -91,14 +95,6 @@ const MODULE_DOCS = [
   },
 ];
 
-const dateTone = (date) => {
-  if (!date) return '';
-  const days = differenceInCalendarDays(new Date(date), new Date());
-  if (days < 0) return 'bg-danger/10 text-danger';
-  if (days <= 30) return 'bg-warning/10 text-warning';
-  return 'bg-safe/10 text-safe';
-};
-
 export default function ModuleDocsFooter() {
   const { pathname } = useLocation();
   const cfg = MODULE_DOCS.find((m) => pathname.startsWith(m.match));
@@ -111,12 +107,26 @@ export default function ModuleDocsFooter() {
     if (!cfg) return;
     setLoading(true);
     const profileId = pathname.split('/')[2];
-    const scope = profileId && cfg.entity === 'EmployeeDocument' ? { employee_id: profileId } : profileId && cfg.entity === 'ParticipantDocument' ? { participant_id: profileId } : {};
-    base44.entities[cfg.entity].filter({ ...cfg.query, ...scope }, { sort: cfg.sort, limit: 8 })
-      .then((page) => { if (alive) setItems(page.items || []); })
-      .catch(() => { if (alive) setItems([]); })
-      .finally(() => { if (alive) setLoading(false); });
-    return () => { alive = false; };
+    const scope =
+      profileId && cfg.entity === 'EmployeeDocument'
+        ? { employee_id: profileId }
+        : profileId && cfg.entity === 'ParticipantDocument'
+          ? { participant_id: profileId }
+          : {};
+    base44.entities[cfg.entity]
+      .filter({ ...cfg.query, ...scope }, { sort: cfg.sort, limit: 8 })
+      .then((page) => {
+        if (alive) setItems(page.items || []);
+      })
+      .catch(() => {
+        if (alive) setItems([]);
+      })
+      .finally(() => {
+        if (alive) setLoading(false);
+      });
+    return () => {
+      alive = false;
+    };
   }, [cfg?.match, pathname]);
 
   if (!cfg) return null;
@@ -125,7 +135,9 @@ export default function ModuleDocsFooter() {
     setOpening(doc.id);
     try {
       if (doc.file_uri) {
-        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
+        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({
+          file_uri: doc.file_uri,
+        });
         window.open(signed_url, '_blank');
       } else if (safeUrl(doc.file_url)) {
         window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
@@ -138,72 +150,105 @@ export default function ModuleDocsFooter() {
   };
 
   return (
-    <div className={cn('mx-auto max-w-6xl px-4 pb-10 pt-6 md:px-8', ['EmployeeDocument', 'ParticipantDocument'].includes(cfg.entity) && 'employee-documents-footer')}>
-      <section className="rounded-2xl border border-border/60 bg-card/80 shadow-panel backdrop-blur">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg gradient-brand-soft">
-              <FolderOpen className="h-5 w-5 text-brand" />
-            </span>
-            <div>
-              <div className="font-heading text-base font-semibold">{cfg.title}</div>
-              <div className="text-xs text-foreground/50">{cfg.subtitle}</div>
+    <div
+      className={cn(
+        'mx-auto max-w-6xl px-4 pb-10 pt-6 md:px-8',
+        ['EmployeeDocument', 'ParticipantDocument'].includes(cfg.entity) && 'employee-documents-footer'
+      )}
+    >
+      <section
+        className="rounded-3xl p-[12px] shadow-lg"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="rounded-[16px] bg-white p-4 sm:p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 pb-3">
+            <div className="flex items-center gap-3">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <FolderOpen className="h-4 w-4 text-white" />
+              </span>
+              <div>
+                <div className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]">
+                  {cfg.title}
+                </div>
+                <div className="text-xs font-extrabold text-[#5A00D6]">{cfg.subtitle}</div>
+              </div>
             </div>
+            <Link
+              to={`/documents?focus=${cfg.focus}`}
+              className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              style={{ background: BADGE_GRADIENT }}
+            >
+              <span>Open in Document Vault</span>
+              <ExternalLink className="h-3.5 w-3.5 text-white" />
+            </Link>
           </div>
-          <Link
-            to={`/documents?focus=${cfg.focus}`}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline"
-          >
-            Open in Document Vault
-            <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
-        </div>
 
-        <div className="p-5">
-          {loading ? (
-            <div className="flex items-center gap-2 text-sm text-foreground/50">
-              <Loader2 className="h-4 w-4 animate-spin" /> Loading documents…
-            </div>
-          ) : items.length === 0 ? (
-            <div className="text-sm text-foreground/50">
-              No documents filed yet for this module — uploads made here or in the Document Vault will appear below.
-            </div>
-          ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {items.map((d) => {
-                const date = cfg.date(d);
-                const tone = dateTone(date);
-                return (
-                  <div key={d.id} className="flex flex-col gap-2 rounded-xl border border-border/60 bg-white/70 p-3.5">
-                    <div className="flex items-start gap-2">
-                      <FileText className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                      <div className="min-w-0">
-                        <div className="truncate text-sm font-semibold" title={cfg.label(d)}>{cfg.label(d)}</div>
-                        <div className="truncate text-xs text-foreground/50" title={cfg.meta(d)}>{cfg.meta(d) || ' '}</div>
+          <div>
+            {loading ? (
+              <div className="flex items-center gap-2 text-xs font-extrabold text-[#0A2B6D]">
+                <Loader2 className="h-4 w-4 animate-spin text-[#5A00D6]" /> Loading documents…
+              </div>
+            ) : items.length === 0 ? (
+              <div className="text-xs font-extrabold text-[#5A00D6]">
+                No documents filed yet for this module — uploads made here or in the Document Vault will appear below.
+              </div>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {items.map((d) => {
+                  const date = cfg.date(d);
+                  return (
+                    <div
+                      key={d.id}
+                      className="flex flex-col gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-2xs"
+                    >
+                      <div className="flex items-start gap-2">
+                        <span
+                          className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                          style={{ background: ICON_GRADIENT }}
+                        >
+                          <FileText className="h-3 w-3 text-white" />
+                        </span>
+                        <div className="min-w-0">
+                          <div className="text-xs font-extrabold text-[#0A2B6D]" title={cfg.label(d)}>
+                            {cfg.label(d)}
+                          </div>
+                          <div className="text-[11px] font-bold text-[#5A00D6]" title={cfg.meta(d)}>
+                            {cfg.meta(d) || ' '}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-auto flex items-center justify-between gap-2 pt-1">
+                        {date ? (
+                          <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                            {cfg.dateLabel}: {format(new Date(date), 'd MMM yyyy')}
+                          </span>
+                        ) : (
+                          <span />
+                        )}
+                        {d.file_url || d.file_uri ? (
+                          <button
+                            onClick={() => open(d)}
+                            disabled={opening === d.id}
+                            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF] disabled:opacity-50"
+                          >
+                            {opening === d.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <Eye className="h-3 w-3 text-[#0072FF]" />
+                            )}
+                            View
+                          </button>
+                        ) : null}
                       </div>
                     </div>
-                    <div className="mt-auto flex items-center justify-between gap-2">
-                      {date ? (
-                        <span className={cn('rounded-md px-2 py-0.5 text-[11px] font-semibold', tone)}>
-                          {cfg.dateLabel}: {format(new Date(date), 'd MMM yyyy')}
-                        </span>
-                      ) : <span />}
-                      {d.file_url || d.file_uri ? (
-                        <button
-                          onClick={() => open(d)}
-                          disabled={opening === d.id}
-                          className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold text-brand hover:bg-brand/5 disabled:opacity-50"
-                        >
-                          {opening === d.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Eye className="h-3 w-3" />}
-                          View
-                        </button>
-                      ) : null}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </div>

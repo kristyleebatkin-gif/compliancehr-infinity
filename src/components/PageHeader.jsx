@@ -1,10 +1,17 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, Sparkles } from 'lucide-react';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
+
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 
 function resolveHeaderSubject(title = '', seg = '') {
   const t = `${title} ${seg}`.toLowerCase();
@@ -22,52 +29,118 @@ function resolveHeaderSubject(title = '', seg = '') {
   return 'ComplianceHR Infinity Module';
 }
 
-export default function PageHeader({ title, subtitle, subject, action, icon: Icon = LayoutGrid, className, under, beforeAudit, afterAudit, compactActions = true, actionClassName, auditClassName }) {
+export default function PageHeader({
+  title,
+  subtitle,
+  subject,
+  action,
+  icon: Icon = LayoutGrid,
+  className,
+  under,
+  beforeAudit,
+  afterAudit,
+  compactActions = true,
+  actionClassName,
+}) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   const modMeta = resolveAuditModule(seg);
   const description = subtitle || modMeta?.blurb || '';
   const subjectLabel = subject || modMeta?.group || resolveHeaderSubject(title, seg);
+
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-3">
+      {/* Top Module Header Framed in Exact Landing Page Top Section Template */}
       <div
-        className={cn('app-page-header relative flex items-center overflow-hidden rounded-2xl border-2 border-[#5A00D6] px-5 py-4 shadow-lg', className)}
-        style={{ background: 'var(--header-gradient)' }}
+        className={cn('rounded-3xl p-[12px] shadow-lg', className)}
+        style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full border-[28px] border-white/10" />
-        <div className="pointer-events-none absolute -bottom-16 right-24 h-36 w-36 rounded-full bg-white/10" />
-        <div className="relative flex min-w-0 w-full items-center gap-3.5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-white/60 bg-white/20 shadow-md ring-2 ring-white/25">
-            <Icon className="h-6 w-6 text-white" />
+        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5">
+          {/* Centred Subject & Module Pill Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span
+              className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+              style={{ background: BADGE_GRADIENT }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                <Icon className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              </span>
+              <span>Subject: {subjectLabel}</span>
+            </span>
+
+            <span className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
+              <span
+                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <Sparkles className="h-3 w-3 text-white" />
+              </span>
+              <span>Module: {title}</span>
+            </span>
           </div>
-          <div className="min-w-0 flex-1">
-            <div className="mb-1 flex flex-wrap items-center gap-1.5">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/45 bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-2xs">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                Subject: {subjectLabel}
+
+          {/* Centred Module Heading & Subtitle */}
+          <div className="mx-auto max-w-4xl space-y-1">
+            <h1 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
+              <span className="bg-gradient-to-r from-[#0A2B6D] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                {title}
               </span>
-              <span className="rounded-full border border-white/30 bg-[#0A2B6D]/45 px-2 py-0.5 text-[10px] font-bold text-white">
-                Module: {title}
-              </span>
-            </div>
-            <h1 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">{title}</h1>
-            {description && <p className="mt-0.5 text-xs font-medium leading-snug text-white/95">{description}</p>}
+            </h1>
+            {description && (
+              <p className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold leading-relaxed text-[#5A00D6]">
+                {description}
+              </p>
+            )}
+          </div>
+
+          {/* Live Compliance Strip & Module Actions Inside the Top Header Card */}
+          <div
+            className={cn(
+              'mt-1 flex w-full flex-wrap items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs',
+              compactActions ? 'module-action-bar gap-2' : 'gap-2.5'
+            )}
+          >
+            <ModuleComplianceStrip path={seg} />
+            {beforeAudit}
+            {action && (
+              <div
+                className={cn(
+                  'flex flex-wrap items-center justify-center',
+                  compactActions ? 'gap-1.5' : 'gap-2',
+                  actionClassName
+                )}
+              >
+                {action}
+              </div>
+            )}
+            {afterAudit}
           </div>
         </div>
       </div>
-      <div className={cn('flex flex-wrap items-center border-2 border-[#0A2B6D] bg-white shadow-sm', compactActions ? 'module-action-bar gap-2 rounded-xl px-2.5 py-1.5' : 'gap-2.5 rounded-xl p-2')}>
-        <ModuleComplianceStrip path={seg} />
-        {beforeAudit}
-        {action && <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1.5' : 'gap-2', actionClassName)}>{action}</div>}
-        {afterAudit}
-      </div>
+
       {under}
-      {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && <AutoRegisterInsights placement="header" />}
+      {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && (
+        <AutoRegisterInsights placement="header" />
+      )}
     </div>
   );
 }
 
-// Row of controls rendered just below the header card (left-aligned by default).
+// Row of controls rendered just below the header card.
 export function HeaderUnderRow({ children, className }) {
-  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1', className)}>{children}</div>;
+  return (
+    <div
+      className="rounded-3xl p-[10px] shadow-md"
+      style={{ background: TOP_BORDER_GRADIENT }}
+    >
+      <div
+        className={cn(
+          'module-action-bar flex flex-wrap items-center justify-center gap-2 rounded-[14px] bg-white px-3 py-2',
+          className
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  );
 }

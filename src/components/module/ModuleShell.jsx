@@ -5,45 +5,92 @@ import CollapsibleSection from '@/components/module/CollapsibleSection';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import '@/components/module/moduleShell.css';
 
-const WHITE_ROW = 'flex flex-wrap items-center gap-1.5 rounded-xl border border-border/60 bg-white p-2 shadow-sm';
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-/*
- * STANDARD MODULE LAYOUT (owner's rule) — every module, top to bottom:
- *  Header (unchanged PageHeader)
- *  Row 1  live compliance tracker · documents/buttons · Audit Checklist (blue) + Audit Report (pink) (PageHeader bar)
- *  Row 2  small buttons / tabs / tiles (`tabs`, `actions`), module colours
- *  Row 3  search bar (`search`)
- *  Row 4  AI insight (`insightModule`)
- *  Row 5  small dashboards / tiles (`small`), then medium (`medium`)
- *  End    big dashboards (`large`: [{ key, title, content }]) — collapsible
- *  Then   the module's tab content (`children`).
- * Put `tabs` (a <TabsList>) and `children` (<TabsContent>s) inside a <Tabs> root.
- */
-export default function ModuleShell({ embedded = false, header, title, subtitle, icon, moduleKey, tabs, actions, search, insightModule, insight, insightAfterTiles = false, small, medium, large = [], children }) {
-  const colour = moduleKeyColour(moduleKey) || '#4f46e5';
+export default function ModuleShell({
+  embedded = false,
+  header,
+  title,
+  subtitle,
+  icon,
+  moduleKey,
+  tabs,
+  actions,
+  search,
+  insightModule,
+  insight,
+  insightAfterTiles = false,
+  small,
+  medium,
+  large = [],
+  children,
+}) {
+  const colour = moduleKeyColour(moduleKey) || '#0072FF';
   const rows = (
-    <div className="space-y-2.5" style={{ '--module-colour': colour }}>
-      {/* Insight directly under the Audit Register bar and above Employee/Module tiles */}
+    <div className="space-y-3" style={{ '--module-colour': colour }}>
       {!insightAfterTiles && insight}
       {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
+
       {actions && (
-        <div className="module-shell-actions module-action-bar flex flex-wrap items-center rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-sm [&_button]:border-2 [&_button]:border-[#0A2B6D]">
-          {actions}
+        <div
+          className="rounded-3xl p-[10px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[14px] bg-white p-3 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
+            {actions}
+          </div>
         </div>
       )}
+
       {tabs && (
-        <div className="[&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none">
-          {tabs}
+        <div
+          className="rounded-3xl p-[10px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-2.5 [&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none [&>[role=tablist]]:border-0">
+            {tabs}
+          </div>
         </div>
       )}
-      {search && <div>{search}</div>}
-      {small && <div className="module-shell-tiles grid gap-2 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3">{small}</div>}
-      {medium && <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-4">{medium}</div>}
+
+      {search && (
+        <div
+          className="rounded-3xl p-[10px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-2.5">{search}</div>
+        </div>
+      )}
+
+      {small && (
+        <div
+          className="rounded-3xl p-[10px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="module-shell-tiles grid gap-2.5 rounded-[14px] bg-white p-3 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3.5">
+            {small}
+          </div>
+        </div>
+      )}
+
+      {medium && (
+        <div
+          className="rounded-3xl p-[10px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="module-shell-tiles grid gap-3 rounded-[14px] bg-white p-3.5 md:grid-cols-2 [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-4">
+            {medium}
+          </div>
+        </div>
+      )}
     </div>
   );
-  if (embedded) return <div className="space-y-2.5">{tabs}{children}</div>;
+
+  if (embedded) return <div className="space-y-3">{tabs}{children}</div>;
+
   return (
-    <div className="space-y-2.5" style={{ '--module-colour': colour }}>
+    <div className="space-y-3" style={{ '--module-colour': colour }}>
       {header ? (
         <>
           {header}
@@ -61,7 +108,11 @@ export default function ModuleShell({ embedded = false, header, title, subtitle,
       {children}
       {insightAfterTiles && insight}
       {insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
-      {large.map((s) => <CollapsibleSection key={s.key || s.title} title={s.title}>{s.content}</CollapsibleSection>)}
+      {large.map((s) => (
+        <CollapsibleSection key={s.key || s.title} title={s.title}>
+          {s.content}
+        </CollapsibleSection>
+      ))}
     </div>
   );
 }

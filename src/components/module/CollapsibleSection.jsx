@@ -1,40 +1,51 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { moduleColour } from '@/lib/moduleColours';
+import { ChevronDown, Sparkles } from 'lucide-react';
+
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 // Big dashboards sit at the end of a module and can be folded away.
 export default function CollapsibleSection({ title, subject, children, defaultOpen = true }) {
   const [open, setOpen] = useState(defaultOpen);
-  const accent = moduleColour(title || 'ComplianceHR');
+
   return (
     <section
-      className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-panel"
-      style={{ borderTop: `4px solid ${accent}` }}
+      className="rounded-3xl p-[10px] shadow-lg"
+      style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="comm-panel-bar relative flex w-full items-center justify-between gap-2 border-b-2 border-[#FF2E9A] px-4 py-3 text-left text-base font-extrabold text-white"
-        style={{ background: 'var(--header-gradient)' }}
-      >
-        <div className="relative flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full border border-white/40 bg-white/20 px-2 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-            {subject || 'Dashboard Section'}
-          </span>
-          <span data-panel-title className="text-base font-extrabold text-white">{title}</span>
-        </div>
-        <ChevronDown className={`relative h-4 w-4 shrink-0 text-white transition-transform ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && (
-        <div
-          className="dashboard-panel-body p-3.5 text-xs"
-          style={{ background: `linear-gradient(180deg, ${accent}10 0%, transparent 45%)` }}
+      <div className="overflow-hidden rounded-[16px] bg-white">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="flex w-full flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A2B6D]/15 bg-white px-4 py-3 text-left font-extrabold text-[#0A2B6D]"
         >
-          {children}
-        </div>
-      )}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span
+              className="inline-flex min-h-[34px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+              style={{ background: BADGE_GRADIENT }}
+            >
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                <Sparkles className="h-3 w-3 text-[#5A00D6]" />
+              </span>
+              <span>{subject || 'Dashboard Section'}</span>
+            </span>
+            <span data-panel-title className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]">
+              {title}
+            </span>
+          </div>
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${open ? 'rotate-180' : ''}`}
+          />
+        </button>
+        {open && (
+          <div className="dashboard-panel-body bg-white p-4 text-xs text-[#0A2B6D]">
+            {children}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

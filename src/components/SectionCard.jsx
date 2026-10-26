@@ -4,7 +4,11 @@ import {
   AlertTriangle, FileText, DollarSign, GraduationCap, MessagesSquare, Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { moduleColour } from '@/lib/moduleColours';
+
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 function resolveSectionSubject(title = '', description = '') {
   const text = `${title} ${description}`.toLowerCase();
@@ -41,11 +45,21 @@ function resolveSectionSubject(title = '', description = '') {
   return { label: 'Operations & Records', Icon: Sparkles };
 }
 
-export default function SectionCard({ title, subject, description, action, children, className, collapsible = false, defaultOpen = false, ...props }) {
+export default function SectionCard({
+  title,
+  subject,
+  description,
+  action,
+  children,
+  className,
+  collapsible = false,
+  defaultOpen = false,
+  ...props
+}) {
   const contentId = useId();
-  const [expanded, setExpanded] = useState(!collapsible || defaultOpen || (props.id && window.location.hash === `#${props.id}`));
-  const panelTone = /investigation|policy/i.test(title || '') ? 'primary' : /incident|hazard|eliminat/i.test(title || '') ? 'danger' : /risk|assessment|isolate/i.test(title || '') ? 'hr-evidence' : /training|compliance|checklist/i.test(title || '') ? 'chart-2' : 'primary';
-  const accent = moduleColour(title || 'ComplianceHR');
+  const [expanded, setExpanded] = useState(
+    !collapsible || defaultOpen || (props.id && window.location.hash === `#${props.id}`)
+  );
   const subjectInfo = resolveSectionSubject(title, description);
   const SubjectIcon = subjectInfo.Icon;
   const resolvedSubject = subject || subjectInfo.label;
@@ -53,66 +67,68 @@ export default function SectionCard({ title, subject, description, action, child
   return (
     <div
       className={cn(
-        'dashboard-panel relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
+        'dashboard-panel rounded-3xl p-[10px] shadow-lg transition-all duration-200',
         className
       )}
-      style={{
-        '--panel-tone': `var(--${panelTone})`,
-        '--section-accent': accent,
-        borderTop: `4px solid ${accent}`,
-        boxShadow: `0 1px 2px rgba(15, 23, 42, 0.04), 0 14px 34px -20px ${accent}55`,
-      }}
+      style={{ background: TOP_BORDER_GRADIENT }}
       {...props}
     >
-      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-[0.08] blur-xl" style={{ backgroundColor: accent }} />
-      {(title || action) && (
-        <div
-          className="dashboard-panel-header relative flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#FF2E9A] px-4 py-3 sm:px-5"
-          style={{ background: 'var(--header-gradient)' }}
-        >
-          <div className="pointer-events-none absolute -right-8 -top-14 h-36 w-36 rounded-full border-[20px] border-white/10" />
-          <div className="relative flex min-w-0 flex-1 items-start gap-2.5">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/50 bg-white/20 text-white shadow-sm">
-              <SubjectIcon className="h-4 w-4 text-white" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="mb-0.5 flex flex-wrap items-center gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-full border border-white/40 bg-white/20 px-2 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                  {resolvedSubject}
+      <div className="overflow-hidden rounded-[16px] bg-white">
+        {(title || action) && (
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 bg-white px-4 py-3.5 sm:px-5">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2.5">
+              <span
+                className="inline-flex min-h-[34px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                style={{ background: BADGE_GRADIENT }}
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                  <SubjectIcon className="h-3 w-3 text-[#FF2E9A]" />
                 </span>
+                <span>{resolvedSubject}</span>
+              </span>
+
+              <div className="min-w-0 flex-1">
+                {title &&
+                  (collapsible ? (
+                    <button
+                      type="button"
+                      aria-expanded={expanded}
+                      aria-controls={contentId}
+                      onClick={() => setExpanded((value) => !value)}
+                      className="flex items-center gap-2 text-left font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]"
+                    >
+                      <ChevronDown
+                        className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
+                          expanded ? '' : '-rotate-90'
+                        }`}
+                      />
+                      <span data-panel-title>{title}</span>
+                    </button>
+                  ) : (
+                    <div
+                      data-panel-title
+                      className="break-words font-editorial text-base sm:text-lg font-extrabold tracking-tight text-[#0A2B6D]"
+                    >
+                      {title}
+                    </div>
+                  ))}
+                {description && (
+                  <p className="mt-0.5 break-words text-xs font-extrabold text-[#5A00D6]">
+                    {description}
+                  </p>
+                )}
               </div>
-              {title && (
-                collapsible ? (
-                  <button
-                    type="button"
-                    aria-expanded={expanded}
-                    aria-controls={contentId}
-                    onClick={() => setExpanded((value) => !value)}
-                    className="flex items-start gap-2 text-left text-base font-extrabold text-white"
-                  >
-                    <ChevronDown className={`mt-1 h-4 w-4 shrink-0 text-white transition-transform ${expanded ? '' : '-rotate-90'}`} />
-                    <span data-panel-title>{title}</span>
-                  </button>
-                ) : (
-                  <div data-panel-title className="break-words text-base font-extrabold tracking-tight text-white">
-                    {title}
-                  </div>
-                )
-              )}
-              {description && <p className="mt-0.5 break-words text-xs font-medium text-white/90">{description}</p>}
             </div>
+            {action && <div className="flex flex-wrap items-center gap-1.5">{action}</div>}
           </div>
-          {action && <div className="relative flex flex-wrap items-center gap-1.5">{action}</div>}
+        )}
+        <div
+          id={contentId}
+          hidden={collapsible && !expanded}
+          className="dashboard-panel-body bg-white p-4 text-xs text-[#0A2B6D]"
+        >
+          {children}
         </div>
-      )}
-      <div
-        id={contentId}
-        hidden={collapsible && !expanded}
-        className="dashboard-panel-body p-3.5 text-xs sm:p-4"
-        style={{ background: `linear-gradient(180deg, ${accent}12 0%, ${accent}05 42%, transparent 100%)` }}
-      >
-        {children}
       </div>
     </div>
   );

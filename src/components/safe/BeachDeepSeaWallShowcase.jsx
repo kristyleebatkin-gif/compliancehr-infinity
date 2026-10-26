@@ -17,7 +17,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
   const [scene, setScene] = useState(defaultScene);
 
   return (
-    <div className="rounded-3xl border-2 border-[#0A2B6D] bg-white p-3 shadow-lg space-y-3">
+    <div data-preserve-theme="true" className="preserve-island-theme rounded-3xl border-2 border-[#0A2B6D] bg-white p-3 shadow-lg space-y-3">
       {/* Header Bar with White Pill Behind Dark Blue Writing */}
       <div
         className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3.5 py-2.5 text-white shadow-md"

@@ -12,7 +12,7 @@ const TabsList = React.forwardRef(({ className, ...props }, ref) => (
     data-dashboard-tabs=""
     ref={ref}
     className={cn(
-      "flex w-full flex-wrap items-center gap-1 rounded-xl bg-muted/70 p-1 text-muted-foreground shadow-inner",
+      "flex w-full flex-wrap items-center gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 text-[#0A2B6D] shadow-sm",
       className
     )}
     {...props} />
@@ -25,7 +25,7 @@ const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
     data-dashboard-tone={dashboardTabTone(props.value)}
     ref={ref}
     className={cn(
-      "inline-flex min-h-8 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600/15 data-[state=active]:via-violet-600/20 data-[state=active]:to-pink-600/15 data-[state=active]:text-violet-700 data-[state=active]:ring-1 data-[state=active]:ring-violet-300 data-[state=active]:shadow-sm dark:data-[state=active]:text-violet-300",
+      "inline-flex min-h-[38px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
       className
     )}
     {...props} />
@@ -36,7 +36,7 @@ const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "mt-3 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       className
     )}
     {...props} />
