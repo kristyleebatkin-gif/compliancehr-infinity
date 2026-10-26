@@ -17,9 +17,9 @@ import Reveal from '@/components/landing/Reveal';
 import {
   getTilePalette,
   getHeaderView,
-  getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -59,15 +59,18 @@ export default function FeaturesSection() {
         </span>
 
         <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(2) }}
-          >
-            An impossible standard, achieved effortlessly
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">An impossible </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              standard,
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              achieved effortlessly
+            </span>
           </h2>
           <p
             className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(2) }}
+            style={{ color: getSubheaderColourView(1) }}
           >
             One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
           </p>
@@ -81,8 +84,12 @@ export default function FeaturesSection() {
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group flex h-full flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="group flex h-full flex-col justify-between rounded-2xl border-2 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(index),
+                }}
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">

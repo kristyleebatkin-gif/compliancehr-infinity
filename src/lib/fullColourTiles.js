@@ -5,7 +5,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#38BDF8',
     text: '#0A2B6D',
     subtext: '#0A2B6D',
-    border: '#0A2B6D',
+    border: '#0072FF',
     symbolBg: 'linear-gradient(135deg, #FF2E9A 0%, #A100FF 55%, #5A00D6 100%)',
     symbolColor: '#5A00D6',
   },
@@ -14,7 +14,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#FF2E9A',
     text: '#FFFFFF',
     subtext: '#FFFFFF',
-    border: '#0A2B6D',
+    border: '#5A00D6',
     symbolBg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 55%, #5A00D6 100%)',
     symbolColor: '#0072FF',
   },
@@ -23,7 +23,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#C084FC',
     text: '#0A2B6D',
     subtext: '#0A2B6D',
-    border: '#0A2B6D',
+    border: '#5A00D6',
     symbolBg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 50%, #FF2E9A 100%)',
     symbolColor: '#FF2E9A',
   },
@@ -41,7 +41,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#FF85E0',
     text: '#0A2B6D',
     subtext: '#0A2B6D',
-    border: '#0A2B6D',
+    border: '#A100FF',
     symbolBg: 'linear-gradient(135deg, #5A00D6 0%, #0072FF 55%, #00C6FF 100%)',
     symbolColor: '#5A00D6',
   },
@@ -50,7 +50,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#5A00D6',
     text: '#FFFFFF',
     subtext: '#FFFFFF',
-    border: '#0A2B6D',
+    border: '#00C6FF',
     symbolBg: 'linear-gradient(135deg, #00C6FF 0%, #38BDF8 50%, #FF2E9A 100%)',
     symbolColor: '#00C6FF',
   },
@@ -68,7 +68,7 @@ export const FULL_COLOUR_TILES = [
     bg: '#9333EA',
     text: '#FFFFFF',
     subtext: '#FFFFFF',
-    border: '#0A2B6D',
+    border: '#0072FF',
     symbolBg: 'linear-gradient(135deg, #00C6FF 0%, #FF2E9A 55%, #FF6EDB 100%)',
     symbolColor: '#FF2E9A',
   },
@@ -79,9 +79,9 @@ export const HEADER_COLOUR_VIEWS = [
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 48%, #FF2E9A 100%)',
   'linear-gradient(120deg, #FF2E9A 0%, #A100FF 46%, #0072FF 100%)',
   'linear-gradient(120deg, #5A00D6 0%, #0072FF 48%, #00C6FF 100%)',
-  'linear-gradient(120deg, #A100FF 0%, #C80064 50%, #0072FF 100%)',
+  'linear-gradient(120deg, #A100FF 0%, #5A00D6 50%, #0072FF 100%)',
   'linear-gradient(120deg, #00C6FF 0%, #5A00D6 50%, #FF2E9A 100%)',
-  'linear-gradient(120deg, #C80064 0%, #5A00D6 50%, #00C6FF 100%)',
+  'linear-gradient(120deg, #9333EA 0%, #0072FF 50%, #FF2E9A 100%)',
   'linear-gradient(120deg, #0A2B6D 0%, #5A00D6 48%, #FF2E9A 100%)',
   'linear-gradient(120deg, #0072FF 0%, #A100FF 50%, #FF6EDB 100%)',
 ];
@@ -90,30 +90,42 @@ export const HEADER_COLOUR_VIEWS = [
 export const TITLE_GRADIENT_VIEWS = [
   'linear-gradient(90deg, #0072FF 0%, #5A00D6 48%, #FF2E9A 100%)',
   'linear-gradient(90deg, #5A00D6 0%, #A100FF 48%, #0072FF 100%)',
-  'linear-gradient(90deg, #C80064 0%, #5A00D6 50%, #0072FF 100%)',
-  'linear-gradient(90deg, #0A2B6D 0%, #0072FF 48%, #A100FF 100%)',
+  'linear-gradient(90deg, #0A2B6D 0%, #5A00D6 48%, #FF2E9A 100%)',
+  'linear-gradient(90deg, #0072FF 0%, #A100FF 48%, #FF2E9A 100%)',
   'linear-gradient(90deg, #A100FF 0%, #FF2E9A 50%, #0072FF 100%)',
-  'linear-gradient(90deg, #0072FF 0%, #C80064 50%, #5A00D6 100%)',
+  'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #9333EA 100%)',
 ];
 
 export const SUBHEADER_COLOUR_VIEWS = [
   '#5A00D6',
   '#0072FF',
-  '#9333EA',
-  '#C80064',
   '#0A2B6D',
+  '#0072FF',
+  '#0A2B6D',
+  '#5A00D6',
+];
+
+// Different views of the app colours for borders on tiles, screens & reports
+export const APP_BORDER_VIEWS = [
+  '#0072FF',
+  '#FF2E9A',
+  '#5A00D6',
+  '#00C6FF',
   '#A100FF',
+  '#0A2B6D',
+  '#9333EA',
+  '#FF6EDB',
 ];
 
 // Different views of the app colours for symbols outside titles/headers
 export const SYMBOL_GRADIENT_VIEWS = [
-  { bg: '#FFFFFF', iconColor: '#0072FF', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#FF2E9A', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#5A00D6', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#A100FF', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#C80064', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#00C6FF', ring: '#0A2B6D' },
-  { bg: '#FFFFFF', iconColor: '#9333EA', ring: '#0A2B6D' },
+  { bg: '#FFFFFF', iconColor: '#0072FF', ring: '#0072FF' },
+  { bg: '#FFFFFF', iconColor: '#FF2E9A', ring: '#FF2E9A' },
+  { bg: '#FFFFFF', iconColor: '#5A00D6', ring: '#5A00D6' },
+  { bg: '#FFFFFF', iconColor: '#A100FF', ring: '#A100FF' },
+  { bg: '#FFFFFF', iconColor: '#C80064', ring: '#C80064' },
+  { bg: '#FFFFFF', iconColor: '#00C6FF', ring: '#00C6FF' },
+  { bg: '#FFFFFF', iconColor: '#9333EA', ring: '#9333EA' },
   { bg: '#FFFFFF', iconColor: '#0A2B6D', ring: '#0A2B6D' },
 ];
 
@@ -135,6 +147,11 @@ export function getTitleGradientView(index = 0) {
 export function getSubheaderColourView(index = 0) {
   const i = Math.abs(Number(index) || 0) % SUBHEADER_COLOUR_VIEWS.length;
   return SUBHEADER_COLOUR_VIEWS[i];
+}
+
+export function getAppBorderView(index = 0) {
+  const i = Math.abs(Number(index) || 0) % APP_BORDER_VIEWS.length;
+  return APP_BORDER_VIEWS[i];
 }
 
 export function getSymbolView(index = 0) {

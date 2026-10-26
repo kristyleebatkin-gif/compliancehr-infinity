@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Bell, Compass, LayoutDashboard, ShieldCheck, Workflow } from 'lucide-react';
+import { Bell, Compass, LayoutDashboard, ShieldCheck, Workflow } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
   getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -16,8 +14,8 @@ const TOP_BORDER_GRADIENT =
 const STEPS = [
   {
     icon: ShieldCheck,
-    title: 'Register and get approved',
-    text: 'Request the right role. New accounts remain Pending Approval until a Provider Administrator confirms access.',
+    title: 'Register an account, request access',
+    text: 'Register an account, request access, new accounts approval pending for Provider Administrator.',
   },
   {
     icon: LayoutDashboard,
@@ -51,25 +49,23 @@ export default function QuickStartSection() {
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
             <Compass className="h-3.5 w-3.5 text-white" />
           </span>
-          <span className="text-center">4-Step Quick Start Guide</span>
+          <span className="text-center">Our Quick 4 Step Start Guide</span>
         </span>
 
-        <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(1) }}
-          >
-            Start using ComplianceHR in four steps
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">Start using </span>
+            <span className="text-[#0A2B6D]">Compliance</span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              HR
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              in four steps
+            </span>
           </h2>
-          <p
-            className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(1) }}
-          >
-            Sign in, open your role-based dashboard and choose the task you need to complete.
-          </p>
         </div>
 
-        <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-left">
+        <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             const tile = getTilePalette(index + 1);
@@ -79,11 +75,15 @@ export default function QuickStartSection() {
                 key={step.title}
                 as="li"
                 delay={index * 0.06}
-                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="group flex flex-col items-center justify-between rounded-2xl border-2 p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(index + 1),
+                }}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col items-center text-center">
+                  <div className="flex items-center justify-center gap-2">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm">
                       <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                     </span>
@@ -91,10 +91,10 @@ export default function QuickStartSection() {
                       Step 0{index + 1}
                     </span>
                   </div>
-                  <h3 className="mt-3 font-editorial text-base font-extrabold" style={{ color: tile.text }}>
+                  <h3 className="mt-3 font-editorial text-base font-extrabold text-center" style={{ color: tile.text }}>
                     {step.title}
                   </h3>
-                  <p className="mt-1.5 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
+                  <p className="mt-1.5 text-xs font-bold leading-relaxed text-center" style={{ color: tile.subtext }}>
                     {step.text}
                   </p>
                 </div>
@@ -102,19 +102,6 @@ export default function QuickStartSection() {
             );
           })}
         </ol>
-
-        <div className="flex justify-center">
-          <Link
-            to="/login"
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(5) }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <ArrowRight className="h-3.5 w-3.5 text-white" />
-            </span>
-            <span>Sign in to ComplianceHR Infinity</span>
-          </Link>
-        </div>
       </div>
     </section>
   );

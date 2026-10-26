@@ -5,24 +5,23 @@ import {
   ClipboardCheck, Layers, Sparkles, DollarSign, BookOpen, UserCheck,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { Image } from '@/components/ui/image';
 import QuickAppBar from '@/components/QuickAppBar';
-import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
+import { getTilePalette, getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
 
-// 12 Listed Features — 6 on each line, CIRCULAR feature icons + crisp WHITE background behind dark blue writing!
+// 12 Best Highlights & Features of ComplianceHR Infinity
 const LISTED_FEATURES = [
-  { label: '4-Step Quick Start', href: '#quick-start', icon: Compass, color: '#0072FF' },
-  { label: '12 Core Features', href: '#features', icon: Sparkles, color: '#FF2E9A' },
-  { label: '2-Min Express Audit', href: '#express-audit', icon: ClipboardCheck, color: '#5A00D6' },
-  { label: 'App Map & Workspace', href: '#blueprint', icon: Layers, color: '#00C6FF' },
-  { label: 'Why Choose Us', href: '#benefits', icon: ShieldCheck, color: '#A100FF' },
-  { label: 'Must-Have Review', href: '#must-haves', icon: BookOpen, color: '#0072FF' },
-  { label: '1-Click Operations', href: '#infinity-one-click-operations', icon: Zap, color: '#FF2E9A' },
-  { label: 'Screen Audit & Checklist', href: '#screen-by-screen-audit', icon: ClipboardCheck, color: '#0072FF' },
-  { label: 'Business Health', href: '#business-health-intelligence', icon: Activity, color: '#A100FF' },
-  { label: 'Core Risk & Roster', href: '#infinity-core-engine', icon: Cpu, color: '#5A00D6' },
-  { label: 'Unified Oversight & Office', href: '#infinity-control-centre', icon: Building2, color: '#00C6FF' },
-  { label: 'Price & Packaging', href: '#pricing', icon: DollarSign, color: '#FF2E9A' },
+  { label: 'Our Quick 4 Step Start Guide', href: '#quick-start', icon: Compass },
+  { label: '12 Connected Core Engines', href: '#features', icon: Sparkles },
+  { label: '2-Minute Express Internal Audit', href: '#express-audit', icon: ClipboardCheck },
+  { label: '46-Module App Map & Live Workspace', href: '#blueprint', icon: Layers },
+  { label: 'Why Providers Choose ComplianceHR', href: '#benefits', icon: ShieldCheck },
+  { label: 'Must-Have Functions & $355 Audit Suite', href: '#must-haves', icon: BookOpen },
+  { label: 'Infinity One-Click Operations', href: '#infinity-one-click-operations', icon: Zap },
+  { label: '2026 Screen-by-Screen Smart-Fill Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
+  { label: 'Business Health & NDIS Intelligence', href: '#business-health-intelligence', icon: Activity },
+  { label: 'Infinity Core AI & Validation Engine', href: '#infinity-core-engine', icon: Cpu },
+  { label: 'Unified Control Centre & 356 Checks', href: '#infinity-control-centre', icon: Building2 },
+  { label: 'Smart Enhanced Pricing & Doc Pack', href: '#pricing', icon: DollarSign },
 ];
 
 export default function LandingNav() {
@@ -48,9 +47,9 @@ export default function LandingNav() {
         scrolled ? 'shadow-xl' : 'shadow-md'
       }`}
     >
-      {/* Clean white outer area with 0.5cm side spacing — colour strictly inside borders */}
+      {/* Clean white outer area with 0.5cm side spacing */}
       <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
-        {/* Top Section with Increased App-Coloured Border Thickness */}
+        {/* Top Section — Protected & Untouched Design with Slightly Increased Slogan Size */}
         <div
           className="rounded-3xl p-[12px] shadow-lg"
           style={{
@@ -59,7 +58,6 @@ export default function LandingNav() {
           }}
         >
           <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-0 pb-4 sm:px-3 sm:pt-0 sm:pb-4 text-center">
-            {/* Mobile menu toggle in top-right corner */}
             <button
               onClick={() => setOpen((v) => !v)}
               className="md:hidden absolute right-3 top-2.5 z-20 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 text-[#0A2B6D]"
@@ -68,12 +66,10 @@ export default function LandingNav() {
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
 
-            {/* Centred Logo (1.5x Larger, Closer to Top Border) + Balanced Space Above App Name & Below Slogan */}
             <Link
               to="/"
               className="mx-auto flex w-full flex-col items-center justify-center bg-white text-center"
             >
-              {/* One Large Logo Above App Name (Logo Emblem Only — Name & Slogan Removed & Emblem Enlarged to Same Size & Location) */}
               <div
                 className="mt-0 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem] bg-white"
                 style={{ aspectRatio: '100 / 50' }}
@@ -86,7 +82,6 @@ export default function LandingNav() {
                     marginTop: '-5.5%',
                   }}
                 />
-                {/* Clean white masks over the top ascenders of embedded text so the full infinity curve remains 100% unclipped */}
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute bottom-0 left-0 bg-white"
@@ -104,7 +99,7 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* App Name & Slogan with Equal Visual Space to Logo Above and NDIS Badge Below */}
+              {/* App Name & Slightly Increased Slogan */}
               <div className="mt-2 sm:mt-3 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
                 <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
@@ -118,7 +113,7 @@ export default function LandingNav() {
                   </span>
                 </div>
 
-                <div className="mt-1 mx-auto flex w-full flex-wrap items-center justify-center gap-x-1.5 bg-transparent px-2 text-center text-xs sm:text-sm md:text-base font-extrabold">
+                <div className="mt-1.5 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-sm sm:text-base md:text-lg lg:text-xl font-extrabold">
                   <span className="text-[#0072FF]">Complete Control.</span>
                   <span className="text-[#5A00D6]">Greater Confidence.</span>
                   <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -126,9 +121,8 @@ export default function LandingNav() {
               </div>
             </Link>
 
-            {/* Bottom Section: Centred NDIS Badge + Slightly Increased & Centred Open, Landing, and Sign In Icons */}
+            {/* Bottom Section: Centred NDIS Badge + Open, Landing, and Sign In Icons */}
             <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 text-center">
-              {/* NDIS & Aged care Documentation & Compliance Badge */}
               <span
                 className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
                 style={{
@@ -142,7 +136,6 @@ export default function LandingNav() {
                 <span className="text-center">NDIS &amp; Aged care Documentation &amp; Compliance</span>
               </span>
 
-              {/* Slightly Increased & Centred Open, Landing, and Signed In Icons */}
               <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
                 <Link
                   to="/dashboard"
@@ -190,9 +183,9 @@ export default function LandingNav() {
           </div>
         </div>
 
-        {/* Features Listed — White Symbol in Header, Mixed 8 Full-Colour Tiles & App-Coloured Symbols */}
+        {/* ComplianceHR Infinity Highlights & Features */}
         <nav
-          aria-label="Listed features navigation"
+          aria-label="ComplianceHR Infinity Highlights & Features"
           className="rounded-3xl p-[12px] shadow-lg"
           style={{
             background:
@@ -207,10 +200,10 @@ export default function LandingNav() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
                 <Sparkles className="h-3.5 w-3.5 text-white" />
               </span>
-              <span className="text-center">12 Listed Landing Page Sections &amp; Highlights</span>
+              <span className="text-center">ComplianceHR Infinity Highlights &amp; Features</span>
             </span>
 
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 auto-rows-fr">
               {LISTED_FEATURES.map((l, idx) => {
                 const Icon = l.icon;
                 const tile = getTilePalette(idx);
@@ -219,16 +212,18 @@ export default function LandingNav() {
                   <a
                     key={l.href}
                     href={l.href}
-                    className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                    style={{ backgroundColor: tile.bg, color: tile.text }}
+                    className="flex h-full min-h-[48px] items-center gap-2.5 rounded-2xl border-2 px-3 py-2 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    style={{
+                      backgroundColor: tile.bg,
+                      color: tile.text,
+                      borderColor: getAppBorderView(idx),
+                    }}
                   >
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs"
-                    >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
                       <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                     </span>
                     <span
-                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10px] lg:text-[11px] font-extrabold leading-tight"
+                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-xs font-extrabold leading-snug"
                       style={{ color: tile.text }}
                     >
                       {l.label}
@@ -246,25 +241,26 @@ export default function LandingNav() {
       {open && (
         <div className="border-t-2 border-[#0A2B6D] bg-white px-4 py-3">
           <div className="grid grid-cols-2 gap-1.5">
-            {LISTED_FEATURES.map((l) => {
+            {LISTED_FEATURES.map((l, idx) => {
               const Icon = l.icon;
+              const tile = getTilePalette(idx);
+              const sym = getSymbolView(idx);
               return (
                 <a
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D]"
+                  className="flex items-center gap-2 rounded-2xl border-2 px-2.5 py-2 text-xs font-extrabold"
+                  style={{
+                    backgroundColor: tile.bg,
+                    color: tile.text,
+                    borderColor: getAppBorderView(idx),
+                  }}
                 >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Icon className="h-3 w-3 text-white" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                    <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="truncate">{l.label}</span>
+                  <span className="whitespace-normal break-words leading-snug">{l.label}</span>
                 </a>
               );
             })}
@@ -273,9 +269,9 @@ export default function LandingNav() {
             <Link
               to="/dashboard"
               onClick={() => setOpen(false)}
-              className="rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center text-xs font-extrabold text-[#0A2B6D]"
+              className="rounded-full border-2 border-[#0A2B6D] bg-[#0072FF] px-4 py-2 text-center text-xs font-extrabold text-white"
             >
-              Open App Dashboard
+              Dashboard
             </Link>
           </div>
         </div>

@@ -22,9 +22,8 @@ import Reveal from '@/components/landing/Reveal';
 import {
   getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -96,16 +95,16 @@ export default function ExpressAuditSection() {
         </span>
 
         <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(3) }}
-          >
-            From first question to audit-ready report in two minutes.
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">From first question to </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              audit-ready report
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              in two minutes.
+            </span>
           </h2>
-          <p
-            className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(3) }}
-          >
+          <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#0A2B6D]">
             The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
           </p>
         </div>
@@ -119,8 +118,12 @@ export default function ExpressAuditSection() {
             return (
               <div
                 key={v.label}
-                className="flex items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-center shadow-sm"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="flex items-center justify-center gap-2 rounded-full border-2 px-3 py-1.5 text-center shadow-sm"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(idx),
+                }}
               >
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
                   <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
@@ -141,8 +144,12 @@ export default function ExpressAuditSection() {
             return (
               <div
                 key={text}
-                className="flex items-center gap-2.5 rounded-2xl border-2 border-[#0A2B6D] px-4 py-2.5 shadow-sm"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="flex items-center gap-2.5 rounded-2xl border-2 px-4 py-2.5 shadow-sm"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(idx + 3),
+                }}
               >
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
                   <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
@@ -166,8 +173,12 @@ export default function ExpressAuditSection() {
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="group flex flex-col justify-between rounded-2xl border-2 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(index + 5),
+                }}
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">

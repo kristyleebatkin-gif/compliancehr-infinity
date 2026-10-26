@@ -21,6 +21,7 @@ import {
   getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -93,22 +94,29 @@ export default function BlueprintPreviewSection() {
             <span className="text-center">Current Platform Blueprint · {moduleCount} Connected Modules</span>
           </span>
 
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(4) }}
-          >
-            An accurate map of the ComplianceHR Infinity app
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">An accurate map of the </span>
+            <span className="text-[#0A2B6D]">Compliance</span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              HR
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              Infinity app
+            </span>
           </h2>
           <p
             className="mx-auto max-w-3xl text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(4) }}
+            style={{ color: getSubheaderColourView(1) }}
           >
             All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
           </p>
         </Reveal>
 
         {/* How Information Connects & Role-Based Access Model */}
-        <div className="w-full rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-left space-y-3 shadow-sm">
+        <div
+          className="w-full rounded-2xl border-2 bg-white p-4 text-left space-y-3 shadow-sm"
+          style={{ borderColor: getAppBorderView(0) }}
+        >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span
               className="inline-flex min-h-[38px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs"
@@ -133,7 +141,10 @@ export default function BlueprintPreviewSection() {
 
           {expandConnections && (
             <div className="grid gap-4 lg:grid-cols-12">
-              <div className="lg:col-span-7 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-2.5">
+              <div
+                className="lg:col-span-7 rounded-2xl border-2 bg-white p-3.5 space-y-2.5"
+                style={{ borderColor: getAppBorderView(1) }}
+              >
                 <div className="flex items-center justify-between gap-2">
                   <h3
                     className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
@@ -152,15 +163,20 @@ export default function BlueprintPreviewSection() {
                   {DATA_FLOWS.map((flow, fIdx) => (
                     <div
                       key={flow.steps[0]}
-                      className="flex flex-wrap items-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs"
+                      className="flex flex-wrap items-center gap-1.5 rounded-2xl border-2 bg-white px-3 py-2 shadow-2xs"
+                      style={{ borderColor: getAppBorderView(fIdx + 2) }}
                     >
                       {flow.steps.map((item, index) => {
                         const tile = getTilePalette(fIdx * 3 + index);
                         return (
                           <React.Fragment key={item}>
                             <span
-                              className="rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[10.5px] font-extrabold"
-                              style={{ backgroundColor: tile.bg, color: tile.text }}
+                              className="rounded-full border-2 px-2.5 py-0.5 text-[10.5px] font-extrabold"
+                              style={{
+                                backgroundColor: tile.bg,
+                                color: tile.text,
+                                borderColor: getAppBorderView(fIdx * 3 + index),
+                              }}
                             >
                               {item}
                             </span>
@@ -175,7 +191,10 @@ export default function BlueprintPreviewSection() {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-2.5">
+              <div
+                className="lg:col-span-5 rounded-2xl border-2 bg-white p-3.5 space-y-2.5"
+                style={{ borderColor: getAppBorderView(2) }}
+              >
                 <div className="flex items-center justify-between gap-2">
                   <span
                     className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold text-white"
@@ -200,8 +219,12 @@ export default function BlueprintPreviewSection() {
                     return (
                       <div
                         key={lvl.title}
-                        className="flex items-center gap-2.5 rounded-2xl border-2 border-[#0A2B6D] px-3.5 py-2 shadow-2xs"
-                        style={{ backgroundColor: tile.bg, color: tile.text }}
+                        className="flex items-center gap-2.5 rounded-2xl border-2 px-3.5 py-2 shadow-2xs"
+                        style={{
+                          backgroundColor: tile.bg,
+                          color: tile.text,
+                          borderColor: getAppBorderView(idx + 2),
+                        }}
                       >
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
                           <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
@@ -224,7 +247,10 @@ export default function BlueprintPreviewSection() {
         </div>
 
         {/* Live Workspace Groups */}
-        <div className="w-full rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 space-y-4 text-left shadow-sm">
+        <div
+          className="w-full rounded-2xl border-2 bg-white p-4 space-y-4 text-left shadow-sm"
+          style={{ borderColor: getAppBorderView(3) }}
+        >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">
               <span
@@ -240,8 +266,12 @@ export default function BlueprintPreviewSection() {
 
             <div className="flex flex-wrap gap-2">
               <span
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold"
-                style={{ backgroundColor: getTilePalette(0).bg, color: getTilePalette(0).text }}
+                className="inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1 text-xs font-extrabold"
+                style={{
+                  backgroundColor: getTilePalette(0).bg,
+                  color: getTilePalette(0).text,
+                  borderColor: getAppBorderView(0),
+                }}
               >
                 <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                   <FileSpreadsheet className="h-3 w-3 text-[#0072FF]" />
@@ -249,8 +279,12 @@ export default function BlueprintPreviewSection() {
                 Spreadsheet Exchange
               </span>
               <span
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold"
-                style={{ backgroundColor: getTilePalette(1).bg, color: getTilePalette(1).text }}
+                className="inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1 text-xs font-extrabold"
+                style={{
+                  backgroundColor: getTilePalette(1).bg,
+                  color: getTilePalette(1).text,
+                  borderColor: getAppBorderView(1),
+                }}
               >
                 <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
                   <Sparkles className="h-3 w-3 text-[#FF2E9A]" />
@@ -264,7 +298,8 @@ export default function BlueprintPreviewSection() {
             {APP_MODULE_GROUPS.map((group, gIdx) => (
               <div
                 key={group.title}
-                className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-3 shadow-2xs"
+                className="rounded-2xl border-2 bg-white p-3.5 space-y-3 shadow-2xs"
+                style={{ borderColor: getAppBorderView(gIdx) }}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span
@@ -277,8 +312,12 @@ export default function BlueprintPreviewSection() {
                     <span>{group.title}</span>
                   </span>
                   <span
-                    className="rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-xs font-extrabold"
-                    style={{ backgroundColor: getTilePalette(gIdx + 2).bg, color: getTilePalette(gIdx + 2).text }}
+                    className="rounded-full border-2 px-3 py-0.5 text-xs font-extrabold"
+                    style={{
+                      backgroundColor: getTilePalette(gIdx + 2).bg,
+                      color: getTilePalette(gIdx + 2).text,
+                      borderColor: getAppBorderView(gIdx + 2),
+                    }}
                   >
                     {group.modules.length} modules
                   </span>
@@ -293,8 +332,12 @@ export default function BlueprintPreviewSection() {
                       <Link
                         key={mod.key}
                         to={mod.path}
-                        className="group flex items-start gap-2.5 rounded-2xl border-2 border-[#0A2B6D] p-3 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
-                        style={{ backgroundColor: tile.bg, color: tile.text }}
+                        className="group flex items-start gap-2.5 rounded-2xl border-2 p-3 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
+                        style={{
+                          backgroundColor: tile.bg,
+                          color: tile.text,
+                          borderColor: getAppBorderView(gIdx * 3 + mIdx),
+                        }}
                       >
                         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm">
                           <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />

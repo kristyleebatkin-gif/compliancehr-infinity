@@ -4,9 +4,9 @@ import Reveal from '@/components/landing/Reveal';
 import {
   getTilePalette,
   getHeaderView,
-  getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -40,15 +40,19 @@ export default function BenefitsSection() {
         </span>
 
         <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2
-            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
-            style={{ backgroundImage: getTitleGradientView(5) }}
-          >
-            Why providers choose ComplianceHR Infinity
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <span className="text-[#0A2B6D]">Why providers choose </span>
+            <span className="text-[#0A2B6D]">Compliance</span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              HR
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              Infinity
+            </span>
           </h2>
           <p
             className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(5) }}
+            style={{ color: getSubheaderColourView(1) }}
           >
             The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
           </p>
@@ -63,8 +67,12 @@ export default function BenefitsSection() {
               <Reveal
                 key={b.title}
                 delay={(index % 6) * 0.05}
-                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+                className="group flex flex-col justify-between rounded-2xl border-2 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{
+                  backgroundColor: tile.bg,
+                  color: tile.text,
+                  borderColor: getAppBorderView(index + 2),
+                }}
               >
                 <div>
                   <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm transition-transform group-hover:scale-105">
