@@ -34,6 +34,7 @@ export default function ModuleChipStrip() {
       path: '/dashboard',
       icon: Sparkles,
       isAppColoured: true,
+      appGradient: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
       blurb: 'Open ComplianceHR Infinity Dashboard',
     },
     {
@@ -41,6 +42,8 @@ export default function ModuleChipStrip() {
       label: 'Landing Page',
       path: '/',
       icon: Home,
+      isAppColoured: true,
+      appGradient: 'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
       blurb: 'Main ComplianceHR Infinity Landing Page',
     },
   ];
@@ -88,6 +91,7 @@ export default function ModuleChipStrip() {
                   className="group flex h-full min-h-[48px] w-full items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                   style={{
                     background:
+                      m.appGradient ||
                       'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
                   }}
                 >

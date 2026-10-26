@@ -75,28 +75,53 @@ export default function LandingHero() {
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            {/* Entire Logo Fitted Inside Square Border + Centered App Name */}
+            {/* Entire Logo Inside App-Coloured Border + Centered App Name Inside App-Coloured Border */}
             <div className="mx-auto flex w-full flex-col sm:flex-row items-center justify-center gap-4 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-3 shadow-md">
-              <div className="flex h-36 w-36 sm:h-44 sm:w-44 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-3 border-[#0A2B6D] bg-white p-0.5 shadow-sm">
-                <Image
-                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                  alt="ComplianceHR Infinity logo"
-                  className="h-full w-full object-contain"
-                  fittingType="fit"
-                />
+              <div
+                className="flex h-36 w-36 sm:h-44 sm:w-44 shrink-0 items-center justify-center rounded-2xl p-[3px] shadow-md"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
+                }}
+              >
+                <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[13px] bg-white p-0.5">
+                  <Image
+                    src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                    alt="ComplianceHR Infinity logo"
+                    className="h-full w-full object-contain"
+                    fittingType="fit"
+                  />
+                </div>
               </div>
               <div className="flex flex-col items-center justify-center bg-white px-2 text-center">
-                <div className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
-                  Compliance
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    HR
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Infinity
-                  </span>
+                <div
+                  className="inline-flex items-center justify-center rounded-2xl p-[3px] shadow-sm"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
+                  }}
+                >
+                  <div className="rounded-[13px] bg-white px-4 py-1.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
+                    Compliance
+                    <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                      HR
+                    </span>{' '}
+                    <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                      Infinity
+                    </span>
+                  </div>
                 </div>
-                <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-1 text-xs font-extrabold uppercase tracking-widest text-white shadow-sm">
-                  NDIS &amp; Aged Care Compliance
+                <span
+                  className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs font-extrabold uppercase tracking-widest text-white shadow-sm"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+                  }}
+                >
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                    <ShieldCheck className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                  </span>
+                  <span>NDIS &amp; Aged Care Compliance</span>
                 </span>
               </div>
             </div>
