@@ -10,15 +10,18 @@ import {
   ChevronUp,
   Workflow,
   Lock,
+  Layers,
 } from 'lucide-react';
 
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import Reveal from '@/components/landing/Reveal';
 
-// Lighter, brighter headers for Live Workspace (NO dark navy headers!)
-const LIGHT_HEADER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #A100FF 65%, #FF2E9A 100%)';
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) =>
@@ -30,49 +33,39 @@ const pick = (...keys) =>
 const APP_MODULE_GROUPS = [
   {
     title: 'People, intake and profiles',
-    color: '#0072FF',
-    headerBg: 'linear-gradient(90deg, #E0F7FF 0%, #DBEAFE 50%, #F5F0FF 100%)',
     modules: pick('dashboard', 'operations-centre', 'my-profile', 'intake', 'our-staff', 'our-participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'),
   },
   {
     title: 'Service delivery and workforce',
-    color: '#00C6FF',
-    headerBg: 'linear-gradient(90deg, #D8F9FF 0%, #E0F2FE 50%, #F5F0FF 100%)',
     modules: pick('communications', 'incidents', 'incident-analytics', 'risks', 'rostering', 'goals', 'tasks', 'emergency-response'),
   },
   {
     title: 'Compliance, safety and evidence',
-    color: '#A100FF',
-    headerBg: 'linear-gradient(90deg, #F3E8FF 0%, #EDE9FE 50%, #FCE7F3 100%)',
     modules: pick('compliance', 'auditor-portal', 'documents', 'company-safe', 'training', 'certificates', 'quality', 'feedback', 'meetings'),
   },
   {
     title: 'Business, finance and growth',
-    color: '#FF2E9A',
-    headerBg: 'linear-gradient(90deg, #FCE7F3 0%, #FAE8FF 50%, #F5F0FF 100%)',
     modules: pick('invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'analytics', 'human-resources', 'crm', 'projects'),
   },
   {
     title: 'Information, providers and access',
-    color: '#5A00D6',
-    headerBg: 'linear-gradient(90deg, #EDE9FE 0%, #E0E7FF 50%, #E0F7FF 100%)',
     modules: pick('ndis-provider', 'ndis-news', 'equipment-manuals', 'community-council', 'community-referral', 'programs', 'suggestions-hub', 'help', 'user-guides', 'assistant'),
   },
 ];
 
 const DATA_FLOWS = [
-  { color: '#0072FF', steps: ['Intake Centre', 'Staff & Participant Profiles', 'Rostering', 'Communication Centre', 'Invoicing Centre'] },
-  { color: '#5A00D6', steps: ['Document Vault & Forms', 'Company Safe', 'Details Checks & Reminders', 'Compliance Centre', 'NDIS Provider Portal'] },
-  { color: '#A100FF', steps: ['Incident & Risk Reporting', 'Safety Insights & Controls', 'Quality & Improvement', 'Registers & Reports', 'Continuous Improvement'] },
-  { color: '#FF2E9A', steps: ['Tasks & Goal Progress', 'Feedback & Surveys', 'Business Analytics', 'Projects Hub', 'CRM & Growth'] },
+  { steps: ['Intake Centre', 'Staff & Participant Profiles', 'Rostering', 'Communication Centre', 'Invoicing Centre'] },
+  { steps: ['Document Vault & Forms', 'Company Safe', 'Details Checks & Reminders', 'Compliance Centre', 'NDIS Provider Portal'] },
+  { steps: ['Incident & Risk Reporting', 'Safety Insights & Controls', 'Quality & Improvement', 'Registers & Reports', 'Continuous Improvement'] },
+  { steps: ['Tasks & Goal Progress', 'Feedback & Surveys', 'Business Analytics', 'Projects Hub', 'CRM & Growth'] },
 ];
 
 const ACCESS_LEVELS = [
-  { title: 'Admin & Provider Administrator', desc: 'Full organisation-wide setup, governance & management', color: '#0072FF' },
-  { title: 'Compliance, Quality, HR & Finance', desc: 'Dedicated domain managers & accounts officers', color: '#5A00D6' },
-  { title: 'Operational & Coordination Roles', desc: 'Administration, Team Leader, Rostering, Intake & CRM', color: '#A100FF' },
-  { title: 'Support Workers & Volunteers', desc: 'Connected profiles, shifts, training & records', color: '#FF2E9A' },
-  { title: 'Participants & External Auditors', desc: 'Own profile/goals or consent-verified audit records', color: '#00C6FF' },
+  { title: 'Admin & Provider Administrator', desc: 'Full organisation-wide setup, governance & management' },
+  { title: 'Compliance, Quality, HR & Finance', desc: 'Dedicated domain managers & accounts officers' },
+  { title: 'Operational & Coordination Roles', desc: 'Administration, Team Leader, Rostering, Intake & CRM' },
+  { title: 'Support Workers & Volunteers', desc: 'Connected profiles, shifts, training & records' },
+  { title: 'Participants & External Auditors', desc: 'Own profile/goals or consent-verified audit records' },
 ];
 
 export default function BlueprintPreviewSection() {
@@ -82,268 +75,233 @@ export default function BlueprintPreviewSection() {
   return (
     <section
       id="blueprint"
-      className="relative w-full scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white px-4 py-6 shadow-xl md:px-6 space-y-5"
-      style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}
+      className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
+      style={{ background: TOP_BORDER_GRADIENT }}
     >
-      {/* Lighter, Brighter Top Heading Banner */}
-      <Reveal
-        className="gradient-brand mx-auto rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-center text-white shadow-md"
-        style={{ background: LIGHT_HEADER_GRADIENT }}
-      >
-        <div className="mx-auto inline-flex rounded-full border border-[#0A2B6D] bg-white px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-          Current platform blueprint · {moduleCount} Connected Modules
-        </div>
-        <h2 className="mt-2 font-editorial text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-          An accurate map of the ComplianceHR Infinity app
-        </h2>
-        <p className="mt-1 text-xs sm:text-sm font-semibold text-white">
-          All {moduleCount} current modules, their purpose, access model and connected information flows in one colourful view.
-        </p>
-      </Reveal>
-
-      {/* MINIMISED, COLOURFUL, APP-BORDERED "HOW INFORMATION CONNECTS" & "ACCESS FOLLOWS ROLE" */}
-      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md" style={{ borderTopWidth: '4px', borderTopColor: '#00C6FF' }}>
-        <div
-          className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-2"
-          style={{ background: 'linear-gradient(90deg, #E0F7FF 0%, #EDE9FE 50%, #FCE7F3 100%)' }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
-              <Workflow className="h-4 w-4 text-white" />
-            </span>
-            <span className="rounded bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              How Information Connects &amp; Role-Based Access Model
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setExpandConnections((v) => !v)}
-            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
+        <Reveal className="flex flex-col items-center justify-center space-y-2">
+          <span
+            className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+            style={{ background: BADGE_GRADIENT }}
           >
-            {expandConnections ? 'Minimise Panel' : 'Expand Panel'}
-            {expandConnections ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-          </button>
-        </div>
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+              <Layers className="h-3.5 w-3.5 text-[#0072FF]" />
+            </span>
+            <span className="text-center">Current Platform Blueprint · {moduleCount} Connected Modules</span>
+          </span>
 
-        {expandConnections && (
-          <div className="mt-2.5 grid gap-3 lg:grid-cols-12">
-            <div className="lg:col-span-7 rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF]/50 p-2.5 space-y-1.5">
-              <div className="flex items-center justify-between">
-                <h3 className="rounded bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  🔗 How Information Connects Automatically
-                </h3>
-                <span className="rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white">
-                  Zero Double-Entry
-                </span>
-              </div>
-              <div className="space-y-1.5">
-                {DATA_FLOWS.map((flow) => (
-                  <div
-                    key={flow.steps[0]}
-                    className="flex flex-wrap items-center gap-1 rounded-lg border border-[#0A2B6D]/40 bg-white px-2 py-1 shadow-2xs"
-                    style={{ borderLeftWidth: '4px', borderLeftColor: flow.color }}
-                  >
-                    {flow.steps.map((item, index) => (
-                      <React.Fragment key={item}>
-                        <span
-                          className="rounded-md border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
-                          style={{ borderTopWidth: '3px', borderTopColor: flow.color }}
-                        >
-                          {item}
-                        </span>
-                        {index < flow.steps.length - 1 && (
-                          <ArrowRight className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+            An accurate map of the{' '}
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              ComplianceHR Infinity
+            </span>{' '}
+            app
+          </h2>
+          <p className="mx-auto max-w-3xl text-xs sm:text-sm md:text-base font-extrabold text-[#5A00D6]">
+            All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
+          </p>
+        </Reveal>
 
-            <div className="lg:col-span-5 rounded-xl border-2 border-[#0A2B6D] bg-[#FFF0F8]/50 p-2.5 space-y-1.5">
-              <div className="flex items-center justify-between">
-                <h3 className="flex items-center gap-1 rounded bg-white px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  <Lock className="h-3.5 w-3.5 text-[#FF2E9A]" /> Access Follows the Person&apos;s Role
-                </h3>
-                <span className="rounded-full bg-[#FF2E9A] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white">
-                  Strict RLS Security
-                </span>
-              </div>
-              <div className="grid grid-cols-1 gap-1">
-                {ACCESS_LEVELS.map((lvl) => (
-                  <div
-                    key={lvl.title}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/40 bg-white px-2.5 py-1 shadow-2xs"
-                    style={{ borderLeftWidth: '4px', borderLeftColor: lvl.color }}
+        {/* How Information Connects & Role-Based Access Model */}
+        <div className="w-full rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-left space-y-3 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span
+              className="inline-flex min-h-[38px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs"
+              style={{ background: BADGE_GRADIENT }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                <Workflow className="h-3.5 w-3.5 text-[#0072FF]" />
+              </span>
+              <span>How Information Connects &amp; Role-Based Access Model</span>
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setExpandConnections((v) => !v)}
+              className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+              }}
+            >
+              <span>{expandConnections ? 'Minimise Panel' : 'Expand Panel'}</span>
+              {expandConnections ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
+            </button>
+          </div>
+
+          {expandConnections && (
+            <div className="grid gap-4 lg:grid-cols-12">
+              <div className="lg:col-span-7 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                    How Information Connects Automatically
+                  </h3>
+                  <span
+                    className="rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white"
+                    style={{ background: BADGE_GRADIENT }}
                   >
-                    <div className="min-w-0 bg-white">
-                      <div className="text-[10.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                        {lvl.title}
-                      </div>
-                      <div className="text-[9.5px] font-bold text-[#5A00D6] leading-tight">
-                        {lvl.desc}
+                    Zero Double-Entry
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {DATA_FLOWS.map((flow) => (
+                    <div
+                      key={flow.steps[0]}
+                      className="flex flex-wrap items-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs"
+                    >
+                      {flow.steps.map((item, index) => (
+                        <React.Fragment key={item}>
+                          <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                            {item}
+                          </span>
+                          {index < flow.steps.length - 1 && (
+                            <ArrowRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="flex items-center gap-1.5 font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                    <span
+                      className="flex h-6 w-6 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                      style={{ background: ICON_GRADIENT }}
+                    >
+                      <Lock className="h-3 w-3 text-white" />
+                    </span>
+                    <span>Access Follows Role</span>
+                  </h3>
+                  <span
+                    className="rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white"
+                    style={{ background: BADGE_GRADIENT }}
+                  >
+                    Strict RLS Security
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-2">
+                  {ACCESS_LEVELS.map((lvl) => (
+                    <div
+                      key={lvl.title}
+                      className="flex items-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 shadow-2xs"
+                    >
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                        style={{ background: ICON_GRADIENT }}
+                      >
+                        <ShieldCheck className="h-3 w-3 text-white" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[11px] font-extrabold text-[#0A2B6D] leading-tight">
+                          {lvl.title}
+                        </div>
+                        <div className="text-[10px] font-bold text-[#5A00D6] leading-tight">
+                          {lvl.desc}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* LIVE WORKSPACE WINDOW WITH LIGHTER HEADERS */}
-      <div className="relative overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-white shadow-xl">
-        {/* Lighter Bright Sky-to-Pink Window Bar */}
-        <div
-          className="flex flex-wrap items-center gap-2 border-b-2 border-[#0A2B6D] px-4 py-2.5"
-          style={{ background: 'linear-gradient(90deg, #E0F7FF 0%, #EDE9FE 50%, #FCE7F3 100%)' }}
-        >
-          <span className="h-3 w-3 rounded-full bg-[#FF2E9A] ring-1 ring-[#0A2B6D]" />
-          <span className="h-3 w-3 rounded-full bg-[#00C6FF] ring-1 ring-[#0A2B6D]" />
-          <span className="h-3 w-3 rounded-full bg-[#A100FF] ring-1 ring-[#0A2B6D]" />
-          <div className="ml-2 min-w-0 flex-1 rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
-            compliancehrinfinity.com/dashboard — All {moduleCount} Connected Modules
-          </div>
-          <span className="rounded-full border-2 border-[#0A2B6D] bg-[#00C6FF] px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs">
-            LIVE WORKSPACE
-          </span>
+          )}
         </div>
 
-        <div className="grid lg:grid-cols-[220px_1fr]">
-          {/* Lighter Pastel Sidebar Preview */}
-          <aside
-            className="hidden border-r-2 border-[#0A2B6D] bg-[#F5F0FF]/50 p-3 lg:block"
-          >
-            <div className="flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-2xs">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0072FF] text-white shadow-sm">
-                <ShieldCheck className="h-4 w-4 text-white" />
+        {/* Live Workspace Groups on Crisp White with Circular Gradient Icons */}
+        <div className="w-full rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 space-y-4 text-left shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5">
+              <span
+                className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-sm"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <LayoutDashboard className="h-4 w-4 text-white" />
               </span>
-              <div className="min-w-0 bg-white">
-                <div className="truncate text-xs font-extrabold text-[#0A2B6D]">ComplianceHR Infinity</div>
-                <div className="text-[10px] font-extrabold text-[#5A00D6]">Provider Workspace</div>
+              <div>
+                <div className="font-editorial text-lg font-extrabold text-[#0A2B6D]">
+                  Organisation Live Workspace
+                </div>
+                <div className="text-xs font-bold text-[#5A00D6]">
+                  People, service delivery, compliance and business operations connected across all {moduleCount} modules.
+                </div>
               </div>
             </div>
 
-            <div className="mt-3 space-y-2.5">
-              {APP_MODULE_GROUPS.map((group) => (
-                <div
-                  key={group.title}
-                  className="rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-2xs"
-                  style={{ borderTopWidth: '3px', borderTopColor: group.color }}
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1 text-xs font-extrabold text-[#0A2B6D]">
+                <span
+                  className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                  style={{ background: ICON_GRADIENT }}
                 >
-                  <div
-                    className="rounded bg-white text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                  <FileSpreadsheet className="h-3 w-3 text-white" />
+                </span>
+                Spreadsheet Exchange
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1 text-xs font-extrabold text-[#0A2B6D]">
+                <span
+                  className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                  style={{ background: ICON_GRADIENT }}
+                >
+                  <Sparkles className="h-3 w-3 text-white" />
+                </span>
+                AI Assistant
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {APP_MODULE_GROUPS.map((group) => (
+              <div
+                key={group.title}
+                className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 space-y-3 shadow-2xs"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                    style={{ background: BADGE_GRADIENT }}
                   >
-                    {group.title}
-                  </div>
-                  <div className="mt-1 space-y-1">
-                    {group.modules.slice(0, 3).map((m) => (
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                      <Layers className="h-3 w-3 text-[#5A00D6]" />
+                    </span>
+                    <span>{group.title}</span>
+                  </span>
+                  <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                    {group.modules.length} modules
+                  </span>
+                </div>
+
+                <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
+                  {group.modules.map((mod) => {
+                    const Icon = mod.icon || ShieldCheck;
+                    return (
                       <Link
-                        key={m.key}
-                        to={m.path}
-                        className="flex items-center gap-1.5 rounded-md border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[10px] font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                        key={mod.key}
+                        to={mod.path}
+                        className="group flex items-start gap-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-2xs transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                       >
                         <span
-                          className="h-2 w-2 shrink-0 rounded-full"
-                          style={{ backgroundColor: group.color }}
-                        />
-                        <span className="truncate">{m.label}</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </aside>
-
-          {/* Live Workspace Canvas with Lighter Group Headers */}
-          <div className="bg-white p-4 sm:p-5">
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
-              <div className="flex items-center gap-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0072FF] text-white shadow-sm">
-                  <LayoutDashboard className="h-5 w-5 text-white" />
-                </span>
-                <div className="bg-white">
-                  <div className="font-editorial text-lg font-extrabold text-[#0A2B6D]">
-                    Organisation Live Workspace
-                  </div>
-                  <div className="text-xs font-bold text-[#5A00D6]">
-                    People, service delivery, compliance and business operations connected in full colour.
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]">
-                  <FileSpreadsheet className="h-3.5 w-3.5 text-[#0072FF]" />
-                  Spreadsheet Exchange
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]">
-                  <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
-                  AI Assistant
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-4 space-y-4">
-              {APP_MODULE_GROUPS.map((group) => (
-                <div
-                  key={group.title}
-                  className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm"
-                  style={{ borderTopWidth: '4px', borderTopColor: group.color }}
-                >
-                  {/* Lighter Pastel Header with Crisp White Pill Behind Dark Blue Title! */}
-                  <div
-                    className="mb-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-1.5"
-                    style={{ background: group.headerBg }}
-                  >
-                    <h3 className="rounded-lg border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      {group.title}
-                    </h3>
-                    <span
-                      className="rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-                      style={{ backgroundColor: group.color }}
-                    >
-                      {group.modules.length} modules
-                    </span>
-                  </div>
-
-                  <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                    {group.modules.map((mod) => {
-                      const modColor = moduleKeyColour(mod.key) || group.color;
-                      const Icon = mod.icon || ShieldCheck;
-                      return (
-                        <Link
-                          key={mod.key}
-                          to={mod.path}
-                          className="group relative flex items-start gap-2.5 overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
-                          style={{
-                            borderLeftWidth: '5px',
-                            borderLeftColor: modColor,
-                          }}
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm"
+                          style={{ background: ICON_GRADIENT }}
                         >
-                          <span
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm"
-                            style={{ backgroundColor: modColor }}
-                          >
-                            <Icon className="h-4 w-4 text-white" />
-                          </span>
-                          <div className="min-w-0 flex-1 bg-white">
-                            <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                              {mod.label}
-                            </div>
-                            <div className="mt-0.5 text-[10.5px] font-semibold leading-snug text-[#0A2B6D]">
-                              {mod.blurb}
-                            </div>
+                          <Icon className="h-4 w-4 text-white" />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                            {mod.label}
                           </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
+                          <div className="mt-0.5 text-[11px] font-semibold leading-snug text-[#5A00D6]">
+                            {mod.blurb}
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

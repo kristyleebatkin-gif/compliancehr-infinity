@@ -168,35 +168,54 @@ export default function LandingNav() {
           </div>
         </div>
 
-        {/* Features Listed — No Colour Around Features (Clean White Inside Border Only) + Every Feature Icon in App Colour */}
+        {/* Features Listed — Matching Top Section Border, Spacing, Colours & Style */}
         <nav
           aria-label="Listed features navigation"
-          className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md"
+          className="rounded-3xl p-[12px] shadow-lg"
+          style={{
+            background:
+              'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+          }}
         >
-          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
-            {LISTED_FEATURES.map((l) => {
-              const Icon = l.icon;
-              return (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  className="flex h-full min-h-[42px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-2 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
-                >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                    }}
+          <div className="rounded-[16px] bg-white px-3 py-4 sm:px-4 sm:py-4 text-center space-y-3">
+            <span
+              className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+              style={{
+                background:
+                  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+              }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              </span>
+              <span className="text-center">12 Listed Landing Page Sections &amp; Highlights</span>
+            </span>
+
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
+              {LISTED_FEATURES.map((l) => {
+                const Icon = l.icon;
+                return (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                   >
-                    <Icon className="h-3 w-3 text-white" />
-                  </span>
-                  <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[9.5px] lg:text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                    {l.label}
-                  </span>
-                </a>
-              );
-            })}
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+                      style={{
+                        background:
+                          'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                      }}
+                    >
+                      <Icon className="h-3 w-3 text-white" />
+                    </span>
+                    <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10px] lg:text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
+                      {l.label}
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </nav>
       </div>

@@ -2,26 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers,
-  ClipboardCheck, Lock, RefreshCw,
+  ClipboardCheck, Lock, RefreshCw, DollarSign,
 } from 'lucide-react';
-import { Image } from '@/components/ui/image';
 
-const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
-const DEFAULT_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
-const FULL_SLOGAN = 'Complete Control. Greater Confidence. Brighter Success.';
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
-/**
- * ComplianceHR Infinity monthly prices increased by +$160/month across every tier
- * to include the $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack:
- * - Up to 20 users:  $500 + $160 = $660 / mo ($7,920 / yr)
- * - 21–30 users:     $563 + $160 = $723 / mo ($8,670 / yr)
- * - 31–40 users:     $625 + $160 = $785 / mo ($9,420 / yr)
- * - 41–50 users:     $688 + $160 = $848 / mo ($10,170 / yr)
- * - 51–100 users:    $750 + $160 = $910 / mo ($10,920 / yr)
- * - 101+ users:      $875 + $160 = $1,035 / mo ($12,420 / yr)
- */
 export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-20',
@@ -36,12 +26,10 @@ export const COMPLIANCE_HR_PACKAGES = [
     integrationCredits: '20,000 integration credits / mo',
     color: '#FF2E9A',
     featured: true,
-    tagline:
-      'Base $500/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (17 Categories · 356 Checkpoints)',
-      'All 45 ComplianceHR Infinity Modules + Dual Office & Profile Views',
+      'All 46 ComplianceHR Infinity Modules + Dual Office & Profile Views',
       'Employee & Participant Profiles, NDIS Screening & 3-Part Consents',
       '16 Communication Modulars, Shared To-Do Command & 1-Click Audit Packs',
       '14-day $0 upfront free trial — test everything before scaling',
@@ -59,12 +47,10 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     color: '#5A00D6',
-    tagline:
-      'Base $563/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
-      'Full 45-Module Smart Enhanced All-In-One Compliance Pack for 21–30 users',
+      'Full 46-Module Smart Enhanced All-In-One Compliance Pack for 21–30 users',
       'Smart Rostering, Shift Notes, NDIS Price Guide Invoicing & Payroll',
       '24h / 5d NDIS Reportable Incident Timers, Risk Matrix & Take-5 Checks',
       'HR Paperwork Hub, LMS Training Academy & AI Course/Quiz Builder',
@@ -82,8 +68,6 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     color: '#0072FF',
-    tagline:
-      'Base $625/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (17 Categories · 356 Checkpoints)',
@@ -105,8 +89,6 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     color: '#0A2B6D',
-    tagline:
-      'Base $688/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
@@ -128,8 +110,6 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
     color: '#A100FF',
-    tagline:
-      'Base $750/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (17 Categories · 356 Checkpoints)',
@@ -151,8 +131,6 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
     color: '#00C6FF',
-    tagline:
-      'Base $875/mo + $160/mo Elite Plan Smart Enhanced All-In-One Compliance Pack included.',
     benefits: [
       'Includes $160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
       'Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
@@ -168,260 +146,230 @@ export const CORE_PLATFORM_BENEFITS = [
   {
     icon: ShieldCheck,
     title: 'Smart Enhanced All-In-One Pack (+$160/mo Elite Included)',
-    desc: 'Every tier now includes the $160/mo Elite Plan (2,500 message credits & 20,000 integration credits) plus the $355 Master Compliance Audit Document.',
-    color: '#FF2E9A',
+    desc: 'Every tier includes the $160/mo Elite Plan (2,500 message credits & 20,000 integration credits) plus the $355 Master Compliance Audit Document.',
   },
   {
     icon: ClipboardCheck,
     title: '$355 Master Compliance Audit Doc Included Free',
     desc: 'Both ComplianceHR Infinity Governance (CHR-AUD-001) & Workforce Operations (CHR-AUD-002) 11-page, 17-category, 356-checkpoint audit documents included.',
-    color: '#6d28d9',
   },
   {
     icon: Layers,
-    title: 'All 45 Connected Modules + Dual Views',
+    title: 'All 46 Connected Modules + Dual Views',
     desc: 'Switch seamlessly between the Enhanced Executive Office View and General Profile View with custom modular screen selectors.',
-    color: '#0072FF',
   },
   {
     icon: Zap,
     title: '14-Day Free Trial ($0 Upfront Test Mode)',
     desc: 'Build and test your application with zero upfront costs, then scale into the Smart Enhanced All-In-One tier that matches your team size.',
-    color: '#0A2B6D',
   },
   {
     icon: Lock,
     title: 'Strict Role-Based NDIS & HR Security',
     desc: 'Granular permissions across 115+ entities for Admins, Team Leaders, Support Workers, Finance, HR, Participants and Auditors.',
-    color: '#A100FF',
   },
   {
     icon: RefreshCw,
     title: '65+ Workflows & 100+ Server Functions',
     desc: '20,000 integration credits power automated NDIS timers, expiry scans, shift alerts, 30-action reports, and AI copilots.',
-    color: '#00C6FF',
   },
 ];
 
-export default function PricingSection({ compact = false }) {
-  const [billing, setBilling] = useState('monthly'); // 'monthly' | 'yearly'
+export default function PricingSection() {
+  const [billing, setBilling] = useState('monthly');
 
   return (
     <section
       id="pricing"
-      className={`${compact ? '' : 'mx-auto max-w-6xl'} scroll-mt-16 rounded-3xl border-2 border-[#0A2B6D] bg-white p-4 sm:p-6 shadow-xl space-y-5`}
+      className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
+      style={{ background: TOP_BORDER_GRADIENT }}
     >
-      {/* Top Gradient Header Banner */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-white shadow-md"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="flex h-8 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-            <Image
-              src={DEFAULT_LOGO}
-              alt="ComplianceHR Infinity"
-              fittingType="fit"
-              className="h-full w-full object-contain"
-            />
-          </div>
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-xs sm:text-sm font-black uppercase tracking-wider">
-                ComplianceHR Infinity · Smart Enhanced All-In-One Compliance Pack Pricing
-              </span>
-              <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black text-blue-950">
-                INCLUDES +$160/MO ELITE PLAN &amp; $355 AUDIT DOC
-              </span>
-            </div>
-            <p className="text-[9px] font-bold text-amber-100">
-              All tiers include the $160/mo Elite Plan (2,500 Message Credits &amp; 20,000 Integration Credits) + $355 Master Compliance Audit Doc · {FULL_SLOGAN}
-            </p>
-          </div>
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
+        {/* Centred Badge */}
+        <span
+          className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+          style={{ background: BADGE_GRADIENT }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+            <DollarSign className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          </span>
+          <span className="text-center">Smart Enhanced All-In-One Compliance Pack Pricing</span>
+        </span>
+
+        {/* Heading & Subtitle */}
+        <div className="mx-auto max-w-4xl space-y-1.5">
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Transparent Pricing with{' '}
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              +$160/mo Elite Plan &amp; $355 Audit Doc Included
+            </span>
+          </h2>
+          <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#5A00D6]">
+            Every user tier includes 2,500 Message Credits, 20,000 Integration Credits, and the $355 Master Compliance Audit Checklist (CHR-AUD-001 &amp; CHR-AUD-002).
+          </p>
         </div>
 
-        {/* Monthly vs Annual Toggle */}
-        <div className="flex items-center gap-1 rounded-full bg-white/20 p-0.5">
+        {/* Monthly vs Annual Toggle Buttons Matching Top Section */}
+        <div className="mx-auto flex flex-wrap items-center justify-center gap-2.5">
           <button
             type="button"
             onClick={() => setBilling('monthly')}
-            className={`rounded-full px-2.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
-              billing === 'monthly' ? 'bg-white text-blue-950 shadow-sm' : 'text-white hover:bg-white/15'
-            }`}
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold transition-all"
+            style={
+              billing === 'monthly'
+                ? {
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                    color: '#ffffff',
+                  }
+                : { background: '#ffffff', color: '#0A2B6D' }
+            }
           >
-            Monthly Subscription
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white text-[#0072FF]">
+              <Sparkles className="h-3 w-3 text-[#0072FF]" />
+            </span>
+            <span>Monthly Subscription</span>
           </button>
+
           <button
             type="button"
             onClick={() => setBilling('yearly')}
-            className={`rounded-full px-2.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
-              billing === 'yearly' ? 'bg-white text-blue-950 shadow-sm' : 'text-white hover:bg-white/15'
-            }`}
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs sm:text-[13px] font-extrabold transition-all"
+            style={
+              billing === 'yearly'
+                ? {
+                    background:
+                      'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+                    color: '#ffffff',
+                  }
+                : { background: '#ffffff', color: '#0A2B6D' }
+            }
           >
-            Annual Billing
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white text-[#5A00D6]">
+              <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
+            </span>
+            <span>Annual Billing</span>
           </button>
         </div>
-      </div>
 
-      {/* Transparent Price Breakdown Strip: Original Tier + $160/mo Elite Plan + $355 Doc */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-center rounded-xl border-2 border-pink-500 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-2">
-        <div className="lg:col-span-8 flex items-start sm:items-center gap-2">
-          <span
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <Sparkles className="h-4 w-4" />
-          </span>
-          <div>
-            <div className="text-[10.5px] font-black text-blue-950">
-              Smart Enhanced All-In-One Compliance Pack — Every Plan Includes the $160/mo Elite Plan + $355 Master Audit Checklist
-            </div>
-            <div className="text-xs font-bold text-purple-900">
-              Each user tier combines our standard ComplianceHR Infinity platform rate ($500–$875/mo) + <span className="font-black text-pink-700">$160/mo Elite Plan</span> (2,500 Message Credits &amp; 20,000 Integration Credits) + the <span className="font-black text-purple-950">$355 Master Compliance Audit Checklist (CHR-AUD-001 &amp; CHR-AUD-002)</span>. Start with a <span className="font-black text-blue-950">14-Day Free Trial ($0 upfront)</span>!
-            </div>
-          </div>
-        </div>
-        <div className="lg:col-span-4 flex flex-wrap items-center justify-end gap-1.5">
-          <a
-            href="#audit-master-doc"
-            className="rounded-full border border-purple-400 bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 shadow-sm hover:bg-purple-50"
-          >
-            $355 Audit Doc Standalone or Free in Plan
-          </a>
-          <Link
-            to="/register"
-            className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[8.5px] font-black text-white shadow-sm"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            Start 14-Day Free Trial ($0) <ArrowRight className="h-3 w-3" />
-          </Link>
-        </div>
-      </div>
-
-      {/* 6 Smart Enhanced Subscription Cards Grid — Balanced 3-Column Executive Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
-        {COMPLIANCE_HR_PACKAGES.map((pkg) => {
-          const displayPrice =
-            billing === 'monthly'
-              ? pkg.monthly.toLocaleString()
-              : pkg.yearly.toLocaleString();
-          return (
-            <div
-              key={pkg.id}
-              className={`flex flex-col justify-between rounded-2xl border-2 bg-white p-4 sm:p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg ${
-                pkg.featured ? 'ring-2 ring-pink-500 shadow-md' : ''
-              }`}
-              style={{
-                borderColor: pkg.color,
-                borderTopWidth: '5px',
-                background: pkg.featured
-                  ? 'linear-gradient(155deg, rgba(219,39,119,0.12) 0%, rgba(124,58,237,0.08) 45%, #ffffff 90%)'
-                  : `linear-gradient(155deg, ${pkg.color}12 0%, #ffffff 80%)`,
-              }}
-            >
-              <div>
-                {/* Top Badge & User Band */}
-                <div className="flex items-center justify-between gap-1">
-                  <span
-                    className="rounded-full px-1.5 py-0.5 text-[6.8px] font-black uppercase tracking-wider text-white"
-                    style={{ background: pkg.featured ? SQUISHED_GRADIENT : pkg.color }}
-                  >
-                    {pkg.badge}
-                  </span>
-                  <span className="text-[7.5px] font-black text-blue-950">{pkg.users}</span>
-                </div>
-
-                <h3 className="mt-1 text-[10.5px] font-black text-blue-950 leading-tight">
-                  {pkg.name}
-                </h3>
-
-                {/* Price Display with Base + $160 Elite Breakdown */}
-                <div className="mt-1 flex items-baseline gap-1">
-                  <span className="font-editorial text-xl sm:text-2xl font-black text-blue-950">
-                    ${displayPrice}
-                  </span>
-                  <span className="text-[7.5px] font-bold text-purple-800">
-                    {billing === 'monthly'
-                      ? `/ month ($${pkg.yearly.toLocaleString()}/yr)`
-                      : `/ year ($${pkg.monthly}/mo)`}
-                  </span>
-                </div>
-
-                <div className="mt-0.5 rounded bg-amber-50 border border-amber-300 px-1.5 py-0.5 text-[7px] font-black text-blue-950">
-                  ${pkg.previousMonthly}/mo Base + ${pkg.eliteAddon}/mo Elite Pack Included
-                </div>
-
-                {/* Credits Allowance Pills */}
-                <div className="mt-1 space-y-0.5 rounded-lg border border-purple-200 bg-white/95 p-1">
-                  <div className="flex items-center gap-1 text-[7px] font-extrabold text-blue-950">
-                    <Zap className="h-2.5 w-2.5 shrink-0 text-pink-600" />
-                    <span>{pkg.messageCredits}</span>
+        {/* 6 Smart Enhanced Subscription Cards Grid on Crisp White */}
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch text-left">
+          {COMPLIANCE_HR_PACKAGES.map((pkg) => {
+            const displayPrice =
+              billing === 'monthly'
+                ? pkg.monthly.toLocaleString()
+                : pkg.yearly.toLocaleString();
+            return (
+              <div
+                key={pkg.id}
+                className="flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className="rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                      style={{ background: BADGE_GRADIENT }}
+                    >
+                      {pkg.badge}
+                    </span>
+                    <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                      {pkg.users}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-1 text-[7px] font-extrabold text-purple-900">
-                    <Layers className="h-2.5 w-2.5 shrink-0 text-purple-600" />
-                    <span>{pkg.integrationCredits}</span>
-                  </div>
-                </div>
 
-                {/* Listed Benefits */}
-                <ul className="mt-1.5 space-y-1">
-                  {pkg.benefits.map((b) => (
-                    <li key={b} className="flex items-start gap-1 text-[7.3px] font-bold leading-tight text-blue-950">
+                  <h3 className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D] leading-snug">
+                    {pkg.name}
+                  </h3>
+
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-editorial text-2xl sm:text-3xl font-extrabold text-[#0A2B6D]">
+                      ${displayPrice}
+                    </span>
+                    <span className="text-xs font-extrabold text-[#5A00D6]">
+                      {billing === 'monthly'
+                        ? `/ month ($${pkg.yearly.toLocaleString()}/yr)`
+                        : `/ year ($${pkg.monthly}/mo)`}
+                    </span>
+                  </div>
+
+                  <div className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-center text-[11px] font-extrabold text-[#0A2B6D]">
+                    ${pkg.previousMonthly}/mo Base + ${pkg.eliteAddon}/mo Elite Pack Included
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-1.5">
+                    <div className="flex items-center gap-2 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
                       <span
-                        className="mt-0.5 flex h-3 w-3 shrink-0 items-center justify-center rounded-full text-white"
-                        style={{ background: pkg.color }}
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                        style={{ background: ICON_GRADIENT }}
                       >
-                        <Check className="h-2 w-2" />
+                        <Zap className="h-3 w-3 text-white" />
                       </span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      <span>{pkg.messageCredits}</span>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
+                      <span
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                        style={{ background: ICON_GRADIENT }}
+                      >
+                        <Layers className="h-3 w-3 text-white" />
+                      </span>
+                      <span>{pkg.integrationCredits}</span>
+                    </div>
+                  </div>
 
-              <div className="mt-4 pt-3 border-t border-purple-100">
-                <Link
-                  to="/register"
-                  className="flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-black text-white shadow-sm transition-transform hover:-translate-y-0.5"
-                  style={{ background: pkg.featured ? SQUISHED_GRADIENT : pkg.color }}
-                >
-                  Start 14-Day Free Trial
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+                  <ul className="space-y-1.5 pt-1">
+                    {pkg.benefits.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-xs font-bold leading-snug text-[#0A2B6D]">
+                        <span
+                          className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                          style={{ background: ICON_GRADIENT }}
+                        >
+                          <Check className="h-2.5 w-2.5 text-white" />
+                        </span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-      {/* Listed Platform-Wide Benefits Grid */}
-      <div className="rounded-xl border border-purple-300 bg-purple-50/40 p-2 space-y-1.5">
-        <div className="flex flex-wrap items-center justify-between gap-1">
-          <span className="text-[9px] font-black uppercase tracking-wider text-blue-950">
-            Included Platform Benefits Across All Smart Enhanced ComplianceHR Infinity Packages
-          </span>
-          <span className="text-[7.5px] font-extrabold text-purple-800">
-            +$160/mo Elite Plan Included · $355 Audit Doc Included · 14-Day Free Trial
-          </span>
+                <div className="mt-4 pt-3 border-t border-[#0A2B6D]/20">
+                  <Link
+                    to="/register"
+                    className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                      <ArrowRight className="h-3 w-3 text-[#0072FF]" />
+                    </span>
+                    <span>Start 14-Day Free Trial</span>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
+
+        {/* Included Platform Benefits Grid */}
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-left">
           {CORE_PLATFORM_BENEFITS.map((b) => {
             const Icon = b.icon;
             return (
               <div
                 key={b.title}
-                className="flex items-start gap-2 rounded-lg border bg-white p-1.5 shadow-sm"
-                style={{ borderColor: b.color, borderLeftWidth: '3px' }}
+                className="flex items-start gap-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-sm"
               >
                 <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white"
-                  style={{ background: b.color }}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                  style={{ background: ICON_GRADIENT }}
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-4 w-4 text-white" />
                 </span>
                 <div className="min-w-0">
-                  <div className="text-[8.5px] font-black text-blue-950">{b.title}</div>
-                  <p className="text-[7.5px] font-semibold leading-tight text-blue-900/85">{b.desc}</p>
+                  <div className="text-xs font-extrabold text-[#0A2B6D]">{b.title}</div>
+                  <p className="mt-0.5 text-[11px] font-bold leading-snug text-[#5A00D6]">{b.desc}</p>
                 </div>
               </div>
             );

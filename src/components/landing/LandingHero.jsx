@@ -5,13 +5,19 @@ import { base44 } from '@/api/base44Client';
 import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
 import Reveal from '@/components/landing/Reveal';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { Image } from '@/components/ui/image';
+
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+const BADGE_GRADIENT =
+  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 const STATS = [
-  { value: `${MODULE_DIRECTORY.length}`, label: 'connected modules', color: '#0072FF' },
-  { value: '2 min', label: 'express internal audits', color: '#5A00D6' },
-  { value: 'Live', label: 'compliance & expiry trackers', color: '#FF2E9A' },
-  { value: '24/7', label: 'automated reminders & alerts', color: '#A100FF' },
+  { value: `${MODULE_DIRECTORY.length}`, label: 'Connected Modules', color: '#0072FF' },
+  { value: '2 min', label: 'Express Internal Audits', color: '#5A00D6' },
+  { value: 'Live', label: 'Compliance & Expiry Trackers', color: '#FF2E9A' },
+  { value: '24/7', label: 'Automated Reminders & Alerts', color: '#A100FF' },
 ];
 
 export default function LandingHero() {
@@ -24,9 +30,8 @@ export default function LandingHero() {
     {
       icon: Users,
       badge: 'PILLAR 1 · PEOPLE & PROFILES',
-      title: 'People connected',
+      title: 'People Connected',
       color: '#0072FF',
-      headerBg: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 55%, #5A00D6 100%)',
       reasons: [
         'Staff, participants, volunteers and key personnel in one place',
         'Intake flows straight into live, kept-current profiles',
@@ -37,9 +42,8 @@ export default function LandingHero() {
     {
       icon: BarChart3,
       badge: 'PILLAR 2 · ROSTER, COMMS & FINANCE',
-      title: 'Operations connected',
+      title: 'Operations Connected',
       color: '#5A00D6',
-      headerBg: 'linear-gradient(120deg, #0A2B6D 0%, #5A00D6 55%, #A100FF 100%)',
       reasons: [
         'Rosters, shift notes, invoices and payroll in one flow',
         'Registers, alerts and reminders run themselves',
@@ -50,9 +54,8 @@ export default function LandingHero() {
     {
       icon: ShieldCheck,
       badge: 'PILLAR 3 · NDIS & GOVERNANCE',
-      title: 'Audit confidence',
+      title: 'Audit Confidence',
       color: '#FF2E9A',
-      headerBg: 'linear-gradient(120deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
       reasons: [
         'Two-minute internal audits with branded reports',
         'Evidence attached as you work, ready for your NDIS auditor',
@@ -63,182 +66,215 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b-4 border-[#0A2B6D] bg-gradient-to-b from-[#E8DEFF] via-white to-[#FFF0F8]">
-      {/* 0.5cm from side of page under Quick App Bar */}
-      <div className="relative w-full px-[0.5cm] pb-8 pt-3">
-        <div className="w-full text-center">
-          {/* Clean Centered Software Section (Duplicate Logo Header Removed) */}
-          <div
-            className="w-full rounded-3xl p-[3.5px] shadow-md"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-            }}
-          >
-            <div className="rounded-[20px] bg-white p-3">
-              <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3 items-stretch">
-                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}>
-                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
-                    <Award className="h-4 w-4 text-white" />
-                  </span>
-                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                    Official Software Platform
-                  </div>
-                  <div className="mt-0.5 text-sm font-extrabold text-[#0A2B6D]">
-                    Software: ComplianceHR Infinity
-                  </div>
-                </div>
+    <section className="w-full space-y-4">
+      {/* Hero Main Card — Exact Top Section Template (12px Gradient Frame + Crisp White Inner Canvas) */}
+      <div
+        className="rounded-3xl p-[12px] shadow-lg"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-5 sm:px-6 sm:py-6 text-center space-y-5">
+          {/* Software, Slogan & Developer Attribution Pills */}
+          <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3 items-stretch">
+            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-sm">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <Award className="h-3.5 w-3.5 text-white" />
+              </span>
+              <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                Software: <span className="text-[#0072FF]">ComplianceHR Infinity</span>
+              </div>
+            </div>
 
-                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#FF2E9A' }}>
-                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#FF2E9A] text-white">
-                    <Sparkles className="h-4 w-4 text-white" />
-                  </span>
-                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-                    Executive Mission &amp; Slogan
-                  </div>
-                  <div className="mt-0.5 text-sm font-extrabold text-[#0A2B6D]">
-                    Complete Control. <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-                    <span className="text-[#FF2E9A]">Brighter Success.</span>
-                  </div>
-                </div>
+            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-sm">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <Sparkles className="h-3.5 w-3.5 text-white" />
+              </span>
+              <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                <span className="text-[#0072FF]">Complete Control.</span>{' '}
+                <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+                <span className="text-[#FF2E9A]">Brighter Success.</span>
+              </div>
+            </div>
 
-                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}>
-                  <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#5A00D6] text-white">
-                    <Mail className="h-4 w-4 text-white" />
-                  </span>
-                  <div className="text-sm font-extrabold text-[#0A2B6D]">
-                    Developer: Kristy Lee Whelan
-                  </div>
-                  <a
-                    href="mailto:kristyleebatkin@live.com.au"
-                    className="mt-0.5 inline-flex items-center gap-1 text-xs font-extrabold text-[#5A00D6] underline hover:text-[#FF2E9A]"
-                  >
-                    kristyleebatkin@live.com.au
-                  </a>
-                </div>
+            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-sm">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                style={{ background: ICON_GRADIENT }}
+              >
+                <Mail className="h-3.5 w-3.5 text-white" />
+              </span>
+              <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                Developer: Kristy Lee Whelan ·{' '}
+                <a
+                  href="mailto:kristyleebatkin@live.com.au"
+                  className="text-[#5A00D6] underline hover:text-[#FF2E9A]"
+                >
+                  kristyleebatkin@live.com.au
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Headline & Intro on Crisp White Panel */}
-          <div className="mt-4 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-4 shadow-md">
-            <h1 className="font-editorial text-3xl font-bold leading-tight tracking-tight text-[#0A2B6D] sm:text-4xl md:text-5xl">
+          {/* Centred Title & Slogan Matching Top Section Typography */}
+          <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center text-center space-y-2.5">
+            <h1 className="font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
               Compliance management,{' '}
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 simplified end to end.
               </span>
             </h1>
 
-            <p className="mx-auto mt-2 max-w-4xl rounded-xl bg-white px-2 text-sm sm:text-base font-bold leading-relaxed text-[#0A2B6D]">
+            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
               ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
-            </p>
-
-            {/* Primary Action Buttons */}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                to="/dashboard"
-                className="group inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-6 py-2.5 text-sm font-extrabold text-[#0A2B6D] shadow-lg ring-2 ring-[#0072FF] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
-              >
-                Open App Dashboard
-                <ArrowRight className="h-4 w-4 text-[#0072FF] transition-transform group-hover:translate-x-0.5" />
-              </Link>
-              {!authed && (
-                <Link
-                  to="/register"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-5 py-2.5 text-sm font-extrabold text-[#5A00D6] shadow-sm ring-2 ring-[#5A00D6] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
-                >
-                  Start 14-day free trial
-                </Link>
-              )}
-              <a
-                href="#quick-start"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-6 py-2.5 text-sm font-extrabold text-white shadow-lg ring-2 ring-[#FF6EDB] transition-all hover:-translate-y-0.5 hover:bg-[#A100FF]"
-              >
-                <Sparkles className="h-4 w-4 text-white" />
-                View the quick start guide
-              </a>
-            </div>
-            <p className="mt-2 text-xs font-extrabold tracking-wide text-[#0A2B6D]">
-              No credit card required · 14-day free trial · Set up in minutes
             </p>
           </div>
 
-          {/* 46 Actual App Modules — Exact Same Size Cards, 6 Per Line */}
-          <ModuleChipStrip />
+          {/* Centred Badge + 3 Gradient Action Buttons Matching Top Section */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 text-center">
+            <span
+              className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+              style={{ background: BADGE_GRADIENT }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              </span>
+              <span className="text-center">No credit card required · 14-day free trial · Set up in minutes</span>
+            </span>
 
-          {/* 4 Small Stat Tiles — White Background Behind Dark Blue Text */}
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
+              <Link
+                to="/dashboard"
+                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                }}
+              >
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                  <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
+                </span>
+                <span className="whitespace-nowrap text-center">Open App Dashboard</span>
+              </Link>
+
+              <Link
+                to={authed ? '/dashboard' : '/register'}
+                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+                }}
+              >
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                  <UserCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+                </span>
+                <span className="whitespace-nowrap text-center">Start 14-Day Free Trial</span>
+              </Link>
+
+              <a
+                href="#quick-start"
+                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
+                }}
+              >
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                  <Compass className="h-3.5 w-3.5 text-[#A100FF]" />
+                </span>
+                <span className="whitespace-nowrap text-center">Quick Start Guide</span>
+              </a>
+            </div>
+          </div>
+
+          {/* 4 Stat Pills on Crisp White with Circular App-Gradient Icons */}
+          <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
             {STATS.map((stat, index) => (
               <Reveal
                 key={stat.label}
                 delay={index * 0.05}
-                className="rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-3 text-center shadow-md"
-                style={{ borderTopWidth: '5px', borderTopColor: stat.color }}
+                className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-sm"
               >
-                <div
-                  className="font-editorial text-2xl font-extrabold"
-                  style={{ color: stat.color }}
+                <span
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+                  style={{ background: ICON_GRADIENT }}
                 >
-                  {stat.value}
-                </div>
-                <div className="mt-0.5 rounded bg-white px-1 text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  {stat.label}
+                  <Sparkles className="h-4 w-4 text-white" />
+                </span>
+                <div className="text-left">
+                  <div
+                    className="font-editorial text-lg sm:text-xl font-extrabold leading-none"
+                    style={{ color: stat.color }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    {stat.label}
+                  </div>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          {/* 3 Upgraded Pillar Tiles Under the 4 Small Tiles — White Background Behind All Dark Blue Text */}
-          <div className="mt-5 grid gap-4 text-left sm:grid-cols-3">
-            {highlights.map(({ icon: Icon, badge, title, color, headerBg, reasons }, index) => (
+          {/* 3 Pillar Cards Styled with Top Section Design */}
+          <div className="grid w-full gap-4 text-left sm:grid-cols-3">
+            {highlights.map(({ icon: Icon, badge, title, color, reasons }, index) => (
               <Reveal
                 key={title}
                 delay={index * 0.07}
-                className="group flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div>
-                  <div
-                    className="gradient-brand flex items-center gap-2.5 border-b-2 border-[#0A2B6D] px-4 py-3 text-white"
-                    style={{ background: headerBg }}
-                  >
+                <div className="space-y-3">
+                  <div className="flex flex-col items-center text-center space-y-1.5">
                     <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-white text-white shadow-sm"
-                      style={{ backgroundColor: color }}
+                      className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      style={{ background: BADGE_GRADIENT }}
                     >
-                      <Icon className="h-5 w-5 text-white" />
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                        <Icon className="h-3 w-3 text-[#5A00D6]" />
+                      </span>
+                      <span>{badge}</span>
                     </span>
-                    <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-wider text-white">
-                        {badge}
-                      </div>
-                      <div className="font-editorial text-lg font-extrabold text-white leading-tight">
-                        {title}
-                      </div>
-                    </div>
+                    <h3 className="font-editorial text-xl font-extrabold text-[#0A2B6D]">
+                      {title}
+                    </h3>
                   </div>
 
-                  <ul className="space-y-1.5 bg-white p-3.5">
+                  <ul className="space-y-2">
                     {reasons.map((r) => (
                       <li
                         key={r}
-                        className="flex items-start gap-2 rounded-xl border border-[#0A2B6D]/30 bg-white px-2.5 py-1.5 text-xs font-extrabold leading-snug text-[#0A2B6D] shadow-2xs"
+                        className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold leading-snug text-[#0A2B6D] shadow-2xs"
                       >
-                        <CheckCircle2
-                          className="mt-0.5 h-4 w-4 shrink-0"
-                          style={{ color }}
-                        />
-                        <span className="bg-white text-[#0A2B6D]">{r}</span>
+                        <span
+                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                          style={{ background: ICON_GRADIENT }}
+                        >
+                          <CheckCircle2 className="h-3 w-3 text-white" />
+                        </span>
+                        <span className="flex-1">{r}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="border-t border-[#0A2B6D]/20 bg-white px-4 py-2 text-right">
+                <div className="mt-4 flex justify-center">
                   <Link
                     to="/dashboard"
-                    className="inline-flex items-center gap-1 rounded bg-white px-2 py-0.5 text-xs font-extrabold text-[#0A2B6D] hover:underline"
+                    className="inline-flex min-h-[36px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                    }}
                   >
-                    Explore in Dashboard <ArrowRight className="h-3.5 w-3.5" style={{ color }} />
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                      <ArrowRight className="h-3 w-3" style={{ color }} />
+                    </span>
+                    <span>Explore in Dashboard</span>
                   </Link>
                 </div>
               </Reveal>
@@ -246,6 +282,9 @@ export default function LandingHero() {
           </div>
         </div>
       </div>
+
+      {/* 46 Actual App Modules — Top Section Template */}
+      <ModuleChipStrip />
     </section>
   );
 }
