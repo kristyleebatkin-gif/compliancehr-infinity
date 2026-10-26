@@ -897,7 +897,7 @@ export default function ExecutiveWallScene({
                         </span>
                       </div>
 
-                      <div className="grid flex-1 content-between grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
+                      <div className="grid flex-1 content-between grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1 auto-rows-fr">
                         {MODULE_DIRECTORY.map((mod) => {
                           const Icon = mod.icon;
                           const colour = moduleKeyColour(mod.key);
@@ -907,7 +907,7 @@ export default function ExecutiveWallScene({
                               key={mod.key}
                               type="button"
                               onClick={() => handleSelectScreenInOffice(mod.key)}
-                              className={`flex items-center gap-1 rounded border bg-white px-1.5 py-1 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${
+                              className={`flex h-full min-h-[28px] items-center gap-1 rounded-lg border bg-white px-1.5 py-1 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${
                                 isSelected ? 'ring-1 ring-pink-500 bg-pink-50/40' : ''
                               }`}
                               style={{
@@ -917,12 +917,12 @@ export default function ExecutiveWallScene({
                               title={`Select ${mod.label} modular screen to review`}
                             >
                               <span
-                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
+                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white"
                                 style={{ background: colour }}
                               >
                                 <Icon className="h-2.5 w-2.5" />
                               </span>
-                              <span className="min-w-0 flex-1 text-[6.8px] font-extrabold text-blue-950 leading-tight">
+                              <span className="min-w-0 flex-1 whitespace-normal break-words text-[7.5px] font-extrabold text-[#0A2B6D] leading-tight">
                                 {mod.label}
                               </span>
                             </button>

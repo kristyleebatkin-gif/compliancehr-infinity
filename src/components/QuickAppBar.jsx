@@ -103,8 +103,8 @@ export default function QuickAppBar() {
             </button>
           </div>
 
-          {/* 6-Per-Line Grid of Quick App Module Items — Uniform Height, Circular Icons & Clean Fit */}
-          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
+          {/* 6-Per-Line Grid of Quick App Module Items — Equal Size, Circular Icons & All Writing Fitted Inside */}
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
               const Icon = item.icon;
@@ -114,7 +114,7 @@ export default function QuickAppBar() {
                   key={item.path}
                   to={item.path}
                   onClick={() => setShowAllModules(false)}
-                  className={`flex h-10 items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
+                  className={`flex h-full min-h-[42px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-2 py-1 text-[9.5px] lg:text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
                     active ? 'ring-2 ring-[#FF2E9A]' : ''
                   }`}
                 >
@@ -122,9 +122,9 @@ export default function QuickAppBar() {
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                     style={{ backgroundColor: accent }}
                   >
-                    <Icon className="h-3.5 w-3.5 text-white" />
+                    <Icon className="h-3 w-3 text-white" />
                   </span>
-                  <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[#0A2B6D]">
+                  <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left leading-tight text-[#0A2B6D]">
                     {item.label}
                   </span>
                 </Link>
@@ -133,7 +133,7 @@ export default function QuickAppBar() {
           </div>
         </div>
 
-        {/* All 46 Actual App Modules Drawer — Uniform Size, Circular Icons & Crisp White Background */}
+        {/* All 46 Actual App Modules Drawer — Equal Size, Circular Icons & All Writing Fitted Inside */}
         {showAllModules && (
           <div className="mt-2 max-h-[72vh] overflow-y-auto rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-xl">
             <div className="mb-2.5 flex items-center justify-between rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3 py-2">
@@ -149,7 +149,7 @@ export default function QuickAppBar() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
+            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
               {MODULE_DIRECTORY.map((mod, idx) => {
                 const Icon = mod.icon;
                 const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
@@ -158,15 +158,15 @@ export default function QuickAppBar() {
                     key={mod.key}
                     to={mod.path}
                     onClick={() => setShowAllModules(false)}
-                    className="flex h-10 items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                    className="flex h-full min-h-[42px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-2 py-1 text-[9.5px] lg:text-[10.5px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                   >
                     <span
                       className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                       style={{ backgroundColor: accent }}
                     >
-                      <Icon className="h-3.5 w-3.5 text-white" />
+                      <Icon className="h-3 w-3 text-white" />
                     </span>
-                    <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[#0A2B6D]">
+                    <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left leading-tight text-[#0A2B6D]">
                       {mod.label}
                     </span>
                   </Link>

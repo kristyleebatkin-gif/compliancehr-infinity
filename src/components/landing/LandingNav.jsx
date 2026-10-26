@@ -120,7 +120,7 @@ export default function LandingNav() {
           </button>
         </div>
 
-        {/* Features Listed — Circular Feature Icons + Crisp WHITE Background Behind Dark Blue Writing (6 Per Line) */}
+        {/* Features Listed — Circular Feature Icons + All Writing Fitted Properly Inside Every Pill (6 Per Line) */}
         <nav
           aria-label="Listed features navigation"
           className="rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-md ring-2 ring-[#FF2E9A]"
@@ -129,22 +129,22 @@ export default function LandingNav() {
               'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
           }}
         >
-          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
             {LISTED_FEATURES.map((l) => {
               const Icon = l.icon;
               return (
                 <a
                   key={l.href}
                   href={l.href}
-                  className="flex h-10 items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                  className="flex h-full min-h-[42px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-2 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                 >
                   <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                     style={{ backgroundColor: l.color }}
                   >
-                    <Icon className="h-3.5 w-3.5 text-white" />
+                    <Icon className="h-3 w-3 text-white" />
                   </span>
-                  <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[10.5px] font-extrabold text-[#0A2B6D]">
+                  <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left text-[9.5px] lg:text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
                     {l.label}
                   </span>
                 </a>

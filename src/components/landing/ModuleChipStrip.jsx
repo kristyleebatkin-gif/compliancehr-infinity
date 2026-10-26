@@ -61,7 +61,7 @@ export default function ModuleChipStrip() {
           </span>
         </div>
 
-        {/* Every module card has fixed uniform h-12 height, circular icon badge, and identical dimensions */}
+        {/* Every module card has identical equal-size dimensions (auto-rows-fr + h-full) and all writing fits properly inside */}
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
           {fullGridItems.map((m, idx) => {
             const Icon = m.icon;
@@ -69,12 +69,12 @@ export default function ModuleChipStrip() {
             const inner = (
               <>
                 <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
                   style={{ backgroundColor: accent }}
                 >
-                  <Icon className="h-3.5 w-3.5 text-white" />
+                  <Icon className="h-3 w-3 text-white" />
                 </span>
-                <span className="min-w-0 flex-1 truncate rounded bg-white text-left text-[10.5px] font-extrabold text-[#0A2B6D]">
+                <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left text-[9.5px] lg:text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
                   {m.label}
                 </span>
               </>
@@ -86,7 +86,7 @@ export default function ModuleChipStrip() {
                   key={m.key}
                   href={m.href}
                   title={m.blurb}
-                  className="group flex h-12 w-full items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                  className="group flex h-full min-h-[48px] w-full items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                   style={{ borderTopWidth: '4px', borderTopColor: accent }}
                 >
                   {inner}
@@ -99,7 +99,7 @@ export default function ModuleChipStrip() {
                 key={m.key}
                 to={m.path}
                 title={m.blurb}
-                className="group flex h-12 w-full items-center gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                className="group flex h-full min-h-[48px] w-full items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
                 style={{ borderTopWidth: '4px', borderTopColor: accent }}
               >
                 {inner}

@@ -455,8 +455,8 @@ export default function ModularScreenDataSelector({
         </div>
       </div>
 
-      {/* Core 12 Modular Screen Check-Pills */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1">
+      {/* Core 12 Modular Screen Check-Pills — Circular Icons & All Writing Fitted Properly Inside */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 auto-rows-fr">
         {MODULAR_SCREEN_DECKS.map((deck) => {
           const Icon = deck.icon;
           const isChecked = effectiveSelected.includes(deck.key);
@@ -464,15 +464,12 @@ export default function ModularScreenDataSelector({
           return (
             <div
               key={deck.key}
-              className={`flex items-center justify-between gap-0.5 rounded border px-1 py-0.5 transition-all ${
+              className={`flex h-full min-h-[30px] items-center justify-between gap-1 rounded-lg border bg-white px-1.5 py-1 transition-all ${
                 isFocused ? 'ring-1 ring-pink-500' : ''
               }`}
               style={{
                 borderColor: deck.color,
                 borderLeftWidth: '3px',
-                background: isChecked
-                  ? `linear-gradient(135deg, ${deck.color}22 0%, #ffffff 85%)`
-                  : '#ffffff',
               }}
             >
               <button
@@ -484,19 +481,19 @@ export default function ModularScreenDataSelector({
                 className="flex items-center gap-1 min-w-0 flex-1 text-left"
               >
                 <span
-                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white"
                   style={{ background: deck.color }}
                 >
-                  <Icon className="h-2 w-2" />
+                  <Icon className="h-2.5 w-2.5" />
                 </span>
-                <span className="truncate text-[7.2px] font-extrabold text-blue-950">
+                <span className="min-w-0 flex-1 whitespace-normal break-words text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                   {deck.shortLabel}
                 </span>
               </button>
               <button
                 type="button"
                 onClick={() => onToggleModular && onToggleModular(deck.key)}
-                className={`shrink-0 rounded px-1 text-[6.5px] font-extrabold ${
+                className={`shrink-0 rounded-full px-1.5 py-0.5 text-[7px] font-extrabold ${
                   isChecked
                     ? 'bg-pink-600 text-white'
                     : 'border border-purple-200 bg-white text-purple-900'

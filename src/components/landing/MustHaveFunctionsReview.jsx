@@ -409,7 +409,7 @@ export default function MustHaveFunctionsReview() {
             Click any module to launch directly
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1.5 auto-rows-fr">
           {MODULE_DIRECTORY.map((mod, idx) => {
             const mixedColors = ['#0072FF', '#FF2E9A', '#5A00D6', '#00C6FF', '#A100FF', '#0A2B6D'];
             const accent = mixedColors[idx % mixedColors.length];
@@ -418,16 +418,16 @@ export default function MustHaveFunctionsReview() {
               <Link
                 key={mod.key}
                 to={mod.path}
-                className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm hover:-translate-y-0.5 transition-transform"
+                className="flex h-full min-h-[44px] items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 text-[9.5px] lg:text-[10px] font-extrabold text-[#0A2B6D] shadow-sm hover:-translate-y-0.5 transition-transform"
                 style={{ borderTopWidth: '4px', borderTopColor: accent }}
               >
                 <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#0A2B6D] text-white shadow-2xs"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
                   style={{ backgroundColor: accent }}
                 >
                   {Icon ? <Icon className="h-3 w-3 text-white" /> : idx + 1}
                 </span>
-                <span className="min-w-0 flex-1 rounded bg-white px-0.5 leading-tight text-[#0A2B6D]">
+                <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left leading-tight text-[#0A2B6D]">
                   {mod.label}
                 </span>
               </Link>
