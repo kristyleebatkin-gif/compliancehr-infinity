@@ -201,34 +201,40 @@ export default function ModuleChipStrip() {
         `}</style>
 
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-5 sm:px-6 sm:py-6 text-center space-y-4 overflow-hidden">
-          {/* Top Header in Border with App Design Colours on "All ComplianceHR modules are Live, Effortless and Simple." */}
+          {/* Top Header in Border with Enlarged "All ComplianceHR modules are Live, Effortless and Simple." */}
           <div
             className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-5 sm:px-10 sm:py-7 text-center">
-              <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">
+            <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-6 sm:px-10 sm:py-8 text-center space-y-3">
+              <h2 className="mx-auto text-center font-editorial text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
                 <span className="text-[#0A2B6D]">All Compliance</span>
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   HR
                 </span>{' '}
-                <span className="text-[#0A2B6D]">modules are </span>
+                <span className="text-[#0A2B6D]">Modules Are </span>
                 <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                   Live, Effortless and Simple.
                 </span>
               </h2>
+              <div
+                className="h-2 w-full rounded-full"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              />
             </div>
           </div>
 
-          {/* Stretched Full-Width Header: ComplianceHR infinity App Modules (Live) */}
+          {/* Stretched Full-Width Header: ComplianceHR Infinity App Modules (48 Live iPads) */}
           <div
-            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+            className="flex min-h-[56px] w-full items-center justify-center gap-3 rounded-2xl border-2 border-[#0A2B6D] px-6 py-2.5 font-editorial text-lg sm:text-2xl md:text-3xl font-extrabold tracking-wide text-white shadow-sm"
             style={{ background: getHeaderView(3) }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Layers className="h-3.5 w-3.5 text-white" />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Layers className="h-4.5 w-4.5 text-white" />
             </span>
-            <span className="text-center">ComplianceHR Infinity App Modules (Live)</span>
+            <span className="text-center">
+              ComplianceHR Infinity App Modules ({fullGridItems.length} Live iPads)
+            </span>
           </div>
 
           {/* Row 1 of Live iPads */}

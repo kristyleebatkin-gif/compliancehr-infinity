@@ -283,30 +283,33 @@ export default function ExpressAuditSection() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-[13px] px-6 py-3 text-white"
+            className="gradient-brand flex min-h-[88px] w-full flex-col items-center justify-between gap-2.5 rounded-[13px] px-5 sm:px-7 py-3.5 text-white"
             style={{ background: getHeaderView(6), color: '#FFFFFF' }}
           >
-            <div className="flex items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Timer className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            <div className="flex items-center justify-center gap-3 font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wide text-white">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Timer className="h-4.5 w-4.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>The Two-Minute Express Audit</span>
             </div>
-            <div
-              className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
-              style={{ color: '#FFFFFF' }}
-            >
-              Sticky Notes with Functions · Live iPad Screens Above 4 Audit Steps
+            <div className="flex w-full flex-wrap items-center justify-between gap-2.5 pt-1">
+              <div
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                style={{ color: '#FFFFFF' }}
+              >
+                <Pin className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions · 14 Live iPads &amp; 4 Audit Steps</span>
+              </div>
+              <button
+                type="button"
+                onClick={cycleAllStepNotes}
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs hover:bg-white/30"
+                style={{ color: '#FFFFFF' }}
+              >
+                <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Flip All 4 Audit Step Sticky Notes ▸</span>
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={cycleAllStepNotes}
-              className="mt-0.5 inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs font-extrabold text-white shadow-2xs hover:bg-white/30"
-              style={{ color: '#FFFFFF' }}
-            >
-              <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>Flip All 4 Audit Step Sticky Notes ▸</span>
-            </button>
           </div>
         </div>
 

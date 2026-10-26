@@ -144,52 +144,69 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading with App Design Colours on "Start using ComplianceHR in four simple and effortless steps" */}
+        {/* Refined Executive Heading — "Start Using ComplianceHR Infinity in Four Simple, Effortless Steps." */}
         <div
           className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-5 sm:px-10 sm:py-7 text-center">
-            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">
-              <span className="text-[#0A2B6D]">Start using Compliance</span>
+          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-6 sm:px-10 sm:py-8 text-center space-y-3">
+            <h2 className="mx-auto max-w-5xl text-center font-editorial text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0A2B6D]">Start Using </span>
+              <span className="text-[#0A2B6D]">Compliance</span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
               </span>{' '}
+              <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] bg-clip-text text-transparent">
+                Infinity
+              </span>{' '}
+              <span className="block sm:inline text-[#0A2B6D]">in </span>
               <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                in four simple and effortless steps
+                Four Simple, Effortless Steps.
               </span>
             </h2>
+            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#5A00D6]">
+              From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
+            </p>
+            <div
+              className="h-2 w-full rounded-full"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            />
           </div>
         </div>
 
-        {/* Stretched Banner — Line 1: Guide Title, Line 2: Sticky Notes with Functions, Line 3: Flip All Button Below */}
+        {/* Stretched Banner — Top: Enlarged "Our Quick 4-Step Start Guide", Bottom Row: "Sticky Notes with Functions" on Left in White Border Beside Flip Button */}
         <div
-          className="flex min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] px-6 py-3 text-white shadow-sm"
+          className="flex min-h-[88px] w-full flex-col items-center justify-between gap-2.5 rounded-2xl border-2 border-[#0A2B6D] px-5 sm:px-7 py-3.5 text-white shadow-sm"
           style={{ background: getHeaderView(4), color: '#FFFFFF' }}
         >
-          <div className="flex items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Compass className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+          <div className="flex items-center justify-center gap-3 font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-white">
+            <span className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-2xs">
+              <Compass className="h-4.5 w-4.5 sm:h-5 sm:w-5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>
-              Our Quick 4 Step Start Guide
+              Our Quick 4-Step Start Guide
             </span>
           </div>
-          <div
-            className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
-            style={{ color: '#FFFFFF' }}
-          >
-            Sticky Notes with Functions
+
+          <div className="flex w-full flex-wrap items-center justify-between gap-2.5 pt-1">
+            <div
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white shadow-2xs"
+              style={{ color: '#FFFFFF' }}
+            >
+              <Pin className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions (4 Steps · 16 Notes)</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={cycleAllNotes}
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs hover:bg-white/30"
+              style={{ color: '#FFFFFF' }}
+            >
+              <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={cycleAllNotes}
-            className="mt-0.5 inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs font-extrabold text-white shadow-2xs hover:bg-white/30"
-            style={{ color: '#FFFFFF' }}
-          >
-            <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-            <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
-          </button>
         </div>
 
         {/* 4 Steps on Changeable Sticky Notes in the Exact Same Sticky Note Design with Bigger Step Numbers */}

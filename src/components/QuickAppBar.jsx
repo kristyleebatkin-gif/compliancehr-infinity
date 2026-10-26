@@ -189,13 +189,13 @@ export default function QuickAppBar() {
                 <Compass className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Quick App Bar — Instant Workspace Navigation
+                Quick App Bar — Instant Workspace Navigation (18 Live iPads)
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white">
               <Radio className="h-3.5 w-3.5 text-[#00C6FF]" />
               <span style={{ color: '#FFFFFF' }}>
-                Live iPad Screens · Screen #{String(litIdx + 1).padStart(2, '0')} Lit · 30s View {(cycleIdx % 3) + 1}/3
+                18 Live iPad Screens · Screen #{String(litIdx + 1).padStart(2, '0')} of {QUICK_LINKS.length} Lit · 30s View {(cycleIdx % 3) + 1}/3
               </span>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function QuickAppBar() {
                   <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
                     <span className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
                       <Tablet className="h-3 w-3 text-[#00C6FF]" />
-                      IPAD {String(idx + 1).padStart(2, '0')} · {isLit ? 'LIT UP ✦' : `CH ${(cycleIdx % 3) + 1}`}
+                      IPAD {String(idx + 1).padStart(2, '0')}/{QUICK_LINKS.length} · {isLit ? 'LIT UP ✦' : `CH ${(cycleIdx % 3) + 1}/3`}
                     </span>
                     <span
                       className={`h-2 w-2 rounded-full border border-white/80 ${

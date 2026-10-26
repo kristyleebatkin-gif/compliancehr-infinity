@@ -8,20 +8,20 @@ import { base44 } from '@/api/base44Client';
 import QuickAppBar from '@/components/QuickAppBar';
 import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
 
-// 12 Compact Highlights & Features (smaller, fewer words, light pink bg, white font, app-colour symbols & borders)
+// 12 Highlights & Features with Verified Section Counts
 const LISTED_FEATURES = [
-  { label: '4-Step Start', href: '#quick-start', icon: Compass },
-  { label: '12 Core Engines', href: '#features', icon: Sparkles },
-  { label: '2-Min Audit', href: '#express-audit', icon: ClipboardCheck },
-  { label: 'App Map', href: '#blueprint', icon: Layers },
-  { label: 'Why Choose Us', href: '#benefits', icon: ShieldCheck },
-  { label: 'Must-Haves', href: '#must-haves', icon: BookOpen },
-  { label: '1-Click Ops', href: '#infinity-one-click-operations', icon: Zap },
-  { label: 'Screen Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
-  { label: 'Health AI', href: '#business-health-intelligence', icon: Activity },
-  { label: 'Core Engine', href: '#infinity-core-engine', icon: Cpu },
-  { label: 'Control Centre', href: '#infinity-control-centre', icon: Building2 },
-  { label: 'Pricing & Packs', href: '#pricing', icon: DollarSign },
+  { label: '01 · 4-Step Start', href: '#quick-start', icon: Compass },
+  { label: '02 · 12 Core Engines', href: '#features', icon: Sparkles },
+  { label: '03 · 2-Min Audit (4 Steps)', href: '#express-audit', icon: ClipboardCheck },
+  { label: '04 · 46-Module Map', href: '#blueprint', icon: Layers },
+  { label: '05 · 6 Provider Benefits', href: '#benefits', icon: ShieldCheck },
+  { label: '06 · 8 Must-Have Pillars', href: '#must-haves', icon: BookOpen },
+  { label: '07 · 12 1-Click Ops', href: '#infinity-one-click-operations', icon: Zap },
+  { label: '08 · 48-Page Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
+  { label: '09 · 8-Domain Health AI', href: '#business-health-intelligence', icon: Activity },
+  { label: '10 · 12 Core Pipelines', href: '#infinity-core-engine', icon: Cpu },
+  { label: '11 · 9-Tab Control Suite', href: '#infinity-control-centre', icon: Building2 },
+  { label: '12 · 6 Pricing Tiers', href: '#pricing', icon: DollarSign },
 ];
 
 // Three small purple clipboards with a small checklist + ticks on each and a flow between them
@@ -241,9 +241,9 @@ export default function LandingNav() {
             >
               <ThreeClipboardsFlow />
 
-              <div className="flex min-w-0 flex-1 items-center justify-center text-center leading-tight">
+              <div className="flex min-w-0 flex-1 flex-col items-center justify-center text-center leading-tight">
                 <span className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-wide text-white">
-                  Highlights and Features
+                  12 Highlights and Features
                 </span>
               </div>
 
