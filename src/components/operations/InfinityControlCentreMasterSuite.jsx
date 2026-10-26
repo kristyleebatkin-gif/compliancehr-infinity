@@ -537,14 +537,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
           </h2>
 
           {/* Subtitle: "End-of-Shift..." Placed on the 2nd Line Underneath */}
-          <p
-            className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-snug text-black"
-            style={{ color: '#000000' }}
-          >
-            <span className="block">
+          <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-snug">
+            <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               Unified Executive Oversight · Real Operational Evidence Verification
             </span>
-            <span className="block">
+            <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
               End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
             </span>
           </p>

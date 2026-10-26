@@ -128,90 +128,103 @@ export default function LandingFooter() {
         </div>
       </div>
 
-      {/* 2. Smaller Software & Developer Section Infused With Rich App-Design Colours */}
+      {/* 2. Contact Us Section Styled to Match the Footer Brand Logo Area */}
       <div
-        className="mx-auto max-w-xl rounded-2xl p-[5px] shadow-md"
+        className="rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div
-          className="rounded-[12px] p-1.5 sm:p-2 space-y-1.5 text-center"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          {/* Compact Contact Us Header */}
-          <div
-            className="w-full rounded-full p-[2px] shadow-2xs"
-            style={{ background: BADGE_GRADIENT }}
-          >
-            <div
-              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
-              style={{ background: getHeaderView(4), color: '#FFFFFF' }}
-            >
-              <span
-                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                style={{ borderColor: getAppBorderView(4) }}
-              >
-                <Mail className="h-2.5 w-2.5 text-[#0A2B6D]" />
+        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-4 sm:px-6 sm:py-5 text-center space-y-3">
+          {/* Brand Title Lockup Matching Footer Logo Area */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center text-center space-y-1">
+            <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
+              <span className="mx-auto block text-center">
+                Contact{' '}
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  ComplianceHR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
+                </span>
               </span>
-              <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Contact Us · Software &amp; Developer
-              </span>
+            </div>
+            <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 px-2 text-center text-xs sm:text-sm md:text-base font-extrabold">
+              <span className="text-[#0072FF]">Software Enquiries.</span>
+              <span className="text-[#5A00D6]">Onboarding Support.</span>
+              <span className="text-[#FF2E9A]">Direct Developer Contact.</span>
             </div>
           </div>
 
-          {/* Decreased-Size Software & Developer Tiles With More App-Design Colour */}
-          <div className="mx-auto grid grid-cols-1 gap-1.5 sm:grid-cols-2 items-stretch text-center">
+          {/* Center Pill Badge Matching Footer Logo Area */}
+          <span
+            className="mx-auto inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+            style={{ background: BADGE_GRADIENT, color: '#FFFFFF' }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+              <Mail className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            </span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>
+              Contact Us · Software &amp; Developer Support
+            </span>
+          </span>
+
+          {/* Software & Developer Cards With Pink/Blue/Purple Spray Frame, App-Design Headers, White Background & Dark Blue Writing */}
+          <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-2.5 sm:grid-cols-2 items-stretch text-center">
             {[
               {
+                num: '01',
                 icon: Cpu,
-                title: 'Software',
-                text: 'ComplianceHR Infinity — NDIS & Aged Care Compliance Super-Platform',
+                title: '01 · Software Platform',
+                text: 'ComplianceHR Infinity — NDIS & Aged Care Compliance Super-Platform (46 Connected Modules & 356 Audit Checkpoints)',
                 headerBg: getHeaderView(0),
+                symColor: getSymbolView(0).iconColor,
               },
               {
+                num: '02',
                 icon: Mail,
-                title: 'Developer',
+                title: '02 · Lead Developer',
                 text: 'Kristy Lee Whelan · kristyleebatkin@live.com.au',
                 href: 'mailto:kristyleebatkin@live.com.au',
                 headerBg: getHeaderView(2),
+                symColor: getSymbolView(2).iconColor,
               },
             ].map((box, idx) => {
               const Icon = box.icon;
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-xl p-[3px] shadow-sm"
-                  style={{ background: BADGE_GRADIENT }}
+                  className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                  style={{ background: getHeaderView(idx) }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] p-2 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
-                    {/* App-Design Coloured Pill Title */}
+                    {/* App-Design Coloured Pill Title With Coloured Symbol */}
                     <div
-                      className="flex w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      className="gradient-brand flex min-h-[28px] w-full items-center justify-center gap-1.5 rounded-full border border-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                       style={{ background: box.headerBg, color: '#FFFFFF' }}
                     >
-                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-2.5 w-2.5 text-[#0A2B6D]" />
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-3 w-3" style={{ color: box.symColor }} />
                       </span>
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
                     {/* Crisp White Inner Box Framed in App-Design Border With Dark Blue Writing */}
                     <div
-                      className="w-full flex-1 rounded-lg p-[1.5px]"
+                      className="w-full flex-1 rounded-xl p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                      <div className="flex h-full min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
                         {box.href ? (
                           <a
                             href={box.href}
-                            className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D] underline"
+                            className="text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D] underline"
                           >
                             {box.text}
                           </a>
                         ) : (
-                          <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                          <p className="text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
                             {box.text}
                           </p>
                         )}
@@ -221,6 +234,60 @@ export default function LandingFooter() {
                 </div>
               );
             })}
+          </div>
+
+          {/* 3 Bottom Action Pills Matching Footer Logo Area */}
+          <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5 pt-1">
+            <a
+              href="mailto:kristyleebatkin@live.com.au"
+              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                color: '#FFFFFF',
+              }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                <Mail className="h-3.5 w-3.5 text-[#0072FF]" />
+              </span>
+              <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
+                Email Developer
+              </span>
+            </a>
+
+            <Link
+              to="/help"
+              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+                color: '#FFFFFF',
+              }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+              </span>
+              <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
+                Help &amp; Support Centre
+              </span>
+            </Link>
+
+            <Link
+              to="/register"
+              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
+                color: '#FFFFFF',
+              }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                <Sparkles className="h-3.5 w-3.5 text-[#A100FF]" />
+              </span>
+              <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
+                Start 14-Day Trial
+              </span>
+            </Link>
           </div>
         </div>
       </div>

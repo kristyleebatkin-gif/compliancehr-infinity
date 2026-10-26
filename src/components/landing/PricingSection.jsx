@@ -212,10 +212,7 @@ export default function PricingSection() {
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div className="rounded-[9px] bg-white px-4 py-2.5 text-center">
-                <p
-                  className="mx-auto text-center text-[11px] sm:text-xs md:text-sm font-extrabold text-black"
-                  style={{ color: '#000000' }}
-                >
+                <p className="mx-auto text-center text-[11px] sm:text-xs md:text-sm font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   Every Smart Enhanced user tier includes full access to the ComplianceHR app, full access to over 100 documents downloadable at any stage &amp; tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message Credits, 50,000 Integration Credits, support, and Elite Package Tokens valued at $160/mo.
                 </p>
               </div>
@@ -353,28 +350,25 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Package Title & Monthly Price + $999 Doc Words */}
+                    {/* 50% Smaller Package Title & Monthly Price — White Background & Dark Blue Writing */}
                     <div
                       className="w-full rounded-lg p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
-                        <h3
-                          className="font-editorial text-xs font-extrabold leading-tight bg-clip-text text-transparent text-center"
-                          style={{ backgroundImage: getTitleGradientView(pIdx) }}
-                        >
+                        <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
                           {pkg.name}
                         </h3>
-                        <span className="font-editorial text-sm font-extrabold text-[#5A00D6]">
+                        <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
                           ${pkg.monthly.toLocaleString()} per a month
                         </span>
-                        <span className="text-[8px] font-extrabold text-[#0072FF] leading-tight">
+                        <span className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
                           Includes 100+ Tailored Docs (WHS, Risk, Incident, Medication, Intake, Policies &amp; Registers)
                         </span>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Credit Pills */}
+                    {/* 50% Smaller Credit Pills — White Background, Coloured Symbols & Dark Blue Writing */}
                     <div className="grid grid-cols-2 gap-1">
                       <div
                         className="rounded-lg p-[1.5px] shadow-2xs"
@@ -393,7 +387,7 @@ export default function PricingSection() {
                       >
                         <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
                           <Layers className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
-                          <span className="text-[8.5px] font-extrabold text-[#5A00D6] leading-tight">
+                          <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.integrationCredits}
                           </span>
                         </div>
@@ -447,23 +441,31 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* 6 Included Platform Pillar Benefits — 50% Smaller, App-Coloured Headers, Pink/Blue/Purple Spray & White Box With Dark Blue Writing */}
-        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 text-center items-stretch">
+        {/* 6 Included Platform Pillar Benefits — App-Coloured Outer Frame (No Black Space), Pink/Blue/Purple Spray & White Box With Dark Blue Writing */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center items-stretch">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
             const borderCol = getAppBorderView(idx + 3);
+            const sym = getSymbolView(idx);
             return (
               <div
                 key={b.title}
-                className="flex h-full flex-col justify-between rounded-[14px] border-2 bg-[#0A2B6D] p-1.5 shadow-2xs"
-                style={{ borderColor: borderCol }}
+                className="flex h-full flex-col justify-between rounded-[14px] border-2 p-1.5 shadow-2xs"
+                style={{
+                  borderColor: borderCol,
+                  background: getHeaderView(idx),
+                }}
               >
                 <div className="mb-1 flex items-center justify-between px-1">
-                  <span className="flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold uppercase tracking-wider"
+                    style={{ color: sym.iconColor }}
+                  >
                     Pillar 0{idx + 1}
                   </span>
-                  <span className="text-[6.5px] font-extrabold text-white/85">5G · 100%</span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    5G · 100%
+                  </span>
                 </div>
 
                 <div
@@ -474,12 +476,14 @@ export default function PricingSection() {
                     className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
-                    {/* App-Design Coloured Header Bar */}
+                    {/* App-Design Coloured Header Bar With Symbol */}
                     <div
                       className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                     >
-                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                      </span>
                       <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
                         {b.title}
                       </span>

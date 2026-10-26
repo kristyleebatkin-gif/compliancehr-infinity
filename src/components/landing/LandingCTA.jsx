@@ -41,23 +41,36 @@ export default function LandingCTA() {
           </div>
         </div>
 
-        {/* 2. "Ready to simplify" 25% Smaller */}
+        {/* 2. "Ready to simplify" With Pink/Blue/Purple Spray Frame Around White Writing Areas */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-[10px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5">
-            <h2 className="flex flex-col items-center justify-center gap-1.5 font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
-              <span className="flex flex-wrap items-baseline justify-center gap-x-2 leading-[1.3] py-0.5">
-                <span className="text-[#0A2B6D]">Ready to</span>
-                <span className="font-editorial-italic inline-block px-2 py-0.5 leading-[1.3] bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  simplify
-                </span>
-              </span>
-              <span className="block pt-0.5 leading-[1.2] bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                your NDIS &amp; Aged Care compliance?
-              </span>
-            </h2>
+          <div
+            className="flex w-full flex-col items-center justify-center rounded-[10px] px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5"
+            style={{
+              background:
+                'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+            }}
+          >
+            <div
+              className="w-full rounded-xl p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="rounded-[9px] bg-white px-4 py-3 text-center">
+                <h2 className="flex flex-col items-center justify-center gap-1 font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+                  <span className="flex flex-wrap items-baseline justify-center gap-x-2 leading-[1.3] py-0.5">
+                    <span className="text-[#0A2B6D]">Ready to</span>
+                    <span className="font-editorial-italic inline-block px-2 py-0.5 leading-[1.3] bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                      simplify
+                    </span>
+                  </span>
+                  <span className="block pt-0.5 leading-[1.2] bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    your NDIS &amp; Aged Care compliance?
+                  </span>
+                </h2>
+              </div>
+            </div>
 
             <div
               className="mx-auto w-full max-w-3xl rounded-xl p-[2.5px] shadow-2xs"

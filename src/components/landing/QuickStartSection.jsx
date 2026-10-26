@@ -160,10 +160,7 @@ export default function QuickStartSection() {
                 in Four Simple, Effortless Steps.
               </span>
             </h2>
-            <p
-              className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug text-black"
-              style={{ color: '#000000' }}
-            >
+            <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
             </p>
           </div>
@@ -204,11 +201,12 @@ export default function QuickStartSection() {
           </div>
         </div>
 
-        {/* 4 Steps on Changeable Sticky Notes — Halved in Size With App-Design Coloured Headers */}
-        <ol className="grid w-full gap-2 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
+        {/* 4 Steps on Changeable Sticky Notes — App-Design Coloured Headers, Symbols, Numbers & Dark Blue Writing on White */}
+        <ol className="grid w-full gap-2.5 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             const borderCol = getAppBorderView(index);
+            const sym = getSymbolView(index);
             const activeNoteIdx = noteIndices[index] % step.notes.length;
             const currentNote = step.notes[activeNoteIdx];
 
@@ -224,14 +222,16 @@ export default function QuickStartSection() {
                   borderBottomRightRadius: '16px',
                 }}
               >
-                {/* Top Sticky Tape Strip + Pin */}
+                {/* Top Sticky Tape Strip + Number Badge in App-Design Colour */}
                 <div
-                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0 shadow-2xs"
-                  style={{ background: STICKY_NOTE_TAPE }}
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white px-2.5 py-0 shadow-2xs"
+                  style={{ background: getHeaderView(index) }}
                 >
-                  <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[7px] font-extrabold" style={{ color: sym.iconColor }}>
+                    0{index + 1}
+                  </span>
                   <span
-                    className="text-[8px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
                     Step 0{index + 1} · Note {activeNoteIdx + 1}/4
@@ -239,13 +239,15 @@ export default function QuickStartSection() {
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-1">
-                  {/* App-Coloured Header Bar + Next Note Button */}
+                  {/* App-Coloured Header Bar + Coloured Symbol + Next Note Button */}
                   <div
                     className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold text-white">
-                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-white">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
+                      </span>
                       <span style={{ color: '#FFFFFF' }}>{currentNote.title}</span>
                     </span>
                     <button
@@ -258,13 +260,13 @@ export default function QuickStartSection() {
                     </button>
                   </div>
 
-                  {/* Compact Description Box */}
+                  {/* Compact Description Box — Pure White Behind Dark Blue Writing */}
                   <div
                     className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
-                      <p className="text-[8.5px] font-extrabold leading-tight text-center text-[#0A2B6D]">
+                      <p className="text-[8px] font-extrabold leading-tight text-center text-[#0A2B6D]">
                         {currentNote.text}
                       </p>
                     </div>
@@ -278,12 +280,12 @@ export default function QuickStartSection() {
                 >
                   <div className="rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
                     <ul className="space-y-0.5">
-                      {currentNote.functions.map((fn) => (
+                      {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
-                          className="flex items-center gap-1 text-[8px] font-extrabold leading-tight text-[#0A2B6D]"
+                          className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
-                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(index + fIdx).iconColor }} />
                           <span className="text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}

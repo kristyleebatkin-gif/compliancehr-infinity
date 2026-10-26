@@ -205,10 +205,7 @@ export default function BenefitsSection() {
                 </span>
               </span>
             </h2>
-            <p
-              className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
-              style={{ color: '#000000' }}
-            >
+            <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
             </p>
           </div>
@@ -240,10 +237,10 @@ export default function BenefitsSection() {
           </div>
         </div>
 
-        {/* 6 Projector Screens — Halved in Size With App-Design Coloured Header Tiles */}
-        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
+        {/* 6 Projector Screens — App-Design Coloured Header Tiles, Symbols, Numbers, Pink/Blue/Purple Spray & Dark Blue Writing on White */}
+        <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {BENEFITS.map((b, index) => {
-            const borderCol = getAppBorderView(index);
+            const sym = getSymbolView(index);
             const totalNotes = b.notes.length;
             const activeNoteIdx = noteIndices[index] % totalNotes;
             const currentFunctions = b.notes[activeNoteIdx];
@@ -253,14 +250,16 @@ export default function BenefitsSection() {
                 delay={(index % 6) * 0.05}
                 className="group flex h-full flex-col items-center justify-between"
               >
-                {/* Top Projector Roller Bar */}
+                {/* Top Projector Roller Bar With App-Design Number & Symbol */}
                 <div className="flex w-full flex-col items-center">
                   <div
-                    className="flex w-full items-center justify-between rounded-full border border-[#0A2B6D] px-2 py-0.5 shadow-2xs"
+                    className="flex w-full items-center justify-between rounded-full border border-white px-2 py-0.5 shadow-2xs"
                     style={{ background: getHeaderView(index) }}
                   >
-                    <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
-                      <Projector className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
+                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold" style={{ color: sym.iconColor }}>
+                        0{index + 1}
+                      </span>
                       <span style={{ color: '#FFFFFF' }}>PROJ 0{index + 1}</span>
                     </span>
                     <button
@@ -274,31 +273,38 @@ export default function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Pull-Down Projector Screen Canvas — 50% Smaller */}
+                {/* Pull-Down Projector Screen Canvas — Pink/Blue/Purple Spray Between Outer Border & White Writing Boxes */}
                 <div
-                  className="mx-auto flex w-[96%] flex-1 flex-col border-x-2 border-b-2 border-[#0A2B6D] p-[2px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="mx-auto flex w-[96%] flex-1 flex-col rounded-b-xl p-[2px] shadow-2xs"
+                  style={{ background: getHeaderView(index) }}
                 >
                   <div
-                    className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[8px] p-1.5 text-center"
+                    className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[9px] p-1.5 text-center"
                     style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
                   >
-                    {/* App-Design Coloured Header Bar */}
+                    {/* App-Design Coloured Header Bar With Symbol */}
                     <div
                       className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-                      style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                      style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
                     >
-                      <b.icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <b.icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                      </span>
                       <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
                         {b.title}
                       </span>
                     </div>
 
-                    {/* Compact Description Box */}
-                    <div className="flex items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                      <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                        {b.desc}
-                      </p>
+                    {/* Compact Description Box — Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
+                    <div
+                      className="w-full rounded-lg p-[1.5px]"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="flex items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                        <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                          {b.desc}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Compact Functions Box — White Background & Dark Blue Writing */}
@@ -308,12 +314,12 @@ export default function BenefitsSection() {
                     >
                       <div className="rounded-[5px] bg-white p-1">
                         <ul className="space-y-0.5">
-                          {currentFunctions.map((fn) => (
+                          {currentFunctions.map((fn, fIdx) => (
                             <li
                               key={fn}
-                              className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                              className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
                             >
-                              <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                              <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: getSymbolView(index + fIdx).iconColor }} />
                               <span className="text-[#0A2B6D]">{fn}</span>
                             </li>
                           ))}
@@ -323,8 +329,11 @@ export default function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Bottom Projector Weighted Bar */}
-                <div className="h-1 w-full rounded-full bg-[#0A2B6D]" />
+                {/* Bottom Projector Weighted Bar in App-Design Gradient (No Black Bar) */}
+                <div
+                  className="h-1.5 w-full rounded-full"
+                  style={{ background: getHeaderView(index) }}
+                />
               </Reveal>
             );
           })}

@@ -341,10 +341,7 @@ export default function FeaturesSection() {
                 achieved effortlessly.
               </span>
             </h2>
-            <p
-              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
-              style={{ color: '#000000' }}
-            >
+            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
             </p>
           </div>
@@ -389,10 +386,11 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes — Halved in Size With App-Design Coloured Header Tiles */}
-        <div className="grid w-full grid-cols-2 gap-2 pt-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
+        {/* 12 Capability Sticky Notes — App-Design Coloured Header Tiles, Symbols, Numbers & Dark Blue Writing on White */}
+        <div className="grid w-full grid-cols-2 gap-2.5 pt-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {FEATURES.map((f, index) => {
             const borderCol = getAppBorderView(index);
+            const sym = getSymbolView(index);
             const activeNoteIdx = noteIndices[index] % f.notes.length;
             const currentNote = f.notes[activeNoteIdx];
 
@@ -407,28 +405,32 @@ export default function FeaturesSection() {
                   borderBottomRightRadius: '16px',
                 }}
               >
-                {/* Top Sticky Tape Strip + Pin */}
+                {/* Top Sticky Tape Strip + App-Design Coloured Number */}
                 <div
-                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2 py-0 shadow-2xs"
-                  style={{ background: STICKY_NOTE_TAPE }}
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white px-2 py-0 shadow-2xs"
+                  style={{ background: getHeaderView(index) }}
                 >
-                  <Pin className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold" style={{ color: sym.iconColor }}>
+                    {index + 1}
+                  </span>
                   <span
-                    className="text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[7px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    #{index + 1} · {activeNoteIdx + 1}/{f.notes.length}
+                    Note {activeNoteIdx + 1}/{f.notes.length}
                   </span>
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-1">
-                  {/* App-Coloured Capability Header Bar + Next Button */}
+                  {/* App-Coloured Capability Header Bar + Coloured Symbol + Next Button */}
                   <div
                     className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-1.5 py-0.5 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <span className="inline-flex items-center gap-1 text-[8px] font-extrabold leading-tight text-white">
-                      <f.icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-white">
+                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <f.icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                      </span>
                       <span style={{ color: '#FFFFFF' }}>{f.title}</span>
                     </span>
                     <button
@@ -441,13 +443,13 @@ export default function FeaturesSection() {
                     </button>
                   </div>
 
-                  {/* Compact Info Box */}
+                  {/* Compact Info Box — White Background & Dark Blue Writing */}
                   <div
                     className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div className="flex items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
-                      <p className="text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                      <p className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                         {currentNote.desc}
                       </p>
                     </div>
@@ -461,12 +463,12 @@ export default function FeaturesSection() {
                 >
                   <div className="rounded-[6px] bg-white p-1 text-left">
                     <ul className="space-y-0.5">
-                      {currentNote.functions.map((fn) => (
+                      {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
-                          className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                          className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
-                          <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                          <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: getSymbolView(index + fIdx).iconColor }} />
                           <span className="text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}

@@ -150,10 +150,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 </span>
               </h2>
 
-              <p
-                className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
-                style={{ color: '#000000' }}
-              >
+              <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
               </p>
             </div>
@@ -412,23 +409,31 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               const activeReason = screen.reasons[activeBenefitIdx % screen.reasons.length];
               return (
                 <div key={screen.screenLabel} className="flex h-full flex-col items-center justify-between">
-                  {/* Flat Screen Monitor Frame — 50% Smaller & Header Tiles in App-Design Colour */}
+                  {/* Flat Screen Monitor Frame — App-Design Colour Frame (Zero Black Space) */}
                   <div
                     className={`flex h-full w-full flex-1 flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300 ${
                       isLit
-                        ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/75 shadow-md'
-                        : 'bg-[#0A2B6D] shadow-2xs'
+                        ? '-translate-y-0.5 ring-2 ring-[#00C6FF]/85 shadow-md'
+                        : 'shadow-2xs'
                     }`}
-                    style={{ borderColor: borderCol }}
+                    style={{
+                      borderColor: borderCol,
+                      background: getHeaderView(idx),
+                    }}
                   >
-                    {/* Top Monitor Bezel Header Tile in App-Design Colour */}
+                    {/* Top Monitor Bezel Header Tile in App-Design Colour With Number & Symbol */}
                     <div
-                      className="gradient-brand mb-1 flex min-h-[20px] w-full flex-nowrap items-center justify-between gap-1 rounded-full px-2 py-0.5 whitespace-nowrap text-white"
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      className="gradient-brand mb-1 flex min-h-[20px] w-full flex-nowrap items-center justify-between gap-1 rounded-full border border-white px-2 py-0.5 whitespace-nowrap text-white"
+                      style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
                     >
                       <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
-                        <Monitor className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
-                        <span style={{ color: '#FFFFFF' }}>FLAT SCREEN 0{idx + 1}{isLit ? ' · LIT ✦' : ''}</span>
+                        <span
+                          className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold"
+                          style={{ color: sym.iconColor }}
+                        >
+                          0{idx + 1}
+                        </span>
+                        <span style={{ color: '#FFFFFF' }}>SCREEN 0{idx + 1}{isLit ? ' · LIT ✦' : ''}</span>
                       </span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white whitespace-nowrap">
                         <Radio className="h-2 w-2 text-white shrink-0" style={{ color: '#FFFFFF' }} />
@@ -536,10 +541,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </div>
                     </div>
                   </div>
-                  {/* Flat Screen Monitor Stand Neck & Base */}
-                  <div className="h-1 w-4 bg-[#0A2B6D]" />
+                  {/* Flat Screen Monitor Stand Neck & Base in App-Design Colour (No Black Space) */}
+                  <div className="h-1 w-4" style={{ background: getHeaderView(idx) }} />
                   <div
-                    className="h-1 w-10 rounded-full border border-[#0A2B6D]"
+                    className="h-1 w-10 rounded-full"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   />
                 </div>

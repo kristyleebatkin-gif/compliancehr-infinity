@@ -984,8 +984,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       return (
                         <div className="flex flex-col items-center w-full">
                           <div
-                            className="w-full rounded-xl border-2 border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-sm"
+                            className="w-full rounded-xl border-2 border-[#00C6FF] p-1.5 shadow-sm"
                             style={{
+                              background: getHeaderView(1),
                               boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px rgba(0, 198, 255, 0.6)',
                             }}
                           >
@@ -995,8 +996,8 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                   className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
                                   style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                                 />
-                                <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
-                                <span>LIVE INTERACTIVE RISK CHARTS · {selectedDomain.shortName.toUpperCase()}</span>
+                                <Monitor className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                                <span style={{ color: '#FFFFFF' }}>LIVE INTERACTIVE RISK CHARTS · {selectedDomain.shortName.toUpperCase()}</span>
                               </span>
                               <button
                                 type="button"
@@ -1011,7 +1012,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               </button>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-1.5 rounded-lg bg-white p-1">
+                            <div
+                              className="grid grid-cols-2 gap-1.5 rounded-lg p-1"
+                              style={{ background: UNIFORM_SPRAY_BG }}
+                            >
                               {/* Risk Chart 1: Dynamic Moving Severity Matrix */}
                               <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
                                 <div className="flex items-center justify-between text-[7px] font-extrabold uppercase text-[#0A2B6D]">
@@ -1080,9 +1084,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               </div>
                             </div>
                           </div>
-                          <div className="h-1 w-6 bg-[#0A2B6D]" />
+                          <div className="h-1 w-6" style={{ background: getHeaderView(1) }} />
                           <div
-                            className="h-1 w-12 rounded-full border border-[#0A2B6D]"
+                            className="h-1 w-12 rounded-full"
                             style={{ background: TOP_BORDER_GRADIENT }}
                           />
                         </div>
@@ -1183,40 +1187,43 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       </div>
                     </div>
 
-                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD */}
-                    <div className="grid grid-cols-3 gap-1 items-stretch">
-                      <div className="rounded-lg border-2 border-[#0A2B6D] bg-[#0A2B6D] p-1">
-                        <div className="rounded bg-white px-1 py-0.5 text-center">
-                          <div className="text-[6.5px] font-extrabold uppercase text-[#0A2B6D]">
-                            PHONE · DATE &amp; TEMP
-                          </div>
-                          <div className="text-[7.5px] font-extrabold text-[#0A2B6D]">
-                            27 Oct · 24°C
+                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — Spray Pink/Blue/Purple & White Dark-Blue Writing */}
+                    <div className="grid grid-cols-3 gap-1.5 items-stretch">
+                      {[
+                        { tag: '01 · PHONE', val: '27 Oct · 24°C', to: null },
+                        { tag: '02 · PC NDIS', val: '2026 Price Guide', to: '/ndis-updates' },
+                        { tag: '03 · IPAD', val: 'Sydney 24°C Clear', to: null },
+                      ].map((dev, dIdx) => (
+                        <div
+                          key={dev.tag}
+                          className="rounded-lg p-[2px]"
+                          style={{ background: getHeaderView(dIdx) }}
+                        >
+                          <div
+                            className="flex h-full flex-col justify-between gap-0.5 rounded-[6px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
+                            <div
+                              className="gradient-brand rounded px-1 py-0 text-[6.5px] font-extrabold uppercase text-white"
+                              style={{ background: getHeaderView(dIdx + 1), color: '#FFFFFF' }}
+                            >
+                              <span style={{ color: '#FFFFFF' }}>{dev.tag}</span>
+                            </div>
+                            {dev.to ? (
+                              <Link
+                                to={dev.to}
+                                className="block rounded bg-white px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate"
+                              >
+                                {dev.val}
+                              </Link>
+                            ) : (
+                              <div className="rounded bg-white px-1 py-0.5 text-center text-[7.5px] font-extrabold text-[#0A2B6D] truncate">
+                                {dev.val}
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </div>
-
-                      <div className="rounded-lg border-2 border-[#0072FF] bg-[#0A2B6D] p-1">
-                        <Link to="/ndis-updates" className="block rounded bg-white px-1 py-0.5 text-center">
-                          <div className="text-[6.5px] font-extrabold uppercase text-[#0A2B6D]">
-                            PC · NDIS UPDATES
-                          </div>
-                          <div className="text-[7.5px] font-extrabold text-[#0A2B6D] truncate">
-                            2026 Price Guide Live
-                          </div>
-                        </Link>
-                      </div>
-
-                      <div className="rounded-lg border-2 border-[#00C6FF] bg-[#0A2B6D] p-1">
-                        <div className="rounded bg-[#F0F9FF] px-1 py-0.5 text-center">
-                          <div className="text-[6.5px] font-extrabold uppercase text-[#0A2B6D]">
-                            IPAD · WEATHER CH.
-                          </div>
-                          <div className="text-[7.5px] font-extrabold text-[#0A2B6D]">
-                            Sydney 24°C Clear
-                          </div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
 
@@ -1282,7 +1289,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           >
             <div
               className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              style={{ background: UNIFORM_SPRAY_BG }}
             >
               <div
                 className="gradient-brand flex min-h-[24px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-white whitespace-nowrap"
@@ -1302,7 +1309,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 />
               </div>
 
-              <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">
+              <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
                 Audit Readiness (%) &amp; Monthly NDIS Billing ($K) · 98.7% Peak
               </div>
 
@@ -1311,8 +1318,8 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <ComposedChart data={TREND_DATA_2026}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e9d5ff" />
                     <XAxis dataKey="month" fontSize={7.5} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
-                    <YAxis yAxisId="left" domain={[88, 100]} fontSize={7.5} tick={{ fill: '#5A00D6', fontWeight: 700 }} />
-                    <YAxis yAxisId="right" orientation="right" fontSize={7.5} tick={{ fill: '#FF2E9A', fontWeight: 700 }} />
+                    <YAxis yAxisId="left" domain={[88, 100]} fontSize={7.5} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis yAxisId="right" orientation="right" fontSize={7.5} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
                     <Tooltip />
                     <Bar yAxisId="right" dataKey="revenueK" name="NDIS Billed ($K)" fill="#FF2E9A" radius={[3, 3, 0, 0]} barSize={12} />
                     <Area
@@ -1329,19 +1336,19 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 </ResponsiveContainer>
               </div>
             </div>
-          </div>
+            </div>
 
-          {/* Chart 2: 8-Domain Benchmark Score Comparison With Glowing White Lights */}
-          <div
+            {/* Chart 2: 8-Domain Benchmark Score Comparison With Glowing White Lights */}
+            <div
             className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-sm"
             style={{
               background: getHeaderView(2),
               boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px rgba(0, 198, 255, 0.45)',
             }}
-          >
+            >
             <div
               className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              style={{ background: UNIFORM_SPRAY_BG }}
             >
               <div
                 className="gradient-brand flex min-h-[24px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-white whitespace-nowrap"
@@ -1361,7 +1368,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 />
               </div>
 
-              <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold text-[#0072FF] whitespace-nowrap">
+              <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
                 Every Department Exceeds the 95% NDIS Audit Threshold
               </div>
 
@@ -1387,16 +1394,16 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 </ResponsiveContainer>
               </div>
             </div>
-          </div>
+            </div>
 
-          {/* Column 3: Predictive 90 / 60 / 30 / 21 / 14-Day Radar — 50% Smaller, App-Design Colour Between Side Border & Words, Writing Moved to Left Side */}
-          <div
+            {/* Column 3: Predictive 90 / 60 / 30 / 21 / 14-Day Radar — Pink/Blue/Purple Spray Between Side Border & Words, Dark Blue Writing */}
+            <div
             className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
-          >
+            >
             <div
               className="relative flex w-full flex-col justify-between rounded-[9px] p-1.5 text-left space-y-1 overflow-hidden"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              style={{ background: UNIFORM_SPRAY_BG }}
             >
               {/* One-Line Top Spotlight & Predictive Header */}
               <div
@@ -1529,7 +1536,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             </span>
                           </div>
 
-                          <div className="truncate text-left text-[7.5px] font-bold text-[#5A00D6]">
+                          <div className="truncate text-left text-[7.5px] font-bold text-[#0A2B6D]">
                             {al.action}
                           </div>
                         </div>

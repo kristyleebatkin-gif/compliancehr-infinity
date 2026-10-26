@@ -222,14 +222,11 @@ export default function MustHaveFunctionsReview() {
                   Resource &amp; Feature
                 </span>
               </h2>
-              <p
-                className="mx-auto w-full text-center text-[10px] sm:text-xs font-extrabold leading-snug text-black"
-                style={{ color: '#000000' }}
-              >
-                <span className="block">
+              <p className="mx-auto w-full text-center text-[10px] sm:text-xs font-extrabold leading-snug">
+                <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
                 </span>
-                <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                   $760 per a month or $999 Outright Documents
                 </span>
               </p>
@@ -580,16 +577,23 @@ export default function MustHaveFunctionsReview() {
             return (
               <div
                 key={pillar.id}
-                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl border-2 bg-[#0A2B6D] p-1 shadow-2xs text-center"
-                style={{ borderColor: ipadBorder }}
+                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl border-2 p-1 shadow-2xs text-center"
+                style={{
+                  borderColor: ipadBorder,
+                  background: getHeaderView(pIdx),
+                }}
               >
-                {/* Top iPad Camera & Status Bar */}
-                <div className="mb-0.5 flex h-[12px] items-center justify-between px-1">
-                  <span className="flex items-center gap-1 text-[6.5px] font-extrabold uppercase tracking-wider text-white">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                    iPad · Pillar 0{pIdx + 1}
+                {/* Top iPad Camera & Status Bar in App-Design Colour */}
+                <div className="mb-0.5 flex h-[14px] items-center justify-between px-1">
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider"
+                    style={{ color: getSymbolView(pIdx).iconColor }}
+                  >
+                    Pillar 0{pIdx + 1}
                   </span>
-                  <span className="text-[6.5px] font-extrabold text-white/85">5G · 100%</span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    5G · 100%
+                  </span>
                 </div>
 
                 {/* Inner iPad Retina Screen — Minimised & Centred */}

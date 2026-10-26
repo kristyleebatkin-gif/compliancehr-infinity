@@ -255,10 +255,7 @@ export default function ExpressAuditSection() {
                 in two minutes.
               </span>
             </h2>
-            <p
-              className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug text-black"
-              style={{ color: '#000000' }}
-            >
+            <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
             </p>
           </div>
@@ -426,10 +423,15 @@ export default function ExpressAuditSection() {
                 }}
               >
                 <div
-                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0 shadow-2xs"
-                  style={{ background: STICKY_NOTE_TAPE }}
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white px-2.5 py-0 shadow-2xs"
+                  style={{ background: getHeaderView(index) }}
                 >
-                  <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                  <span
+                    className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[7px] font-extrabold"
+                    style={{ color: getSymbolView(index).iconColor }}
+                  >
+                    {item.step}
+                  </span>
                   <span
                     className="text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
@@ -443,8 +445,10 @@ export default function ExpressAuditSection() {
                     className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
                     style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
                   >
-                    <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold text-white">
-                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-white">
+                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2 w-2" style={{ color: getSymbolView(index).iconColor }} />
+                      </span>
                       <span style={{ color: '#FFFFFF' }}>{currentNote.title}</span>
                     </span>
                     <button
@@ -475,12 +479,12 @@ export default function ExpressAuditSection() {
                 >
                   <div className="rounded-[6px] bg-white p-1.5 text-left">
                     <ul className="space-y-0.5">
-                      {currentNote.functions.map((fn) => (
+                      {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
                           className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
-                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                          <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(index + fIdx).iconColor }} />
                           <span className="text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}

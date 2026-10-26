@@ -594,10 +594,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
             </span>
           </h2>
 
-          <p
-            className="mx-auto max-w-4xl text-center text-[10px] sm:text-xs font-extrabold leading-tight text-black"
-            style={{ color: '#000000' }}
-          >
+          <p className="mx-auto max-w-4xl text-center text-[10px] sm:text-xs font-extrabold leading-tight bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
             Audit Packs, Smart-Fill Docs, Roster &amp; Task Dispatch, and Incident &amp; Risk Sweeps.
           </p>
         </div>

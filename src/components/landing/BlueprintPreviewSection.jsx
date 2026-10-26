@@ -556,10 +556,7 @@ export default function BlueprintPreviewSection() {
                 Infinity app
               </span>
             </h2>
-            <p
-              className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-black"
-              style={{ color: '#000000' }}
-            >
+            <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
             </p>
           </div>
@@ -608,43 +605,60 @@ export default function BlueprintPreviewSection() {
                       {DATA_FLOWS.map((flow, fIdx) => (
                         <div
                           key={flow.label}
-                          className="flex h-full rounded-xl p-[2px] shadow-2xs overflow-hidden"
-                          style={{ background: TOP_BORDER_GRADIENT }}
+                          className="flex h-full rounded-xl p-[2.5px] shadow-2xs overflow-hidden"
+                          style={{ background: getHeaderView(fIdx) }}
                         >
-                          {/* White Background in the Flow */}
-                          <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2 py-1 text-center">
-                            {/* App-Design Coloured Flow Heading Bar */}
-                            <span
-                              className="gradient-brand inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
+                          {/* Spray Pink, Blue & Purple Between Outer Border & White Writing Box */}
+                          <div
+                            className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
+                            {/* App-Design Coloured Flow Heading Bar With Number */}
+                            <div
+                              className="gradient-brand flex w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
                               style={{ background: getHeaderView(fIdx), color: '#FFFFFF' }}
                             >
-                              {flow.label}
-                            </span>
+                              <span
+                                className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold"
+                                style={{ color: getSymbolView(fIdx).iconColor }}
+                              >
+                                0{fIdx + 1}
+                              </span>
+                              <span style={{ color: '#FFFFFF' }}>{flow.label}</span>
+                            </div>
 
+                            {/* Pure White Background Behind Dark Blue Writing */}
                             <div
-                              className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1 py-0.5"
-                              style={{ animationDelay: `${fIdx * 0.6}s` }}
+                              className="w-full flex-1 rounded-lg p-[1.5px]"
+                              style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              {flow.steps.map((item, index) => {
-                                const idx = fIdx * 5 + index;
-                                const flowTile = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
-                                return (
-                                  <React.Fragment key={item}>
-                                    <span
-                                      className="rounded-full px-2 py-0.5 text-[8px] font-extrabold text-white whitespace-nowrap"
-                                      style={{
-                                        backgroundColor: flowTile.bg,
-                                        color: '#FFFFFF',
-                                      }}
-                                    >
-                                      {item}
-                                    </span>
-                                    {index < flow.steps.length - 1 && (
-                                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                                    )}
-                                  </React.Fragment>
-                                );
-                              })}
+                              <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-2 py-0.5">
+                                <div
+                                  className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1"
+                                  style={{ animationDelay: `${fIdx * 0.6}s` }}
+                                >
+                                  {flow.steps.map((item, index) => {
+                                    const idx = fIdx * 5 + index;
+                                    const borderCol = getAppBorderView(idx);
+                                    return (
+                                      <React.Fragment key={item}>
+                                        <span
+                                          className="rounded-full border bg-white px-2 py-0 text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap"
+                                          style={{ borderColor: borderCol }}
+                                        >
+                                          {item}
+                                        </span>
+                                        {index < flow.steps.length - 1 && (
+                                          <ArrowRight
+                                            className="h-2.5 w-2.5 shrink-0"
+                                            style={{ color: getSymbolView(idx).iconColor }}
+                                          />
+                                        )}
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -857,30 +871,33 @@ export default function BlueprintPreviewSection() {
                               animationDelay: `${(idx % 8) * 0.45}s`,
                             }}
                           >
-                            {/* Minimised Live Module Laptop — Lit Up in Glowing White & Walking Clockwise */}
+                            {/* Minimised Live Module Laptop — App-Design Colour Frame (No Black Space), Lit Up in Glowing White & Walking Clockwise */}
                             <div
-                              className="group flex w-full flex-1 flex-col rounded-t-xl border-2 bg-[#0A2B6D] p-1 shadow-sm"
+                              className="group flex w-full flex-1 flex-col rounded-t-xl border-2 p-1 shadow-sm"
                               style={{
                                 borderColor: borderCol,
+                                background: getHeaderView(idx),
                                 boxShadow:
                                   '0 0 14px 3px rgba(255, 255, 255, 0.98), 0 0 10px 2px rgba(0, 198, 255, 0.55)',
                               }}
                             >
-                              <div className="mb-0.5 flex h-[12px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
-                                <span className="inline-flex items-center gap-0.5 text-[6.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+                              <div className="mb-0.5 flex h-[14px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
+                                <span
+                                  className="inline-flex items-center gap-0.5 rounded-full bg-white px-1 py-0 text-[6px] font-extrabold uppercase tracking-wider whitespace-nowrap"
+                                  style={{ color: getSymbolView(idx).iconColor }}
+                                >
+                                  <span>MOD #{String(idx + 1).padStart(2, '0')}</span>
+                                </span>
+                                <span className="inline-flex items-center gap-0.5 text-[6px] font-extrabold text-white whitespace-nowrap">
                                   <span
                                     className="h-1.5 w-1.5 rounded-full bg-white"
                                     style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
                                   />
-                                  <span>MOD {String(idx + 1).padStart(2, '0')}</span>
-                                </span>
-                                <span className="inline-flex items-center gap-0.5 text-[6.5px] font-extrabold text-white whitespace-nowrap">
-                                  <Youtube className="h-2 w-2 text-[#FF2E9A] shrink-0" />
-                                  <span>WHITE LIT ✦</span>
+                                  <span style={{ color: '#FFFFFF' }}>WHITE LIT ✦</span>
                                 </span>
                               </div>
 
-                              {/* Inner Minimised Laptop Screen */}
+                              {/* Inner Minimised Laptop Screen — Spray Pink, Blue & Purple Between Outer & White Writing Border */}
                               <div
                                 className="flex flex-1 rounded-md p-[1px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
@@ -892,27 +909,34 @@ export default function BlueprintPreviewSection() {
                                   <Link
                                     to={mod.path}
                                     className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded px-1 py-0.5 text-center text-white"
-                                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                                   >
-                                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                                    <span className="text-[7.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                    <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-white">
+                                      <Icon className="h-2 w-2" style={{ color: getSymbolView(idx).iconColor }} />
+                                    </span>
+                                    <span className="text-[7px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
                                       {mod.label}
                                     </span>
                                   </Link>
 
-                                  <Link
-                                    to={mod.path}
-                                    className="flex flex-1 items-center justify-center rounded bg-white px-1 py-0.5 text-center"
+                                  <div
+                                    className="flex flex-1 rounded p-[1px]"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <p className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
-                                      {mod.blurb}
-                                    </p>
-                                  </Link>
+                                    <Link
+                                      to={mod.path}
+                                      className="flex h-full w-full items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center"
+                                    >
+                                      <p className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
+                                        {mod.blurb}
+                                      </p>
+                                    </Link>
+                                  </div>
 
                                   {/* Compact YouTube Clip Strip */}
                                   <div className="w-full">
                                     {isEmbedOpen ? (
-                                      <div className="w-full overflow-hidden rounded border border-[#0A2B6D] bg-[#0A2B6D] aspect-video">
+                                      <div className="w-full overflow-hidden rounded border border-white bg-white aspect-video">
                                         <iframe
                                           title={ytClip.title}
                                           src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
@@ -941,8 +965,8 @@ export default function BlueprintPreviewSection() {
 
                             <div className="flex w-[104%] flex-col items-center">
                               <div
-                                className="flex h-1 w-full items-center justify-center rounded-b-lg border border-[#0A2B6D]"
-                                style={{ background: TOP_BORDER_GRADIENT }}
+                                className="flex h-1 w-full items-center justify-center rounded-b-lg"
+                                style={{ background: getHeaderView(idx + 3) }}
                               />
                             </div>
                           </div>

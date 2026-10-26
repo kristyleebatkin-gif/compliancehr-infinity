@@ -27,15 +27,15 @@ function getModuleBulletPoints(item) {
 function ThreeTopSirenLights() {
   return (
     <div className="flex items-end justify-center gap-5" aria-hidden="true">
-      {[1, 2, 3].map((num) => (
+      {[1, 2, 3].map((num, idx) => (
         <div key={num} className="flex flex-col items-center">
           <span
-            className={`rounded-t-full border-[3px] border-[#0A2B6D] chr-siren-light-${num}`}
-            style={{ width: '1.5cm', height: '1.5cm' }}
+            className={`rounded-t-full border-2 chr-siren-light-${num}`}
+            style={{ width: '1.5cm', height: '1.5cm', borderColor: getAppBorderView(idx) }}
           />
           <span
-            className="h-2 rounded-full bg-[#0A2B6D] shadow-sm"
-            style={{ width: '1.85cm' }}
+            className="h-2 rounded-full shadow-sm"
+            style={{ width: '1.85cm', background: getHeaderView(idx) }}
           />
         </div>
       ))}
@@ -46,22 +46,31 @@ function ThreeTopSirenLights() {
 function IpadModuleScreenCard({ item, idx }) {
   const Icon = item.icon;
   const borderCol = getAppBorderView(idx);
+  const sym = getSymbolView(idx);
   const bullets = getModuleBulletPoints(item);
 
   return (
     <Link
       to={item.path}
       title={item.blurb}
-      className="group relative flex w-[180px] sm:w-[195px] h-[112px] shrink-0 flex-col justify-between rounded-[14px] border-2 bg-[#0A2B6D] p-1.5 shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
-      style={{ borderColor: borderCol }}
+      className="group relative flex w-[180px] sm:w-[195px] h-[114px] shrink-0 flex-col justify-between rounded-[14px] border-2 p-1.5 shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
+      style={{
+        borderColor: borderCol,
+        background: getHeaderView(idx),
+      }}
     >
-      {/* Top iPad Bezel Camera & Status Bar */}
-      <div className="mb-1 flex h-[12px] items-center justify-between px-1">
-        <span className="text-[7px] font-extrabold uppercase tracking-wider text-white/90">
+      {/* Top iPad Bezel Camera & Status Bar in App-Design Colour */}
+      <div className="mb-1 flex h-[14px] items-center justify-between px-1">
+        <span className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider" style={{ color: sym.iconColor }}>
           IPAD #{String(idx + 1).padStart(2, '0')}
         </span>
-        <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-        <span className="text-[7px] font-extrabold text-white/90">LIVE</span>
+        <span
+          className="h-2 w-2 rounded-full bg-white"
+          style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
+        />
+        <span className="text-[7px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+          LIVE
+        </span>
       </div>
 
       {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
@@ -72,14 +81,16 @@ function IpadModuleScreenCard({ item, idx }) {
             'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
         }}
       >
-        {/* App-Coloured Header Bar */}
+        {/* App-Coloured Header Bar With Coloured Symbol */}
         <div
           className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-          style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+          style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
         >
-          <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+            <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+          </span>
           <span
-            className="min-w-0 flex-1 whitespace-normal break-words text-center text-[8px] font-extrabold leading-tight text-white"
+            className="min-w-0 flex-1 truncate text-center text-[8px] font-extrabold leading-tight text-white"
             style={{ color: '#FFFFFF' }}
           >
             {item.label}
@@ -94,9 +105,9 @@ function IpadModuleScreenCard({ item, idx }) {
           <div className="flex flex-1 items-center rounded-[4px] bg-white px-1.5 py-0.5">
             <ul className="w-full space-y-0.5">
               {bullets.slice(0, 2).map((point, bIdx) => (
-                <li key={bIdx} className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                  <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
-                  <span className="min-w-0 flex-1 whitespace-normal break-words text-[#0A2B6D]">
+                <li key={bIdx} className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
+                  <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: getSymbolView(idx + bIdx).iconColor }} />
+                  <span className="min-w-0 flex-1 truncate text-[#0A2B6D]">
                     {point}
                   </span>
                 </li>
