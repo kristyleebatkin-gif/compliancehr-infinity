@@ -852,19 +852,15 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   </div>
                 </div>
 
-                {/* Section 3: Assets Centred Above Live Compliance Tracker — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                {/* Section 3: Live Compliance Tracker — Pink/Blue/Purple Spray & Dark Blue Writing */}
                 <div
                   className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index + 1) }}
                 >
-                  <Link
-                    to="/assets"
-                    className="flex flex-col items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
+                  <div
+                    className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
                     style={{ background: sprayBg }}
                   >
-                    <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">
-                      {maintenanceStats.assets} Assets Current
-                    </span>
                     <span className="inline-flex items-center justify-center gap-0.5 text-[6.5px] font-extrabold text-[#0A2B6D]">
                       <span
                         className="h-1.5 w-1.5 rounded-full bg-[#10B981]"
@@ -872,7 +868,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                       />
                       <span>Live Compliance Tracker</span>
                     </span>
-                  </Link>
+                  </div>
                 </div>
 
                 {/* Section 4: 50% Smaller Bottom Action Buttons */}

@@ -102,13 +102,12 @@ export default function LandingHero() {
                 </p>
               </div>
 
-              {/* Live Compliance Tracker Placed ABOVE Assets, Fleet & Safety Kits Current */}
+              {/* Live Compliance Tracker */}
               <div
                 className="w-full rounded-2xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] bg-white px-3 py-1.5 text-center">
-                  {/* Live Compliance Tracker ABOVE */}
+                <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-3 py-1.5 text-center">
                   <div className="flex w-full flex-wrap items-center justify-center gap-2">
                     <div className="flex items-center justify-center gap-1.5">
                       <span
@@ -131,18 +130,6 @@ export default function LandingHero() {
                         }}
                       />
                     </div>
-                  </div>
-
-                  {/* Assets Centred UNDERNEATH Live Compliance Tracker */}
-                  <div className="flex w-full justify-center">
-                    <Link
-                      to="/assets"
-                      className="gradient-brand inline-flex items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
-                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                    >
-                      <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
-                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </Link>
                   </div>
                 </div>
               </div>
