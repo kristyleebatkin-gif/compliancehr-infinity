@@ -53,26 +53,27 @@ export default function LandingNav() {
     >
       {/* Full-width app-coloured background with 0.5cm side spacing */}
       <div className="w-full px-[0.5cm] py-2.5 space-y-2.5">
-        {/* TWICE-THE-SIZE Top Bar: Larger Logo Filled to Border, Centered Name + "NDIS & Aged Care Compliance" Centered Underneath in Bright Pink */}
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border-3 border-[#0A2B6D] bg-white px-5 py-4 sm:py-5 shadow-lg ring-2 ring-[#00C6FF]">
+        {/* Top Bar: Zero Gap Between Logo & Border, True-Centered App Name, and Small Landing Page Under Open App Dashboard */}
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-3xl border-3 border-[#0A2B6D] bg-white px-3 py-2.5 sm:px-4 sm:py-3 shadow-lg ring-2 ring-[#00C6FF]">
+          {/* Logo Filled Tightly to Border (No Extra Gap Between Logo & Border) */}
           <Link
             to="/"
-            className="flex items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-1 shadow-sm transition-transform hover:scale-102"
+            className="flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-0 shadow-sm transition-transform hover:scale-102"
           >
             <Image
               src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
               alt="ComplianceHR Infinity logo"
-              className="h-20 w-32 sm:h-24 sm:w-40 md:h-28 md:w-48 rounded-xl object-contain"
-              fittingType="fit"
+              className="h-16 w-28 sm:h-20 sm:w-36 md:h-24 md:w-44 block object-cover"
+              fittingType="fill"
             />
           </Link>
 
-          {/* Centered Brand Name with "NDIS & Aged Care Compliance" Centered Underneath in Bright Pink */}
+          {/* True-Centered Brand Name Fitted Properly + "NDIS & Aged Care Compliance" Centered Underneath in Bright Pink */}
           <Link
             to="/"
-            className="flex min-w-0 flex-1 flex-col items-center justify-center bg-white text-center px-2"
+            className="flex min-w-0 flex-col items-center justify-center bg-white text-center px-1"
           >
-            <span className="font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-wider text-[#0A2B6D] leading-tight">
+            <span className="font-editorial text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
               Compliance
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
@@ -81,34 +82,47 @@ export default function LandingNav() {
                 Infinity
               </span>
             </span>
-            <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-1 text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-white shadow-sm">
+            <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-3.5 py-0.5 text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
               NDIS &amp; Aged Care Compliance
             </span>
           </Link>
 
-          <div className="hidden shrink-0 items-center gap-2 md:flex">
+          {/* Right Column: Open App Dashboard on Top, Small Landing Page Directly Underneath */}
+          <div className="hidden shrink-0 flex-col items-center justify-center gap-1 md:flex">
             <Link
               to="/dashboard"
-              className="rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-md ring-2 ring-[#FF2E9A] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+              className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+              }}
             >
               Open App Dashboard
             </Link>
-            {!authed && (
-              <>
-                <Link
-                  to="/login"
-                  className="rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition-colors hover:bg-[#F5F0FF]"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  to="/register"
-                  className="rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-2 text-xs font-extrabold text-white shadow-sm transition-all hover:bg-[#5A00D6]"
-                >
-                  Get started
-                </Link>
-              </>
-            )}
+            <div className="flex items-center justify-center gap-1">
+              <Link
+                to="/"
+                className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+              >
+                Landing Page
+              </Link>
+              {!authed && (
+                <>
+                  <Link
+                    to="/login"
+                    className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-[#FF2E9A] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white hover:bg-[#5A00D6]"
+                  >
+                    Get started
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           <button

@@ -70,20 +70,9 @@ export default function QuickAppBar() {
               'linear-gradient(135deg, rgba(0,114,255,0.22) 0%, rgba(90,0,214,0.25) 50%, rgba(255,46,154,0.22) 100%)',
           }}
         >
-          {/* Centered Top Control Row: Landing Page | Quick App Bar | All 46 Modules (Extra design details removed!) */}
-          <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs">
-            <Link
-              to="/"
-              onClick={() => setShowAllModules(false)}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#FF2E9A] transition-transform hover:-translate-y-0.5 hover:bg-[#FFF0F8]"
-            >
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF2E9A] text-white">
-                <Home className="h-3.5 w-3.5 text-white" />
-              </span>
-              <span>Landing Page</span>
-            </Link>
-
-            <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
+          {/* Centered Top Control Row: Quick App Bar | All 46 Modules (Landing Page is now small in Top Header under Open Dashboard) */}
+          <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-2xs">
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0072FF] text-white">
                 <Compass className="h-3.5 w-3.5 text-white" />
               </span>
@@ -93,7 +82,7 @@ export default function QuickAppBar() {
             <button
               type="button"
               onClick={() => setShowAllModules((prev) => !prev)}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
             >
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5A00D6] text-white">
                 <Sparkles className="h-3.5 w-3.5 text-white" />

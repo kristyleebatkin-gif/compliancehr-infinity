@@ -29,13 +29,12 @@ export default function ModuleChipStrip() {
       blurb: m.blurb,
     })),
     {
-      key: 'executive-suite-anchor',
-      label: 'Pricing & Packages',
-      path: '/#pricing',
-      isAnchor: true,
-      href: '#pricing',
+      key: 'open-dashboard-app-colours',
+      label: 'Open Dashboard',
+      path: '/dashboard',
       icon: Sparkles,
-      blurb: 'Smart Enhanced All-In-One Compliance Packages',
+      isAppColoured: true,
+      blurb: 'Open ComplianceHR Infinity Dashboard',
     },
     {
       key: 'landing-page-bottom-right',
@@ -80,17 +79,25 @@ export default function ModuleChipStrip() {
               </>
             );
 
-            if (m.isAnchor) {
+            if (m.isAppColoured) {
               return (
-                <a
+                <Link
                   key={m.key}
-                  href={m.href}
+                  to={m.path}
                   title={m.blurb}
-                  className="group flex h-full min-h-[48px] w-full items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-2 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
-                  style={{ borderTopWidth: '4px', borderTopColor: accent }}
+                  className="group flex h-full min-h-[48px] w-full items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+                  }}
                 >
-                  {inner}
-                </a>
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6] shadow-sm">
+                    <Icon className="h-3 w-3 text-[#5A00D6]" />
+                  </span>
+                  <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[9.5px] lg:text-[10.5px] font-extrabold leading-tight text-white">
+                    {m.label}
+                  </span>
+                </Link>
               );
             }
 
