@@ -43,7 +43,7 @@ export default function LandingNav() {
   return (
     <header
       id="top-landing"
-      className={`sticky top-0 z-40 border-b-4 border-[#0A2B6D] transition-shadow duration-300 ${
+      className={`relative z-40 border-b-4 border-[#0A2B6D] transition-shadow duration-300 ${
         scrolled ? 'shadow-xl' : 'shadow-md'
       }`}
       style={{
@@ -52,23 +52,24 @@ export default function LandingNav() {
       }}
     >
       {/* Full-width app-coloured background with 0.5cm side spacing */}
-      <div className="w-full px-[0.5cm] py-2.5 space-y-2.5">
-        {/* Bigger Top Bar: Entire Logo Fitted Inside Square Border, True-Centered App Name, and Open + Landing Icons at Bottom of Section */}
-        <div className="relative flex flex-col items-center justify-center gap-3 rounded-3xl border-3 border-[#0A2B6D] bg-white px-5 py-5 sm:px-7 sm:py-6 shadow-lg ring-2 ring-[#00C6FF]">
+      <div className="w-full px-[0.5cm] py-2 space-y-2">
+        {/* Clean, Balanced Top Bar: Square Logo Fitted to Border + Single-Line Centered App Name + Bottom Action Row */}
+        <div className="relative flex flex-col items-center justify-between gap-2.5 rounded-2xl border-3 border-[#0A2B6D] bg-white px-4 py-3 sm:px-5 sm:py-3.5 shadow-lg ring-2 ring-[#00C6FF]">
           {/* Mobile menu toggle in top-right corner */}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden absolute right-4 top-4 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 text-[#0A2B6D]"
+            className="md:hidden absolute right-3 top-3 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 text-[#0A2B6D]"
             aria-label="Menu"
           >
-            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          {/* Main Centered Header Row: Entire Logo Fitted Inside Tight Square Border + Centered App Name */}
-          <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
+          {/* Balanced 3-Column Top Row so App Name is Mathematically Dead-Center and Fits on One Line */}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-[96px_1fr_96px] md:grid-cols-[108px_1fr_108px] items-center gap-3">
+            {/* Left: Entire Logo Fitted Cleanly Inside Square Border */}
             <Link
               to="/"
-              className="flex h-28 w-28 sm:h-32 sm:w-32 md:h-36 md:w-36 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-3 border-[#0A2B6D] bg-white p-1 shadow-md transition-transform hover:scale-102"
+              className="mx-auto sm:mx-0 flex h-24 w-24 md:h-[108px] md:w-[108px] shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-0.5 shadow-sm transition-transform hover:scale-102"
             >
               <Image
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
@@ -78,12 +79,12 @@ export default function LandingNav() {
               />
             </Link>
 
-            {/* True-Centered App Name + Bright Pink Subtitle */}
+            {/* Center: Single-Line App Name + Bright Pink Subtitle */}
             <Link
               to="/"
-              className="flex flex-col items-center justify-center bg-white text-center"
+              className="flex min-w-0 flex-col items-center justify-center bg-white text-center px-1"
             >
-              <span className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight">
+              <span className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
                 Compliance
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   HR
@@ -92,54 +93,61 @@ export default function LandingNav() {
                   Infinity
                 </span>
               </span>
-              <span className="mt-2 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white shadow-sm">
+              <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-0.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-sm">
                 NDIS &amp; Aged Care Compliance
               </span>
             </Link>
+
+            {/* Right: Sign In / Get Started Stack Balancing the Logo Width */}
+            <div className="hidden sm:flex flex-col items-end justify-center gap-1">
+              {!authed ? (
+                <>
+                  <Link
+                    to="/login"
+                    className="inline-flex w-full items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="inline-flex w-full items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-2.5 py-1 text-[10px] font-extrabold text-white shadow-sm hover:bg-[#5A00D6]"
+                  >
+                    Get started
+                  </Link>
+                </>
+              ) : (
+                <span className="inline-flex w-full items-center justify-center rounded-full border border-[#0A2B6D] bg-[#F5F0FF] px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                  Signed In
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Bottom of Top Bar Section: Open App Dashboard (in App Colours) + Landing Page Icons Centered at Bottom */}
-          <div className="flex w-full flex-wrap items-center justify-center gap-2 border-t-2 border-[#0A2B6D]/20 pt-3">
+          {/* Bottom of Top Bar Section: Open App Dashboard (in App Colours) + Landing Page Icons Centered */}
+          <div className="flex w-full flex-wrap items-center justify-center gap-2 border-t border-[#0A2B6D]/20 pt-2">
             <Link
               to="/dashboard"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
               style={{
                 background:
                   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
               }}
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                <Sparkles className="h-3 w-3 text-[#5A00D6]" />
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                <Sparkles className="h-2.5 w-2.5 text-[#5A00D6]" />
               </span>
               <span>Open App Dashboard</span>
             </Link>
 
             <Link
               to="/"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
-                <ShieldCheck className="h-3 w-3 text-white" />
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
+                <ShieldCheck className="h-2.5 w-2.5 text-white" />
               </span>
               <span>Landing Page</span>
             </Link>
-
-            {!authed && (
-              <>
-                <Link
-                  to="/login"
-                  className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  to="/register"
-                  className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm hover:bg-[#5A00D6]"
-                >
-                  Get started
-                </Link>
-              </>
-            )}
           </div>
         </div>
 
