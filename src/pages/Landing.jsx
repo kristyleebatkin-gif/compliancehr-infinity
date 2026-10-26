@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
 import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
@@ -17,11 +18,11 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="app-readable relative min-h-screen overflow-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
+    <div className="landing-page app-readable relative min-h-screen overflow-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
       {/* Top Navigation — Top Section Template + Highlights & Features + Quick App Bar */}
       <LandingNav />
 
-      <main className="relative z-10 w-full bg-white px-[0.5cm] py-2 space-y-4 pb-8">
+      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] bg-white px-3 py-6 sm:px-6 space-y-8 pb-12">
         {/* 1. Hero — Compliance Management, Simplified End to End */}
         <LandingHero />
 
