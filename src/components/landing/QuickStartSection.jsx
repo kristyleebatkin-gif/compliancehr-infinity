@@ -40,14 +40,20 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading with Generous Space Around "Start using ComplianceHR in four simple and effortless steps" */}
+        {/* Heading with App Design Colours on "Start using ComplianceHR in four simple and effortless steps" */}
         <div
           className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-5 sm:px-10 sm:py-7 text-center">
-            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug text-[#0A2B6D]">
-              Start using ComplianceHR in four simple and effortless steps
+            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">
+              <span className="text-[#0A2B6D]">Start using Compliance</span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                HR
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                in four simple and effortless steps
+              </span>
             </h2>
           </div>
         </div>

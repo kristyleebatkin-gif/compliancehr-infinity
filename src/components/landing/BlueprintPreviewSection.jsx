@@ -31,6 +31,13 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
+// Bright Pink, Light Blue, and Purple tiles for "How Information Connects Automatically"
+const FLOW_TILE_STYLES = [
+  { bg: '#FF2E9A', text: '#FFFFFF' }, // Bright Pink
+  { bg: '#38BDF8', text: '#0A2B6D' }, // Light Blue
+  { bg: '#9333EA', text: '#FFFFFF' }, // Purple
+];
+
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) =>
   keys
@@ -140,36 +147,18 @@ export default function BlueprintPreviewSection() {
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div
-                className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
+                className="gradient-brand flex w-full items-center justify-center gap-2.5 rounded-[13px] px-4 py-2.5 text-white"
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                    <Workflow className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                  </span>
-                  <span
-                    className="text-xs sm:text-sm md:text-base font-extrabold text-white"
-                    style={{ color: '#FFFFFF' }}
-                  >
-                    How Information Connects &amp; Role-Based Access Model
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setExpandConnections((v) => !v)}
-                  className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border-2 border-white bg-white/15 px-3.5 py-1 text-xs font-extrabold text-white shadow-2xs transition-all hover:bg-white/25"
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                  <Workflow className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+                <span
+                  className="text-xs sm:text-sm md:text-base font-extrabold text-white"
                   style={{ color: '#FFFFFF' }}
                 >
-                  <span className="text-white" style={{ color: '#FFFFFF' }}>
-                    {expandConnections ? 'Minimise Panel' : 'Expand Panel'}
-                  </span>
-                  {expandConnections ? (
-                    <ChevronUp className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                  ) : (
-                    <ChevronDown className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                  )}
-                </button>
+                  How Information Connects &amp; Role-Based Access Model
+                </span>
               </div>
             </div>
 
@@ -214,8 +203,8 @@ export default function BlueprintPreviewSection() {
                         >
                           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 rounded-[13px] bg-white px-3 py-2">
                             {flow.steps.map((item, index) => {
-                              const idx = fIdx * 3 + index;
-                              const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+                              const idx = fIdx * 5 + index;
+                              const flowTile = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
                               return (
                                 <React.Fragment key={item}>
                                   <div
@@ -223,8 +212,11 @@ export default function BlueprintPreviewSection() {
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <span
-                                      className="block rounded-full px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D]"
-                                      style={{ background: sprayBg }}
+                                      className="block rounded-full px-3 py-1 text-[11px] font-extrabold"
+                                      style={{
+                                        backgroundColor: flowTile.bg,
+                                        color: flowTile.text,
+                                      }}
                                     >
                                       {item}
                                     </span>
@@ -254,18 +246,24 @@ export default function BlueprintPreviewSection() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(5) }}
+                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(5), color: '#FFFFFF' }}
                       >
                         <div className="flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Lock className="h-3 w-3 text-white" />
+                            <Lock className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span className="font-editorial text-sm sm:text-base font-extrabold text-white">
+                          <span
+                            className="font-editorial text-sm sm:text-base font-extrabold text-white"
+                            style={{ color: '#FFFFFF' }}
+                          >
                             Access Follows Role
                           </span>
                         </div>
-                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white">
+                        <span
+                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
                           Strict RLS Security
                         </span>
                       </div>
@@ -283,22 +281,28 @@ export default function BlueprintPreviewSection() {
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
                             <div
-                              className="flex items-center gap-2.5 rounded-[13px] px-3.5 py-2 text-[#0A2B6D]"
+                              className="flex flex-col gap-1.5 rounded-[13px] p-2.5 text-[#0A2B6D]"
                               style={{ background: sprayBg }}
                             >
-                              <span
-                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                                style={{ borderColor: borderCol }}
+                              {/* Title Header in App Design Coloured Border with White Background */}
+                              <div
+                                className="w-full rounded-xl p-[2px] shadow-2xs"
+                                style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                              </span>
-                              <div className="min-w-0">
-                                <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                                  {lvl.title}
+                                <div className="flex items-center gap-2 rounded-[9px] bg-white px-2.5 py-1.5">
+                                  <span
+                                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                    style={{ borderColor: borderCol }}
+                                  >
+                                    <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                                  </span>
+                                  <span className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                                    {lvl.title}
+                                  </span>
                                 </div>
-                                <div className="text-[11px] font-bold leading-tight text-[#0A2B6D]">
-                                  {lvl.desc}
-                                </div>
+                              </div>
+                              <div className="px-1 text-[11px] font-bold leading-snug text-[#0A2B6D]">
+                                {lvl.desc}
                               </div>
                             </div>
                           </div>
@@ -309,6 +313,30 @@ export default function BlueprintPreviewSection() {
                 </div>
               </div>
             )}
+
+            {/* Smaller Minimise Button on Bottom Right of Section */}
+            <div className="flex w-full justify-end pt-1">
+              <div
+                className="rounded-full p-[2px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandConnections((v) => !v)}
+                  className="gradient-brand inline-flex min-h-[26px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-white transition-all hover:opacity-95"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>
+                    {expandConnections ? 'Minimise' : 'Expand'}
+                  </span>
+                  {expandConnections ? (
+                    <ChevronUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  ) : (
+                    <ChevronDown className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -342,13 +370,13 @@ export default function BlueprintPreviewSection() {
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <span
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
-                      style={{ background: SPRAY_BGS[0] }}
+                      className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
+                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                     >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                        <FileSpreadsheet className="h-3 w-3 text-[#0072FF]" />
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                        <FileSpreadsheet className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       </span>
-                      Spreadsheet Exchange
+                      <span style={{ color: '#FFFFFF' }}>Spreadsheet Exchange</span>
                     </span>
                   </div>
                   <div
@@ -356,13 +384,13 @@ export default function BlueprintPreviewSection() {
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <span
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
-                      style={{ background: SPRAY_BGS[1] }}
+                      className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
+                      style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                     >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                        <Sparkles className="h-3 w-3 text-[#FF2E9A]" />
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                        <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       </span>
-                      AI Assistant
+                      <span style={{ color: '#FFFFFF' }}>AI Assistant</span>
                     </span>
                   </div>
                 </div>
@@ -383,18 +411,24 @@ export default function BlueprintPreviewSection() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(gIdx) }}
+                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(gIdx), color: '#FFFFFF' }}
                       >
                         <div className="flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Layers className="h-3 w-3 text-white" />
+                            <Layers className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white">
+                          <span
+                            className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
+                            style={{ color: '#FFFFFF' }}
+                          >
                             {group.title}
                           </span>
                         </div>
-                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-xs font-extrabold text-white">
+                        <span
+                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-xs font-extrabold text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
                           {group.modules.length} modules
                         </span>
                       </div>
@@ -415,22 +449,28 @@ export default function BlueprintPreviewSection() {
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
                             <div
-                              className="flex h-full w-full items-start gap-2.5 rounded-[13px] p-3 text-[#0A2B6D]"
+                              className="flex h-full w-full flex-col justify-between gap-2 rounded-[13px] p-3 text-[#0A2B6D]"
                               style={{ background: sprayBg }}
                             >
-                              <span
-                                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
-                                style={{ borderColor: borderCol }}
+                              {/* Module Header in App Design Coloured Border with White Background */}
+                              <div
+                                className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                                style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                              </span>
-                              <div className="min-w-0 flex-1">
-                                <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                                  {mod.label}
+                                <div className="flex items-center gap-2 rounded-[9px] bg-white px-2.5 py-1.5">
+                                  <span
+                                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                    style={{ borderColor: borderCol }}
+                                  >
+                                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                                  </span>
+                                  <span className="min-w-0 flex-1 text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                                    {mod.label}
+                                  </span>
                                 </div>
-                                <div className="mt-0.5 text-[11px] font-bold leading-snug text-[#0A2B6D]">
-                                  {mod.blurb}
-                                </div>
+                              </div>
+                              <div className="flex-1 px-1 text-[11px] font-bold leading-snug text-[#0A2B6D]">
+                                {mod.blurb}
                               </div>
                             </div>
                           </Link>
