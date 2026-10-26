@@ -505,10 +505,7 @@ export default function InfinityCoreEngine({ compact = false }) {
                   boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.95)',
                 }}
               >
-                <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
                   <div
                     className="gradient-brand flex h-[18px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-white"
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
@@ -526,7 +523,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                     className="w-full flex-1 rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex h-full flex-col items-center justify-center rounded-[5px] bg-white px-1 py-0.5 text-center">
+                    <div
+                      className="flex h-full flex-col items-center justify-center rounded-[5px] px-1 py-0.5 text-center"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
                       <span className="block text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
                         {stat.label}
                       </span>
@@ -640,10 +640,7 @@ export default function InfinityCoreEngine({ compact = false }) {
                     className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
+                    <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white p-1 text-center space-y-1">
                       <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
                           className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
@@ -659,7 +656,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="w-full rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                          <div
+                            className="flex min-h-[22px] items-center justify-center rounded-[3px] px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             {pipe.title}
                           </div>
                         </div>
@@ -668,7 +668,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="flex flex-1 rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] bg-white p-1 text-center">
+                          <div
+                            className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             <div className="text-[7px] font-extrabold text-[#0A2B6D] leading-tight line-clamp-2">
                               {pipe.action}
                             </div>
@@ -677,7 +680,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                       </div>
 
                       <div className="flex h-[18px] w-full items-center justify-between gap-1">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]">
+                        <span
+                          className="truncate rounded-full border border-[#0A2B6D]/25 px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
                           {pipe.functionName}
                         </span>
                         <Link
@@ -730,10 +736,7 @@ export default function InfinityCoreEngine({ compact = false }) {
                     className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
+                    <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white p-1 text-center space-y-1">
                       <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
                           className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
@@ -749,7 +752,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="w-full rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                          <div
+                            className="flex min-h-[22px] items-center justify-center rounded-[3px] px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             {gate.name}
                           </div>
                         </div>
@@ -758,7 +764,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="flex flex-1 rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex w-full items-center justify-center rounded-[3px] bg-white p-1 text-center">
+                          <div
+                            className="flex w-full items-center justify-center rounded-[3px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
                               {gate.ruleSummary}
                             </p>
@@ -767,7 +776,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                       </div>
 
                       <div className="flex h-[18px] w-full items-center justify-between">
-                        <span className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]">
+                        <span
+                          className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
                           <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" /> Gate Active
                         </span>
                         <Link
@@ -815,10 +827,7 @@ export default function InfinityCoreEngine({ compact = false }) {
                     className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
+                    <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white p-1 text-center space-y-1">
                       <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
                           className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
@@ -834,7 +843,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="w-full rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                          <div
+                            className="flex min-h-[22px] items-center justify-center rounded-[3px] px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             {eng.title}
                           </div>
                         </div>
@@ -843,7 +855,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                           className="flex flex-1 rounded p-[1px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] bg-white p-1 text-center">
+                          <div
+                            className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] p-1 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
                             <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
                               {eng.output}
                             </p>
@@ -852,7 +867,10 @@ export default function InfinityCoreEngine({ compact = false }) {
                       </div>
 
                       <div className="flex h-[18px] w-full items-center justify-between gap-1">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]">
+                        <span
+                          className="truncate rounded-full border border-[#0A2B6D]/25 px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
                           {eng.fnLabel}
                         </span>
                         <Link
