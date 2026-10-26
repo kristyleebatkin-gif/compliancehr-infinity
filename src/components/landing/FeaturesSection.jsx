@@ -66,7 +66,10 @@ export default function FeaturesSection() {
               <div className="flex items-center justify-between gap-2">
                 <div
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
-                  style={{ backgroundColor: f.color }}
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                  }}
                 >
                   <f.icon className="h-4 w-4 text-white" />
                 </div>

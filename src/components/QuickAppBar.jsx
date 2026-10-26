@@ -55,49 +55,54 @@ export default function QuickAppBar() {
       : location.pathname === path || location.pathname.startsWith(`${path}/`);
 
   return (
-    <div
-      className="w-full border-t-2 border-b-4 border-[#0A2B6D] shadow-md"
-      style={{
-        background:
-          'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 38%, #A100FF 60%, #FF2E9A 82%, #0072FF 100%)',
-      }}
-    >
+    <div className="w-full border-t-2 border-b-4 border-[#0A2B6D] bg-white shadow-md">
       <div className="w-full px-[0.5cm] py-2">
-        <div
-          className="rounded-2xl border-2 border-[#0A2B6D] p-2.5 shadow-md ring-2 ring-[#00C6FF] space-y-2"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(0,114,255,0.22) 0%, rgba(90,0,214,0.25) 50%, rgba(255,46,154,0.22) 100%)',
-          }}
-        >
-          {/* Centered Top Control Row: Quick App Bar | All 46 Modules (Landing Page is now small in Top Header under Open Dashboard) */}
-          <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-2xs">
-            <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-sm ring-2 ring-[#0072FF]">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0072FF] text-white">
-                <Compass className="h-3.5 w-3.5 text-white" />
+        <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md space-y-2.5">
+          {/* Longer Full-Width Quick App Bar Header in the Same Colours as the App */}
+          <div
+            className="flex w-full flex-col sm:flex-row items-center justify-between gap-2.5 rounded-xl border-2 border-[#0A2B6D] px-4 py-2.5 text-white shadow-md"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 20%, #0A2B6D 38%, #5A00D6 58%, #A100FF 78%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="flex items-center justify-center gap-2.5 text-center sm:text-left">
+              <span
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white text-white shadow-sm"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #00C6FF 0%, #0072FF 30%, #5A00D6 65%, #FF2E9A 100%)',
+                }}
+              >
+                <Compass className="h-4 w-4 text-white" />
               </span>
-              <span>Quick App Bar</span>
-            </span>
+              <h2 className="font-editorial text-base sm:text-lg md:text-xl font-extrabold uppercase tracking-wider text-white">
+                Quick App Bar — Instant Workspace Navigation
+              </h2>
+            </div>
 
             <button
               type="button"
               onClick={() => setShowAllModules((prev) => !prev)}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-sm ring-2 ring-[#5A00D6] transition-transform hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-white px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-transform hover:-translate-y-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 48%, #5A00D6 80%, #0072FF 100%)',
+              }}
             >
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5A00D6] text-white">
-                <Sparkles className="h-3.5 w-3.5 text-white" />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[#5A00D6]">
+                <Sparkles className="h-3 w-3 text-[#5A00D6]" />
               </span>
               <span>All {MODULE_DIRECTORY.length} Modules</span>
-              {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-[#0A2B6D]" /> : <ChevronDown className="h-3.5 w-3.5 text-[#0A2B6D]" />}
+              {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
             </button>
           </div>
 
-          {/* 6-Per-Line Grid of Quick App Module Items — Equal Size, Circular Icons & All Writing Fitted Inside */}
+          {/* 6-Per-Line Grid of Quick App Module Items — Clean White Around Items (Inside Border Only) & Circular App-Colour Icons */}
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
-            {QUICK_LINKS.map((item, idx) => {
+            {QUICK_LINKS.map((item) => {
               const active = isActive(item.path);
               const Icon = item.icon;
-              const accent = MIXED_COLOURS[idx % MIXED_COLOURS.length];
               return (
                 <Link
                   key={item.path}
@@ -109,7 +114,10 @@ export default function QuickAppBar() {
                 >
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                    style={{ backgroundColor: accent }}
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                    }}
                   >
                     <Icon className="h-3 w-3 text-white" />
                   </span>
@@ -151,7 +159,10 @@ export default function QuickAppBar() {
                   >
                     <span
                       className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                      style={{ backgroundColor: accent }}
+                      style={{
+                        background:
+                          'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                      }}
                     >
                       <Icon className="h-3 w-3 text-white" />
                     </span>

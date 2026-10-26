@@ -43,18 +43,14 @@ export default function LandingNav() {
   return (
     <header
       id="top-landing"
-      className={`relative z-40 border-b-4 border-[#0A2B6D] transition-shadow duration-300 ${
+      className={`relative z-40 border-b-4 border-[#0A2B6D] bg-white transition-shadow duration-300 ${
         scrolled ? 'shadow-xl' : 'shadow-md'
       }`}
-      style={{
-        background:
-          'linear-gradient(120deg, #0072FF 0%, #0A2B6D 16%, #5A00D6 34%, #A100FF 52%, #FF2E9A 72%, #5A00D6 88%, #0072FF 100%)',
-      }}
     >
-      {/* Full-width app-coloured background with 0.5cm side spacing */}
-      <div className="w-full px-[0.5cm] py-2 space-y-2">
+      {/* Clean white outer area with 0.5cm side spacing — colour strictly inside borders */}
+      <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
         {/* Clean, Balanced Top Bar: Square Logo Fitted to Border + Single-Line Centered App Name + Bottom Action Row */}
-        <div className="relative flex flex-col items-center justify-between gap-2.5 rounded-2xl border-3 border-[#0A2B6D] bg-white px-4 py-3 sm:px-5 sm:py-3.5 shadow-lg ring-2 ring-[#00C6FF]">
+        <div className="relative flex flex-col items-center justify-between gap-2.5 rounded-2xl border-3 border-[#0A2B6D] bg-white px-4 py-3 sm:px-5 sm:py-3.5 shadow-lg">
           {/* Mobile menu toggle in top-right corner */}
           <button
             onClick={() => setOpen((v) => !v)}
@@ -185,14 +181,10 @@ export default function LandingNav() {
           </div>
         </div>
 
-        {/* Features Listed — Circular Feature Icons + All Writing Fitted Properly Inside Every Pill (6 Per Line) */}
+        {/* Features Listed — No Colour Around Features (Clean White Inside Border Only) + Every Feature Icon in App Colour */}
         <nav
           aria-label="Listed features navigation"
-          className="rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-md ring-2 ring-[#FF2E9A]"
-          style={{
-            background:
-              'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
-          }}
+          className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md"
         >
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
             {LISTED_FEATURES.map((l) => {
@@ -205,7 +197,10 @@ export default function LandingNav() {
                 >
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                    style={{ backgroundColor: l.color }}
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                    }}
                   >
                     <Icon className="h-3 w-3 text-white" />
                   </span>
@@ -235,7 +230,10 @@ export default function LandingNav() {
                 >
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                    style={{ backgroundColor: l.color }}
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                    }}
                   >
                     <Icon className="h-3 w-3 text-white" />
                   </span>
