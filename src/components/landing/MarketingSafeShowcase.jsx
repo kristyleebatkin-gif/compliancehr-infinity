@@ -78,25 +78,25 @@ const PACKS = [
     badgeLine2: '& Compliance Doc Pack',
     topPriceHeading: 'ComplianceHR',
     priceMain: '$999',
-    priceSuffix: 'Outright or $125 per a month',
+    priceSuffix: 'or $125 per a month (24 month contract)',
     subtitle:
-      'Complete 125+ Document NDIS & Aged Care Library + 6 Structured Binders · Includes full access to ComplianceHR templates',
+      'Full access to documents, downloadable at any stage, over 100 documents tailored to Business Details · $999 (no payment plan) or $125 per a month (24 month contract)',
     bullets: [
-      '1. Complete 125+ NDIS & Aged Care Policies, Procedures, Registers & Intake Forms',
-      '2. Includes Governance (CHR-AUD-001) & Workforce (CHR-AUD-002) Checklists',
-      '3. 6 Structured Compliance Binders + 12 Printable A4 Executive Office Templates',
-      '4. Smart-Fill Auto-Branding with Organisation Logo, ABN, NDIS Number & Signatories',
-      '5. Instant 1-Click PDF & CSV Audit Evidence Packs Ready for NDIS Commission Audits',
+      '1. Full access to over 100 documents, downloadable at any stage & tailored to Business Details',
+      '2. Includes WHS, Risk, Incident, Medication, Waste, Support Plan & Service Delivery',
+      '3. Includes Infection Control, Continuity, Staff Training Modules & Consents',
+      '4. Includes Intake Employee, Intake Participant, Progress, Skill Assessments & Review',
+      '5. Includes Conflict, Safe Meal Management, Policies, Procedures, Registers & Business Plans',
     ],
-    importantInfoTitle: 'Important Outright Package Info & Inclusions',
+    importantInfoTitle: 'Important Document Package Info & Inclusions',
     importantInfoRows: [
-      'Outright Purchase: $999 Total · Payment Plan: $125 per a month',
-      'Includes Both Governance (CHR-AUD-001) & Workforce (CHR-AUD-002) Checklists',
-      'Covers All 17 NDIS Audit Categories & 356 Mandatory Verification Checkpoints',
-      '100% Editable, Printable & Downloadable PDF & CSV Packs with Lifetime Updates',
+      '$999 Outright (no payment plan) · $125 per a month (24 month contract)',
+      'Full access to over 100 documents · Downloadable at any stage · Tailored to Business Details',
+      'WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control & Continuity',
+      'Staff Training, Consents, Intake (Employee & Participant), Progress, Skills, Review, Conflict, Safe Meal, Policies, Procedures, Registers & Business Plans',
     ],
-    primaryCta: { label: 'Select $999 Outright', href: '#pricing' },
-    secondaryCta: { label: 'Preview 125+ Docs', to: '/compliance' },
+    primaryCta: { label: 'Select $999 or $125/mo', href: '#pricing' },
+    secondaryCta: { label: 'Preview 100+ Docs', to: '/compliance' },
   },
 ];
 
@@ -804,7 +804,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                       <CheckCircle2 className="h-2.5 w-2.5" style={{ color: iSym.iconColor }} />
                                     </span>
                                     <span
-                                      className="text-center sm:whitespace-nowrap"
+                                      className="text-center"
                                       style={{ color: iSym.iconColor }}
                                     >
                                       {info}

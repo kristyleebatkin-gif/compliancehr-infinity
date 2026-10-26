@@ -156,8 +156,8 @@ export const CORE_PLATFORM_BENEFITS = [
   },
   {
     icon: ClipboardCheck,
-    title: 'Full Access to All Documents Included',
-    desc: 'Complete 125+ NDIS & Aged Care documents plus both CHR-AUD-001 & CHR-AUD-002 11-page, 17-category, 356-checkpoint audit suites included.',
+    title: '$999 or $125/mo (24m Contract) · 100+ Docs',
+    desc: 'Full access to over 100 documents downloadable at any stage, tailored to Business Details (no payment plan on $999): WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training Modules, Consents, Intake Employee & Participant, Progress, Skill Assessments, Review, Conflict, Safe Meal Management, Policies, Procedures, Registers & Business Plans.',
   },
   {
     icon: Layers,

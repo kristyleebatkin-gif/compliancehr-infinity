@@ -37,27 +37,27 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
-// What You Get in the $999 Outright & Smart Enhanced Packages (No $355 references)
+// What You Get in the $999 or $125/mo (24-Month Contract) & Smart Enhanced Packages
 export const WHAT_YOU_GET_ITEMS = [
   {
-    title: '125+ NDIS & Aged Care Policies & Forms',
-    included: 'Included in $999 Outright & All Plans',
-    detail: 'Every mandatory policy, procedure, intake form & register ready to use.',
+    title: 'Over 100 Documents · Downloadable Anytime',
+    included: '$999 (No Payment Plan) or $125/mo (24m Contract)',
+    detail: 'Full access to over 100 documents downloadable at any stage & tailored to Business Details.',
   },
   {
-    title: 'Dual Audit Checklists (CHR-AUD-001 & 002)',
-    included: '17 Categories · 356 Checkpoints Included',
-    detail: 'Governance & Workforce 11-page interactive & printable audit suites.',
+    title: 'WHS, Risk, Incident, Medication & Waste',
+    included: 'Support Plan, Service Delivery & Infection Control',
+    detail: 'Includes Continuity, Safe Meal Management, Conflict, Policies, Procedures & Registers.',
   },
   {
-    title: '6 Structured Compliance Binders',
-    included: 'Complete Audit-Ready Binder Volumes',
-    detail: 'Pre-indexed across Governance, HR, Participants, Safety, Rostering & Finance.',
+    title: 'Intake, Consents, Progress & Reviews',
+    included: 'Intake Employee & Intake Participant Included',
+    detail: 'Includes Staff Training Modules, Skill Assessments, Progress, Review & Business Plans.',
   },
   {
-    title: '12 Printable A4 Executive Office Masters',
-    included: '2026 Standard Ruled & Smart-Fill A4 Pack',
-    detail: 'Service Agreements, 24h/5d Incidents, Risk Matrix, Screening & Consents.',
+    title: 'Documents Tailored to Business Details',
+    included: 'Auto-Branded with Your Business Identity',
+    detail: 'Every policy, procedure, register & business plan automatically tailored to your Business Details.',
   },
   {
     title: 'Up to 20 Users ($760/mo) to 101+ Users',
@@ -65,9 +65,9 @@ export const WHAT_YOU_GET_ITEMS = [
     detail: 'Includes Elite Package Tokens ($160/mo value): 1,200 message credits, 50,000 integration credits & support.',
   },
   {
-    title: '1-Click Smart-Fill Auto-Branding',
-    included: 'Logo, ABN, NDIS ID & Signatories',
-    detail: 'Stamps your organisation details across every PDF & CSV export automatically.',
+    title: 'Dual Audit Checklists (CHR-AUD-001 & 002)',
+    included: '17 Categories · 356 Checkpoints Included',
+    detail: 'Governance & Workforce 11-page interactive & printable audit suites ready for NDIS audits.',
   },
 ];
 
@@ -346,14 +346,14 @@ export default function MustHaveFunctionsReview() {
                         <div className="font-editorial text-2xl sm:text-3xl font-extrabold leading-tight">
                           <span className="text-[#0A2B6D]">$999 </span>
                           <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            Outright
+                            or $125/mo
                           </span>
                         </div>
                         <div className="mt-0.5 text-xs font-extrabold text-[#5A00D6]">
-                          or $125 per a month · Full 125+ Document Suite
+                          24 month contract · No payment plan on $999 · Over 100 Documents
                         </div>
-                        <p className="mt-1.5 text-center text-xs font-bold leading-snug text-[#5A00D6]">
-                          Or subscribe to ComplianceHR Subscription from $760 per a month (up to 20 users, includes Elite Package Tokens valued at $160 per a month &amp; full access to ComplianceHR app).
+                        <p className="mt-1.5 text-center text-[11px] font-bold leading-snug text-[#5A00D6]">
+                          Full access to documents, downloadable at any stage, tailored to Business Details. Includes WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training Modules, Consents, Intake Employee, Intake Participant, Progress, Skill Assessments, Review, Conflict, Safe Meal Management, Policies, Procedures, Registers &amp; Business Plans.
                         </p>
                       </div>
                     </div>
