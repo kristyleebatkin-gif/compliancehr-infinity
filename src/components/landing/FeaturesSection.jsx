@@ -393,131 +393,86 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes — App-Coloured Numbers & Symbols, Smaller Next Note Button, All Sections Lined Up, App-Coloured Writing */}
-        <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center items-stretch">
+        {/* 12 Capability Sticky Notes — Halved in Size With App-Design Coloured Header Tiles */}
+        <div className="grid w-full grid-cols-2 gap-2 pt-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {FEATURES.map((f, index) => {
-            const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
             const activeNoteIdx = noteIndices[index] % f.notes.length;
             const currentNote = f.notes[activeNoteIdx];
-            const titleAmpParts = f.title.includes(' & ') ? f.title.split(' & ') : null;
 
             return (
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-3.5 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-xl border-2 p-2 pt-3 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   background: STICKY_NOTE_BG,
                   borderColor: borderCol,
-                  borderBottomRightRadius: '26px',
+                  borderBottomRightRadius: '16px',
                 }}
               >
                 {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2 py-0 shadow-2xs"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
-                  <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <Pin className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Capability #{index + 1} · Note {activeNoteIdx + 1}/{f.notes.length}
+                    #{index + 1} · {activeNoteIdx + 1}/{f.notes.length}
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-2">
-                  {/* Top Row: App-Coloured Symbol + App-Coloured Number Badge + Reduced "Next Note ▸" Button */}
-                  <div className="flex min-h-[38px] w-full items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                        style={{ borderColor: borderCol }}
-                      >
-                        <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                      </span>
-                      <span
-                        className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs whitespace-nowrap"
-                        style={{ borderColor: borderCol, color: sym.iconColor }}
-                      >
-                        #{String(index + 1).padStart(2, '0')}
-                      </span>
-                    </div>
-
+                <div className="flex w-full flex-col items-center space-y-1">
+                  {/* App-Coloured Capability Header Bar + Next Button */}
+                  <div
+                    className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-1.5 py-0.5 text-white"
+                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                  >
+                    <span className="inline-flex items-center gap-1 text-[8px] font-extrabold leading-tight text-white">
+                      <f.icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>{f.title}</span>
+                    </span>
                     <button
                       type="button"
                       onClick={() => cycleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
+                      className="shrink-0 rounded-full border border-white bg-white/20 px-1 py-0 text-[6.5px] font-extrabold text-white"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
+                      ▸
                     </button>
                   </div>
 
-                  {/* Section 1: Fixed-Height Heading Box in App Design Colour */}
+                  {/* Compact Info Box */}
                   <div
-                    className="w-full rounded-xl p-[3px] shadow-2xs"
+                    className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[52px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                      <h3
-                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight"
-                        style={{ color: sym.iconColor }}
-                      >
-                        {titleAmpParts ? (
-                          <>
-                            <span className="block">{titleAmpParts[0]}</span>
-                            <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
-                          </>
-                        ) : (
-                          f.title
-                        )}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Section 2: Fixed-Height Info Box in App Design Colour */}
-                  <div
-                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                      <p className="text-[11.5px] font-extrabold leading-snug text-[#5A00D6]">
+                    <div className="flex items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                      <p className="text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                         {currentNote.desc}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Section 3: Fixed-Height Live Functions Box Lined Up Across All 12 Tiles */}
+                {/* Compact Live Functions Box */}
                 <div
-                  className="mt-2.5 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex min-h-[124px] flex-col justify-between rounded-[9px] bg-white p-2.5 text-left">
-                    <div className="flex items-center justify-between text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      <span>Live Functions Included:</span>
-                      <span>Note {activeNoteIdx + 1}/{f.notes.length}</span>
-                    </div>
-                    <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
+                  <div className="rounded-[6px] bg-white p-1 text-left">
+                    <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => {
                         const fSym = getSymbolView(index + fIdx);
                         return (
                           <li
                             key={fn}
-                            className="flex min-h-[28px] items-center gap-1.5 text-[10.5px] font-extrabold leading-tight"
+                            className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
                           >
-                            <span
-                              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(index + fIdx) }}
-                            >
-                              <CheckCircle2
-                                className="h-2.5 w-2.5"
-                                style={{ color: fSym.iconColor }}
-                              />
-                            </span>
+                            <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: fSym.iconColor }} />
                             <span style={{ color: fSym.iconColor }}>{fn}</span>
                           </li>
                         );

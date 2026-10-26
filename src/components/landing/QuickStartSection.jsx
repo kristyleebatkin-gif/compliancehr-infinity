@@ -203,145 +203,89 @@ export default function QuickStartSection() {
           </div>
         </div>
 
-        {/* 4 Steps on Changeable Sticky Notes — App-Design Outlines, App-Design Coloured Writing & Symbols, and "&" Placed on Line 2 */}
-        <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
+        {/* 4 Steps on Changeable Sticky Notes — Halved in Size With App-Design Coloured Headers */}
+        <ol className="grid w-full gap-2 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
-            const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
             const activeNoteIdx = noteIndices[index] % step.notes.length;
             const currentNote = step.notes[activeNoteIdx];
-            const ampParts = currentNote.title.includes(' & ')
-              ? currentNote.title.split(' & ')
-              : null;
 
             return (
               <Reveal
                 key={`step-${index}`}
                 as="li"
                 delay={index * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-xl border-2 p-2 pt-3.5 text-center shadow-sm transition-all hover:-translate-y-0.5"
                 style={{
                   background: STICKY_NOTE_BG,
                   borderColor: borderCol,
-                  borderBottomRightRadius: '26px',
+                  borderBottomRightRadius: '16px',
                 }}
               >
                 {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0 shadow-2xs"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
-                  <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[8px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Step 0{index + 1} of 04 · Note {activeNoteIdx + 1}/4
+                    Step 0{index + 1} · Note {activeNoteIdx + 1}/4
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Top Row: App-Coloured Symbol + App-Coloured Outlined Step Badge + Compact "Next Note ▸" Button */}
-                  <div className="flex w-full items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
-                        style={{ borderColor: borderCol }}
-                      >
-                        <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
-                      </span>
-                      <span
-                        className="rounded-full border-2 bg-white px-3 py-0.5 font-editorial text-sm sm:text-base font-extrabold shadow-2xs whitespace-nowrap"
-                        style={{ borderColor: borderCol, color: sym.iconColor }}
-                      >
-                        Step 0{index + 1}
-                      </span>
-                    </div>
-
+                <div className="flex w-full flex-col items-center space-y-1">
+                  {/* App-Coloured Header Bar + Next Note Button */}
+                  <div
+                    className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
+                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                  >
+                    <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold text-white">
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>{currentNote.title}</span>
+                    </span>
                     <button
                       type="button"
                       onClick={() => cycleSingleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
+                      className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
+                      Next ▸
                     </button>
                   </div>
 
-                  {/* Heading in App Design Coloured Border — "&" Placed on Second Line */}
+                  {/* Compact Description Box */}
                   <div
-                    className="w-full rounded-xl p-[3px] shadow-2xs"
+                    className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
-                      <h3
-                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight text-center"
-                        style={{ color: sym.iconColor }}
-                      >
-                        {ampParts ? (
-                          <>
-                            <span className="block">{ampParts[0]}</span>
-                            <span className="block">&amp; {ampParts.slice(1).join(' & ')}</span>
-                          </>
-                        ) : (
-                          currentNote.title
-                        )}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* White Description Box Framed in App-Design Coloured Border */}
-                  <div
-                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <p className="text-xs font-extrabold leading-snug text-center text-[#5A00D6]">
+                    <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                      <p className="text-[8.5px] font-extrabold leading-tight text-center text-[#0A2B6D]">
                         {currentNote.text}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Sticky Note With App-Design Coloured Symbols & Writing */}
+                {/* Compact Live Functions Listed on Each Sticky Note */}
                 <div
-                  className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white p-2.5 text-left space-y-1.5">
-                    <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      <span>Live Functions Included:</span>
-                      <span>Note {activeNoteIdx + 1}/4</span>
-                    </div>
-                    <ul className="space-y-1.5">
+                  <div className="rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
+                    <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => {
                         const fSym = getSymbolView(index + fIdx);
                         return (
                           <li
                             key={fn}
-                            className="flex items-center gap-2 text-[11px] font-extrabold leading-tight"
+                            className="flex items-center gap-1 text-[8px] font-extrabold leading-tight"
                           >
-                            <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(index + fIdx) }}
-                            >
-                              <CheckCircle2
-                                className="h-3 w-3"
-                                style={{ color: fSym.iconColor }}
-                              />
-                            </span>
-                            <span style={{ color: fSym.iconColor }}>
-                              {fn.includes(' & ') ? (
-                                <>
-                                  <span className="block">{fn.split(' & ')[0]}</span>
-                                  <span className="block">&amp; {fn.split(' & ').slice(1).join(' & ')}</span>
-                                </>
-                              ) : (
-                                fn
-                              )}
-                            </span>
+                            <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: fSym.iconColor }} />
+                            <span style={{ color: fSym.iconColor }}>{fn}</span>
                           </li>
                         );
                       })}

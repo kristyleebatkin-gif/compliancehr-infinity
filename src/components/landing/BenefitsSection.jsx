@@ -240,180 +240,92 @@ export default function BenefitsSection() {
           </div>
         </div>
 
-        {/* 6 Projector Screens — All Sections Lined Up Horizontally, Symbols & Writing in App Design Colour */}
-        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
+        {/* 6 Projector Screens — Halved in Size With App-Design Coloured Header Tiles */}
+        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {BENEFITS.map((b, index) => {
-            const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
             const totalNotes = b.notes.length;
             const activeNoteIdx = noteIndices[index] % totalNotes;
             const currentFunctions = b.notes[activeNoteIdx];
-            const titleAmpParts = b.title.includes(' & ') ? b.title.split(' & ') : null;
             return (
               <Reveal
                 key={b.title}
                 delay={(index % 6) * 0.05}
                 className="group flex h-full flex-col items-center justify-between"
               >
-                {/* Top Projector Ceiling Mount & Identical Roller Casing Bar */}
+                {/* Top Projector Roller Bar */}
                 <div className="flex w-full flex-col items-center">
-                  <div className="flex w-4/5 items-center justify-between px-2">
-                    <span className="h-2 w-2 rounded-t bg-[#0A2B6D]" />
-                    <span className="h-2 w-2 rounded-t bg-[#0A2B6D]" />
-                  </div>
                   <div
-                    className="flex w-full items-center justify-between rounded-full border-2 border-[#0A2B6D] px-3 py-1 shadow-md"
-                    style={{ background: UNIFORM_PROJECTOR_HEADER }}
+                    className="flex w-full items-center justify-between rounded-full border border-[#0A2B6D] px-2 py-0.5 shadow-2xs"
+                    style={{ background: getHeaderView(index) }}
                   >
-                    <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                      <Projector className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>PROJECTOR 0{index + 1}</span>
+                    <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
+                      <Projector className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>PROJ 0{index + 1}</span>
                     </span>
-                    <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                    <button
+                      type="button"
+                      onClick={() => cycleNote(index)}
+                      className="rounded-full bg-white/25 px-1.5 py-0 text-[6.5px] font-extrabold text-white"
+                      style={{ color: '#FFFFFF' }}
+                    >
+                      {activeNoteIdx + 1}/{totalNotes} ▸
+                    </button>
                   </div>
                 </div>
 
-                {/* Pull-Down Projector Screen Canvas — Fixed Section Heights So All 6 Line Up */}
+                {/* Pull-Down Projector Screen Canvas — 50% Smaller */}
                 <div
-                  className="mx-auto flex w-[96%] flex-1 flex-col border-x-[3px] border-b-[3px] border-[#0A2B6D] bg-white p-[3px] shadow-md transition-all group-hover:shadow-lg"
+                  className="mx-auto flex w-[96%] flex-1 flex-col border-x-2 border-b-2 border-[#0A2B6D] p-[2px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="grid h-full flex-1 grid-cols-1 grid-rows-[38px_48px_68px_1fr] gap-2 rounded-b-[10px] p-3 text-center"
+                    className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[8px] p-1.5 text-center"
                     style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
                   >
-                    {/* Section 1: Fixed-Height Top Row (Symbol + Number + Next Button) */}
-                    <div className="flex h-[38px] w-full items-center justify-between gap-1.5">
-                      <div className="flex items-center gap-1.5">
-                        <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                          style={{ borderColor: borderCol }}
-                        >
-                          <b.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                        </span>
-                        <span
-                          className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs"
-                          style={{ borderColor: borderCol, color: sym.iconColor }}
-                        >
-                          #0{index + 1}
-                        </span>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => cycleNote(index)}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
-                        style={{ color: '#FFFFFF' }}
-                      >
-                        <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                        <span style={{ color: '#FFFFFF' }}>Next ▸</span>
-                      </button>
+                    {/* App-Design Coloured Header Bar */}
+                    <div
+                      className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                      style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                    >
+                      <b.icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                        {b.title}
+                      </span>
                     </div>
 
-                    {/* Section 2: Fixed-Height Title Box in App Design Colour */}
-                    <div
-                      className="flex h-[48px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
-                        <h3
-                          className="font-editorial text-xs sm:text-sm font-extrabold leading-tight text-center"
-                          style={{ color: sym.iconColor }}
-                        >
-                          {titleAmpParts ? (
-                            <>
-                              <span className="block">{titleAmpParts[0]}</span>
-                              <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
-                            </>
-                          ) : (
-                            b.title
-                          )}
-                        </h3>
-                      </div>
+                    {/* Compact Description Box */}
+                    <div className="flex items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
+                      <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        {b.desc}
+                      </p>
                     </div>
 
-                    {/* Section 3: Fixed-Height Description Box in App Design Colour */}
+                    {/* Compact Functions Box */}
                     <div
-                      className="flex h-[68px] w-full rounded-xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      className="rounded-lg border p-1 text-left"
+                      style={{ background: STICKY_NOTE_BG, borderColor: borderCol }}
                     >
-                      <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
-                        <p className="text-center text-[10.5px] font-extrabold leading-snug text-[#5A00D6]">
-                          {b.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Section 4: Changeable Sticky Note With App-Design Coloured Outline, Symbols & Writing */}
-                    <div
-                      className="relative mt-1 flex h-full w-full flex-col justify-between rounded-2xl border-[2.5px] p-2.5 pt-4 text-left shadow-md"
-                      style={{
-                        background: STICKY_NOTE_BG,
-                        borderColor: borderCol,
-                        borderBottomRightRadius: '20px',
-                      }}
-                    >
-                      <div
-                        className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
-                        style={{ background: STICKY_NOTE_TAPE }}
-                      >
-                        <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                        <span
-                          className="text-[8.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          Screen #0{index + 1} · Note {activeNoteIdx + 1}/{totalNotes}
-                        </span>
-                      </div>
-
-                      <div
-                        className="flex h-full w-full rounded-xl p-[2px]"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <div className="flex h-full w-full flex-col justify-between rounded-[9px] bg-white p-2">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                              Live Functions:
-                            </span>
-                            <span className="text-[8.5px] font-extrabold" style={{ color: sym.iconColor }}>
-                              {activeNoteIdx + 1} of {totalNotes}
-                            </span>
-                          </div>
-
-                          <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
-                            {currentFunctions.map((fn, fIdx) => {
-                              const fSym = getSymbolView(index + fIdx);
-                              return (
-                                <li
-                                  key={fn}
-                                  className="flex min-h-[24px] items-center gap-1.5 text-[10px] font-extrabold leading-tight"
-                                >
-                                  <span
-                                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                                    style={{ borderColor: getAppBorderView(index + fIdx) }}
-                                  >
-                                    <CheckCircle2
-                                      className="h-2.5 w-2.5"
-                                      style={{ color: fSym.iconColor }}
-                                    />
-                                  </span>
-                                  <span style={{ color: fSym.iconColor }}>{fn}</span>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
+                      <ul className="space-y-0.5">
+                        {currentFunctions.map((fn, fIdx) => {
+                          const fSym = getSymbolView(index + fIdx);
+                          return (
+                            <li
+                              key={fn}
+                              className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
+                            >
+                              <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: fSym.iconColor }} />
+                              <span style={{ color: fSym.iconColor }}>{fn}</span>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Projector Weighted Bar & Pull Ring Handle */}
-                <div className="flex w-full flex-col items-center">
-                  <div className="h-2 w-full rounded-full bg-[#0A2B6D] shadow-sm" />
-                  <div className="h-2 w-0.5 bg-[#0A2B6D]" />
-                  <div className="h-3 w-3 rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs" />
-                </div>
+                {/* Bottom Projector Weighted Bar */}
+                <div className="h-1 w-full rounded-full bg-[#0A2B6D]" />
               </Reveal>
             );
           })}

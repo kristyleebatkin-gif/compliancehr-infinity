@@ -318,73 +318,40 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles Above Steps — App-Design Coloured Symbols & Words */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — Halved in Size With App-Coloured Headers */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="grid w-full grid-cols-2 gap-3 rounded-[12px] bg-white p-3.5 sm:grid-cols-5 lg:grid-cols-10">
+          <div className="grid w-full grid-cols-5 gap-1.5 rounded-[9px] bg-white p-1.5 lg:grid-cols-10">
             {VERBS.map((v, idx) => {
               const Icon = v.icon;
               const isLit = litVerbIdx === idx;
-              const sym = getSymbolView(idx);
               const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx);
-              const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
               return (
                 <div
                   key={v.label}
-                  className={`flex flex-col justify-between rounded-[20px] border-[3px] p-2 transition-all duration-300 ${
+                  className={`flex flex-col justify-between rounded-xl border-2 p-1 transition-all duration-300 ${
                     isLit
-                      ? 'bg-[#0072FF] -translate-y-1 ring-4 ring-[#00C6FF]/75 shadow-xl'
-                      : 'bg-[#0A2B6D] shadow-md hover:-translate-y-0.5'
+                      ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/75 shadow-md'
+                      : 'bg-[#0A2B6D] shadow-2xs'
                   }`}
                   style={{ borderColor: borderCol }}
                 >
-                  {/* Top iPad Camera Dot & Bezel */}
-                  <div className="mb-1.5 flex items-center justify-between px-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
-                    <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white">
-                      {isLit ? 'LIT UP ✦' : `iPad ${idx + 1}`}
+                  <div className="mb-0.5 flex items-center justify-between px-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+                    <span className="text-[6.5px] font-extrabold uppercase text-white">
+                      iPad {idx + 1}
                     </span>
-                    <span
-                      className={`h-2 w-2 rounded-full ${
-                        isLit ? 'bg-[#FF2E9A] animate-ping' : 'bg-[#10B981]'
-                      }`}
-                    />
                   </div>
-
-                  {/* Inner iPad Display — App-Design Coloured Symbol & Word */}
                   <div
-                    className="rounded-xl p-[2.5px] shadow-inner"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                    className="gradient-brand flex min-h-[28px] flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-0.5 text-center text-white"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
-                    <div
-                      className="flex min-h-[82px] flex-col items-center justify-center gap-1.5 rounded-[9px] px-2 py-2.5 text-center"
-                      style={{ background: sprayBg }}
-                    >
-                      <span
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-md"
-                        style={{ borderColor: getAppBorderView(idx) }}
-                      >
-                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
-                      </span>
-                      <div
-                        className="rounded-full p-[2px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <span
-                          className="block rounded-full bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider"
-                          style={{ color: sym.iconColor }}
-                        >
-                          {v.label}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom iPad Home Indicator */}
-                  <div className="mt-1.5 flex justify-center">
-                    <span className="h-1 w-8 rounded-full bg-white/85" />
+                    <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                      {v.label}
+                    </span>
                   </div>
                 </div>
               );
@@ -392,205 +359,134 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Proof iPad Screens Above Steps — App-Design Coloured Symbols & Writing, Lined Up */}
-        <div className="grid w-full gap-3.5 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
+        {/* 2. Top 4 Proof iPad Screens Above Steps — Halved in Size With App-Coloured Headers */}
+        <div className="grid w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {PROOF.map(({ icon: Icon, messages }, idx) => {
             const sym = getSymbolView(idx + 3);
             const isLit = litProofIdx === idx;
             const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx + 3);
-            const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
             const activeMsg = messages[proofPage % messages.length];
             return (
               <div
                 key={idx}
-                className={`flex h-full flex-col justify-between rounded-[22px] border-[3.5px] p-2.5 transition-all duration-300 ${
+                className={`flex h-full flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300 ${
                   isLit
-                    ? 'bg-[#0072FF] -translate-y-0.5 ring-4 ring-[#00C6FF]/70 shadow-xl'
-                    : 'bg-[#0A2B6D] shadow-md hover:-translate-y-0.5 hover:shadow-lg'
+                    ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/70 shadow-md'
+                    : 'bg-[#0A2B6D] shadow-2xs'
                 }`}
                 style={{ borderColor: borderCol }}
               >
-                {/* Top iPad Bezel Bar & Camera */}
-                <div className="mb-1.5 flex items-center justify-between px-2">
-                  <span className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                    <Tablet className="h-3 w-3 text-[#00C6FF]" />
-                    iPad 0{idx + 1} · {isLit ? 'LIT UP ✦' : `30s (${(proofPage % 3) + 1}/3)`}
+                <div
+                  className="gradient-brand mb-1 flex items-center justify-between rounded-full px-2 py-0.5 text-white"
+                  style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                >
+                  <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
+                    <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>iPad 0{idx + 1} · {isLit ? 'LIT ✦' : `${(proofPage % 3) + 1}/3`}</span>
                   </span>
-                  <span className="h-2 w-2 rounded-full bg-white/80 ring-2 ring-[#00C6FF]/50" />
                   <button
                     type="button"
                     onClick={() => setProofPage((prev) => (prev + 1) % 3)}
-                    className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0.5 text-[8.5px] font-extrabold text-white"
+                    className="rounded-full bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
                     style={{ color: '#FFFFFF' }}
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                    <span style={{ color: '#FFFFFF' }}>Next ▸</span>
+                    Next ▸
                   </button>
                 </div>
 
-                {/* Inner iPad Screen — App-Design Coloured Symbol + App-Design Coloured Writing */}
                 <div
-                  className="flex flex-1 rounded-2xl p-[2.5px]"
+                  className="flex flex-1 rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[13px] px-3.5 py-3 text-center"
-                    style={{ background: sprayBg }}
-                  >
-                    <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
-                      style={{ borderColor: getAppBorderView(idx + 3) }}
-                    >
-                      <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                  <div className="flex min-h-[28px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                    <span className="text-[8.5px] font-extrabold leading-tight" style={{ color: sym.iconColor }}>
+                      {activeMsg}
                     </span>
-                    <div
-                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex min-h-[52px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2">
-                        <span className="text-xs font-extrabold leading-snug" style={{ color: sym.iconColor }}>
-                          {activeMsg}
-                        </span>
-                      </div>
-                    </div>
                   </div>
-                </div>
-
-                {/* Bottom iPad Home Bar */}
-                <div className="mt-1.5 flex justify-center">
-                  <span className="h-1 w-12 rounded-full bg-white/80" />
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* 3. Four Audit Steps Placed on Changeable Sticky Notes — App-Design Coloured Outlines, Symbols & Writing */}
-        <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
+        {/* 3. Four Audit Steps Placed on Changeable Sticky Notes — Halved in Size With App-Coloured Headers */}
+        <ol className="grid w-full gap-2 pt-1 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
-            const sym = getSymbolView(index + 5);
             const borderCol = getAppBorderView(index + 5);
             const noteIdx = stepNoteIndices[index] % item.notes.length;
             const currentNote = item.notes[noteIdx];
-            const titleAmpParts = currentNote.title.includes(' & ')
-              ? currentNote.title.split(' & ')
-              : null;
 
             return (
               <Reveal
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-3.5 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-xl border-2 p-2 pt-3 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   background: STICKY_NOTE_BG,
                   borderColor: borderCol,
-                  borderBottomRightRadius: '26px',
+                  borderBottomRightRadius: '16px',
                 }}
               >
-                {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
+                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0 shadow-2xs"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
-                  <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Audit Step {item.step} of 04 · Note {noteIdx + 1}/4
+                    Step {item.step} · Note {noteIdx + 1}/4
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-2">
-                  <div className="flex min-h-[38px] w-full items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
-                        style={{ borderColor: borderCol }}
-                      >
-                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                      </span>
-                      <span
-                        className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs whitespace-nowrap"
-                        style={{ borderColor: borderCol, color: sym.iconColor }}
-                      >
-                        Step {item.step}
-                      </span>
-                    </div>
-
+                <div className="flex w-full flex-col items-center space-y-1">
+                  <div
+                    className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
+                    style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
+                  >
+                    <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold text-white">
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>{currentNote.title}</span>
+                    </span>
                     <button
                       type="button"
                       onClick={() => cycleStepNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
+                      className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
+                      Next ▸
                     </button>
                   </div>
 
                   <div
-                    className="w-full rounded-xl p-[3px] shadow-2xs"
+                    className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[52px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                      <h3
-                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight"
-                        style={{ color: sym.iconColor }}
-                      >
-                        {titleAmpParts ? (
-                          <>
-                            <span className="block">{titleAmpParts[0]}</span>
-                            <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
-                          </>
-                        ) : (
-                          currentNote.title
-                        )}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div
-                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                      <p className="text-[11.5px] font-extrabold leading-snug text-[#5A00D6]">
+                    <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                      <p className="text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
                         {currentNote.text}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Step Sticky Note in App Design Colour */}
                 <div
-                  className="mt-2.5 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex min-h-[118px] flex-col justify-between rounded-[9px] bg-white p-2.5 text-left">
-                    <div className="flex items-center justify-between text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      <span>Live Functions Included:</span>
-                      <span>Note {noteIdx + 1}/4</span>
-                    </div>
-                    <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
+                  <div className="rounded-[6px] bg-white p-1.5 text-left">
+                    <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => {
                         const fSym = getSymbolView(index + fIdx + 2);
                         return (
                           <li
                             key={fn}
-                            className="flex min-h-[26px] items-center gap-1.5 text-[10.5px] font-extrabold leading-tight"
+                            className="flex items-center gap-1 text-[7.5px] font-extrabold leading-tight"
                           >
-                            <span
-                              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(index + fIdx + 2) }}
-                            >
-                              <CheckCircle2
-                                className="h-2.5 w-2.5"
-                                style={{ color: fSym.iconColor }}
-                              />
-                            </span>
+                            <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: fSym.iconColor }} />
                             <span style={{ color: fSym.iconColor }}>{fn}</span>
                           </li>
                         );

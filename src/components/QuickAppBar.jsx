@@ -200,8 +200,8 @@ export default function QuickAppBar() {
             </div>
           </div>
 
-          {/* 18 Modular Tiles Styled as Identical-Size iPad Screens — All Sections Lined Up Horizontally */}
-          <div className="grid w-full grid-cols-1 gap-3.5 rounded-2xl bg-white p-1.5 sm:grid-cols-2 md:grid-cols-3 auto-rows-fr items-stretch">
+          {/* 18 Modular Tiles Styled as 50% Smaller iPad Screens With App-Coloured Headers */}
+          <div className="grid w-full grid-cols-2 gap-1.5 rounded-xl bg-white p-1 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr items-stretch">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
               const isLit = litIdx === idx;
@@ -214,93 +214,59 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`group flex h-full min-h-[184px] flex-col justify-between rounded-[22px] border-[3px] p-2.5 transition-all duration-300 ${
+                  className={`group flex h-full min-h-[86px] flex-col justify-between rounded-[14px] border-2 p-1.5 transition-all duration-300 ${
                     isLit
-                      ? 'bg-[#0072FF] -translate-y-0.5 ring-4 ring-[#00C6FF]/70 shadow-xl'
+                      ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/70 shadow-md'
                       : active
-                      ? 'bg-[#0A2B6D] ring-2 ring-[#FF2E9A] shadow-md'
-                      : 'bg-[#0A2B6D] shadow-md hover:-translate-y-0.5 hover:shadow-lg'
+                      ? 'bg-[#0A2B6D] ring-2 ring-[#FF2E9A] shadow-2xs'
+                      : 'bg-[#0A2B6D] shadow-2xs hover:-translate-y-0.5'
                   }`}
                   style={{ borderColor: borderCol }}
                 >
                   {/* Top iPad Camera & Bezel Bar */}
-                  <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
-                    <span className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                      <Tablet className="h-3 w-3 text-[#00C6FF]" />
-                      IPAD {String(idx + 1).padStart(2, '0')} · {isLit ? 'LIT UP ✦' : `CH ${(cycleIdx % 3) + 1}`}
+                  <div className="mb-1 flex h-[12px] items-center justify-between px-1">
+                    <span className="flex items-center gap-0.5 text-[7px] font-extrabold uppercase tracking-wider text-white">
+                      <Tablet className="h-2.5 w-2.5 text-[#00C6FF]" />
+                      IPAD {String(idx + 1).padStart(2, '0')}
                     </span>
                     <span
-                      className={`h-2 w-2 rounded-full border border-white/80 ${
-                        isLit ? 'bg-[#FFF3FA] scale-125' : 'bg-[#00C6FF]'
-                      }`}
-                    />
-                    <span
-                      className={`h-2 w-2 rounded-full ${
-                        isLit ? 'bg-[#FF2E9A] animate-ping' : active ? 'bg-[#FF2E9A]' : 'bg-[#10B981]'
+                      className={`h-1.5 w-1.5 rounded-full ${
+                        isLit ? 'bg-[#FF2E9A] animate-ping' : 'bg-[#10B981]'
                       }`}
                     />
                   </div>
 
-                  {/* Inner iPad Display Screen — Fixed Equal Heights So Every iPad Section Lines Up With Neighbour */}
+                  {/* Inner iPad Display Screen — 50% Smaller */}
                   <div
-                    className="flex flex-1 rounded-2xl p-[2.5px]"
+                    className="flex flex-1 rounded-xl p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="grid h-full w-full grid-cols-1 grid-rows-[1fr_auto] gap-2 rounded-[13px] px-3 py-2.5 text-center"
-                      style={{ background: isLit ? LIT_IPAD_SPRAY_BG : UNIFORM_IPAD_SPRAY_BG }}
+                      className="flex h-full w-full flex-col justify-between gap-1 rounded-[9px] p-1 text-center"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      {/* Section 1: Fixed-Height Module Title Box with App-Design Coloured Symbol & App-Design Coloured Words */}
+                      {/* App-Design Coloured Header Bar for Module Title */}
                       <div
-                        className="flex h-full w-full rounded-xl p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
+                        className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                        style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                       >
-                        <div className="flex min-h-[54px] h-full w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                          <span
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                            style={{ borderColor: getAppBorderView(idx) }}
-                          >
-                            <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
-                          </span>
-                          <span
-                            className="text-xs sm:text-sm font-extrabold leading-tight"
-                            style={{ color: sym.iconColor }}
-                          >
-                            {item.label}
-                          </span>
-                        </div>
+                        <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                        <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                          {item.label}
+                        </span>
                       </div>
 
-                      {/* Section 2: Fixed-Height 30-Second Rotating Info Box With App-Design Coloured Words */}
-                      <div
-                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <div className="flex min-h-[40px] w-full items-center justify-between gap-2 rounded-[9px] bg-white px-2.5 py-1">
-                          <span
-                            className="flex-1 text-center text-[11px] font-extrabold leading-tight text-[#5A00D6]"
-                          >
-                            {currentSub}
-                          </span>
-                          <span
-                            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
-                            style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                          >
-                            <span style={{ color: '#FFFFFF' }}>Open</span>
-                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                        </div>
+                      {/* Rotating Info Box */}
+                      <div className="flex min-h-[22px] w-full items-center justify-between gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
+                        <span
+                          className="flex-1 text-center text-[7.5px] font-extrabold leading-tight"
+                          style={{ color: sym.iconColor }}
+                        >
+                          {currentSub}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: sym.iconColor }} />
                       </div>
                     </div>
-                  </div>
-
-                  {/* Bottom iPad Home Indicator Bar */}
-                  <div className="mt-1.5 flex h-[8px] items-center justify-center">
-                    <span
-                      className={`h-1 w-10 rounded-full ${
-                        isLit ? 'bg-[#FFF3FA]' : 'bg-white/80'
-                      }`}
-                    />
                   </div>
                 </Link>
               );

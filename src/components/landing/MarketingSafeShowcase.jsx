@@ -177,8 +177,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </div>
           </div>
 
-          {/* 4 High-Impact Subscriber Flat Screens — Made 25% Smaller */}
-          <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+          {/* 4 High-Impact Subscriber Flat Screens — Halved in Size & Flat Screen Header Tiles in App-Design Colour */}
+          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
             {[
               {
                 screenLabel: 'FLAT SCREEN 01 · PLATFORM VALUE',
@@ -410,138 +410,95 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               const sym = getSymbolView(idx + 1);
               const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx + 1);
               const activeReason = screen.reasons[activeBenefitIdx % screen.reasons.length];
-              const titleAmpParts = activeReason.title.includes(' & ')
-                ? activeReason.title.split(' & ')
-                : null;
               return (
                 <div key={screen.screenLabel} className="flex h-full flex-col items-center justify-between">
-                  {/* Flat Screen Monitor Frame — 25% Smaller */}
+                  {/* Flat Screen Monitor Frame — 50% Smaller & Header Tiles in App-Design Colour */}
                   <div
-                    className={`flex h-full w-full flex-1 flex-col justify-between rounded-xl border-[2.5px] p-1.5 transition-all duration-300 ${
+                    className={`flex h-full w-full flex-1 flex-col justify-between rounded-xl border-2 p-1.5 transition-all duration-300 ${
                       isLit
-                        ? 'bg-[#0072FF] -translate-y-0.5 ring-3 ring-[#00C6FF]/75 shadow-lg'
-                        : 'bg-[#0A2B6D] shadow-sm'
+                        ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/75 shadow-md'
+                        : 'bg-[#0A2B6D] shadow-2xs'
                     }`}
                     style={{ borderColor: borderCol }}
                   >
-                    {/* Top Monitor Bezel Bar */}
-                    <div className="mb-1 flex h-[16px] w-full flex-nowrap items-center justify-between gap-1 px-1 whitespace-nowrap">
+                    {/* Top Monitor Bezel Header Tile in App-Design Colour */}
+                    <div
+                      className="gradient-brand mb-1 flex min-h-[20px] w-full flex-nowrap items-center justify-between gap-1 rounded-full px-2 py-0.5 whitespace-nowrap text-white"
+                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                    >
                       <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
-                        <Monitor className="h-2.5 w-2.5 text-[#00C6FF] shrink-0" />
-                        <span>FLAT SCREEN 0{idx + 1}{isLit ? ' · LIT ✦' : ''}</span>
+                        <Monitor className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                        <span style={{ color: '#FFFFFF' }}>FLAT SCREEN 0{idx + 1}{isLit ? ' · LIT ✦' : ''}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-1.5 py-0 text-[7.5px] font-extrabold text-white whitespace-nowrap">
-                        <Radio className="h-2 w-2 text-[#FF2E9A] shrink-0" />
-                        <span>30s · {(activeBenefitIdx % 5) + 1}/5</span>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white whitespace-nowrap">
+                        <Radio className="h-2 w-2 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                        <span style={{ color: '#FFFFFF' }}>30s · {(activeBenefitIdx % 5) + 1}/5</span>
                       </span>
                     </div>
 
-                    {/* Inner Monitor Display — 25% Smaller */}
+                    {/* Inner Monitor Display — 50% Smaller & App-Design Colour Around All Writing */}
                     <div
                       className="flex flex-1 rounded-lg p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[24px_56px_44px_1fr] gap-1.5 rounded-[8px] p-2 text-center"
-                        style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
+                        className="flex h-full w-full flex-col justify-between gap-1 rounded-[7px] p-1.5 text-center"
+                        style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        {/* Centered Reason Banner */}
+                        {/* App-Design Coloured Flat Screen Reason Header Tile */}
                         <div
-                          className="flex h-[24px] w-full rounded-full p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
+                          className="gradient-brand relative flex min-h-[20px] w-full items-center justify-center rounded-full px-2 py-0.5 text-white"
+                          style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                         >
-                          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-white px-2 py-0">
-                            <span
-                              className="text-center text-[8px] font-extrabold uppercase tracking-wider"
-                              style={{ color: sym.iconColor }}
-                            >
-                              Reason #{(activeBenefitIdx % 5) + 1} of 5
+                          <span className="text-center text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                            Reason #{(activeBenefitIdx % 5) + 1} of 5
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                            className="absolute right-1 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[6.5px] font-extrabold text-white hover:bg-white/30"
+                            style={{ color: '#FFFFFF' }}
+                          >
+                            Next ▸
+                          </button>
+                        </div>
+
+                        {/* App-Design Coloured Flat Screen Title Header Tile */}
+                        <div className="w-full rounded-lg overflow-hidden border border-white/60">
+                          <div
+                            className="gradient-brand flex items-center justify-center gap-1 px-2 py-1 text-center text-white"
+                            style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
+                          >
+                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                            <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                              {activeReason.title}
                             </span>
-                            <button
-                              type="button"
-                              onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                              className="absolute right-1 rounded-full bg-[#5A00D6] px-1.5 py-0 text-[7px] font-extrabold text-white hover:opacity-90"
-                              style={{ color: '#FFFFFF' }}
-                            >
-                              Next ▸
-                            </button>
+                          </div>
+                          <div className="bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold text-[#5A00D6] leading-tight">
+                            {activeReason.sub}
                           </div>
                         </div>
 
-                        {/* Centered Icon + Title Box */}
-                        <div
-                          className="flex h-[56px] w-full rounded-lg p-[1.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
-                            <div className="flex items-center justify-center gap-1.5">
-                              <span
-                                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                                style={{ borderColor: getAppBorderView(idx + 1) }}
-                              >
-                                <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                              </span>
-                              <div
-                                className="text-center text-[10.5px] font-extrabold leading-tight"
-                                style={{ color: sym.iconColor }}
-                              >
-                                {titleAmpParts ? (
-                                  <>
-                                    <span className="block">{titleAmpParts[0]}</span>
-                                    <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
-                                  </>
-                                ) : (
-                                  activeReason.title
-                                )}
-                              </div>
-                            </div>
-                            <div className="text-center text-[8.5px] font-extrabold text-[#5A00D6] leading-tight">
-                              {activeReason.sub}
-                            </div>
-                          </div>
+                        {/* Compact Summary Explanation */}
+                        <div className="flex w-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                          <p className="text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                            {activeReason.detail}
+                          </p>
                         </div>
 
-                        {/* Centered Summary Explanation */}
-                        <div
-                          className="flex h-[44px] w-full rounded-lg p-[2px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-white px-2 py-1 text-center">
-                            <p className="text-center text-[9px] font-extrabold leading-tight text-[#5A00D6]">
-                              {activeReason.detail}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* 3 Centered Subscriber Proof Points */}
+                        {/* 3 Compact Subscriber Proof Points */}
                         <ul className="grid w-full grid-cols-1 grid-rows-3 gap-1 text-center">
                           {activeReason.points.map((pt, ptIdx) => {
                             const ptSym = getSymbolView(idx + ptIdx + 2);
-                            const ptAmp = pt.includes(' & ') ? pt.split(' & ') : null;
                             return (
                               <li
                                 key={pt}
-                                className="flex min-h-[30px] rounded-lg p-[1.5px] shadow-2xs"
-                                style={{ background: TOP_BORDER_GRADIENT }}
+                                className="flex min-h-[22px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight"
                               >
-                                <div className="flex h-full w-full items-center justify-center gap-1 rounded-[7px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold leading-tight">
-                                  <span
-                                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
-                                    style={{ borderColor: getAppBorderView(idx + ptIdx) }}
-                                  >
-                                    <CheckCircle2 className="h-2 w-2" style={{ color: ptSym.iconColor }} />
-                                  </span>
-                                  <span className="text-center" style={{ color: ptSym.iconColor }}>
-                                    {ptAmp ? (
-                                      <>
-                                        <span className="block">{ptAmp[0]}</span>
-                                        <span className="block">&amp; {ptAmp.slice(1).join(' & ')}</span>
-                                      </>
-                                    ) : (
-                                      pt
-                                    )}
-                                  </span>
-                                </div>
+                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: ptSym.iconColor }} />
+                                <span className="text-center" style={{ color: ptSym.iconColor }}>
+                                  {pt}
+                                </span>
                               </li>
                             );
                           })}
@@ -550,8 +507,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     </div>
 
                     {/* Bottom Monitor Channel Dots */}
-                    <div className="mt-1 flex items-center justify-between px-1.5">
-                      <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white/90">
+                    <div className="mt-1 flex items-center justify-between px-1">
+                      <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-white/90">
                         30S CYCLE
                       </span>
                       <div className="flex items-center gap-1">
@@ -570,9 +527,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     </div>
                   </div>
                   {/* Flat Screen Monitor Stand Neck & Base */}
-                  <div className="h-1.5 w-5 bg-[#0A2B6D]" />
+                  <div className="h-1 w-4 bg-[#0A2B6D]" />
                   <div
-                    className="h-1 w-12 rounded-full border border-[#0A2B6D]"
+                    className="h-1 w-10 rounded-full border border-[#0A2B6D]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   />
                 </div>
@@ -580,8 +537,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             })}
           </div>
 
-          {/* Pack 1 (Channel 7 TV) & Pack 2 (Channel 9 TV) — All Sections Lined Up Together, App-Design Coloured Symbols & Writing */}
-          <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
+          {/* Pack 1 (Channel 7 TV) & Pack 2 (Channel 9 TV) — Halved in Size, Bright Pink & White Spray, App-Coloured Headers */}
+          <div className="grid w-full grid-cols-1 gap-2.5 md:grid-cols-2 items-stretch">
             {PACKS.map((pack, pIdx) => {
               const PackIcon = pack.icon;
               const packSym = getSymbolView(pIdx * 2 + 1);
@@ -589,100 +546,78 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               return (
                 <div
                   key={pack.id}
-                  className="flex h-full rounded-2xl p-[4px] shadow-sm"
+                  className="flex h-full rounded-xl p-[3px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="grid h-full w-full grid-cols-1 grid-rows-[60px_auto_1fr_54px] gap-3.5 rounded-[12px] bg-white p-4 sm:p-5 text-center">
-                    {/* 1. Top Aligned 2-Line Header Badge With App-Design Coloured Symbol */}
+                  <div
+                    className="flex h-full w-full flex-col justify-between gap-2 rounded-[9px] p-2 text-center"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    {/* 1. Compact App-Coloured Header Badge */}
                     <div
-                      className="flex h-[60px] w-full rounded-2xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      className="gradient-brand flex min-h-[32px] w-full items-center justify-center gap-2 rounded-lg px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                      style={{ background: getHeaderView(pIdx * 2 + 2), color: '#FFFFFF' }}
                     >
-                      <div
-                        className="gradient-brand flex h-full w-full items-center justify-center gap-2.5 rounded-[13px] px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
-                        style={{ background: getHeaderView(pIdx * 2 + 2), color: '#FFFFFF' }}
+                      <span
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                        style={{ borderColor: getAppBorderView(pIdx * 2 + 1) }}
                       >
-                        <span
-                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                          style={{ borderColor: getAppBorderView(pIdx * 2 + 1) }}
-                        >
-                          <PackIcon className="h-4 w-4" style={{ color: packSym.iconColor }} />
-                        </span>
-                        <div className="flex flex-col items-center justify-center leading-tight text-center">
-                          <span className="block" style={{ color: '#FFFFFF' }}>{pack.badgeLine1}</span>
-                          <span className="block" style={{ color: '#FFFFFF' }}>{pack.badgeLine2}</span>
-                        </div>
-                      </div>
+                        <PackIcon className="h-3 w-3" style={{ color: packSym.iconColor }} />
+                      </span>
+                      <span style={{ color: '#FFFFFF' }}>
+                        {pack.badgeLine1} {pack.badgeLine2}
+                      </span>
                     </div>
 
-                    {/* 2. Constantly Lit Live HD Widescreen TV Screen: Channel 7 on TV 1, Channel 9 on TV 2 */}
+                    {/* 2. 50% Smaller Live HD Widescreen TV Screen: Bright Pink & White Spray Background */}
                     <div className="flex w-full flex-col items-center">
                       <div
-                        className="flex w-full flex-col justify-between rounded-[22px] border-[4px] bg-[#0072FF] p-3 ring-4 ring-[#00C6FF]/75 shadow-xl"
+                        className="flex w-full flex-col justify-between rounded-[14px] border-2 bg-[#0072FF] p-1.5 ring-2 ring-[#00C6FF]/75 shadow-md"
                         style={{ borderColor: '#00C6FF' }}
                       >
-                        {/* Top TV Bezel Status Bar — "LIT UP ✦" Placed Under "LIVE HD" */}
-                        <div className="mb-2 flex min-h-[34px] items-center justify-between px-2">
-                          <div className="flex flex-col items-start leading-tight">
-                            <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                              <Tv className="h-3.5 w-3.5 text-[#FFF3FA]" />
-                              {pack.tvChannel}
-                            </span>
-                            <span className="pl-5 text-[9px] font-extrabold uppercase tracking-widest text-[#FFF3FA]">
-                              LIT UP ✦
-                            </span>
-                          </div>
-                          <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap">
-                            <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
-                            30s · {(activeBenefitIdx % 5) + 1} of 5
+                        {/* Top TV Bezel Status Bar */}
+                        <div className="mb-1 flex items-center justify-between px-1.5">
+                          <span className="flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+                            <Tv className="h-3 w-3 text-[#FFF3FA]" />
+                            {pack.tvChannel} · LIT UP ✦
+                          </span>
+                          <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2 py-0 text-[7.5px] font-extrabold text-white whitespace-nowrap">
+                            <Radio className="h-2 w-2 text-[#FF2E9A]" />
+                            30s · {(activeBenefitIdx % 5) + 1}/5
                           </span>
                         </div>
 
-                        {/* Inner TV Screen — Bright Pink & White Radial Spray Background Across Both TV Tiles */}
+                        {/* Inner TV Screen — Bright Pink & White Radial Spray Background */}
                         <div
-                          className="flex flex-col justify-between rounded-2xl p-[3px]"
+                          className="flex flex-col justify-between rounded-xl p-[2px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <div
-                            className="flex flex-col justify-between rounded-[13px] p-3 text-center space-y-2.5"
+                            className="flex flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
                             style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                           >
-                            {/* Strict Fixed-Height 30-Second Spotlight Banner ("Now Playing" Only) */}
+                            {/* Compact 30-Second Spotlight Banner */}
                             <div
-                              className="w-full rounded-xl p-[2px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
+                              className="gradient-brand flex min-h-[34px] items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-center text-white"
+                              style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                             >
-                              <div
-                                className="gradient-brand flex h-[74px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-1.5 text-center text-white sm:flex-row sm:justify-between"
-                                style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
-                              >
-                                <div className="min-w-0 flex-1 text-center">
-                                  <div
-                                    className="text-[10px] font-extrabold uppercase tracking-widest text-white"
-                                    style={{ color: '#FFFFFF' }}
-                                  >
-                                    {pack.nowPlayingLabel}
-                                  </div>
-                                  <div
-                                    className="text-[11px] font-extrabold leading-tight text-white"
-                                    style={{ color: '#FFFFFF' }}
-                                  >
-                                    {currentSpotlight}
-                                  </div>
-                                </div>
-                                <button
-                                  type="button"
-                                  onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                                  className="shrink-0 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[9.5px] font-extrabold text-white hover:bg-white/30"
-                                  style={{ color: '#FFFFFF' }}
-                                >
-                                  Next ▸
-                                </button>
+                              <div className="min-w-0 flex-1 text-center">
+                                <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                  {pack.nowPlayingLabel}: {currentSpotlight}
+                                </span>
                               </div>
+                              <button
+                                type="button"
+                                onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                                className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0 text-[7.5px] font-extrabold text-white"
+                                style={{ color: '#FFFFFF' }}
+                              >
+                                Next ▸
+                              </button>
                             </div>
 
-                            {/* All 5 Package Benefits with Equal Row Heights & App-Design Coloured Symbols & Writing */}
-                            <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1.5 text-center text-xs font-extrabold">
+                            {/* All 5 Package Benefits — Compact Rows */}
+                            <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
                               {pack.bullets.map((line, idx) => {
                                 const sym = getSymbolView(pIdx * 3 + idx);
                                 const borderCol = getAppBorderView(pIdx * 3 + idx);
@@ -691,22 +626,22 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                   <li
                                     key={line}
                                     onClick={() => setActiveBenefitIdx(idx)}
-                                    className="flex h-[56px] cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
+                                    className="flex min-h-[26px] cursor-pointer rounded-lg p-[1.5px] shadow-2xs transition-all"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
-                                      className={`flex h-full w-full items-center justify-center gap-2 rounded-[9px] px-2.5 py-1 text-center ${
-                                        isCurrent ? 'bg-white ring-2 ring-[#FF2E9A]' : 'bg-white/95'
+                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 py-0.5 text-center ${
+                                        isCurrent ? 'bg-white ring-1 ring-[#FF2E9A]' : 'bg-white/95'
                                       }`}
                                     >
                                       <span
-                                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
+                                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
+                                        <CheckCircle2 className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                                       </span>
                                       <span
-                                        className="flex-1 text-center text-[10.5px] font-extrabold leading-tight"
+                                        className="flex-1 text-center text-[8px] font-extrabold leading-tight"
                                         style={{ color: sym.iconColor }}
                                       >
                                         {line}
@@ -719,19 +654,19 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Bottom TV Speaker Bar & Channel Dots */}
-                        <div className="mt-2 flex h-[20px] items-center justify-between px-3">
-                          <span className="text-[9px] font-extrabold tracking-widest text-white">
+                        {/* Bottom TV Speaker Bar */}
+                        <div className="mt-1 flex h-[14px] items-center justify-between px-2">
+                          <span className="text-[7px] font-extrabold tracking-widest text-white">
                             {pack.tvChannel} · CONSTANTLY LIT HD
                           </span>
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-1">
                             {[0, 1, 2, 3, 4].map((dot) => (
                               <button
                                 key={dot}
                                 type="button"
                                 aria-label={`Show benefit ${dot + 1}`}
                                 onClick={() => setActiveBenefitIdx(dot)}
-                                className={`h-2 w-2 rounded-full transition-all ${
+                                className={`h-1.5 w-1.5 rounded-full transition-all ${
                                   activeBenefitIdx % 5 === dot ? 'bg-[#FF2E9A] scale-125' : 'bg-white/60'
                                 }`}
                               />
@@ -741,29 +676,29 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </div>
 
                       {/* TV Pedestal Neck & Stand Base */}
-                      <div className="h-2.5 w-12 bg-[#0A2B6D]" />
+                      <div className="h-1.5 w-8 bg-[#0A2B6D]" />
                       <div
-                        className="h-2 w-28 rounded-full border-2 border-[#0A2B6D] shadow-sm"
+                        className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       />
                     </div>
 
-                    {/* 3. Important Package Info & Accurate Prices Below TV — Bright Pink & White Spray + Compliance in Logo Colour + Outright on 2nd Line */}
+                    {/* 3. Compact Package Info & Prices Below TV — Bright Pink & White Spray + Compliance in Logo Colour + Outright on 2nd Line */}
                     <div
-                      className="flex w-full flex-1 flex-col justify-between rounded-2xl p-[3px] shadow-2xs"
+                      className="flex w-full flex-1 flex-col justify-between rounded-xl p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[132px_38px_1fr] gap-2.5 rounded-[13px] p-3.5 text-center"
+                        className="flex h-full w-full flex-col justify-between gap-1.5 rounded-[9px] p-2 text-center"
                         style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                       >
-                        {/* Strict Fixed-Height Price Box: "Compliance" in Logo Gradient Colour & Outright on 2nd Line */}
+                        {/* Compact Price Box */}
                         <div
-                          className="flex h-[132px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                          className="w-full rounded-lg p-[1.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
-                            <div className="font-editorial text-sm sm:text-base font-extrabold uppercase tracking-wider">
+                          <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center space-y-0.5">
+                            <div className="font-editorial text-xs font-extrabold uppercase tracking-wider">
                               <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                                 Compliance
                               </span>
@@ -777,16 +712,16 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               ) : null}
                             </div>
                             <div className="flex flex-col items-center justify-center leading-tight">
-                              <div className="flex flex-wrap items-baseline justify-center gap-1.5">
+                              <div className="flex flex-wrap items-baseline justify-center gap-1">
                                 <span
-                                  className="font-editorial text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent"
+                                  className="font-editorial text-base sm:text-lg font-extrabold bg-clip-text text-transparent"
                                   style={{ backgroundImage: getTitleGradientView(pIdx) }}
                                 >
                                   {pack.priceMain}
                                 </span>
                                 {pack.id === 'pack-1' && (
                                   <span
-                                    className="text-xs font-extrabold"
+                                    className="text-[9.5px] font-extrabold"
                                     style={{ color: getSymbolView(pIdx + 2).iconColor }}
                                   >
                                     {pack.priceSuffix}
@@ -795,7 +730,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </div>
                               {pack.id === 'pack-2' && (
                                 <span
-                                  className="text-[11px] font-extrabold"
+                                  className="text-[9px] font-extrabold"
                                   style={{ color: getSymbolView(pIdx + 2).iconColor }}
                                 >
                                   Outright · {pack.priceSuffix}
@@ -803,7 +738,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               )}
                             </div>
                             <p
-                              className="text-center text-[10px] font-extrabold leading-snug"
+                              className="text-center text-[8px] font-extrabold leading-tight"
                               style={{ color: getSymbolView(pIdx + 1).iconColor }}
                             >
                               {pack.subtitle}
@@ -811,45 +746,28 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Important Info Header */}
+                        {/* Compact Important Info Header */}
                         <div
-                          className="flex h-[38px] w-full rounded-lg p-[2px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
+                          className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-[8.5px] font-extrabold uppercase tracking-wider text-white"
+                          style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
                         >
-                          <div
-                            className="gradient-brand flex h-full w-full items-center justify-center gap-2 rounded-[6px] px-3 py-1 text-center text-[10.5px] font-extrabold uppercase tracking-wider text-white"
-                            style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
-                          >
-                            <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white"
-                            >
-                              <CheckCircle2 className="h-3 w-3" style={{ color: getSymbolView(pIdx + 4).iconColor }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
-                          </div>
+                          <CheckCircle2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                         </div>
 
-                        {/* 4 Equal Fixed-Height Rows Framed in App-Design Coloured Borders */}
-                        <div className="grid grid-cols-1 grid-rows-4 gap-1.5">
+                        {/* 4 Compact Rows */}
+                        <div className="grid grid-cols-1 grid-rows-4 gap-1">
                           {pack.importantInfoRows.map((info, iIdx) => {
                             const iSym = getSymbolView(pIdx + iIdx);
                             return (
                               <div
                                 key={info}
-                                className="flex h-[48px] rounded-xl p-[2px] shadow-2xs"
+                                className="flex min-h-[24px] rounded-lg p-[1.5px] shadow-2xs"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <div className="flex h-full w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight">
-                                  <span
-                                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
-                                    style={{ borderColor: getAppBorderView(pIdx + iIdx) }}
-                                  >
-                                    <CheckCircle2 className="h-3 w-3" style={{ color: iSym.iconColor }} />
-                                  </span>
-                                  <span
-                                    className="flex-1 text-center"
-                                    style={{ color: iSym.iconColor }}
-                                  >
+                                <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold leading-tight">
+                                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0" style={{ color: iSym.iconColor }} />
+                                  <span className="flex-1 text-center" style={{ color: iSym.iconColor }}>
                                     {info}
                                   </span>
                                 </div>
@@ -860,77 +778,47 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </div>
                     </div>
 
-                    {/* 4. Slightly Enlarged Start & View Action Tiles — App-Coloured Symbols & Identical Height Across Pack 1 & Pack 2 */}
-                    <div className="grid h-[54px] w-full grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                      <div
-                        className="rounded-full p-[3px] shadow-sm"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        {pack.primaryCta.to ? (
-                          <Link
-                            to={pack.primaryCta.to}
-                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                          >
-                            <span
-                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(0) }}
-                            >
-                              <ArrowRight className="h-3.5 w-3.5" style={{ color: getSymbolView(0).iconColor }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
-                          </Link>
-                        ) : (
-                          <a
-                            href={pack.primaryCta.href}
-                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                          >
-                            <span
-                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(0) }}
-                            >
-                              <ArrowRight className="h-3.5 w-3.5" style={{ color: getSymbolView(0).iconColor }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
-                          </a>
-                        )}
-                      </div>
+                    {/* 4. Compact Start & View Action Tiles */}
+                    <div className="grid w-full grid-cols-2 gap-1.5">
+                      {pack.primaryCta.to ? (
+                        <Link
+                          to={pack.primaryCta.to}
+                          className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap"
+                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                        >
+                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
+                        </Link>
+                      ) : (
+                        <a
+                          href={pack.primaryCta.href}
+                          className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap"
+                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                        >
+                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
+                        </a>
+                      )}
 
-                      <div
-                        className="rounded-full p-[3px] shadow-sm"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        {pack.secondaryCta.to ? (
-                          <Link
-                            to={pack.secondaryCta.to}
-                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                            style={{ background: getHeaderView(3), color: '#FFFFFF' }}
-                          >
-                            <span
-                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(3) }}
-                            >
-                              <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(3).iconColor }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
-                          </Link>
-                        ) : (
-                          <a
-                            href={pack.secondaryCta.href}
-                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                            style={{ background: getHeaderView(3), color: '#FFFFFF' }}
-                          >
-                            <span
-                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(3) }}
-                            >
-                              <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(3).iconColor }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
-                          </a>
-                        )}
-                      </div>
+                      {pack.secondaryCta.to ? (
+                        <Link
+                          to={pack.secondaryCta.to}
+                          className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap"
+                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+                        >
+                          <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
+                        </Link>
+                      ) : (
+                        <a
+                          href={pack.secondaryCta.href}
+                          className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap"
+                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+                        >
+                          <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -157,13 +157,13 @@ export default function LandingHero() {
             </Link>
           </div>
 
-          {/* 4 Modules Under Start 14-Day Free Trial in Different App Colour Views with White Writing */}
-          <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+          {/* 4 Modules Under Start 14-Day Free Trial — Halved in Size in App-Design Colour */}
+          <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4">
             {STATS.map((stat, index) => (
               <Reveal
                 key={stat.label}
                 delay={index * 0.05}
-                className="flex min-h-[62px] items-center justify-center gap-2 rounded-2xl border-2 px-3 py-2.5 text-center text-white shadow-sm"
+                className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-xl border-2 px-2 py-1 text-center text-white shadow-2xs"
                 style={{
                   background: getHeaderView(index),
                   borderColor: getAppBorderView(index),
@@ -171,16 +171,16 @@ export default function LandingHero() {
                 }}
               >
                 <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                   style={{ borderColor: getAppBorderView(index) }}
                 >
-                  <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(index).iconColor }} />
+                  <Sparkles className="h-2.5 w-2.5" style={{ color: getSymbolView(index).iconColor }} />
                 </span>
                 <div className="text-left min-w-0">
-                  <div className="font-editorial text-base sm:text-lg font-extrabold leading-none text-white">
+                  <div className="font-editorial text-xs sm:text-sm font-extrabold leading-none text-white" style={{ color: '#FFFFFF' }}>
                     {stat.value}
                   </div>
-                  <div className="mt-0.5 text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wide leading-tight text-white">
+                  <div className="text-[7.5px] sm:text-[8.5px] font-extrabold uppercase tracking-wide leading-tight text-white" style={{ color: '#FFFFFF' }}>
                     {stat.label}
                   </div>
                 </div>
@@ -188,115 +188,57 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Pillar Cards — Symbols & Writing in App Design Colour, Fitted Cleanly & Lined Up */}
-          <div className="grid w-full gap-4 text-center md:grid-cols-3 items-stretch">
-            {highlights.map(({ icon: Icon, badge, title, reasons }, index) => {
-              const pSym = getSymbolView(index);
-              const PILLAR_SPRAY_BGS = [
-                'radial-gradient(circle at 12% 20%, rgba(255, 133, 224, 0.55) 0%, transparent 45%), radial-gradient(circle at 88% 25%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), radial-gradient(circle at 52% 85%, rgba(192, 132, 252, 0.55) 0%, transparent 50%), #FFFFFF',
-                'radial-gradient(circle at 18% 80%, rgba(56, 189, 248, 0.58) 0%, transparent 46%), radial-gradient(circle at 82% 20%, rgba(192, 132, 252, 0.55) 0%, transparent 46%), radial-gradient(circle at 50% 35%, rgba(255, 133, 224, 0.5) 0%, transparent 48%), #FFFFFF',
-                'radial-gradient(circle at 15% 30%, rgba(192, 132, 252, 0.58) 0%, transparent 46%), radial-gradient(circle at 85% 75%, rgba(255, 133, 224, 0.58) 0%, transparent 46%), radial-gradient(circle at 55% 20%, rgba(56, 189, 248, 0.52) 0%, transparent 48%), #FFFFFF',
-                'radial-gradient(circle at 85% 22%, rgba(255, 133, 224, 0.58) 0%, transparent 46%), radial-gradient(circle at 15% 78%, rgba(56, 189, 248, 0.56) 0%, transparent 46%), radial-gradient(circle at 48% 50%, rgba(192, 132, 252, 0.52) 0%, transparent 50%), #FFFFFF',
-              ];
-              return (
-                <Reveal
-                  key={title}
-                  delay={index * 0.07}
-                  className="flex h-full flex-col rounded-3xl p-[6px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+          {/* 3 Pillar Tiles — Halved in Size & Styled in App-Design Colour */}
+          <div className="grid w-full gap-2 text-center md:grid-cols-3 items-stretch">
+            {highlights.map(({ icon: Icon, badge, title, reasons }, index) => (
+              <Reveal
+                key={title}
+                delay={index * 0.07}
+                className="flex h-full flex-col rounded-2xl border-2 border-[#0A2B6D] p-[3px] shadow-sm transition-all hover:-translate-y-0.5"
+                style={{ background: getHeaderView(index) }}
+              >
+                <div
+                  className="flex h-full flex-1 flex-col justify-between rounded-[12px] p-1.5 space-y-1"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex h-full flex-1 flex-col justify-between rounded-[18px] bg-white p-3">
-                    <div className="flex flex-1 flex-col justify-between space-y-2">
-                      {/* Pillar Title & Badge in App Design Colours */}
-                      <div className="flex flex-col items-center text-center space-y-2">
-                        <div
-                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                            <span
-                              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                              style={{ borderColor: getAppBorderView(index) }}
-                            >
-                              <Icon className="h-3.5 w-3.5" style={{ color: pSym.iconColor }} />
-                            </span>
-                            <h3 className="font-editorial text-sm sm:text-base lg:text-lg font-extrabold leading-tight bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                              {title}
-                            </h3>
-                          </div>
-                        </div>
-
-                        <div
-                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-[9px] bg-white px-2 py-1 text-[9.5px] lg:text-[10.5px] font-extrabold uppercase tracking-wide text-center">
-                            <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
-                              style={{ borderColor: getAppBorderView(index + 1) }}
-                            >
-                              <Icon className="h-3 w-3" style={{ color: pSym.iconColor }} />
-                            </span>
-                            <span className="text-center leading-tight" style={{ color: pSym.iconColor }}>
-                              {badge}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 4 Equal-Height Rows With App-Design Coloured Symbols & Writing */}
-                      <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-2">
-                        {reasons.map((r, rIdx) => {
-                          const sym = getSymbolView(index * 3 + rIdx);
-                          const sprayBg = PILLAR_SPRAY_BGS[(index + rIdx) % PILLAR_SPRAY_BGS.length];
-                          return (
-                            <li
-                              key={r}
-                              className="flex h-full min-h-[54px] rounded-2xl p-[2.5px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
-                            >
-                              <div
-                                className="flex h-full w-full items-center gap-2 rounded-[13px] px-2.5 py-1.5 text-left text-[10.5px] lg:text-[11px] font-extrabold leading-snug"
-                                style={{ background: sprayBg }}
-                              >
-                                <span
-                                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                                  style={{ borderColor: getAppBorderView(index * 3 + rIdx) }}
-                                >
-                                  <CheckCircle2 className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                                </span>
-                                <span className="flex-1 text-[#5A00D6]">{r}</span>
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-
-                    <div className="mt-2.5 flex justify-center">
-                      <div
-                        className="w-full rounded-full p-[2.5px] shadow-sm"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <Link
-                          to="/dashboard"
-                          className="inline-flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold transition-all hover:bg-[#F5F0FF]"
-                          style={{ color: pSym.iconColor }}
-                        >
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
-                            style={{ borderColor: getAppBorderView(index) }}
-                          >
-                            <ArrowRight className="h-3 w-3" style={{ color: pSym.iconColor }} />
-                          </span>
-                          <span style={{ color: pSym.iconColor }}>Explore in Dashboard</span>
-                        </Link>
-                      </div>
-                    </div>
+                  {/* App-Coloured Pillar Header Tile */}
+                  <div
+                    className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-white"
+                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
+                  >
+                    <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                      {badge} · {title}
+                    </span>
                   </div>
-                </Reveal>
-              );
-            })}
+
+                  {/* 4 Compact Rows Framed in App-Design Colour */}
+                  <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-1">
+                    {reasons.map((r, rIdx) => {
+                      const sym = getSymbolView(index * 3 + rIdx);
+                      return (
+                        <li
+                          key={r}
+                          className="flex min-h-[24px] items-center gap-1.5 rounded-lg bg-white px-2 py-0.5 text-left text-[8.5px] font-extrabold leading-tight"
+                        >
+                          <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: sym.iconColor }} />
+                          <span className="flex-1" style={{ color: sym.iconColor }}>{r}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <Link
+                    to="/dashboard"
+                    className="gradient-brand inline-flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
+                  >
+                    <span style={{ color: '#FFFFFF' }}>Explore in Dashboard</span>
+                    <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                  </Link>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>
