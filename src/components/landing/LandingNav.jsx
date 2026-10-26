@@ -49,15 +49,15 @@ export default function LandingNav() {
     >
       {/* Clean white outer area with 0.5cm side spacing — colour strictly inside borders */}
       <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
-        {/* Slightly Reduced Top Bar with Border Around Top Bar in App Colour */}
+        {/* Top Section with Doubled App-Coloured Border Thickness */}
         <div
-          className="rounded-3xl p-[3.5px] shadow-md"
+          className="rounded-3xl p-[7px] shadow-md"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="relative flex flex-col items-center justify-between gap-2 rounded-[20px] bg-white px-3.5 py-2 sm:px-4 sm:py-2.5">
+          <div className="relative flex flex-col items-center justify-center gap-4 rounded-[18px] bg-white px-4 py-4 sm:px-6 sm:py-5">
             {/* Mobile menu toggle in top-right corner */}
             <button
               onClick={() => setOpen((v) => !v)}
@@ -67,13 +67,13 @@ export default function LandingNav() {
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
 
-            {/* One Logo Above App Name (Big Enough to See) + Centred App Name + Slogan Directly Under App Name (Inner Borders Removed) */}
+            {/* Centred Logo (1.5x Larger, No Border) + Slightly Larger Centred App Name + Slogan Underneath with Clear Spacing */}
             <Link
               to="/"
-              className="flex w-full flex-col items-center justify-center bg-white text-center"
+              className="flex w-full flex-col items-center justify-center gap-3.5 bg-white text-center"
             >
-              {/* One Large Logo Above App Name */}
-              <div className="flex h-28 w-28 sm:h-36 sm:w-36 md:h-40 md:w-40 items-center justify-center bg-white">
+              {/* One Large Logo Above App Name (1.5x Size, No Border) */}
+              <div className="mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
                 <Image
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                   alt="ComplianceHR Infinity logo"
@@ -82,8 +82,8 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* Centred App Name (No Inner Border) */}
-              <span className="mt-1 bg-white px-2 font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
+              {/* Centred App Name (Slightly Increased Size, No Border) */}
+              <span className="mx-auto bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
                 Compliance
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   HR
@@ -94,7 +94,7 @@ export default function LandingNav() {
               </span>
 
               {/* Slogan Directly Under App Name */}
-              <div className="mt-1.5 bg-white px-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide">
+              <div className="mx-auto bg-white px-2 text-center text-xs sm:text-sm md:text-base font-extrabold tracking-wide">
                 <span className="text-[#0072FF]">Complete Control.</span>{' '}
                 <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -102,7 +102,7 @@ export default function LandingNav() {
             </Link>
 
             {/* Bottom Section: NDIS & Aged care Documentation & Compliance + Open, Landing and Signed In Just Smaller */}
-            <div className="flex w-full flex-col items-center justify-center gap-1.5 pt-1">
+            <div className="flex w-full flex-col items-center justify-center gap-2.5 pt-1">
               {/* NDIS & Aged care Documentation & Compliance Badge */}
               <span
                 className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"

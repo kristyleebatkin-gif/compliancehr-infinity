@@ -59,16 +59,16 @@ export default function LandingFooter() {
       <div className="w-full rounded-3xl border-3 border-[#0A2B6D] bg-white p-5 sm:p-6 shadow-2xl space-y-5">
         {/* Footer Brand & Bottom Controls Matching Top Header Layout */}
         <div
-          className="rounded-3xl p-[3.5px] shadow-md"
+          className="rounded-3xl p-[7px] shadow-md"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex flex-col items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-center">
-            {/* One Logo Above App Name (Big Enough to See) + Centred App Name + Slogan Directly Under App Name (Inner Borders Removed) */}
-            <Link to="/" className="flex flex-col items-center justify-center text-center">
-              <div className="flex h-28 w-28 sm:h-36 sm:w-36 items-center justify-center bg-white">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-[18px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center">
+            {/* Centred Logo (1.5x Larger, No Border) + Slightly Larger Centred App Name + Slogan Underneath with Clear Spacing */}
+            <Link to="/" className="flex w-full flex-col items-center justify-center gap-3.5 text-center">
+              <div className="mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
                 <Image
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                   alt="ComplianceHR Infinity logo"
@@ -77,7 +77,7 @@ export default function LandingFooter() {
                 />
               </div>
 
-              <span className="mt-1 bg-white px-2 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
+              <span className="mx-auto bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
                 Compliance
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   HR
@@ -87,7 +87,7 @@ export default function LandingFooter() {
                 </span>
               </span>
 
-              <div className="mt-1.5 bg-white px-2 text-xs sm:text-sm font-extrabold tracking-wide">
+              <div className="mx-auto bg-white px-2 text-center text-xs sm:text-sm font-extrabold tracking-wide">
                 <span className="text-[#0072FF]">Complete Control.</span>{' '}
                 <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -95,7 +95,7 @@ export default function LandingFooter() {
             </Link>
 
             {/* NDIS & Aged care Documentation & Compliance Placed Just Above Open, Landing and Signed In (Just Smaller) */}
-            <div className="flex w-full flex-col items-center justify-center gap-1.5 pt-1">
+            <div className="flex w-full flex-col items-center justify-center gap-2.5 pt-1">
               <span
                 className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
                 style={{
