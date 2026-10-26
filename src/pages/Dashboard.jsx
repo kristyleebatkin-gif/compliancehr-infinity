@@ -23,6 +23,7 @@ import InfinityControlCentreMasterSuite from '@/components/operations/InfinityCo
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import OriginalPublishedOverview from '@/components/dashboard/OriginalPublishedOverview';
+import DashboardGrandCelebrationBar from '@/components/dashboard/DashboardGrandCelebrationBar';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -69,6 +70,8 @@ export default function Dashboard() {
       />
 
       <SoftwareAndSafeBanner compact />
+
+      <DashboardGrandCelebrationBar />
 
       {/* Unified Dashboard Command Navigator — defaults to Full Merged Dashboard ('all') */}
       <section className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">

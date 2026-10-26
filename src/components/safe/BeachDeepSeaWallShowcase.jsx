@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Compass, Anchor, Sun, Layers } from 'lucide-react';
+import { Compass, Anchor, Sun, Layers, Trophy } from 'lucide-react';
 import KidsZoneTreasurePath from '@/components/visual/KidsZoneTreasurePath';
 import DeepSeaScubaProgress from '@/components/goals/DeepSeaScubaProgress';
 import ShorelineCommandCenter from '@/components/hr/ShorelineCommandCenter';
+import { playShorelineVictoryFanfare } from '@/components/hr/shorelineSoundAndRewards';
 
 const SCENE_MODES = [
   { id: 'deep-sea', label: '🤿 Deep Sea Scuba Progress', icon: Anchor },
@@ -52,6 +53,19 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'deep-sea', co
               </button>
             );
           })}
+          <button
+            type="button"
+            onClick={() =>
+              playShorelineVictoryFanfare(
+                'Triple Beach, Scuba & Shoreline Trophy',
+                'Executive Wall Grand Victory',
+                false
+              )
+            }
+            className="inline-flex items-center gap-1 rounded-full border border-white bg-[#FFE066] px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-sm hover:bg-white"
+          >
+            <Trophy className="h-2.5 w-2.5" /> Victory Fanfare
+          </button>
         </div>
       </div>
 
