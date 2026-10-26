@@ -43,3 +43,25 @@
 .landing-page .landing-hero [class*="md:grid-cols-3"] { gap: 1rem; }
 .landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child { padding: .5rem; }
 .landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child span { font-size: 1.5rem; }
+.landing-page .business-landing-nav { border-bottom: 1px solid #E9D5FF; }
+.landing-page .business-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; max-width: 1440px; margin: auto; padding: 1rem 1.5rem; }
+.business-brand { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+.business-brand img { width: 72px; height: 64px; object-fit: contain; }
+.business-brand strong { display: block; font-size: 1.25rem; line-height: 1.3; }
+.business-brand strong span { color: #A100FF; }
+.business-brand small { display: block; font-size: .6875rem; line-height: 1.5; margin-top: .25rem; }
+.business-desktop-links, .business-nav-actions { display: flex; align-items: center; gap: 1.25rem; }
+.business-desktop-links a, .business-sign-in { font-size: .875rem; font-weight: 600; }
+.business-trial { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.125rem; border-radius: .75rem; background: linear-gradient(110deg, #0072FF, #5A00D6); color: white !important; font-size: .875rem; font-weight: 700; }
+.business-menu { display: none; border: 1px solid #E9D5FF; border-radius: .75rem; padding: .625rem; background: white; }
+.business-mobile-links { display: grid; padding: .5rem 1rem 1rem; gap: .25rem; }
+.business-mobile-links a { padding: .75rem; font-weight: 600; }
+@media (max-width: 1050px) { .business-desktop-links { display: none; } .business-menu { display: block; } }
+@media (max-width: 639px) {
+  .landing-page .business-nav-inner { padding: .75rem; gap: .5rem; flex-wrap: wrap; }
+  .business-brand { flex: 1 1 100%; }
+  .business-brand img { width: 56px; height: 48px; }
+  .business-brand strong { font-size: 1.125rem; }
+  .business-nav-actions { width: 100%; justify-content: flex-end; gap: 1rem; }
+  .business-sign-in { margin-right: auto; }
+}
