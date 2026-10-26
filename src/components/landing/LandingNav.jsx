@@ -241,11 +241,8 @@ export default function LandingNav() {
             >
               <ThreeClipboardsFlow />
 
-              <div className="flex min-w-0 flex-1 flex-col items-center justify-center text-center leading-tight">
-                <span className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
-                  ComplianceHR Infinity
-                </span>
-                <span className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+              <div className="flex min-w-0 flex-1 items-center justify-center text-center leading-tight">
+                <span className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-wide text-white">
                   Highlights and Features
                 </span>
               </div>

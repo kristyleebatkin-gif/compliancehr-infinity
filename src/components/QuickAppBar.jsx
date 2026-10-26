@@ -71,7 +71,7 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex h-full min-h-[44px] items-center gap-1.5 rounded-xl border-2 px-2.5 py-1.5 text-[10px] sm:text-[10.5px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                  className={`flex h-full min-h-[48px] items-center gap-2 rounded-xl border-2 px-3 py-2 text-xs sm:text-[13px] md:text-sm font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
                     active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
                   style={{
@@ -81,10 +81,10 @@ export default function QuickAppBar() {
                   }}
                 >
                   <span
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border bg-white shadow-2xs"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white shadow-2xs"
                     style={{ borderColor: borderCol }}
                   >
-                    <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                   </span>
                   <span className="min-w-0 flex-1 whitespace-nowrap overflow-hidden text-ellipsis text-left leading-tight text-white">
                     {item.label}
