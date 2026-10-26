@@ -28,7 +28,7 @@ export default function KidsZoneTreasurePath() {
   const [currentStep, setCurrentStep] = useState(2);
   const [avatarId, setAvatarId] = useState('crab');
   const [chestOpened, setChestOpened] = useState(false);
-  const [soundMuted, setSoundMuted] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(true);
   const [editingCustomPrize, setEditingCustomPrize] = useState(false);
   const [customPrizeDraft, setCustomPrizeDraft] = useState('');
   const [prizeConfig, setPrizeConfig] = useState(() => {

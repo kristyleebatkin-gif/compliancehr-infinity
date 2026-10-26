@@ -49,7 +49,7 @@ export default function ShorelineCommandCenter() {
   const [squares, setSquares] = useState(INITIAL_HEATMAP);
   const [cheers, setCheers] = useState({ '☀️': 14, '🏄‍♂️': 9, '⚓': 18, '🌴': 11 });
   const [lastCheer, setLastCheer] = useState('⚓ Solid Anchor sent to the support team!');
-  const [soundMuted, setSoundMuted] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(true);
   const [victoryOpen, setVictoryOpen] = useState(false);
   const [editingReward, setEditingReward] = useState(false);
   const [customRewardDraft, setCustomRewardDraft] = useState('');

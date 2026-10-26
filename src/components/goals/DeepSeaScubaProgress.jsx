@@ -19,7 +19,7 @@ const STORAGE_KEY = 'chr-deep-sea-custom-rewards-v1';
 
 export default function DeepSeaScubaProgress({ goals = [], onProgress, compact = false }) {
   const [localProgress, setLocalProgress] = useState({});
-  const [soundMuted, setSoundMuted] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(true);
   const [celebrationBanner, setCelebrationBanner] = useState(null);
   const [editingGoalId, setEditingGoalId] = useState(null);
   const [customPrizeDraft, setCustomPrizeDraft] = useState('');

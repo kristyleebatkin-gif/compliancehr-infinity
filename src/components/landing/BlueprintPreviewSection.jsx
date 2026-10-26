@@ -446,11 +446,11 @@ function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, view
 
 export default function BlueprintPreviewSection() {
   const [expandConnections, setExpandConnections] = useState(true);
-  const [isPlayingPop, setIsPlayingPop] = useState(true);
+  const [isPlayingPop, setIsPlayingPop] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [songIndex] = useState(0);
   const [beatStep, setBeatStep] = useState(0);
-  const [activeVideoLaptopKey, setActiveVideoLaptopKey] = useState('yt-filler-1');
+  const [activeVideoLaptopKey, setActiveVideoLaptopKey] = useState(null);
   const audioCtxRef = useRef(null);
 
   const moduleCount = MODULE_DIRECTORY.length;
@@ -954,7 +954,7 @@ export default function BlueprintPreviewSection() {
                                       {isEmbedOpen ? (
                                         <iframe
                                           title={ytClip.title}
-                                          src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&rel=0`}
+                                          src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
                                           className="h-full w-full"
                                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                           allowFullScreen
@@ -1114,7 +1114,7 @@ export default function BlueprintPreviewSection() {
                                       {isLive ? (
                                         <iframe
                                           title={yt.clipTitle}
-                                          src={`https://www.youtube-nocookie.com/embed/${yt.videoId}?autoplay=1&rel=0`}
+                                          src={`https://www.youtube-nocookie.com/embed/${yt.videoId}?autoplay=1&mute=1&rel=0`}
                                           className="h-full w-full"
                                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                           allowFullScreen
