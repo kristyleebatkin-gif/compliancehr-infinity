@@ -69,7 +69,7 @@ export default function LandingFooter() {
               />
             </div>
 
-            <div className="-mt-7 sm:-mt-9 md:-mt-11 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+            <div className="-mt-1 sm:-mt-2 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
               <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                 <span className="mx-auto block whitespace-nowrap text-center">
                   Compliance
