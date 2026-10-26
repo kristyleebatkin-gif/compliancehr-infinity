@@ -851,14 +851,14 @@ export default function BlueprintPreviewSection() {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               {APP_MODULE_GROUPS.map((group, gIdx) => (
                 <div
                   key={group.title}
-                  className="rounded-2xl p-[3.5px] shadow-2xs"
+                  className="rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+                  <div className="rounded-[10px] bg-white p-2 space-y-1.5">
                     <UniformBlueprintHeader
                       icon={Laptop}
                       title={group.title}
@@ -866,8 +866,8 @@ export default function BlueprintPreviewSection() {
                       viewIndex={gIdx}
                     />
 
-                    {/* Grid of Laptops — Halved in Size With App-Design Coloured Module Headers */}
-                    <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 auto-rows-fr pt-1 items-stretch">
+                    {/* Slightly Reduced Grid of MOD Tiles */}
+                    <div className="grid gap-1.5 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 auto-rows-fr pt-0.5 items-stretch">
                       {group.modules.map((mod, mIdx) => {
                         const Icon = mod.icon || ShieldCheck;
                         const idx = gIdx * 10 + mIdx;
@@ -888,101 +888,88 @@ export default function BlueprintPreviewSection() {
                               animationDelay: `${(idx % 8) * 0.45}s`,
                             }}
                           >
-                            {/* Minimised Live Module Laptop — App-Design Colour Frame (No Black Space), Lit Up in Glowing White & Walking Clockwise */}
+                            {/* Slightly Reduced Live Module Laptop */}
                             <div
-                              className="group flex w-full flex-1 flex-col rounded-t-xl border-2 p-1 shadow-sm"
+                              className="group flex w-full flex-1 flex-col rounded-t-lg border p-0.5 shadow-2xs"
                               style={{
                                 borderColor: borderCol,
                                 background: getHeaderView(idx),
                                 boxShadow:
-                                  '0 0 14px 3px rgba(255, 255, 255, 0.98), 0 0 10px 2px rgba(0, 198, 255, 0.55)',
+                                  '0 0 10px 2px rgba(255, 255, 255, 0.95), 0 0 8px 1px rgba(0, 198, 255, 0.45)',
                               }}
                             >
-                              <div className="mb-0.5 flex h-[14px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
+                              <div className="mb-0.5 flex h-[12px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
                                 <span
-                                  className="inline-flex items-center gap-0.5 rounded-full bg-white px-1 py-0 text-[6px] font-extrabold uppercase tracking-wider whitespace-nowrap"
+                                  className="inline-flex items-center gap-0.5 rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold uppercase tracking-wider whitespace-nowrap"
                                   style={{ color: getSymbolView(idx).iconColor }}
                                 >
                                   <span>MOD #{String(idx + 1).padStart(2, '0')}</span>
                                 </span>
-                                <span className="inline-flex items-center gap-0.5 text-[6px] font-extrabold text-white whitespace-nowrap">
+                                <span className="inline-flex items-center gap-0.5 text-[5.5px] font-extrabold text-white whitespace-nowrap">
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-white"
-                                    style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
+                                    className="h-1 w-1 rounded-full bg-white"
+                                    style={{ boxShadow: '0 0 5px 1px #FFFFFF' }}
                                   />
                                   <span style={{ color: '#FFFFFF' }}>WHITE LIT ✦</span>
                                 </span>
                               </div>
 
-                              {/* Inner Minimised Laptop Screen — Spray Between Borders & Pure White Inside Writing Box */}
-                              <div
-                                className="flex flex-1 rounded-md p-[1px]"
-                                style={{ background: TOP_BORDER_GRADIENT }}
-                              >
-                                <div
-                                  className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[5px] p-1 text-center"
-                                  style={{ background: UNIFORM_SPRAY_BG }}
+                              {/* Inner Minimised Laptop Screen — Pure White Inside Writing Box */}
+                              <div className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[4px] bg-white p-0.5 text-center">
+                                <Link
+                                  to={mod.path}
+                                  className="gradient-brand flex min-h-[15px] w-full items-center justify-center gap-0.5 rounded px-1 py-0 text-center text-white"
+                                  style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                                 >
-                                  <Link
-                                    to={mod.path}
-                                    className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded px-1 py-0.5 text-center text-white"
-                                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                                  >
-                                    <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-white">
-                                      <Icon className="h-2 w-2" style={{ color: getSymbolView(idx).iconColor }} />
-                                    </span>
-                                    <span className="text-[7px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                                      {mod.label}
-                                    </span>
-                                  </Link>
+                                  <span className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-full bg-white">
+                                    <Icon className="h-1.5 w-1.5" style={{ color: getSymbolView(idx).iconColor }} />
+                                  </span>
+                                  <span className="truncate text-[6.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                    {mod.label}
+                                  </span>
+                                </Link>
 
-                                  <div
-                                    className="flex flex-1 rounded p-[1px]"
-                                    style={{ background: TOP_BORDER_GRADIENT }}
-                                  >
-                                    <Link
-                                      to={mod.path}
-                                      className="flex h-full w-full items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center"
+                                <Link
+                                  to={mod.path}
+                                  className="flex flex-1 w-full items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0 text-center"
+                                >
+                                  <p className="text-center text-[6px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-1">
+                                    {mod.blurb}
+                                  </p>
+                                </Link>
+
+                                {/* Compact YouTube Clip Strip */}
+                                <div className="w-full">
+                                  {isEmbedOpen ? (
+                                    <div className="w-full overflow-hidden rounded border border-white bg-white aspect-video">
+                                      <iframe
+                                        title={ytClip.title}
+                                        src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
+                                        className="h-full w-full"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                      />
+                                    </div>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => setActiveVideoLaptopKey(mod.key)}
+                                      className="gradient-brand flex h-[13px] w-full items-center justify-between gap-0.5 rounded-full px-1 py-0 text-center text-[5.5px] font-extrabold text-white"
+                                      style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
                                     >
-                                      <p className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
-                                        {mod.blurb}
-                                      </p>
-                                    </Link>
-                                  </div>
-
-                                  {/* Compact YouTube Clip Strip */}
-                                  <div className="w-full">
-                                    {isEmbedOpen ? (
-                                      <div className="w-full overflow-hidden rounded border border-white bg-white aspect-video">
-                                        <iframe
-                                          title={ytClip.title}
-                                          src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
-                                          className="h-full w-full"
-                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                          allowFullScreen
-                                        />
-                                      </div>
-                                    ) : (
-                                      <button
-                                        type="button"
-                                        onClick={() => setActiveVideoLaptopKey(mod.key)}
-                                        className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-1.5 py-0 text-center text-[6.5px] font-extrabold text-white"
-                                        style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
-                                      >
-                                        <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
-                                          ♫ {ytClip.title}
-                                        </span>
-                                        <Play className="h-2 w-2 shrink-0 fill-white text-white" />
-                                      </button>
-                                    )}
-                                  </div>
+                                      <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
+                                        ♫ {ytClip.title}
+                                      </span>
+                                      <Play className="h-1.5 w-1.5 shrink-0 fill-white text-white" />
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             </div>
 
                             <div className="flex w-[104%] flex-col items-center">
                               <div
-                                className="flex h-1 w-full items-center justify-center rounded-b-lg"
+                                className="flex h-0.5 w-full items-center justify-center rounded-b-lg"
                                 style={{ background: getHeaderView(idx + 3) }}
                               />
                             </div>
