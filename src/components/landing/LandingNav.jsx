@@ -82,9 +82,9 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* Centred App Name */}
-              <div className="mx-auto flex w-full items-center justify-center bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#0A2B6D] leading-tight">
-                <span className="text-center">
+              {/* Centred App Name on One Line */}
+              <div className="mx-auto flex w-full items-center justify-center bg-white px-2 text-center font-editorial text-[clamp(1.75rem,4.8vw,3.75rem)] font-extrabold text-[#0A2B6D] leading-tight whitespace-nowrap">
+                <span className="whitespace-nowrap text-center">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                     HR
