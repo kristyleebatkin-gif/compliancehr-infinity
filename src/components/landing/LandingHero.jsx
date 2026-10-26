@@ -67,109 +67,15 @@ export default function LandingHero() {
       {/* 0.5cm from side of page under Quick App Bar */}
       <div className="relative w-full px-[0.5cm] pb-8 pt-3">
         <div className="w-full text-center">
-          {/* Full-Width Logo Filled Right to the Border Size (0.5cm from Side of Page) + Clean Centered Software Section */}
+          {/* Clean Centered Software Section (Duplicate Logo Header Removed) */}
           <div
-            className="w-full rounded-3xl border-4 border-[#0A2B6D] p-2.5 shadow-xl ring-2 ring-[#FF2E9A]"
+            className="w-full rounded-3xl p-[3.5px] shadow-md"
             style={{
               background:
-                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            {/* One Logo Above App Name (Big Enough to See) + Centred App Name + Slogan Directly Under App Name (Inner Borders Removed) */}
-            <div className="mx-auto flex w-full flex-col items-center justify-between gap-2 rounded-2xl bg-white px-4 py-3">
-              <div className="flex w-full flex-col items-center justify-center text-center">
-                {/* One Large Logo Above App Name */}
-                <div className="flex h-32 w-32 sm:h-36 sm:w-36 md:h-40 md:w-40 items-center justify-center bg-white">
-                  <Image
-                    src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                    alt="ComplianceHR Infinity logo"
-                    className="h-full w-full object-contain"
-                    fittingType="fit"
-                  />
-                </div>
-
-                {/* Centred App Name (No Inner Border) */}
-                <div className="mt-1 bg-white px-2 font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
-                  Compliance
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    HR
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Infinity
-                  </span>
-                </div>
-
-                {/* Slogan Directly Under App Name */}
-                <div className="mt-1.5 bg-white px-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide">
-                  <span className="text-[#0072FF]">Complete Control.</span>{' '}
-                  <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-                  <span className="text-[#FF2E9A]">Brighter Success.</span>
-                </div>
-              </div>
-
-              {/* NDIS & Aged care Documentation & Compliance + Open, Landing and Signed In Just Smaller */}
-              <div className="flex w-full flex-col items-center justify-center gap-1.5 pt-1">
-                <span
-                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-                  }}
-                >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                    <ShieldCheck className="h-3 w-3 text-[#FF2E9A]" />
-                  </span>
-                  <span>NDIS &amp; Aged care Documentation &amp; Compliance</span>
-                </span>
-
-                <div className="grid w-full max-w-lg grid-cols-1 sm:grid-cols-3 items-stretch justify-center gap-2">
-                  <Link
-                    to="/dashboard"
-                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                      <Sparkles className="h-2.5 w-2.5 text-[#0072FF]" />
-                    </span>
-                    <span className="whitespace-nowrap">Open App Dashboard</span>
-                  </Link>
-
-                  <Link
-                    to="/"
-                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-                    }}
-                  >
-                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                      <Compass className="h-2.5 w-2.5 text-[#5A00D6]" />
-                    </span>
-                    <span className="whitespace-nowrap">Landing Page</span>
-                  </Link>
-
-                  <Link
-                    to={authed ? '/dashboard' : '/login'}
-                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                    style={{
-                      background:
-                        'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
-                    }}
-                  >
-                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                      <UserCheck className="h-2.5 w-2.5 text-[#A100FF]" />
-                    </span>
-                    <span className="whitespace-nowrap">{authed ? 'Signed In' : 'Sign In'}</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Fixed, Balanced & Centered Software Section */}
-            <div className="mt-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md">
+            <div className="rounded-[20px] bg-white p-3">
               <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3 items-stretch">
                 <div className="flex flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2.5 text-center shadow-2xs" style={{ borderTopWidth: '4px', borderTopColor: '#0072FF' }}>
                   <span className="mb-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">

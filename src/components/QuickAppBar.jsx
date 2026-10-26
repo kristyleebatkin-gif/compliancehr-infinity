@@ -60,7 +60,7 @@ export default function QuickAppBar() {
         <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md space-y-2.5">
           {/* Longer Full-Width Quick App Bar Header in the Same Colours as the App */}
           <div
-            className="flex w-full flex-col sm:flex-row items-center justify-between gap-2.5 rounded-xl border-2 border-[#0A2B6D] px-4 py-2.5 text-white shadow-md"
+            className="gradient-brand flex w-full flex-col sm:flex-row items-center justify-between gap-2.5 rounded-xl border-2 border-[#0A2B6D] px-4 py-2.5 text-white shadow-md"
             style={{
               background:
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 20%, #0A2B6D 38%, #5A00D6 58%, #A100FF 78%, #FF2E9A 100%)',
@@ -121,7 +121,7 @@ export default function QuickAppBar() {
                   >
                     <Icon className="h-3 w-3 text-white" />
                   </span>
-                  <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left leading-tight text-[#0A2B6D]">
+                  <span className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight text-[#0A2B6D]">
                     {item.label}
                   </span>
                 </Link>
@@ -166,7 +166,7 @@ export default function QuickAppBar() {
                     >
                       <Icon className="h-3 w-3 text-white" />
                     </span>
-                    <span className="min-w-0 flex-1 whitespace-normal break-words rounded bg-white text-left leading-tight text-[#0A2B6D]">
+                    <span className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight text-[#0A2B6D]">
                       {mod.label}
                     </span>
                   </Link>
