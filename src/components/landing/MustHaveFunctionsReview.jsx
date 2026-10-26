@@ -242,18 +242,19 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Executive KPI & Accurate Price Counter Pills — Lined Up & All Writing in App Design Colours */}
+        {/* Executive KPI & Accurate Price Counter Pills (Numbered Tiles Display Category & Suitable Category Symbol) */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 items-stretch">
           {[
-            { val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per a month' },
-            { val: 'All Documents', label: 'Full Access Incl.' },
-            { val: '100+ Documents', label: 'Tailored to Business' },
-            { val: '$999 / $125m', label: 'Outright Documents' },
-            { val: '$160/mo Value', label: 'Elite Tokens Incl.' },
-            { val: '50,000 Credits', label: 'Integration / mo' },
-            { val: '1,200 Credits', label: 'Message / mo' },
-            { val: 'Full Support', label: '& 14-Day Trial' },
+            { category: 'Platform', icon: Layers, val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per a month' },
+            { category: 'Documents', icon: BookOpen, val: 'All Documents', label: 'Full Access Incl.' },
+            { category: 'Suite', icon: ClipboardCheck, val: '100+ Documents', label: 'Tailored to Business' },
+            { category: 'Outright', icon: Sparkles, val: '$999 / $125m', label: 'Outright Documents' },
+            { category: 'Tokens', icon: Cpu, val: '$160/mo Value', label: 'Elite Tokens Incl.' },
+            { category: 'Integrations', icon: TrendingUp, val: '50,000 Credits', label: 'Integration / mo' },
+            { category: 'Messages', icon: MessagesSquare, val: '1,200 Credits', label: 'Message / mo' },
+            { category: 'Support', icon: Users, val: 'Full Support', label: '& 14-Day Trial' },
           ].map((stat, idx) => {
+            const StatIcon = stat.icon;
             const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
             const sym = getSymbolView(idx);
             return (
@@ -263,14 +264,31 @@ export default function MustHaveFunctionsReview() {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full w-full flex-col items-center justify-center rounded-[13px] p-2 text-center"
+                  className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2 text-center"
                   style={{ background: sprayBg }}
                 >
+                  <div className="flex items-center justify-center gap-1">
+                    <span
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                      style={{ borderColor: getAppBorderView(idx) }}
+                    >
+                      <StatIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span
+                      className="rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider"
+                      style={{ color: sym.iconColor }}
+                    >
+                      {stat.category}
+                    </span>
+                  </div>
                   <div
                     className="flex h-full w-full rounded-xl p-[2px]"
                     style={{ background: getHeaderView(idx) }}
                   >
-                    <div className="flex min-h-[62px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
+                    <div
+                      className="flex min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
+                      style={{ background: sprayBg }}
+                    >
                       <div
                         className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent whitespace-nowrap"
                         style={{ backgroundImage: getTitleGradientView(idx) }}
@@ -484,57 +502,87 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Centered Pillar Number Tiles */}
-        <div className="flex w-full flex-wrap items-center justify-center gap-2">
+        {/* Selected Pillar Bar Framed in App-Design Colours Between Pillar & Side, Displaying Category & Suitable Symbol */}
+        <div
+          className="w-full rounded-2xl p-[3.5px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
           <div
-            className="rounded-full p-[2.5px] shadow-2xs"
+            className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-2 rounded-[13px] p-2.5"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <button
-              type="button"
-              onClick={() => setSelectedPillar('all')}
-              className="inline-flex min-h-[38px] min-w-[128px] items-center justify-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-extrabold transition-all"
-              style={
-                selectedPillar === 'all'
-                  ? { background: getHeaderView(0), color: '#ffffff' }
-                  : { background: SPRAY_BGS[0], color: '#0A2B6D' }
-              }
-            >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                <Layers className="h-3 w-3 text-[#0072FF]" />
-              </span>
-              <span className="whitespace-nowrap">All 8 Pillars</span>
-            </button>
-          </div>
-
-          {MUST_HAVE_PILLARS.map((p, idx) => {
-            const Icon = p.icon;
-            const sym = getSymbolView(idx + 1);
-            const active = selectedPillar === p.id;
-            return (
-              <div
-                key={p.id}
-                className="rounded-full p-[2.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
+            <div className="rounded-xl p-[2px] shadow-2xs bg-white">
+              <button
+                type="button"
+                onClick={() => setSelectedPillar('all')}
+                className={`flex h-full min-h-[46px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold transition-all ${
+                  selectedPillar === 'all' ? 'ring-2 ring-[#FF2E9A]' : ''
+                }`}
+                style={{ background: SPRAY_BGS[0] }}
               >
-                <button
-                  type="button"
-                  onClick={() => setSelectedPillar(p.id)}
-                  className="inline-flex min-h-[38px] min-w-[112px] items-center justify-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-extrabold transition-all"
-                  style={
-                    active
-                      ? { background: getHeaderView(idx + 1), color: '#ffffff' }
-                      : { background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length], color: '#0A2B6D' }
-                  }
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                  <Layers className="h-3 w-3 text-[#0072FF]" />
+                </span>
+                <span
+                  className="font-extrabold leading-tight bg-clip-text text-transparent"
+                  style={{ backgroundImage: getTitleGradientView(0) }}
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                    <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                  </span>
-                  <span className="whitespace-nowrap">Pillar {idx + 1}</span>
-                </button>
-              </div>
-            );
-          })}
+                  All 8 Pillars
+                </span>
+                <span className="text-[8.5px] font-extrabold text-[#5A00D6]">All Categories</span>
+              </button>
+            </div>
+
+            {MUST_HAVE_PILLARS.map((p, idx) => {
+              const Icon = p.icon;
+              const sym = getSymbolView(idx + 1);
+              const active = selectedPillar === p.id;
+              const shortCategories = [
+                'Master Audit',
+                'Dual Workspace',
+                'People Directory',
+                '16 Comms Hub',
+                'Roster & Billing',
+                'Safety & WHS',
+                'HR & Academy',
+                'AI & Workflows',
+              ];
+              return (
+                <div
+                  key={p.id}
+                  className="rounded-xl p-[2px] shadow-2xs bg-white"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPillar(p.id)}
+                    className={`flex h-full min-h-[46px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold transition-all ${
+                      active ? 'ring-2 ring-[#FF2E9A]' : ''
+                    }`}
+                    style={{ background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length] }}
+                  >
+                    <span
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                      style={{ borderColor: getAppBorderView(idx + 1) }}
+                    >
+                      <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span
+                      className="font-extrabold leading-tight bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(idx + 1) }}
+                    >
+                      Pillar {idx + 1}
+                    </span>
+                    <span
+                      className="text-[8.5px] font-extrabold leading-tight"
+                      style={{ color: sym.iconColor }}
+                    >
+                      {shortCategories[idx]}
+                    </span>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* 8 Must-Have Pillars Grid — Fixed Section Heights so Pillars 1&2, 3&4, 5&6, 7&8 Line Up Horizontally */}

@@ -8,6 +8,8 @@ import { base44 } from '@/api/base44Client';
 import { downloadInfinityCoreEnginePdf } from '@/lib/infinityCoreEnginePdf';
 import {
   getHeaderView,
+  getTitleGradientView,
+  getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 
@@ -475,19 +477,20 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* Top Live Telemetry Strip — App Design Coloured Borders, Blue/Pink/Purple Spray Background, App-Coloured Writing & Centered */}
+        {/* Top Live Telemetry Strip (The 8 Numbered Tiles): Display Category, Suitable Category Symbol, Pink/Blue/Purple Spray Behind Words & Writing in App Design Colours */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
-            { label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
-            { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', icon: Zap },
-            { label: 'Connected Modules', value: '46', sub: 'Unified Data Bus', icon: Layers },
-            { label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', icon: ShieldCheck },
-            { label: 'Smart-Fill Docs', value: '125+', sub: '2026 A4 & Digital', icon: FileText },
-            { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', icon: Award },
-            { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, icon: Users },
-            { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, icon: Activity },
+            { category: 'Edge Compute', label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
+            { category: 'Automation', label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', icon: Zap },
+            { category: 'Platform Hub', label: 'Connected Modules', value: '46', sub: 'Unified Data Bus', icon: Layers },
+            { category: 'Guardrails', label: 'Validation Gates', value: '6 / 6', sub: 'Real-Time Enforced', icon: ShieldCheck },
+            { category: 'Document Suite', label: 'Smart-Fill Docs', value: '100+', sub: '2026 A4 & Digital', icon: FileText },
+            { category: 'Audit Suite', label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', icon: Award },
+            { category: 'People Hub', label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, icon: Users },
+            { category: 'Live Registers', label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, icon: Activity },
           ].map((stat, idx) => {
             const Icon = stat.icon;
+            const sym = getSymbolView(idx);
             return (
               <div
                 key={stat.label}
@@ -495,27 +498,49 @@ export default function InfinityCoreEngine({ compact = false }) {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full w-full flex-col items-center justify-center rounded-[13px] p-2.5 text-center"
+                  className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2.5 text-center"
                   style={{ background: UNIFORM_SPRAY_BG }}
                 >
-                  <span
-                    className="flex h-7 w-7 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                    style={{ borderColor: getAppBorderView(idx) }}
-                  >
-                    <Icon className="h-3.5 w-3.5 text-[#0072FF]" />
-                  </span>
+                  <div className="flex items-center justify-center gap-1.5">
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      style={{ borderColor: getAppBorderView(idx) }}
+                    >
+                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span
+                      className="rounded-full border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider"
+                      style={{ color: sym.iconColor }}
+                    >
+                      {stat.category}
+                    </span>
+                  </div>
                   <div
-                    className="mt-1.5 w-full rounded-xl p-[2px]"
+                    className="w-full flex-1 rounded-xl p-[2px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="rounded-[9px] bg-white px-2 py-1 text-center">
-                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    <div
+                      className="flex h-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
+                      <span
+                        className="block text-[9.5px] font-extrabold uppercase tracking-wider"
+                        style={{ color: sym.iconColor }}
+                      >
                         {stat.label}
                       </span>
-                      <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
+                      <div
+                        className="mt-0.5 font-editorial text-base font-extrabold leading-none bg-clip-text text-transparent"
+                        style={{ backgroundImage: getTitleGradientView(idx) }}
+                      >
                         {stat.value}
                       </div>
-                      <div className="mt-0.5 text-[9.5px] font-extrabold text-[#0072FF]">{stat.sub}</div>
+                      <div
+                        className="mt-0.5 text-[9.5px] font-extrabold"
+                        style={{ color: getSymbolView(idx + 2).iconColor }}
+                      >
+                        {stat.sub}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import {
   ShieldCheck, CheckCircle2, AlertTriangle, FileText, Download, Printer,
   Plus, Search, Layers, ClipboardCheck, Sparkles, Clock, Lock,
   ArrowRight, RefreshCw, Award, Eye, Wrench, CheckSquare, Building2,
+  Users, HeartHandshake, CalendarClock, MessagesSquare, Flame, FolderLock, DollarSign,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -620,18 +621,18 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
           </div>
 
-          {/* 9 Navigation Tiles Underneath: White Background with Spray of Pink, Blue & Purple, WHITE WRITING & App Design Coloured Borders */}
+          {/* 9 Numbered Navigation Tiles Underneath: Display Category, Suitable Symbol, White Background with Pink/Blue/Purple Spray Behind Words & Writing in App Design Colours */}
           <div className="grid w-full grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2.5 auto-rows-fr pt-1">
             {[
-              { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry', icon: Building2 },
-              { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
-              { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText },
-              { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out', icon: Clock },
-              { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency', icon: Award },
-              { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Route', icon: Layers },
-              { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate', icon: Sparkles },
-              { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS', icon: Wrench },
-              { id: 'dev-register-31', label: '9. Dev Register', sub: '15-Pt Check', icon: CheckSquare },
+              { id: 'control-centre', label: '1. Control Centre', category: 'Oversight', sub: 'Live Telemetry', icon: Building2 },
+              { id: 'master-audit-356', label: '2. 356 Audit Checks', category: 'Audit', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
+              { id: 'document-control-98', label: '3. 98 Master Docs', category: 'Documents', sub: 'Word, PDF & Excel', icon: FileText },
+              { id: 'end-of-shift', label: '4. End-of-Shift', category: 'Shifts', sub: 'Clock-Out', icon: Clock },
+              { id: 'skills-17-point', label: '5. Skills & 17-Pt', category: 'Training', sub: 'Competency', icon: Award },
+              { id: 'smart-mailroom', label: '6. Smart Mailroom', category: 'Mailroom', sub: 'Auto-Route', icon: Layers },
+              { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', category: 'AI Suite', sub: 'Human Gate', icon: Sparkles },
+              { id: 'best-in-class', label: '8. Best-In-Class', category: 'Benchmarks', sub: 'PRODA · SCHADS', icon: Wrench },
+              { id: 'dev-register-31', label: '9. Dev Register', category: 'Verification', sub: '15-Pt Check', icon: CheckSquare },
             ].map((tab, idx) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -647,27 +648,49 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   <button
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[68px] w-full flex-col items-center justify-between gap-1 rounded-[13px] p-2 text-center"
+                    className="flex h-full min-h-[76px] w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                      style={{ borderColor: getAppBorderView(idx) }}
-                    >
-                      <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                    </span>
+                    <div className="flex items-center justify-center gap-1">
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                        style={{ borderColor: getAppBorderView(idx) }}
+                      >
+                        <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                      </span>
+                      <span
+                        className="rounded-full border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider"
+                        style={{ color: sym.iconColor }}
+                      >
+                        {tab.category}
+                      </span>
+                    </div>
                     <div
-                      className="gradient-brand flex w-full flex-col items-center justify-center rounded-lg px-2 py-1 text-center text-white shadow-2xs"
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      className="w-full rounded-lg p-[1.5px] shadow-2xs"
+                      style={{ background: getHeaderView(idx) }}
                     >
-                      <div className="text-[10px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                        {tab.label}
-                      </div>
-                      <div className="text-[8.5px] font-bold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                        {tab.sub}
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
+                        style={{
+                          background:
+                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                        }}
+                      >
+                        <div
+                          className="text-[10px] font-extrabold leading-tight bg-clip-text text-transparent"
+                          style={{ backgroundImage: getTitleGradientView(idx) }}
+                        >
+                          {tab.label}
+                        </div>
+                        <div
+                          className="text-[8.5px] font-extrabold leading-tight"
+                          style={{ color: sym.iconColor }}
+                        >
+                          {tab.sub}
+                        </div>
                       </div>
                     </div>
                   </button>
@@ -678,25 +701,26 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — ALL TILES WITH APP DESIGN COLOURS IN DIFFERENT VIEWS, SPRAY PINK/BLUE/PURPLE BACKGROUND & UNIFORM BORDERS ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 12 NUMBERED REGISTER TILES WITH CATEGORY, SUITABLE SYMBOL, SPRAY BEHIND WORDS & APP-COLOURED WRITING ==================== */}
       {activeTab === 'control-centre' && (
         <div className="p-2 space-y-3.5 bg-white text-center">
-          {/* 12 Live Operational Register Telemetry Tiles — App Design Coloured Borders Around All Work Areas, Tiles & Symbols */}
+          {/* 12 Live Operational Register Telemetry Tiles — Numbered Tiles Display Category & Suitable Category Symbol */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 items-stretch">
             {[
-              { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
-              { label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
-              { label: 'Rostered Shifts', value: counts.shifts, route: '/roster', sub: 'Daily/Weekly Schedule' },
-              { label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', sub: 'Mandatory Progress' },
-              { label: 'Incident Clinic', value: counts.incidents, route: '/incidents', sub: '24h/5d NDIS SLA' },
-              { label: 'Risk & Hazards', value: counts.risks, route: '/risks', sub: 'ISO 31000 Matrix' },
-              { label: 'Management Tasks', value: counts.tasks, route: '/tasks', sub: 'Overdue & Approvals' },
-              { label: 'Active Policies', value: counts.policies, route: '/compliance', sub: 'Version Controlled' },
-              { label: 'Vault Documents', value: counts.documents, route: '/documents', sub: 'Expiry Monitored' },
-              { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', sub: 'Roster Integrated' },
-              { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', sub: 'Continuous Improvement' },
-              { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
+              { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
+              { category: 'Care & Support', icon: HeartHandshake, label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
+              { category: 'Rostering', icon: CalendarClock, label: 'Rostered Shifts', value: counts.shifts, route: '/roster', sub: 'Daily/Weekly Schedule' },
+              { category: 'Communications', icon: MessagesSquare, label: 'Shift Notes Logged', value: counts.shiftNotes, route: '/communications', sub: 'Mandatory Progress' },
+              { category: 'Safety & WHS', icon: AlertTriangle, label: 'Incident Clinic', value: counts.incidents, route: '/incidents', sub: '24h/5d NDIS SLA' },
+              { category: 'Risk Control', icon: Flame, label: 'Risk & Hazards', value: counts.risks, route: '/risks', sub: 'ISO 31000 Matrix' },
+              { category: 'Work & Tasks', icon: ClipboardCheck, label: 'Management Tasks', value: counts.tasks, route: '/tasks', sub: 'Overdue & Approvals' },
+              { category: 'Governance', icon: ShieldCheck, label: 'Active Policies', value: counts.policies, route: '/compliance', sub: 'Version Controlled' },
+              { category: 'Document Vault', icon: FolderLock, label: 'Vault Documents', value: counts.documents, route: '/documents', sub: 'Expiry Monitored' },
+              { category: 'HR & Leave', icon: Clock, label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', sub: 'Roster Integrated' },
+              { category: 'Quality & CAPA', icon: Award, label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', sub: 'Continuous Improvement' },
+              { category: 'Finance & NDIS', icon: DollarSign, label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
             ].map((m, idx) => {
+              const TileIcon = m.icon;
               const sym = getSymbolView(idx);
               return (
                 <div
@@ -706,46 +730,73 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 >
                   <Link
                     to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-2.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-2.5 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
-                    {/* Symbol Inside App Design Coloured Border */}
+                    {/* Suitable Category Symbol + Category Badge Inside App Design Coloured Border */}
                     <div
-                      className="rounded-full p-[2px] shadow-2xs"
+                      className="w-full rounded-full p-[2px] shadow-2xs"
                       style={{ background: getHeaderView(idx) }}
                     >
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
-                        <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                      </span>
+                      <div className="flex min-h-[28px] items-center justify-center gap-1.5 rounded-full bg-white px-2 py-0.5">
+                        <span
+                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                          style={{ borderColor: getAppBorderView(idx) }}
+                        >
+                          <TileIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                        </span>
+                        <span
+                          className="text-[9px] font-extrabold uppercase tracking-wider"
+                          style={{ color: sym.iconColor }}
+                        >
+                          {m.category}
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Label & Value Inside App Design Coloured Border */}
+                    {/* Label & Number Value With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
                     <div
                       className="w-full rounded-xl p-[2px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div className="flex min-h-[56px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                      <div
+                        className="flex min-h-[58px] flex-col items-center justify-center rounded-[9px] px-2 py-1 text-center"
+                        style={{
+                          background:
+                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                        }}
+                      >
                         <span
                           className="text-[9.5px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
                         >
                           {m.label}
                         </span>
-                        <div className="font-editorial text-lg font-extrabold leading-tight text-[#0A2B6D]">
+                        <div
+                          className="font-editorial text-lg font-extrabold leading-tight bg-clip-text text-transparent"
+                          style={{ backgroundImage: getTitleGradientView(idx + 1) }}
+                        >
                           {m.value}
                         </div>
                       </div>
                     </div>
 
-                    {/* Sub-Label Inside App Design Coloured Border */}
+                    {/* Sub-Label With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
                     <div
                       className="w-full flex-1 rounded-xl p-[2px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
-                      <div className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
+                      <div
+                        className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] px-2 py-0.5 text-center text-[9.5px] font-extrabold leading-tight"
+                        style={{
+                          background:
+                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                          color: getSymbolView(idx + 2).iconColor,
+                        }}
+                      >
                         {m.sub}
                       </div>
                     </div>

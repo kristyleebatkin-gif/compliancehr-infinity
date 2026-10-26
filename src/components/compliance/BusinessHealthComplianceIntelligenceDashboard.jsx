@@ -14,6 +14,7 @@ import { base44 } from '@/api/base44Client';
 import { downloadBusinessHealthIntelligencePdf } from '@/lib/businessHealthIntelligencePdf';
 import {
   getHeaderView,
+  getTitleGradientView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
@@ -325,36 +326,48 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const topKpis = [
     {
+      category: 'Governance & Audit',
+      icon: ShieldCheck,
       label: 'Overall Business & Compliance Health',
       value: `${overallScore}%`,
       sub: 'Audit-Ready across 17 Categories & 356 Checkpoints',
       badge: '+2.4% vs Q3',
     },
     {
+      category: 'People & HR Screening',
+      icon: Users,
       label: 'Workforce 100-Point Screening',
       value: '100%',
       sub: `${liveCounts.staff} Active Staff · ${liveCounts.certificates} Verified Credentials`,
       badge: 'Zero Unscreened Shifts',
     },
     {
+      category: 'Care & Consents',
+      icon: HeartHandshake,
       label: 'Participant Consents & Care Plans',
       value: '99.1%',
       sub: `${liveCounts.participants} Participants · 3-Part Consents Current`,
       badge: '10-Wk Reviews Active',
     },
     {
+      category: 'Safety & WHS SLA',
+      icon: AlertTriangle,
       label: 'WHS, Incident & Reportable SLA',
       value: '100% On-Time',
       sub: `${liveCounts.incidents} Incidents · ${liveCounts.risks} Active Risk Controls`,
       badge: '24h / 5d SLA Met',
     },
     {
+      category: 'Finance & Claims',
+      icon: DollarSign,
       label: 'NDIS Billing & Financial Health',
       value: '99.4%',
       sub: '3-Way Roster, Note & Invoice Match · 4.2d DSO',
       badge: 'PRODA Claim Ready',
     },
     {
+      category: 'Tasks & Quality',
+      icon: CheckCircle2,
       label: 'Action & Task Closure Velocity',
       value: `${liveCounts.completedTasks} Closed`,
       sub: `${liveCounts.openTasks} Open Tasks · ${liveCounts.audits} Internal Audits`,
@@ -449,9 +462,11 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         </div>
       </div>
 
-      {/* 6 Executive Intelligence KPI Tiles Under Live Executive — Light Up One at a Time for 30s & Move Left in Green, Yellow & Red */}
+      {/* 6 Executive Intelligence KPI Tiles Under Live Executive — Display Category, Suitable Category Symbol, White Spray Background, App-Coloured Writing & 30s Leftward Green/Yellow/Red Glow */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 items-stretch">
         {topKpis.map((k, idx) => {
+          const KpiIcon = k.icon;
+          const sym = getSymbolView(idx);
           const isLit = litKpiIdx === idx;
           const trafficPalette = [
             { label: 'GREEN', bg: '#10B981', ring: 'rgba(16, 185, 129, 0.75)' },
@@ -474,10 +489,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               }}
             >
               <div
-                className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
+                className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-3 text-center"
                 style={{ background: UNIFORM_SPRAY_BG }}
               >
-                {/* Same Symbol + Header Pill (Lights Up in Green, Yellow or Red When Active for 30s) */}
+                {/* Suitable Category Symbol + Category Header Pill */}
                 <div
                   className="w-full rounded-full p-[2px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx) }}
@@ -485,43 +500,61 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <div
                     className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
                     style={{
-                      background: isLit ? trafficPalette.bg : getHeaderView(0),
+                      background: isLit ? trafficPalette.bg : getHeaderView(idx),
                       color: '#FFFFFF',
                     }}
                   >
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                      <ShieldCheck
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                      <KpiIcon
                         className="h-3 w-3"
-                        style={{ color: isLit ? trafficPalette.bg : '#5A00D6' }}
+                        style={{ color: isLit ? trafficPalette.bg : sym.iconColor }}
                       />
                     </span>
                     <span style={{ color: '#FFFFFF' }}>
-                      {isLit ? `✦ ${trafficPalette.label} · 30s ◂` : k.badge}
+                      {isLit ? `✦ ${trafficPalette.label} · ${k.category} ◂` : k.category}
                     </span>
                   </div>
                 </div>
 
-                {/* Writing Box 1 Framed in App Design Border in Different Views */}
+                {/* Writing Box 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
                 <div
                   className="w-full rounded-xl p-[2px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 1) }}
                 >
-                  <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
-                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF] leading-tight">
+                  <div
+                    className="flex min-h-[72px] flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
+                    style={{ background: UNIFORM_SPRAY_BG }}
+                  >
+                    <div
+                      className="text-[9.5px] font-extrabold uppercase tracking-wider leading-tight"
+                      style={{ color: sym.iconColor }}
+                    >
                       {k.label}
                     </div>
-                    <div className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none text-[#0A2B6D]">
+                    <div
+                      className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(idx) }}
+                    >
                       {k.value}
+                    </div>
+                    <div
+                      className="mt-0.5 text-[9px] font-extrabold"
+                      style={{ color: getSymbolView(idx + 2).iconColor }}
+                    >
+                      {k.badge}
                     </div>
                   </div>
                 </div>
 
-                {/* Writing Box 2 Framed in App Design Border in Different Views */}
+                {/* Writing Box 2: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
                 <div
                   className="w-full flex-1 rounded-xl p-[2px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 2) }}
                 >
-                  <div className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
+                  <div
+                    className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold leading-tight"
+                    style={{ background: UNIFORM_SPRAY_BG, color: getSymbolView(idx + 1).iconColor }}
+                  >
                     {k.sub}
                   </div>
                 </div>
@@ -531,215 +564,262 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         })}
       </div>
 
-      {/* 8-Domain Departmental Health & Compliance Intelligence Grid + Selected Intelligence Pillar — Same Headers, Same Symbols & App Design Borders in Different Views Around All Writing */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
-        {/* Left 8 Columns: 8-Domain Health Cards */}
+      {/* 8-Pillar Matrix + Selected Pillar Side Panel Framed Together With App-Design Coloured Background Between Pillar & Side */}
+      <div
+        className="w-full rounded-3xl p-[5px] shadow-md"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
         <div
-          className="lg:col-span-8 flex rounded-2xl p-[3.5px] shadow-sm"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch rounded-[19px] p-2.5"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-            <div
-              className="w-full rounded-full p-[2.5px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
+          {/* Left 8 Columns: 8-Domain Health Cards With Suitable Category Symbols, Category Display, Spray Background & App-Coloured Writing */}
+          <div className="lg:col-span-8 flex rounded-2xl bg-white p-3.5 shadow-sm">
+            <div className="flex w-full flex-col justify-between space-y-3">
               <div
-                className="gradient-brand flex min-h-[42px] w-full flex-wrap items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white"
-                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <ShieldCheck className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>
-                  8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix
-                </span>
+                <div
+                  className="gradient-brand flex min-h-[42px] w-full flex-wrap items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <ShieldCheck className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>
+                    8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 items-stretch">
-              {intelligenceDomains.map((dom, idx) => {
-                const isSelected = dom.id === selectedDomain.id;
-                return (
-                  <div
-                    key={dom.id}
-                    className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all ${
-                      isSelected ? 'ring-2 ring-[#FF2E9A] scale-[1.01]' : ''
-                    }`}
-                    style={{ background: getHeaderView(idx) }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setSelectedDomainId(dom.id)}
-                      className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
-                      style={{ background: UNIFORM_SPRAY_BG }}
+              <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 items-stretch">
+                {intelligenceDomains.map((dom, idx) => {
+                  const DomainIcon = dom.icon;
+                  const sym = getSymbolView(idx);
+                  const isSelected = dom.id === selectedDomain.id;
+                  return (
+                    <div
+                      key={dom.id}
+                      className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all ${
+                        isSelected ? 'ring-2 ring-[#FF2E9A] scale-[1.01]' : ''
+                      }`}
+                      style={{ background: getHeaderView(idx) }}
                     >
-                      <div className="flex w-full flex-col items-center space-y-2">
-                        {/* Same Header Style & Same Symbol Across All Tiles */}
-                        <div
-                          className="w-full rounded-full p-[2px]"
-                          style={{ background: getHeaderView(idx) }}
-                        >
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDomainId(dom.id)}
+                        className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-3 text-center"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
+                        <div className="flex w-full flex-col items-center space-y-2">
+                          {/* Suitable Category Symbol + Category & Number Header */}
                           <div
-                            className="gradient-brand flex min-h-[36px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
-                            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                            className="w-full rounded-full p-[2px]"
+                            style={{ background: getHeaderView(idx) }}
                           >
-                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                              <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>
-                              {dom.score}% · {dom.status}
-                            </span>
+                            <div
+                              className="gradient-brand flex min-h-[36px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
+                              style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                            >
+                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                                <DomainIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                              </span>
+                              <span style={{ color: '#FFFFFF' }}>
+                                {dom.shortName} · {dom.score}%
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Writing Box 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
+                          <div
+                            className="w-full rounded-xl p-[2px]"
+                            style={{ background: getHeaderView(idx + 1) }}
+                          >
+                            <div
+                              className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] px-2.5 py-1.5 text-center"
+                              style={{ background: UNIFORM_SPRAY_BG }}
+                            >
+                              <div
+                                className="text-xs font-extrabold leading-tight bg-clip-text text-transparent"
+                                style={{ backgroundImage: getTitleGradientView(idx) }}
+                              >
+                                {dom.name}
+                              </div>
+                              <div
+                                className="mt-0.5 text-[10px] font-extrabold"
+                                style={{ color: sym.iconColor }}
+                              >
+                                {dom.standard}
+                              </div>
+                            </div>
                           </div>
                         </div>
 
-                        {/* Writing Box 1 Framed in App Design Border in Different Views */}
+                        {/* Writing Box 2: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
                         <div
                           className="w-full rounded-xl p-[2px]"
-                          style={{ background: getHeaderView(idx + 1) }}
+                          style={{ background: getHeaderView(idx + 2) }}
                         >
-                          <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                            <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                              {dom.name}
+                          <div
+                            className="flex flex-col items-center justify-center gap-1 rounded-[9px] p-2 text-center"
+                            style={{ background: UNIFORM_SPRAY_BG }}
+                          >
+                            <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
+                              <div
+                                className="h-full rounded-full"
+                                style={{ width: `${dom.score}%`, background: TOP_BORDER_GRADIENT }}
+                              />
                             </div>
-                            <div className="mt-0.5 text-[10px] font-extrabold text-[#0072FF]">
-                              {dom.standard}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Writing Box 2 Framed in App Design Border in Different Views */}
-                      <div
-                        className="w-full rounded-xl p-[2px]"
-                        style={{ background: getHeaderView(idx + 2) }}
-                      >
-                        <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white p-2 text-center">
-                          <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
                             <div
-                              className="h-full rounded-full"
-                              style={{ width: `${dom.score}%`, background: TOP_BORDER_GRADIENT }}
-                            />
-                          </div>
-                          <div className="text-center text-[10px] font-extrabold text-[#0A2B6D]">
-                            {dom.metricValue}
+                              className="text-center text-[10px] font-extrabold"
+                              style={{ color: getSymbolView(idx + 1).iconColor }}
+                            >
+                              {dom.metricValue}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </button>
-                  </div>
-                );
-              })}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Right 4 Columns: Selected Intelligence Pillar — Same Header, Same Symbol & App Design Borders in Different Views */}
-        <div
-          className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
-          style={{ background: getHeaderView(2) }}
-        >
-          <div
-            className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
-            <div className="w-full space-y-2.5">
-              {/* Same Header & Same ShieldCheck Symbol */}
-              <div
-                className="w-full rounded-full p-[2px] shadow-2xs"
-                style={{ background: getHeaderView(2) }}
-              >
-                <div
-                  className="gradient-brand flex min-h-[42px] items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-center text-white"
-                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
-                  </span>
-                  <div className="text-center">
-                    <div className="text-[9px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                      SELECTED PILLAR · {selectedDomain.score}% ({selectedDomain.status})
+          {/* Right 4 Columns: Selected Intelligence Pillar Side Panel — White Background Container, Tiles With Pink/Blue/Purple Spray Behind Words, Suitable Category Symbol & App-Design Coloured Writing */}
+          <div className="lg:col-span-4 flex rounded-2xl bg-white p-3.5 shadow-sm">
+            {(() => {
+              const SelectedIcon = selectedDomain.icon;
+              return (
+                <div className="flex h-full w-full flex-col items-center justify-between text-center space-y-2.5">
+                  <div className="w-full space-y-2.5">
+                    {/* Selected Pillar Header With Suitable Category Symbol */}
+                    <div
+                      className="w-full rounded-full p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div
+                        className="gradient-brand flex min-h-[44px] items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-center text-white"
+                        style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                      >
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white">
+                          <SelectedIcon className="h-3.5 w-3.5 text-[#5A00D6]" />
+                        </span>
+                        <div className="text-center">
+                          <div className="text-[9px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                            SELECTED PILLAR · {selectedDomain.shortName} · {selectedDomain.score}%
+                          </div>
+                          <div className="text-xs font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
+                            {selectedDomain.name}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-xs font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
-                      {selectedDomain.name}
+
+                    {/* Side Tile 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: getHeaderView(3) }}
+                    >
+                      <div
+                        className="rounded-[9px] p-2.5 text-center space-y-1"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
+                        <div className="inline-flex items-center justify-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                          <SelectedIcon className="h-3.5 w-3.5 text-[#0072FF]" />
+                          <span>{selectedDomain.shortName} · {selectedDomain.metricLabel}</span>
+                        </div>
+                        <div
+                          className="text-xs sm:text-sm font-extrabold bg-clip-text text-transparent"
+                          style={{ backgroundImage: getTitleGradientView(1) }}
+                        >
+                          {selectedDomain.metricValue}
+                        </div>
+                        <p className="text-[11px] font-extrabold text-[#0072FF] leading-snug">
+                          {selectedDomain.detail}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Side Tiles List: White Background With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
+                    <div className="space-y-1.5 text-center">
+                      <div
+                        className="w-full rounded-full p-[2px]"
+                        style={{ background: getHeaderView(4) }}
+                      >
+                        <div
+                          className="rounded-full py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
+                          Verified 2026 {selectedDomain.shortName} Controls
+                        </div>
+                      </div>
+                      {selectedDomain.ActionItems.map((item, aIdx) => {
+                        const aSym = getSymbolView(aIdx + 1);
+                        return (
+                          <div
+                            key={item}
+                            className="rounded-xl p-[2px]"
+                            style={{ background: getHeaderView(aIdx + 4) }}
+                          >
+                            <div
+                              className="flex items-center justify-center gap-1.5 rounded-[9px] px-2.5 py-1.5 text-center text-[10.5px] font-extrabold"
+                              style={{ background: UNIFORM_SPRAY_BG, color: aSym.iconColor }}
+                            >
+                              <span
+                                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                style={{ borderColor: getAppBorderView(aIdx + 1) }}
+                              >
+                                <SelectedIcon className="h-3 w-3" style={{ color: aSym.iconColor }} />
+                              </span>
+                              <span className="text-center" style={{ color: aSym.iconColor }}>
+                                {item}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="grid w-full grid-cols-2 gap-2 pt-2 border-t border-[#0A2B6D]/20">
+                    <div
+                      className="rounded-full p-[2px]"
+                      style={{ background: getHeaderView(0) }}
+                    >
+                      <Link
+                        to={selectedDomain.route}
+                        className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-white"
+                        style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                      >
+                        <span style={{ color: '#FFFFFF' }}>Open {selectedDomain.shortName}</span>
+                        <ArrowUpRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      </Link>
+                    </div>
+                    <div
+                      className="rounded-full p-[2px]"
+                      style={{ background: getHeaderView(1) }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          downloadBusinessHealthIntelligencePdf({
+                            overallScore,
+                            domains: intelligenceDomains,
+                            kpis: topKpis,
+                            predictiveAlerts,
+                          })
+                        }
+                        className="inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-[#5A00D6]"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
+                        <Download className="h-3 w-3 text-[#0072FF]" />
+                        <span>Pillar PDF</span>
+                      </button>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div
-                className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                style={{ background: getHeaderView(3) }}
-              >
-                <div className="rounded-[9px] bg-white p-2.5 text-center space-y-1">
-                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                    {selectedDomain.metricLabel}
-                  </div>
-                  <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                    {selectedDomain.metricValue}
-                  </div>
-                  <p className="text-[11px] font-extrabold text-[#0072FF] leading-snug">
-                    {selectedDomain.detail}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-1.5 text-center">
-                <div
-                  className="w-full rounded-full p-[2px]"
-                  style={{ background: getHeaderView(4) }}
-                >
-                  <div className="rounded-full bg-white py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                    Verified 2026 Governance &amp; Audit Controls
-                  </div>
-                </div>
-                {selectedDomain.ActionItems.map((item, aIdx) => (
-                  <div
-                    key={item}
-                    className="rounded-xl p-[2px]"
-                    style={{ background: getHeaderView(aIdx + 4) }}
-                  >
-                    <div className="flex items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center text-[10.5px] font-extrabold text-[#0A2B6D]">
-                      <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
-                      <span className="text-center text-[#0A2B6D]">{item}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid w-full grid-cols-2 gap-2 pt-2 border-t border-[#0A2B6D]/20">
-              <div
-                className="rounded-full p-[2px]"
-                style={{ background: getHeaderView(0) }}
-              >
-                <Link
-                  to={selectedDomain.route}
-                  className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-white"
-                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                >
-                  <span style={{ color: '#FFFFFF' }}>Open {selectedDomain.shortName}</span>
-                  <ArrowUpRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                </Link>
-              </div>
-              <div
-                className="rounded-full p-[2px]"
-                style={{ background: getHeaderView(1) }}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    downloadBusinessHealthIntelligencePdf({
-                      overallScore,
-                      domains: intelligenceDomains,
-                      kpis: topKpis,
-                      predictiveAlerts,
-                    })
-                  }
-                  className="inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]"
-                >
-                  <Download className="h-3 w-3 text-[#5A00D6]" />
-                  <span>Pillar PDF</span>
-                </button>
-              </div>
-            </div>
+              );
+            })()}
           </div>
         </div>
       </div>
