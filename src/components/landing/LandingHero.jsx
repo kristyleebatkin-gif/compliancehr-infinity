@@ -75,103 +75,101 @@ export default function LandingHero() {
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            {/* Main Logo Centred in Current Size + Smaller Logo Copy on Each Side Between Slogan & Border + Bottom Controls */}
-            <div className="mx-auto flex w-full flex-col items-center justify-between gap-3 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-4 shadow-md">
-              <div className="flex w-full flex-col items-center justify-center gap-2.5">
-                {/* Centred Main Logo in Current Size */}
-                <div
-                  className="flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center rounded-2xl p-[3px] shadow-md"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
-                  }}
-                >
-                  <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[13px] bg-white p-0.5">
-                    <Image
-                      src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                      alt="ComplianceHR Infinity logo"
-                      className="h-full w-full object-contain"
-                      fittingType="fit"
-                    />
+            {/* App Name at Top + Main Logo Centred Under App Name + Two Smaller Logos Between Slogan & Side of Screen */}
+            <div className="mx-auto flex w-full flex-col items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-3 shadow-md">
+              {/* 1. Centred App Name at Top */}
+              <div
+                className="inline-flex items-center justify-center rounded-2xl p-[3px] shadow-sm"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
+                }}
+              >
+                <div className="rounded-[13px] bg-white px-4 sm:px-5 py-1.5 font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
+                  Compliance
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
+                </div>
+              </div>
+
+              {/* 2. Main Logo Centred Under App Name + Two Smaller Logos Between Slogan and Side of Screen on Both Sides */}
+              <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
+                {/* Left Side: Smaller Copy of Logo Centred Between Left Side of Screen and Slogan */}
+                <div className="flex w-full items-center justify-center">
+                  <div
+                    className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl p-[2.5px] shadow-sm"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[10px] bg-white p-0.5">
+                      <Image
+                        src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                        alt="ComplianceHR Infinity side logo"
+                        className="h-full w-full object-contain"
+                        fittingType="fit"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* App Name + Slogan with Smaller Logo Copy on Each Side Between Slogan and Border, Centred */}
-                <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
-                  {/* Left Side: Smaller Copy of Logo Centred Between Slogan and Left Border */}
-                  <div className="flex w-full items-center justify-center">
-                    <div
-                      className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-xl p-[2.5px] shadow-sm"
-                      style={{
-                        background:
-                          'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
-                      }}
-                    >
-                      <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[10px] bg-white p-0.5">
-                        <Image
-                          src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                          alt="ComplianceHR Infinity side logo"
-                          className="h-full w-full object-contain"
-                          fittingType="fit"
-                        />
-                      </div>
+                {/* Centre: Main Logo Centred Directly Under App Name + Slogan */}
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div
+                    className="flex h-24 w-24 sm:h-28 sm:w-28 shrink-0 items-center justify-center rounded-2xl p-[3px] shadow-md"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[13px] bg-white p-0.5">
+                      <Image
+                        src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                        alt="ComplianceHR Infinity logo"
+                        className="h-full w-full object-contain"
+                        fittingType="fit"
+                      />
                     </div>
                   </div>
 
-                  {/* Centre: App Name + Slogan Under App Name in Logo Colours */}
-                  <div className="flex flex-col items-center justify-center bg-white px-1 text-center">
-                    <div
-                      className="inline-flex items-center justify-center rounded-2xl p-[3px] shadow-md"
-                      style={{
-                        background:
-                          'linear-gradient(120deg, #0072FF 0%, #5A00D6 35%, #A100FF 68%, #FF2E9A 100%)',
-                      }}
-                    >
-                      <div className="rounded-[13px] bg-white px-4 sm:px-5 py-2 font-editorial text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
-                        Compliance
-                        <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                          HR
-                        </span>{' '}
-                        <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                          Infinity
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Slogan Under App Name in the Same Colours as on Logo */}
-                    <div className="mt-2 rounded-full bg-white px-3 py-0.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide">
-                      <span className="text-[#0072FF]">Complete Control.</span>{' '}
-                      <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-                      <span className="text-[#FF2E9A]">Brighter Success.</span>
-                    </div>
+                  {/* Slogan Under Centred Logo in the Same Colours as on Logo */}
+                  <div className="mt-1.5 rounded-full bg-white px-3 py-0.5 text-xs sm:text-sm font-extrabold tracking-wide">
+                    <span className="text-[#0072FF]">Complete Control.</span>{' '}
+                    <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+                    <span className="text-[#FF2E9A]">Brighter Success.</span>
                   </div>
+                </div>
 
-                  {/* Right Side: Smaller Copy of Logo Centred Between Slogan and Right Border */}
-                  <div className="flex w-full items-center justify-center">
-                    <div
-                      className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-xl p-[2.5px] shadow-sm"
-                      style={{
-                        background:
-                          'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
-                      }}
-                    >
-                      <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[10px] bg-white p-0.5">
-                        <Image
-                          src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                          alt="ComplianceHR Infinity side logo"
-                          className="h-full w-full object-contain"
-                          fittingType="fit"
-                        />
-                      </div>
+                {/* Right Side: Smaller Copy of Logo Centred Between Slogan and Right Side of Screen */}
+                <div className="flex w-full items-center justify-center">
+                  <div
+                    className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl p-[2.5px] shadow-sm"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #A100FF 78%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[10px] bg-white p-0.5">
+                      <Image
+                        src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                        alt="ComplianceHR Infinity side logo"
+                        className="h-full w-full object-contain"
+                        fittingType="fit"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* NDIS & Aged care Documentation & Compliance + Slightly Smaller Open, Landing and Sign In */}
-              <div className="flex w-full flex-col items-center justify-center gap-2 border-t border-[#0A2B6D]/20 pt-2.5">
+              {/* NDIS & Aged care Documentation & Compliance + Open, Landing and Signed In Just Smaller */}
+              <div className="flex w-full flex-col items-center justify-center gap-1.5 border-t border-[#0A2B6D]/20 pt-2">
                 <span
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-md"
+                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
                   style={{
                     background:
                       'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
@@ -183,16 +181,16 @@ export default function LandingHero() {
                   <span>NDIS &amp; Aged care Documentation &amp; Compliance</span>
                 </span>
 
-                <div className="grid w-full max-w-md grid-cols-1 sm:grid-cols-3 items-stretch justify-center gap-2">
+                <div className="grid w-full max-w-lg grid-cols-1 sm:grid-cols-3 items-stretch justify-center gap-2">
                   <Link
                     to="/dashboard"
-                    className="inline-flex h-7 w-full items-center justify-center gap-1 rounded-full border-2 border-[#0A2B6D] px-2.5 text-[9.5px] sm:text-[10px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                     style={{
                       background:
                         'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                     }}
                   >
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
                       <Sparkles className="h-2.5 w-2.5 text-[#0072FF]" />
                     </span>
                     <span className="whitespace-nowrap">Open App Dashboard</span>
@@ -200,13 +198,13 @@ export default function LandingHero() {
 
                   <Link
                     to="/"
-                    className="inline-flex h-7 w-full items-center justify-center gap-1 rounded-full border-2 border-[#0A2B6D] px-2.5 text-[9.5px] sm:text-[10px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                     style={{
                       background:
                         'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                     }}
                   >
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
                       <Compass className="h-2.5 w-2.5 text-[#5A00D6]" />
                     </span>
                     <span className="whitespace-nowrap">Landing Page</span>
@@ -214,13 +212,13 @@ export default function LandingHero() {
 
                   <Link
                     to={authed ? '/dashboard' : '/login'}
-                    className="inline-flex h-7 w-full items-center justify-center gap-1 rounded-full border-2 border-[#0A2B6D] px-2.5 text-[9.5px] sm:text-[10px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                    className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                     style={{
                       background:
                         'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                     }}
                   >
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                    <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
                       <UserCheck className="h-2.5 w-2.5 text-[#A100FF]" />
                     </span>
                     <span className="whitespace-nowrap">{authed ? 'Signed In' : 'Sign In'}</span>
