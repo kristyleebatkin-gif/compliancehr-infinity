@@ -16,21 +16,27 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="app-readable relative min-h-screen overflow-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
-      {/* Top Navigation with App-Themed Border around Brand, Open Dashboard, 6-per-line Features & Quick App Bar */}
+    <div
+      className="app-readable relative min-h-screen overflow-hidden font-elegant text-[#0A2B6D] antialiased"
+      style={{
+        background:
+          'linear-gradient(180deg, #E8DEFF 0%, #F5F0FF 25%, #FFE8F6 50%, #E6F4FF 75%, #F5F0FF 100%)',
+      }}
+    >
+      {/* Top Navigation with App-Coloured Background to Page Edges, Longer Brand Name, 6-Per-Line Full-Colour Features & Quick App Bar */}
       <LandingNav />
 
-      <main className="relative z-10 space-y-6 pb-8">
-        {/* 1. Hero (App-Bordered Logo, Minimised Software Details, Bright Pink Start Guide, 6-Per-Line Full-Colour Modules, 4 Stats & 3 Upgraded Pillars) */}
+      <main className="relative z-10 space-y-5 px-2 pb-8 pt-2 sm:px-4">
+        {/* 1. Hero (Larger Logo, Redesigned Software Card, Bright Pink Start Guide, 6-Per-Line Full-Colour Modules, 4 Stats & 3 Pillars) */}
         <LandingHero />
 
         {/* 2. Compliance in 4 Steps (Quick Start Guide) */}
         <QuickStartSection />
 
-        {/* 3. An Impossible Standard, Achieved Effortlessly (12 Core Capabilities — 6 per line, vibrant colours) */}
+        {/* 3. An Impossible Standard, Achieved Effortlessly (12 Core Capabilities — 6 per line in mixed full colours) */}
         <FeaturesSection />
 
-        {/* 4. From First Question to Audit-Ready Report in Two Minutes (Express Audit with vibrant colours) */}
+        {/* 4. From First Question to Audit-Ready Report in Two Minutes (Express Audit) */}
         <ExpressAuditSection />
 
         {/* 5. Accurate Map of the App -> Minimised Colourful Connections & Access Info -> Colourful Live Workspace */}
@@ -39,10 +45,7 @@ export default function Landing() {
         {/* 6. Why Providers Choose ComplianceHR */}
         <BenefitsSection />
 
-        {/* 7. All Marketing & Sales Materials Ordered After "Why Providers Choose ComplianceHR":
-               Must-Have Review -> 1-Click Operations -> Screen-by-Screen Audit (with Small Master Checklist) ->
-               Business Health -> Core Engines (Risk, Roster & Smart-Fill) -> Unified Oversight (with Smaller Master Audit Report) ->
-               Office View & Beach Themed -> Price & Packaging */}
+        {/* 7. All Marketing & Sales Materials Ordered After "Why Providers Choose ComplianceHR" */}
         <MarketingSafeShowcase embedded />
 
         {/* 8. Final Call-To-Action */}

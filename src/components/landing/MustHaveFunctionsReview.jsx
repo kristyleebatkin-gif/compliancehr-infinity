@@ -409,24 +409,33 @@ export default function MustHaveFunctionsReview() {
             Click any module to launch directly
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1.5">
           {MODULE_DIRECTORY.map((mod, idx) => {
-            const c = moduleKeyColour(mod.key);
+            const mixedBgs = [
+              { bg: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)', text: '#ffffff' },
+              { bg: 'linear-gradient(135deg, #FF2E9A 0%, #A100FF 100%)', text: '#ffffff' },
+              { bg: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)', text: '#0A2B6D' },
+              { bg: 'linear-gradient(135deg, #5A00D6 0%, #A100FF 100%)', text: '#ffffff' },
+              { bg: 'linear-gradient(135deg, #0A2B6D 0%, #5A00D6 100%)', text: '#ffffff' },
+              { bg: 'linear-gradient(135deg, #A100FF 0%, #FF2E9A 100%)', text: '#ffffff' },
+              { bg: 'linear-gradient(135deg, #FF6EDB 0%, #FF2E9A 100%)', text: '#0A2B6D' },
+              { bg: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)', text: '#ffffff' },
+            ];
+            const palette = mixedBgs[idx % mixedBgs.length];
             const Icon = mod.icon;
             return (
               <Link
                 key={mod.key}
                 to={mod.path}
-                className="flex items-center gap-1.5 rounded-lg border-2 border-[#0A2B6D] bg-white px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs hover:-translate-y-0.5 transition-transform"
-                style={{ borderTopColor: c, borderTopWidth: '3px' }}
+                className="flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2 py-1.5 text-[10px] font-extrabold shadow-sm hover:-translate-y-0.5 transition-transform"
+                style={{ background: palette.bg, color: palette.text }}
               >
-                <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-2xs"
-                  style={{ background: c }}
-                >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-white/50 bg-black/20 text-white shadow-2xs">
                   {Icon ? <Icon className="h-3 w-3 text-white" /> : idx + 1}
                 </span>
-                <span className="min-w-0 flex-1 leading-tight">{mod.label}</span>
+                <span className="min-w-0 flex-1 leading-tight" style={{ color: palette.text }}>
+                  {mod.label}
+                </span>
               </Link>
             );
           })}
