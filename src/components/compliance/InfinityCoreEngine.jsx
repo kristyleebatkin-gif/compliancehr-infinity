@@ -550,15 +550,15 @@ export default function InfinityCoreEngine({ compact = false }) {
               </div>
             </div>
 
-            {/* All 3 Core Engines Switcher Tiles — Same Spray Display Colour & Words Fit Cleanly */}
-            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 items-stretch">
+            {/* All 3 Core Engines Switcher Tiles — Cut in Size by 50% (Numbered Telemetry Tiles Above Remain the Same) */}
+            <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1.5 items-stretch">
               {PILLAR_TABS.map((tab, idx) => {
                 const Icon = tab.icon;
                 const active = activePillar === tab.id;
                 return (
                   <div
                     key={tab.id}
-                    className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all ${
+                    className={`flex h-full rounded-xl p-[2px] shadow-2xs transition-all ${
                       active ? 'ring-2 ring-[#FF2E9A]' : ''
                     }`}
                     style={{ background: TOP_BORDER_GRADIENT }}
@@ -566,16 +566,16 @@ export default function InfinityCoreEngine({ compact = false }) {
                     <button
                       type="button"
                       onClick={() => setActivePillar(tab.id)}
-                      className="flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[13px] px-3 py-2 text-center text-xs font-extrabold text-[#0A2B6D] transition-all"
+                      className="flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold text-[#0A2B6D] transition-all"
                       style={{ background: UNIFORM_SPRAY_BG }}
                     >
                       <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                         style={{ borderColor: getAppBorderView(idx) }}
                       >
-                        <Icon className="h-3.5 w-3.5 text-[#5A00D6]" />
+                        <Icon className="h-2.5 w-2.5 text-[#5A00D6]" />
                       </span>
-                      <span className="leading-snug text-center text-[#0A2B6D]">{tab.label}</span>
+                      <span className="leading-tight text-center text-[#0A2B6D]">{tab.label}</span>
                     </button>
                   </div>
                 );
@@ -584,102 +584,95 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         </div>
 
-        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — LARGER 2-LINE HEADER, APP-COLOURED WRITING, SPRAY BG & ALIGNED SECTIONS ==================== */}
+        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — TILES CUT IN SIZE BY 50% ==================== */}
         {(activePillar === 'all' || activePillar === 'automation') && (
           <div
-            className="rounded-2xl p-[3.5px] shadow-sm"
+            className="rounded-2xl p-[2.5px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-              {/* Enlarged Sub-Engine 1 Header with Words on Second Line */}
+            <div className="rounded-[12px] bg-white p-2 space-y-2">
               <div
-                className="w-full rounded-2xl p-[3px] shadow-2xs"
+                className="w-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-5 py-2.5 text-center text-white"
+                  className="gradient-brand flex min-h-[36px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-3 py-1 text-center text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Zap className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
+                  <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white">
+                    <Zap className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>
                       SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB
                     </span>
                   </div>
-                  <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
                     104 Server Functions &amp; 65 Live Workflows · Zero-Touch Event &amp; Schedule Pipelines
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 items-stretch">
                 {(compact ? filteredPipelines.slice(0, 4) : filteredPipelines).map((pipe) => (
                   <div
                     key={pipe.code}
-                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 text-center space-y-1"
                       style={{ background: UNIFORM_SPRAY_BG }}
                     >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-2">
-                        {/* Fixed-Height Top Code & LIVE 24/7 Pill in App Design Colours */}
+                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[36px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[20px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#5A00D6]">
                             <span>{pipe.code} · {pipe.category}</span>
-                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-1.5 py-0 text-[8px] font-extrabold text-[#0072FF]">
                               {pipe.status}
                             </span>
                           </div>
                         </div>
 
-                        {/* Fixed-Height Centered Title Box */}
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[54px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                          <div className="flex min-h-[28px] items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[10px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pipe.title}
                           </div>
                         </div>
 
-                        {/* Fixed-Height Centered Trigger & Action Box */}
                         <div
-                          className="flex flex-1 rounded-xl p-[2px]"
+                          className="flex flex-1 rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[92px] w-full flex-col items-center justify-center gap-1 rounded-[9px] bg-white/95 p-2.5 text-center">
-                            <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[42px] w-full flex-col items-center justify-center gap-0.5 rounded-[6px] bg-white/95 p-1 text-center">
+                            <div className="text-[9px] font-extrabold text-[#5A00D6] leading-tight">
                               Trigger: {pipe.trigger}
                             </div>
-                            <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                            <p className="text-[9px] font-bold text-[#0072FF] leading-tight">
                               {pipe.action}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Fixed-Height Bottom Bar with App-Coloured Open Button */}
-                      <div className="flex h-[38px] w-full items-center justify-between gap-2 border-t border-[#0A2B6D]/15 pt-2">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 font-mono text-[9.5px] font-extrabold text-[#5A00D6]">
+                      <div className="flex h-[22px] w-full items-center justify-between gap-1 border-t border-[#0A2B6D]/15 pt-1">
+                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 font-mono text-[8px] font-extrabold text-[#5A00D6]">
                           fn: {pipe.functionName}
                         </span>
                         <div
-                          className="rounded-full p-[2px]"
+                          className="rounded-full p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <Link
                             to={pipe.path}
-                            className="inline-flex h-[26px] items-center justify-center gap-1 rounded-full bg-white px-2.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                            className="inline-flex h-[18px] items-center justify-center gap-0.5 rounded-full bg-white px-2 text-[8.5px] font-extrabold text-[#0A2B6D]"
                           >
                             <span className="text-[#5A00D6]">Open</span>
-                            <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
+                            <ArrowRight className="h-2 w-2 text-[#0072FF]" />
                           </Link>
                         </div>
                       </div>
@@ -691,95 +684,92 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* ==================== PILLAR 2: REAL-TIME COMPLIANCE, RISK & ROSTER VALIDATION ENGINE — LARGER 2-LINE HEADER, SPRAY BG & ALIGNED SECTIONS ==================== */}
+        {/* ==================== PILLAR 2: REAL-TIME VALIDATION ENGINE — TILES CUT IN SIZE BY 50% ==================== */}
         {(activePillar === 'all' || activePillar === 'validation') && (
           <div
-            className="rounded-2xl p-[3.5px] shadow-sm"
+            className="rounded-2xl p-[2.5px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-              {/* Enlarged Sub-Engine 2 Header with Words on Second Line */}
+            <div className="rounded-[12px] bg-white p-2 space-y-2">
               <div
-                className="w-full rounded-2xl p-[3px] shadow-2xs"
+                className="w-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-5 py-2.5 text-center text-white"
+                  className="gradient-brand flex min-h-[36px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-3 py-1 text-center text-white"
                   style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                 >
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <ShieldCheck className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
+                  <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white">
+                    <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>
                       SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER VALIDATION ENGINE
                     </span>
                   </div>
-                  <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
                     6 Live Validation Gates · Real-Time Database Gatekeeper
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 items-stretch">
                 {validationGates.map((gate) => (
                   <div
                     key={gate.code}
-                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 text-center space-y-1"
                       style={{ background: UNIFORM_SPRAY_BG }}
                     >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-2">
+                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[36px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[20px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#5A00D6]">
                             <span>{gate.code} · {gate.standard}</span>
-                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-1.5 py-0 text-[8px] font-extrabold text-[#0072FF]">
                               {gate.badge}
                             </span>
                           </div>
                         </div>
 
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[50px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D]">
+                          <div className="flex min-h-[26px] items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[10px] font-extrabold text-[#0A2B6D] leading-tight">
                             {gate.name}
                           </div>
                         </div>
 
                         <div
-                          className="flex flex-1 rounded-xl p-[2px]"
+                          className="flex flex-1 rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[78px] w-full items-center justify-center rounded-[9px] bg-white/95 p-2.5 text-center">
-                            <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                          <div className="flex min-h-[38px] w-full items-center justify-center rounded-[6px] bg-white/95 p-1 text-center">
+                            <p className="text-[9px] font-bold text-[#0072FF] leading-tight">
                               {gate.ruleSummary}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex h-[38px] w-full items-center justify-between border-t border-[#0A2B6D]/15 pt-2">
-                        <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                          <CheckCircle2 className="h-3 w-3 text-[#0072FF]" /> Active Rule Gate
+                      <div className="flex h-[22px] w-full items-center justify-between border-t border-[#0A2B6D]/15 pt-1">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[8.5px] font-extrabold text-[#5A00D6]">
+                          <CheckCircle2 className="h-2.5 w-2.5 text-[#0072FF]" /> Active Rule Gate
                         </span>
                         <div
-                          className="rounded-full p-[2px]"
+                          className="rounded-full p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <Link
                             to={gate.path}
-                            className="inline-flex h-[26px] items-center justify-center gap-1 rounded-full bg-white px-2.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                            className="inline-flex h-[18px] items-center justify-center gap-0.5 rounded-full bg-white px-2 text-[8.5px] font-extrabold text-[#0A2B6D]"
                           >
                             <span className="text-[#5A00D6]">Open</span>
-                            <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
+                            <ArrowRight className="h-2 w-2 text-[#0072FF]" />
                           </Link>
                         </div>
                       </div>
@@ -791,98 +781,95 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — LARGER 2-LINE HEADER & EXACT SAME TILE DESIGN AS ABOVE ==================== */}
+        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — TILES CUT IN SIZE BY 50% ==================== */}
         {(activePillar === 'all' || activePillar === 'smartfill') && (
           <div
-            className="rounded-2xl p-[3.5px] shadow-sm"
+            className="rounded-2xl p-[2.5px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-              {/* Enlarged Sub-Engine 3 Header with Words on Second Line */}
+            <div className="rounded-[12px] bg-white p-2 space-y-2">
               <div
-                className="w-full rounded-2xl p-[3px] shadow-2xs"
+                className="w-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-5 py-2.5 text-center text-white"
+                  className="gradient-brand flex min-h-[36px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-3 py-1 text-center text-white"
                   style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                 >
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
+                  <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white">
+                    <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                     <span style={{ color: '#FFFFFF' }}>
                       SUB-ENGINE 3 · SMART-FILL DOCUMENT, AUDIT &amp; PREDICTIVE ALERT ENGINE
                     </span>
                   </div>
-                  <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                    2026 Smart-Fill Studio · 125+ Docs · 12 A4 Templates · 356 Checkpoints
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                    2026 Smart-Fill Studio · 100+ Documents · 356 Checkpoints
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 items-stretch">
                 {SMART_FILL_ENGINES.map((eng) => (
                   <div
                     key={eng.code}
-                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 text-center space-y-1"
                       style={{ background: UNIFORM_SPRAY_BG }}
                     >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-2">
+                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[36px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[20px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#5A00D6]">
                             <span>{eng.code} · {eng.category}</span>
-                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                            <span className="rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-1.5 py-0 text-[8px] font-extrabold text-[#0072FF]">
                               {eng.badge}
                             </span>
                           </div>
                         </div>
 
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[54px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                          <div className="flex min-h-[28px] items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[10px] font-extrabold text-[#0A2B6D] leading-tight">
                             {eng.title}
                           </div>
                         </div>
 
                         <div
-                          className="flex flex-1 rounded-xl p-[2px]"
+                          className="flex flex-1 rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[92px] w-full flex-col items-center justify-center gap-1 rounded-[9px] bg-white/95 p-2.5 text-center">
-                            <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                          <div className="flex min-h-[42px] w-full flex-col items-center justify-center gap-0.5 rounded-[6px] bg-white/95 p-1 text-center">
+                            <div className="text-[9px] font-extrabold text-[#5A00D6] leading-tight">
                               {eng.coverage}
                             </div>
-                            <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                            <p className="text-[9px] font-bold text-[#0072FF] leading-tight">
                               {eng.output}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex h-[38px] w-full items-center justify-between gap-2 border-t border-[#0A2B6D]/15 pt-2">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 font-mono text-[9.5px] font-extrabold text-[#5A00D6]">
+                      <div className="flex h-[22px] w-full items-center justify-between gap-1 border-t border-[#0A2B6D]/15 pt-1">
+                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 font-mono text-[8px] font-extrabold text-[#5A00D6]">
                           {eng.fnLabel}
                         </span>
                         <div
-                          className="rounded-full p-[2px]"
+                          className="rounded-full p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <Link
                             to={eng.link}
-                            className="inline-flex h-[26px] items-center justify-center gap-1 rounded-full bg-white px-2.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                            className="inline-flex h-[18px] items-center justify-center gap-0.5 rounded-full bg-white px-2 text-[8.5px] font-extrabold text-[#0A2B6D]"
                           >
                             <span className="text-[#5A00D6]">Open</span>
-                            <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
+                            <ArrowRight className="h-2 w-2 text-[#0072FF]" />
                           </Link>
                         </div>
                       </div>

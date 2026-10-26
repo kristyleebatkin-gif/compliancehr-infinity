@@ -606,27 +606,37 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
             </div>
           </div>
 
-          {/* Group Filter Tiles Under Search — Centered Words & All App Design Colour */}
+          {/* 8 Group Filter Tiles Under Search — Help Tile Replaced With Money Tile, App-Coloured Background & White Writing */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-            {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp, idx) => {
+            {[
+              'All',
+              'Overview',
+              'People',
+              'Care & Support',
+              'Compliance & Safety',
+              'Work',
+              'Company',
+              'Money',
+            ].map((grp, idx) => {
               const active = selectedGroup === grp;
               return (
                 <div
                   key={grp}
                   className={`rounded-full p-[2.5px] shadow-2xs transition-all ${
-                    active ? 'ring-2 ring-[#FF2E9A]' : ''
+                    active ? 'ring-2 ring-[#0A2B6D] scale-[1.02]' : ''
                   }`}
-                  style={{ background: getHeaderView(idx) }}
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                  }}
                 >
                   <button
                     type="button"
                     onClick={() => setSelectedGroup(grp)}
-                    className="flex h-[38px] w-full items-center justify-center rounded-full bg-white px-3 text-center text-xs font-extrabold transition-all"
+                    className="gradient-brand flex h-[38px] w-full items-center justify-center rounded-full px-3 text-center text-xs font-extrabold text-white transition-all hover:opacity-95"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
-                    <span
-                      className="text-center font-extrabold bg-clip-text text-transparent"
-                      style={{ backgroundImage: getTitleGradientView(idx) }}
-                    >
+                    <span className="text-center font-extrabold text-white" style={{ color: '#FFFFFF' }}>
                       {grp}
                     </span>
                   </button>
@@ -811,24 +821,22 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 className="grid h-full w-full grid-cols-1 grid-rows-[68px_72px_72px_34px] gap-2 overflow-hidden rounded-[13px] p-2.5 text-center"
                 style={{ background: sprayBg }}
               >
-                {/* Section 1: Fixed-Height Centered Header Across All 48 Page Tiles */}
+                {/* Section 1: Fixed-Height Centered Header Across All 48 Page Tiles (No White Dots) */}
                 <div
                   className="flex h-[68px] w-full rounded-xl p-[2px] shadow-2xs"
                   style={{ background: getHeaderView(index) }}
                 >
                   <div
-                    className="gradient-brand flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
+                    className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
                     <div className="flex items-center justify-center gap-1.5 w-full">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                        <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                      </span>
+                      <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                       <span
                         className="text-[10.5px] font-extrabold leading-tight text-center text-white"
                         style={{ color: '#FFFFFF' }}
                       >
-                        Page #{index + 1} · {mod.label}
+                        Page #{index + 1} {mod.label}
                       </span>
                     </div>
                     <Link
@@ -870,49 +878,61 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   </div>
                 </div>
 
-                {/* Section 4: Fixed-Height Bottom Action Buttons (Doc, Task, Done) */}
+                {/* Section 4: Fixed-Height Bottom Action Buttons (Doc, Task, Done) in App Design Colours */}
                 <div className="grid h-[34px] grid-cols-3 gap-1.5 pt-1 border-t border-[#0A2B6D]/15">
                   <div
                     className="rounded-full p-[2px]"
-                    style={{ background: getHeaderView(index) }}
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                    }}
                   >
                     <button
                       type="button"
                       onClick={() => openSmartFillDoc(mod)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
+                      style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                     >
-                      <Wand2 className="h-2.5 w-2.5 text-[#FF2E9A]" />
-                      Doc
+                      <Wand2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Doc</span>
                     </button>
                   </div>
 
                   <div
                     className="rounded-full p-[2px]"
-                    style={{ background: getHeaderView(index + 1) }}
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                    }}
                   >
                     <button
                       type="button"
                       disabled={creatingTaskKey === `${mod.key}-open`}
                       onClick={() => handleQuickCreateAndCompleteTask(mod, false)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
+                      style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
                     >
-                      <PlusCircle className="h-2.5 w-2.5 text-[#0072FF]" />
-                      Task
+                      <PlusCircle className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Task</span>
                     </button>
                   </div>
 
                   <div
                     className="rounded-full p-[2px]"
-                    style={{ background: getHeaderView(index + 2) }}
+                    style={{
+                      background:
+                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                    }}
                   >
                     <button
                       type="button"
                       disabled={creatingTaskKey === `${mod.key}-done`}
                       onClick={() => handleQuickCreateAndCompleteTask(mod, true)}
-                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-1.5 text-[9.5px] font-extrabold text-[#0A2B6D]"
+                      className="flex h-[26px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[9.5px] font-extrabold text-white"
+                      style={{ background: getHeaderView(index + 2), color: '#FFFFFF' }}
                     >
-                      <CheckCircle2 className="h-2.5 w-2.5 text-[#5A00D6]" />
-                      Done
+                      <CheckCircle2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Done</span>
                     </button>
                   </div>
                 </div>

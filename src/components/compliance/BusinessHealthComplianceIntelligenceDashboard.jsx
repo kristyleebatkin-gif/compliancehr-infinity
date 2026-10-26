@@ -49,6 +49,17 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   const [selectedDomainId, setSelectedDomainId] = useState('governance');
   const [horizonFilter, setHorizonFilter] = useState('ALL');
   const [refreshing, setRefreshing] = useState(false);
+  const [litKpiIdx, setLitKpiIdx] = useState(5);
+  const [trafficStep, setTrafficStep] = useState(0);
+
+  // Light up tiles under Live Executive one at a time for 30 seconds each, then go left to the next tile, cycling Green, Yellow & Red
+  useEffect(() => {
+    const timer30 = setInterval(() => {
+      setLitKpiIdx((prev) => (prev - 1 + 6) % 6);
+      setTrafficStep((prev) => (prev + 1) % 3);
+    }, 30000);
+    return () => clearInterval(timer30);
+  }, []);
 
   const loadLiveIntelligence = useCallback(async () => {
     setRefreshing(true);
@@ -438,61 +449,86 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         </div>
       </div>
 
-      {/* 6 Executive Intelligence KPI Tiles — App Design Borders in Different Views Around ALL Writing, Same Headers & Same Symbols */}
+      {/* 6 Executive Intelligence KPI Tiles Under Live Executive — Light Up One at a Time for 30s & Move Left in Green, Yellow & Red */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 items-stretch">
-        {topKpis.map((k, idx) => (
-          <div
-            key={k.label}
-            className="flex h-full rounded-2xl p-[3px] shadow-sm"
-            style={{ background: getHeaderView(idx) }}
-          >
+        {topKpis.map((k, idx) => {
+          const isLit = litKpiIdx === idx;
+          const trafficPalette = [
+            { label: 'GREEN', bg: '#10B981', ring: 'rgba(16, 185, 129, 0.75)' },
+            { label: 'YELLOW', bg: '#EAB308', ring: 'rgba(234, 179, 8, 0.75)' },
+            { label: 'RED', bg: '#EF4444', ring: 'rgba(239, 68, 68, 0.75)' },
+          ][trafficStep % 3];
+          return (
             <div
-              className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
-              style={{ background: UNIFORM_SPRAY_BG }}
+              key={k.label}
+              onClick={() => {
+                setLitKpiIdx(idx);
+                setTrafficStep((prev) => (prev + 1) % 3);
+              }}
+              className={`flex h-full cursor-pointer rounded-2xl p-[3.5px] transition-all duration-300 ${
+                isLit ? '-translate-y-1 shadow-xl' : 'shadow-sm'
+              }`}
+              style={{
+                background: isLit ? trafficPalette.bg : getHeaderView(idx),
+                boxShadow: isLit ? `0 0 0 4px ${trafficPalette.ring}` : undefined,
+              }}
             >
-              {/* Same Symbol + Header Pill in App Design Colour */}
               <div
-                className="w-full rounded-full p-[2px]"
-                style={{ background: getHeaderView(idx) }}
+                className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
+                style={{ background: UNIFORM_SPRAY_BG }}
               >
+                {/* Same Symbol + Header Pill (Lights Up in Green, Yellow or Red When Active for 30s) */}
                 <div
-                  className="gradient-brand flex min-h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
-                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                  className="w-full rounded-full p-[2px]"
+                  style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx) }}
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
-                  </span>
-                  <span style={{ color: '#FFFFFF' }}>{k.badge}</span>
-                </div>
-              </div>
-
-              {/* Writing Box 1 Framed in App Design Border in Different Views */}
-              <div
-                className="w-full rounded-xl p-[2px]"
-                style={{ background: getHeaderView(idx + 1) }}
-              >
-                <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
-                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF] leading-tight">
-                    {k.label}
-                  </div>
-                  <div className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none text-[#0A2B6D]">
-                    {k.value}
+                  <div
+                    className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
+                    style={{
+                      background: isLit ? trafficPalette.bg : getHeaderView(0),
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                      <ShieldCheck
+                        className="h-3 w-3"
+                        style={{ color: isLit ? trafficPalette.bg : '#5A00D6' }}
+                      />
+                    </span>
+                    <span style={{ color: '#FFFFFF' }}>
+                      {isLit ? `✦ ${trafficPalette.label} · 30s ◂` : k.badge}
+                    </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Writing Box 2 Framed in App Design Border in Different Views */}
-              <div
-                className="w-full flex-1 rounded-xl p-[2px]"
-                style={{ background: getHeaderView(idx + 2) }}
-              >
-                <div className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
-                  {k.sub}
+                {/* Writing Box 1 Framed in App Design Border in Different Views */}
+                <div
+                  className="w-full rounded-xl p-[2px]"
+                  style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 1) }}
+                >
+                  <div className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
+                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF] leading-tight">
+                      {k.label}
+                    </div>
+                    <div className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none text-[#0A2B6D]">
+                      {k.value}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Writing Box 2 Framed in App Design Border in Different Views */}
+                <div
+                  className="w-full flex-1 rounded-xl p-[2px]"
+                  style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 2) }}
+                >
+                  <div className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
+                    {k.sub}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 8-Domain Departmental Health & Compliance Intelligence Grid + Selected Intelligence Pillar — Same Headers, Same Symbols & App Design Borders in Different Views Around All Writing */}
@@ -585,9 +621,6 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           <div className="text-center text-[10px] font-extrabold text-[#0A2B6D]">
                             {dom.metricValue}
                           </div>
-                          <span className="text-[9.5px] font-extrabold text-[#5A00D6]">
-                            Inspect Pillar →
-                          </span>
                         </div>
                       </div>
                     </button>

@@ -37,37 +37,27 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
-// What You Get in the $999 or $125/mo (24-Month Contract) & Smart Enhanced Packages
+// 4 Merged Package & Document Suite Tiles — All Sections Lined Up & Styled in App Design Colours
 export const WHAT_YOU_GET_ITEMS = [
   {
-    title: 'Over 100 Documents · Downloadable Anytime',
-    included: '$999 (No Payment Plan) or $125/mo (24m Contract)',
-    detail: 'Full access to over 100 documents downloadable at any stage & tailored to Business Details.',
+    title: 'Outright Documents · $999 or $125 per a month',
+    included: '24 Month Contract · Full Access to Document Suite',
+    detail: 'Over 100 documents downloadable at any stage — document access & tailor business details only (no payment plan on $999).',
   },
   {
-    title: 'WHS, Risk, Incident, Medication & Waste',
+    title: 'WHS, Risk, Incident, Medication & Waste Suite',
     included: 'Support Plan, Service Delivery & Infection Control',
-    detail: 'Includes Continuity, Safe Meal Management, Conflict, Policies, Procedures & Registers.',
+    detail: 'Includes Continuity, Safe Meal Management, Conflict, Policies, Procedures, Registers & Business Plans.',
   },
   {
-    title: 'Intake, Consents, Progress & Reviews',
-    included: 'Intake Employee & Intake Participant Included',
-    detail: 'Includes Staff Training Modules, Skill Assessments, Progress, Review & Business Plans.',
+    title: 'Intake, Consents, Progress & Training Suite',
+    included: 'Intake Employee, Intake Participant & Consents',
+    detail: 'Includes Staff Training Modules, Progress, Skill Assessments & Review tailored to your Business Details.',
   },
   {
-    title: 'Documents Tailored to Business Details',
-    included: 'Auto-Branded with Your Business Identity',
-    detail: 'Every policy, procedure, register & business plan automatically tailored to your Business Details.',
-  },
-  {
-    title: 'Up to 20 Users ($760/mo) to 101+ Users',
-    included: 'Full Access to App, All Documents & Support',
-    detail: 'Includes Elite Package Tokens ($160/mo value): 1,200 message credits, 50,000 integration credits & support.',
-  },
-  {
-    title: 'Dual Audit Checklists (CHR-AUD-001 & 002)',
-    included: '17 Categories · 356 Checkpoints Included',
-    detail: 'Governance & Workforce 11-page interactive & printable audit suites ready for NDIS audits.',
+    title: 'Our Elite Package · $760 per a month',
+    included: 'Includes Full Access to Our Application & Support',
+    detail: 'Includes 1,200 message credits, 50,000 integration credits & all documents — a resource to complete audits easier, simpler and faster.',
   },
 ];
 
@@ -229,7 +219,7 @@ export default function MustHaveFunctionsReview() {
               className="mx-auto w-full text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
               style={{ color: '#000000' }}
             >
-              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · From $760 per a month or $999 Outright Docs
+              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · $760 per a month or $999 Outright Documents
             </p>
           </div>
         </div>
@@ -252,38 +242,45 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Executive KPI & Accurate Price Counter Pills */}
-        <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+        {/* Executive KPI & Accurate Price Counter Pills — Lined Up & All Writing in App Design Colours */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 items-stretch">
           {[
-            { val: `${MODULE_DIRECTORY.length} Modules`, label: 'From $760/mo' },
+            { val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per a month' },
             { val: 'All Documents', label: 'Full Access Incl.' },
-            { val: '2 Editions', label: 'CHR-AUD 001 & 002' },
-            { val: '$999 / $125m', label: '125+ Docs Suite' },
+            { val: '100+ Documents', label: 'Tailored to Business' },
+            { val: '$999 / $125m', label: 'Outright Documents' },
             { val: '$160/mo Value', label: 'Elite Tokens Incl.' },
             { val: '50,000 Credits', label: 'Integration / mo' },
             { val: '1,200 Credits', label: 'Message / mo' },
             { val: 'Full Support', label: '& 14-Day Trial' },
           ].map((stat, idx) => {
             const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+            const sym = getSymbolView(idx);
             return (
               <div
                 key={stat.label}
-                className="rounded-2xl p-[3px] shadow-sm"
+                className="flex h-full rounded-2xl p-[3px] shadow-sm"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-col items-center justify-center rounded-[13px] p-2 text-center text-[#0A2B6D]"
+                  className="flex h-full w-full flex-col items-center justify-center rounded-[13px] p-2 text-center"
                   style={{ background: sprayBg }}
                 >
                   <div
-                    className="w-full rounded-xl p-[2px]"
+                    className="flex h-full w-full rounded-xl p-[2px]"
                     style={{ background: getHeaderView(idx) }}
                   >
-                    <div className="rounded-[9px] bg-white px-2 py-1.5 text-center">
-                      <div className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                    <div className="flex min-h-[62px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
+                      <div
+                        className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent whitespace-nowrap"
+                        style={{ backgroundImage: getTitleGradientView(idx) }}
+                      >
                         {stat.val}
                       </div>
-                      <div className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      <div
+                        className="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider leading-tight whitespace-nowrap"
+                        style={{ color: sym.iconColor }}
+                      >
                         {stat.label}
                       </div>
                     </div>
@@ -294,13 +291,13 @@ export default function MustHaveFunctionsReview() {
           })}
         </div>
 
-        {/* LEFT: $999 Outright Docs Package TV Screen · RIGHT: What You Get in the Package & Subscription */}
+        {/* LEFT: $999 Outright Documents TV Screen · RIGHT: 4 Merged Tiles (All Sections Lined Up & in App Design Colours) */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-stretch rounded-[12px] bg-white p-4 text-center">
-            {/* LEFT COLUMN: $999 Outright Docs Package on a Constantly Lit TV Screen */}
+            {/* LEFT COLUMN: $999 Outright Documents TV Screen */}
             <div className="lg:col-span-5 flex flex-col items-center justify-between">
               <div
                 className="flex w-full flex-1 flex-col justify-between rounded-[22px] border-[4px] bg-[#0072FF] p-3 ring-4 ring-[#00C6FF]/75 shadow-lg"
@@ -310,7 +307,7 @@ export default function MustHaveFunctionsReview() {
                 <div className="mb-2 flex items-center justify-between px-2">
                   <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
                     <Tv className="h-3.5 w-3.5 text-[#FFF3FA]" />
-                    $999 OUTRIGHT TV · LIT UP ✦
+                    $999 OUTRIGHT DOCUMENTS TV · LIT UP ✦
                   </span>
                   <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
                     <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
@@ -318,13 +315,13 @@ export default function MustHaveFunctionsReview() {
                   </span>
                 </div>
 
-                {/* Inner TV Screen — All Writing Centered */}
+                {/* Inner TV Screen — All Writing Centered & in App Design Colours */}
                 <div
                   className="flex flex-1 rounded-2xl p-[3px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex w-full flex-col items-center justify-between gap-2.5 rounded-[13px] p-4 text-center"
+                    className="flex w-full flex-col items-center justify-between gap-3 rounded-[13px] p-4 text-center"
                     style={{ background: SPRAY_BGS[2] }}
                   >
                     <span
@@ -332,56 +329,50 @@ export default function MustHaveFunctionsReview() {
                       style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                     >
                       <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                      <span style={{ color: '#FFFFFF' }}>Outright Docs &amp; Subscription Value</span>
+                      <span style={{ color: '#FFFFFF' }}>Outright Documents &amp; Subscription Value</span>
                     </span>
 
                     <div
-                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      className="flex-1 w-full rounded-xl p-[2.5px] shadow-2xs flex"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex flex-col items-center justify-center rounded-[9px] bg-white px-3.5 py-3 text-center">
+                      <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[9px] bg-white px-4 py-3.5 text-center">
                         <div className="font-editorial text-sm font-extrabold uppercase tracking-wider text-[#0072FF]">
                           ComplianceHR
                         </div>
-                        <div className="font-editorial text-2xl sm:text-3xl font-extrabold leading-tight">
-                          <span className="text-[#0A2B6D]">$999 </span>
-                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            or $125/mo
+                        <div className="font-editorial text-xl sm:text-2xl font-extrabold leading-tight">
+                          <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            $760 per a month or $999 Outright Documents
                           </span>
                         </div>
-                        <div className="mt-0.5 text-xs font-extrabold text-[#5A00D6]">
-                          24 month contract · No payment plan on $999 · Over 100 Documents
+                        <div className="text-xs font-extrabold text-[#FF2E9A]">
+                          or $125 per a month subscription, 24 month contract
                         </div>
-                        <p className="mt-1.5 text-center text-[11px] font-bold leading-snug text-[#5A00D6]">
-                          Full access to documents, downloadable at any stage, tailored to Business Details. Includes WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training Modules, Consents, Intake Employee, Intake Participant, Progress, Skill Assessments, Review, Conflict, Safe Meal Management, Policies, Procedures, Registers &amp; Business Plans.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] font-extrabold">
-                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#0072FF]">
-                          125+ Master Docs
-                        </span>
-                      </div>
-                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#5A00D6]">
-                          6 Binders
-                        </span>
-                      </div>
-                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#FF2E9A]">
-                          356 Checkpoints
-                        </span>
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <p className="rounded-[8px] bg-white px-3 py-2 text-center text-[11px] font-extrabold leading-snug text-[#0072FF]">
+                            Full access to document suite, Document access, tailor business details, only.
+                          </p>
+                        </div>
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <p className="rounded-[8px] bg-white px-3 py-2 text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                            Our Elite package includes full access to our application, a resource to complete audits easier, simpler and faster.
+                          </p>
+                        </div>
                       </div>
                     </div>
 
                     <a
                       href="#pricing"
-                      className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                      className="gradient-brand inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                       style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                     >
-                      <span style={{ color: '#FFFFFF' }}>View Outright &amp; Subscription Plans</span>
+                      <span style={{ color: '#FFFFFF' }}>View Outright Documents &amp; Subscription Plans</span>
                       <ArrowRight className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
                     </a>
                   </div>
@@ -404,61 +395,82 @@ export default function MustHaveFunctionsReview() {
               />
             </div>
 
-            {/* RIGHT COLUMN: List What You Get (6 Centered Inclusion Tiles) */}
+            {/* RIGHT COLUMN: 4 Merged Tiles (All Sections Lined Up Horizontally & All Titles/Writing in App Design Colours) */}
             <div className="lg:col-span-7 flex flex-col justify-between space-y-2.5">
               <div
                 className="w-full rounded-full p-[2.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
+                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
                   style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                 >
                   <TrendingUp className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>What You Get in the $999 Outright &amp; Monthly Packages</span>
+                  <span style={{ color: '#FFFFFF' }}>
+                    What You Get in the $999 Outright Documents &amp; $760/mo Elite Packages
+                  </span>
                 </div>
               </div>
 
-              <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 gap-2.5 items-stretch">
+              <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
                 {WHAT_YOU_GET_ITEMS.map((item, idx) => {
                   const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+                  const symTop = getSymbolView(idx);
+                  const symMid = getSymbolView(idx + 2);
+                  const symBot = getSymbolView(idx + 4);
                   return (
                     <div
                       key={item.title}
-                      className="flex h-full rounded-2xl p-[2.5px] shadow-2xs"
+                      className="flex h-full rounded-2xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
+                        className="grid h-full w-full grid-cols-1 grid-rows-[48px_38px_1fr] gap-2 rounded-[13px] p-3 text-center"
                         style={{ background: sprayBg }}
                       >
-                        {/* Section 1: Title Box Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 1: Top Title Box Lined Up Across Neighbouring Tiles in App Design Colour */}
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="flex h-[48px] w-full rounded-xl p-[2px]"
                           style={{ background: getHeaderView(idx) }}
                         >
-                          <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                            {item.title}
+                          <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
+                            <span
+                              className="text-center text-xs font-extrabold leading-tight bg-clip-text text-transparent"
+                              style={{ backgroundImage: getTitleGradientView(idx) }}
+                            >
+                              {item.title}
+                            </span>
                           </div>
                         </div>
 
-                        {/* Section 2: Included Pill Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 2: Middle Tile Title in App Design Colour & Lined Up Across Neighbouring Tiles */}
                         <div
-                          className="w-full rounded-full p-[2px]"
+                          className="flex h-[38px] w-full rounded-full p-[2px]"
                           style={{ background: getHeaderView(idx + 1) }}
                         >
-                          <div className="flex min-h-[30px] w-full items-center justify-center rounded-full bg-white px-2.5 py-0.5 text-center text-[10px] font-extrabold text-[#5A00D6]">
-                            {item.included}
+                          <div className="flex h-full w-full items-center justify-center rounded-full bg-white px-2.5 py-0.5 text-center">
+                            <span
+                              className="text-center text-[10.5px] font-extrabold leading-tight bg-clip-text text-transparent"
+                              style={{
+                                backgroundImage: getTitleGradientView(idx + 2),
+                                color: symMid.iconColor,
+                              }}
+                            >
+                              {item.included}
+                            </span>
                           </div>
                         </div>
 
-                        {/* Section 3: Detail Box Lined Up Across Tile 1 & Tile 2 */}
+                        {/* Section 3: Detail Box Lined Up Across Neighbouring Tiles in App Design Colour */}
                         <div
-                          className="w-full flex-1 rounded-xl p-[2px]"
+                          className="flex h-full min-h-[68px] w-full rounded-xl p-[2px]"
                           style={{ background: getHeaderView(idx + 2) }}
                         >
-                          <div className="flex h-full min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
-                            <p className="text-center text-[10.5px] font-bold leading-tight text-[#5A00D6]">
+                          <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                            <p
+                              className="text-center text-[10.5px] font-extrabold leading-snug"
+                              style={{ color: symBot.iconColor || symTop.iconColor }}
+                            >
                               {item.detail}
                             </p>
                           </div>
@@ -614,7 +626,7 @@ export default function MustHaveFunctionsReview() {
                                 >
                                   <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
                                 </span>
-                                <span className="flex-1 text-center text-[#0A2B6D]">{item}</span>
+                                <span className="flex-1 text-center" style={{ color: sym.iconColor }}>{item}</span>
                               </div>
                             </li>
                           );

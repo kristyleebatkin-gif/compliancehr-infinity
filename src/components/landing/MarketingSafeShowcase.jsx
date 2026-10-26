@@ -75,12 +75,12 @@ const PACKS = [
     tvChannel: 'CHANNEL 9 · LIVE HD',
     nowPlayingLabel: 'Now Playing',
     badgeLine1: 'Pack 2 · Outright Audit',
-    badgeLine2: '& Compliance Doc Pack',
+    badgeLine2: '& Compliance Documents Pack',
     topPriceHeading: 'ComplianceHR',
     priceMain: '$999',
-    priceSuffix: 'or $125 per a month (24 month contract)',
+    priceSuffix: 'or $125 per a month subscription (24 month contract)',
     subtitle:
-      'Full access to documents, downloadable at any stage, over 100 documents tailored to Business Details · $999 (no payment plan) or $125 per a month (24 month contract)',
+      'Full access to document suite · Document access, tailor business details, only · Downloadable at any stage (over 100 documents) · No payment plan on $999',
     bullets: [
       '1. Full access to over 100 documents, downloadable at any stage & tailored to Business Details',
       '2. Includes WHS, Risk, Incident, Medication, Waste, Support Plan & Service Delivery',
@@ -90,13 +90,13 @@ const PACKS = [
     ],
     importantInfoTitle: 'Important Document Package Info & Inclusions',
     importantInfoRows: [
-      '$999 Outright (no payment plan) · $125 per a month (24 month contract)',
-      'Full access to over 100 documents · Downloadable at any stage · Tailored to Business Details',
+      '$999 Outright (no payment plan) · $125 per a month subscription (24 month contract)',
+      'Full access to document suite · Document access & tailor business details only',
       'WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control & Continuity',
       'Staff Training, Consents, Intake (Employee & Participant), Progress, Skills, Review, Conflict, Safe Meal, Policies, Procedures, Registers & Business Plans',
     ],
     primaryCta: { label: 'Select $999 or $125/mo', href: '#pricing' },
-    secondaryCta: { label: 'Preview 100+ Docs', to: '/compliance' },
+    secondaryCta: { label: 'View 100+ Documents', to: '/compliance' },
   },
 ];
 
@@ -579,6 +579,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
           <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
             {PACKS.map((pack, pIdx) => {
               const PackIcon = pack.icon;
+              const packSym = getSymbolView(pIdx * 2 + 1);
               const currentSpotlight = pack.bullets[activeBenefitIdx % pack.bullets.length];
               return (
                 <div
@@ -586,18 +587,21 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                   className="flex h-full rounded-2xl p-[4px] shadow-sm"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex h-full w-full flex-col justify-between rounded-[12px] bg-white p-4 sm:p-5 text-center space-y-3.5">
-                    {/* Top Aligned 2-Line Header Badge ("& Compliance Doc Pack" on Line 2 After Audit) */}
+                  <div className="grid h-full w-full grid-cols-1 grid-rows-[60px_auto_1fr_54px] gap-3.5 rounded-[12px] bg-white p-4 sm:p-5 text-center">
+                    {/* 1. Top Aligned 2-Line Header Badge With App-Design Coloured Symbol */}
                     <div
-                      className="w-full rounded-2xl p-[2.5px] shadow-2xs"
+                      className="flex h-[60px] w-full rounded-2xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="gradient-brand flex min-h-[54px] w-full items-center justify-center gap-2 rounded-[13px] px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
+                        className="gradient-brand flex h-full w-full items-center justify-center gap-2.5 rounded-[13px] px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
                         style={{ background: getHeaderView(pIdx * 2 + 2), color: '#FFFFFF' }}
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                          <PackIcon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                        <span
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                          style={{ borderColor: getAppBorderView(pIdx * 2 + 1) }}
+                        >
+                          <PackIcon className="h-4 w-4" style={{ color: packSym.iconColor }} />
                         </span>
                         <div className="flex flex-col items-center justify-center leading-tight text-center">
                           <span className="block" style={{ color: '#FFFFFF' }}>{pack.badgeLine1}</span>
@@ -606,7 +610,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </div>
                     </div>
 
-                    {/* Constantly Lit Live HD Widescreen TV Screen: Channel 7 on TV 1, Channel 9 on TV 2 */}
+                    {/* 2. Constantly Lit Live HD Widescreen TV Screen: Channel 7 on TV 1, Channel 9 on TV 2 */}
                     <div className="flex w-full flex-col items-center">
                       <div
                         className="flex w-full flex-col justify-between rounded-[22px] border-[4px] bg-[#0072FF] p-3 ring-4 ring-[#00C6FF]/75 shadow-xl"
@@ -644,7 +648,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="gradient-brand flex min-h-[72px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-1.5 text-center text-white sm:flex-row sm:justify-between"
+                                className="gradient-brand flex h-[74px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-1.5 text-center text-white sm:flex-row sm:justify-between"
                                 style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                               >
                                 <div className="min-w-0 flex-1 text-center">
@@ -682,7 +686,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                   <li
                                     key={line}
                                     onClick={() => setActiveBenefitIdx(idx)}
-                                    className="flex min-h-[54px] cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
+                                    className="flex h-[56px] cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
@@ -739,22 +743,25 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* Important Package Info & Accurate Prices Below TV — Lined Up Across Both Columns */}
+                    {/* 3. Important Package Info & Accurate Prices Below TV — Lined Up Across Both Columns */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-2xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex h-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
+                        className="grid h-full w-full grid-cols-1 grid-rows-[132px_38px_1fr] gap-2.5 rounded-[13px] p-3.5 text-center"
                         style={{ background: SPRAY_BGS[(pIdx + 1) % SPRAY_BGS.length] }}
                       >
                         {/* Strict Fixed-Height Price Box: "ComplianceHR Subscription" Above $760 & "ComplianceHR" Above $999 */}
                         <div
-                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                          className="flex h-[132px] w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[118px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2.5 text-center space-y-1">
-                            <div className="font-editorial text-sm sm:text-base font-extrabold uppercase tracking-wider text-[#0072FF]">
+                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
+                            <div
+                              className="font-editorial text-sm sm:text-base font-extrabold uppercase tracking-wider"
+                              style={{ color: getSymbolView(pIdx).iconColor }}
+                            >
                               {pack.topPriceHeading}
                             </div>
                             <div className="flex flex-wrap items-baseline justify-center gap-2">
@@ -764,103 +771,142 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               >
                                 {pack.priceMain}
                               </span>
-                              <span className="text-xs font-extrabold text-[#5A00D6]">
+                              <span
+                                className="text-xs font-extrabold"
+                                style={{ color: getSymbolView(pIdx + 2).iconColor }}
+                              >
                                 {pack.priceSuffix}
                               </span>
                             </div>
-                            <p className="text-center text-[10.5px] font-extrabold leading-snug text-[#5A00D6]">
+                            <p
+                              className="text-center text-[10.5px] font-extrabold leading-snug"
+                              style={{ color: getSymbolView(pIdx + 1).iconColor }}
+                            >
                               {pack.subtitle}
                             </p>
                           </div>
                         </div>
 
-                        {/* Important Info Header & 4 Equal Single-Line Rows Framed in App-Design Coloured Borders */}
-                        <div className="space-y-1.5 text-center">
+                        {/* Important Info Header */}
+                        <div
+                          className="flex h-[38px] w-full rounded-lg p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
                           <div
-                            className="w-full rounded-lg p-[2px]"
-                            style={{ background: TOP_BORDER_GRADIENT }}
+                            className="gradient-brand flex h-full w-full items-center justify-center gap-2 rounded-[6px] px-3 py-1 text-center text-[10.5px] font-extrabold uppercase tracking-wider text-white"
+                            style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
                           >
-                            <div
-                              className="gradient-brand flex min-h-[34px] items-center justify-center rounded-[6px] px-3 py-1 text-center text-[10.5px] font-extrabold uppercase tracking-wider text-white"
-                              style={{ background: getHeaderView(pIdx + 4), color: '#FFFFFF' }}
+                            <span
+                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white"
                             >
-                              <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
-                            </div>
+                              <CheckCircle2 className="h-3 w-3" style={{ color: getSymbolView(pIdx + 4).iconColor }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                           </div>
-                          <div className="grid grid-cols-1 grid-rows-4 gap-1.5">
-                            {pack.importantInfoRows.map((info, iIdx) => {
-                              const iSym = getSymbolView(pIdx + iIdx);
-                              return (
-                                <div
-                                  key={info}
-                                  className="rounded-xl p-[2px] shadow-2xs"
-                                  style={{ background: TOP_BORDER_GRADIENT }}
-                                >
-                                  <div className="flex min-h-[38px] items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight">
-                                    <span
-                                      className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
-                                      style={{ borderColor: getAppBorderView(pIdx + iIdx) }}
-                                    >
-                                      <CheckCircle2 className="h-2.5 w-2.5" style={{ color: iSym.iconColor }} />
-                                    </span>
-                                    <span
-                                      className="text-center"
-                                      style={{ color: iSym.iconColor }}
-                                    >
-                                      {info}
-                                    </span>
-                                  </div>
+                        </div>
+
+                        {/* 4 Equal Fixed-Height Rows Framed in App-Design Coloured Borders */}
+                        <div className="grid grid-cols-1 grid-rows-4 gap-1.5">
+                          {pack.importantInfoRows.map((info, iIdx) => {
+                            const iSym = getSymbolView(pIdx + iIdx);
+                            return (
+                              <div
+                                key={info}
+                                className="flex h-[48px] rounded-xl p-[2px] shadow-2xs"
+                                style={{ background: TOP_BORDER_GRADIENT }}
+                              >
+                                <div className="flex h-full w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1 text-center text-[10px] font-extrabold leading-tight">
+                                  <span
+                                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
+                                    style={{ borderColor: getAppBorderView(pIdx + iIdx) }}
+                                  >
+                                    <CheckCircle2 className="h-3 w-3" style={{ color: iSym.iconColor }} />
+                                  </span>
+                                  <span
+                                    className="flex-1 text-center"
+                                    style={{ color: iSym.iconColor }}
+                                  >
+                                    {info}
+                                  </span>
                                 </div>
-                              );
-                            })}
-                          </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
 
-                    {/* Package Action Buttons — Compact & Identical Height Across Pack 1 & Pack 2 */}
-                    <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                      {pack.primaryCta.to ? (
-                        <Link
-                          to={pack.primaryCta.to}
-                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                        >
-                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
-                        </Link>
-                      ) : (
-                        <a
-                          href={pack.primaryCta.href}
-                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                        >
-                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
-                        </a>
-                      )}
+                    {/* 4. Slightly Enlarged Start & View Action Tiles — App-Coloured Symbols & Identical Height Across Pack 1 & Pack 2 */}
+                    <div className="grid h-[54px] w-full grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div
+                        className="rounded-full p-[3px] shadow-sm"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        {pack.primaryCta.to ? (
+                          <Link
+                            to={pack.primaryCta.to}
+                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
+                            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                          >
+                            <span
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(0) }}
+                            >
+                              <ArrowRight className="h-3.5 w-3.5" style={{ color: getSymbolView(0).iconColor }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
+                          </Link>
+                        ) : (
+                          <a
+                            href={pack.primaryCta.href}
+                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
+                            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                          >
+                            <span
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(0) }}
+                            >
+                              <ArrowRight className="h-3.5 w-3.5" style={{ color: getSymbolView(0).iconColor }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
+                          </a>
+                        )}
+                      </div>
 
-                      {pack.secondaryCta.to ? (
-                        <Link
-                          to={pack.secondaryCta.to}
-                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
-                        >
-                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
-                        </Link>
-                      ) : (
-                        <a
-                          href={pack.secondaryCta.href}
-                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
-                        >
-                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
-                        </a>
-                      )}
+                      <div
+                        className="rounded-full p-[3px] shadow-sm"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        {pack.secondaryCta.to ? (
+                          <Link
+                            to={pack.secondaryCta.to}
+                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
+                            style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+                          >
+                            <span
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(3) }}
+                            >
+                              <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(3).iconColor }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
+                          </Link>
+                        ) : (
+                          <a
+                            href={pack.secondaryCta.href}
+                            className="gradient-brand inline-flex h-full min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
+                            style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+                          >
+                            <span
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(3) }}
+                            >
+                              <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(3).iconColor }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

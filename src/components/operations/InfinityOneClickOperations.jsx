@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   getHeaderView,
   getTitleGradientView,
+  getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 import {
@@ -669,12 +670,14 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 4. 12 One-Click Operation Cards — All Info Centered & All Sections Lined Up Horizontally */}
+      {/* 4. 12 One-Click System Operation Tiles — App Design Colours & Strictly Lined-Up Sections */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 items-stretch text-center">
         {visibleOps.map((op, idx) => {
           const Icon = op.icon;
           const isRunning = runningId === op.id;
           const borderCol = getAppBorderView(idx);
+          const sym = getSymbolView(idx);
+          const symSub = getSymbolView(idx + 2);
           return (
             <div
               key={op.id}
@@ -682,61 +685,68 @@ export default function InfinityOneClickOperations({ compact = false }) {
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div
-                className="flex h-full w-full flex-col justify-between rounded-[13px] p-3.5 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[42px_84px_86px_42px] gap-2.5 rounded-[13px] p-3.5 text-center"
                 style={{ background: UNIFORM_SPRAY_BG }}
               >
-                <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                  {/* Centered Header Pill — Full Text Fits Without Truncation */}
-                  <div
-                    className="w-full rounded-full p-[2px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                {/* Section 1: Fixed-Height Centered Header Pill With App-Design Coloured Symbol */}
+                <div
+                  className="flex h-[42px] w-full rounded-full p-[2px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <span
+                    className="gradient-brand inline-flex h-full w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
                     <span
-                      className="gradient-brand inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      style={{ borderColor: borderCol }}
                     >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                        <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                      </span>
-                      <span className="text-center" style={{ color: '#FFFFFF' }}>
-                        {op.code} · {op.pillarLabel}
-                      </span>
+                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                     </span>
-                  </div>
+                    <span className="text-center" style={{ color: '#FFFFFF' }}>
+                      {op.code} · {op.pillarLabel}
+                    </span>
+                  </span>
+                </div>
 
-                  {/* Fixed-Height Centered Card Title Box */}
-                  <div
-                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[78px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <h3
-                        className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent text-center"
-                        style={{ backgroundImage: getTitleGradientView(idx) }}
-                      >
-                        {op.title}
-                      </h3>
-                      <div className="mt-1 text-center text-[11px] font-extrabold text-[#0072FF]">
-                        {op.subtitle}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Centered Description Box Framed in App-Design Coloured Border */}
-                  <div
-                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[74px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <p className="text-center text-xs font-bold leading-snug text-[#5A00D6]">
-                        {op.description}
-                      </p>
+                {/* Section 2: Fixed-Height Centered Card Title Box in App Design Colours */}
+                <div
+                  className="flex h-[84px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                  style={{ background: getHeaderView(idx) }}
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                    <h3
+                      className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent text-center"
+                      style={{ backgroundImage: getTitleGradientView(idx) }}
+                    >
+                      {op.title}
+                    </h3>
+                    <div
+                      className="mt-1 text-center text-[11px] font-extrabold"
+                      style={{ color: sym.iconColor }}
+                    >
+                      {op.subtitle}
                     </div>
                   </div>
                 </div>
 
-                {/* Fixed-Height Aligned Action Buttons Row */}
-                <div className="mt-3 flex h-[40px] items-center justify-between gap-2 border-t border-[#0A2B6D]/20 pt-2">
+                {/* Section 3: Fixed-Height Centered Description Box Framed in App-Design Coloured Border */}
+                <div
+                  className="flex h-[86px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                  style={{ background: getHeaderView(idx + 1) }}
+                >
+                  <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                    <p
+                      className="text-center text-[11.5px] font-extrabold leading-snug"
+                      style={{ color: symSub.iconColor }}
+                    >
+                      {op.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Section 4: Fixed-Height Aligned Action Buttons Row in App Design Colours */}
+                <div className="flex h-[42px] items-center justify-between gap-2 border-t border-[#0A2B6D]/20 pt-2">
                   <div
                     className="flex-1 rounded-full p-[2px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
@@ -764,12 +774,12 @@ export default function InfinityOneClickOperations({ compact = false }) {
                   >
                     <Link
                       to={op.link}
-                      className="inline-flex h-[32px] items-center justify-center gap-1 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D]"
-                      style={{ borderColor: borderCol }}
+                      className="gradient-brand inline-flex h-[32px] items-center justify-center gap-1 rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
+                      style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
                       title="Open connected register"
                     >
-                      <span>Open</span>
-                      <ArrowRight className="h-3 w-3 text-[#5A00D6]" />
+                      <span style={{ color: '#FFFFFF' }}>Open</span>
+                      <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                     </Link>
                   </div>
                 </div>
@@ -779,7 +789,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
         })}
       </div>
 
-      {/* 5. Live Executive One-Click Execution Log */}
+      {/* 5. Live Executive One-Click Execution Log — Lined-Up Sections & App Design Colours */}
       <div
         className="w-full rounded-2xl p-[4px] shadow-sm"
         style={{ background: TOP_BORDER_GRADIENT }}
@@ -814,51 +824,66 @@ export default function InfinityOneClickOperations({ compact = false }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
-            {executionLog.slice(0, compact ? 2 : 4).map((entry) => (
-              <div
-                key={entry.id}
-                className="flex h-full rounded-2xl p-[3px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
+            {executionLog.slice(0, compact ? 2 : 4).map((entry, eIdx) => {
+              const eSym = getSymbolView(eIdx);
+              return (
                 <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] px-4 py-3 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
+                  key={entry.id}
+                  className="flex h-full rounded-2xl p-[3px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex flex-wrap items-center justify-center gap-2">
-                    <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-                      <span className="block rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                        {entry.code}
-                      </span>
-                    </div>
-                    <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-                      <span className="block rounded-full bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold text-[#5A00D6]">
-                        {entry.time}
-                      </span>
-                    </div>
-                  </div>
-
                   <div
-                    className="w-full rounded-xl p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                    className="grid h-full w-full grid-cols-1 grid-rows-[32px_44px_1fr] gap-2 rounded-[13px] px-4 py-3 text-center"
+                    style={{ background: UNIFORM_SPRAY_BG }}
                   >
-                    <div className="w-full rounded-[9px] bg-white px-3 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D]">
-                      {entry.pillar} · {entry.title}
+                    <div className="flex h-[32px] flex-wrap items-center justify-center gap-2">
+                      <div className="rounded-full p-[2px]" style={{ background: getHeaderView(eIdx) }}>
+                        <span
+                          className="block rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold"
+                          style={{ color: eSym.iconColor }}
+                        >
+                          {entry.code}
+                        </span>
+                      </div>
+                      <div className="rounded-full p-[2px]" style={{ background: getHeaderView(eIdx + 1) }}>
+                        <span
+                          className="block rounded-full bg-white px-2.5 py-0.5 font-mono text-[10px] font-extrabold"
+                          style={{ color: getSymbolView(eIdx + 1).iconColor }}
+                        >
+                          {entry.time}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div
-                    className="w-full rounded-xl p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="w-full rounded-[9px] bg-white px-3 py-1.5 text-center">
-                      <p className="text-center text-xs font-bold leading-snug text-[#5A00D6]">
-                        {entry.detail}
-                      </p>
+                    <div
+                      className="flex h-[44px] w-full rounded-xl p-[2px]"
+                      style={{ background: getHeaderView(eIdx + 2) }}
+                    >
+                      <div
+                        className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs font-extrabold bg-clip-text text-transparent"
+                        style={{ backgroundImage: getTitleGradientView(eIdx) }}
+                      >
+                        {entry.pillar} · {entry.title}
+                      </div>
+                    </div>
+
+                    <div
+                      className="flex min-h-[60px] w-full rounded-xl p-[2px]"
+                      style={{ background: getHeaderView(eIdx + 3) }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                        <p
+                          className="text-center text-xs font-extrabold leading-snug"
+                          style={{ color: eSym.iconColor }}
+                        >
+                          {entry.detail}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

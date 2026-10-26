@@ -755,109 +755,108 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             })}
           </div>
 
-          {/* Central Management Approval Queue (Section 3 & Section 24–29 Removed) */}
-          <div
-            className="flex w-full rounded-2xl p-[3.5px] shadow-sm"
-            style={{ background: getHeaderView(0) }}
-          >
+          {/* Non-Numbered Command Centre Tiles Cut in Size by 50% (12 Numbered Register Tiles Above Remain the Same) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch">
+            {/* Compact Central Management Approval Queue (50% Size) */}
             <div
-              className="flex w-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
-              style={{
-                background:
-                  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-              }}
+              className="flex w-full rounded-xl p-[2px] shadow-2xs"
+              style={{ background: getHeaderView(0) }}
             >
               <div
-                className="w-full rounded-xl p-[2px]"
-                style={{ background: getHeaderView(0) }}
+                className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                }}
               >
-                <div className="rounded-[9px] bg-white px-3 py-2 text-center space-y-0.5">
-                  <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                    Central Management Approval &amp; Escalation Queue ({pendingApprovals.length} Active)
-                  </h3>
-                  <p className="text-[10.5px] font-bold text-[#5A00D6]">
-                    Live pending tasks, sign-offs, and open incident reviews requiring management verification
-                  </p>
+                <div
+                  className="w-full rounded-lg p-[1.5px]"
+                  style={{ background: getHeaderView(0) }}
+                >
+                  <div className="rounded-[6px] bg-white px-2 py-1 text-center">
+                    <h3 className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      Central Management Approval Queue ({pendingApprovals.length} Active)
+                    </h3>
+                  </div>
                 </div>
-              </div>
 
-              {pendingApprovals.length === 0 ? (
-                <div className="flex flex-1 items-center justify-center rounded-xl border border-[#0A2B6D]/20 bg-white p-4 text-center text-xs font-extrabold text-[#0072FF]">
-                  All management approvals and incident sign-offs are up to date.
-                </div>
-              ) : (
-                <div className="space-y-1.5 max-h-56 overflow-y-auto">
-                  {pendingApprovals.map((item, idx) => (
-                    <div
-                      key={`${item.entity}-${item.id}`}
-                      className="rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(idx) }}
-                    >
-                      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[9px] bg-white px-3 py-2 text-center sm:text-left">
-                        <div className="min-w-0 flex-1 text-center">
-                          <div className="text-xs font-extrabold text-[#0A2B6D]">
+                {pendingApprovals.length === 0 ? (
+                  <div className="flex flex-1 items-center justify-center rounded-lg border border-[#0A2B6D]/20 bg-white px-2 py-1 text-center text-[10px] font-extrabold text-[#0072FF]">
+                    All management approvals and incident sign-offs are up to date.
+                  </div>
+                ) : (
+                  <div className="space-y-1 max-h-24 overflow-y-auto">
+                    {pendingApprovals.map((item, idx) => (
+                      <div
+                        key={`${item.entity}-${item.id}`}
+                        className="rounded-lg p-[1.5px]"
+                        style={{ background: getHeaderView(idx) }}
+                      >
+                        <div className="flex items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-1 text-center">
+                          <div className="min-w-0 flex-1 text-center text-[9.5px] font-extrabold text-[#0A2B6D] truncate">
                             {item.kind} · {item.title}
                           </div>
-                          <div className="text-[10px] font-bold text-[#5A00D6]">
-                            Status: {item.status} · Priority: {item.priority}
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Button
+                              size="sm"
+                              onClick={() => handleQuickApprove(item)}
+                              className="h-5 rounded-full bg-[#5A00D6] px-2 text-[8.5px] font-extrabold text-white"
+                            >
+                              Approve
+                            </Button>
+                            <Link
+                              to={item.route}
+                              className="inline-flex h-5 items-center rounded-full border border-[#0A2B6D] bg-white px-2 text-[8.5px] font-extrabold text-[#0072FF]"
+                            >
+                              Open
+                            </Link>
                           </div>
                         </div>
-                        <div className="flex items-center justify-center gap-1.5 w-full sm:w-auto">
-                          <Button
-                            size="sm"
-                            onClick={() => handleQuickApprove(item)}
-                            className="h-7 rounded-full bg-[#5A00D6] px-3 text-[10px] font-extrabold text-white"
-                          >
-                            <CheckCircle2 className="mr-1 h-3 w-3" />
-                            Approve
-                          </Button>
-                          <Link
-                            to={item.route}
-                            className="inline-flex h-7 items-center rounded-full border border-[#0A2B6D] bg-white px-3 text-[10px] font-extrabold text-[#0072FF]"
-                          >
-                            Open
-                          </Link>
-                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Compact Master Audit Report Summary inside Unified Oversight */}
-          <div
-            className="rounded-2xl p-[3.5px] shadow-sm"
-            style={{ background: getHeaderView(4) }}
-          >
-            <div
-              className="flex flex-col sm:flex-row items-center justify-between gap-2.5 rounded-[13px] p-3.5 text-center"
-              style={{
-                background:
-                  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-              }}
-            >
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                  Master Audit Report &amp; 356-Checkpoint Summary (CHR-AUD-001 &amp; CHR-AUD-002)
-                </div>
-                <div className="text-[11px] font-extrabold text-[#5A00D6]">
-                  17 Audit Categories · {evidencedCount}/356 Checkpoints Operationally Evidenced · 98 Controlled Documents Linked
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
+            </div>
+
+            {/* Compact Master Audit Report Summary Tile (50% Size) */}
+            <div
+              className="flex w-full rounded-xl p-[2px] shadow-2xs"
+              style={{ background: getHeaderView(4) }}
+            >
               <div
-                className="rounded-full p-[2px]"
-                style={{ background: getHeaderView(5) }}
+                className="flex w-full flex-col items-center justify-between gap-1.5 rounded-[9px] p-1.5 text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                }}
               >
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('master-audit-356')}
-                  className="gradient-brand rounded-full px-4 py-1.5 text-xs font-extrabold text-white"
-                  style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+                <div
+                  className="w-full rounded-lg p-[1.5px]"
+                  style={{ background: getHeaderView(4) }}
                 >
-                  <span style={{ color: '#FFFFFF' }}>Open Full 356-Checkpoint Report →</span>
-                </button>
+                  <div className="rounded-[6px] bg-white px-2 py-1 text-center">
+                    <div className="text-[10px] font-extrabold text-[#0A2B6D]">
+                      Master Audit Report &amp; 356-Checkpoint Summary
+                    </div>
+                    <div className="text-[9px] font-extrabold text-[#5A00D6]">
+                      17 Categories · {evidencedCount}/356 Checkpoints Evidenced · 98 Docs
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="rounded-full p-[1.5px]"
+                  style={{ background: getHeaderView(5) }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('master-audit-356')}
+                    className="gradient-brand rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
+                    style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+                  >
+                    <span style={{ color: '#FFFFFF' }}>Open 356-Checkpoint Report →</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

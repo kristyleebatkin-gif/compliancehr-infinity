@@ -34,7 +34,6 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
       >
         {title && (
           <div className="flex shrink-0 items-center justify-center gap-1.5 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">
-            <span className="h-2 w-2 rounded-full bg-white" />
             <span className="text-center">{title}</span>
           </div>
         )}
