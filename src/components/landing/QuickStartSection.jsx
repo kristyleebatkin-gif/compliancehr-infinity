@@ -33,6 +33,11 @@ const STEPS = [
         text: 'Add your organisation logo, ABN, NDIS registration number and key personnel so every PDF and form is pre-stamped.',
         functions: ['Auto-Branded PDF Headers', 'Company Safe Vault Setup', 'Key Business Contacts'],
       },
+      {
+        title: 'Import Existing Staff & Participants',
+        text: 'Upload CSV/Excel sheets or resumes in one click to populate your live workforce and participant directories.',
+        functions: ['1-Click CSV/Excel Import', 'AI Resume & Plan Extractor', 'Automated Duplicate Check'],
+      },
     ],
   },
   {
@@ -52,6 +57,11 @@ const STEPS = [
         title: 'Launch 1-Click Operations Sweeps',
         text: 'Run any of the 12 armed operational sweeps across compliance, rostering, incidents and staff files in one tap.',
         functions: ['12 Armed Operations Sweeps', 'Live Execution Audit Trail', 'Automated Task Dispatch'],
+      },
+      {
+        title: 'Pin Your Favourite Live Modulars',
+        text: 'Customise your wall screens and quick-access tiles to monitor your highest-priority registers in real time.',
+        functions: ['6-Screen Modular Selector', 'Live Weather & NDIS News', 'Role-Specific Shortcuts'],
       },
     ],
   },
@@ -73,6 +83,11 @@ const STEPS = [
         text: 'Validate worker screening and fatigue on the roster, then generate NDIS invoices and staff payslips in seconds.',
         functions: ['SCHADS & Screening Gate', 'NDIS Price Guide Lookup', 'AI Receipt & Bank Match'],
       },
+      {
+        title: 'Auto-Route Shift Notes & Alerts',
+        text: 'Every logged shift note, incident, hazard or complaint automatically updates linked goals and notifies leadership.',
+        functions: ['Auto-Routed Management Alerts', 'Shared To-Do Command Sync', '5-Day Complaint SLA Timer'],
+      },
     ],
   },
   {
@@ -93,6 +108,11 @@ const STEPS = [
         text: 'Every 30 actions or completed tasks automatically compiles a permanent PDF and CSV governance batch report.',
         functions: ['30-Action PDF/CSV Batches', '30-Task Completion Packs', 'Tamper-Evident Audit Trail'],
       },
+      {
+        title: 'Grant Consent-Verified Auditor Access',
+        text: 'Open the read-only External Auditor Portal where auditors inspect only consent-approved participant and staff files.',
+        functions: ['Consent-Gated Auditor Portal', '8 Practice Standards Map', 'Zero Manual Folder Prep'],
+      },
     ],
   },
 ];
@@ -102,7 +122,7 @@ export default function QuickStartSection() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setNoteIndices((prev) => prev.map((v) => (v + 1) % 3));
+      setNoteIndices((prev) => prev.map((v) => (v + 1) % 4));
     }, 30000);
     return () => clearInterval(timer);
   }, []);
@@ -114,7 +134,7 @@ export default function QuickStartSection() {
   };
 
   const cycleAllNotes = () => {
-    setNoteIndices((prev) => prev.map((v) => (v + 1) % 3));
+    setNoteIndices((prev) => prev.map((v) => (v + 1) % 4));
   };
 
   return (
@@ -142,37 +162,37 @@ export default function QuickStartSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Our Quick 4 Step Start Guide" Directly Above the Sticky Notes */}
+        {/* Stretched Banner — Line 1: Guide Title, Line 2: Sticky Notes with Functions, Line 3: Flip All Button Below */}
         <div
-          className="flex min-h-[56px] w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-[#0A2B6D] px-6 py-2 text-white shadow-sm"
+          className="flex min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] px-6 py-3 text-white shadow-sm"
           style={{ background: getHeaderView(4), color: '#FFFFFF' }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+          <div className="flex items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Compass className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>
               Our Quick 4 Step Start Guide
             </span>
-            <button
-              type="button"
-              onClick={cycleAllNotes}
-              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white hover:bg-white/30"
-              style={{ color: '#FFFFFF' }}
-            >
-              <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
-            </button>
           </div>
           <div
             className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
             style={{ color: '#FFFFFF' }}
           >
-            Sticky Notes with Functions · Click Any Note to Change to Next Note
+            Sticky Notes with Functions
           </div>
+          <button
+            type="button"
+            onClick={cycleAllNotes}
+            className="mt-0.5 inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs font-extrabold text-white shadow-2xs hover:bg-white/30"
+            style={{ color: '#FFFFFF' }}
+          >
+            <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
+          </button>
         </div>
 
-        {/* 4 Steps on Changeable Sticky Notes in the Exact Same Sticky Note Design */}
+        {/* 4 Steps on Changeable Sticky Notes in the Exact Same Sticky Note Design with Bigger Step Numbers */}
         <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
@@ -195,30 +215,30 @@ export default function QuickStartSection() {
               >
                 {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 shadow-sm"
+                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
                   <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Step 0{index + 1} Note ({activeNoteIdx + 1}/{step.notes.length})
+                    Step 0{index + 1} of 04 · Note {activeNoteIdx + 1}/4
                   </span>
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Top Row: Symbol, Step Number & "Next Note ▸" Button */}
+                  {/* Top Row: Symbol + Bigger Step Badge + "Next Note ▸" Button */}
                   <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <span
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                         style={{ borderColor: borderCol }}
                       >
-                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
                         style={{ borderColor: borderCol }}
                       >
                         Step 0{index + 1}
@@ -228,10 +248,10 @@ export default function QuickStartSection() {
                     <button
                       type="button"
                       onClick={() => cycleSingleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
@@ -241,19 +261,22 @@ export default function QuickStartSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
-                      <h3 className="font-editorial text-sm sm:text-[15px] font-extrabold leading-snug text-center text-[#0A2B6D]">
+                    <div className="flex min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                      <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-center text-[#0A2B6D]">
                         {currentNote.title}
                       </h3>
                     </div>
                   </div>
 
-                  <p
-                    className="text-xs font-bold leading-snug text-center text-black"
-                    style={{ color: '#000000' }}
-                  >
-                    {currentNote.text}
-                  </p>
+                  {/* Clean White Framed Description Box so Info Is Displayed Better */}
+                  <div className="flex min-h-[64px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                    <p
+                      className="text-xs font-extrabold leading-snug text-center text-black"
+                      style={{ color: '#000000' }}
+                    >
+                      {currentNote.text}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Live Functions Listed on Each Sticky Note */}
@@ -264,7 +287,7 @@ export default function QuickStartSection() {
                   <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
                     <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
-                      <span>Note {activeNoteIdx + 1}/3</span>
+                      <span>Note {activeNoteIdx + 1}/4</span>
                     </div>
                     <ul className="space-y-1">
                       {currentNote.functions.map((fn) => (

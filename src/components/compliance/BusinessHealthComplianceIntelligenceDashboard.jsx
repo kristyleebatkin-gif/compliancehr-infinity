@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   Activity, ShieldCheck, Users, HeartHandshake, AlertTriangle,
   Flame, DollarSign, Award, Lock, Download, RefreshCw,
-  ArrowUpRight, CheckCircle2, Clock, Sparkles, TrendingUp,
-  FileCheck2, BarChart3, Layers,
+  ArrowUpRight, CheckCircle2, Clock, TrendingUp,
+  BarChart3, Layers,
 } from 'lucide-react';
 import {
   ResponsiveContainer, ComposedChart, Area, Bar, XAxis, YAxis,
@@ -13,16 +13,16 @@ import {
 import { base44 } from '@/api/base44Client';
 import { downloadBusinessHealthIntelligencePdf } from '@/lib/businessHealthIntelligencePdf';
 import {
-  getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 
-const HEADER_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+
+const UNIFORM_SPRAY_BG =
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
 
 const TREND_DATA_2026 = [
   { month: 'May 26', compliance: 94.2, health: 92.8, revenueK: 118, auditReadiness: 93 },
@@ -102,12 +102,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       standard: 'NDIS Core Module 2 · 356 Checkpoints',
       score: 99.2,
       status: 'Audit Ready',
-      colour: '#6d28d9',
+      colour: '#5A00D6',
       icon: ShieldCheck,
       route: '/compliance',
       metricLabel: 'Controlled Policies & SOPs',
       metricValue: `${liveCounts.policies} Active · 100% Current`,
-      detail: 'All 17 Audit Categories & 45 Module SOPs mapped to 2026 Practice Standards',
+      detail: 'All 17 Audit Categories & 46 Module SOPs mapped to 2026 Practice Standards',
       ActionItems: [
         'Annual Governance & Legislative Register verified against 2026 NDIS Rules',
         '100% Key Personnel conflict-of-interest & board quorum minutes ratified',
@@ -178,7 +178,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       standard: 'Emergency & Disaster Management Standard',
       score: 99.0,
       status: '6-Mo Verified',
-      colour: '#b91c1c',
+      colour: '#A100FF',
       icon: Flame,
       route: '/emergency-response',
       metricLabel: 'Evacuation Drills & Kit Audits',
@@ -197,7 +197,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       standard: 'NDIS 2025–26 Price Guide & ATO Rules',
       score: 98.4,
       status: 'Balanced & Verified',
-      colour: '#A100FF',
+      colour: '#0072FF',
       icon: DollarSign,
       route: '/invoicing',
       metricLabel: '3-Way Claim Reconciliation',
@@ -205,7 +205,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       detail: 'Every NDIS invoice line reconciled against signed-off roster & shift note',
       ActionItems: [
         '3-Way Match: Rostered Shift → Completed Progress Note → NDIS Invoice Line',
-        'Real-time participant NDIS plan budget utilisation alerts (prevents over/under-spend)',
+        'Real-time participant NDIS plan budget utilisation alerts',
         'Automated bank statement reconciliation & SCHADS payroll award compliance',
       ],
     },
@@ -216,7 +216,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       standard: 'NDIS Complaints Rules & ISO 9001 QMS',
       score: 98.2,
       status: 'Continuous Improv.',
-      colour: '#00C6FF',
+      colour: '#5A00D6',
       icon: Award,
       route: '/quality',
       metricLabel: 'Internal Audits & Closed Tasks',
@@ -235,7 +235,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       standard: 'Privacy Act 1988, NDB Scheme & RLS',
       score: 99.6,
       status: 'Zero Data Breaches',
-      colour: '#C084FC',
+      colour: '#FF2E9A',
       icon: Lock,
       route: '/documents',
       metricLabel: '2026 Master Docs & Binders',
@@ -264,7 +264,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id: 'AL-2',
       horizon: '30 DAYS',
       severity: 'Medium',
-      colour: '#FF6EDB',
+      colour: '#5A00D6',
       title: '4 Participant 10-Weekly Progress Snapshots & Plan Budget Reviews Due',
       action: 'Pre-filled 2026 Progress Review Forms queued for Team Leader sign-off',
       owner: 'Team Leader / Support Coordination',
@@ -274,9 +274,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id: 'AL-3',
       horizon: '30 DAYS',
       severity: 'Medium',
-      colour: '#5A00D6',
+      colour: '#0072FF',
       title: '6-Monthly Home Environment Risk Assessment & PEEP Check Cycle',
-      action: 'Scheduled on Review Due Board (`CHR-2026-SAF-02` printable sheet ready)',
+      action: 'Scheduled on Review Due Board (CHR-2026-SAF-02 printable sheet ready)',
       owner: 'Compliance & Safety Officer',
       route: '/risks',
     },
@@ -284,9 +284,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id: 'AL-4',
       horizon: '60 DAYS',
       severity: 'Low',
-      colour: '#0072FF',
+      colour: '#A100FF',
       title: 'Q4 6-Monthly Facility Fire Evacuation Drill & First Aid Kit Restock',
-      action: 'Calendar sync active · Kit checklist (`CHR-2026-SAF-03`) assigned',
+      action: 'Calendar sync active · Kit checklist (CHR-2026-SAF-03) assigned',
       owner: 'Facility Warden',
       route: '/emergency-response',
     },
@@ -294,7 +294,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id: 'AL-5',
       horizon: '90 DAYS',
       severity: 'Low',
-      colour: '#A100FF',
+      colour: '#0A2B6D',
       title: 'NDIS Mid-Term Quality & Safeguards Commission Readiness Mock Audit',
       action: '356 Checkpoints across 17 Categories currently at 98.7% verified readiness',
       owner: 'Provider Administrator',
@@ -317,42 +317,36 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       label: 'Overall Business & Compliance Health',
       value: `${overallScore}%`,
       sub: 'Audit-Ready across 17 Categories & 356 Checkpoints',
-      colour: '#4f46e5',
       badge: '+2.4% vs Q3',
     },
     {
       label: 'Workforce 100-Point Screening',
       value: '100%',
       sub: `${liveCounts.staff} Active Staff · ${liveCounts.certificates} Verified Credentials`,
-      colour: '#0072FF',
       badge: 'Zero Unscreened Shifts',
     },
     {
       label: 'Participant Consents & Care Plans',
       value: '99.1%',
       sub: `${liveCounts.participants} Participants · 3-Part Consents Current`,
-      colour: '#FF2E9A',
       badge: '10-Wk Reviews Active',
     },
     {
       label: 'WHS, Incident & Reportable SLA',
       value: '100% On-Time',
       sub: `${liveCounts.incidents} Incidents · ${liveCounts.risks} Active Risk Controls`,
-      colour: '#FF2E9A',
       badge: '24h / 5d SLA Met',
     },
     {
       label: 'NDIS Billing & Financial Health',
       value: '99.4%',
-      sub: '3-Way Roster / Note / Invoice Match · 4.2d DSO',
-      colour: '#A100FF',
+      sub: '3-Way Roster, Note & Invoice Match · 4.2d DSO',
       badge: 'PRODA Claim Ready',
     },
     {
       label: 'Action & Task Closure Velocity',
       value: `${liveCounts.completedTasks} Closed`,
       sub: `${liveCounts.openTasks} Open Tasks · ${liveCounts.audits} Internal Audits`,
-      colour: '#00C6FF',
       badge: '96.1% On-Time SLA',
     },
   ];
@@ -360,398 +354,478 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   return (
     <section
       id="business-health-intelligence"
-      className="scroll-mt-14 rounded-2xl bg-white p-2 sm:p-3 space-y-3"
+      className="scroll-mt-14 rounded-2xl bg-white p-2 sm:p-3 space-y-4 text-center"
     >
-      {/* Top Banner Header — Title in App Colours, Medium Blue Writing, "Live Executive Command" Moved Under Export Board */}
-      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
-          <span className="text-[#0A2B6D]">Business Health &amp; </span>
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Compliance
-          </span>{' '}
-          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-            Intelligence
-          </span>
-        </h2>
+      {/* Enlarged Top Banner Header in App-Design Coloured Border */}
+      <div
+        className="w-full rounded-2xl p-[4px] shadow-sm"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-3">
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+            <span className="text-[#0A2B6D]">Business Health &amp; </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              Compliance
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              Intelligence
+            </span>
+          </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
-          Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
-        </p>
+          <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold text-[#0072FF]">
+            Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
+          </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={loadLiveIntelligence}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(5) }}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div
+              className="rounded-full p-[2.5px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <button
+                type="button"
+                onClick={loadLiveIntelligence}
+                className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white transition-all hover:opacity-95"
+                style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+              >
+                <RefreshCw className={`h-4 w-4 text-white ${refreshing ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Sync Live Telemetry</span>
+              </button>
+            </div>
+
+            <div
+              className="rounded-full p-[2.5px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  downloadBusinessHealthIntelligencePdf({
+                    overallScore,
+                    domains: intelligenceDomains,
+                    kpis: topKpis,
+                    predictiveAlerts,
+                  })
+                }
+                className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white transition-all hover:opacity-95"
+                style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+              >
+                <Download className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Export Board Intelligence Report (A4 PDF)</span>
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="w-full rounded-full p-[2.5px] shadow-2xs"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <RefreshCw className={`h-3.5 w-3.5 text-white ${refreshing ? 'animate-spin' : ''}`} />
-            <span>Sync Live Telemetry</span>
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              downloadBusinessHealthIntelligencePdf({
-                overallScore,
-                domains: intelligenceDomains,
-                kpis: topKpis,
-                predictiveAlerts,
-              })
-            }
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(1) }}
-          >
-            <Download className="h-3.5 w-3.5 text-white" />
-            <span>Export Board Intelligence Report (A4 PDF)</span>
-          </button>
+            <div
+              className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Activity className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              </span>
+              <span style={{ color: '#FFFFFF' }}>
+                Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness
+              </span>
+            </div>
+          </div>
         </div>
-
-        {/* Moved Under Export Board Intelligence Report */}
-        <span
-          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(3) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Activity className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span>Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness</span>
-        </span>
       </div>
 
-      {/* 6 Executive Intelligence KPI Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
-        {topKpis.map((k) => (
+      {/* 6 Executive Intelligence KPI Tiles — App Design Borders, Pink/Blue/Purple Spray Background, App-Coloured Writing & Centered Info */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 items-stretch">
+        {topKpis.map((k, idx) => (
           <div
             key={k.label}
-            className="flex flex-col justify-between rounded-xl border-2 bg-white p-2 shadow-sm"
-            style={{ borderColor: k.colour, borderTopWidth: '4px' }}
+            className="flex h-full rounded-2xl p-[3px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex items-start justify-between gap-1">
-              <span className="font-body text-[7px] font-black uppercase tracking-wider text-purple-900 leading-tight">
-                {k.label}
-              </span>
+            <div
+              className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] p-3 text-center"
+              style={{ background: UNIFORM_SPRAY_BG }}
+            >
               <span
-                className="shrink-0 rounded-full px-1.5 py-0.5 font-body text-[6.5px] font-black text-white"
-                style={{ background: k.colour }}
+                className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#5A00D6]"
               >
                 {k.badge}
               </span>
-            </div>
-            <div className="my-1 font-editorial text-lg sm:text-xl font-black leading-none text-blue-950">
-              {k.value}
-            </div>
-            <div className="font-body text-[7px] font-bold text-purple-950 leading-tight">
-              {k.sub}
+              <div className="w-full rounded-xl border border-[#0A2B6D]/15 bg-white px-2 py-1.5 text-center">
+                <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF] leading-tight">
+                  {k.label}
+                </div>
+                <div className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none text-[#0A2B6D]">
+                  {k.value}
+                </div>
+              </div>
+              <div className="text-[10px] font-extrabold leading-tight text-[#5A00D6]">
+                {k.sub}
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* 8-Domain Departmental Health & Compliance Intelligence Grid + Interactive Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
-        {/* Left 8 Columns: 8-Domain Health Cards */}
-        <div className="lg:col-span-8 space-y-1.5">
-          <div className="flex flex-wrap items-center justify-between gap-1 px-1">
-            <div className="font-body text-[9px] font-black uppercase tracking-wider text-blue-950">
-              <Layers className="mr-1 inline h-3.5 w-3.5 text-purple-700" />
-              8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix (Click any pillar to inspect)
+      {/* 8-Domain Departmental Health & Compliance Intelligence Grid + Selected Intelligence Pillar — All App-Design Borders, Spray Background & Centered Info */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
+        {/* Left 8 Columns: 8-Domain Health Cards inside App Design Coloured Border */}
+        <div
+          className="lg:col-span-8 flex rounded-2xl p-[3.5px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
+            <div
+              className="w-full rounded-full p-[2.5px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="gradient-brand flex min-h-[42px] w-full flex-wrap items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white"
+                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+              >
+                <Layers className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>
+                  8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix
+                </span>
+              </div>
             </div>
-            <span className="font-body text-[7.5px] font-extrabold text-purple-800">
-              45 Connected Modules · Live Server Aggregation
-            </span>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-1.5">
-            {intelligenceDomains.map((dom) => {
-              const Icon = dom.icon;
-              const isSelected = dom.id === selectedDomain.id;
-              return (
-                <button
-                  key={dom.id}
-                  type="button"
-                  onClick={() => setSelectedDomainId(dom.id)}
-                  className={`flex flex-col justify-between rounded-xl border-2 p-2 text-left transition-all ${
-                    isSelected ? 'ring-2 ring-pink-500 shadow-md' : 'hover:bg-purple-50/40'
-                  }`}
-                  style={{
-                    borderColor: dom.colour,
-                    background: isSelected ? `${dom.colour}12` : '#ffffff',
-                  }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1">
-                      <span
-                        className="inline-flex h-6 w-6 items-center justify-center rounded-lg text-white shadow-sm"
-                        style={{ background: dom.colour }}
-                      >
-                        <Icon className="h-3.5 w-3.5" />
-                      </span>
-                      <span
-                        className="rounded-full px-1.5 py-0.5 font-body text-[6.8px] font-black text-white"
-                        style={{ background: dom.colour }}
-                      >
-                        {dom.score}% · {dom.status}
-                      </span>
-                    </div>
-                    <div className="mt-1 font-body text-[8.5px] font-black text-blue-950 leading-tight">
-                      {dom.name}
-                    </div>
-                    <div className="mt-0.5 font-body text-[6.8px] font-bold text-purple-800 leading-tight">
-                      {dom.standard}
-                    </div>
-                  </div>
+            <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 items-stretch">
+              {intelligenceDomains.map((dom, idx) => {
+                const Icon = dom.icon;
+                const sym = getSymbolView(idx);
+                const isSelected = dom.id === selectedDomain.id;
+                return (
+                  <div
+                    key={dom.id}
+                    className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all ${
+                      isSelected ? 'ring-2 ring-[#FF2E9A] scale-[1.01]' : ''
+                    }`}
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setSelectedDomainId(dom.id)}
+                      className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3 text-center"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
+                      <div className="flex w-full flex-col items-center space-y-1.5">
+                        <div className="flex items-center justify-center gap-1.5">
+                          <span
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                            style={{ borderColor: getAppBorderView(idx) }}
+                          >
+                            <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                          </span>
+                          <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#5A00D6]">
+                            {dom.score}% · {dom.status}
+                          </span>
+                        </div>
 
-                  {/* Progress Bar */}
-                  <div className="mt-1.5 space-y-0.5 w-full">
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-purple-100">
-                      <div
-                        className="h-full rounded-full"
-                        style={{ width: `${dom.score}%`, background: dom.colour }}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between font-body text-[6.8px] font-extrabold text-blue-950">
-                      <span>{dom.metricValue}</span>
-                      <span className="text-purple-700 underline">Inspect →</span>
-                    </div>
+                        <div className="w-full rounded-xl border border-[#0A2B6D]/20 bg-white px-2.5 py-1.5 text-center">
+                          <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                            {dom.name}
+                          </div>
+                          <div className="mt-0.5 text-[10px] font-extrabold text-[#0072FF]">
+                            {dom.standard}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full space-y-1">
+                        <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
+                          <div
+                            className="h-full rounded-full"
+                            style={{ width: `${dom.score}%`, background: TOP_BORDER_GRADIENT }}
+                          />
+                        </div>
+                        <div className="text-center text-[10px] font-extrabold text-[#0A2B6D]">
+                          {dom.metricValue}
+                        </div>
+                        <span className="inline-block rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#5A00D6]">
+                          Inspect Pillar →
+                        </span>
+                      </div>
+                    </button>
                   </div>
-                </button>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Right 4 Columns: Live Selected Domain Deep-Dive Inspector */}
+        {/* Right 4 Columns: Selected Intelligence Pillar — App Design Coloured Border, Spray Background & Centered Info */}
         <div
-          className="lg:col-span-4 flex flex-col justify-between rounded-xl border-2 bg-white p-2.5 shadow-sm"
-          style={{ borderColor: selectedDomain.colour }}
+          className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="space-y-2">
-            <div
-              className="rounded-lg px-2.5 py-1.5 text-white flex items-center justify-between gap-2"
-              style={{ background: selectedDomain.colour }}
-            >
-              <div>
-                <div className="font-body text-[6.8px] font-black uppercase tracking-wider text-white/90">
-                  SELECTED INTELLIGENCE PILLAR
-                </div>
-                <div className="font-body text-xs font-black text-white leading-tight">
-                  {selectedDomain.name}
-                </div>
-              </div>
-              <div className="rounded-lg bg-white/20 px-2 py-1 text-right font-body text-white">
-                <div className="text-xs font-black leading-none">{selectedDomain.score}%</div>
-                <div className="text-[6.5px] font-bold">{selectedDomain.status}</div>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-purple-200 bg-purple-50/40 p-2">
-              <div className="font-body text-[7px] font-black uppercase text-purple-900">
-                {selectedDomain.metricLabel}
-              </div>
-              <div className="font-body text-xs font-black text-blue-950">
-                {selectedDomain.metricValue}
-              </div>
-              <p className="mt-0.5 font-body text-[7.5px] font-bold text-purple-900 leading-snug">
-                {selectedDomain.detail}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="font-body text-[7.5px] font-black uppercase tracking-wider text-blue-950">
-                Verified 2026 Governance &amp; Audit Controls:
-              </div>
-              {selectedDomain.ActionItems.map((item) => (
+          <div
+            className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
+            style={{ background: UNIFORM_SPRAY_BG }}
+          >
+            <div className="w-full space-y-2.5">
+              <div
+                className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
                 <div
-                  key={item}
-                  className="flex items-start gap-1.5 rounded-lg border border-purple-100 bg-white p-1.5 text-[7.5px] font-bold text-blue-950"
+                  className="gradient-brand flex flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-2 text-center text-white"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                 >
-                  <CheckCircle2
-                    className="mt-0.5 h-3.5 w-3.5 shrink-0"
-                    style={{ color: selectedDomain.colour }}
-                  />
-                  <span>{item}</span>
+                  <div
+                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    SELECTED INTELLIGENCE PILLAR · {selectedDomain.score}% ({selectedDomain.status})
+                  </div>
+                  <div
+                    className="text-xs sm:text-sm font-extrabold text-white leading-tight"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    {selectedDomain.name}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-1.5 border-t border-purple-200 pt-2">
-            <Link
-              to={selectedDomain.route}
-              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-body text-[7.8px] font-black text-white shadow-sm"
-              style={{ background: selectedDomain.colour }}
-            >
-              Open {selectedDomain.shortName} Workspace <ArrowUpRight className="h-3 w-3" />
-            </Link>
-            <button
-              type="button"
-              onClick={() =>
-                downloadBusinessHealthIntelligencePdf({
-                  overallScore,
-                  domains: intelligenceDomains,
-                  kpis: topKpis,
-                  predictiveAlerts,
-                })
-              }
-              className="inline-flex items-center gap-1 rounded-lg border border-purple-300 bg-purple-50 px-2 py-1 font-body text-[7.5px] font-black text-purple-950 hover:bg-purple-100"
-            >
-              <Download className="h-3 w-3" /> Pillar PDF
-            </button>
+              <div
+                className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="rounded-[9px] bg-white p-2.5 text-center space-y-1">
+                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    {selectedDomain.metricLabel}
+                  </div>
+                  <div className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                    {selectedDomain.metricValue}
+                  </div>
+                  <p className="text-[11px] font-extrabold text-[#0072FF] leading-snug">
+                    {selectedDomain.detail}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-1.5 text-center">
+                <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  Verified 2026 Governance &amp; Audit Controls
+                </div>
+                {selectedDomain.ActionItems.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center text-[10.5px] font-extrabold text-[#0A2B6D]">
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
+                      <span className="text-center text-[#0A2B6D]">{item}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid w-full grid-cols-2 gap-2 pt-2 border-t border-[#0A2B6D]/20">
+              <div
+                className="rounded-full p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <Link
+                  to={selectedDomain.route}
+                  className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>Open {selectedDomain.shortName}</span>
+                  <ArrowUpRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                </Link>
+              </div>
+              <div
+                className="rounded-full p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadBusinessHealthIntelligencePdf({
+                      overallScore,
+                      domains: intelligenceDomains,
+                      kpis: topKpis,
+                      predictiveAlerts,
+                    })
+                  }
+                  className="inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]"
+                >
+                  <Download className="h-3 w-3 text-[#5A00D6]" />
+                  <span>Pillar PDF</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Visual Analytics & Predictive 30/60/90-Day Expiry & Risk Radar Row */}
+      {/* Visual Analytics & Predictive 14/30/60/90-Day Expiry Radar — All App-Design Coloured Borders, Spray Background & Centered Info */}
       {!compact && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
-          {/* Chart 1: 6-Month Business Health, Compliance Readiness & Revenue Trajectory */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
+          {/* Chart 1: 6-Month Business Health Trajectory */}
           <div
-            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm"
-            style={{ borderColor: getAppBorderView(0), borderTopWidth: '5px' }}
+            className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex items-center justify-between gap-1 mb-1">
-              <div>
-                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-[#0072FF]">
-                  <TrendingUp className="mr-1 inline h-3.5 w-3.5 text-[#0072FF]" />
-                  6-Month Compliance vs. Business Health Trajectory
-                </h3>
-                <p className="font-body text-[7px] font-bold text-[#0072FF]">
-                  Audit Readiness (%) &amp; Monthly NDIS Billing ($K)
-                </p>
+            <div
+              className="flex w-full flex-col justify-between rounded-[13px] p-3 text-center space-y-2"
+              style={{ background: UNIFORM_SPRAY_BG }}
+            >
+              <div
+                className="w-full rounded-xl p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="rounded-[9px] bg-white px-3 py-1.5 text-center">
+                  <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    <TrendingUp className="mr-1 inline h-3.5 w-3.5 text-[#0072FF]" />
+                    6-Month Compliance vs. Business Health
+                  </h3>
+                  <p className="text-[10px] font-extrabold text-[#5A00D6]">
+                    Audit Readiness (%) &amp; Monthly NDIS Billing ($K) · 98.7% Peak
+                  </p>
+                </div>
               </div>
-              <span className="rounded-full bg-[#0072FF] px-2 py-0.5 font-body text-[7px] font-black text-white">
-                98.7% Peak
-              </span>
-            </div>
-            <div className="h-40 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={TREND_DATA_2026}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e9d5ff" />
-                  <XAxis dataKey="month" fontSize={9} tick={{ fill: '#1e1b4b', fontWeight: 700 }} />
-                  <YAxis yAxisId="left" domain={[88, 100]} fontSize={9} tick={{ fill: '#4f46e5', fontWeight: 700 }} />
-                  <YAxis yAxisId="right" orientation="right" fontSize={9} tick={{ fill: '#FF2E9A', fontWeight: 700 }} />
-                  <Tooltip />
-                  <Bar yAxisId="right" dataKey="revenueK" name="NDIS Billed ($K)" fill="#ec4899" radius={[4, 4, 0, 0]} barSize={16} />
-                  <Area
-                    yAxisId="left"
-                    type="monotone"
-                    dataKey="compliance"
-                    name="Compliance Score (%)"
-                    stroke="#4f46e5"
-                    strokeWidth={2.5}
-                    fill="#4f46e5"
-                    fillOpacity={0.18}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+              <div className="h-44 w-full rounded-xl border border-[#0A2B6D]/20 bg-white p-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={TREND_DATA_2026}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e9d5ff" />
+                    <XAxis dataKey="month" fontSize={9} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis yAxisId="left" domain={[88, 100]} fontSize={9} tick={{ fill: '#5A00D6', fontWeight: 700 }} />
+                    <YAxis yAxisId="right" orientation="right" fontSize={9} tick={{ fill: '#FF2E9A', fontWeight: 700 }} />
+                    <Tooltip />
+                    <Bar yAxisId="right" dataKey="revenueK" name="NDIS Billed ($K)" fill="#FF2E9A" radius={[4, 4, 0, 0]} barSize={16} />
+                    <Area
+                      yAxisId="left"
+                      type="monotone"
+                      dataKey="compliance"
+                      name="Compliance Score (%)"
+                      stroke="#5A00D6"
+                      strokeWidth={2.5}
+                      fill="#5A00D6"
+                      fillOpacity={0.18}
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
 
           {/* Chart 2: 8-Domain Benchmark Score Comparison */}
           <div
-            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm"
-            style={{ borderColor: getAppBorderView(2), borderTopWidth: '5px' }}
+            className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex items-center justify-between gap-1 mb-1">
-              <div>
-                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-[#5A00D6]">
-                  <BarChart3 className="mr-1 inline h-3.5 w-3.5 text-[#5A00D6]" />
-                  8-Domain Compliance Benchmark (%)
-                </h3>
-                <p className="font-body text-[7px] font-bold text-[#0072FF]">
-                  Every department exceeds the 95% NDIS Audit Threshold
-                </p>
+            <div
+              className="flex w-full flex-col justify-between rounded-[13px] p-3 text-center space-y-2"
+              style={{ background: UNIFORM_SPRAY_BG }}
+            >
+              <div
+                className="w-full rounded-xl p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="rounded-[9px] bg-white px-3 py-1.5 text-center">
+                  <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    <BarChart3 className="mr-1 inline h-3.5 w-3.5 text-[#5A00D6]" />
+                    8-Domain Compliance Benchmark (%)
+                  </h3>
+                  <p className="text-[10px] font-extrabold text-[#0072FF]">
+                    Every Department Exceeds the 95% NDIS Audit Threshold
+                  </p>
+                </div>
               </div>
-              <span className="rounded-full bg-[#5A00D6] px-2 py-0.5 font-body text-[7px] font-black text-white">
-                Target ≥ 95%
-              </span>
-            </div>
-            <div className="h-40 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={intelligenceDomains} layout="vertical" margin={{ left: 10, right: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e9d5ff" />
-                  <XAxis type="number" domain={[90, 100]} fontSize={9} tick={{ fill: '#1e1b4b', fontWeight: 700 }} />
-                  <YAxis
-                    type="category"
-                    dataKey="shortName"
-                    width={78}
-                    fontSize={8.5}
-                    tick={{ fill: '#1e1b4b', fontWeight: 800 }}
-                  />
-                  <Tooltip formatter={(v) => `${v}%`} />
-                  <Bar dataKey="score" name="Readiness Score (%)" radius={[0, 4, 4, 0]} barSize={12}>
-                    {intelligenceDomains.map((d) => (
-                      <Cell key={d.id} fill={d.colour} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="h-44 w-full rounded-xl border border-[#0A2B6D]/20 bg-white p-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={intelligenceDomains} layout="vertical" margin={{ left: 10, right: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e9d5ff" />
+                    <XAxis type="number" domain={[90, 100]} fontSize={9} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis
+                      type="category"
+                      dataKey="shortName"
+                      width={78}
+                      fontSize={8.5}
+                      tick={{ fill: '#0A2B6D', fontWeight: 800 }}
+                    />
+                    <Tooltip formatter={(v) => `${v}%`} />
+                    <Bar dataKey="score" name="Readiness Score (%)" radius={[0, 4, 4, 0]} barSize={12}>
+                      {intelligenceDomains.map((d) => (
+                        <Cell key={d.id} fill={d.colour} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
 
-          {/* Column 3: Predictive 14/30/60/90-Day Risk, Credential & Review Radar */}
+          {/* Column 3: Predictive 14/30/60/90-Day Expiry Radar */}
           <div
-            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm flex flex-col justify-between"
-            style={{ borderColor: getAppBorderView(1), borderTopWidth: '5px' }}
+            className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div>
-              <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5">
-                <div>
-                  <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-blue-950">
-                    <Clock className="mr-1 inline h-3.5 w-3.5 text-pink-600" />
+            <div
+              className="flex w-full flex-col justify-between rounded-[13px] p-3 text-center space-y-2"
+              style={{ background: UNIFORM_SPRAY_BG }}
+            >
+              <div
+                className="w-full rounded-xl p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="rounded-[9px] bg-white px-3 py-1.5 text-center space-y-1">
+                  <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    <Clock className="mr-1 inline h-3.5 w-3.5 text-[#FF2E9A]" />
                     Predictive 14 / 30 / 60 / 90-Day Expiry Radar
                   </h3>
-                  <p className="font-body text-[7px] font-bold text-purple-800">
-                    Proactive alerts before any credential, plan or drill expires
-                  </p>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {['ALL', '14', '30', '60'].map((h) => (
-                    <button
-                      key={h}
-                      type="button"
-                      onClick={() => setHorizonFilter(h)}
-                      className={`rounded px-1.5 py-0.5 font-body text-[6.8px] font-black ${
-                        horizonFilter === h
-                          ? 'bg-pink-600 text-white'
-                          : 'border border-purple-200 bg-purple-50 text-purple-900'
-                      }`}
-                    >
-                      {h === 'ALL' ? 'All' : `${h}d`}
-                    </button>
-                  ))}
+                  <div className="flex items-center justify-center gap-1">
+                    {['ALL', '14', '30', '60'].map((h) => (
+                      <button
+                        key={h}
+                        type="button"
+                        onClick={() => setHorizonFilter(h)}
+                        className={`rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold ${
+                          horizonFilter === h
+                            ? 'bg-[#5A00D6] text-white'
+                            : 'border border-[#0A2B6D]/30 bg-white text-[#0A2B6D]'
+                        }`}
+                      >
+                        {h === 'ALL' ? 'All' : `${h}d`}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-1 max-h-40 overflow-y-auto pr-0.5">
+              <div className="space-y-1.5 max-h-44 overflow-y-auto pr-0.5">
                 {filteredAlerts.map((al) => (
                   <div
                     key={al.id}
-                    className="rounded-lg border bg-white p-1.5 flex items-start justify-between gap-1.5"
-                    style={{ borderColor: al.colour, borderLeftWidth: '4px' }}
+                    className="rounded-xl p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1">
+                    <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white p-2 text-center">
+                      <div className="flex flex-wrap items-center justify-center gap-1.5">
                         <span
-                          className="rounded px-1 py-0.2 font-body text-[6.2px] font-black text-white"
+                          className="rounded-full px-2 py-0.5 text-[8.5px] font-extrabold text-white"
                           style={{ background: al.colour }}
                         >
                           {al.horizon}
                         </span>
-                        <span className="font-body text-[7.5px] font-black text-blue-950 truncate">
+                        <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
                           {al.title}
                         </span>
                       </div>
-                      <div className="mt-0.5 font-body text-[6.8px] font-bold text-purple-900 leading-tight">
+                      <div className="text-[9.5px] font-bold text-[#5A00D6]">
                         {al.action}
                       </div>
+                      <Link
+                        to={al.route}
+                        className="rounded-full border border-[#0A2B6D] bg-[#F5F0FF] px-2.5 py-0.5 text-[9px] font-extrabold text-[#0072FF]"
+                      >
+                        Action →
+                      </Link>
                     </div>
-                    <Link
-                      to={al.route}
-                      className="shrink-0 rounded border border-purple-300 bg-purple-50 px-1.5 py-0.5 font-body text-[6.8px] font-black text-purple-950 hover:bg-purple-100"
-                    >
-                      Action →
-                    </Link>
                   </div>
                 ))}
               </div>

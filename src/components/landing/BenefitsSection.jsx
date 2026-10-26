@@ -43,6 +43,11 @@ const BENEFITS = [
         'Daily module compliance snapshots',
         'Instant email & in-app renewal alerts',
       ],
+      [
+        'Policy version & read-receipt tracker',
+        'Key personnel delegation register',
+        'Tamper-evident user action audit log',
+      ],
     ],
   },
   {
@@ -59,6 +64,11 @@ const BENEFITS = [
         'Individual & Home Risk Assessments',
         'Emergency drills & safety kit logs',
         'MSDS chemical & equipment manuals',
+      ],
+      [
+        'Dynamic Staff Risk Score threshold alerts',
+        'Vehicle safety & fleet maintenance logs',
+        'Root-cause incident CAPA workflows',
       ],
     ],
   },
@@ -77,6 +87,11 @@ const BENEFITS = [
         'Visual routines & communication pads',
         '10-weekly & 3-monthly review logs',
       ],
+      [
+        'Multilingual translator & sign prompts',
+        'Group programs & accessible events',
+        'Warm allied-health referral letters',
+      ],
     ],
   },
   {
@@ -93,6 +108,11 @@ const BENEFITS = [
         '6 Structured Binders + 12 A4 Masters',
         'Auto-filed corrective action tasks',
         'Direct Vault evidence attachment',
+      ],
+      [
+        'CHR-AUD-001 Governance Edition',
+        'CHR-AUD-002 Workforce Edition',
+        'Scheduled 90-day & 6-monthly audits',
       ],
     ],
   },
@@ -111,6 +131,11 @@ const BENEFITS = [
         'Weekly automated compliance digests',
         'Executive Business Health dashboard',
       ],
+      [
+        'AI Suggestions Hub & 46-screen scanner',
+        'Departmental compliance scorecards',
+        'Strategic business project milestones',
+      ],
     ],
   },
   {
@@ -127,6 +152,11 @@ const BENEFITS = [
         'Admin approval gate for new users',
         'Tamper-evident user action logs',
         'Private encrypted file storage URIs',
+      ],
+      [
+        'Notifiable Data Breach (NDB) register',
+        '15 granular NDIS & HR role levels',
+        'Company Safe locked credential vault',
       ],
     ],
   },
@@ -186,7 +216,7 @@ export default function BenefitsSection() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[56px] w-full flex-col items-center justify-center gap-0.5 rounded-[21px] px-6 py-2.5 text-center text-white"
+            className="gradient-brand flex min-h-[58px] w-full flex-col items-center justify-center gap-0.5 rounded-[21px] px-6 py-2.5 text-center text-white"
             style={{ background: getHeaderView(3), color: '#FFFFFF' }}
           >
             <div className="flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
@@ -201,15 +231,16 @@ export default function BenefitsSection() {
               className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
               style={{ color: '#FFFFFF' }}
             >
-              Projector Screens
+              Projector Screens · 6 Projectors · 3 Notes Per Screen
             </div>
           </div>
         </div>
 
-        {/* 6 Projector Screens Designed Identically with Centered Info + Matching Changeable Sticky Notes */}
+        {/* 6 Projector Screens Designed Identically with Next Button Moved to Top Beside Bigger Numbers */}
         <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {BENEFITS.map((b, index) => {
-            const activeNoteIdx = noteIndices[index] % b.notes.length;
+            const totalNotes = b.notes.length;
+            const activeNoteIdx = noteIndices[index] % totalNotes;
             const currentFunctions = b.notes[activeNoteIdx];
             return (
               <Reveal
@@ -244,40 +275,54 @@ export default function BenefitsSection() {
                     className="flex h-full flex-1 flex-col items-center justify-between rounded-b-[10px] p-3 text-center space-y-2.5"
                     style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
                   >
-                    {/* Top & Middle Projector Screen Info — Centered & Uniform */}
+                    {/* Top Row on Projector Screen: Icon + Bigger Number + "Next ▸" Moved to Top Beside Number */}
                     <div className="flex w-full flex-1 flex-col items-center justify-between space-y-2">
-                      <div className="flex items-center justify-center gap-2">
-                        <span
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                          style={{ borderColor: UNIFORM_ICON_BORDER }}
+                      <div className="flex w-full items-center justify-between gap-1.5">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                            style={{ borderColor: UNIFORM_ICON_BORDER }}
+                          >
+                            <b.icon className="h-4 w-4" style={{ color: UNIFORM_ICON_COLOR }} />
+                          </span>
+                          <span
+                            className="rounded-full border-2 bg-white px-3 py-0.5 font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-2xs"
+                            style={{ borderColor: UNIFORM_ICON_BORDER }}
+                          >
+                            #0{index + 1}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => cycleNote(index)}
+                          className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                          style={{ color: '#FFFFFF' }}
                         >
-                          <b.icon className="h-4 w-4" style={{ color: UNIFORM_ICON_COLOR }} />
-                        </span>
-                        <span
-                          className="rounded-full border-2 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
-                          style={{ borderColor: UNIFORM_ICON_BORDER }}
-                        >
-                          #0{index + 1}
-                        </span>
+                          <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>Next ▸</span>
+                        </button>
                       </div>
 
                       <div
                         className="w-full rounded-xl p-[2.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                        <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
                           <h3 className="font-editorial text-xs sm:text-sm font-extrabold leading-tight text-center text-[#0A2B6D]">
                             {b.title}
                           </h3>
                         </div>
                       </div>
 
-                      <p
-                        className="flex flex-1 items-center justify-center text-center text-[11px] font-extrabold leading-snug text-black"
-                        style={{ color: '#000000' }}
-                      >
-                        {b.desc}
-                      </p>
+                      <div className="flex min-h-[58px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-2.5 py-1.5 text-center shadow-2xs">
+                        <p
+                          className="text-center text-[11px] font-extrabold leading-snug text-black"
+                          style={{ color: '#000000' }}
+                        >
+                          {b.desc}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Changeable Sticky Note in the Exact Same Design Across All 6 Projector Screens */}
@@ -289,7 +334,7 @@ export default function BenefitsSection() {
                         borderBottomRightRadius: '20px',
                       }}
                     >
-                      {/* Top Sticky Tape Strip + Pin */}
+                      {/* Top Sticky Tape Strip + Pin — Accurate Note Count (Note X of 3) */}
                       <div
                         className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
                         style={{ background: STICKY_NOTE_TAPE }}
@@ -299,23 +344,17 @@ export default function BenefitsSection() {
                           className="text-[8.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                           style={{ color: '#FFFFFF' }}
                         >
-                          Note {activeNoteIdx + 1}/{b.notes.length}
+                          Screen #0{index + 1} · Note {activeNoteIdx + 1}/{totalNotes}
                         </span>
                       </div>
 
                       <div className="mb-1 flex items-center justify-between gap-1">
-                        <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                          Functions:
+                        <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                          Live Functions:
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => cycleNote(index)}
-                          className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-95"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          <RefreshCw className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                          <span style={{ color: '#FFFFFF' }}>Next ▸</span>
-                        </button>
+                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                          {activeNoteIdx + 1} of {totalNotes}
+                        </span>
                       </div>
 
                       <ul className="space-y-1">

@@ -349,31 +349,22 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* Stretched Banner — Line 1: Latest Platform Capabilities · 12 Connected Engines, Line 2: Sticky Notes with Functions */}
+        {/* Stretched Banner — Line 1: Latest Platform Capabilities, Line 2: Sticky Notes with Functions, Line 3: Flip All Button Below */}
         <div
           className="w-full rounded-3xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[58px] w-full flex-col items-center justify-center gap-1 rounded-[21px] px-6 py-2.5 text-center text-white"
+            className="gradient-brand flex min-h-[78px] w-full flex-col items-center justify-center gap-1.5 rounded-[21px] px-6 py-3 text-center text-white"
             style={{ background: getHeaderView(5), color: '#FFFFFF' }}
           >
-            <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+            <div className="flex items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
                 <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
                 Latest Platform Capabilities · 12 Connected Engines
               </span>
-              <button
-                type="button"
-                onClick={cycleAllNotes}
-                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white hover:bg-white/30"
-                style={{ color: '#FFFFFF' }}
-              >
-                <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
-              </button>
             </div>
             <div
               className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
@@ -381,10 +372,19 @@ export default function FeaturesSection() {
             >
               Sticky Notes with Functions
             </div>
+            <button
+              type="button"
+              onClick={cycleAllNotes}
+              className="mt-0.5 inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs font-extrabold text-white shadow-2xs hover:bg-white/30"
+              style={{ color: '#FFFFFF' }}
+            >
+              <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
+            </button>
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes with Functions — Changeable & Identical Sticky Note Design */}
+        {/* 12 Capability Sticky Notes with Functions — Bigger Numbers, Better Framed Info & Consistent Design */}
         <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center">
           {FEATURES.map((f, index) => {
             const sym = getSymbolView(index);
@@ -405,43 +405,43 @@ export default function FeaturesSection() {
               >
                 {/* Top Sticky Tape Strip + Pin */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 shadow-sm"
+                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
                   <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Capability Note #{index + 1} ({activeNoteIdx + 1}/{f.notes.length})
+                    Capability #{index + 1} · Note {activeNoteIdx + 1}/{f.notes.length}
                   </span>
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Symbol, Number & "Next Note ▸" Button */}
+                  {/* Top Row: Symbol + Bigger Number Badge + "Next Note ▸" Button */}
                   <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <span
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
                         style={{ borderColor: borderCol }}
                       >
-                        <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                        <f.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
                         style={{ borderColor: borderCol }}
                       >
-                        #{index + 1}
+                        #{String(index + 1).padStart(2, '0')}
                       </span>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => cycleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
@@ -451,19 +451,22 @@ export default function FeaturesSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                    <div className="flex min-h-[46px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
                       <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-[#0A2B6D]">
                         {f.title}
                       </h3>
                     </div>
                   </div>
 
-                  <p
-                    className="text-xs font-bold leading-snug text-black"
-                    style={{ color: '#000000' }}
-                  >
-                    {currentNote.desc}
-                  </p>
+                  {/* Clean White Framed Info Box */}
+                  <div className="flex min-h-[60px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                    <p
+                      className="text-xs font-extrabold leading-snug text-black"
+                      style={{ color: '#000000' }}
+                    >
+                      {currentNote.desc}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Live Functions Listed on Each Sticky Note */}

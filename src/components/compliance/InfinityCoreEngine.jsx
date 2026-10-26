@@ -2,25 +2,20 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Cpu, Zap, ShieldCheck, FileText, RefreshCw, Download, CheckCircle2,
-  AlertTriangle, Sparkles, Activity, Calendar, Siren, Users, FolderLock,
-  ArrowRight, Play, Layers, BellRing, Search, ClipboardCheck, Award,
+  Sparkles, Activity, Users, ArrowRight, Layers, Search, ClipboardCheck, Award,
 } from 'lucide-react';
-import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { downloadInfinityCoreEnginePdf } from '@/lib/infinityCoreEnginePdf';
 import {
-  getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
-  getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 
-const SQUISHED_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
-const CHR_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+
+const UNIFORM_SPRAY_BG =
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
 
 export const AUTOMATION_PIPELINES = [
   {
@@ -129,7 +124,7 @@ export const SMART_FILL_ENGINES = [
     output: 'Auto-populates provider metadata, compliance status, evidence citations & exports A4 board audit PDFs.',
     color: '#6d28d9',
     link: '/compliance',
-    badge: '$355 Value Included',
+    badge: '2 Editions Included',
   },
   {
     code: 'SF-ENG-02',
@@ -142,12 +137,12 @@ export const SMART_FILL_ENGINES = [
   },
   {
     code: 'SF-ENG-03',
-    title: '45-Screen 2026 Smart-Fill Audit & 1-Click Task Studio',
-    coverage: 'All 45 Operational Modules · 125+ 2026 Compliance Documents · 6 Printed Binder Volumes',
+    title: '46-Screen 2026 Smart-Fill Audit & 1-Click Task Studio',
+    coverage: 'All 46 Operational Modules · 125+ 2026 Compliance Documents · 6 Printed Binder Volumes',
     output: 'Saves Smart-Fill documents directly into FormSubmission register and dispatches linked TodoTask items.',
     color: '#0ea5e9',
     link: '/compliance',
-    badge: '45 Modules Linked',
+    badge: '46 Modules Linked',
   },
   {
     code: 'SF-ENG-04',
@@ -371,78 +366,116 @@ export default function InfinityCoreEngine({ compact = false }) {
   };
 
   const PILLAR_TABS = [
-    { id: 'all', label: 'All 3 Core Engines (Unified View)', icon: Cpu, color: '#4f46e5' },
-    { id: 'automation', label: '1. AI & Automation Hub (104 Functions · 65 Workflows)', icon: Zap, color: '#5A00D6' },
-    { id: 'validation', label: '2. Real-Time Compliance, Risk & Roster Validation', icon: ShieldCheck, color: '#FF2E9A' },
-    { id: 'smartfill', label: '3. Smart-Fill Document, Audit & Predictive Alert Engine', icon: Sparkles, color: '#00C6FF' },
+    { id: 'all', label: 'All 3 Core Engines (Unified View)', icon: Cpu },
+    { id: 'automation', label: '1. AI & Automation Hub (104 Functions · 65 Workflows)', icon: Zap },
+    { id: 'validation', label: '2. Real-Time Compliance, Risk & Roster Validation', icon: ShieldCheck },
+    { id: 'smartfill', label: '3. Smart-Fill Document, Audit & Predictive Alert Engine', icon: Sparkles },
   ];
 
   return (
     <section
       id="infinity-core-engine"
-      className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
+      className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3.5 text-center"
     >
-      {/* Header — Title in App Colours at Top, "Infinity Core Engine · 104 Functions" Moved Above Run Core Engine Sweep */}
-      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight">
-          <span className="text-[#0A2B6D]">Infinity </span>
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Core Engine
-          </span>{' '}
-          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-            — AI Automation &amp; Real-Time Validation
-          </span>
-        </h2>
+      {/* Enlarged Header Fitted Cleanly, Black Subtitle, Minimised Single-Line Core Engine Tile, and 3 Action Tiles on One Line */}
+      <div
+        className="w-full rounded-2xl p-[4px] shadow-sm"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-3">
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+            <span className="text-[#0A2B6D]">Infinity </span>
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              Core Engine
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+              — AI Automation &amp; Real-Time Validation
+            </span>
+          </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#0072FF]">
-          Complete Control. Greater Confidence. Brighter Success.
-        </p>
+          {/* Black Writing Underneath Header */}
+          <p
+            className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold text-black"
+            style={{ color: '#000000' }}
+          >
+            Complete Control. Greater Confidence. Brighter Success.
+          </p>
 
-        {/* Moved Directly Above Run Core Engine Sweep */}
-        <span
-          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(4) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Cpu className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span>Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}</span>
-        </span>
+          {/* Minimised Core Engine Tile Fitted on One Line */}
+          <div
+            className="mx-auto rounded-full p-[2px] shadow-2xs"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <span
+              className="gradient-brand inline-flex h-[32px] items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[10.5px] sm:text-xs font-extrabold tracking-wide text-white whitespace-nowrap"
+              style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+            >
+              <Cpu className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>
+                Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}
+              </span>
+            </span>
+          </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={handleRunCoreSweep}
-            disabled={sweeping}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{ background: getHeaderView(0) }}
-          >
-            <RefreshCw className={`h-3.5 w-3.5 text-white ${sweeping ? 'animate-spin' : ''}`} />
-            <span>{sweeping ? 'Sweeping Engine…' : 'Run Core Engine Sweep'}</span>
-          </button>
-          <button
-            type="button"
-            onClick={handleLogDiagnosticTask}
-            disabled={creatingTask}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{ background: getHeaderView(2) }}
-          >
-            <ClipboardCheck className="h-3.5 w-3.5 text-white" />
-            <span>{creatingTask ? 'Logging…' : '1-Click Log Audit Task'}</span>
-          </button>
-          <button
-            type="button"
-            onClick={handleExportPdf}
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(6) }}
-          >
-            <Download className="h-3.5 w-3.5 text-white" />
-            <span>Export Core Engine A4 PDF</span>
-          </button>
+          {/* Three Action Tiles Underneath on One Single Line */}
+          <div className="grid w-full grid-cols-3 gap-2">
+            <div
+              className="rounded-full p-[2px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <button
+                type="button"
+                onClick={handleRunCoreSweep}
+                disabled={sweeping}
+                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+              >
+                <RefreshCw className={`h-3 w-3 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                  {sweeping ? 'Sweeping…' : 'Run Core Engine Sweep'}
+                </span>
+              </button>
+            </div>
+
+            <div
+              className="rounded-full p-[2px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <button
+                type="button"
+                onClick={handleLogDiagnosticTask}
+                disabled={creatingTask}
+                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+              >
+                <ClipboardCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                  {creatingTask ? 'Logging…' : '1-Click Log Audit Task'}
+                </span>
+              </button>
+            </div>
+
+            <div
+              className="rounded-full p-[2px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <button
+                type="button"
+                onClick={handleExportPdf}
+                className="gradient-brand flex h-[36px] w-full items-center justify-center gap-1.5 rounded-full px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
+                style={{ background: getHeaderView(6), color: '#FFFFFF' }}
+              >
+                <Download className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span className="truncate" style={{ color: '#FFFFFF' }}>
+                  Export Core Engine A4 PDF
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="bg-white p-2 space-y-3">
+      <div className="bg-white p-1 space-y-3.5">
         {statusBanner && (
           <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D]">
             <span className="flex items-center gap-1.5">
@@ -459,8 +492,8 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* Top Live Telemetry Strip — All 8 Tiles Same Design, Same Colour & Centred */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+        {/* Top Live Telemetry Strip — App Design Coloured Borders, Blue/Pink/Purple Spray Background, App-Coloured Writing & Centered */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
             { label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
             { label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', icon: Zap },
@@ -470,290 +503,372 @@ export default function InfinityCoreEngine({ compact = false }) {
             { label: 'Master Checkpoints', value: '356', sub: '17 Audit Categories', icon: Award },
             { label: 'People Monitored', value: `${telemetry.staff + telemetry.participants}`, sub: `${telemetry.staff} Staff · ${telemetry.participants} Part.`, icon: Users },
             { label: 'Live Ops Records', value: `${telemetry.shifts + telemetry.tasks + telemetry.incidents + telemetry.risks}`, sub: `${telemetry.shifts} Shifts · ${telemetry.tasks} Tasks`, icon: Activity },
-          ].map((stat) => {
+          ].map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-[#38BDF8] p-2.5 text-center shadow-sm"
+                className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
-                  <Icon className="h-3.5 w-3.5 text-[#0072FF]" />
-                </span>
-                <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  {stat.label}
-                </span>
-                <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
-                  {stat.value}
+                <div
+                  className="flex h-full w-full flex-col items-center justify-center rounded-[13px] p-2.5 text-center"
+                  style={{ background: UNIFORM_SPRAY_BG }}
+                >
+                  <span
+                    className="flex h-7 w-7 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                    style={{ borderColor: getAppBorderView(idx) }}
+                  >
+                    <Icon className="h-3.5 w-3.5 text-[#0072FF]" />
+                  </span>
+                  <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    {stat.label}
+                  </span>
+                  <div className="mt-0.5 font-editorial text-base font-extrabold leading-none text-[#0A2B6D]">
+                    {stat.value}
+                  </div>
+                  <div className="mt-0.5 text-[9.5px] font-extrabold text-[#0072FF]">{stat.sub}</div>
                 </div>
-                <div className="mt-0.5 text-[9.5px] font-bold text-[#0A2B6D]">{stat.sub}</div>
               </div>
             );
           })}
         </div>
 
-        {/* All 3 Core Engines Switcher Tiles — Same Design, Same Colour & Centred */}
-        <div className="flex flex-col items-center justify-center gap-2.5 rounded-2xl border-2 border-[#0072FF] bg-white p-3">
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-            {PILLAR_TABS.map((tab) => {
-              const Icon = tab.icon;
-              const active = activePillar === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActivePillar(tab.id)}
-                  className={`flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3 py-2 text-center text-xs font-extrabold text-white transition-all ${
-                    active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'opacity-90 hover:opacity-100'
-                  }`}
-                  style={{ background: getHeaderView(0) }}
-                >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <Icon className="h-3.5 w-3.5 text-white" />
-                  </span>
-                  <span className="leading-snug">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
+        {/* All 3 Core Engines Switcher Tiles — App Design Borders, Spray Background, App-Coloured Writing & Centered */}
+        <div
+          className="rounded-2xl p-[3.5px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-col items-center justify-center gap-2.5 rounded-[13px] bg-white p-3">
+            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              {PILLAR_TABS.map((tab, idx) => {
+                const Icon = tab.icon;
+                const active = activePillar === tab.id;
+                return (
+                  <div
+                    key={tab.id}
+                    className="rounded-2xl p-[2.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setActivePillar(tab.id)}
+                      className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[13px] px-3 py-2 text-center text-xs font-extrabold transition-all ${
+                        active ? 'ring-2 ring-[#FF2E9A] shadow-md' : ''
+                      }`}
+                      style={
+                        active
+                          ? { background: getHeaderView(idx), color: '#FFFFFF' }
+                          : { background: UNIFORM_SPRAY_BG, color: '#0A2B6D' }
+                      }
+                    >
+                      <span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white"
+                        style={{ borderColor: getAppBorderView(idx) }}
+                      >
+                        <Icon className="h-3.5 w-3.5 text-[#5A00D6]" />
+                      </span>
+                      <span className="leading-snug text-center">{tab.label}</span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
 
-          <div className="relative w-full max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#0072FF]" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search functions, workflows, gates…"
-              className="h-8 w-full rounded-full border-2 border-[#0072FF] bg-white pl-9 pr-3 text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6]/70 focus:outline-none text-center"
-            />
+            <div
+              className="w-full max-w-md rounded-full p-[2.5px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="relative flex w-full items-center rounded-full bg-white">
+                <Search className="pointer-events-none absolute left-3.5 h-3.5 w-3.5 text-[#5A00D6]" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search functions, workflows, gates…"
+                  className="h-8 w-full rounded-full bg-white pl-9 pr-3 text-center text-xs font-extrabold text-[#5A00D6] placeholder:text-[#5A00D6]/80 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
+        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — APP DESIGN BORDERS, SPRAY BG & CENTERED INFO ==================== */}
         {(activePillar === 'all' || activePillar === 'automation') && (
           <div
-            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
-            style={{ borderColor: getAppBorderView(0) }}
+            className="rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div
-              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
-              style={{ background: getHeaderView(0) }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <Zap className="h-3 w-3 text-white" />
-                </span>
-                <span className="text-xs font-extrabold uppercase tracking-wider">
-                  SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB (104 SERVER FUNCTIONS &amp; 65 LIVE WORKFLOWS)
-                </span>
+            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+              <div
+                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="gradient-brand flex flex-wrap items-center justify-center sm:justify-between gap-2 rounded-full px-4 py-2 text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <Zap className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="text-xs font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
+                      SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB (104 SERVER FUNCTIONS &amp; 65 LIVE WORKFLOWS)
+                    </span>
+                  </div>
+                  <span className="rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    Zero-Touch Event &amp; Schedule Pipelines
+                  </span>
+                </div>
               </div>
-              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                Zero-Touch Event &amp; Schedule Pipelines
-              </span>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 items-stretch">
-              {(compact ? filteredPipelines.slice(0, 4) : filteredPipelines).map((pipe, idx) => {
-                const borderCol = getAppBorderView(idx);
-                return (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
+                {(compact ? filteredPipelines.slice(0, 4) : filteredPipelines).map((pipe, idx) => (
                   <div
                     key={pipe.code}
-                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
-                    style={{ borderColor: borderCol }}
+                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div>
-                      <div
-                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
-                        style={{ background: getHeaderView(idx) }}
-                      >
-                        <span className="text-[10px] font-extrabold text-white">
-                          {pipe.code} · {pipe.category}
-                        </span>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
-                          {pipe.status}
-                        </span>
-                      </div>
-                      <div className="p-2.5 space-y-1 bg-white">
-                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
-                          {pipe.title}
+                    <div
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
+                      <div className="w-full space-y-2">
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex items-center justify-between gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#5A00D6]">
+                            <span>{pipe.code} · {pipe.category}</span>
+                            <span className="rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                              {pipe.status}
+                            </span>
+                          </div>
                         </div>
-                        <div className="text-[10.5px] font-bold text-[#5A00D6]">
-                          <span className="font-extrabold text-[#0A2B6D]">Trigger:</span> {pipe.trigger}
-                        </div>
-                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
-                          {pipe.action}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between gap-1 border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
-                      <span className="truncate font-mono text-[10px] font-extrabold text-[#5A00D6]">
-                        fn: {pipe.functionName}
-                      </span>
-                      <Link
-                        to={pipe.path}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-                        style={{ background: borderCol }}
-                      >
-                        Open <ArrowRight className="h-2.5 w-2.5 text-white" />
-                      </Link>
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[48px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                            {pipe.title}
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-[#0A2B6D]/15 bg-white/95 p-2 text-center space-y-1">
+                          <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                            Trigger: {pipe.trigger}
+                          </div>
+                          <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                            {pipe.action}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full items-center justify-between gap-1 border-t border-[#0A2B6D]/15 pt-2">
+                        <span className="truncate rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5 font-mono text-[9.5px] font-extrabold text-[#5A00D6]">
+                          fn: {pipe.functionName}
+                        </span>
+                        <Link
+                          to={pipe.path}
+                          className="gradient-brand inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                          style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                        >
+                          <span style={{ color: '#FFFFFF' }}>Open</span>
+                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* ==================== PILLAR 2: REAL-TIME COMPLIANCE, RISK & ROSTER VALIDATION ENGINE — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
+        {/* ==================== PILLAR 2: REAL-TIME COMPLIANCE, RISK & ROSTER VALIDATION ENGINE — APP DESIGN BORDERS, SPRAY BG & CENTERED ==================== */}
         {(activePillar === 'all' || activePillar === 'validation') && (
           <div
-            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
-            style={{ borderColor: getAppBorderView(1) }}
+            className="rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div
-              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
-              style={{ background: getHeaderView(1) }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <ShieldCheck className="h-3 w-3 text-white" />
-                </span>
-                <span className="text-xs font-extrabold uppercase tracking-wider">
-                  SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER VALIDATION ENGINE (6 LIVE GATES)
-                </span>
+            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+              <div
+                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="gradient-brand flex flex-wrap items-center justify-center sm:justify-between gap-2 rounded-full px-4 py-2 text-white"
+                  style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="text-xs font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
+                      SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER VALIDATION ENGINE (6 LIVE GATES)
+                    </span>
+                  </div>
+                  <span className="rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    Live Database Gatekeeper
+                  </span>
+                </div>
               </div>
-              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                Live Database Gatekeeper
-              </span>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 items-stretch">
-              {validationGates.map((gate, idx) => {
-                const borderCol = getAppBorderView(idx + 2);
-                return (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 items-stretch">
+                {validationGates.map((gate, idx) => (
                   <div
                     key={gate.code}
-                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
-                    style={{ borderColor: borderCol }}
+                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div>
-                      <div
-                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
-                        style={{ background: getHeaderView(idx + 2) }}
-                      >
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-white">
-                          {gate.code} · {gate.standard}
-                        </span>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
-                          {gate.badge}
-                        </span>
-                      </div>
-                      <div className="p-2.5 space-y-1 bg-white">
-                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-tight">
-                          {gate.name}
+                    <div
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
+                      <div className="w-full space-y-2">
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex items-center justify-between gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#5A00D6]">
+                            <span>{gate.code} · {gate.standard}</span>
+                            <span className="rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                              {gate.badge}
+                            </span>
+                          </div>
                         </div>
-                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
-                          {gate.ruleSummary}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#0072FF]">
-                        <CheckCircle2 className="h-3 w-3 text-[#0072FF]" /> Active Rule Gate
-                      </span>
-                      <Link
-                        to={gate.path}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-                        style={{ background: borderCol }}
-                      >
-                        Inspect Register <ArrowRight className="h-2.5 w-2.5 text-white" />
-                      </Link>
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[44px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D]">
+                            {gate.name}
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-[#0A2B6D]/15 bg-white/95 p-2 text-center">
+                          <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                            {gate.ruleSummary}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full items-center justify-between border-t border-[#0A2B6D]/15 pt-2">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                          <CheckCircle2 className="h-3 w-3 text-[#0072FF]" /> Active Rule Gate
+                        </span>
+                        <Link
+                          to={gate.path}
+                          className="gradient-brand inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                          style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
+                        >
+                          <span style={{ color: '#FFFFFF' }}>Inspect Register</span>
+                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — WHITE CARDS WITH APP COLOUR HEADERS & BORDERS ==================== */}
+        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — APP DESIGN BORDERS, SPRAY BG & CENTERED ==================== */}
         {(activePillar === 'all' || activePillar === 'smartfill') && (
           <div
-            className="rounded-2xl border-2 bg-white p-3 space-y-2.5 shadow-sm"
-            style={{ borderColor: getAppBorderView(2) }}
+            className="rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div
-              className="flex flex-wrap items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-white"
-              style={{ background: getHeaderView(2) }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <Sparkles className="h-3 w-3 text-white" />
-                </span>
-                <span className="text-xs font-extrabold uppercase tracking-wider">
-                  SUB-ENGINE 3 · SMART-FILL DOCUMENT, AUDIT &amp; PREDICTIVE ALERT ENGINE (2026)
-                </span>
+            <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+              <div
+                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="gradient-brand flex flex-wrap items-center justify-center sm:justify-between gap-2 rounded-full px-4 py-2 text-white"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="text-xs font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
+                      SUB-ENGINE 3 · SMART-FILL DOCUMENT, AUDIT &amp; PREDICTIVE ALERT ENGINE (2026)
+                    </span>
+                  </div>
+                  <span className="rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    125+ Docs · 12 A4 Templates · 356 Checkpoints
+                  </span>
+                </div>
               </div>
-              <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                125+ Docs · 12 A4 Templates · 356 Checkpoints
-              </span>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 items-stretch">
-              {SMART_FILL_ENGINES.map((eng, idx) => {
-                const borderCol = getAppBorderView(idx + 4);
-                return (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
+                {SMART_FILL_ENGINES.map((eng, idx) => (
                   <div
                     key={eng.code}
-                    className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 bg-white shadow-sm"
-                    style={{ borderColor: borderCol }}
+                    className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div>
-                      <div
-                        className="flex items-center justify-between gap-1.5 px-3 py-1.5 text-white"
-                        style={{ background: getHeaderView(idx + 4) }}
-                      >
-                        <span className="text-[10px] font-extrabold text-white">
-                          {eng.code}
-                        </span>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
-                          {eng.badge}
-                        </span>
-                      </div>
-                      <div className="p-2.5 space-y-1 bg-white">
-                        <div className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
-                          {eng.title}
+                    <div
+                      className="flex h-full w-full flex-col items-center justify-between rounded-[13px] p-3 text-center space-y-2"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
+                      <div className="w-full space-y-2">
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex items-center justify-between gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#5A00D6]">
+                            <span>{eng.code}</span>
+                            <span className="rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[9px] font-extrabold text-[#0072FF]">
+                              {eng.badge}
+                            </span>
+                          </div>
                         </div>
-                        <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
-                          {eng.coverage}
-                        </div>
-                        <p className="text-[10.5px] font-semibold text-[#0072FF] leading-snug">
-                          {eng.output}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between gap-1 border-t border-[#0A2B6D]/15 bg-white px-2.5 py-1.5">
-                      <button
-                        type="button"
-                        onClick={handleExportPdf}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                      >
-                        <Download className="h-2.5 w-2.5 text-[#0072FF]" /> A4 Report
-                      </button>
-                      <Link
-                        to={eng.link}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-                        style={{ background: borderCol }}
-                      >
-                        Launch Studio <ArrowRight className="h-2.5 w-2.5 text-white" />
-                      </Link>
+                        <div
+                          className="w-full rounded-xl p-[2px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[48px] items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                            {eng.title}
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-[#0A2B6D]/15 bg-white/95 p-2 text-center space-y-1">
+                          <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                            {eng.coverage}
+                          </div>
+                          <p className="text-[10.5px] font-bold text-[#0072FF] leading-snug">
+                            {eng.output}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full items-center justify-between gap-1 border-t border-[#0A2B6D]/15 pt-2">
+                        <button
+                          type="button"
+                          onClick={handleExportPdf}
+                          className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                        >
+                          <Download className="h-2.5 w-2.5 text-[#0072FF]" /> A4 Report
+                        </button>
+                        <Link
+                          to={eng.link}
+                          className="gradient-brand inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                          style={{ background: getHeaderView(idx + 4), color: '#FFFFFF' }}
+                        >
+                          <span style={{ color: '#FFFFFF' }}>Launch Studio</span>
+                          <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </div>
         )}

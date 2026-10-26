@@ -38,6 +38,7 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
+// Pack 1 (zero slashes, no master doc mention) & Pack 2 (aligned & identical button sizing)
 const PACKS = [
   {
     id: 'pack-1',
@@ -47,21 +48,21 @@ const PACKS = [
     badge: 'Pack 1 · Smart Enhanced All-In-One Subscription',
     pricePrefix: 'From',
     priceMain: '$660',
-    priceSuffix: '/ month ($7,920/yr)',
+    priceSuffix: 'per month ($7,920 per year)',
     subtitle: 'Up to 20 Users ($500 Base + $160 Elite Included) · Scales to 101+ Users',
     bullets: [
-      '1. Includes +$160/mo Elite Plan (2,500 Message & 20,000 Integration Credits/mo)',
-      '2. Includes $355 Master Compliance Audit Doc (17 Categories · 356 Checkpoints)',
+      '1. Includes +$160 per month Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      '2. Includes 17 Audit Categories & 356 Mandatory Verification Checkpoints',
       '3. All 46 Connected Modules + Dual Interactive Office & Profile Workspace Views',
-      '4. Smart Rostering, NDIS Price-Guide Invoicing, Payroll & 24h/5d Incident Timers',
+      '4. Smart Rostering, NDIS Price-Guide Invoicing, Payroll & 24h & 5d Incident Timers',
       '5. 14-Day $0 Upfront Free Trial + Consent-Gated External NDIS Auditor Portal',
     ],
     importantInfoTitle: 'Important Subscription Info & Accurate Tier Pricing',
     importantInfoRows: [
-      'Up to 20 Users: $660/mo ($7,920/yr) · 21–30 Users: $723/mo ($8,670/yr)',
-      '31–40 Users: $785/mo ($9,420/yr) · 41–50 Users: $848/mo ($10,170/yr)',
-      '51–100 Users: $910/mo ($10,920/yr) · 101+ Users: $1,035/mo ($12,420/yr)',
-      'Includes 2,500 Message Credits + 20,000 Integration Credits + $355 Audit Doc Free',
+      'Up to 20 Users: $660 per month ($7,920 per year) · 21–30 Users: $723 per month',
+      '31–40 Users: $785 per month ($9,420 per year) · 41–50 Users: $848 per month',
+      '51–100 Users: $910 per month ($10,920 per year) · 101+ Users: $1,035 per month',
+      'Includes 2,500 Message Credits + 20,000 Integration Credits + 356 Audit Checkpoints',
     ],
     primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
     secondaryCta: { label: 'View All 6 User Tiers', href: '#pricing' },
@@ -74,31 +75,40 @@ const PACKS = [
     badge: 'Pack 2 · Outright Audit & Compliance Doc Pack',
     pricePrefix: 'Outright',
     priceMain: '$999',
-    priceSuffix: 'or $125 / month',
-    subtitle: 'Complete 125+ Document NDIS & Aged Care Library + $355 Master Audit Doc Free',
+    priceSuffix: 'or $125 per month',
+    subtitle: 'Complete 125+ Document NDIS & Aged Care Library + 6 Structured Binders',
     bullets: [
       '1. Complete 125+ NDIS & Aged Care Policies, Procedures, Registers & Intake Forms',
-      '2. Includes $355 Master Compliance Audit Doc (CHR-AUD-001 & CHR-AUD-002)',
-      '3. 6 Structured Compliance Binders + 12 Printable A4 Executive Office Masters',
+      '2. Includes Governance (CHR-AUD-001) & Workforce (CHR-AUD-002) Checklists',
+      '3. 6 Structured Compliance Binders + 12 Printable A4 Executive Office Templates',
       '4. Smart-Fill Auto-Branding with Organisation Logo, ABN, NDIS Number & Signatories',
       '5. Instant 1-Click PDF & CSV Audit Evidence Packs Ready for NDIS Commission Audits',
     ],
     importantInfoTitle: 'Important Outright Package Info & Inclusions',
     importantInfoRows: [
-      'One-Off Outright Purchase: $999 Total · Or Flexible $125/mo Payment Plan',
-      'Includes Both CHR-AUD-001 (Governance) & CHR-AUD-002 (Workforce) ($355 Value)',
+      'One-Off Outright Purchase: $999 Total · Or Flexible $125 per month Payment Plan',
+      'Includes Both Governance (CHR-AUD-001) & Workforce (CHR-AUD-002) Checklists',
       'Covers All 17 NDIS Audit Categories & 356 Mandatory Verification Checkpoints',
-      '100% Editable, Printable & Downloadable PDF/CSV Audit Packs with Lifetime Updates',
+      '100% Editable, Printable & Downloadable PDF & CSV Packs with Lifetime Updates',
     ],
-    primaryCta: { label: 'Select $999 Outright / $125m Pack', href: '#pricing' },
-    secondaryCta: { label: 'Preview 125+ Audit Docs', to: '/compliance' },
+    primaryCta: { label: 'Select $999 Outright', href: '#pricing' },
+    secondaryCta: { label: 'Preview 125+ Docs', to: '/compliance' },
   },
 ];
 
 export default function MarketingSafeShowcase({ embedded = false }) {
   const [activeBenefitIdx, setActiveBenefitIdx] = useState(0);
+  const [litScreenIdx, setLitScreenIdx] = useState(0);
 
-  // Changes every 30 seconds to cycle through the 5 package benefits on Channel 7 & Channel 9
+  // Light up Flat Screens one at a time every 2 seconds
+  useEffect(() => {
+    const lightTimer = setInterval(() => {
+      setLitScreenIdx((prev) => (prev + 1) % 4);
+    }, 2000);
+    return () => clearInterval(lightTimer);
+  }, []);
+
+  // Changes every 30 seconds to cycle through the 5 reasons & package benefits
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveBenefitIdx((prev) => (prev + 1) % 5);
@@ -114,13 +124,13 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-          {/* Heading & Black Subtitle Inside Stretched App Design Coloured Border */}
+          {/* Heading & Centered Black Subtitle Inside Stretched App Design Coloured Border */}
           <div
             className="w-full rounded-2xl p-[4px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="w-full rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
-              <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
+            <div className="flex flex-col items-center justify-center w-full rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
+              <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
                 <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
                 <span className="text-[#0A2B6D]">Compliance</span>
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -158,7 +168,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </div>
           </div>
 
-          {/* 4 High-Impact Subscriber Flat Screens — Detailed Reasons Why Providers Subscribe (Changes Every 30 Secs) */}
+          {/* 4 High-Impact Subscriber Flat Screens — Lighting Up One at a Time & Changing Every 30 Secs (Centered Info, No Master Doc Mention) */}
           <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
             {[
               {
@@ -167,10 +177,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 reasons: [
                   {
                     title: '46 Live Modules in One Subscription',
-                    sub: '100% Connected Super-Platform · From $660/mo',
+                    sub: '100% Connected Super-Platform · From $660 per month',
                     detail: 'Replaces 8 separate HR, Roster, CRM, LMS, Risk, Finance & Audit subscriptions.',
                     points: [
-                      'Saves $1,400+/mo vs buying separate tools',
+                      'Saves $1,400+ per month vs separate tools',
                       'Single login across Staff, Participants & Admins',
                       'Dual Executive Office & Profile Workspace views',
                     ],
@@ -197,7 +207,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                   },
                   {
                     title: '100-Point Staff & Participant Readiness',
-                    sub: 'Automated 90/60/30-Day Expiry Protection',
+                    sub: 'Automated 90, 60 & 30-Day Expiry Protection',
                     detail: 'Never miss an NDIS Worker Screening, Blue Card, First Aid, CPR or Plan Review date.',
                     points: [
                       'Daily automated compliance expiry scanner',
@@ -211,8 +221,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     detail: 'Experience all 46 connected modules, AI tools and printable packs before paying a cent.',
                     points: [
                       'Instant setup with pre-built NDIS templates',
-                      'Includes +$160/mo Elite AI & Integration tier',
-                      'Includes $355 Master Compliance Audit Doc free',
+                      'Includes +$160 per month Elite AI & Integration tier',
+                      'Full access to all 356 audit verification checkpoints',
                     ],
                   },
                 ],
@@ -223,7 +233,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 reasons: [
                   {
                     title: '2-Minute Express Internal Audits',
-                    sub: 'Instant Branded PDF Pack · $355 Doc Free',
+                    sub: 'Instant Branded PDF Pack · Audit Ready',
                     detail: 'Complete internal audits in minutes with attached evidence and auto-logged actions.',
                     points: [
                       'Covers Staff, Participant, Safety & Governance',
@@ -279,7 +289,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 reasons: [
                   {
                     title: '356 Mandatory Audit Checkpoints',
-                    sub: '17 Audit Categories · 125+ Master Docs',
+                    sub: '17 Audit Categories · 125+ Compliance Docs',
                     detail: 'Every single NDIS & Aged Care verification checkpoint pre-mapped with live status.',
                     points: [
                       'Includes CHR-AUD-001 (Governance & Operations)',
@@ -288,7 +298,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     ],
                   },
                   {
-                    title: '6 Structured Binders + 12 A4 Masters',
+                    title: '6 Structured Binders + 12 A4 Templates',
                     sub: '2026 Standard Printable Templates Suite',
                     detail: 'Print or download courtroom-grade A4 policies, registers, contracts and intake forms.',
                     points: [
@@ -334,7 +344,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 icon: Sparkles,
                 reasons: [
                   {
-                    title: 'AI Smart-Fill & +$160/mo Elite Included',
+                    title: 'AI Smart-Fill & +$160 Elite Included',
                     sub: '2,500 Message + 20,000 Integration Credits',
                     detail: 'Every subscription tier includes the Elite AI & Automation plan built right into the price.',
                     points: [
@@ -374,7 +384,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                     ],
                   },
                   {
-                    title: 'Seamless CSV / Excel Data Exchange',
+                    title: 'Seamless CSV & Excel Data Exchange',
                     sub: 'Migrate & Export Any Register in Seconds',
                     detail: 'Bring your existing staff, participants and documents over effortlessly with guided imports.',
                     points: [
@@ -387,29 +397,34 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               },
             ].map((screen, idx) => {
               const Icon = screen.icon;
+              const isLit = litScreenIdx === idx;
               const sym = getSymbolView(idx + 1);
-              const borderCol = getAppBorderView(idx + 1);
+              const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx + 1);
               const activeReason = screen.reasons[activeBenefitIdx % screen.reasons.length];
               return (
                 <div key={screen.screenLabel} className="flex h-full flex-col items-center justify-between">
-                  {/* Flat Screen Monitor Frame */}
+                  {/* Flat Screen Monitor Frame — Lights Up One at a Time */}
                   <div
-                    className="flex h-full w-full flex-1 flex-col justify-between rounded-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"
+                    className={`flex h-full w-full flex-1 flex-col justify-between rounded-2xl border-[3px] p-2.5 transition-all duration-300 ${
+                      isLit
+                        ? 'bg-[#0072FF] -translate-y-0.5 ring-4 ring-[#00C6FF]/75 shadow-xl'
+                        : 'bg-[#0A2B6D] shadow-md'
+                    }`}
                     style={{ borderColor: borderCol }}
                   >
                     {/* Top Monitor Bezel Bar */}
                     <div className="mb-1.5 flex items-center justify-between gap-1 px-1.5">
                       <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
                         <Monitor className="h-3 w-3 text-[#00C6FF]" />
-                        {screen.screenLabel}
+                        {isLit ? `SCREEN 0${idx + 1} · LIT UP ✦` : screen.screenLabel}
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[8.5px] font-extrabold text-white">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0.5 text-[8.5px] font-extrabold text-white">
                         <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
-                        30s Cycle · {(activeBenefitIdx % 5) + 1}/5
+                        30s · {(activeBenefitIdx % 5) + 1}/5
                       </span>
                     </div>
 
-                    {/* Inner Monitor Display */}
+                    {/* Inner Monitor Display — All Info Centered */}
                     <div
                       className="flex flex-1 rounded-xl p-[2.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
@@ -421,12 +436,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         {/* Live 30s Reason Banner */}
                         <div className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5">
                           <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                            Reason #{(activeBenefitIdx % 5) + 1} Why Providers Subscribe
+                            Reason #{(activeBenefitIdx % 5) + 1} of 5
                           </span>
                           <button
                             type="button"
                             onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                            className="rounded-full bg-[#5A00D6] px-2 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-90"
+                            className="rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-90"
                             style={{ color: '#FFFFFF' }}
                           >
                             Next ▸
@@ -438,41 +453,43 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           className="w-full rounded-xl p-[2px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2.5 py-2 text-center">
+                          <div className="flex min-h-[68px] flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2.5 py-2 text-center">
                             <div className="flex items-center justify-center gap-2">
                               <span
                                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                                style={{ borderColor: borderCol }}
+                                style={{ borderColor: getAppBorderView(idx + 1) }}
                               >
                                 <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                               </span>
-                              <div className="text-xs sm:text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
+                              <div className="text-center text-xs sm:text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
                                 {activeReason.title}
                               </div>
                             </div>
-                            <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                            <div className="text-center text-[10.5px] font-extrabold text-[#5A00D6]">
                               {activeReason.sub}
                             </div>
                           </div>
                         </div>
 
                         {/* Centered Summary Explanation */}
-                        <p
-                          className="text-center text-[11px] font-extrabold leading-snug text-black"
-                          style={{ color: '#000000' }}
-                        >
-                          {activeReason.detail}
-                        </p>
+                        <div className="flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-2.5 py-1.5 text-center">
+                          <p
+                            className="text-center text-[11px] font-extrabold leading-snug text-black"
+                            style={{ color: '#000000' }}
+                          >
+                            {activeReason.detail}
+                          </p>
+                        </div>
 
-                        {/* 3 Concrete Subscriber Reasons / Proof Points */}
-                        <ul className="w-full space-y-1 text-left">
+                        {/* 3 Centered Subscriber Proof Points */}
+                        <ul className="w-full space-y-1 text-center">
                           {activeReason.points.map((pt) => (
                             <li
                               key={pt}
-                              className="flex items-start gap-1.5 rounded-lg border border-[#0A2B6D]/20 bg-white/95 px-2 py-1 text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
+                              className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/20 bg-white/95 px-2 py-1 text-center text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
                             >
-                              <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-[#FF2E9A]" />
-                              <span>{pt}</span>
+                              <CheckCircle2 className="h-3 w-3 shrink-0 text-[#FF2E9A]" />
+                              <span className="text-center">{pt}</span>
                             </li>
                           ))}
                         </ul>
@@ -481,8 +498,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
 
                     {/* Bottom Monitor Channel Dots */}
                     <div className="mt-1.5 flex items-center justify-between px-2">
-                      <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white/80">
-                        AUTO-ROTATES EVERY 30 SECS
+                      <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white/90">
+                        CHANGES EVERY 30 SECS
                       </span>
                       <div className="flex items-center gap-1">
                         {[0, 1, 2, 3, 4].map((dot) => (
@@ -510,7 +527,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             })}
           </div>
 
-          {/* Pack 1 (Channel 7 TV) & Pack 2 (Channel 9 TV) — Lined Up & Designed the Exact Same with Important Info Below Screen */}
+          {/* Pack 1 (Channel 7 TV) & Pack 2 (Channel 9 TV) — Lined Up, Constantly Lit Up, Centered Writing & Identical Button Sizes */}
           <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
             {PACKS.map((pack, pIdx) => {
               const PackIcon = pack.icon;
@@ -528,29 +545,29 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <span
-                        className="gradient-brand inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                        className="gradient-brand inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
                         style={{ background: getHeaderView(pIdx * 2 + 2), color: '#FFFFFF' }}
                       >
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
                           <PackIcon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                         </span>
-                        <span style={{ color: '#FFFFFF' }}>{pack.badge}</span>
+                        <span className="text-center" style={{ color: '#FFFFFF' }}>{pack.badge}</span>
                       </span>
                     </div>
 
-                    {/* Widescreen TV Screen: Channel 7 on TV 1, Channel 9 on TV 2 */}
+                    {/* Constantly Lit Live HD Widescreen TV Screen: Channel 7 on TV 1, Channel 9 on TV 2 */}
                     <div className="flex w-full flex-col items-center">
                       <div
-                        className="flex w-full flex-col justify-between rounded-[22px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
-                        style={{ borderColor: getAppBorderView(pIdx) }}
+                        className="flex w-full flex-col justify-between rounded-[22px] border-[4px] bg-[#0072FF] p-3 ring-4 ring-[#00C6FF]/75 shadow-xl"
+                        style={{ borderColor: '#00C6FF' }}
                       >
-                        {/* Top TV Bezel Status Bar */}
+                        {/* Top TV Bezel Status Bar — Constantly Lit */}
                         <div className="mb-2 flex items-center justify-between px-2">
                           <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                            <Tv className="h-3.5 w-3.5 text-[#00C6FF]" />
-                            {pack.tvChannel}
+                            <Tv className="h-3.5 w-3.5 text-[#FFF3FA]" />
+                            {pack.tvChannel} · LIT UP ✦
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
                             <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
                             30s Auto-Cycle · Benefit {(activeBenefitIdx % 5) + 1} of 5
                           </span>
@@ -562,19 +579,19 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <div
-                            className="flex flex-col justify-between rounded-[13px] p-3 text-left space-y-2.5"
+                            className="flex flex-col justify-between rounded-[13px] p-3 text-center space-y-2.5"
                             style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
                           >
-                            {/* 30-Second Changing Spotlight Banner on Channel 7 / Channel 9 */}
+                            {/* 30-Second Changing Spotlight Banner — Centered */}
                             <div
                               className="w-full rounded-xl p-[2px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="gradient-brand flex min-h-[58px] items-center justify-between gap-2 rounded-[9px] px-3 py-2 text-white"
+                                className="gradient-brand flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-3 py-2 text-center text-white sm:flex-row sm:justify-between"
                                 style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                               >
-                                <div className="min-w-0 flex-1">
+                                <div className="min-w-0 flex-1 text-center">
                                   <div
                                     className="text-[9.5px] font-extrabold uppercase tracking-wider text-white"
                                     style={{ color: '#FFFFFF' }}
@@ -599,8 +616,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </div>
                             </div>
 
-                            {/* All 5 Package Benefits Listed on the TV Screen */}
-                            <ul className="grid w-full grid-cols-1 gap-1.5 text-left text-xs font-extrabold">
+                            {/* All 5 Package Benefits Listed & Centered on the TV Screen with Equal Row Heights */}
+                            <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1.5 text-center text-xs font-extrabold">
                               {pack.bullets.map((line, idx) => {
                                 const sym = getSymbolView(pIdx * 3 + idx);
                                 const borderCol = getAppBorderView(pIdx * 3 + idx);
@@ -613,7 +630,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
                                     <div
-                                      className={`flex min-h-[38px] items-center gap-2 rounded-[9px] px-2.5 py-1.5 ${
+                                      className={`flex h-full min-h-[42px] items-center justify-center gap-2 rounded-[9px] px-2.5 py-1.5 text-center ${
                                         isCurrent ? 'bg-white ring-2 ring-[#FF2E9A]' : 'bg-white/95'
                                       }`}
                                     >
@@ -623,7 +640,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                       >
                                         <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="flex-1 text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
+                                      <span className="flex-1 text-center text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
                                         {line}
                                       </span>
                                     </div>
@@ -636,8 +653,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
 
                         {/* Bottom TV Speaker Bar & Channel Dots */}
                         <div className="mt-2 flex items-center justify-between px-3">
-                          <span className="text-[9px] font-extrabold tracking-widest text-white/80">
-                            {pack.tvChannel} · COMPLIANCEHR TV
+                          <span className="text-[9px] font-extrabold tracking-widest text-white">
+                            {pack.tvChannel} · CONSTANTLY LIT HD
                           </span>
                           <div className="flex items-center gap-1.5">
                             {[0, 1, 2, 3, 4].map((dot) => (
@@ -647,7 +664,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 aria-label={`Show benefit ${dot + 1}`}
                                 onClick={() => setActiveBenefitIdx(dot)}
                                 className={`h-2 w-2 rounded-full transition-all ${
-                                  activeBenefitIdx % 5 === dot ? 'bg-[#FF2E9A] scale-125' : 'bg-white/40'
+                                  activeBenefitIdx % 5 === dot ? 'bg-[#FF2E9A] scale-125' : 'bg-white/60'
                                 }`}
                               />
                             ))}
@@ -663,7 +680,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* Important Package Info & Accurate Prices Placed Directly BELOW the TV Screen */}
+                    {/* Important Package Info & Accurate Prices Placed Directly BELOW the TV Screen — Centered & Aligned */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-2xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
@@ -672,12 +689,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                         className="flex h-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
                         style={{ background: SPRAY_BGS[(pIdx + 1) % SPRAY_BGS.length] }}
                       >
-                        {/* Price Box Inside App Design Coloured Border */}
+                        {/* Centered Price Box Inside App Design Coloured Border */}
                         <div
                           className="w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex min-h-[76px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2">
+                          <div className="flex min-h-[82px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                             <div className="flex flex-wrap items-baseline justify-center gap-2">
                               <span className="text-xs font-extrabold uppercase text-[#0072FF]">
                                 {pack.pricePrefix}
@@ -701,8 +718,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </div>
                         </div>
 
-                        {/* Important Info Header & Aligned Bullet Rows Below Screen */}
-                        <div className="space-y-1.5 text-left">
+                        {/* Centered Important Info Header & Aligned Bullet Rows Below Screen */}
+                        <div className="space-y-1.5 text-center">
                           <div
                             className="w-full rounded-lg p-[2px]"
                             style={{ background: TOP_BORDER_GRADIENT }}
@@ -714,15 +731,15 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               {pack.importantInfoTitle}
                             </div>
                           </div>
-                          <div className="grid grid-cols-1 gap-1">
+                          <div className="grid grid-cols-1 grid-rows-4 gap-1">
                             {pack.importantInfoRows.map((info) => (
                               <div
                                 key={info}
-                                className="flex min-h-[30px] items-center gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-black"
+                                className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1 text-center text-[10.5px] font-extrabold text-black"
                                 style={{ color: '#000000' }}
                               >
                                 <CheckCircle2 className="h-3 w-3 shrink-0 text-[#5A00D6]" />
-                                <span className="text-black" style={{ color: '#000000' }}>{info}</span>
+                                <span className="text-center text-black" style={{ color: '#000000' }}>{info}</span>
                               </div>
                             ))}
                           </div>
@@ -730,27 +747,27 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </div>
                     </div>
 
-                    {/* Package Action Buttons Lined Up at Bottom */}
+                    {/* Package Action Buttons — Compact & Identical Height Across Pack 1 & Pack 2 */}
                     <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                       {pack.primaryCta.to ? (
                         <Link
                           to={pack.primaryCta.to}
-                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
                           style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                         >
-                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
                           <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
                         </Link>
                       ) : (
                         <a
                           href={pack.primaryCta.href}
-                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
                           style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                         >
-                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                            <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
                           <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
                         </a>
@@ -759,7 +776,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       {pack.secondaryCta.to ? (
                         <Link
                           to={pack.secondaryCta.to}
-                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
                           style={{ background: getHeaderView(3), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
@@ -767,7 +784,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       ) : (
                         <a
                           href={pack.secondaryCta.href}
-                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          className="gradient-brand inline-flex h-[38px] w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap"
                           style={{ background: getHeaderView(3), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>

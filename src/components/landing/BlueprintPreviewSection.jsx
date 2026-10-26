@@ -81,6 +81,102 @@ const YOUTUBE_CLIPS = [
   { title: 'Maroon 5 — Sugar', videoId: '09R8_2nJtjg', channel: 'YouTube Spotlight' },
 ];
 
+// Expanded, consistent-length descriptions for every laptop so the white areas look balanced and uniform
+const EXPANDED_LAPTOP_DESCRIPTIONS = {
+  dashboard:
+    'Unified executive & role command hub featuring the interactive Office Wall, live compliance score ring, morning shift brief & instant module launcher.',
+  'operations-centre':
+    'One-click operational command deck with 12 armed compliance, roster & risk sweeps, live execution audit trails and benchmark suites.',
+  'my-profile':
+    'Personal staff & participant workspace uniting my shifts, my documents, 100-point credential status, personal tasks & printable ID name tags.',
+  intake:
+    'End-to-end participant & employee onboarding pipeline with online fillable forms, AI resume extraction & 1-click conversion into live profiles.',
+  'our-staff':
+    'Consolidated employee directory tracking 100-point HR files, NDIS worker screening, Blue Cards, First Aid, contracts & 360° appraisals.',
+  'our-participants':
+    'Person-centred participant profiles with NDIS plan budgets, locked 3-part consents, support teams, risk assessments & 10-weekly reviews.',
+  'visual-boards':
+    'Accessible daily visual routines, text-to-speech communication pads, weather boards, Auslan sign prompts & multilingual translation tools.',
+  'key-contacts':
+    'Centralised register of key management personnel, financial & clinical delegations, authority expiry alerts & auto-attached email signatures.',
+  'volunteering-placements':
+    'Complete volunteer & student placement lifecycle covering applications, screening clearances, induction training & supervised buddy shifts.',
+  users:
+    'Granular role-based access control (RLS) hub with 15 permission levels, 1-click portal invitations, pending approval gates & user audit logs.',
+  communications:
+    '16-modular communication command centre uniting shift handover notes, branded emails, inbox, broadcasts, video calls & team banter.',
+  incidents:
+    'NDIS reportable incident clinic with statutory 24-hour & 5-day Commission countdown timers, root-cause investigations & photo evidence.',
+  'incident-analytics':
+    'Real-time incident trend intelligence displaying severity breakdowns, time-of-day heatmaps, category charts & preventative CAPA actions.',
+  risks:
+    'Enterprise, clinical & home risk matrix applying the ISO 31000 Hierarchy of Controls, pre-shift Take-5 checks & 6-monthly review schedules.',
+  rostering:
+    'Smart NDIS shift rostering with automated worker screening & fatigue gatekeepers, coverage heatmaps, labour forecasts & calendar sync.',
+  goals:
+    'Interactive participant & staff goal tracking with 0–100% progress sliders, linked shift notes, NDIS funding outcome charts & AI Goal Coach.',
+  tasks:
+    'Shared To-Do command board featuring priority Kanban lanes, digital supervisor sign-off, team competition leaderboards & 30-task PDF batches.',
+  'emergency-response':
+    '24/7 emergency readiness suite covering Personal Emergency Evacuation Plans (PEEPs), 6-monthly fire drills, safety kit logs & quick-dial.',
+  compliance:
+    'Master compliance & report centre housing the 17-category / 356-checkpoint audit checklist, 8 NDIS Practice Standards map & 1-click board packs.',
+  'auditor-portal':
+    'Dedicated read-only external NDIS auditor portal enforcing participant & staff audit consent flags with pre-mapped Practice Standard evidence.',
+  documents:
+    'Smart document vault with private encrypted storage, version control, staff read-receipt acknowledgements & 90/60/30-day renewal calendars.',
+  'company-safe':
+    'High-security corporate vault storing business identity credentials, NDIS registration certificates, insurance policies, leases & badge studio.',
+  training:
+    'Interactive LMS training academy with AI course authoring, competency quiz drills, learner streaks & department skills-gap analytics.',
+  certificates:
+    'Official accreditation & recognition studio generating signed PDF certificates, tracking credential expiry horizons & celebrating milestones.',
+  quality:
+    'Continuous Improvement Register (CIR) automatically linking audit findings, incidents & feedback to assigned owners and closure evidence.',
+  feedback:
+    'Complaints, compliments & survey hub with 24-hour acknowledgement SLAs, procedural fairness workflows & public submission portals.',
+  meetings:
+    'Governance & team meeting suite with 2026 Smart-Fill agenda & minutes templates, quorum tracking, action item extraction & calendar views.',
+  invoicing:
+    'NDIS Price Guide invoicing & payroll engine converting completed shifts into compliant claim lines, pay runs, payslips & bank matches.',
+  quotes:
+    'Branded NDIS Schedule of Supports quote builder with itemised support calculators, live A4 PDF previews & 1-click invoice conversion.',
+  receipts:
+    'AI-powered expense receipt scanner extracting merchant, amount, GST & NDIS support categories with instant reimbursement & PDF bundling.',
+  procurement:
+    'Approved supplier & purchase order hub enforcing ABN/insurance checks and automated 3-way matching across POs, receipts & invoices.',
+  assets:
+    'Fleet, plant & assistive technology register tracking scheduled maintenance, vehicle safety inspections, compliance reviews & disposals.',
+  analytics:
+    'Executive business intelligence suite aggregating cross-module KPIs, compliance trajectories, revenue vs labour metrics & board exports.',
+  'human-resources':
+    'Complete HR paperwork studio for digital employment contracts, position descriptions, leave requests, appraisals & 100-point staff files.',
+  crm:
+    'Provider growth & referrer relationship pipeline managing enquiries, support coordinator contacts, follow-up tasks & intake conversion.',
+  projects:
+    'Strategic business project & governance delivery tracker with milestone boards, budget oversight, owner assignments & progress logs.',
+  'ndis-provider':
+    'NDIS registration group & governance control portal tracking Practice Standard compliance, Commission deadlines & provider KPIs.',
+  'ndis-news':
+    'Live NDIS Quality & Safeguards Commission news feed, Price Guide release tracker, regulatory impact briefings & policy update alerts.',
+  'equipment-manuals':
+    'Safe operating procedure library for hoists, assistive technology & plant alongside a live Hazardous Chemical MSDS safety register.',
+  'community-council':
+    'Local council accessibility lookup, inclusive community program directory & venue safety planning for participant outings.',
+  'community-referral':
+    'Postcode-matched allied health, advocacy & crisis service directory with 1-click warm referral letters and consent transfers.',
+  programs:
+    'Group programs & accessible events calendar featuring AI promotional flyer generation, staffing ratio calculators & RSVP invitations.',
+  'suggestions-hub':
+    'Whole-of-platform AI module auditor scanning all 46 screens for overdue items, expiring records & 1-click continuous improvements.',
+  help:
+    '24/7 technical support & AI system troubleshooter with live platform health diagnostics, guided fixes & priority help-desk tickets.',
+  'user-guides':
+    'Step-by-step interactive user manuals and downloadable A4 Standard Operating Procedure (SOP) guides for every module and role.',
+  assistant:
+    'In-app AI compliance, rostering & documentation copilot answering NDIS policy questions and drafting compliant records in seconds.',
+};
+
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) =>
   keys
@@ -88,7 +184,7 @@ const pick = (...keys) =>
     .filter(Boolean)
     .map((m) => ({
       label: m.label,
-      blurb: m.blurb,
+      blurb: EXPANDED_LAPTOP_DESCRIPTIONS[m.key] || m.blurb,
       key: m.key,
       path: m.key === 'dashboard' ? '/dashboard' : m.path,
       icon: m.icon,
@@ -113,7 +209,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-1',
         label: 'YouTube Stage 01',
-        blurb: 'Live YouTube Pop Stream synced to your workspace beat — Dua Lipa · Levitating.',
+        blurb: 'Live YouTube Pop Stream synced to your workspace beat — Dua Lipa · Levitating (Official Studio Music Clip).',
         clipTitle: 'Dua Lipa — Levitating (Official Clip)',
         videoId: 'TUVcZfQe-Kw',
         visibilityClass: 'flex',
@@ -121,7 +217,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-2',
         label: 'YouTube Stage 02',
-        blurb: 'Official YouTube Synthwave HD Music Clip — The Weeknd · Blinding Lights.',
+        blurb: 'Official YouTube Synthwave HD Music Clip — The Weeknd · Blinding Lights (1080p Live Workspace Stream).',
         clipTitle: 'The Weeknd — Blinding Lights (Official Clip)',
         videoId: '4NRXx6U8ABQ',
         visibilityClass: 'flex',
@@ -144,7 +240,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-3',
         label: 'YouTube Stage 03',
-        blurb: 'Service Delivery Groove & Workforce Energy — Mark Ronson ft. Bruno Mars · Uptown Funk.',
+        blurb: 'Service Delivery Groove & Workforce Energy — Mark Ronson ft. Bruno Mars · Uptown Funk (Official Music Clip).',
         clipTitle: 'Mark Ronson ft. Bruno Mars — Uptown Funk',
         videoId: 'OPf0YbXqDm0',
         visibilityClass: 'flex',
@@ -152,7 +248,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-4',
         label: 'YouTube Stage 04',
-        blurb: 'Feel-Good Shift Pop Channel — Justin Timberlake · Can’t Stop the Feeling!',
+        blurb: 'Feel-Good Shift Pop Channel — Justin Timberlake · Can’t Stop the Feeling! (Official HD Music Video).',
         clipTitle: 'Justin Timberlake — Can’t Stop the Feeling!',
         videoId: 'ru0K8uYEZWw',
         visibilityClass: 'hidden sm:flex lg:hidden',
@@ -176,7 +272,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-5',
         label: 'YouTube Stage 05',
-        blurb: 'Audit-Ready Celebration Music Clip — Pharrell Williams · Happy.',
+        blurb: 'Audit-Ready Celebration Music Clip — Pharrell Williams · Happy (Official Studio HD Music Video).',
         clipTitle: 'Pharrell Williams — Happy (Official Clip)',
         videoId: 'ZbZSe6N_BXs',
         visibilityClass: 'hidden sm:flex lg:hidden',
@@ -200,7 +296,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-6',
         label: 'YouTube Stage 06',
-        blurb: 'Executive Finance & Growth Pop Stream — Bruno Mars · 24K Magic.',
+        blurb: 'Executive Finance & Growth Pop Stream — Bruno Mars · 24K Magic (Official HD Music Video Clip).',
         clipTitle: 'Bruno Mars — 24K Magic (Official Clip)',
         videoId: 'UqyT8IEBkvY',
         visibilityClass: 'hidden sm:flex lg:hidden',
@@ -225,7 +321,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-7',
         label: 'YouTube Stage 07',
-        blurb: 'Provider Network Indie Pop Stream — Harry Styles · As It Was.',
+        blurb: 'Provider Network Indie Pop Stream — Harry Styles · As It Was (Official Studio HD Music Clip).',
         clipTitle: 'Harry Styles — As It Was (Official Clip)',
         videoId: 'H5v3kku4y6Q',
         visibilityClass: 'flex',
@@ -233,7 +329,7 @@ const APP_MODULE_GROUPS = [
       {
         id: 'yt-filler-8',
         label: 'YouTube Stage 08',
-        blurb: 'Infinity Assistant Live Arena Clip — Coldplay · Higher Power.',
+        blurb: 'Infinity Assistant Live Arena Clip — Coldplay · Higher Power (Official HD Music Video Stream).',
         clipTitle: 'Coldplay — Higher Power (Official Clip)',
         videoId: '3lfnR7OhZY8',
         visibilityClass: 'flex',
@@ -265,7 +361,6 @@ const DATA_FLOWS = [
   },
 ];
 
-// Channel 29 for External NDIS Auditors & Guests, without repeating "Auditor Portal" twice
 const ACCESS_LEVELS = [
   {
     channelBadge: 'CHANNEL 7 · LIVE HD',
@@ -304,31 +399,41 @@ const ACCESS_LEVELS = [
   },
 ];
 
-// Reusable uniform section/group header bar so every header with writing in Accurate Map is the exact same size
-function UniformBlueprintHeader({ icon: Icon, title, badgeText, viewIndex = 0 }) {
+// Reusable uniform section/group header bar — supports optional secondLine so "& YouTube Music Clips" sits on line 2
+function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, viewIndex = 0 }) {
   return (
     <div
       className="w-full rounded-2xl p-[3px] shadow-2xs"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div
-        className="gradient-brand flex min-h-[48px] w-full flex-wrap items-center justify-between gap-2.5 rounded-[13px] px-4 py-2 text-white"
+        className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-4 py-2 text-center text-white sm:flex-row sm:justify-between"
         style={{ background: getHeaderView(viewIndex), color: '#FFFFFF' }}
       >
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-          </span>
-          <span
-            className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
-            style={{ color: '#FFFFFF' }}
-          >
-            {title}
-          </span>
+        <div className="flex flex-col items-center sm:items-start">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span
+              className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              style={{ color: '#FFFFFF' }}
+            >
+              {title}
+            </span>
+          </div>
+          {secondLine ? (
+            <span
+              className="mt-0.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white sm:pl-8"
+              style={{ color: '#FFFFFF' }}
+            >
+              {secondLine}
+            </span>
+          ) : null}
         </div>
         {badgeText ? (
           <span
-            className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10.5px] font-extrabold text-white"
+            className="shrink-0 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10.5px] font-extrabold text-white"
             style={{ color: '#FFFFFF' }}
           >
             {badgeText}
@@ -351,7 +456,6 @@ export default function BlueprintPreviewSection() {
   const moduleCount = MODULE_DIRECTORY.length;
   const currentSong = POP_SONGS[songIndex % POP_SONGS.length];
 
-  // Pop rhythm engine: drives visual beat + optional Web Audio pop synth
   useEffect(() => {
     if (!isPlayingPop) return undefined;
     const intervalMs = Math.round(((60 / currentSong.bpm) * 1000) / 2);
@@ -405,7 +509,6 @@ export default function BlueprintPreviewSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      {/* Keyframes for slow left-to-right connected flow movement & dancing laptops */}
       <style>{`
         @keyframes flowSlideLeftToRight {
           0% { transform: translateX(-14px); }
@@ -492,7 +595,6 @@ export default function BlueprintPreviewSection() {
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Uniform Header #3 */}
                     <UniformBlueprintHeader
                       icon={Workflow}
                       title="How Information Connects Automatically"
@@ -515,7 +617,6 @@ export default function BlueprintPreviewSection() {
                               {flow.label}
                             </span>
 
-                            {/* Connected Tiles Moving Together Slowly Left to Right */}
                             <div
                               className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1.5 py-1"
                               style={{ animationDelay: `${fIdx * 0.6}s` }}
@@ -553,13 +654,12 @@ export default function BlueprintPreviewSection() {
                   </div>
                 </div>
 
-                {/* Right Column: Access Follows Role — Centered on Flat Screen TVs Tuned to Channels (Ch 7, 9, 10, 2, 29) */}
+                {/* Right Column: Access Follows Role — Constantly Lit Live HD TVs on Channels 7, 9, 10, 2, 29 */}
                 <div
                   className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Uniform Header #4 */}
                     <UniformBlueprintHeader
                       icon={Lock}
                       title="Access Follows Role (Live TV Channels)"
@@ -567,25 +667,25 @@ export default function BlueprintPreviewSection() {
                       viewIndex={5}
                     />
 
-                    {/* 5 Role Permission Levels Centered Inside Flat Screen TVs on Channels */}
+                    {/* 5 Role Permission Levels Centered Inside Constantly Lit Live HD Flat Screen TVs */}
                     <div className="grid grid-cols-1 gap-3">
                       {ACCESS_LEVELS.map((lvl, idx) => {
                         const sym = getSymbolView(idx + 2);
                         const borderCol = getAppBorderView(idx + 2);
                         return (
                           <div key={lvl.title} className="flex flex-col items-center">
-                            {/* Flat Screen TV Bezel */}
+                            {/* Constantly Lit Flat Screen TV Bezel */}
                             <div
-                              className="w-full rounded-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"
+                              className="w-full rounded-2xl border-[3px] bg-[#0072FF] p-2.5 ring-2 ring-[#00C6FF]/80 shadow-lg"
                               style={{ borderColor: borderCol }}
                             >
                               {/* Top TV Channel & Broadcast Bar */}
                               <div className="mb-1.5 flex items-center justify-between px-2">
                                 <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                                  <Tv className="h-3.5 w-3.5 text-[#00C6FF]" />
-                                  {lvl.channelBadge}
+                                  <Tv className="h-3.5 w-3.5 text-[#FFF3FA]" />
+                                  {lvl.channelBadge} · LIT UP ✦
                                 </span>
-                                <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
+                                <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
                                   <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
                                   {lvl.channelProgram}
                                 </span>
@@ -600,7 +700,6 @@ export default function BlueprintPreviewSection() {
                                   className="flex flex-col items-center justify-center gap-2 rounded-[10px] px-4 py-3 text-center text-[#0A2B6D]"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* Role Scope Pill */}
                                   <span
                                     className="inline-flex items-center gap-1 rounded-full border bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6] shadow-2xs"
                                     style={{ borderColor: borderCol }}
@@ -609,7 +708,6 @@ export default function BlueprintPreviewSection() {
                                     {lvl.scopeBadge}
                                   </span>
 
-                                  {/* Centered Role Heading Box */}
                                   <div
                                     className="w-full max-w-xl rounded-xl p-[2px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
@@ -627,13 +725,14 @@ export default function BlueprintPreviewSection() {
                                     </div>
                                   </div>
 
-                                  {/* Centered Middle Description */}
-                                  <p
-                                    className="mx-auto max-w-xl text-center text-[11px] font-extrabold leading-snug text-black"
-                                    style={{ color: '#000000' }}
-                                  >
-                                    {lvl.desc}
-                                  </p>
+                                  <div className="w-full max-w-xl rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                                    <p
+                                      className="mx-auto text-center text-[11px] font-extrabold leading-snug text-black"
+                                      style={{ color: '#000000' }}
+                                    >
+                                      {lvl.desc}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -678,21 +777,22 @@ export default function BlueprintPreviewSection() {
           </div>
         </div>
 
-        {/* Organisation Live Workspace — Uniform Header + Clean Action Row + Identically Designed Laptops with Screens at the Bottom */}
+        {/* Organisation Live Workspace — "& YouTube Music Clips" Moved to Line 2 Under Header */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-[12px] bg-white p-4 space-y-4 text-left">
-            {/* Uniform Header #5: Organisation Live Workspace */}
+            {/* Uniform Header #5: Line 1 = Organisation Live Workspace · Interactive Laptops, Line 2 = & YouTube Music Clips */}
             <UniformBlueprintHeader
               icon={LayoutDashboard}
-              title="Organisation Live Workspace · Interactive Laptops & YouTube Music Clips"
+              title="Organisation Live Workspace · Interactive Laptops"
+              secondLine="& YouTube Music Clips"
               badgeText="All Laptops Designed Identically"
               viewIndex={7}
             />
 
-            {/* Clean Symmetrical 3-Tile Action Row Below Header (Fixes the First Two Tiles / Header Crowding) */}
+            {/* Clean Symmetrical 3-Tile Action Row Below Header */}
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               <div
                 className="rounded-xl p-[2.5px] shadow-2xs"
@@ -750,7 +850,6 @@ export default function BlueprintPreviewSection() {
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Uniform Group Header — Exact Same Size as All Other Blueprint Headers */}
                     <UniformBlueprintHeader
                       icon={Laptop}
                       title={group.title}
@@ -758,7 +857,7 @@ export default function BlueprintPreviewSection() {
                       viewIndex={gIdx}
                     />
 
-                    {/* Grid of Laptops — Every Laptop (Including First Two Tiles & Filler Laptops) Has Identical Design & Screen at the Bottom */}
+                    {/* Grid of Laptops — Expanded White Areas, Balanced Writing on Laptop #2 & All Others, Screens at the Bottom */}
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr pt-1 items-stretch">
                       {group.modules.map((mod, mIdx) => {
                         const Icon = mod.icon || ShieldCheck;
@@ -799,7 +898,7 @@ export default function BlueprintPreviewSection() {
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen — Uniform Top Header, Centered Writing, and YouTube Video Screen at the Bottom */}
+                              {/* Inner Laptop Screen — Expanded White Areas & YouTube Video Screen at the Bottom */}
                               <div
                                 className="flex flex-1 rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
@@ -808,37 +907,42 @@ export default function BlueprintPreviewSection() {
                                   className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* 1. Top: Fixed-Height Centered Module Header Box (First Two Tiles & All Others Match Size) */}
+                                  {/* 1. Top: Spacious White Module Header Box */}
                                   <Link
                                     to={mod.path}
                                     className="w-full rounded-xl p-[2.5px] shadow-2xs transition-transform hover:scale-[1.01]"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                                    <div className="flex min-h-[54px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-2 text-center">
                                       <span
-                                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                                        <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
-                                        {mod.label}
-                                      </span>
+                                      <div className="flex flex-col items-center">
+                                        <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                          {mod.label}
+                                        </span>
+                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                                          Module #{String(idx + 1).padStart(2, '0')} · Clip #{idx + 1}
+                                        </span>
+                                      </div>
                                     </div>
                                   </Link>
 
-                                  {/* 2. Middle: Crisp Centered Module Writing & Open Module Link */}
+                                  {/* 2. Middle: Expanded White Info Box with Full Consistent Description */}
                                   <Link
                                     to={mod.path}
-                                    className="flex min-h-[68px] w-full flex-col items-center justify-between rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs"
+                                    className="flex min-h-[96px] w-full flex-1 flex-col items-center justify-between rounded-xl border-2 border-[#0A2B6D]/20 bg-white px-3.5 py-2.5 text-center shadow-2xs"
                                   >
                                     <p
-                                      className="text-center text-[11px] font-extrabold leading-snug text-black"
+                                      className="text-center text-[11px] font-extrabold leading-relaxed text-black"
                                       style={{ color: '#000000' }}
                                     >
                                       {mod.blurb}
                                     </p>
-                                    <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                    <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
                                       <span style={{ color: '#FFFFFF' }}>Open {mod.label}</span>
                                       <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                                     </span>
@@ -936,7 +1040,7 @@ export default function BlueprintPreviewSection() {
                         );
                       })}
 
-                      {/* Filler YouTube Video Laptops in Blank Grid Spaces — Designed the Exact Same as Module Laptops */}
+                      {/* Filler YouTube Video Laptops in Blank Grid Spaces — Exact Same Expanded White Areas & Bottom Screen */}
                       {group.youtubeFillers.map((yt, yIdx) => {
                         const idx = gIdx * 10 + group.modules.length + yIdx;
                         const sym = getSymbolView(idx);
@@ -947,12 +1051,10 @@ export default function BlueprintPreviewSection() {
                             key={yt.id}
                             className={`${yt.visibilityClass} h-full flex-col items-center justify-between laptop-beat-a`}
                           >
-                            {/* Top Laptop Lid & Screen */}
                             <div
                               className="flex w-full flex-1 flex-col rounded-t-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"
                               style={{ borderColor: borderCol }}
                             >
-                              {/* Laptop Webcam & Bezel Bar */}
                               <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
                                 <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
                                   <Laptop className="h-2.5 w-2.5 text-[#00C6FF]" />
@@ -965,7 +1067,6 @@ export default function BlueprintPreviewSection() {
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen — Exact Same 3-Part Layout (Header Top, Writing Middle, YouTube Screen Bottom) */}
                               <div
                                 className="flex flex-1 rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
@@ -974,38 +1075,40 @@ export default function BlueprintPreviewSection() {
                                   className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* 1. Top: Fixed-Height Centered Header Box */}
                                   <div
                                     className="w-full rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                                    <div className="flex min-h-[54px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-2 text-center">
                                       <span
-                                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <Music className="h-4 w-4" style={{ color: sym.iconColor }} />
+                                        <Music className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
-                                        {yt.label}
-                                      </span>
+                                      <div className="flex flex-col items-center">
+                                        <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                          {yt.label}
+                                        </span>
+                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                                          Stage #{String(idx + 1).padStart(2, '0')} · Clip #{idx + 1}
+                                        </span>
+                                      </div>
                                     </div>
                                   </div>
 
-                                  {/* 2. Middle: Crisp Centered Writing Box */}
-                                  <div className="flex min-h-[68px] w-full flex-col items-center justify-between rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                                  <div className="flex min-h-[96px] w-full flex-1 flex-col items-center justify-between rounded-xl border-2 border-[#0A2B6D]/20 bg-white px-3.5 py-2.5 text-center shadow-2xs">
                                     <p
-                                      className="text-center text-[11px] font-extrabold leading-snug text-black"
+                                      className="text-center text-[11px] font-extrabold leading-relaxed text-black"
                                       style={{ color: '#000000' }}
                                     >
                                       {yt.blurb}
                                     </p>
-                                    <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                    <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
                                       <span style={{ color: '#FFFFFF' }}>YouTube Music Stage</span>
                                     </span>
                                   </div>
 
-                                  {/* 3. Bottom: YouTube Music Video Screen at the Bottom */}
                                   <div className="w-full space-y-1.5">
                                     <div className="w-full overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] shadow-sm aspect-video">
                                       {isLive ? (
@@ -1042,7 +1145,6 @@ export default function BlueprintPreviewSection() {
                                       )}
                                     </div>
 
-                                    {/* Bottom Controls Bar */}
                                     <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1">
                                       <button
                                         type="button"
@@ -1071,7 +1173,6 @@ export default function BlueprintPreviewSection() {
                               </div>
                             </div>
 
-                            {/* Laptop Keyboard Base & Trackpad Lip */}
                             <div className="flex w-[104%] flex-col items-center">
                               <div
                                 className="flex h-3 w-full items-center justify-center rounded-b-xl border-2 border-[#0A2B6D] shadow-sm"

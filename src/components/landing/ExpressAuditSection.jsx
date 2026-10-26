@@ -61,7 +61,7 @@ const PROOF = [
     icon: Timer,
     messages: [
       'Internal audits completed in minutes, not days',
-      '2-Minute Express Audit covers all 8 NDIS Practice Standards',
+      '2-Min Express Audit covers all 8 NDIS Standards',
       'Auto-stamps time, auditor & compliance score ring',
     ],
   },
@@ -85,7 +85,7 @@ const PROOF = [
     icon: BadgeCheck,
     messages: [
       'Reports, registers and CSV exports ready for your NDIS auditor',
-      '1-Click Printable PDF Audit Pack & Executive Summary',
+      '1-Click Printable PDF Audit Pack & Board Summary',
       'Consent-verified External Auditor Portal access',
     ],
   },
@@ -111,6 +111,11 @@ const FLOW = [
         text: 'Compare today’s readiness against prior audit runs with automatic delta highlighting.',
         functions: ['Historical Score Comparison', 'Carry-Forward Evidence', 'Scheduled Audit Calendar'],
       },
+      {
+        title: 'Launch Express 2-Minute Mode',
+        text: 'Pre-populate verified green controls from your live registers so you only review exceptions.',
+        functions: ['Auto-Tick Verified Controls', 'Exception-Only Fast Pass', 'Live Readiness Score Ring'],
+      },
     ],
   },
   {
@@ -131,6 +136,11 @@ const FLOW = [
         title: 'Record Auditor Observations',
         text: 'Add structured notes, control ratings and digital sign-off stamps on every checkpoint.',
         functions: ['Control Evidence Mapping', 'Digital Sign-Off Stamp', 'Timestamped Audit Log'],
+      },
+      {
+        title: 'Link Policies & Register Entries',
+        text: 'Cite the exact version-controlled policy, drill record or risk assessment for each standard.',
+        functions: ['125+ Master Docs Linked', 'Policy Version Citations', 'Read-Receipt Verification'],
       },
     ],
   },
@@ -153,6 +163,11 @@ const FLOW = [
         text: 'Link audit findings directly to your ISO 31000 Risk Register and Governance Control Register.',
         functions: ['Risk Matrix Sync', 'Hierarchy of Controls', 'Governance Register Link'],
       },
+      {
+        title: 'Track Closure & Root-Cause Fix',
+        text: 'Verify evidence of completion before closing out corrective actions with a digital supervisor signature.',
+        functions: ['Root-Cause CAPA Tracking', 'Supervisor Sign-Off Lock', '30-Action Batch Inclusion'],
+      },
     ],
   },
   {
@@ -172,7 +187,12 @@ const FLOW = [
       {
         title: 'Archive & Schedule Next Review',
         text: 'Lock the completed audit pack in the vault and auto-schedule the next 90-day or 6-monthly review date.',
-        functions: ['Permanent Vault Archive', 'Auto-Next-Review Scheduler', '30-Action Batch Inclusion'],
+        functions: ['Permanent Vault Archive', 'Auto-Next-Review Scheduler', 'Executive Digest Email'],
+      },
+      {
+        title: 'Export Dual Master Checklists',
+        text: 'Download both CHR-AUD-001 (Governance) and CHR-AUD-002 (Workforce) signed A4 audit books.',
+        functions: ['CHR-AUD-001 Governance PDF', 'CHR-AUD-002 Workforce PDF', 'Full 356-Checkpoint Ledger'],
       },
     ],
   },
@@ -197,7 +217,7 @@ export default function ExpressAuditSection() {
   useEffect(() => {
     const timer30 = setInterval(() => {
       setProofPage((prev) => (prev + 1) % 3);
-      setStepNoteIndices((prev) => prev.map((v) => (v + 1) % 3));
+      setStepNoteIndices((prev) => prev.map((v) => (v + 1) % 4));
     }, 30000);
     return () => clearInterval(timer30);
   }, []);
@@ -206,6 +226,10 @@ export default function ExpressAuditSection() {
     setStepNoteIndices((prev) =>
       prev.map((val, i) => (i === idx ? (val + 1) % FLOW[idx].notes.length : val))
     );
+  };
+
+  const cycleAllStepNotes = () => {
+    setStepNoteIndices((prev) => prev.map((v) => (v + 1) % 4));
   };
 
   return (
@@ -243,7 +267,7 @@ export default function ExpressAuditSection() {
         >
           <Link
             to="/compliance"
-            className="gradient-brand flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white transition-all hover:-translate-y-0.5"
+            className="gradient-brand flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full px-6 py-1 text-xs sm:text-[13px] font-extrabold tracking-wide text-white transition-all hover:-translate-y-0.5"
             style={{ background: getHeaderView(7), color: '#FFFFFF' }}
           >
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
@@ -253,13 +277,13 @@ export default function ExpressAuditSection() {
           </Link>
         </div>
 
-        {/* Stretched Side-to-Side "The Two-Minute Express Audit" Underneath */}
+        {/* Stretched Banner — Line 1: The Two-Minute Express Audit, Line 2: Sticky Notes with Functions, Line 3: Flip All Button */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-0.5 rounded-[13px] px-6 py-2 text-white"
+            className="gradient-brand flex min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-[13px] px-6 py-3 text-white"
             style={{ background: getHeaderView(6), color: '#FFFFFF' }}
           >
             <div className="flex items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
@@ -269,64 +293,82 @@ export default function ExpressAuditSection() {
               <span className="text-center" style={{ color: '#FFFFFF' }}>The Two-Minute Express Audit</span>
             </div>
             <div
-              className="text-[10.5px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
+              className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
               style={{ color: '#FFFFFF' }}
             >
-              Live iPad Screens Lighting Up 1-by-1 · Sticky Notes with Functions Below
+              Sticky Notes with Functions · Live iPad Screens Above 4 Audit Steps
             </div>
+            <button
+              type="button"
+              onClick={cycleAllStepNotes}
+              className="mt-0.5 inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs font-extrabold text-white shadow-2xs hover:bg-white/30"
+              style={{ color: '#FFFFFF' }}
+            >
+              <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Flip All 4 Audit Step Sticky Notes ▸</span>
+            </button>
           </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles Above Steps — Compact iPad Screens Lighting Up 1-by-1 */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — Bold Stand-Out iPad Screens with Larger Symbol & Word */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="grid w-full grid-cols-2 gap-2.5 rounded-[12px] bg-white p-3 sm:grid-cols-5 lg:grid-cols-10">
+          <div className="grid w-full grid-cols-2 gap-3 rounded-[12px] bg-white p-3.5 sm:grid-cols-5 lg:grid-cols-10">
             {VERBS.map((v, idx) => {
               const Icon = v.icon;
               const isLit = litVerbIdx === idx;
+              const sym = getSymbolView(idx);
               const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx);
+              const sprayBg = EXPRESS_SPRAY_BGS[idx % EXPRESS_SPRAY_BGS.length];
               return (
                 <div
                   key={v.label}
-                  className={`flex flex-col justify-between rounded-2xl border-[2.5px] p-1.5 transition-all duration-300 ${
+                  className={`flex flex-col justify-between rounded-[20px] border-[3px] p-2 transition-all duration-300 ${
                     isLit
-                      ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF] shadow-md'
-                      : 'bg-[#0A2B6D] shadow-sm'
+                      ? 'bg-[#0072FF] -translate-y-1 ring-4 ring-[#00C6FF]/75 shadow-xl'
+                      : 'bg-[#0A2B6D] shadow-md hover:-translate-y-0.5'
                   }`}
                   style={{ borderColor: borderCol }}
                 >
-                  {/* Top iPad Camera Dot */}
-                  <div className="mb-1 flex items-center justify-between px-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-                    <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-white/90">
-                      {isLit ? 'LIT ✦' : 'iPad'}
+                  {/* Top iPad Camera Dot & Bezel */}
+                  <div className="mb-1.5 flex items-center justify-between px-1.5">
+                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+                    <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white">
+                      {isLit ? 'LIT UP ✦' : `iPad ${idx + 1}`}
                     </span>
-                    <span className={`h-1.5 w-1.5 rounded-full ${isLit ? 'bg-[#FF2E9A]' : 'bg-[#10B981]'}`} />
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        isLit ? 'bg-[#FF2E9A] animate-ping' : 'bg-[#10B981]'
+                      }`}
+                    />
                   </div>
 
-                  {/* Inner iPad Display */}
+                  {/* Inner iPad Display — High-Contrast Word & Symbol Stand Out Boldly */}
                   <div
-                    className="rounded-xl p-[2px]"
+                    className="rounded-xl p-[2.5px] shadow-inner"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2 py-1.5 text-center text-[#0A2B6D]">
+                    <div
+                      className="flex min-h-[82px] flex-col items-center justify-center gap-1.5 rounded-[9px] px-2 py-2.5 text-center"
+                      style={{ background: sprayBg }}
+                    >
                       <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-md"
                         style={{ borderColor: getAppBorderView(idx) }}
                       >
-                        <Icon className="h-3.5 w-3.5 text-[#0A2B6D]" />
+                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      <span className="rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs">
                         {v.label}
                       </span>
                     </div>
                   </div>
 
                   {/* Bottom iPad Home Indicator */}
-                  <div className="mt-1 flex justify-center">
-                    <span className="h-1 w-6 rounded-full bg-white/80" />
+                  <div className="mt-1.5 flex justify-center">
+                    <span className="h-1 w-8 rounded-full bg-white/85" />
                   </div>
                 </div>
               );
@@ -334,8 +376,8 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Tiles Above Steps — Full iPad Screens Lighting Up 1-by-1 & Changing Every 30 Secs */}
-        <div className="grid w-full gap-3.5 sm:grid-cols-2 lg:grid-cols-4 text-left items-stretch">
+        {/* 2. Top 4 Proof iPad Screens Above Steps — Clean Centered Live Info, Lighting Up 1-by-1 & Changing Every 30 Secs */}
+        <div className="grid w-full gap-3.5 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {PROOF.map(({ icon: Icon, messages }, idx) => {
             const sym = getSymbolView(idx + 3);
             const isLit = litProofIdx === idx;
@@ -370,24 +412,26 @@ export default function ExpressAuditSection() {
                   </button>
                 </div>
 
-                {/* Inner iPad Screen */}
+                {/* Inner iPad Screen — Centered Symbol + Framed Live Info */}
                 <div
                   className="flex flex-1 rounded-2xl p-[2.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-3.5 py-3 text-[#0A2B6D]"
+                    className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[13px] px-3.5 py-3 text-center text-[#0A2B6D]"
                     style={{ background: sprayBg }}
                   >
                     <span
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                       style={{ borderColor: getAppBorderView(idx + 3) }}
                     >
-                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                      <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                     </span>
-                    <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
-                      {activeMsg}
-                    </span>
+                    <div className="w-full rounded-xl border border-[#0A2B6D]/20 bg-white/95 px-3 py-2 shadow-2xs">
+                      <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                        {activeMsg}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -400,7 +444,7 @@ export default function ExpressAuditSection() {
           })}
         </div>
 
-        {/* 3. Four Steps Placed on Changeable Sticky Notes in the Exact Same Sticky Note Design */}
+        {/* 3. Four Audit Steps Placed on Changeable Sticky Notes with Bigger Step Badges & Accurate 4-Step / 4-Note Count */}
         <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
@@ -421,31 +465,31 @@ export default function ExpressAuditSection() {
                   borderBottomRightRadius: '26px',
                 }}
               >
-                {/* Top Sticky Tape Strip + Pin */}
+                {/* Top Sticky Tape Strip + Pin — Accurate 4-Step & 4-Note Count */}
                 <div
-                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 shadow-sm"
+                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
                   style={{ background: STICKY_NOTE_TAPE }}
                 >
                   <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                   <span
-                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Audit Step {item.step} ({noteIdx + 1}/{item.notes.length})
+                    Audit Step {item.step} of 04 · Note {noteIdx + 1}/4
                   </span>
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-2.5">
                   <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <span
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                         style={{ borderColor: borderCol }}
                       >
-                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
                         style={{ borderColor: borderCol }}
                       >
                         Step {item.step}
@@ -455,10 +499,10 @@ export default function ExpressAuditSection() {
                     <button
                       type="button"
                       onClick={() => cycleStepNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
@@ -467,19 +511,21 @@ export default function ExpressAuditSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                    <div className="flex min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                       <h3 className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
                         {currentNote.title}
                       </h3>
                     </div>
                   </div>
 
-                  <p
-                    className="text-xs font-bold leading-snug text-black"
-                    style={{ color: '#000000' }}
-                  >
-                    {currentNote.text}
-                  </p>
+                  <div className="flex min-h-[64px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                    <p
+                      className="text-xs font-extrabold leading-snug text-black"
+                      style={{ color: '#000000' }}
+                    >
+                      {currentNote.text}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Live Functions Listed on Each Step Sticky Note */}
@@ -490,7 +536,7 @@ export default function ExpressAuditSection() {
                   <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
                     <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
-                      <span>Note {noteIdx + 1}/3</span>
+                      <span>Note {noteIdx + 1}/4</span>
                     </div>
                     <ul className="space-y-1">
                       {currentNote.functions.map((fn) => (
