@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
 import SilverScreenSplit from '@/components/safe/SilverScreenSplit';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
+import MiniCommunicationCentrePanel from '@/components/safe/MiniCommunicationCentrePanel';
 import {
   LogoBrandedOfficeSecondScreen,
   DEFAULT_LOGO,
@@ -285,54 +286,69 @@ function CommunicationAndMailboxTabs() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="3. iPad (Date, Time & Weather) + Red Letterbox & 4. Mini Communication Board">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white">
-        {/* Left Column: iPad With Date, Time & Weather on Top + Red-Lit Letterbox Underneath It */}
+    <WallHangingPictureFrame title="3. Mini Comms Above Red Letterbox & 4. Mini Communication Centre + Small Shared To-Do List">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white items-stretch">
+        {/* Left Column: Mini Comms Placed Directly Above the Red Little Box (Letterbox) */}
         <div className="flex flex-col justify-between gap-1.5">
-          {/* Top: iPad With Date, Time & Weather (With Mailbox Status Pill Beside It) */}
-          <div className="rounded-xl border-[2.5px] border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-sm">
-            <div className="mb-1 flex items-center justify-between px-1.5">
-              <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
-                <Tablet className="h-2.5 w-2.5 text-[#00C6FF]" />
-                IPAD · DATE, TIME &amp; WEATHER
-              </span>
-              <span
-                className="inline-flex items-center gap-1 rounded-full px-1.5 py-0 text-[7.5px] font-extrabold text-white"
-                style={{ backgroundColor: hasAlertMail ? '#EF4444' : '#0072FF' }}
+          {/* Top Above Red Little Box: Mini Comms */}
+          <div
+            className="rounded-xl p-[2.5px] shadow-2xs"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <div
+              className="flex flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
+              style={{ background: UNIFORM_SPRAY_BG }}
+            >
+              <div
+                className="gradient-brand flex w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
+                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
               >
-                <Mail className="h-2 w-2 text-white" />
-                {hasAlertMail ? `${mailAlertCount} Mail` : '0 Mail'}
-              </span>
-            </div>
-            <div className="grid grid-cols-3 gap-1 rounded-lg bg-white p-1.5 text-center">
-              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
-                <Calendar className="mx-auto h-3 w-3 text-[#0A2B6D]" />
-                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
-                  27 Oct 2026
-                </div>
+                <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                  <span
+                    className="h-2 w-2 rounded-full bg-white"
+                    style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
+                  />
+                  <MessagesSquare className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>Mini Comms</span>
+                </span>
+                <span className="text-[7px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                  27 Oct · 24°C
+                </span>
               </div>
-              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
-                <Clock className="mx-auto h-3 w-3 text-[#0A2B6D]" />
-                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
-                  09:30 AM
-                </div>
-              </div>
-              <div className="rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF] px-1 py-1">
-                <Sun className="mx-auto h-3 w-3 text-[#0A2B6D]" />
-                <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
-                  24°C Sunny
+
+              <div
+                className="w-full rounded-lg p-[1.5px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="w-full space-y-0.5 rounded-[5px] bg-white p-1 text-left">
+                  {[
+                    { tag: 'Shift Note', text: 'Morning SIL handover signed off' },
+                    { tag: 'Broadcast', text: 'NDIS 2026 Standards briefing live' },
+                    { tag: 'Team Diary', text: '3 participant goal notes synced' },
+                    { tag: 'Inbox SLA', text: 'Zero overdue · 24h SLA active' },
+                  ].map((msg) => (
+                    <div
+                      key={msg.tag}
+                      className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/15 bg-[#F5F0FF]/60 px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+                    >
+                      <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
+                        {msg.tag}
+                      </span>
+                      <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Underneath iPad: Letterbox That Lights Up in Bright RED When It Has Mail */}
+          {/* Underneath Mini Comms: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
           <div
-            className="rounded-xl p-[3.5px] transition-all duration-300"
+            className="rounded-xl p-[3px] transition-all duration-300"
             style={{
               background: hasAlertMail ? '#EF4444' : TOP_BORDER_GRADIENT,
               boxShadow: hasAlertMail
-                ? '0 0 20px 5px rgba(239, 68, 68, 0.92), 0 0 10px 2px #EF4444'
+                ? '0 0 18px 4px rgba(239, 68, 68, 0.92), 0 0 10px 2px #EF4444'
                 : undefined,
             }}
           >
@@ -340,34 +356,34 @@ function CommunicationAndMailboxTabs() {
               className="flex flex-col items-center justify-between gap-1 rounded-[8px] p-1.5 text-center"
               style={{ background: UNIFORM_SPRAY_BG }}
             >
-              <div className="flex w-full items-center justify-between gap-1 rounded-md bg-white px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D]">
+              <div className="flex w-full items-center justify-between gap-1 rounded-md bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]">
                 <div className="flex items-center gap-1">
                   <span
-                    className="h-2.5 w-2.5 shrink-0 rounded-full border border-white"
+                    className="h-2 w-2 shrink-0 rounded-full border border-white"
                     style={{
                       backgroundColor: hasAlertMail ? '#EF4444' : '#FFFFFF',
                       boxShadow: hasAlertMail
-                        ? '0 0 12px 4px #EF4444, 0 0 16px 5px #EF4444'
+                        ? '0 0 10px 3px #EF4444'
                         : '0 0 6px 2px #FFFFFF',
                     }}
                   />
-                  <Mail className="h-3 w-3 text-[#EF4444]" />
-                  <span>Red Letterbox Under iPad</span>
+                  <Mail className="h-2.5 w-2.5 text-[#EF4444]" />
+                  <span>Red Little Box · Letterbox</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setHasAlertMail((prev) => !prev)}
-                  className="rounded-full px-2 py-0.5 text-[7.5px] font-extrabold text-white"
+                  className="rounded-full px-1.5 py-0 text-[7px] font-extrabold text-white"
                   style={{ background: hasAlertMail ? '#EF4444' : '#0A2B6D' }}
                 >
                   {hasAlertMail ? 'RED MAIL LIT ✦' : 'Test Mail'}
                 </button>
               </div>
 
-              <div className="flex w-full flex-col items-center justify-center rounded-md bg-white px-1.5 py-1 text-center">
+              <div className="flex w-full flex-col items-center justify-center rounded-md bg-white px-1.5 py-0.5 text-center">
                 <svg
                   viewBox="0 0 220 68"
-                  className="h-11 w-full max-w-[175px]"
+                  className="h-10 w-full max-w-[165px]"
                   aria-label="Interactive Red Letterbox with Opening Door and Flying Letters"
                 >
                   {hasAlertMail && (
@@ -411,7 +427,7 @@ function CommunicationAndMailboxTabs() {
                     <rect x="114" y="14" width="6" height="30" rx="2" fill="#FFFFFF" stroke="#0A2B6D" strokeWidth="1.5" />
                   )}
                 </svg>
-                <div className="text-[8.5px] font-extrabold text-[#EF4444]">
+                <div className="text-[8px] font-extrabold text-[#EF4444]">
                   {hasAlertMail
                     ? `Letterbox Lit Red (${mailAlertCount} Letters Out)`
                     : 'Letterbox Closed'}
@@ -421,58 +437,8 @@ function CommunicationAndMailboxTabs() {
           </div>
         </div>
 
-        {/* Right Column (Where Mailbox Was): Mini Communication Board */}
-        <div
-          className="rounded-xl p-[3.5px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="flex h-full flex-col items-center justify-between gap-1.5 rounded-[9px] p-2 text-center"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
-            <div
-              className="w-full rounded-lg p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div className="flex items-center justify-center gap-1.5 rounded-[6px] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
-                <span
-                  className="h-2.5 w-2.5 rounded-full bg-white"
-                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
-                />
-                <MessagesSquare className="h-3.5 w-3.5 text-[#0A2B6D]" />
-                <span>Mini Communication Board</span>
-              </div>
-            </div>
-
-            <div className="w-full flex-1 space-y-1 rounded-lg border border-[#0A2B6D]/20 bg-white p-2 text-left">
-              {[
-                { tag: 'Shift Note', text: 'Morning SIL handover signed off · 100% meds verified' },
-                { tag: 'Broadcast', text: 'All staff: NDIS 2026 Practice Standards briefing live' },
-                { tag: 'Team Diary', text: '3 participant goal progress notes synced today' },
-                { tag: 'Inbox SLA', text: 'Zero overdue messages · 24h response SLA active' },
-              ].map((msg) => (
-                <div
-                  key={msg.tag}
-                  className="flex items-center justify-between gap-1.5 rounded-md border border-[#0A2B6D]/15 bg-[#F5F0FF]/60 px-2 py-1 text-[8.5px] font-extrabold text-[#0A2B6D]"
-                >
-                  <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[7.5px] text-white">
-                    {msg.tag}
-                  </span>
-                  <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
-                </div>
-              ))}
-            </div>
-
-            <Link
-              to="/communications"
-              className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white"
-              style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-            >
-              <span style={{ color: '#FFFFFF' }}>Open Mini Communication Board</span>
-              <ArrowRight className="h-2.5 w-2.5 text-white" />
-            </Link>
-          </div>
-        </div>
+        {/* Right Column (Where Mini Comms Was): Mini Communication Centre + Small Shared To-Do List */}
+        <MiniCommunicationCentrePanel alertCount={mailAlertCount} />
       </div>
     </WallHangingPictureFrame>
   );
