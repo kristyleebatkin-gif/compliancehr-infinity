@@ -41,23 +41,23 @@ export default function LandingCTA() {
           </div>
         </div>
 
-        {/* 2. "Ready to simplify" With Pink/Blue/Purple Spray Frame Around White Writing Areas */}
+        {/* 2. "Ready to simplify" — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div
-            className="flex w-full flex-col items-center justify-center rounded-[10px] px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5"
-            style={{
-              background:
-                'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
-            }}
-          >
+          <div className="flex w-full flex-col items-center justify-center rounded-[10px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5">
             <div
               className="w-full rounded-xl p-[2px]"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <div className="rounded-[9px] bg-white px-4 py-3 text-center">
+              <div
+                className="rounded-[9px] px-4 py-3 text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                }}
+              >
                 <h2 className="flex flex-col items-center justify-center gap-1 font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
                   <span className="flex flex-wrap items-baseline justify-center gap-x-2 leading-[1.3] py-0.5">
                     <span className="text-[#0A2B6D]">Ready to</span>
@@ -76,7 +76,13 @@ export default function LandingCTA() {
               className="mx-auto w-full max-w-3xl rounded-xl p-[2.5px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+              <div
+                className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] px-3 py-2 text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                }}
+              >
                 <p className="text-center text-[11px] sm:text-xs md:text-sm font-extrabold leading-snug text-[#0A2B6D]">
                   Join providers who trust ComplianceHR Infinity to keep their records, teams, and participants audit-ready every single day.
                 </p>

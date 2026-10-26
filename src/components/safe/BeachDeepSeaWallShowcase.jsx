@@ -25,8 +25,8 @@ const THREE_SCENE_LIST = [
 export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact = true }) {
   const [scene, setScene] = useState(defaultScene);
 
-  const BLUE_WHITE_SPRAY_BG =
-    'radial-gradient(circle at 16% 24%, rgba(0, 198, 255, 0.52) 0%, transparent 48%), radial-gradient(circle at 84% 72%, rgba(0, 114, 255, 0.38) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95) 0%, #E0F2FE 100%)';
+  const PINK_BLUE_PURPLE_SPRAY =
+    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF';
 
   return (
     <div
@@ -35,7 +35,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="rounded-[14px] bg-white p-2 sm:p-2.5 space-y-2 text-center">
-        {/* 50% Smaller Header + Three Listed Activities With Spray Blue & White Background + Smaller Interactive Bar Tiles */}
+        {/* 50% Smaller Header + Three Listed Activities — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
           className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -54,7 +54,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               </span>
             </h2>
 
-            {/* Three Listed Activities (Tropical, Sunny & Deep) — Blue Removed From Outside, App-Design Colour Inside With Writing */}
+            {/* Three Listed Activities (Tropical, Sunny & Deep) — White Outside Border, Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
             <ol className="mx-auto grid w-full grid-cols-1 sm:grid-cols-3 gap-1.5 bg-white text-center items-stretch">
               {THREE_SCENE_LIST.map((line, idx) => (
                 <li
@@ -63,16 +63,19 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-extrabold text-white"
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                    className="flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0A2B6D]"
+                    style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                   >
                     <span
-                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white text-[7px] font-extrabold"
-                      style={{ color: getSymbolView(idx).iconColor }}
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white text-[7px] font-extrabold"
+                      style={{
+                        borderColor: getAppBorderView(idx),
+                        color: getSymbolView(idx).iconColor,
+                      }}
                     >
                       0{idx + 1}
                     </span>
-                    <span className="truncate text-center text-white" style={{ color: '#FFFFFF' }}>
+                    <span className="truncate text-center text-[#0A2B6D]">
                       {line}
                     </span>
                   </div>
@@ -80,8 +83,8 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
               ))}
             </ol>
 
-            {/* All 5 Interactive Bar Tiles Under Sized & Styled Identically */}
-            <div className="grid w-full grid-cols-2 sm:grid-cols-5 gap-1.5 pt-0.5 items-stretch">
+            {/* All 5 Interactive Bar Tiles Under Sized & Styled Identically — Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
+            <div className="grid w-full grid-cols-2 sm:grid-cols-5 gap-1.5 bg-white pt-0.5 items-stretch">
               {SCENE_MODES.map((m, idx) => {
                 const Icon = m.icon;
                 const active = scene === m.id;
@@ -95,10 +98,10 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                     <button
                       type="button"
                       onClick={() => setScene(m.id)}
-                      className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all ${
-                        active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
+                      className={`flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] transition-all ${
+                        active ? 'ring-2 ring-[#FF2E9A] shadow-sm' : 'hover:opacity-95'
                       }`}
-                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                      style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                     >
                       <span
                         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -106,7 +109,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                       >
                         <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                      <span className="truncate text-center leading-tight text-[#0A2B6D]">
                         {m.label}
                       </span>
                     </button>
@@ -127,8 +130,8 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                       false
                     )
                   }
-                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs"
-                  style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+                  className="flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs"
+                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
                 >
                   <span
                     className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -136,7 +139,7 @@ export default function BeachDeepSeaWallShowcase({ defaultScene = 'all', compact
                   >
                     <Trophy className="h-2.5 w-2.5" style={{ color: getSymbolView(5).iconColor }} />
                   </span>
-                  <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                  <span className="truncate text-center leading-tight text-[#0A2B6D]">
                     Play Victory Fanfare
                   </span>
                 </button>

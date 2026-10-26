@@ -92,17 +92,28 @@ export default function LandingHero() {
                 </span>
               </h1>
 
-              {/* Governance Sentence Kept */}
-              <p className="mx-auto max-w-5xl text-xs sm:text-sm md:text-base lg:text-lg font-extrabold leading-relaxed text-[#0A2B6D]">
-                ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
-              </p>
+              {/* Governance Sentence Inside Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+              <div
+                className="w-full rounded-xl p-[2px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <p
+                  className="mx-auto w-full rounded-[10px] px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg font-extrabold leading-relaxed text-[#0A2B6D]"
+                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                >
+                  ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
+                </p>
+              </div>
 
               {/* Assets Above & Centred + Live Compliance Tracker Underneath */}
               <div
                 className="w-full rounded-2xl p-[2.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] bg-white px-3 py-2 text-center">
+                <div
+                  className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] px-3 py-2 text-center"
+                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                >
                   {/* Assets Centred Above Live Compliance Tracker */}
                   <div className="flex w-full justify-center">
                     <Link
@@ -168,7 +179,7 @@ export default function LandingHero() {
             </Link>
           </div>
 
-          {/* 4 Small Stat Tiles — Uniformly Aligned Sections Across All 4 Tiles */}
+          {/* 4 Small Stat Tiles — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
           <div className="grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4 items-stretch">
             {STATS.map((stat, index) => (
               <Reveal
@@ -177,10 +188,7 @@ export default function LandingHero() {
                 className="flex h-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] p-1 text-center"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                >
+                <div className="grid h-full w-full grid-cols-1 grid-rows-[20px_24px] gap-1 rounded-[9px] bg-white p-1 text-center">
                   <div
                     className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-2 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
@@ -194,7 +202,10 @@ export default function LandingHero() {
                     className="flex h-[24px] w-full rounded-md p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex h-full w-full items-center justify-center rounded-[4px] bg-white px-1 text-center text-[7px] font-extrabold uppercase tracking-wide text-[#0A2B6D] whitespace-nowrap">
+                    <div
+                      className="flex h-full w-full items-center justify-center rounded-[4px] px-1 text-center text-[7px] font-extrabold uppercase tracking-wide text-[#0A2B6D] whitespace-nowrap"
+                      style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                    >
                       {stat.label}
                     </div>
                   </div>
@@ -203,7 +214,7 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Minimised Pillar Tiles — Smaller Words to Fit Cleanly on One Line, Centred & Aligned */}
+          {/* 3 Minimised Pillar Tiles — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
           <div className="grid w-full gap-1.5 text-center md:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => (
               <Reveal
@@ -212,10 +223,7 @@ export default function LandingHero() {
                 className="flex h-full flex-col rounded-xl p-[2px] shadow-sm transition-all hover:-translate-y-0.5"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="flex h-full flex-1 flex-col justify-between rounded-[9px] p-1 space-y-1"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                >
+                <div className="flex h-full flex-1 flex-col justify-between rounded-[9px] bg-white p-1 space-y-1">
                   {/* App-Coloured Pillar Header Tile */}
                   <div
                     className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 text-center text-white whitespace-nowrap"
@@ -227,7 +235,7 @@ export default function LandingHero() {
                     </span>
                   </div>
 
-                  {/* 4 Compact Rows: Smaller Text So Every Word Fits Cleanly */}
+                  {/* 4 Compact Rows: Pink/Blue/Purple Spray & Dark Blue Writing */}
                   <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-0.5">
                     {reasons.map((r) => (
                       <li
@@ -235,7 +243,10 @@ export default function LandingHero() {
                         className="flex h-[20px] rounded p-[1px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1.5 text-center text-[7px] font-extrabold leading-none text-[#0A2B6D] whitespace-nowrap">
+                        <div
+                          className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] px-1.5 text-center text-[7px] font-extrabold leading-none text-[#0A2B6D] whitespace-nowrap"
+                          style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                        >
                           <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                           <span className="text-[#0A2B6D]">{r}</span>
                         </div>

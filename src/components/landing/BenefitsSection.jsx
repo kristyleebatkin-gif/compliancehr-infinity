@@ -187,27 +187,37 @@ export default function BenefitsSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Black Subheading Centred Inside Stretched App Design Coloured Border */}
+        {/* Heading & Subheading — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
-            <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
-              <span className="text-[#0A2B6D]">Why providers choose </span>
-              <span className="inline-block whitespace-nowrap">
-                <span className="text-[#0A2B6D]">Compliance</span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
-                </span>
-              </span>
-            </h2>
-            <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
-            </p>
+          <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white p-2 text-center">
+            <div
+              className="w-full rounded-xl p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="flex w-full flex-col items-center justify-center rounded-[10px] px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-2"
+                style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
+              >
+                <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
+                  <span className="text-[#0A2B6D]">Why providers choose </span>
+                  <span className="inline-block whitespace-nowrap">
+                    <span className="text-[#0A2B6D]">Compliance</span>
+                    <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                      HR
+                    </span>{' '}
+                    <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                      Infinity
+                    </span>
+                  </span>
+                </h2>
+                <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
+                  The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -273,15 +283,12 @@ export default function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Pull-Down Projector Screen Canvas — Pink/Blue/Purple Spray Between Outer Border & White Writing Boxes */}
+                {/* Pull-Down Projector Screen Canvas — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                 <div
                   className="mx-auto flex w-[96%] flex-1 flex-col rounded-b-xl p-[2px] shadow-2xs"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div
-                    className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[9px] p-1.5 text-center"
-                    style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
-                  >
+                  <div className="flex h-full flex-1 flex-col justify-between gap-1 rounded-b-[9px] bg-white p-1.5 text-center">
                     {/* App-Design Coloured Header Bar With Symbol */}
                     <div
                       className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
@@ -295,24 +302,30 @@ export default function BenefitsSection() {
                       </span>
                     </div>
 
-                    {/* Compact Description Box — Framed in App-Design Border With Pure White Background & Dark Blue Writing */}
+                    {/* Compact Description Box — Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
                     <div
                       className="w-full rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                      <div
+                        className="flex items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
+                        style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
+                      >
                         <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                           {b.desc}
                         </p>
                       </div>
                     </div>
 
-                    {/* Compact Functions Box — White Background & Dark Blue Writing */}
+                    {/* Compact Functions Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                     <div
                       className="rounded-lg p-[1.5px] text-left"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="rounded-[5px] bg-white p-1">
+                      <div
+                        className="rounded-[5px] p-1"
+                        style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
+                      >
                         <ul className="space-y-0.5">
                           {currentFunctions.map((fn, fIdx) => (
                             <li

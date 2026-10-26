@@ -145,24 +145,34 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Smaller Start Header Sized to Fit Cleanly in Space + Black Sentence Underneath */}
+        {/* Smaller Start Header — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-2.5 sm:p-3 shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-2.5 sm:px-5 sm:py-3 text-center space-y-1">
-            <h2 className="mx-auto w-full text-center font-editorial text-sm sm:text-lg md:text-xl lg:text-2xl font-extrabold tracking-tight leading-snug whitespace-nowrap">
-              <span className="text-[#0A2B6D]">Start Using Compliance</span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                HR
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                in Four Simple, Effortless Steps.
-              </span>
-            </h2>
-            <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
-            </p>
+          <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white p-2 text-center">
+            <div
+              className="w-full rounded-xl p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="flex w-full flex-col items-center justify-center rounded-[10px] px-3 py-2.5 sm:px-5 sm:py-3 text-center space-y-1"
+                style={{ background: STICKY_NOTE_BG }}
+              >
+                <h2 className="mx-auto w-full text-center font-editorial text-sm sm:text-lg md:text-xl lg:text-2xl font-extrabold tracking-tight leading-snug whitespace-nowrap">
+                  <span className="text-[#0A2B6D]">Start Using Compliance</span>
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    in Four Simple, Effortless Steps.
+                  </span>
+                </h2>
+                <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                  From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -215,9 +225,8 @@ export default function QuickStartSection() {
                 key={`step-${index}`}
                 as="li"
                 delay={index * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-xl border-2 p-2 pt-3.5 text-center shadow-sm transition-all hover:-translate-y-0.5"
+                className="group relative flex h-full flex-col justify-between rounded-xl border-2 bg-white p-2 pt-3.5 text-center shadow-sm transition-all hover:-translate-y-0.5"
                 style={{
-                  background: STICKY_NOTE_BG,
                   borderColor: borderCol,
                   borderBottomRightRadius: '16px',
                 }}
@@ -260,12 +269,15 @@ export default function QuickStartSection() {
                     </button>
                   </div>
 
-                  {/* Compact Description Box — Pure White Behind Dark Blue Writing */}
+                  {/* Compact Description Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                   <div
                     className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                    <div
+                      className="flex items-center justify-center rounded-[6px] px-2 py-1 text-center"
+                      style={{ background: STICKY_NOTE_BG }}
+                    >
                       <p className="text-[8px] font-extrabold leading-tight text-center text-[#0A2B6D]">
                         {currentNote.text}
                       </p>
@@ -273,12 +285,15 @@ export default function QuickStartSection() {
                   </div>
                 </div>
 
-                {/* Compact Live Functions Listed on Each Sticky Note — White Background & Dark Blue Writing */}
+                {/* Compact Live Functions Listed on Each Sticky Note — Pink/Blue/Purple Spray & Dark Blue Writing */}
                 <div
                   className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
+                  <div
+                    className="rounded-[6px] p-1.5 text-left space-y-0.5"
+                    style={{ background: STICKY_NOTE_BG }}
+                  >
                     <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => (
                         <li

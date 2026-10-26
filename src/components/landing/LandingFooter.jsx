@@ -197,10 +197,7 @@ export default function LandingFooter() {
                   className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[10px] p-1.5 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
-                  >
+                  <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[10px] bg-white p-1.5 text-center">
                     {/* App-Design Coloured Pill Title With Coloured Symbol */}
                     <div
                       className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
@@ -212,12 +209,15 @@ export default function LandingFooter() {
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
-                    {/* Crisp White Inner Box Framed in App-Design Border With Dark Blue Writing */}
+                    {/* Pink/Blue/Purple Spray Inner Box Framed in App-Design Border With Dark Blue Writing */}
                     <div
                       className="w-full flex-1 rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full min-h-[28px] w-full items-center justify-center rounded-[6px] bg-white px-2.5 py-1 text-center">
+                      <div
+                        className="flex h-full min-h-[28px] w-full items-center justify-center rounded-[6px] px-2.5 py-1 text-center"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
                         {box.href ? (
                           <a
                             href={box.href}

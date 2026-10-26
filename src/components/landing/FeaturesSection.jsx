@@ -326,24 +326,34 @@ export default function FeaturesSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Bigger "An impossible standard, achieved effortlessly" + Black Sentence Underneath */}
+        {/* Bigger "An impossible standard, achieved effortlessly" — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-2.5">
-            <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
-              <span className="text-[#0A2B6D]">An impossible </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                standard,
-              </span>{' '}
-              <span className="inline-block whitespace-nowrap bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                achieved effortlessly.
-              </span>
-            </h2>
-            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
-            </p>
+          <div className="w-full rounded-[12px] bg-white p-2 text-center">
+            <div
+              className="w-full rounded-xl p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="w-full rounded-[10px] px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2"
+                style={{ background: STICKY_NOTE_BG }}
+              >
+                <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                  <span className="text-[#0A2B6D]">An impossible </span>
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    standard,
+                  </span>{' '}
+                  <span className="inline-block whitespace-nowrap bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    achieved effortlessly.
+                  </span>
+                </h2>
+                <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
+                  One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -398,9 +408,8 @@ export default function FeaturesSection() {
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group relative flex h-full flex-col justify-between rounded-xl border-2 p-2 pt-3 text-center shadow-2xs transition-all hover:-translate-y-0.5"
+                className="group relative flex h-full flex-col justify-between rounded-xl border-2 bg-white p-2 pt-3 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
-                  background: STICKY_NOTE_BG,
                   borderColor: borderCol,
                   borderBottomRightRadius: '16px',
                 }}
@@ -443,12 +452,15 @@ export default function FeaturesSection() {
                     </button>
                   </div>
 
-                  {/* Compact Info Box — White Background & Dark Blue Writing */}
+                  {/* Compact Info Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                   <div
                     className="w-full rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                    <div
+                      className="flex items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
+                      style={{ background: STICKY_NOTE_BG }}
+                    >
                       <p className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                         {currentNote.desc}
                       </p>
@@ -456,12 +468,15 @@ export default function FeaturesSection() {
                   </div>
                 </div>
 
-                {/* Compact Live Functions Box — White Background & Dark Blue Writing */}
+                {/* Compact Live Functions Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                 <div
                   className="mt-1 w-full rounded-lg p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[6px] bg-white p-1 text-left">
+                  <div
+                    className="rounded-[6px] p-1 text-left"
+                    style={{ background: STICKY_NOTE_BG }}
+                  >
                     <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => (
                         <li

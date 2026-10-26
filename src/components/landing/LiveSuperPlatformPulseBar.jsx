@@ -85,10 +85,7 @@ export default function LiveSuperPlatformPulseBar() {
       className="w-full rounded-xl p-[2.5px] shadow-sm"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div
-        className="rounded-[9px] p-1.5 space-y-1.5 text-center"
-        style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-      >
+      <div className="rounded-[9px] bg-white p-1.5 space-y-1.5 text-center">
         {/* App-Design Coloured Header Bar */}
         <div
           className="gradient-brand flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
@@ -120,20 +117,23 @@ export default function LiveSuperPlatformPulseBar() {
           </div>
         </div>
 
-        {/* Compact Search + Live Telemetry Ticker Row Inside Pink/Blue/Purple Spray & White Dark-Blue Writing Boxes */}
+        {/* Compact Search + Live Telemetry Ticker Row — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-1.5 items-stretch">
           <div
             className="md:col-span-5 rounded-lg p-[1.5px]"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="relative flex h-full items-center rounded-[6px] bg-white px-2 py-0.5">
+            <div
+              className="relative flex h-full items-center rounded-[6px] px-2 py-0.5"
+              style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+            >
               <Search className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
               <input
                 type="search"
                 value={quickFilter}
                 onChange={(e) => setQuickFilter(e.target.value)}
                 placeholder="Quick-jump any of the 46 live modules…"
-                className="w-full bg-white pl-1.5 pr-1 text-[8px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/70 focus:outline-none"
+                className="w-full bg-transparent pl-1.5 pr-1 text-[8px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/70 focus:outline-none"
               />
             </div>
           </div>
@@ -142,7 +142,10 @@ export default function LiveSuperPlatformPulseBar() {
             className="md:col-span-7 rounded-lg p-[1.5px]"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex h-full items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-left">
+            <div
+              className="flex h-full items-center justify-between gap-1.5 rounded-[6px] px-2 py-0.5 text-left"
+              style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+            >
               <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-[#0A2B6D]">
                 <Activity className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
                 <span>{liveTickers[activeTickerIdx]}</span>
@@ -154,7 +157,7 @@ export default function LiveSuperPlatformPulseBar() {
           </div>
         </div>
 
-        {/* 6 Compact Instant-Launch Small Tiles: Pink/Blue/Purple Spray Outside, App-Coloured Header, White Box & Dark Blue Writing */}
+        {/* 6 Compact Instant-Launch Small Tiles — White Outside Border, App-Coloured Header & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
           {matchedModules.map((mod, idx) => {
             const Icon = mod.icon || ShieldCheck;
@@ -168,10 +171,7 @@ export default function LiveSuperPlatformPulseBar() {
                   borderColor: getAppBorderView(idx),
                 }}
               >
-                <div
-                  className="flex h-full w-full flex-col justify-between gap-1 rounded-[6px] p-1 text-center"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                >
+                <div className="flex h-full w-full flex-col justify-between gap-1 rounded-[6px] bg-white p-1 text-center">
                   <div
                     className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded px-1.5 py-0.5 text-white"
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
@@ -186,7 +186,10 @@ export default function LiveSuperPlatformPulseBar() {
                     className="w-full rounded p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex items-center justify-between gap-1 rounded-[3px] bg-white px-1.5 py-0.5">
+                    <div
+                      className="flex items-center justify-between gap-1 rounded-[3px] px-1.5 py-0.5"
+                      style={{ background: PINK_BLUE_PURPLE_SPRAY }}
+                    >
                       <span className="text-[7px] font-extrabold text-[#0A2B6D]">
                         Audit Ready
                       </span>

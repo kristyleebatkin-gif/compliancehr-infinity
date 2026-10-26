@@ -73,14 +73,8 @@ function IpadModuleScreenCard({ item, idx }) {
         </span>
       </div>
 
-      {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
-      <div
-        className="flex flex-1 flex-col justify-between gap-1 rounded-[10px] p-1 text-left"
-        style={{
-          background:
-            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
-        }}
-      >
+      {/* Inner iPad Display Screen — White Outside Border, App-Coloured Header, Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
+      <div className="flex flex-1 flex-col justify-between gap-1 rounded-[10px] bg-white p-1 text-left">
         {/* App-Coloured Header Bar With Coloured Symbol */}
         <div
           className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
@@ -97,12 +91,18 @@ function IpadModuleScreenCard({ item, idx }) {
           </span>
         </div>
 
-        {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
+        {/* Pink/Blue/Purple Spray Writing Box Framed in App-Design Border With Dark Blue Writing */}
         <div
           className="flex flex-1 rounded-md p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-1 items-center rounded-[4px] bg-white px-1.5 py-0.5">
+          <div
+            className="flex flex-1 items-center rounded-[4px] px-1.5 py-0.5"
+            style={{
+              background:
+                'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.68) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.68) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.68) 0%, transparent 52%), #FFFFFF',
+            }}
+          >
             <ul className="w-full space-y-0.5">
               {bullets.slice(0, 2).map((point, bIdx) => (
                 <li key={bIdx} className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]">

@@ -210,17 +210,20 @@ export default function PricingSection() {
               </span>
             </h2>
 
-            {/* Minimised Writing Underneath Fitted Evenly */}
+            {/* Minimised Writing Underneath Fitted Evenly — Pink/Blue/Purple Spray & Dark Blue Writing */}
             <div
               className="w-full rounded-xl p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <div className="rounded-[9px] bg-white px-3 py-1.5 text-center">
-                <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  <span className="block">
+              <div
+                className="rounded-[9px] px-3 py-1.5 text-center"
+                style={{ background: UNIFORM_SPRAY_BG }}
+              >
+                <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D]">
+                  <span className="block text-[#0A2B6D]">
                     Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ documents tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery,
                   </span>
-                  <span className="block">
+                  <span className="block text-[#0A2B6D]">
                     Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message + 50,000 Integration Credits, support &amp; $160/mo Elite Tokens.
                   </span>
                 </p>
@@ -311,21 +314,21 @@ export default function PricingSection() {
                     '0 0 18px 4px rgba(255, 255, 255, 0.98), 0 0 12px 2px rgba(0, 198, 255, 0.55)',
                 }}
               >
-                <div
-                  className="flex h-full w-full flex-col justify-between rounded-[12px] p-2 text-center space-y-1.5"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="flex h-full w-full flex-col justify-between rounded-[12px] bg-white p-2 text-center space-y-1.5">
                   <div className="flex flex-1 flex-col justify-between space-y-1.5">
                     {/* Glowing White Lights Bar at Top of Subscription Card */}
                     <div className="flex items-center justify-center gap-1.5">
                       {[0, 1, 2].map((b) => (
                         <span
                           key={b}
-                          className="h-2 w-2 rounded-full border border-white bg-white"
+                          className="h-2 w-2 rounded-full border border-[#0A2B6D]/30 bg-white"
                           style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                         />
                       ))}
-                      <span className="rounded-full bg-white px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      <span
+                        className="rounded-full border border-[#0A2B6D]/25 px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
                         WHITE LIGHTS ON
                       </span>
                     </div>
@@ -353,18 +356,21 @@ export default function PricingSection() {
                             {pkg.packageName}
                           </span>
                         </div>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#5A00D6]">
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#0A2B6D]">
                           {pkg.users}
                         </span>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Package Title & Monthly Price — White Background & Dark Blue Writing */}
+                    {/* 50% Smaller Package Title & Monthly Price — Pink/Blue/Purple Spray & Dark Blue Writing */}
                     <div
                       className="w-full rounded-lg p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
+                      <div
+                        className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center"
+                        style={{ background: UNIFORM_SPRAY_BG }}
+                      >
                         <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
                           {pkg.name}
                         </h3>
@@ -377,13 +383,16 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Credit Pills — White Background, Coloured Symbols & Dark Blue Writing */}
+                    {/* 50% Smaller Credit Pills — Pink/Blue/Purple Spray, Coloured Symbols & Dark Blue Writing */}
                     <div className="grid grid-cols-2 gap-1">
                       <div
                         className="rounded-lg p-[1.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
+                        <div
+                          className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] px-1.5 py-0.5"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
                           <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx).iconColor }} />
                           <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.messageCredits}
@@ -394,7 +403,10 @@ export default function PricingSection() {
                         className="rounded-lg p-[1.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
+                        <div
+                          className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] px-1.5 py-0.5"
+                          style={{ background: UNIFORM_SPRAY_BG }}
+                        >
                           <Layers className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
                           <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.integrationCredits}
@@ -403,7 +415,7 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Benefits List */}
+                    {/* 50% Smaller Benefits List — Pink/Blue/Purple Spray & Dark Blue Writing */}
                     <ul className="grid flex-1 grid-cols-1 gap-1 pt-0.5">
                       {pkg.benefits.slice(0, 4).map((b, bIdx) => {
                         const sym = getSymbolView(pIdx * 2 + bIdx);
@@ -413,7 +425,10 @@ export default function PricingSection() {
                             className="flex min-h-[26px] rounded-lg p-[1.5px] shadow-2xs"
                             style={{ background: TOP_BORDER_GRADIENT }}
                           >
-                            <div className="flex h-full w-full items-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                            <div
+                              className="flex h-full w-full items-center gap-1.5 rounded-[6px] px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                              style={{ background: UNIFORM_SPRAY_BG }}
+                            >
                               <span
                                 className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                                 style={{ borderColor: getAppBorderView(pIdx * 2 + bIdx) }}
@@ -461,11 +476,8 @@ export default function PricingSection() {
                 className="flex h-full rounded-2xl p-[2.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                {/* Spray Colour Inside Pillar */}
-                <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] p-1.5 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                {/* White Outside Writing Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] bg-white p-1.5 text-center">
                   {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
                   <div
                     className="gradient-brand flex min-h-[22px] w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
@@ -500,12 +512,15 @@ export default function PricingSection() {
                     </span>
                   </div>
 
-                  {/* Pure White Inside Writing Box With Dark Blue Writing */}
+                  {/* Pink/Blue/Purple Spray Inside Writing Box With Dark Blue Writing */}
                   <div
                     className="w-full flex-1 rounded-lg p-[1.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                    <div
+                      className="flex h-full items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
+                      style={{ background: UNIFORM_SPRAY_BG }}
+                    >
                       <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                         {b.desc}
                       </p>
