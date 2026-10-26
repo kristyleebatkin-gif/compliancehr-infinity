@@ -14,11 +14,8 @@ import {
 } from 'lucide-react';
 
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import Reveal from '@/components/landing/Reveal';
 import {
-  getTilePalette,
   getHeaderView,
-  getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
@@ -26,6 +23,13 @@ import {
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+
+const SPRAY_BGS = [
+  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+  'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.56) 0%, transparent 50%), #FFFFFF',
+  'radial-gradient(circle at 16% 28%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 78%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 54% 18%, rgba(56, 189, 248, 0.58) 0%, transparent 50%), #FFFFFF',
+  'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
+];
 
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
 const pick = (...keys) =>
@@ -82,8 +86,8 @@ export default function BlueprintPreviewSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
-        {/* "An accurate map..." and Writing Under Inside an App Design Coloured Border */}
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+        {/* "An accurate map..." and Writing Under Inside a Stretched App Design Coloured Border */}
         <div
           className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -108,261 +112,319 @@ export default function BlueprintPreviewSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Current Platform Blueprint" Underneath Writing */}
+        {/* Stretched Side-to-Side "Current Platform Blueprint" Underneath Writing in App Design Coloured Border */}
         <div
-          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(1) }}
+          className="w-full rounded-full p-[3px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Layers className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">Current Platform Blueprint · {moduleCount} Connected Modules</span>
+          <div
+            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            style={{ background: getHeaderView(1) }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Layers className="h-3.5 w-3.5 text-white" />
+            </span>
+            <span className="text-center">Current Platform Blueprint · {moduleCount} Connected Modules</span>
+          </div>
         </div>
 
-        {/* How Information Connects & Role-Based Access Model */}
+        {/* How Information Connects & Role-Based Access Model — App Design Coloured Border */}
         <div
-          className="w-full rounded-2xl border-2 bg-white p-4 text-left space-y-3 shadow-sm"
-          style={{ borderColor: getAppBorderView(0) }}
+          className="w-full rounded-2xl p-[4px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span
-              className="inline-flex min-h-[38px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs"
-              style={{ background: getHeaderView(2) }}
+          <div className="w-full rounded-[12px] bg-white p-4 text-left space-y-3.5">
+            {/* Stretched Header Border with White Writing */}
+            <div
+              className="w-full rounded-2xl p-[3px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Workflow className="h-3.5 w-3.5 text-white" />
-              </span>
-              <span>How Information Connects &amp; Role-Based Access Model</span>
-            </span>
-
-            <button
-              type="button"
-              onClick={() => setExpandConnections((v) => !v)}
-              className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
-              style={{ background: getHeaderView(3) }}
-            >
-              <span>{expandConnections ? 'Minimise Panel' : 'Expand Panel'}</span>
-              {expandConnections ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
-            </button>
-          </div>
-
-          {expandConnections && (
-            <div className="grid gap-4 lg:grid-cols-12">
               <div
-                className="lg:col-span-7 rounded-2xl border-2 bg-white p-3.5 space-y-2.5"
-                style={{ borderColor: getAppBorderView(1) }}
+                className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
+                style={{ background: getHeaderView(2) }}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <h3
-                    className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
-                    style={{ backgroundImage: getTitleGradientView(0) }}
-                  >
-                    How Information Connects Automatically
-                  </h3>
-                  <span
-                    className="rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white"
-                    style={{ background: getHeaderView(4) }}
-                  >
-                    Zero Double-Entry
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                    <Workflow className="h-3.5 w-3.5 text-white" />
+                  </span>
+                  <span className="text-xs sm:text-sm md:text-base font-extrabold text-white">
+                    How Information Connects &amp; Role-Based Access Model
                   </span>
                 </div>
-                <div className="space-y-2">
-                  {DATA_FLOWS.map((flow, fIdx) => (
+
+                <button
+                  type="button"
+                  onClick={() => setExpandConnections((v) => !v)}
+                  className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border-2 border-white bg-white/15 px-3.5 py-1 text-xs font-extrabold text-white shadow-2xs transition-all hover:bg-white/25"
+                >
+                  <span className="text-white">{expandConnections ? 'Minimise Panel' : 'Expand Panel'}</span>
+                  {expandConnections ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
+                </button>
+              </div>
+            </div>
+
+            {expandConnections && (
+              <div className="grid gap-4 lg:grid-cols-12">
+                {/* Left Column: How Information Connects Automatically */}
+                <div
+                  className="lg:col-span-7 rounded-2xl p-[3.5px] shadow-2xs flex"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
+                    {/* Stretched Header in App Design Coloured Border with White Writing */}
                     <div
-                      key={flow.steps[0]}
-                      className="flex flex-wrap items-center gap-1.5 rounded-2xl border-2 bg-white px-3 py-2 shadow-2xs"
-                      style={{ borderColor: getAppBorderView(fIdx + 2) }}
+                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      {flow.steps.map((item, index) => {
-                        const tile = getTilePalette(fIdx * 3 + index);
+                      <div
+                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(0) }}
+                      >
+                        <h3 className="font-editorial text-sm sm:text-base font-extrabold text-white">
+                          How Information Connects Automatically
+                        </h3>
+                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white">
+                          Zero Double-Entry
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {DATA_FLOWS.map((flow, fIdx) => (
+                        <div
+                          key={flow.steps[0]}
+                          className="rounded-2xl p-[2.5px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 rounded-[13px] bg-white px-3 py-2">
+                            {flow.steps.map((item, index) => {
+                              const idx = fIdx * 3 + index;
+                              const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+                              return (
+                                <React.Fragment key={item}>
+                                  <div
+                                    className="rounded-full p-[2px] shadow-2xs"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
+                                  >
+                                    <span
+                                      className="block rounded-full px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D]"
+                                      style={{ background: sprayBg }}
+                                    >
+                                      {item}
+                                    </span>
+                                  </div>
+                                  {index < flow.steps.length - 1 && (
+                                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Access Follows Role */}
+                <div
+                  className="lg:col-span-5 rounded-2xl p-[3.5px] shadow-2xs flex"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
+                    {/* Stretched Header in App Design Coloured Border with White Writing */}
+                    <div
+                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div
+                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(5) }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                            <Lock className="h-3 w-3 text-white" />
+                          </span>
+                          <span className="font-editorial text-sm sm:text-base font-extrabold text-white">
+                            Access Follows Role
+                          </span>
+                        </div>
+                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white">
+                          Strict RLS Security
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-2">
+                      {ACCESS_LEVELS.map((lvl, idx) => {
+                        const sym = getSymbolView(idx + 2);
+                        const borderCol = getAppBorderView(idx + 2);
+                        const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
                         return (
-                          <React.Fragment key={item}>
-                            <span
-                              className="rounded-full border-2 px-2.5 py-0.5 text-[10.5px] font-extrabold"
-                              style={{
-                                backgroundColor: tile.bg,
-                                color: tile.text,
-                                borderColor: getAppBorderView(fIdx * 3 + index),
-                              }}
+                          <div
+                            key={lvl.title}
+                            className="rounded-2xl p-[2.5px] shadow-2xs"
+                            style={{ background: TOP_BORDER_GRADIENT }}
+                          >
+                            <div
+                              className="flex items-center gap-2.5 rounded-[13px] px-3.5 py-2 text-[#0A2B6D]"
+                              style={{ background: sprayBg }}
                             >
-                              {item}
-                            </span>
-                            {index < flow.steps.length - 1 && (
-                              <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
-                            )}
-                          </React.Fragment>
+                              <span
+                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                style={{ borderColor: borderCol }}
+                              >
+                                <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                              </span>
+                              <div className="min-w-0">
+                                <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                                  {lvl.title}
+                                </div>
+                                <div className="text-[11px] font-bold leading-tight text-[#0A2B6D]">
+                                  {lvl.desc}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         );
                       })}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
-
-              <div
-                className="lg:col-span-5 rounded-2xl border-2 bg-white p-3.5 space-y-2.5"
-                style={{ borderColor: getAppBorderView(2) }}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold text-white"
-                    style={{ background: getHeaderView(5) }}
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Lock className="h-3 w-3 text-white" />
-                    </span>
-                    <span>Access Follows Role</span>
-                  </span>
-                  <span
-                    className="rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white"
-                    style={{ background: getHeaderView(6) }}
-                  >
-                    Strict RLS Security
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-2">
-                  {ACCESS_LEVELS.map((lvl, idx) => {
-                    const tile = getTilePalette(idx + 2);
-                    const sym = getSymbolView(idx + 2);
-                    return (
-                      <div
-                        key={lvl.title}
-                        className="flex items-center gap-2.5 rounded-2xl border-2 px-3.5 py-2 shadow-2xs"
-                        style={{
-                          backgroundColor: tile.bg,
-                          color: tile.text,
-                          borderColor: getAppBorderView(idx + 2),
-                        }}
-                      >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
-                          <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                        </span>
-                        <div className="min-w-0">
-                          <div className="text-[11px] font-extrabold leading-tight" style={{ color: tile.text }}>
-                            {lvl.title}
-                          </div>
-                          <div className="text-[10px] font-bold leading-tight" style={{ color: tile.subtext }}>
-                            {lvl.desc}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
-        {/* Live Workspace Groups */}
+        {/* Live Workspace Groups — App Design Coloured Border */}
         <div
-          className="w-full rounded-2xl border-2 bg-white p-4 space-y-4 text-left shadow-sm"
-          style={{ borderColor: getAppBorderView(3) }}
+          className="w-full rounded-2xl p-[4px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <span
-                className="inline-flex min-h-[38px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold text-white"
+          <div className="w-full rounded-[12px] bg-white p-4 space-y-4 text-left">
+            {/* Stretched Header Border for Organisation Live Workspace */}
+            <div
+              className="w-full rounded-2xl p-[3px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
                 style={{ background: getHeaderView(7) }}
               >
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <LayoutDashboard className="h-3.5 w-3.5 text-white" />
-                </span>
-                <span>Organisation Live Workspace</span>
-              </span>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1 text-xs font-extrabold"
-                style={{
-                  backgroundColor: getTilePalette(0).bg,
-                  color: getTilePalette(0).text,
-                  borderColor: getAppBorderView(0),
-                }}
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                  <FileSpreadsheet className="h-3 w-3 text-[#0072FF]" />
-                </span>
-                Spreadsheet Exchange
-              </span>
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1 text-xs font-extrabold"
-                style={{
-                  backgroundColor: getTilePalette(1).bg,
-                  color: getTilePalette(1).text,
-                  borderColor: getAppBorderView(1),
-                }}
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                  <Sparkles className="h-3 w-3 text-[#FF2E9A]" />
-                </span>
-                AI Assistant
-              </span>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {APP_MODULE_GROUPS.map((group, gIdx) => (
-              <div
-                key={group.title}
-                className="rounded-2xl border-2 bg-white p-3.5 space-y-3 shadow-2xs"
-                style={{ borderColor: getAppBorderView(gIdx) }}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                    style={{ background: getHeaderView(gIdx) }}
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <Layers className="h-3 w-3 text-white" />
-                    </span>
-                    <span>{group.title}</span>
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                    <LayoutDashboard className="h-3.5 w-3.5 text-white" />
                   </span>
-                  <span
-                    className="rounded-full border-2 px-3 py-0.5 text-xs font-extrabold"
-                    style={{
-                      backgroundColor: getTilePalette(gIdx + 2).bg,
-                      color: getTilePalette(gIdx + 2).text,
-                      borderColor: getAppBorderView(gIdx + 2),
-                    }}
-                  >
-                    {group.modules.length} modules
+                  <span className="text-xs sm:text-sm md:text-base font-extrabold text-white">
+                    Organisation Live Workspace
                   </span>
                 </div>
 
-                <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
-                  {group.modules.map((mod, mIdx) => {
-                    const Icon = mod.icon || ShieldCheck;
-                    const tile = getTilePalette(gIdx * 3 + mIdx);
-                    const sym = getSymbolView(gIdx * 3 + mIdx);
-                    return (
-                      <Link
-                        key={mod.key}
-                        to={mod.path}
-                        className="group flex items-start gap-2.5 rounded-2xl border-2 p-3 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
-                        style={{
-                          backgroundColor: tile.bg,
-                          color: tile.text,
-                          borderColor: getAppBorderView(gIdx * 3 + mIdx),
-                        }}
-                      >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm">
-                          <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-xs font-extrabold leading-tight" style={{ color: tile.text }}>
-                            {mod.label}
-                          </div>
-                          <div className="mt-0.5 text-[11px] font-bold leading-snug" style={{ color: tile.subtext }}>
-                            {mod.blurb}
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="flex flex-wrap gap-2">
+                  <div
+                    className="rounded-full p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                      style={{ background: SPRAY_BGS[0] }}
+                    >
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                        <FileSpreadsheet className="h-3 w-3 text-[#0072FF]" />
+                      </span>
+                      Spreadsheet Exchange
+                    </span>
+                  </div>
+                  <div
+                    className="rounded-full p-[2px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                      style={{ background: SPRAY_BGS[1] }}
+                    >
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                        <Sparkles className="h-3 w-3 text-[#FF2E9A]" />
+                      </span>
+                      AI Assistant
+                    </span>
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className="space-y-4">
+              {APP_MODULE_GROUPS.map((group, gIdx) => (
+                <div
+                  key={group.title}
+                  className="rounded-2xl p-[3.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+                    {/* Stretched Group Header Border */}
+                    <div
+                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div
+                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(gIdx) }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                            <Layers className="h-3 w-3 text-white" />
+                          </span>
+                          <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white">
+                            {group.title}
+                          </span>
+                        </div>
+                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-xs font-extrabold text-white">
+                          {group.modules.length} modules
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+                      {group.modules.map((mod, mIdx) => {
+                        const Icon = mod.icon || ShieldCheck;
+                        const idx = gIdx * 3 + mIdx;
+                        const sym = getSymbolView(idx);
+                        const borderCol = getAppBorderView(idx);
+                        const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+                        return (
+                          <Link
+                            key={mod.key}
+                            to={mod.path}
+                            className="group flex h-full rounded-2xl p-[3px] shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
+                            style={{ background: TOP_BORDER_GRADIENT }}
+                          >
+                            <div
+                              className="flex h-full w-full items-start gap-2.5 rounded-[13px] p-3 text-[#0A2B6D]"
+                              style={{ background: sprayBg }}
+                            >
+                              <span
+                                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                                style={{ borderColor: borderCol }}
+                              >
+                                <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                              </span>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
+                                  {mod.label}
+                                </div>
+                                <div className="mt-0.5 text-[11px] font-bold leading-snug text-[#0A2B6D]">
+                                  {mod.blurb}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
