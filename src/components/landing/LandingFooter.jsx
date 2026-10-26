@@ -65,10 +65,10 @@ export default function LandingFooter() {
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-2 pt-1.5 pb-4 sm:px-3 sm:pt-2 sm:pb-4 text-center">
-            {/* Centred Logo (1.5x Larger, Closer to Top Border) + App Name & Slogan Centred Between Logo and NDIS */}
+          <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-0 pb-4 sm:px-3 sm:pt-0 sm:pb-4 text-center">
+            {/* Centred Logo (1.5x Larger, Closer to Top Border) + Balanced Space Above App Name & Below Slogan */}
             <Link to="/" className="mx-auto flex w-full flex-col items-center justify-center text-center">
-              <div className="-mt-1 sm:-mt-2 mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
+              <div className="-mt-3 sm:-mt-4 md:-mt-5 mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center">
                 <Image
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                   alt="ComplianceHR Infinity logo"
@@ -77,7 +77,7 @@ export default function LandingFooter() {
                 />
               </div>
 
-              <div className="-mt-4 sm:-mt-5 mb-6 sm:mb-7 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+              <div className="-mt-7 sm:-mt-9 md:-mt-11 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
                 <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
                     Compliance
