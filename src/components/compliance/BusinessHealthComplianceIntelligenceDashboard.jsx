@@ -507,31 +507,31 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand relative flex min-h-[28px] w-full flex-wrap items-center justify-center gap-2 rounded-[8px] border border-white px-3 py-1 text-center text-white"
+              className="gradient-brand relative flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-[8px] border border-white px-2.5 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
               style={{
                 background: getHeaderView(3),
                 color: '#FFFFFF',
                 boxShadow: '0 0 12px 2px rgba(255, 255, 255, 0.9)',
               }}
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex shrink-0 items-center justify-center gap-1">
                 {[0, 1, 2].map((bulb) => (
                   <span
                     key={bulb}
-                    className="h-2 w-2 rounded-full bg-white"
+                    className="h-1.5 w-1.5 rounded-full bg-white"
                     style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
                   />
                 ))}
               </div>
-              <Activity className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-              <span className="text-[10px] sm:text-xs font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+              <Activity className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span className="truncate text-[8.5px] sm:text-[10px] font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
                 Live Executive Command · SYS READY · 98.7% Overall Business Health &amp; Verified 2026 NDIS Audit Readiness
               </span>
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex shrink-0 items-center justify-center gap-1">
                 {[0, 1, 2].map((bulb) => (
                   <span
                     key={`r-${bulb}`}
-                    className="h-2 w-2 rounded-full bg-white"
+                    className="h-1.5 w-1.5 rounded-full bg-white"
                     style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
                   />
                 ))}
@@ -577,8 +577,11 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     : '0 0 8px 2px rgba(255, 255, 255, 0.85)',
               }}
             >
-              {/* White Area Outside Writing Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
-              <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1 text-center">
+              {/* Spray Between Outer Border & White Writing Boxes */}
+              <div
+                className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
+                style={{ background: UNIFORM_SPRAY_BG }}
+              >
                 {/* App-Design Coloured Header Bar */}
                 <div
                   className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-1.5 py-0.5 whitespace-nowrap text-white"
@@ -602,15 +605,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>SYS READY</span>
                 </div>
 
-                {/* Writing Box 1: Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                {/* Writing Box 1: Pure White Background Where the Writing Is */}
                 <div
                   className="w-full rounded-[6px] p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
-                  >
+                  <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
                     <div className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight text-[#0A2B6D]">
                       <span
                         className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -629,15 +629,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   </div>
                 </div>
 
-                {/* Writing Box 2: Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+                {/* Writing Box 2: Pure White Background Where the Writing Is */}
                 <div
                   className="w-full rounded-[6px] p-[1.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div
-                    className="flex min-h-[20px] w-full items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                    style={{ background: UNIFORM_SPRAY_BG }}
-                  >
+                  <div className="flex min-h-[20px] w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                     {k.sub}
                   </div>
                 </div>

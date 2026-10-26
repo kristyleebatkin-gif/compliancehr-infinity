@@ -600,26 +600,26 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 2. 50% Smaller Infinity One-Click Operations Tile With Glowing White Lights & Circular Orbit Status */}
+      {/* 2. One-Line Infinity One-Click Operations & Minimised Circular Rotation Tile */}
       <div
-        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+        className="w-full rounded-full p-[2px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div
-          className="gradient-brand flex min-h-[28px] w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-3 py-1 text-center text-white"
+          className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-between gap-2 rounded-full px-3 py-0.5 text-white whitespace-nowrap overflow-hidden"
           style={{
             background: getHeaderView(5),
             color: '#FFFFFF',
             boxShadow: '0 0 12px 2px rgba(255, 255, 255, 0.92)',
           }}
         >
-          <div className="flex items-center gap-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white">
+          <div className="flex min-w-0 items-center gap-1 text-[9.5px] sm:text-xs font-extrabold tracking-wide text-white truncate">
             <span
-              className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
-              style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+              className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+              style={{ boxShadow: '0 0 8px 2px #FFFFFF, 0 0 12px 2px #00C6FF' }}
             />
-            <Zap className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-            <span style={{ color: '#FFFFFF' }}>
+            <Zap className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span className="truncate" style={{ color: '#FFFFFF' }}>
               Infinity One-Click Operations · 12 Instant Executive Actions Armed
             </span>
           </div>
@@ -627,15 +627,15 @@ export default function InfinityOneClickOperations({ compact = false }) {
           <button
             type="button"
             onClick={() => setCircleStep((prev) => prev + 1)}
-            className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white hover:bg-white/30"
+            className="inline-flex shrink-0 items-center gap-1 rounded-full border border-white bg-white/20 px-2 py-0 text-[7.5px] sm:text-[8px] font-extrabold uppercase tracking-wider text-white hover:bg-white/30 whitespace-nowrap"
             style={{ color: '#FFFFFF' }}
           >
             <span
-              className="h-2 w-2 rounded-full bg-white"
-              style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
+              className="h-1.5 w-1.5 rounded-full bg-white"
+              style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
             />
             <span style={{ color: '#FFFFFF' }}>
-              ↻ Circular Rotation Active (Every 30s · Step #{circleStep + 1})
+              ↻ Circular Rotation (30s · #{circleStep + 1})
             </span>
           </button>
         </div>

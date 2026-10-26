@@ -12,16 +12,16 @@ const UNIFORM_SPRAY_BG =
 
 export default function LandingFooter() {
   return (
-    <footer className="relative overflow-hidden border-t-4 border-[#0A2B6D] bg-white py-4 px-[0.5cm] space-y-4 text-center">
+    <footer className="relative overflow-hidden border-t-4 border-[#0A2B6D] bg-white py-2 px-[0.5cm] space-y-2.5 text-center">
       {/* 1. Footer Brand Logo Section Matching Exact Top Header Design */}
       <div
-        className="rounded-3xl p-[12px] shadow-lg"
+        className="rounded-3xl p-[10px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-0 pb-4 sm:px-3 sm:pt-0 sm:pb-4 text-center">
+        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-2 pb-2.5 sm:px-3 sm:pt-2.5 sm:pb-3 text-center">
           <Link to="/" className="mx-auto flex w-full flex-col items-center justify-center text-center">
             <div
-              className="mt-0 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem] bg-white"
+              className="mt-2 sm:mt-2.5 mx-auto relative overflow-hidden w-[13.5rem] sm:w-[17rem] md:w-[20rem] bg-white"
               style={{ aspectRatio: '100 / 50' }}
             >
               <img
@@ -49,8 +49,8 @@ export default function LandingFooter() {
               />
             </div>
 
-            <div className="mt-2 sm:mt-3 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
-              <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+            <div className="mt-3 sm:mt-4 mb-2 sm:mb-2.5 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+              <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                 <span className="mx-auto block whitespace-nowrap text-center">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -62,7 +62,7 @@ export default function LandingFooter() {
                 </span>
               </div>
 
-              <div className="mt-1.5 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-sm sm:text-base md:text-lg lg:text-xl font-extrabold">
+              <div className="mt-1 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-xs sm:text-sm md:text-base lg:text-lg font-extrabold">
                 <span className="text-[#0072FF]">Complete Control.</span>
                 <span className="text-[#5A00D6]">Greater Confidence.</span>
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -70,14 +70,14 @@ export default function LandingFooter() {
             </div>
           </Link>
 
-          <div className="mx-auto flex w-full flex-col items-center justify-center gap-2 text-center">
-            {/* NDIS Stretched From Side to Side */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center gap-1.5 text-center">
+            {/* Smaller NDIS Stretched From Side to Side */}
             <span
-              className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+              className="flex min-h-[20px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold tracking-wide text-white shadow-2xs"
               style={{ background: BADGE_GRADIENT }}
             >
-              <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <ShieldCheck className="h-2.5 w-2.5 text-[#FF2E9A]" />
+              <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                <ShieldCheck className="h-2 w-2 text-[#FF2E9A]" />
               </span>
               <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
             </span>
@@ -130,15 +130,15 @@ export default function LandingFooter() {
         </div>
       </div>
 
-      {/* 2. Contact Us Section Styled to Match the Footer Brand Logo Area */}
+      {/* 2. Minimised Contact Us Section With White Writing Background */}
       <div
-        className="rounded-3xl p-[12px] shadow-lg"
+        className="rounded-3xl p-[10px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-3 sm:px-5 sm:py-4 text-center space-y-2">
-          {/* Smaller Contact ComplianceHR Infinity on One Line */}
+        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-2 sm:px-4 sm:py-2.5 text-center space-y-1.5">
+          {/* Minimised Contact ComplianceHR Infinity on One Line */}
           <div className="mx-auto flex w-full flex-col items-center justify-center text-center space-y-0.5">
-            <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-base sm:text-xl md:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+            <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-sm sm:text-base md:text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
               <span className="mx-auto block whitespace-nowrap text-center">
                 Contact{' '}
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -149,28 +149,28 @@ export default function LandingFooter() {
                 </span>
               </span>
             </div>
-            <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 px-2 text-center text-[10px] sm:text-xs font-extrabold">
+            <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 px-2 text-center text-[9px] sm:text-[10px] font-extrabold">
               <span className="text-[#0072FF]">Software Enquiries.</span>
               <span className="text-[#5A00D6]">Onboarding Support.</span>
               <span className="text-[#FF2E9A]">Direct Developer Contact.</span>
             </div>
           </div>
 
-          {/* Contact Stretched From Side to Side */}
+          {/* Minimised Contact Stretched From Side to Side */}
           <span
-            className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+            className="flex min-h-[20px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold tracking-wide text-white shadow-2xs"
             style={{ background: BADGE_GRADIENT, color: '#FFFFFF' }}
           >
-            <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-              <Mail className="h-2.5 w-2.5 text-[#FF2E9A]" />
+            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+              <Mail className="h-2 w-2 text-[#FF2E9A]" />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>
               Contact Us · Software &amp; Developer Support
             </span>
           </span>
 
-          {/* Software & Developer Cards Stretched Side-to-Side */}
-          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 items-stretch text-center">
+          {/* Software & Developer Cards Stretched Side-to-Side — White Writing Background */}
+          <div className="grid w-full grid-cols-1 gap-1.5 sm:grid-cols-2 items-stretch text-center">
             {[
               {
                 num: '01',
@@ -194,30 +194,27 @@ export default function LandingFooter() {
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="flex h-full rounded-xl p-[2px] shadow-2xs"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[10px] bg-white p-1.5 text-center">
+                  <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
                     {/* App-Design Coloured Pill Title With Coloured Symbol */}
                     <div
-                      className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                       style={{ background: box.headerBg, color: '#FFFFFF' }}
                     >
-                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-2.5 w-2.5" style={{ color: box.symColor }} />
+                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2 w-2" style={{ color: box.symColor }} />
                       </span>
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
-                    {/* Pink/Blue/Purple Spray Inner Box Framed in App-Design Border With Dark Blue Writing */}
+                    {/* Clean White Inner Writing Box Framed in App-Design Border With Dark Blue Writing */}
                     <div
                       className="w-full flex-1 rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="flex h-full min-h-[28px] w-full items-center justify-center rounded-[6px] px-2.5 py-1 text-center"
-                        style={{ background: UNIFORM_SPRAY_BG }}
-                      >
+                      <div className="flex h-full min-h-[24px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
                         {box.href ? (
                           <a
                             href={box.href}

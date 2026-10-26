@@ -131,52 +131,42 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-          {/* Heading & Subtitle — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+          {/* Heading & Subtitle on Clean White Background */}
           <div
-            className="w-full rounded-2xl p-[4px] shadow-sm"
+            className="w-full rounded-2xl p-[3px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex flex-col items-center justify-center w-full rounded-[12px] bg-white p-2 text-center">
-              <div
-                className="w-full rounded-xl p-[2px]"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <div
-                  className="flex flex-col items-center justify-center w-full rounded-[10px] px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-2"
-                  style={{ background: SPRAY_BGS[0] }}
-                >
-                  <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
-                    <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
-                    <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                      Compliance
-                    </span>
-                    <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                      HR
-                    </span>{' '}
-                    <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                      Infinity
-                    </span>
-                  </h2>
+            <div className="flex flex-col items-center justify-center w-full rounded-[11px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-1.5">
+              <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
+                <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
+                <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Compliance
+                </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  HR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
+                </span>
+              </h2>
 
-                  <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
-                    Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
-                  </p>
-                </div>
-              </div>
+              <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
+                Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
+              </p>
             </div>
           </div>
 
-          {/* Stretched Side-to-Side Banner Underneath in App Design Coloured Border */}
+          {/* Minimised Stretched Side-to-Side Executive Marketing Banner */}
           <div
-            className="w-full rounded-full p-[3px] shadow-sm"
+            className="w-full rounded-full p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[10px] sm:text-xs font-extrabold tracking-wide text-white"
               style={{ background: getHeaderView(1), color: '#FFFFFF' }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
                 Executive Marketing &amp; Sales Suite · 14-Day Free Trial
@@ -624,20 +614,48 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <div className="flex flex-col justify-between rounded-[9px] bg-white p-1.5 text-center space-y-1">
+                            {/* Outright & Subscription Inside Live HD TV Screen With White Background & ComplianceHR Colours in Name & $ Amounts */}
+                            <div
+                              className="w-full rounded-lg p-[1.5px] shadow-2xs"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
+                              <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                                <div className="font-editorial text-[10.5px] font-extrabold uppercase tracking-wider">
+                                  <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                    Compliance
+                                  </span>
+                                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                    HR
+                                  </span>{' '}
+                                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                                    {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
+                                  </span>
+                                </div>
+                                <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
+                                  <span className="font-editorial text-xs sm:text-sm font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                    {pack.priceMain}
+                                  </span>
+                                  <span className="text-[8px] font-extrabold bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                                    {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
                             {/* Compact 30-Second Spotlight Banner */}
                             <div
-                              className="gradient-brand flex min-h-[34px] items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-center text-white"
+                              className="gradient-brand flex min-h-[26px] items-center justify-between gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
                               style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                             >
                               <div className="min-w-0 flex-1 text-center">
-                                <span className="text-[8.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                                <span className="text-[7.5px] font-extrabold leading-tight text-white line-clamp-1" style={{ color: '#FFFFFF' }}>
                                   {pack.nowPlayingLabel}: {currentSpotlight}
                                 </span>
                               </div>
                               <button
                                 type="button"
                                 onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                                className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0 text-[7.5px] font-extrabold text-white"
+                                className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
                                 style={{ color: '#FFFFFF' }}
                               >
                                 Next ▸
@@ -714,27 +732,32 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] bg-white p-2 text-center">
-                        {/* Row 1: Aligned Price Box */}
+                        {/* Row 1: Aligned Price Box — White Background & ComplianceHR Colours in Name and $ Amounts */}
                         <div
-                          className="flex h-[64px] w-full rounded-lg p-[1.5px] shadow-2xs"
+                          className="flex min-h-[60px] w-full rounded-lg p-[1.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex h-full w-full flex-col items-center justify-center rounded-[6px] px-2 py-0.5 text-center"
-                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
-                          >
-                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                              ComplianceHR{pack.id === 'pack-1' ? ' Subscription' : ''}
+                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider">
+                              <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                Compliance
+                              </span>
+                              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                HR
+                              </span>{' '}
+                              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                                {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
+                              </span>
                             </div>
-                            <div className="flex flex-wrap items-baseline justify-center gap-1 leading-none">
-                              <span className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                            <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
+                              <span className="font-editorial text-sm sm:text-base font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                                 {pack.priceMain}
                               </span>
-                              <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                              <span className="text-[8.5px] font-extrabold bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                                 {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
                               </span>
                             </div>
-                            <p className="truncate text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                            <p className="w-full text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                               {pack.subtitle}
                             </p>
                           </div>
@@ -857,15 +880,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         </div>
       </div>
 
-      {/* 5. Core Engines */}
+      {/* 5. Core Engines — Normal Clean Border */}
       <div
         id="infinity-core-engine"
-        className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
-        style={{ background: TOP_BORDER_GRADIENT }}
+        className="w-full scroll-mt-16 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 sm:p-3 shadow-sm"
       >
-        <div className="rounded-[16px] bg-white p-3 sm:p-4">
-          <InfinityCoreEngine />
-        </div>
+        <InfinityCoreEngine />
       </div>
 
       {/* 6. Unified Oversight */}

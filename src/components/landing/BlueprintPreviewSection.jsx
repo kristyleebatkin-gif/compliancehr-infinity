@@ -540,54 +540,46 @@ export default function BlueprintPreviewSection() {
       `}</style>
 
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* "An accurate map..." — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* "An accurate map of the ComplianceHR Infinity app" in Two Neat Lines on Clean White Background */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white p-2 text-center">
-            <div
-              className="w-full rounded-xl p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="w-full rounded-[10px] px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-1.5"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
-                <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
-                  <span className="text-[#0A2B6D]">An accurate map of the </span>
-                  <span className="text-[#0A2B6D]">Compliance</span>
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    HR
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Infinity app
-                  </span>
-                </h2>
-                <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D]">
-                  All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
-                </p>
-              </div>
-            </div>
+          <div className="w-full rounded-[11px] bg-white px-4 py-2.5 sm:px-6 sm:py-3 text-center space-y-1">
+            <h2 className="font-editorial text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight">
+              <span className="block text-[#0A2B6D]">An accurate map of the</span>
+              <span className="block">
+                <span className="text-[#0A2B6D]">Compliance</span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  HR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity app
+                </span>
+              </span>
+            </h2>
+            <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D]">
+              All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
+            </p>
           </div>
         </div>
 
-        {/* Uniform Header #1: Current Platform Blueprint on Line 1, "46 Connected Modules" on Line 2 */}
-        <UniformBlueprintHeader
-          icon={Layers}
-          title="Current Platform Blueprint"
-          secondLine={`${moduleCount} Connected Modules`}
-          badgeText="100% Connected Architecture"
-          viewIndex={1}
-        />
-
-        {/* How Information Connects & Role-Based Access Model — App Design Coloured Border */}
+        {/* How Information Connects & Role-Based Access Model — With Current, How & Access Headers Stacked Neatly Above */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white p-4 text-left space-y-3.5">
-            {/* Uniform Header #2: "How Information Connects" on Line 1, "& Role-Based Access Model" on Line 2 */}
+          <div className="w-full rounded-[12px] bg-white p-3.5 text-left space-y-2">
+            {/* 1. Current Platform Blueprint Moved Above How Information Connects */}
+            <UniformBlueprintHeader
+              icon={Layers}
+              title="Current Platform Blueprint"
+              secondLine={`${moduleCount} Connected Modules`}
+              badgeText="100% Connected Architecture"
+              viewIndex={1}
+            />
+
+            {/* 2. How Information Connects & Role-Based Access Model */}
             <UniformBlueprintHeader
               icon={Workflow}
               title="How Information Connects"
@@ -597,13 +589,13 @@ export default function BlueprintPreviewSection() {
             />
 
             {expandConnections && (
-              <div className="grid gap-4 lg:grid-cols-12 items-stretch">
+              <div className="grid gap-3 lg:grid-cols-12 items-stretch">
                 {/* Left Column: How Information Connects Automatically */}
                 <div
-                  className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
+                  className="lg:col-span-6 rounded-2xl p-[3px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
+                  <div className="flex w-full flex-col justify-between rounded-[12px] bg-white p-3 space-y-2">
                     <UniformBlueprintHeader
                       icon={Workflow}
                       title="How Information Connects Automatically"
@@ -618,9 +610,7 @@ export default function BlueprintPreviewSection() {
                           className="flex h-full rounded-xl p-[2.5px] shadow-2xs overflow-hidden"
                           style={{ background: getHeaderView(fIdx) }}
                         >
-                          {/* White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                           <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
-                            {/* App-Design Coloured Flow Heading Bar With Number */}
                             <div
                               className="gradient-brand flex w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
                               style={{ background: getHeaderView(fIdx), color: '#FFFFFF' }}
@@ -634,7 +624,7 @@ export default function BlueprintPreviewSection() {
                               <span style={{ color: '#FFFFFF' }}>{flow.label}</span>
                             </div>
 
-                            {/* Pink/Blue/Purple Spray Behind Dark Blue Writing */}
+                            {/* Colours Restored in Flow Step Tiles */}
                             <div
                               className="w-full flex-1 rounded-lg p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
@@ -649,12 +639,15 @@ export default function BlueprintPreviewSection() {
                                 >
                                   {flow.steps.map((item, index) => {
                                     const idx = fIdx * 5 + index;
-                                    const borderCol = getAppBorderView(idx);
+                                    const tileStyle = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
                                     return (
                                       <React.Fragment key={item}>
                                         <span
-                                          className="rounded-full border bg-white/80 px-2 py-0 text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap"
-                                          style={{ borderColor: borderCol }}
+                                          className="rounded-full border border-white px-2 py-0 text-[7.5px] font-extrabold text-white shadow-2xs whitespace-nowrap"
+                                          style={{
+                                            backgroundColor: tileStyle.bg,
+                                            color: '#FFFFFF',
+                                          }}
                                         >
                                           {item}
                                         </span>
@@ -799,22 +792,22 @@ export default function BlueprintPreviewSection() {
               viewIndex={7}
             />
 
-            {/* Clean Symmetrical 3-Tile Action Row Below Header */}
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+            {/* 50% Smaller Symmetrical 3-Tile Action Row Below Header (Play, Spreadsheet & 24/7) */}
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
               <div
-                className="rounded-xl p-[2.5px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <button
                   type="button"
                   onClick={togglePopSound}
-                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
                   style={{ background: getHeaderView(4), color: '#FFFFFF' }}
                 >
                   {soundEnabled ? (
-                    <Volume2 className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                    <Volume2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   ) : (
-                    <VolumeX className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                    <VolumeX className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   )}
                   <span style={{ color: '#FFFFFF' }}>
                     {soundEnabled ? 'Pop Beat Audio: ON ♫' : 'Play Pop Song Audio ♫'}
@@ -823,27 +816,27 @@ export default function BlueprintPreviewSection() {
               </div>
 
               <div
-                className="rounded-xl p-[2.5px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <FileSpreadsheet className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <FileSpreadsheet className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>Spreadsheet Exchange</span>
                 </div>
               </div>
 
               <div
-                className="rounded-xl p-[2.5px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
                   style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                 >
-                  <Sparkles className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>24/7 AI Assistant</span>
                 </div>
               </div>
@@ -989,6 +982,30 @@ export default function BlueprintPreviewSection() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Minimise Button Under Live Workspace on Bottom Right */}
+            <div className="flex w-full justify-end pt-1">
+              <div
+                className="rounded-full p-[2px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandConnections((v) => !v)}
+                  className="gradient-brand inline-flex min-h-[24px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                >
+                  <span style={{ color: '#FFFFFF' }}>
+                    {expandConnections ? 'Minimise' : 'Expand'}
+                  </span>
+                  {expandConnections ? (
+                    <ChevronUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  ) : (
+                    <ChevronDown className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>

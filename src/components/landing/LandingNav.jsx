@@ -88,17 +88,17 @@ export default function LandingNav() {
         scrolled ? 'shadow-xl' : 'shadow-md'
       }`}
     >
-      {/* Clean white outer area with 0.5cm side spacing */}
-      <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
-        {/* Top Section — Protected & Untouched Design */}
+      {/* Clean white outer area with reduced top space */}
+      <div className="w-full bg-white px-[0.5cm] py-1 space-y-1.5">
+        {/* Top Section — Reduced Top Space, Logo & Name/Slogan Moved Down, Smaller NDIS Tile */}
         <div
-          className="rounded-3xl p-[12px] shadow-lg"
+          className="rounded-3xl p-[10px] shadow-lg"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-0 pb-4 sm:px-3 sm:pt-0 sm:pb-4 text-center">
+          <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-2 pt-2 pb-2.5 sm:px-3 sm:pt-2.5 sm:pb-3 text-center">
             <button
               onClick={() => setOpen((v) => !v)}
               className="md:hidden absolute right-3 top-2.5 z-20 rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 text-[#0A2B6D]"
@@ -112,7 +112,7 @@ export default function LandingNav() {
               className="mx-auto flex w-full flex-col items-center justify-center bg-white text-center"
             >
               <div
-                className="mt-0 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem] bg-white"
+                className="mt-2 sm:mt-2.5 mx-auto relative overflow-hidden w-[13.5rem] sm:w-[17rem] md:w-[20rem] bg-white"
                 style={{ aspectRatio: '100 / 50' }}
               >
                 <img
@@ -140,9 +140,9 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* App Name & Slogan */}
-              <div className="mt-2 sm:mt-3 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
-                <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+              {/* App Name & Slogan Moved Down Closer to Bottom Bar */}
+              <div className="mt-3 sm:mt-4 mb-2 sm:mb-2.5 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+                <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
                     Compliance
                     <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -154,7 +154,7 @@ export default function LandingNav() {
                   </span>
                 </div>
 
-                <div className="mt-1.5 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-sm sm:text-base md:text-lg lg:text-xl font-extrabold">
+                <div className="mt-1 mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 bg-transparent px-2 text-center text-xs sm:text-sm md:text-base lg:text-lg font-extrabold">
                   <span className="text-[#0072FF]">Complete Control.</span>
                   <span className="text-[#5A00D6]">Greater Confidence.</span>
                   <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -162,17 +162,17 @@ export default function LandingNav() {
               </div>
             </Link>
 
-            {/* Bottom Section: NDIS Stretched Side-to-Side + Dashboard, Landing Page & Sign In 50% Smaller */}
-            <div className="mx-auto flex w-full flex-col items-center justify-center gap-2 text-center">
+            {/* Bottom Section: Smaller NDIS Stretched Side-to-Side + Dashboard, Landing Page & Sign In 50% Smaller */}
+            <div className="mx-auto flex w-full flex-col items-center justify-center gap-1.5 text-center">
               <span
-                className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+                className="flex min-h-[20px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold tracking-wide text-white shadow-2xs"
                 style={{
                   background:
                     'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
                 }}
               >
-                <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                  <ShieldCheck className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                  <ShieldCheck className="h-2 w-2 text-[#FF2E9A]" />
                 </span>
                 <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
               </span>

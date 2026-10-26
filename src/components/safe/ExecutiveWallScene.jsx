@@ -49,14 +49,14 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
 }
 
 /**
- * 1. Fixed Logo Section Lockup — Unclipped Emblem, App Name & Full Slogan
+ * 1. Minimised Fixed Logo Section Lockup — Unclipped Emblem, App Name & Full Slogan
  */
 export function ComplianceHrPhotoFrame() {
   return (
     <WallHangingPictureFrame title="1. Fixed Logo & Brand Slogan">
-      <div className="flex h-full flex-col items-center justify-center rounded-xl bg-white p-2 text-center space-y-2">
+      <div className="flex h-full flex-col items-center justify-center rounded-xl bg-white p-1.5 text-center space-y-1">
         <div
-          className="mx-auto relative overflow-hidden w-[12rem] sm:w-[14rem] bg-white"
+          className="mx-auto relative overflow-hidden w-[7.5rem] sm:w-[8.5rem] bg-white"
           style={{ aspectRatio: '100 / 50' }}
         >
           <img
@@ -82,7 +82,7 @@ export function ComplianceHrPhotoFrame() {
           />
         </div>
 
-        <div className="font-editorial text-xl sm:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
+        <div className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
           Compliance
           <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
             HR
@@ -93,10 +93,10 @@ export function ComplianceHrPhotoFrame() {
         </div>
 
         <div
-          className="w-full rounded-full p-[2px]"
+          className="w-full rounded-full p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="rounded-full bg-white px-3 py-1 text-[10px] font-extrabold text-[#5A00D6]">
+          <div className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-[#5A00D6]">
             {FULL_SLOGAN}
           </div>
         </div>
@@ -188,58 +188,52 @@ function TodaysRosterPictureCard() {
             </Link>
           </div>
 
-          {/* Inner Flat Screen Display — All Writing & Symbols in Dark Blue (#0A2B6D) */}
+          {/* Minimised Inner Flat Screen Display — Compact Roster Rows With Dark Blue Writing (#0A2B6D) */}
           <div
-            className="flex-1 rounded-xl p-[2px]"
+            className="flex-1 rounded-xl p-[1.5px]"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] p-2"
+              className="flex h-full flex-col justify-between gap-1 rounded-[8px] p-1"
               style={{ background: UNIFORM_SPRAY_BG }}
             >
-              <div className="flex items-center justify-between gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1">
+              <div className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/25 bg-white px-2 py-0.5">
                 <span
-                  className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                  className="flex items-center gap-1 text-[8px] font-extrabold text-[#0A2B6D]"
                   style={{ color: '#0A2B6D' }}
                 >
-                  <CalendarClock className="h-3 w-3 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
-                  Visual Daily Shift Roster Screen
+                  <CalendarClock className="h-2.5 w-2.5 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+                  Visual Daily Shift Roster
                 </span>
                 <span
-                  className="rounded-full border border-[#0A2B6D]/30 bg-[#F5F0FF] px-2 py-0 text-[8px] font-extrabold text-[#0A2B6D]"
+                  className="rounded-full border border-[#0A2B6D]/30 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
                   style={{ color: '#0A2B6D' }}
                 >
                   100% Screened
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 gap-1">
+              <div className="grid grid-cols-1 gap-0.5">
                 {sampleRosterRows.map((row, idx) => (
                   <div
                     key={row.shift}
-                    className="rounded-lg p-[1.5px]"
+                    className="rounded p-[1px]"
                     style={{ background: getHeaderView(idx) }}
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-1 text-left">
-                      <div>
-                        <div
-                          className="text-[9.5px] font-extrabold text-[#0A2B6D]"
+                    <div className="flex items-center justify-between gap-1 rounded-[3px] bg-white px-1.5 py-0.5 text-left">
+                      <div className="min-w-0 truncate">
+                        <span
+                          className="text-[7.5px] font-extrabold text-[#0A2B6D]"
                           style={{ color: '#0A2B6D' }}
                         >
-                          {row.shift}
-                        </div>
-                        <div
-                          className="text-[8.5px] font-bold text-[#0A2B6D]"
-                          style={{ color: '#0A2B6D' }}
-                        >
-                          Worker: {row.staff} · Participant: {row.participant}
-                        </div>
+                          {row.shift} · {row.staff} → {row.participant}
+                        </span>
                       </div>
                       <span
-                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-2 py-0 text-[8px] font-extrabold text-[#0A2B6D]"
+                        className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
                         style={{ color: '#0A2B6D' }}
                       >
-                        <CheckCircle2 className="h-2.5 w-2.5 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+                        <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
                         {row.status}
                       </span>
                     </div>
@@ -343,7 +337,31 @@ function CommunicationAndMailboxTabs() {
             </div>
           </div>
 
-          {/* Cool Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
+          {/* Between Mini Comms and Mailbox: Live Roster Strip + Sky-Drop Command Deck */}
+          <div
+            className="rounded-xl p-[2px] shadow-2xs"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <div className="flex items-center justify-between gap-1.5 rounded-[8px] bg-white px-2 py-0.5">
+              <span
+                className="gradient-brand inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[7px] font-extrabold uppercase text-white whitespace-nowrap"
+                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+              >
+                <CalendarClock className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Live Roster</span>
+              </span>
+              <span className="truncate rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+                3 Shifts Active · 100% Screened
+              </span>
+              <Link
+                to="/roster"
+                className="shrink-0 rounded-full bg-[#0A2B6D] px-2 py-0 text-[6.5px] font-extrabold text-white"
+              >
+                Roster →
+              </Link>
+            </div>
+          </div>
+
           <AboveMailboxCommandDeck
             mailAlertCount={mailAlertCount}
             onDropExpressMail={() => {
@@ -352,7 +370,7 @@ function CommunicationAndMailboxTabs() {
             }}
           />
 
-          {/* Underneath Mini Comms & Sky-Drop Command Deck: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
+          {/* Underneath Mini Comms & Roster: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
           <div
             className="rounded-xl p-[3px] transition-all duration-300"
             style={{

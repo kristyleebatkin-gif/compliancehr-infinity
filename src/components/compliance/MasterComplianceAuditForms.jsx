@@ -843,19 +843,16 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
             }}
           >
             <div
-              className="gradient-brand flex min-h-[30px] w-full flex-wrap items-center justify-center gap-1.5 rounded-[9px] px-3 py-1 text-center text-white"
+              className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-[9px] px-2.5 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
               style={{ background: getHeaderView(0), color: '#FFFFFF' }}
             >
               <span
                 className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
                 style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
               />
-              <ClipboardList className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span className="text-xs sm:text-sm font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                Master Compliance Audit Checklist
-              </span>
-              <span className="text-[9.5px] sm:text-[10.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                · 17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
+              <ClipboardList className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span className="truncate text-[9px] sm:text-[10.5px] font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+                Master Compliance Audit Checklist · 17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
               </span>
             </div>
           </div>

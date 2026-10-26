@@ -191,44 +191,32 @@ export default function PricingSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Top Package Title Header on Two Lines + Minimised Evenly Fitted Writing Underneath */}
+        {/* Top Package Title Header on One Line + Border & Colour Removed From Writing Underneath */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-2">
-            {/* Smart Enhanced Sentence on Two Lines */}
-            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight text-center">
-              <span className="block">
-                <span className="text-[#0A2B6D]">Smart Enhanced </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  All-In-One Elite Packages
-                </span>
-              </span>
-              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-4 py-2.5 sm:px-6 sm:py-3 text-center space-y-1.5">
+            {/* Smart Enhanced Sentence on One Single Line */}
+            <h2 className="font-editorial text-sm sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight leading-snug text-center whitespace-nowrap">
+              <span className="text-[#0A2B6D]">Smart Enhanced </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                All-In-One Elite Packages
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                 &amp; Master Audit Suite
               </span>
             </h2>
 
-            {/* Minimised Writing Underneath Fitted Evenly — Pink/Blue/Purple Spray & Dark Blue Writing */}
-            <div
-              className="w-full rounded-xl p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="rounded-[9px] px-3 py-1.5 text-center"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
-                <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D]">
-                  <span className="block text-[#0A2B6D]">
-                    Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ documents tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery,
-                  </span>
-                  <span className="block text-[#0A2B6D]">
-                    Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message + 50,000 Integration Credits, support &amp; $160/mo Elite Tokens.
-                  </span>
-                </p>
-              </div>
-            </div>
+            {/* Writing Underneath With Border & Spray Colour Removed */}
+            <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D] bg-white">
+              <span className="block text-[#0A2B6D]">
+                Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ documents tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery,
+              </span>
+              <span className="block text-[#0A2B6D]">
+                Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message + 50,000 Integration Credits, support &amp; $160/mo Elite Tokens.
+              </span>
+            </p>
           </div>
         </div>
 
@@ -362,15 +350,12 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Package Title & Monthly Price — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* 50% Smaller Package Title & Monthly Price — White Background & Coloured Border */}
                     <div
                       className="w-full rounded-lg p-[2px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      style={{ background: getHeaderView(pIdx) }}
                     >
-                      <div
-                        className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center"
-                        style={{ background: UNIFORM_SPRAY_BG }}
-                      >
+                      <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
                         <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
                           {pkg.name}
                         </h3>
@@ -383,16 +368,13 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Credit Pills — Pink/Blue/Purple Spray, Coloured Symbols & Dark Blue Writing */}
+                    {/* 50% Smaller Credit Pills — White Background, Coloured Border & Coloured Symbols */}
                     <div className="grid grid-cols-2 gap-1">
                       <div
-                        className="rounded-lg p-[1.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
+                        className="rounded-lg p-[2px] shadow-2xs"
+                        style={{ background: getHeaderView(pIdx + 1) }}
                       >
-                        <div
-                          className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] px-1.5 py-0.5"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
+                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
                           <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx).iconColor }} />
                           <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.messageCredits}
@@ -400,13 +382,10 @@ export default function PricingSection() {
                         </div>
                       </div>
                       <div
-                        className="rounded-lg p-[1.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
+                        className="rounded-lg p-[2px] shadow-2xs"
+                        style={{ background: getHeaderView(pIdx + 2) }}
                       >
-                        <div
-                          className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] px-1.5 py-0.5"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
+                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
                           <Layers className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
                           <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
                             {pkg.integrationCredits}
@@ -415,20 +394,17 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* 50% Smaller Benefits List — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                    {/* 50% Smaller Benefits List — White Background & Coloured Border */}
                     <ul className="grid flex-1 grid-cols-1 gap-1 pt-0.5">
                       {pkg.benefits.slice(0, 4).map((b, bIdx) => {
                         const sym = getSymbolView(pIdx * 2 + bIdx);
                         return (
                           <li
                             key={b}
-                            className="flex min-h-[26px] rounded-lg p-[1.5px] shadow-2xs"
-                            style={{ background: TOP_BORDER_GRADIENT }}
+                            className="flex min-h-[26px] rounded-lg p-[2px] shadow-2xs"
+                            style={{ background: getHeaderView(pIdx + bIdx) }}
                           >
-                            <div
-                              className="flex h-full w-full items-center gap-1.5 rounded-[6px] px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                              style={{ background: UNIFORM_SPRAY_BG }}
-                            >
+                            <div className="flex h-full w-full items-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                               <span
                                 className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                                 style={{ borderColor: getAppBorderView(pIdx * 2 + bIdx) }}
@@ -465,7 +441,7 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* 6 Included Platform Pillar Benefits — Spray Colour Directly Inside Pillars & Pure White Inside Writing Boxes */}
+        {/* 6 Included Platform Pillar Benefits — White Background & App-Design Coloured Borders */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center items-stretch">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
@@ -473,10 +449,9 @@ export default function PricingSection() {
             return (
               <div
                 key={b.title}
-                className="flex h-full rounded-2xl p-[2.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="flex h-full rounded-2xl p-[3px] shadow-2xs"
+                style={{ background: getHeaderView(idx) }}
               >
-                {/* White Outside Writing Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                 <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] bg-white p-1.5 text-center">
                   {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
                   <div
@@ -512,15 +487,12 @@ export default function PricingSection() {
                     </span>
                   </div>
 
-                  {/* Pink/Blue/Purple Spray Inside Writing Box With Dark Blue Writing */}
+                  {/* Pure White Inside Writing Box With Coloured Border & Dark Blue Writing */}
                   <div
-                    className="w-full flex-1 rounded-lg p-[1.5px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+                    className="w-full flex-1 rounded-lg p-[2px]"
+                    style={{ background: getHeaderView(idx + 2) }}
                   >
-                    <div
-                      className="flex h-full items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
+                    <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
                       <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
                         {b.desc}
                       </p>

@@ -203,39 +203,29 @@ export default function MustHaveFunctionsReview() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-2.5 py-3 sm:px-3.5 sm:py-3.5 text-center space-y-2">
-        {/* 50% Smaller Heading & 2-Line Subtitle — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* 50% Smaller Heading & 2-Line Subtitle on Clean White Background */}
         <div
           className="w-full rounded-xl p-[3px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[9px] bg-white p-2 text-center space-y-1">
-            <div
-              className="rounded-lg p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="rounded-[6px] px-3 py-2 text-center space-y-1"
-                style={{ background: SPRAY_BGS[0] }}
-              >
-                <h2 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight leading-tight">
-                  <span className="text-[#0A2B6D]">Complete Review of Every </span>
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Must-Have Function,
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Resource &amp; Feature
-                  </span>
-                </h2>
-                <p className="mx-auto w-full text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
-                  <span className="block text-[#0A2B6D]">
-                    {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
-                  </span>
-                  <span className="block text-[#0A2B6D]">
-                    $760 per a month or $999 Outright Documents
-                  </span>
-                </p>
-              </div>
-            </div>
+          <div className="w-full rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
+            <h2 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0A2B6D]">Complete Review of Every </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                Must-Have Function,
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                Resource &amp; Feature
+              </span>
+            </h2>
+            <p className="mx-auto w-full text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
+              <span className="block text-[#0A2B6D]">
+                {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
+              </span>
+              <span className="block text-[#0A2B6D]">
+                $760 per a month or $999 Outright Documents
+              </span>
+            </p>
           </div>
         </div>
 
@@ -353,24 +343,31 @@ export default function MustHaveFunctionsReview() {
                       className="flex-1 w-full rounded-lg p-[2px] shadow-2xs flex"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[7px] px-2.5 py-1.5 text-center"
-                        style={{ background: SPRAY_BGS[0] }}
-                      >
-                        <div className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                          ComplianceHR Infinity
+                      <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[7px] bg-white px-2.5 py-1.5 text-center">
+                        {/* ComplianceHR Infinity in Compliance Colours */}
+                        <div className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wider">
+                          <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            Compliance
+                          </span>
+                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            HR
+                          </span>{' '}
+                          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                            Infinity
+                          </span>
                         </div>
 
-                        <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight text-[#0A2B6D]">
-                          <span className="block text-[#0A2B6D]">
+                        {/* $ Amounts in ComplianceHR Colours on White Background */}
+                        <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight">
+                          <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                             $760 per a month
                           </span>
-                          <span className="block text-[#0A2B6D]">
+                          <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                             or $999 Outright Documents
                           </span>
                         </div>
 
-                        <div className="text-[9px] font-extrabold text-[#0A2B6D]">
+                        <div className="text-[9px] font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                           or $125 per a month subscription, 24 month contract
                         </div>
 
@@ -378,10 +375,7 @@ export default function MustHaveFunctionsReview() {
                           className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <p
-                            className="rounded-[6px] px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                            style={{ background: SPRAY_BGS[1] }}
-                          >
+                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                             Full access to document suite, Document access, tailor business details, only.
                           </p>
                         </div>
@@ -390,10 +384,7 @@ export default function MustHaveFunctionsReview() {
                           className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <p
-                            className="rounded-[6px] px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                            style={{ background: SPRAY_BGS[2] }}
-                          >
+                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                             Our Elite package includes full access to our application, a resource to complete audits easier, simpler and faster.
                           </p>
                         </div>

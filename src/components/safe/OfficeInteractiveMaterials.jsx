@@ -76,14 +76,14 @@ export function LogoBrandedOfficeSecondScreen({
   const activeColor = moduleKeyColour(activeModule.key || 'dashboard');
 
   return (
-    <div className="rounded-lg border-2 border-amber-400 bg-white p-1.5 shadow-sm">
-      {/* Top Branded Bezel with Logo & Full Slogan on the Office Display Item */}
+    <div className="rounded-lg border-2 border-[#0A2B6D] bg-white p-1 shadow-2xs space-y-1">
+      {/* Minimised Top Branded Bezel with Logo on Office Smart Screen #2 */}
       <div
-        className="flex flex-wrap items-center justify-between gap-1 rounded-md px-2 py-1 text-white shadow-sm"
+        className="flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
         style={{ background: SQUISHED_GRADIENT }}
       >
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-0.5 shadow">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <div className="flex h-4.5 w-4.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
             <Image
               src={logoUrl || DEFAULT_LOGO}
               alt="ComplianceHR Infinity Logo"
@@ -91,104 +91,68 @@ export function LogoBrandedOfficeSecondScreen({
               className="h-full w-full object-contain"
             />
           </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                {companyName} · Office Smart Screen #2
-              </span>
-              <span className="rounded-full bg-amber-300 px-1.5 py-0 text-[7px] font-extrabold text-blue-950">
-                LIVE OFFICE ITEM
-              </span>
-            </div>
-            <div className="truncate text-[8px] font-extrabold text-amber-100">
-              {FULL_SLOGAN}
-            </div>
-          </div>
+          <span className="truncate text-[8px] font-extrabold uppercase tracking-wider text-white">
+            6. Office Smart Screen #2 · {activeModule.label}
+          </span>
         </div>
 
         <Link
           to={activeModule.path || '/dashboard'}
-          className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[8px] font-extrabold text-blue-950 shadow-sm hover:bg-pink-50"
+          className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
         >
-          Open Screen <ExternalLink className="h-2.5 w-2.5 text-pink-600" />
+          Open <ExternalLink className="h-2 w-2 text-[#FF2E9A]" />
         </Link>
       </div>
 
-      {/* Screen Selector Pills on the Branded Office Display Item */}
-      <div className="mt-1.5 flex flex-wrap items-center gap-1">
-        <span className="text-[8px] font-extrabold uppercase tracking-wider text-purple-900 mr-1">
-          Show Screen:
-        </span>
+      {/* Minimised Screen Selector Pills */}
+      <div className="grid grid-cols-3 gap-0.5">
         {quickScreens.map((scr) => {
-          const isSelected = ( activeModule.key === scr.key );
+          const isSelected = activeModule.key === scr.key;
           return (
             <button
               key={scr.key}
               type="button"
               onClick={() => onSelectScreen(scr.key)}
-              className={`rounded-full border px-2 py-0.5 text-[7.5px] font-extrabold transition-all ${
+              className={`truncate rounded-full border px-1.5 py-0 text-[6.5px] font-extrabold transition-all ${
                 isSelected
-                  ? 'text-white shadow-sm'
-                  : 'border-purple-200 bg-purple-50/60 text-blue-950 hover:bg-purple-100'
+                  ? 'text-white shadow-2xs'
+                  : 'border-[#0A2B6D]/25 bg-white text-[#0A2B6D]'
               }`}
               style={isSelected ? { background: scr.color, borderColor: scr.color } : undefined}
             >
-              {scr.label}
+              {scr.label.replace(' Screen', '')}
             </button>
           );
         })}
       </div>
 
-      {/* The Generated Office Display Screen Body with Live Branded Watermark & Selected Screen Content */}
+      {/* Minimised Office Display Screen Body */}
       <div
-        className="mt-1.5 rounded-lg border-2 p-2"
-        style={{
-          borderColor: activeColor,
-          background: `linear-gradient(135deg, ${activeColor}15 0%, #ffffff 65%)`,
-        }}
+        className="rounded-md border p-1.5 bg-white"
+        style={{ borderColor: activeColor }}
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-purple-200 bg-white p-1 shadow-sm">
-              <Image
-                src={logoUrl || DEFAULT_LOGO}
-                alt="Logo on Office Item"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
+        <div className="flex items-center justify-between gap-1.5">
+          <div className="min-w-0 flex-1 text-left">
+            <div className="flex items-center gap-1">
+              <Monitor className="h-2.5 w-2.5 shrink-0" style={{ color: activeColor }} />
+              <span className="truncate text-[8px] font-extrabold text-[#0A2B6D]">
+                {activeModule.label}
+              </span>
             </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5">
-                <Monitor className="h-3 w-3 shrink-0" style={{ color: activeColor }} />
-                <span className="truncate text-[10.5px] font-extrabold text-blue-950">
-                  Now Showing in Office: {activeModule.label}
-                </span>
-              </div>
-              <p className="text-[8.5px] font-bold text-blue-900/85 leading-snug">
-                {activeModule.summary ||
-                  `Live interactive ${activeModule.label} workspace displayed on your branded ComplianceHR Infinity office screen.`}
-              </p>
-              <div className="mt-0.5 text-[7.5px] font-extrabold text-purple-800">
-                {companyName} — {FULL_SLOGAN}
-              </div>
-            </div>
+            <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
+              {activeModule.summary ||
+                `Live interactive ${activeModule.label} workspace on your office screen.`}
+            </p>
           </div>
 
-          <div className="flex shrink-0 items-center gap-1">
-            <Link
-              to={activeModule.path || '/dashboard'}
-              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[8.5px] font-extrabold text-white shadow-sm"
-              style={{ background: activeColor }}
-            >
-              Launch {activeModule.label} <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+          <Link
+            to={activeModule.path || '/dashboard'}
+            className="inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-0.5 text-[7px] font-extrabold text-white"
+            style={{ background: activeColor }}
+          >
+            Launch <ArrowRight className="h-2 w-2" />
+          </Link>
         </div>
-        {activeModule.key === 'compliance' && (
-          <div className="mt-1.5">
-            <MasterComplianceAuditForms compact={true} />
-          </div>
-        )}
       </div>
     </div>
   );

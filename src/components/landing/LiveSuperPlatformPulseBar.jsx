@@ -86,35 +86,33 @@ export default function LiveSuperPlatformPulseBar() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="rounded-[9px] bg-white p-1.5 space-y-1.5 text-center">
-        {/* App-Design Coloured Header Bar */}
+        {/* Compact One-Line App-Design Coloured Header Bar */}
         <div
-          className="gradient-brand flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
+          className="gradient-brand flex flex-nowrap items-center justify-between gap-1.5 rounded-lg px-2 py-0.5 text-white whitespace-nowrap overflow-hidden"
           style={{ background: getHeaderView(0), color: '#FFFFFF' }}
         >
-          <div className="flex items-center gap-1.5">
+          <div className="flex min-w-0 items-center gap-1 truncate">
             <span
-              className="h-2 w-2 shrink-0 rounded-full bg-white"
-              style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+              className="h-1.5 w-1.5 shrink-0 rounded-full bg-white"
+              style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
             />
-            <Radio className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-            <span className="text-[8.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+            <Radio className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span className="truncate text-[7.5px] sm:text-[8.5px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
               Live Super-Platform Command &amp; Instant Module Launcher · {pulseScore}% Ready
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={triggerLiveSweep}
-              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2 py-0.5 text-[7.5px] font-extrabold text-white hover:bg-white/30"
-              style={{ color: '#FFFFFF' }}
-            >
-              <Zap className={`h-2.5 w-2.5 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>
-                {sweeping ? 'Running 46-Module Sweep…' : '1-Click Live Audit Pulse ♫'}
-              </span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={triggerLiveSweep}
+            className="inline-flex shrink-0 items-center gap-1 rounded-full border border-white bg-white/20 px-2 py-0 text-[7px] font-extrabold text-white hover:bg-white/30 whitespace-nowrap"
+            style={{ color: '#FFFFFF' }}
+          >
+            <Zap className={`h-2 w-2 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+            <span style={{ color: '#FFFFFF' }}>
+              {sweeping ? 'Sweeping…' : '1-Click Live Audit Pulse ♫'}
+            </span>
+          </button>
         </div>
 
         {/* Compact Search + Live Telemetry Ticker Row — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}

@@ -92,55 +92,37 @@ export default function LandingHero() {
                 </span>
               </h1>
 
-              {/* Governance Sentence Inside Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
+              {/* Governance Sentence Inside Border With White Background */}
               <div
                 className="w-full rounded-xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <p
-                  className="mx-auto w-full rounded-[10px] px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg font-extrabold leading-relaxed text-[#0A2B6D]"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                >
+                <p className="mx-auto w-full rounded-[10px] bg-white px-4 py-2 text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
                   ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
                 </p>
               </div>
 
-              {/* Assets Above & Centred + Live Compliance Tracker Underneath */}
+              {/* Live Compliance Tracker Placed ABOVE Assets, Fleet & Safety Kits Current */}
               <div
-                className="w-full rounded-2xl p-[2.5px] shadow-2xs"
+                className="w-full rounded-2xl p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] px-3 py-2 text-center"
-                  style={{ background: PINK_BLUE_PURPLE_SPRAY }}
-                >
-                  {/* Assets Centred Above Live Compliance Tracker */}
-                  <div className="flex w-full justify-center">
-                    <Link
-                      to="/assets"
-                      className="gradient-brand inline-flex items-center justify-center gap-1.5 rounded-full px-3.5 py-0.5 text-[10px] font-extrabold text-white shadow-2xs"
-                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                    >
-                      <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
-                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </Link>
-                  </div>
-
-                  {/* Live Compliance Tracker Centred Underneath */}
+                <div className="flex flex-col items-center justify-center gap-1.5 rounded-[12px] bg-white px-3 py-1.5 text-center">
+                  {/* Live Compliance Tracker ABOVE */}
                   <div className="flex w-full flex-wrap items-center justify-center gap-2">
                     <div className="flex items-center justify-center gap-1.5">
                       <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#10B981]"
-                        style={{ boxShadow: '0 0 10px 3px #10B981' }}
+                        className="h-2 w-2 shrink-0 rounded-full bg-[#10B981]"
+                        style={{ boxShadow: '0 0 8px 2px #10B981' }}
                       />
-                      <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                         Live Compliance Tracker
                       </span>
-                      <span className="rounded-full bg-[#10B981] px-2 py-0 text-[9px] font-extrabold text-white">
+                      <span className="rounded-full bg-[#10B981] px-2 py-0 text-[8.5px] font-extrabold text-white">
                         100% LIVE
                       </span>
                     </div>
-                    <div className="w-full max-w-md h-2 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
+                    <div className="w-full max-w-md h-1.5 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -150,30 +132,42 @@ export default function LandingHero() {
                       />
                     </div>
                   </div>
+
+                  {/* Assets Centred UNDERNEATH Live Compliance Tracker */}
+                  <div className="flex w-full justify-center">
+                    <Link
+                      to="/assets"
+                      className="gradient-brand inline-flex items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
+                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                    >
+                      <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
+                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Full-Width Side-to-Side Credit Card Bar + Full-Width Start 14-Day Free Trial — No obligation to stay */}
-          <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 text-center">
+          {/* Smaller Credit Card Bar + Smaller Start 14-Day Free Trial Tiles */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center gap-1.5 text-center">
             <div
-              className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+              className="flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold tracking-wide text-white shadow-2xs"
               style={{ background: getHeaderView(2) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <ShieldCheck className="h-3.5 w-3.5 text-white" />
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <ShieldCheck className="h-2.5 w-2.5 text-white" />
               </span>
               <span className="text-center">Credit card required · 14-day free trial · Set up in minutes</span>
             </div>
 
             <Link
               to={authed ? '/dashboard' : '/register'}
-              className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm transition-all hover:-translate-y-0.5"
+              className="flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold tracking-wide text-white shadow-2xs transition-all hover:-translate-y-0.5"
               style={{ background: getHeaderView(1) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <UserCheck className="h-3.5 w-3.5 text-white" />
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <UserCheck className="h-2.5 w-2.5 text-white" />
               </span>
               <span className="text-center">Start 14-Day Free Trial — No obligation to stay</span>
             </Link>

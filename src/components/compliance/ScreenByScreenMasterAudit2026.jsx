@@ -507,48 +507,34 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       id="screen-by-screen-audit"
       className="rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* 2026 Screen-by-Screen Header Fitted Better + Black Writing Underneath */}
+      {/* 2026 Screen-by-Screen Header on Clean White Background + Minimised Open & 46 Screens Tiles */}
       <div
-        className="w-full rounded-2xl p-[4px] shadow-sm"
+        className="w-full rounded-2xl p-[3px] shadow-sm"
         style={{
           background:
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-3">
-          <div
-            className="w-full rounded-2xl p-[3px] shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-            }}
-          >
-            <div
-              className="rounded-[13px] px-4 py-3 text-center space-y-1.5"
-              style={{
-                background:
-                  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-              }}
-            >
-              <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-                <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Audit
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  of All {MODULE_DIRECTORY.length} Modulars
-                </span>
-              </h2>
+        <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-2">
+          <div className="w-full rounded-xl bg-white px-3 py-1 text-center space-y-1">
+            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight tracking-tight">
+              <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                Audit
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                of All {MODULE_DIRECTORY.length} Modulars
+              </span>
+            </h2>
 
-              <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
-                Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
-              </p>
-            </div>
+            <p className="mx-auto max-w-4xl text-center text-[10.5px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
+              Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
+            </p>
           </div>
 
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-1.5">
             <div
-              className="rounded-full p-[2.5px] shadow-2xs"
+              className="rounded-full p-[1.5px] shadow-2xs"
               style={{
                 background:
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -557,29 +543,29 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               <button
                 type="button"
                 onClick={() => openSmartFillDoc(MODULE_DIRECTORY[13])}
-                className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-5 py-1.5 text-xs sm:text-sm font-extrabold text-white transition-all hover:opacity-95"
+                className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white transition-all hover:opacity-95"
                 style={{ background: getHeaderView(4), color: '#FFFFFF' }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <Wand2 className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <Wand2 className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>Open 2026 Smart-Fill Doc Studio</span>
               </button>
             </div>
 
             <div
-              className="rounded-full p-[2.5px] shadow-2xs"
+              className="rounded-full p-[1.5px] shadow-2xs"
               style={{
                 background:
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
               }}
             >
               <div
-                className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-5 py-1.5 text-xs sm:text-sm font-extrabold text-white"
+                className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white"
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <ShieldCheck className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>
                   {MODULE_DIRECTORY.length} Screens Audited · Smart-Fill 2026 Docs

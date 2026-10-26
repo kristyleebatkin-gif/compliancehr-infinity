@@ -187,37 +187,33 @@ export default function BenefitsSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Subheading — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* Heading on One Line & Subheading in Three Neat Lines on Clean White Background */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white p-2 text-center">
-            <div
-              className="w-full rounded-xl p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="flex w-full flex-col items-center justify-center rounded-[10px] px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-2"
-                style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
-              >
-                <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
-                  <span className="text-[#0A2B6D]">Why providers choose </span>
-                  <span className="inline-block whitespace-nowrap">
-                    <span className="text-[#0A2B6D]">Compliance</span>
-                    <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                      HR
-                    </span>{' '}
-                    <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                      Infinity
-                    </span>
-                  </span>
-                </h2>
-                <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
-                  The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
-                </p>
-              </div>
-            </div>
+          <div className="flex w-full flex-col items-center justify-center rounded-[11px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-1.5">
+            <h2 className="mx-auto text-center font-editorial text-base sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight leading-snug whitespace-nowrap">
+              <span className="text-[#0A2B6D]">Why providers choose </span>
+              <span className="text-[#0A2B6D]">Compliance</span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                HR
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                Infinity
+              </span>
+            </h2>
+            <p className="mx-auto max-w-4xl text-center text-[10.5px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
+              <span className="block">
+                The smartest, simplest, easiest and most effortless way to store, copy, use, audit,
+              </span>
+              <span className="block">
+                share, scan, send, sort, file and report on every document, conversation
+              </span>
+              <span className="block">
+                and outcome, while saving you time, money and effort.
+              </span>
+            </p>
           </div>
         </div>
 

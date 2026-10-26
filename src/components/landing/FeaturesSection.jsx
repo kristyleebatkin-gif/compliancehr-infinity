@@ -326,78 +326,59 @@ export default function FeaturesSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Bigger "An impossible standard, achieved effortlessly" — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+        {/* "An impossible standard, achieved effortlessly." — Clean White Background */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white p-2 text-center">
-            <div
-              className="w-full rounded-xl p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="w-full rounded-[10px] px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2"
-                style={{ background: STICKY_NOTE_BG }}
-              >
-                <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
-                  <span className="text-[#0A2B6D]">An impossible </span>
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    standard,
-                  </span>{' '}
-                  <span className="inline-block whitespace-nowrap bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                    achieved effortlessly.
-                  </span>
-                </h2>
-                <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
-                  One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
-                </p>
-              </div>
-            </div>
+          <div className="w-full rounded-[12px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-1.5">
+            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0A2B6D]">An impossible </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                standard,
+              </span>{' '}
+              <span className="inline-block whitespace-nowrap bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                achieved effortlessly.
+              </span>
+            </h2>
+            <p className="mx-auto max-w-4xl text-[10.5px] sm:text-xs md:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
+              One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
+            </p>
           </div>
         </div>
 
-        {/* Stretched Banner — "12 Connected Engines" Beside "Latest Platform Capabilities" on Top Line + Sticky & Flip Smaller in Middle */}
+        {/* One-Line Stretched Banner: "Latest Platform Capabilities · 12 Connected Engines" & "Flip All 12 Sticky Notes ▸" on One Line ("Sticky Notes with Functions" Removed) */}
         <div
-          className="w-full rounded-2xl p-[2.5px] shadow-sm"
+          className="w-full rounded-full p-[2px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-1.5 rounded-[14px] px-3 sm:px-5 py-1.5 text-center text-white"
+            className="gradient-brand flex min-h-[26px] w-full flex-nowrap items-center justify-between gap-2 rounded-full px-3 sm:px-4 py-0.5 text-white whitespace-nowrap"
             style={{ background: getHeaderView(5), color: '#FFFFFF' }}
           >
-            <div className="flex items-center justify-center gap-1.5 font-editorial text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white whitespace-nowrap">
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+            <div className="flex items-center gap-1.5 font-editorial text-[10px] sm:text-xs md:text-sm font-extrabold tracking-wide text-white whitespace-nowrap">
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
-              <span className="text-center whitespace-nowrap" style={{ color: '#FFFFFF' }}>
+              <span style={{ color: '#FFFFFF' }}>
                 Latest Platform Capabilities · 12 Connected Engines
               </span>
             </div>
 
-            <div className="flex w-full flex-nowrap items-center justify-center gap-2">
-              <div
-                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
-                style={{ color: '#FFFFFF' }}
-              >
-                <Pin className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
-              </div>
-              <button
-                type="button"
-                onClick={cycleAllNotes}
-                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
-                style={{ color: '#FFFFFF' }}
-              >
-                <RefreshCw className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={cycleAllNotes}
+              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-2.5 py-0.5 text-[8px] sm:text-[9px] font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
+              style={{ color: '#FFFFFF' }}
+            >
+              <RefreshCw className="h-2.5 w-2.5 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
+            </button>
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes — App-Design Coloured Header Tiles, Symbols, Numbers & Dark Blue Writing on White */}
-        <div className="grid w-full grid-cols-2 gap-2.5 pt-2 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
+        {/* 12 Capability Sticky Notes — 50% Smaller & Fixed Note Count (Note 1–12 of 12 · Page 1–2) */}
+        <div className="grid w-full grid-cols-2 gap-1.5 pt-1 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {FEATURES.map((f, index) => {
             const borderCol = getAppBorderView(index);
             const sym = getSymbolView(index);
@@ -408,83 +389,80 @@ export default function FeaturesSection() {
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group relative flex h-full flex-col justify-between rounded-xl border-2 bg-white p-2 pt-3 text-center shadow-2xs transition-all hover:-translate-y-0.5"
+                className="group relative flex h-full flex-col justify-between rounded-lg border-2 bg-white p-1 pt-2.5 text-center shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   borderColor: borderCol,
-                  borderBottomRightRadius: '16px',
+                  borderBottomRightRadius: '12px',
                 }}
               >
-                {/* Top Sticky Tape Strip + App-Design Coloured Number */}
+                {/* 50% Smaller Top Sticky Tape Strip + Fixed Note Count */}
                 <div
-                  className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white px-2 py-0 shadow-2xs"
+                  className="absolute -top-2 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full border border-white px-1.5 py-0 shadow-2xs"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold" style={{ color: sym.iconColor }}>
+                  <span className="flex h-3 w-3 items-center justify-center rounded-full bg-white text-[6px] font-extrabold" style={{ color: sym.iconColor }}>
                     {index + 1}
                   </span>
                   <span
-                    className="text-[7px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    className="text-[6.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Note {activeNoteIdx + 1}/{f.notes.length}
+                    Note {index + 1}/12 · {activeNoteIdx + 1}/{f.notes.length}
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-1">
-                  {/* App-Coloured Capability Header Bar + Coloured Symbol + Next Button */}
+                <div className="flex w-full flex-col items-center space-y-0.5">
                   <div
-                    className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1 rounded-lg px-1.5 py-0.5 text-white"
+                    className="gradient-brand flex min-h-[18px] w-full items-center justify-between gap-1 rounded px-1 py-0 text-white"
                     style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold leading-tight text-white">
-                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                    <span className="inline-flex items-center gap-1 text-[7px] font-extrabold leading-tight text-white truncate">
+                      <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-white">
                         <f.icon className="h-2 w-2" style={{ color: sym.iconColor }} />
                       </span>
-                      <span style={{ color: '#FFFFFF' }}>{f.title}</span>
+                      <span className="truncate" style={{ color: '#FFFFFF' }}>{f.title}</span>
                     </span>
                     <button
                       type="button"
                       onClick={() => cycleNote(index)}
-                      className="shrink-0 rounded-full border border-white bg-white/20 px-1 py-0 text-[6.5px] font-extrabold text-white"
+                      className="shrink-0 rounded-full border border-white bg-white/20 px-1 py-0 text-[6px] font-extrabold text-white"
                       style={{ color: '#FFFFFF' }}
                     >
                       ▸
                     </button>
                   </div>
 
-                  {/* Compact Info Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                   <div
-                    className="w-full rounded-lg p-[1.5px]"
+                    className="w-full rounded p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
+                      className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
                       style={{ background: STICKY_NOTE_BG }}
                     >
-                      <p className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                      <p className="text-[6.5px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                         {currentNote.desc}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Compact Live Functions Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
                 <div
-                  className="mt-1 w-full rounded-lg p-[1.5px]"
+                  className="mt-0.5 w-full rounded p-[1px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="rounded-[6px] p-1 text-left"
+                    className="rounded-[3px] p-1 text-left"
                     style={{ background: STICKY_NOTE_BG }}
                   >
                     <ul className="space-y-0.5">
                       {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
-                          className="flex items-center gap-1 text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
+                          className="flex items-center gap-1 text-[6.5px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
                           <CheckCircle2 className="h-2 w-2 shrink-0" style={{ color: getSymbolView(index + fIdx).iconColor }} />
-                          <span className="text-[#0A2B6D]">{fn}</span>
+                          <span className="truncate text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}
                     </ul>
