@@ -373,28 +373,51 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* Included Platform Benefits Grid in Mixed Full Colours + App-Coloured Borders */}
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-left">
+        {/* Included Platform Pillar Benefits Styled as iPad Screens */}
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-left items-stretch">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
-            const tile = getTilePalette(idx + 3);
             const sym = getSymbolView(idx + 3);
+            const borderCol = getAppBorderView(idx + 3);
             return (
               <div
                 key={b.title}
-                className="flex items-start gap-2.5 rounded-2xl border-2 p-3.5 shadow-sm"
-                style={{
-                  backgroundColor: tile.bg,
-                  color: tile.text,
-                  borderColor: getAppBorderView(idx + 3),
-                }}
+                className="flex h-full flex-col justify-between rounded-[24px] border-[4px] bg-[#0A2B6D] p-2.5 shadow-md"
+                style={{ borderColor: borderCol }}
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
-                  <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                </span>
-                <div className="min-w-0">
-                  <div className="text-xs font-extrabold" style={{ color: tile.text }}>{b.title}</div>
-                  <p className="mt-0.5 text-[11px] font-bold leading-snug" style={{ color: tile.subtext }}>{b.desc}</p>
+                {/* Top iPad Bezel */}
+                <div className="mb-1.5 flex items-center justify-between px-2">
+                  <span className="flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+                    iPad Screen · Price Pillar 0{idx + 1}
+                  </span>
+                  <span className="text-[8.5px] font-extrabold text-white/85">5G · 100%</span>
+                </div>
+
+                {/* Inner iPad Display */}
+                <div
+                  className="flex flex-1 rounded-[16px] p-[2.5px]"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex h-full w-full items-start gap-2.5 rounded-[13px] bg-white p-3.5">
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      style={{ borderColor: borderCol }}
+                    >
+                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs font-extrabold text-[#0A2B6D]">{b.title}</div>
+                      <p className="mt-1 text-[11px] font-bold leading-snug text-black" style={{ color: '#000000' }}>
+                        {b.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom iPad Home Bar */}
+                <div className="mt-1.5 flex items-center justify-center">
+                  <span className="h-1 w-14 rounded-full bg-white/80" />
                 </div>
               </div>
             );

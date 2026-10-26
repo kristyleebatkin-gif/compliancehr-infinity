@@ -556,100 +556,124 @@ export default function MustHaveFunctionsReview() {
           })}
         </div>
 
-        {/* 8 Must-Have Pillars Grid — App Design Coloured Borders & Spray Tiles */}
+        {/* 8 Must-Have Pillars Grid — Styled as iPad Screens with App Design Coloured Borders */}
         <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left items-stretch">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
+            const ipadBorder = getAppBorderView(pIdx);
             return (
               <div
                 key={pillar.id}
-                className="flex h-full rounded-2xl p-[3.5px] shadow-sm"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="flex h-full flex-col justify-between rounded-[26px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
+                style={{ borderColor: ipadBorder }}
               >
-                <div className="flex h-full w-full flex-col justify-between rounded-[13px] bg-white p-4">
-                  <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                    <div className="space-y-2">
-                      {/* Stretched Pillar Header Border */}
-                      <div
-                        className="w-full rounded-full p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <span
-                          className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
-                          style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                        >
-                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                          <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
-                        </span>
-                      </div>
+                {/* Top iPad Camera & Status Bar */}
+                <div className="mb-2 flex items-center justify-between px-2.5">
+                  <span className="flex items-center gap-1.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+                    iPad Pro · Pillar 0{pIdx + 1}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] font-extrabold text-white/85">5G · 100%</span>
+                    <span className="h-2 w-3.5 rounded-xs border border-white bg-[#10B981]" />
+                  </div>
+                </div>
 
-                      {/* Heading in Stretched App Design Coloured Border */}
-                      <div
-                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <div className="rounded-[9px] bg-white px-3 py-2 text-center">
-                          <h4
-                            className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent"
-                            style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                {/* Inner iPad Retina Screen with App Design Coloured Border */}
+                <div
+                  className="flex flex-1 rounded-[18px] p-[3px] shadow-inner"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex h-full w-full flex-col justify-between rounded-[15px] bg-white p-3.5">
+                    <div className="flex flex-1 flex-col justify-between space-y-2.5">
+                      <div className="space-y-2">
+                        {/* Stretched Pillar Header Border */}
+                        <div
+                          className="w-full rounded-full p-[2.5px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <span
+                            className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                            style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                           >
-                            {pillar.title}
-                          </h4>
-                          <p
-                            className="mt-0.5 text-[11px] font-bold text-black"
-                            style={{ color: '#000000' }}
-                          >
-                            {pillar.subtitle}
-                          </p>
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                              <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                            </span>
+                            <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
+                          </span>
+                        </div>
+
+                        {/* Heading in Stretched App Design Coloured Border */}
+                        <div
+                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="rounded-[9px] bg-white px-3 py-2 text-center">
+                            <h4
+                              className="font-editorial text-xs sm:text-sm font-extrabold leading-snug bg-clip-text text-transparent"
+                              style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                            >
+                              {pillar.title}
+                            </h4>
+                            <p
+                              className="mt-0.5 text-[11px] font-bold text-black"
+                              style={{ color: '#000000' }}
+                            >
+                              {pillar.subtitle}
+                            </p>
+                          </div>
                         </div>
                       </div>
+
+                      <ul className="grid flex-1 grid-cols-1 auto-rows-fr gap-1.5 pt-1">
+                        {pillar.items.map((item, iIdx) => {
+                          const idx = pIdx * 3 + iIdx;
+                          const sym = getSymbolView(idx);
+                          const borderCol = getAppBorderView(idx);
+                          const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+                          return (
+                            <li
+                              key={item}
+                              className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                              style={{ background: TOP_BORDER_GRADIENT }}
+                            >
+                              <div
+                                className="flex h-full w-full items-center gap-2 rounded-[10px] px-2.5 py-1.5 text-xs font-extrabold leading-snug text-[#0A2B6D]"
+                                style={{ background: sprayBg }}
+                              >
+                                <span
+                                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
+                                  style={{ borderColor: borderCol }}
+                                >
+                                  <CheckCircle2 className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
+                                </span>
+                                <span className="text-[#0A2B6D]">{item}</span>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </div>
 
-                    <ul className="grid flex-1 grid-cols-1 auto-rows-fr gap-1.5 pt-1">
-                      {pillar.items.map((item, iIdx) => {
-                        const idx = pIdx * 3 + iIdx;
-                        const sym = getSymbolView(idx);
-                        const borderCol = getAppBorderView(idx);
-                        const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
-                        return (
-                          <li
-                            key={item}
-                            className="flex h-full rounded-xl p-[2px] shadow-2xs"
-                            style={{ background: TOP_BORDER_GRADIENT }}
-                          >
-                            <div
-                              className="flex h-full w-full items-center gap-2 rounded-[10px] px-2.5 py-1.5 text-xs font-extrabold leading-snug text-[#0A2B6D]"
-                              style={{ background: sprayBg }}
-                            >
-                              <span
-                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                                style={{ borderColor: borderCol }}
-                              >
-                                <CheckCircle2 className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
-                              </span>
-                              <span className="text-[#0A2B6D]">{item}</span>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    <div className="mt-3.5 pt-2.5 border-t border-[#0A2B6D]/20 flex items-center justify-between">
+                      <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
+                        From $660/mo Plan
+                      </span>
+                      <Link
+                        to="/register"
+                        className="gradient-brand inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white"
+                        style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
+                      >
+                        <span style={{ color: '#FFFFFF' }}>Activate</span>
+                        <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      </Link>
+                    </div>
                   </div>
+                </div>
 
-                  <div className="mt-4 pt-2.5 border-t border-[#0A2B6D]/20 flex items-center justify-between">
-                    <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
-                      From $660/mo Plan
-                    </span>
-                    <Link
-                      to="/register"
-                      className="gradient-brand inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white"
-                      style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
-                    >
-                      <span style={{ color: '#FFFFFF' }}>Activate</span>
-                      <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                    </Link>
-                  </div>
+                {/* Bottom iPad Home Indicator Bar */}
+                <div className="mt-2 flex items-center justify-center gap-2">
+                  <span className="h-1.5 w-16 rounded-full bg-white/80" />
                 </div>
               </div>
             );
