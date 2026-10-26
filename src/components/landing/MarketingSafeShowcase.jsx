@@ -158,57 +158,344 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             </div>
           </div>
 
-          {/* 4 High-Impact Subscriber Value Tiles Inside Small Flat Screen Monitors */}
-          <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+          {/* 4 High-Impact Subscriber Flat Screens — Detailed Reasons Why Providers Subscribe (Changes Every 30 Secs) */}
+          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
             {[
-              { icon: ShieldCheck, title: '46 Live Modules', sub: '100% Connected · From $660/mo' },
-              { icon: Zap, title: '2-Min Audits', sub: 'Instant PDF Pack · $355 Doc Free' },
-              { icon: Award, title: '356 Checkpoints', sub: '125+ Master Docs · $999 Outright' },
-              { icon: Sparkles, title: 'AI Smart-Fill', sub: 'Zero Double-Entry · +$160/m Elite' },
-            ].map((p, idx) => {
-              const Icon = p.icon;
+              {
+                screenLabel: 'FLAT SCREEN 01 · PLATFORM VALUE',
+                icon: ShieldCheck,
+                reasons: [
+                  {
+                    title: '46 Live Modules in One Subscription',
+                    sub: '100% Connected Super-Platform · From $660/mo',
+                    detail: 'Replaces 8 separate HR, Roster, CRM, LMS, Risk, Finance & Audit subscriptions.',
+                    points: [
+                      'Saves $1,400+/mo vs buying separate tools',
+                      'Single login across Staff, Participants & Admins',
+                      'Dual Executive Office & Profile Workspace views',
+                    ],
+                  },
+                  {
+                    title: 'Zero Double-Entry Across Every Shift',
+                    sub: 'Intake → Profile → Roster → Note → Invoice',
+                    detail: 'Enter a participant or employee once and auto-populate every connected register.',
+                    points: [
+                      '1-Click Intake-to-Profile onboarding engine',
+                      'Rostered shifts flow straight into NDIS invoices',
+                      'Shift notes automatically update Goal Progress',
+                    ],
+                  },
+                  {
+                    title: 'Strict Role-Based Security & Privacy',
+                    sub: '115+ Protected Entities · Live RLS Locks',
+                    detail: 'Every staff member, participant, manager and auditor sees only what their role permits.',
+                    points: [
+                      'Service-role locked 3-Part Participant Consents',
+                      'Admin approval gate for new user registrations',
+                      'Full tamper-evident user action & status logs',
+                    ],
+                  },
+                  {
+                    title: '100-Point Staff & Participant Readiness',
+                    sub: 'Automated 90/60/30-Day Expiry Protection',
+                    detail: 'Never miss an NDIS Worker Screening, Blue Card, First Aid, CPR or Plan Review date.',
+                    points: [
+                      'Daily automated compliance expiry scanner',
+                      'Roster gatekeeper blocks expired worker shifts',
+                      'Instant email & in-app renewal alerts',
+                    ],
+                  },
+                  {
+                    title: '14-Day $0 Upfront Full-Access Trial',
+                    sub: 'Try Every Module Live with Your Team',
+                    detail: 'Experience all 46 connected modules, AI tools and printable packs before paying a cent.',
+                    points: [
+                      'Instant setup with pre-built NDIS templates',
+                      'Includes +$160/mo Elite AI & Integration tier',
+                      'Includes $355 Master Compliance Audit Doc free',
+                    ],
+                  },
+                ],
+              },
+              {
+                screenLabel: 'FLAT SCREEN 02 · EXPRESS AUDITS',
+                icon: Zap,
+                reasons: [
+                  {
+                    title: '2-Minute Express Internal Audits',
+                    sub: 'Instant Branded PDF Pack · $355 Doc Free',
+                    detail: 'Complete internal audits in minutes with attached evidence and auto-logged actions.',
+                    points: [
+                      'Covers Staff, Participant, Safety & Governance',
+                      'Non-compliant items auto-create corrective tasks',
+                      '1-Click PDF & CSV export for NDIS auditors',
+                    ],
+                  },
+                  {
+                    title: 'Consent-Gated External Auditor Portal',
+                    sub: 'Dedicated Read-Only NDIS Auditor Workspace',
+                    detail: 'Give external NDIS Commission auditors secure, consent-verified access in one click.',
+                    points: [
+                      'Enforces Participant & Staff Audit Consent flags',
+                      'Maps live evidence to 8 NDIS Practice Standards',
+                      'Eliminates weeks of manual folder preparation',
+                    ],
+                  },
+                  {
+                    title: '24-Hour & 5-Day NDIS Incident Timers',
+                    sub: 'Automated Reportable Incident Compliance',
+                    detail: 'Built-in countdown clocks ensure mandatory NDIS Commission timeframes are never breached.',
+                    points: [
+                      '24h initial notification & 5-day follow-up alerts',
+                      'Guided root-cause investigation & photo evidence',
+                      'Auto-links to Continuous Improvement Register',
+                    ],
+                  },
+                  {
+                    title: 'ISO 31000 Risk & Take-5 Safety Suite',
+                    sub: 'Proactive Hazard & Home Risk Controls',
+                    detail: 'Identify, rate and treat operational, clinical and WHS risks before incidents happen.',
+                    points: [
+                      'Eliminate, Minimise & Isolate control hierarchy',
+                      '6-monthly Individual & Home Risk schedules',
+                      'Mobile Pre-Shift Take-5 & vehicle safety checks',
+                    ],
+                  },
+                  {
+                    title: 'Automated 30-Action & 30-Task Batch Packs',
+                    sub: 'Continuous Executive Oversight Reports',
+                    detail: 'Every 30 actions or completed tasks automatically compiles a signed PDF & CSV audit batch.',
+                    points: [
+                      'Zero manual report writing for board meetings',
+                      'Stored permanently in Data Control & Vault',
+                      'Real-time compliance health score ring',
+                    ],
+                  },
+                ],
+              },
+              {
+                screenLabel: 'FLAT SCREEN 03 · 356 CHECKPOINTS',
+                icon: Award,
+                reasons: [
+                  {
+                    title: '356 Mandatory Audit Checkpoints',
+                    sub: '17 Audit Categories · 125+ Master Docs',
+                    detail: 'Every single NDIS & Aged Care verification checkpoint pre-mapped with live status.',
+                    points: [
+                      'Includes CHR-AUD-001 (Governance & Operations)',
+                      'Includes CHR-AUD-002 (Workforce & Clinical)',
+                      'Available in Subscription or $999 Outright Pack',
+                    ],
+                  },
+                  {
+                    title: '6 Structured Binders + 12 A4 Masters',
+                    sub: '2026 Standard Printable Templates Suite',
+                    detail: 'Print or download courtroom-grade A4 policies, registers, contracts and intake forms.',
+                    points: [
+                      'Auto-stamped with your Logo, ABN & NDIS ID',
+                      'Digital signature pads & version acknowledgements',
+                      'Ready for mid-term & renewal certification audits',
+                    ],
+                  },
+                  {
+                    title: 'Smart Rostering & SCHADS Gatekeeper',
+                    sub: 'Fatigue, Qualification & Budget Protection',
+                    detail: 'Match the right support worker to every participant shift with live compliance checks.',
+                    points: [
+                      'Flags unscreened or fatigued workers automatically',
+                      'Live coverage heatmaps & labour cost forecasting',
+                      '2-way Google Calendar & iCal shift sync',
+                    ],
+                  },
+                  {
+                    title: 'NDIS Price-Guide Invoicing & Payroll',
+                    sub: 'End-to-End Financial & Claim Accuracy',
+                    detail: 'Generate NDIS-compliant invoices, quotes, pay runs and payslips without spreadsheets.',
+                    points: [
+                      'Built-in NDIS Support Item & Price Guide lookup',
+                      'AI Receipt Scanner with GST & NDIS categorisation',
+                      '3-Way Procurement Match & Bank Reconciliation',
+                    ],
+                  },
+                  {
+                    title: 'Complete HR, LMS Training & Appraisals',
+                    sub: 'Retain & Upskill Your Support Workforce',
+                    detail: 'Manage recruitment, digital contracts, competency quizzes, certificates and appraisals.',
+                    points: [
+                      'Interactive LMS with AI Course & Quiz Generator',
+                      'Auto-issued PDF Training Certificates on pass',
+                      'Gamified Task Leaderboard & Staff Recognition',
+                    ],
+                  },
+                ],
+              },
+              {
+                screenLabel: 'FLAT SCREEN 04 · AI & AUTOMATION',
+                icon: Sparkles,
+                reasons: [
+                  {
+                    title: 'AI Smart-Fill & +$160/mo Elite Included',
+                    sub: '2,500 Message + 20,000 Integration Credits',
+                    detail: 'Every subscription tier includes the Elite AI & Automation plan built right into the price.',
+                    points: [
+                      '1-Click Smart-Fill across forms, audits & letters',
+                      'AI Assistant for instant policy & NDIS answers',
+                      '65+ live automated workflows running 24/7',
+                    ],
+                  },
+                  {
+                    title: '1-Click Executive Operations Centre',
+                    sub: '12 Armed Instant Compliance & Roster Sweeps',
+                    detail: 'Run a full organisation-wide compliance, expiry, risk and roster sweep in one click.',
+                    points: [
+                      'Instant Master Sweep across all 46 modules',
+                      'Auto-dispatches reminders to staff & managers',
+                      'Live execution log with timestamped proof',
+                    ],
+                  },
+                  {
+                    title: 'Accessible Visual Boards & Goal Coach',
+                    sub: 'Built for Participant Empowerment & Choice',
+                    detail: 'Empower participants with interactive visual routines, speech pads and AI goal coaching.',
+                    points: [
+                      'Text-to-Speech Communication & Weather Boards',
+                      'Multilingual Translator & Auslan Sign Prompts',
+                      'NDIS Funding Utilisation & Goal Outcome charts',
+                    ],
+                  },
+                  {
+                    title: 'Unified Communication & Shift Diary',
+                    sub: 'Zero Lost Messages or Handover Gaps',
+                    detail: 'Keep shift notes, broadcasts, complaints, video calls and emails in one audited hub.',
+                    points: [
+                      'AI Compose for professional letters & shift notes',
+                      '5-Day Complaint SLA tracker & escalation alerts',
+                      'Daily AI Briefing & Weather bar for every shift',
+                    ],
+                  },
+                  {
+                    title: 'Seamless CSV / Excel Data Exchange',
+                    sub: 'Migrate & Export Any Register in Seconds',
+                    detail: 'Bring your existing staff, participants and documents over effortlessly with guided imports.',
+                    points: [
+                      'Bulk intake & resume upload with AI extraction',
+                      '1-Click CSV & PDF export on every register',
+                      'Bi-directional GitHub & calendar integrations',
+                    ],
+                  },
+                ],
+              },
+            ].map((screen, idx) => {
+              const Icon = screen.icon;
               const sym = getSymbolView(idx + 1);
               const borderCol = getAppBorderView(idx + 1);
-              const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
+              const activeReason = screen.reasons[activeBenefitIdx % screen.reasons.length];
               return (
-                <div key={p.title} className="flex flex-col items-center">
-                  {/* Small Flat Screen Monitor Frame */}
+                <div key={screen.screenLabel} className="flex h-full flex-col items-center justify-between">
+                  {/* Flat Screen Monitor Frame */}
                   <div
-                    className="w-full rounded-2xl border-[3px] bg-[#0A2B6D] p-2 shadow-md"
+                    className="flex h-full w-full flex-1 flex-col justify-between rounded-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"
                     style={{ borderColor: borderCol }}
                   >
                     {/* Top Monitor Bezel Bar */}
-                    <div className="mb-1.5 flex items-center justify-between px-2">
+                    <div className="mb-1.5 flex items-center justify-between gap-1 px-1.5">
                       <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                        <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
-                        FLAT SCREEN 0{idx + 1}
+                        <Monitor className="h-3 w-3 text-[#00C6FF]" />
+                        {screen.screenLabel}
                       </span>
-                      <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[8.5px] font-extrabold text-white">
+                        <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                        30s Cycle · {(activeBenefitIdx % 5) + 1}/5
+                      </span>
                     </div>
 
                     {/* Inner Monitor Display */}
                     <div
-                      className="rounded-xl p-[2.5px]"
+                      className="flex flex-1 rounded-xl p-[2.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex items-center justify-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left text-[#0A2B6D]"
-                        style={{ background: sprayBg }}
+                        className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[10px] p-3 text-center text-[#0A2B6D]"
+                        style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
                       >
-                        <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                          style={{ borderColor: borderCol }}
+                        {/* Live 30s Reason Banner */}
+                        <div className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5">
+                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                            Reason #{(activeBenefitIdx % 5) + 1} Why Providers Subscribe
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                            className="rounded-full bg-[#5A00D6] px-2 py-0.5 text-[8.5px] font-extrabold text-white hover:opacity-90"
+                            style={{ color: '#FFFFFF' }}
+                          >
+                            Next ▸
+                          </button>
+                        </div>
+
+                        {/* Centered Icon + Title Box */}
+                        <div
+                          className="w-full rounded-xl p-[2px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
-                            {p.title}
-                          </div>
-                          <div className="text-[11px] font-bold leading-tight text-black" style={{ color: '#000000' }}>
-                            {p.sub}
+                          <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-2.5 py-2 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <span
+                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                style={{ borderColor: borderCol }}
+                              >
+                                <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                              </span>
+                              <div className="text-xs sm:text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
+                                {activeReason.title}
+                              </div>
+                            </div>
+                            <div className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                              {activeReason.sub}
+                            </div>
                           </div>
                         </div>
+
+                        {/* Centered Summary Explanation */}
+                        <p
+                          className="text-center text-[11px] font-extrabold leading-snug text-black"
+                          style={{ color: '#000000' }}
+                        >
+                          {activeReason.detail}
+                        </p>
+
+                        {/* 3 Concrete Subscriber Reasons / Proof Points */}
+                        <ul className="w-full space-y-1 text-left">
+                          {activeReason.points.map((pt) => (
+                            <li
+                              key={pt}
+                              className="flex items-start gap-1.5 rounded-lg border border-[#0A2B6D]/20 bg-white/95 px-2 py-1 text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
+                            >
+                              <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-[#FF2E9A]" />
+                              <span>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Bottom Monitor Channel Dots */}
+                    <div className="mt-1.5 flex items-center justify-between px-2">
+                      <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-white/80">
+                        AUTO-ROTATES EVERY 30 SECS
+                      </span>
+                      <div className="flex items-center gap-1">
+                        {[0, 1, 2, 3, 4].map((dot) => (
+                          <button
+                            key={dot}
+                            type="button"
+                            aria-label={`Show subscriber reason ${dot + 1}`}
+                            onClick={() => setActiveBenefitIdx(dot)}
+                            className={`h-1.5 w-1.5 rounded-full transition-all ${
+                              activeBenefitIdx % 5 === dot ? 'bg-[#FF2E9A] scale-125' : 'bg-white/40'
+                            }`}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
