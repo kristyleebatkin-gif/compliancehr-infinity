@@ -24,30 +24,27 @@ const LISTED_FEATURES = [
   { label: 'Pricing & Packs', href: '#pricing', icon: DollarSign },
 ];
 
-// Three small clipboards with a small checklist + ticks on each and a flow between them
-function MiniClipboardWithTicks({ accent = '#0072FF' }) {
+// Three small purple clipboards with a small checklist + ticks on each and a flow between them
+function MiniClipboardWithTicks({ accent = '#5A00D6' }) {
   return (
     <div
-      className="relative flex h-8 w-6 sm:h-9 sm:w-7 shrink-0 flex-col justify-between rounded-md border-2 bg-white px-1 pt-1.5 pb-1 shadow-2xs"
-      style={{ borderColor: accent }}
+      className="relative flex h-8 w-6 sm:h-9 sm:w-7 shrink-0 flex-col justify-between rounded-md border-2 border-white bg-[#5A00D6] px-1 pt-1.5 pb-1 shadow-2xs"
+      style={{ backgroundColor: accent }}
     >
       {/* Top clipboard clip */}
       <span
-        className="absolute -top-1 left-1/2 h-1.5 w-3.5 -translate-x-1/2 rounded-sm border border-white"
-        style={{ backgroundColor: accent }}
+        className="absolute -top-1 left-1/2 h-1.5 w-3.5 -translate-x-1/2 rounded-sm border border-white bg-[#A100FF]"
       />
       {/* 3 mini checklist rows with ticks */}
       {[0, 1, 2].map((row) => (
         <div key={row} className="flex items-center gap-0.5 leading-none">
           <span
-            className="flex h-2 w-2 shrink-0 items-center justify-center rounded-[2px] text-[6px] font-black text-white"
-            style={{ backgroundColor: accent }}
+            className="flex h-2 w-2 shrink-0 items-center justify-center rounded-[2px] bg-white text-[6px] font-black text-[#5A00D6]"
           >
             ✓
           </span>
           <span
-            className="h-[2px] flex-1 rounded-full"
-            style={{ backgroundColor: accent, opacity: 0.75 }}
+            className="h-[2px] flex-1 rounded-full bg-white/90"
           />
         </div>
       ))}
@@ -55,19 +52,15 @@ function MiniClipboardWithTicks({ accent = '#0072FF' }) {
   );
 }
 
-function ThreeClipboardsFlow({ offset = 0 }) {
-  const colors = [
-    getAppBorderView(offset),
-    getAppBorderView(offset + 2),
-    getAppBorderView(offset + 4),
-  ];
+function ThreeClipboardsFlow() {
+  const purples = ['#5A00D6', '#7C3AED', '#A100FF'];
   return (
     <div className="flex items-center gap-1 sm:gap-1.5 shrink-0" aria-hidden="true">
-      <MiniClipboardWithTicks accent={colors[0]} />
+      <MiniClipboardWithTicks accent={purples[0]} />
       <ArrowRight className="h-3.5 w-3.5 text-white shrink-0 stroke-[3]" />
-      <MiniClipboardWithTicks accent={colors[1]} />
+      <MiniClipboardWithTicks accent={purples[1]} />
       <ArrowRight className="h-3.5 w-3.5 text-white shrink-0 stroke-[3]" />
-      <MiniClipboardWithTicks accent={colors[2]} />
+      <MiniClipboardWithTicks accent={purples[2]} />
     </div>
   );
 }
@@ -241,26 +234,26 @@ export default function LandingNav() {
           }}
         >
           <div className="rounded-[16px] bg-white px-3 py-3.5 sm:px-4 sm:py-4 text-center space-y-2.5">
-            {/* Full-Width Stretched Title Bar with 3 Small Clipboards + Ticks + Flow on Both Sides */}
+            {/* Full-Width Stretched Title Bar: 2 Centred Lines (No Symbol) + 3 Purple Clipboards Flow on Both Sides */}
             <div
-              className="flex w-full items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-3 sm:px-5 py-1.5 text-white shadow-sm"
+              className="flex w-full items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-3 sm:px-5 py-2 text-white shadow-sm"
               style={{ background: getHeaderView(0) }}
             >
-              <ThreeClipboardsFlow offset={0} />
+              <ThreeClipboardsFlow />
 
-              <div className="flex min-w-0 flex-1 items-center justify-center gap-2 text-center">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                  <Sparkles className="h-3.5 w-3.5 text-white" />
+              <div className="flex min-w-0 flex-1 flex-col items-center justify-center text-center leading-tight">
+                <span className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+                  ComplianceHR Infinity
                 </span>
                 <span className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
-                  ComplianceHR Infinity Highlights &amp; Features
+                  Highlights and Features
                 </span>
               </div>
 
-              <ThreeClipboardsFlow offset={3} />
+              <ThreeClipboardsFlow />
             </div>
 
-            {/* Smaller Tiles with Fewer Words, Light Pink Background, White Font Tone, App-Colour Symbols & Different App-Colour Borders */}
+            {/* Feature Tiles in App Design Colour with White Font Tone, App-Colour Symbols & Different App-Colour Borders */}
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
               {LISTED_FEATURES.map((l, idx) => {
                 const Icon = l.icon;
@@ -270,9 +263,9 @@ export default function LandingNav() {
                   <a
                     key={l.href}
                     href={l.href}
-                    className="flex h-full min-h-[36px] items-center justify-center gap-1.5 rounded-full border-2 px-2.5 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex h-full min-h-[38px] items-center justify-center gap-1.5 rounded-xl border-2 px-2.5 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                     style={{
-                      backgroundColor: '#FF85E0',
+                      background: getHeaderView(idx),
                       color: '#FFFFFF',
                       borderColor: borderCol,
                     }}
@@ -283,10 +276,7 @@ export default function LandingNav() {
                     >
                       <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                     </span>
-                    <span
-                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10.5px] font-extrabold leading-tight text-white"
-                      style={{ textShadow: '0 1px 2px rgba(10, 43, 109, 0.45)' }}
-                    >
+                    <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10.5px] font-extrabold leading-tight text-white">
                       {l.label}
                     </span>
                   </a>
@@ -311,9 +301,9 @@ export default function LandingNav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-1.5 rounded-full border-2 px-2.5 py-1.5 text-[11px] font-extrabold text-white"
+                  className="flex items-center gap-1.5 rounded-xl border-2 px-2.5 py-1.5 text-[11px] font-extrabold text-white"
                   style={{
-                    backgroundColor: '#FF85E0',
+                    background: getHeaderView(idx),
                     borderColor: borderCol,
                   }}
                 >
