@@ -74,15 +74,15 @@ export default function LandingNav() {
             >
               {/* One Large Logo Above App Name (Logo Emblem Only — Name & Slogan Removed & Emblem Enlarged to Same Size & Location) */}
               <div
-                className="mt-1 sm:mt-1.5 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem] bg-white"
-                style={{ aspectRatio: '100 / 52.5' }}
+                className="mt-0 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem] bg-white"
+                style={{ aspectRatio: '100 / 50' }}
               >
                 <img
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                   alt="ComplianceHR Infinity logo"
                   className="w-full pointer-events-none select-none"
                   style={{
-                    marginTop: '-3%',
+                    marginTop: '-5.5%',
                   }}
                 />
                 {/* Clean white masks over the top ascenders of embedded text so the full infinity curve remains 100% unclipped */}
