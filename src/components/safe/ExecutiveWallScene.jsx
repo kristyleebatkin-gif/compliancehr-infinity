@@ -1009,11 +1009,10 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Beach, Treasure Hunt, Shoreline & Deep Sea Scuba Wall Showcase + Infinity Core Engine + Audit Forms */}
+      {/* Beach, Treasure Hunt, Shoreline & Deep Sea Scuba Wall Showcase + Compact Master Audit Report */}
       <div className="bg-white px-1 pb-1 space-y-1">
         <BeachDeepSeaWallShowcase defaultScene="deep-sea" compact={true} />
-        <InfinityCoreEngine compact={true} />
-        <MasterComplianceAuditForms />
+        <MasterComplianceAuditForms compact={true} smallFeatured={true} />
       </div>
 
       {/* Bottom Office Baseboard Trim */}

@@ -16,40 +16,77 @@ import {
 import Reveal from '@/components/landing/Reveal';
 
 const FEATURES = [
-  { icon: Users, title: 'Workforce Records', desc: 'Maintain staff profiles, employment documents, certificates, teams and consent-aware audit access.', color: '#0072FF' },
-  { icon: Heart, title: 'Participant Records', desc: 'Centralise participant profiles, support plans, agreements, and folder compliance checklists.', color: '#0A2B6D' },
-  { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, manage shifts, availability, handovers, approvals, vehicle checks and payable hours.', color: '#5A00D6' },
-  { icon: BriefcaseBusiness, title: 'Employee Performance Reviews', desc: 'Complete online appraisals, manage review schedules and maintain connected employment records.', color: '#A100FF' },
-  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'Build professional NDIS invoices from rostered shifts, apply price-guide items and generate payroll-ready reports.', color: '#FF2E9A' },
-  { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate, and resolve incidents with automatic alerts and full audit trails.', color: '#A100FF' },
-  { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess, and treat risks and hazards with a live register and mitigation tracking.', color: '#5A00D6' },
-  { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions, and stay on top of expiring certifications automatically.', color: '#0A2B6D' },
-  { icon: BadgeCheck, title: 'NDIS Provider Governance', desc: 'Store registration certificates and groups, schedule audits and renewals, receive reminders and open official Commission portals.', color: '#0072FF' },
-  { icon: ClipboardCheck, title: 'Express Audit & Certification', desc: 'Complete internal audits in minutes from checklists with evidence attached, generate branded reports, manage NDIS deadlines and prepare printable file checklists.', color: '#00C6FF' },
-  { icon: MapPinned, title: 'Community Referral', desc: 'Find essential crisis contacts, verified provider contacts and nearby community services from a postcode.', color: '#FF6EDB' },
-  { icon: Sparkles, title: 'Automation & Spreadsheet Exchange', desc: 'Use assisted checks, scheduled reminders and secure Excel import, preview and export across connected modules.', color: '#C084FC' },
+  { icon: Users, title: 'Workforce Records', desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.', color: '#0072FF' },
+  { icon: Heart, title: 'Participant Records', desc: 'Participant profiles, support plans, agreements and folder compliance checklists.', color: '#0A2B6D' },
+  { icon: CalendarClock, title: 'Rostering & Shift Notes', desc: 'Plan by participant or worker, shifts, availability, handovers and payable hours.', color: '#5A00D6' },
+  { icon: BriefcaseBusiness, title: 'Performance Reviews', desc: 'Online appraisals, review schedules and connected employment records.', color: '#A100FF' },
+  { icon: FileSpreadsheet, title: 'Invoicing & Payroll', desc: 'NDIS invoices from rostered shifts, price-guide items and payroll reports.', color: '#FF2E9A' },
+  { icon: AlertTriangle, title: 'Incident Clinic', desc: 'Log, investigate and resolve incidents with 24h/5d alerts and full audit trails.', color: '#00C6FF' },
+  { icon: ShieldAlert, title: 'Risk Management', desc: 'Identify, assess and treat risks and hazards with a live register and controls.', color: '#5A00D6' },
+  { icon: GraduationCap, title: 'Training Tracking', desc: 'Assign modules, track completions and stay on top of expiring certifications.', color: '#0A2B6D' },
+  { icon: BadgeCheck, title: 'NDIS Governance', desc: 'Registration groups, scheduled audits, renewals, reminders and Commission portals.', color: '#0072FF' },
+  { icon: ClipboardCheck, title: 'Express Audit & Certs', desc: 'Complete internal audits in minutes with evidence attached and branded reports.', color: '#FF2E9A' },
+  { icon: MapPinned, title: 'Community Referral', desc: 'Essential crisis contacts, verified providers and local services by postcode.', color: '#A100FF' },
+  { icon: Sparkles, title: 'Automation & Excel', desc: 'Assisted checks, scheduled reminders and secure Excel import, preview and export.', color: '#00C6FF' },
 ];
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="relative mx-auto my-8 max-w-6xl scroll-mt-16 overflow-hidden rounded-[2rem] border-2 border-[#0A2B6D] bg-white px-4 py-12 sm:py-16 shadow-xl md:px-8">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-300/40 blur-3xl dark:bg-pink-500/10" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/40 blur-3xl dark:bg-blue-500/10" />
-      <div className="relative mx-auto max-w-2xl text-center">
-        <div className="inline-flex rounded-full border border-pink-300 bg-pink-100/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-pink-700 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-300">Latest platform capabilities</div>
-        <h2 className="mt-5 font-editorial text-3xl font-medium tracking-tight text-foreground md:text-[2.6rem] md:leading-tight">
-          An impossible standard, <span className="font-editorial-italic bg-gradient-to-r from-pink-700 via-violet-600 to-blue-600 bg-clip-text text-transparent">achieved effortlessly</span>
+    <section
+      id="features"
+      className="relative mx-auto max-w-6xl scroll-mt-16 overflow-hidden rounded-3xl border-2 border-[#0A2B6D] bg-gradient-to-br from-[#FFF0F8] via-white to-[#F5F0FF] px-4 py-8 sm:py-10 shadow-xl md:px-8"
+      style={{ borderTopWidth: '4px', borderTopColor: '#FF2E9A' }}
+    >
+      <div
+        className="mx-auto rounded-2xl border-2 border-[#0A2B6D] px-4 py-3.5 text-center text-white shadow-md"
+        style={{ background: 'var(--header-gradient)' }}
+      >
+        <div className="inline-flex rounded-full border border-white/40 bg-[#FF2E9A] px-3.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-white">
+          Latest platform capabilities · 6 Per Line
+        </div>
+        <h2 className="mt-2 font-editorial text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+          An impossible standard, achieved effortlessly
         </h2>
-        <p className="mt-4 text-lg font-medium text-foreground/65">One super platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker that shows you are audit prepared, every day.</p>
+        <p className="mx-auto mt-1 max-w-3xl text-xs sm:text-sm font-semibold text-white/95">
+          One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
+        </p>
       </div>
-      <div className="relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+      {/* 12 Core Capabilities — 6 on Each Line with Full-Colour Icons & App-Themed Borders */}
+      <div className="relative mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         {FEATURES.map((f, index) => (
-          <Reveal key={f.title} delay={(index % 3) * 0.07} className="group relative overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl" style={{ borderTopWidth: '4px', borderTopColor: f.color }}>
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: `${f.color}16`, color: f.color }}>
-              <f.icon className="h-5 w-5" />
+          <Reveal
+            key={f.title}
+            delay={(index % 6) * 0.04}
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+            style={{
+              borderTopWidth: '4px',
+              borderTopColor: f.color,
+              background: `linear-gradient(155deg, ${f.color}16 0%, #ffffff 82%)`,
+            }}
+          >
+            <div>
+              <div className="flex items-center justify-between gap-1.5">
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border-2 border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
+                  style={{ backgroundColor: f.color }}
+                >
+                  <f.icon className="h-4 w-4 text-white" />
+                </div>
+                <span
+                  className="rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-white"
+                  style={{ backgroundColor: f.color }}
+                >
+                  #{index + 1}
+                </span>
+              </div>
+              <h3 className="mt-2.5 font-editorial text-sm font-extrabold leading-snug text-[#0A2B6D]">
+                {f.title}
+              </h3>
+              <p className="mt-1 text-[11px] font-semibold leading-snug text-[#0A2B6D]/85">
+                {f.desc}
+              </p>
             </div>
-            <h3 className="mt-4 font-editorial text-lg font-bold text-[#0A2B6D]">{f.title}</h3>
-            <p className="mt-1.5 text-xs font-medium leading-relaxed text-[#0A2B6D]/80">{f.desc}</p>
           </Reveal>
         ))}
       </div>

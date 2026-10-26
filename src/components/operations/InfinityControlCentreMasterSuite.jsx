@@ -778,6 +778,32 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
           </div>
 
+          {/* Compact Master Audit Report Summary inside Unified Oversight */}
+          <div className="rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF] p-2.5 shadow-sm" style={{ borderTopWidth: '4px', borderTopColor: '#5A00D6' }}>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5A00D6] text-white">
+                  <ClipboardCheck className="h-4 w-4" />
+                </span>
+                <div>
+                  <div className="text-xs font-extrabold text-[#0A2B6D]">
+                    Master Audit Report &amp; 356-Checkpoint Summary (CHR-AUD-001 &amp; CHR-AUD-002)
+                  </div>
+                  <div className="text-[10px] font-bold text-[#5A00D6]">
+                    17 Audit Categories · {evidencedCount}/356 Checkpoints Operationally Evidenced · 98 Controlled Documents Linked
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveTab('master-audit-356')}
+                className="rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:bg-[#5A00D6]"
+              >
+                Open Full 356-Checkpoint Report →
+              </button>
+            </div>
+          </div>
+
           {/* Section 24 — 29 Module-Specific Semantic Colours Launch Strip */}
           <div className="rounded-xl border-2 border-[#db2777] bg-pink-50/30 p-2" style={{ borderTopWidth: '4px' }}>
             <div className="mb-1 flex flex-wrap items-center justify-between gap-1">

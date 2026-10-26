@@ -773,12 +773,13 @@ export function SingleMasterComplianceAuditForm({
  * Displays both Gold Governance (`CHR-AUD-001`) and Infinity Operations (`CHR-AUD-002`)
  * 11-page, 17-category, 356-checkpoint interactive forms side-by-side.
  */
-export default function MasterComplianceAuditForms({ compact = false, defaultView = 'both' }) {
+export default function MasterComplianceAuditForms({ compact = false, defaultView = 'both', smallFeatured = false }) {
   const [displayMode, setDisplayMode] = useState(defaultView); // 'both' | 'infinity' | 'gold'
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [expanded, setExpanded] = useState(!smallFeatured);
 
   return (
-    <div id="audit-master-doc" className="scroll-mt-14 rounded-xl border-2 border-purple-600 bg-white p-1.5 shadow-md space-y-1.5">
+    <div id="audit-master-doc" className="scroll-mt-14 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-md space-y-1.5">
       {/* Top Control & Edition Switcher Bar */}
       <div
         className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
@@ -828,11 +829,45 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
               </button>
             );
           })}
+          {smallFeatured && (
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="rounded-full border border-white bg-[#FF2E9A] px-2.5 py-0.5 text-[7.5px] font-black text-white shadow-sm hover:bg-[#A100FF]"
+            >
+              {expanded ? 'Minimise Master Checklist' : 'Expand Full 11-Page Checklist'}
+            </button>
+          )}
         </div>
       </div>
 
+      {smallFeatured && !expanded && (
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
+          {AUDIT_CATEGORIES_17.slice(0, 6).map((cat, idx) => (
+            <button
+              key={cat.number}
+              type="button"
+              onClick={() => {
+                setCategoryIndex(idx);
+                setExpanded(true);
+              }}
+              className="flex flex-col justify-between rounded-lg border-2 border-[#0A2B6D] bg-[#F5F0FF] p-1.5 text-left transition-all hover:bg-white"
+            >
+              <span className="rounded bg-[#5A00D6] px-1.5 py-0.5 text-[7px] font-black text-white w-fit">
+                Page {cat.page} · {cat.rows.length} Checks
+              </span>
+              <span className="mt-1 line-clamp-2 text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                {cat.title}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Quick Category / Page Pill Bar (Pages 1 to 11) */}
-      <div className="flex flex-wrap items-center justify-between gap-1 rounded-md border border-purple-200 bg-purple-50/50 px-2 py-1">
+      {expanded && (
+        <>
+          <div className="flex flex-wrap items-center justify-between gap-1 rounded-md border border-purple-200 bg-purple-50/50 px-2 py-1">
         <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-purple-950">
           Audit Category / Page:
         </span>
@@ -880,6 +915,8 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
           />
         )}
       </div>
+        </>
+      )}
     </div>
   );
 }

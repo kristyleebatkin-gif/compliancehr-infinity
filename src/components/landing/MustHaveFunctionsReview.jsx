@@ -409,7 +409,7 @@ export default function MustHaveFunctionsReview() {
             Click any module to launch directly
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
           {MODULE_DIRECTORY.map((mod, idx) => {
             const c = moduleKeyColour(mod.key);
             const Icon = mod.icon;
@@ -417,16 +417,16 @@ export default function MustHaveFunctionsReview() {
               <Link
                 key={mod.key}
                 to={mod.path}
-                className="flex items-center gap-1.5 rounded border bg-white px-2 py-1 text-[7px] font-extrabold text-blue-950 shadow-sm hover:-translate-y-0.5 transition-transform"
-                style={{ borderColor: c, borderLeftWidth: '3px' }}
+                className="flex items-center gap-1.5 rounded-lg border-2 border-[#0A2B6D] bg-white px-2 py-1 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs hover:-translate-y-0.5 transition-transform"
+                style={{ borderTopColor: c, borderTopWidth: '3px' }}
               >
                 <span
-                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-white"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-2xs"
                   style={{ background: c }}
                 >
-                  {Icon ? <Icon className="h-2.5 w-2.5" /> : idx + 1}
+                  {Icon ? <Icon className="h-3 w-3 text-white" /> : idx + 1}
                 </span>
-                <span className="min-w-0 leading-tight">{mod.label}</span>
+                <span className="min-w-0 flex-1 leading-tight">{mod.label}</span>
               </Link>
             );
           })}

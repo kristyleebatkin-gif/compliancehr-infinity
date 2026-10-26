@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
-import MarketingSafeShowcase from '@/components/landing/MarketingSafeShowcase';
 import QuickStartSection from '@/components/landing/QuickStartSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
 import ExpressAuditSection from '@/components/landing/ExpressAuditSection';
 import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
-import PricingSection from '@/components/landing/PricingSection';
+import MarketingSafeShowcase from '@/components/landing/MarketingSafeShowcase';
 import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
 
@@ -18,39 +17,39 @@ export default function Landing() {
 
   return (
     <div className="app-readable relative min-h-screen overflow-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
-      {/* Original Published Top Navigation merged with Current Showcase Links */}
+      {/* Top Navigation with App-Themed Border around Brand, Open Dashboard, 6-per-line Features & Quick App Bar */}
       <LandingNav />
 
-      <main className="relative z-10 space-y-6">
-        {/* Original Published Hero (Logo, Slogan, Developer Card, 45-Module Strip, Stats & 3 Pillars) */}
+      <main className="relative z-10 space-y-6 pb-8">
+        {/* 1. Hero (App-Bordered Logo, Minimised Software Details, Bright Pink Start Guide, 6-Per-Line Full-Colour Modules, 4 Stats & 3 Upgraded Pillars) */}
         <LandingHero />
 
-        {/* Current Design Showcase (Sales Hero Ribbon, 1-Click Operations, Infinity Core Engine, Health Intelligence, Interactive Executive Office & Profile Wall Scene, Must-Have Review & 45-Screen 2026 Audit) */}
-        <MarketingSafeShowcase embedded />
-
-        {/* Original Published 4-Step Quick Start Guide */}
+        {/* 2. Compliance in 4 Steps (Quick Start Guide) */}
         <QuickStartSection />
 
-        {/* Original Published 12 Core Platform Capabilities */}
+        {/* 3. An Impossible Standard, Achieved Effortlessly (12 Core Capabilities — 6 per line, vibrant colours) */}
         <FeaturesSection />
 
-        {/* Original Published 2-Minute Express Audit Section */}
+        {/* 4. From First Question to Audit-Ready Report in Two Minutes (Express Audit with vibrant colours) */}
         <ExpressAuditSection />
 
-        {/* Original Published 45-Module Platform Blueprint & Data Flow Map */}
+        {/* 5. Accurate Map of the App -> Minimised Colourful Connections & Access Info -> Colourful Live Workspace */}
         <BlueprintPreviewSection />
 
-        {/* Original Published 6 Provider Benefits */}
+        {/* 6. Why Providers Choose ComplianceHR */}
         <BenefitsSection />
 
-        {/* Merged Current & Original Smart Enhanced All-In-One Pricing & Compliance Document Packages */}
-        <PricingSection />
+        {/* 7. All Marketing & Sales Materials Ordered After "Why Providers Choose ComplianceHR":
+               Must-Have Review -> 1-Click Operations -> Screen-by-Screen Audit (with Small Master Checklist) ->
+               Business Health -> Core Engines (Risk, Roster & Smart-Fill) -> Unified Oversight (with Smaller Master Audit Report) ->
+               Office View & Beach Themed -> Price & Packaging */}
+        <MarketingSafeShowcase embedded />
 
-        {/* Original Published Call-To-Action */}
+        {/* 8. Final Call-To-Action */}
         <LandingCTA />
       </main>
 
-      {/* Original Published Multi-Column Footer with Full Brand & Developer Details */}
+      {/* Multi-Column Footer */}
       <LandingFooter />
     </div>
   );

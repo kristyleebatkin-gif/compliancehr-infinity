@@ -8,6 +8,7 @@ import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { useToast } from '@/components/ui/use-toast';
+import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -515,6 +516,9 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
           </button>
         </div>
       </div>
+
+      {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
+      <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
       {/* Group Filter Pills + Search */}
       <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-xl border border-purple-200 bg-purple-50/50 p-1.5">
