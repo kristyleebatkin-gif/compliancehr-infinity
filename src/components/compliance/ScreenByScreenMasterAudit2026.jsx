@@ -9,6 +9,13 @@ import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { useToast } from '@/components/ui/use-toast';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -486,29 +493,29 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       id="screen-by-screen-audit"
       className="rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header Banner — Top Section of Landing Page Template */}
+      {/* Header Banner — White Symbols in Header, Different Views of App Design Colours */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(2) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <ShieldCheck className="h-3.5 w-3.5 text-white" />
           </span>
           <span>45 Screens Audited · 45 Smart-Fill 2026 Docs · 1-Click Task Completion</span>
         </span>
 
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
-          2026 Screen-by-Screen Audit of{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            All 45 Modulars
-          </span>
+        <h2
+          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(2) }}
+        >
+          2026 Screen-by-Screen Audit of All 45 Modulars
         </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
+          style={{ color: getSubheaderColourView(2) }}
+        >
           Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
         </p>
 
@@ -516,13 +523,10 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
           type="button"
           onClick={() => openSmartFillDoc(MODULE_DIRECTORY[13])}
           className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-          style={{
-            background:
-              'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-          }}
+          style={{ background: getHeaderView(4) }}
         >
-          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <Wand2 className="h-3 w-3 text-[#FF2E9A]" />
+          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+            <Wand2 className="h-3 w-3 text-white" />
           </span>
           <span>Open 2026 Smart-Fill Doc Studio</span>
         </button>
@@ -531,31 +535,29 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
       <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
-      {/* Group Filter Pills + Search */}
+      {/* Group Filter Pills in Mixed Full Colours + Search */}
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-2xs">
         <div className="flex flex-wrap items-center gap-1.5">
-          {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp) => (
-            <button
-              key={grp}
-              type="button"
-              onClick={() => setSelectedGroup(grp)}
-              className={`rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold transition-all ${
-                selectedGroup === grp
-                  ? 'text-white shadow-sm'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-              style={
-                selectedGroup === grp
-                  ? {
-                      background:
-                        'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-                    }
-                  : undefined
-              }
-            >
-              {grp}
-            </button>
-          ))}
+          {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp, idx) => {
+            const tile = getTilePalette(idx);
+            return (
+              <button
+                key={grp}
+                type="button"
+                onClick={() => setSelectedGroup(grp)}
+                className={`rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold transition-all ${
+                  selectedGroup === grp ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
+                }`}
+                style={
+                  selectedGroup === grp
+                    ? { background: getHeaderView(idx), color: '#ffffff' }
+                    : { backgroundColor: tile.bg, color: tile.text }
+                }
+              >
+                {grp}
+              </button>
+            );
+          })}
         </div>
 
         <div className="relative min-w-[200px] flex-1 max-w-xs">

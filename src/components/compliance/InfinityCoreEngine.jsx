@@ -8,6 +8,11 @@ import {
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { downloadInfinityCoreEnginePdf } from '@/lib/infinityCoreEnginePdf';
+import {
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+} from '@/lib/fullColourTiles';
 
 const SQUISHED_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -374,29 +379,29 @@ export default function InfinityCoreEngine({ compact = false }) {
       id="infinity-core-engine"
       className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Top Section of Landing Page Header Template */}
+      {/* Header — White Symbols in Header, Different Views of App Design Colours */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(4) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-            <Cpu className="h-3.5 w-3.5 text-[#5A00D6]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Cpu className="h-3.5 w-3.5 text-white" />
           </span>
           <span>Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}</span>
         </span>
 
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
-          Infinity Core Engine —{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            AI Automation &amp; Real-Time Validation
-          </span>
+        <h2
+          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(4) }}
+        >
+          Infinity Core Engine — AI Automation &amp; Real-Time Validation
         </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
+          style={{ color: getSubheaderColourView(4) }}
+        >
           Complete Control. Greater Confidence. Brighter Success.
         </p>
 
@@ -406,10 +411,7 @@ export default function InfinityCoreEngine({ compact = false }) {
             onClick={handleRunCoreSweep}
             disabled={sweeping}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(0) }}
           >
             <RefreshCw className={`h-3.5 w-3.5 text-white ${sweeping ? 'animate-spin' : ''}`} />
             <span>{sweeping ? 'Sweeping Engine…' : 'Run Core Engine Sweep'}</span>
@@ -419,10 +421,7 @@ export default function InfinityCoreEngine({ compact = false }) {
             onClick={handleLogDiagnosticTask}
             disabled={creatingTask}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{
-              background:
-                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-            }}
+            style={{ background: getHeaderView(2) }}
           >
             <ClipboardCheck className="h-3.5 w-3.5 text-white" />
             <span>{creatingTask ? 'Logging…' : '1-Click Log Audit Task'}</span>
@@ -431,10 +430,7 @@ export default function InfinityCoreEngine({ compact = false }) {
             type="button"
             onClick={handleExportPdf}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
-            }}
+            style={{ background: getHeaderView(6) }}
           >
             <Download className="h-3.5 w-3.5 text-white" />
             <span>Export Core Engine A4 PDF</span>

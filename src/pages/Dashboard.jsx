@@ -5,6 +5,7 @@ import ManagementReviewReport from '@/components/dashboard/ManagementReviewRepor
 import ComplianceDashboardFrame from '@/components/dashboard/ComplianceDashboardFrame';
 import { useRole } from '@/lib/useRole';
 import { ROLES, canAccessNav } from '@/lib/roles';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 import SafetyTrendsDashboard from '@/components/safety/SafetyTrendsDashboard';
 import AdminDashboard from '@/components/dashboard/AdminDashboard';
 import StaffDashboard from '@/components/dashboard/StaffDashboard';

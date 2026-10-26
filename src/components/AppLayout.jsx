@@ -11,6 +11,7 @@ import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,

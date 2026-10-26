@@ -614,15 +614,87 @@
     box-shadow: 0 10px 25px -5px rgba(10, 43, 109, 0.14) !important;
   }
 
-  /* Inner cards, tiles, and register boxes inside modules use crisp white background + 2px #0A2B6D border */
-  :root:not(.dark) .app-dashboard-canvas :is(
+  /* Small tiles & cards inside grids across all modules (except Treasure Hunt, Beach & Deep Sea) cycle through the 8 mixed full colours:
+     1. Light Blue (#38BDF8) · 2. Medium Pink (#FF2E9A) · 3. Light Purple (#C084FC) · 4. Medium Blue (#0072FF) ·
+     5. Light Pink (#FF85E0) · 6. Violet (#5A00D6) · 7. Dark Pink (#C80064) · 8. Medium Purple (#9333EA) */
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
     .rounded-xl.border,
     .rounded-2xl.border,
-    .rounded-lg.border
-  ):not([role="tabpanel"] > *):not(.preserve-island-theme):not(.preserve-island-theme *) {
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+1) {
     border: 2px solid #0A2B6D !important;
-    background-color: #ffffff !important;
-    color: #0A2B6D;
-    box-shadow: 0 2px 8px -2px rgba(10, 43, 109, 0.08);
+    background-color: #38BDF8 !important;
+    color: #0A2B6D !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+2) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #FF2E9A !important;
+    color: #FFFFFF !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+3) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #C084FC !important;
+    color: #0A2B6D !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+4) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #0072FF !important;
+    color: #FFFFFF !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+5) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #FF85E0 !important;
+    color: #0A2B6D !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+6) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #5A00D6 !important;
+    color: #FFFFFF !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+7) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #C80064 !important;
+    color: #FFFFFF !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas .grid > :is(
+    .rounded-xl.border,
+    .rounded-2xl.border,
+    .rounded-lg.border,
+    .rounded-2xl.border-2
+  ):not(.preserve-island-theme):not(.preserve-island-theme *):nth-child(8n+8) {
+    border: 2px solid #0A2B6D !important;
+    background-color: #9333EA !important;
+    color: #FFFFFF !important;
   }
 }

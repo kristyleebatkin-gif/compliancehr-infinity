@@ -12,6 +12,13 @@ import {
 } from 'recharts';
 import { base44 } from '@/api/base44Client';
 import { downloadBusinessHealthIntelligencePdf } from '@/lib/businessHealthIntelligencePdf';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -354,29 +361,29 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       id="business-health-intelligence"
       className="scroll-mt-14 rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Top Banner Header — Top Section of Landing Page Template */}
+      {/* Top Banner Header — White Symbol in Header, Different Views of App Design Colours */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(3) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <Activity className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Activity className="h-3.5 w-3.5 text-white" />
           </span>
           <span>Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness</span>
         </span>
 
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
-          Business Health &amp;{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Compliance Intelligence
-          </span>
+        <h2
+          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(3) }}
+        >
+          Business Health &amp; Compliance Intelligence
         </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
+          style={{ color: getSubheaderColourView(3) }}
+        >
           Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
         </p>
 
@@ -385,10 +392,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             type="button"
             onClick={loadLiveIntelligence}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-            }}
+            style={{ background: getHeaderView(5) }}
           >
             <RefreshCw className={`h-3.5 w-3.5 text-white ${refreshing ? 'animate-spin' : ''}`} />
             <span>Sync Live Telemetry</span>
@@ -404,10 +408,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               })
             }
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(1) }}
           >
             <Download className="h-3.5 w-3.5 text-white" />
             <span>Export Board Intelligence Report (A4 PDF)</span>

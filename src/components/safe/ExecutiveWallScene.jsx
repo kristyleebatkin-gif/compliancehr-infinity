@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { getTilePalette, getHeaderView } from '@/lib/fullColourTiles';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import SilverScreenSplit from '@/components/safe/SilverScreenSplit';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
@@ -766,54 +767,48 @@ export default function ExecutiveWallScene({
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
-      {/* Top Section of Landing Page Header Template */}
+      {/* Header — White Symbol in Header, Mixed Full-Colour Mode Buttons */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(7) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-            <Building2 className="h-3.5 w-3.5 text-[#0072FF]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Building2 className="h-3.5 w-3.5 text-white" />
           </span>
           <span>{companyName} · Dual Executive Office &amp; Profile Workspace</span>
         </span>
 
         <div className="flex flex-wrap items-center justify-center gap-2">
-          {LAYOUT_CHOICES.map((choice) => {
+          {LAYOUT_CHOICES.map((choice, idx) => {
             const Icon = choice.icon;
             const active = viewMode === choice.id;
+            const tile = getTilePalette(idx);
             return (
               <button
                 key={choice.id}
                 type="button"
                 onClick={() => selectMode(choice.id)}
                 className={`inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold transition-all ${
-                  active
-                    ? 'text-white shadow-sm'
-                    : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                  active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : ''
                 }`}
                 style={
                   active
-                    ? {
-                        background:
-                          'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-                      }
-                    : undefined
+                    ? { background: getHeaderView(idx), color: '#ffffff' }
+                    : { backgroundColor: tile.bg, color: tile.text }
                 }
               >
-                <Icon className={`h-3.5 w-3.5 ${active ? 'text-white' : 'text-[#5A00D6]'}`} />
+                <Icon className="h-3.5 w-3.5" style={{ color: active ? '#ffffff' : tile.text }} />
                 <span>{choice.label}</span>
               </button>
             );
           })}
           <Link
             to="/login"
-            className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+            className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold shadow-2xs"
+            style={{ backgroundColor: getTilePalette(3).bg, color: getTilePalette(3).text }}
           >
-            <LogIn className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            <LogIn className="h-3.5 w-3.5" style={{ color: getTilePalette(3).text }} />
             <span>Sign In</span>
           </Link>
         </div>

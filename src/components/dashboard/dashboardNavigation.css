@@ -28,49 +28,90 @@
   padding: 0.45rem 0.75rem;
   border: 2px solid #0A2B6D !important;
   border-radius: 9999px !important;
-  background: #ffffff !important;
-  color: #0A2B6D !important;
   text-align: start;
   white-space: normal;
   overflow-wrap: anywhere;
   font-size: 0.72rem;
   font-weight: 800;
   line-height: 1.3;
-  box-shadow: 0 1px 4px rgba(10, 43, 109, 0.08);
+  box-shadow: 0 1px 4px rgba(10, 43, 109, 0.12);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:hover {
-  transform: translateY(-1px);
-  background: #F5F0FF !important;
+/* 8 mixed full colours so the same colour is never adjacent */
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+1) {
+  background: #38BDF8 !important;
+  color: #0A2B6D !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+2) {
+  background: #FF2E9A !important;
+  color: #FFFFFF !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+3) {
+  background: #C084FC !important;
+  color: #0A2B6D !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+4) {
+  background: #0072FF !important;
+  color: #FFFFFF !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+5) {
+  background: #FF85E0 !important;
+  color: #0A2B6D !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+6) {
+  background: #5A00D6 !important;
+  color: #FFFFFF !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+7) {
+  background: #C80064 !important;
+  color: #FFFFFF !important;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+8) {
+  background: #9333EA !important;
+  color: #FFFFFF !important;
 }
 
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+1) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+3) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+5) * {
+  color: #0A2B6D !important;
+}
+
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+2) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+4) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+6) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+7) *,
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+8) * {
+  color: #FFFFFF !important;
+}
+
+/* Symbols inside tabs (not title/header) in different views of the app colours */
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab] svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.35rem;
+  height: 1.35rem;
   padding: 0.22rem;
   border-radius: 9999px;
-  border: 1px solid #0A2B6D;
-  background: linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%);
-  color: #ffffff !important;
+  border: 2px solid #0A2B6D;
+  background: #ffffff !important;
   flex-shrink: 0;
+}
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+1) svg { color: #0072FF !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+2) svg { color: #FF2E9A !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+3) svg { color: #5A00D6 !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+4) svg { color: #A100FF !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+5) svg { color: #C80064 !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+6) svg { color: #00C6FF !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+7) svg { color: #9333EA !important; }
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:nth-child(8n+8) svg { color: #0A2B6D !important; }
+
+.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
 }
 
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) {
-  background: linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%) !important;
-  color: #ffffff !important;
-  border-color: #0A2B6D !important;
-  box-shadow: 0 4px 12px -3px rgba(90, 0, 214, 0.35);
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) * {
-  color: #ffffff !important;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) svg {
-  background: #ffffff !important;
-  border-color: #ffffff !important;
-  color: #5A00D6 !important;
+  box-shadow: 0 0 0 3px #0A2B6D, 0 4px 12px -3px rgba(90, 0, 214, 0.35);
 }
 
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab]:focus-visible {

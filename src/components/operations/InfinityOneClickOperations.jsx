@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+} from '@/lib/fullColourTiles';
+import {
   Zap, ShieldCheck, FileText, Users, CalendarClock, Siren, AlertTriangle,
   Download, CheckCircle2, RefreshCw, Sparkles, ClipboardCheck, Megaphone,
   Award, FolderLock, ArrowRight, Play, Layers, Building2, Clock,
@@ -538,29 +543,29 @@ export default function InfinityOneClickOperations({ compact = false }) {
       id="infinity-one-click-operations"
       className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Top Section of Landing Page Header Template */}
+      {/* Header — White Symbols in Header, Different Views of App Design Colours */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(5) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <Zap className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Zap className="h-3.5 w-3.5 text-white" />
           </span>
           <span>Infinity One-Click Operations · 12 Instant Executive Actions Armed</span>
         </span>
 
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
-          Infinity{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            One-Click Operations
-          </span>
+        <h2
+          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(5) }}
+        >
+          Infinity One-Click Operations
         </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
+          style={{ color: getSubheaderColourView(5) }}
+        >
           Audit Packs, Smart-Fill Docs, Roster &amp; Task Dispatch, and Incident &amp; Risk Sweeps.
         </p>
 
@@ -570,10 +575,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
             onClick={handleRunMasterAllOperations}
             disabled={runningMaster}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(1) }}
           >
             <RefreshCw className={`h-3.5 w-3.5 text-white ${runningMaster ? 'animate-spin' : ''}`} />
             <span>{runningMaster ? 'Executing All 3 Pillars…' : 'Execute Master 1-Click Sweep (All 3 Pillars)'}</span>
@@ -581,10 +583,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
           <Link
             to="/operations-centre"
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-            }}
+            style={{ background: getHeaderView(3) }}
           >
             <Building2 className="h-3.5 w-3.5 text-white" />
             <span>Open Full Executive Operations Centre</span>

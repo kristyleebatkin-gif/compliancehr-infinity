@@ -10,6 +10,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { downloadCsv } from '@/lib/csvExport';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 import { useToast } from '@/components/ui/use-toast';
 import {
   INFINITY_APPROVED_PALETTE,
@@ -505,29 +512,29 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
   return (
     <section className="overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
-      {/* ==================== MASTER HEADER BANNER — TOP SECTION TEMPLATE ==================== */}
+      {/* ==================== MASTER HEADER BANNER ==================== */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-3 shadow-sm">
         <span
           className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-          style={{
-            background:
-              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-          }}
+          style={{ background: getHeaderView(6) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <ShieldCheck className="h-3.5 w-3.5 text-white" />
           </span>
           <span>17 Categories · 356 Checkpoints · 98 Controlled Docs · 31 Dev Register Items</span>
         </span>
 
-        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
-          Infinity{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Control Centre &amp; Master Audit
-          </span>
+        <h2
+          className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(0) }}
+        >
+          Infinity Control Centre &amp; Master Audit
         </h2>
 
-        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold"
+          style={{ color: getSubheaderColourView(0) }}
+        >
           Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
         </p>
 
@@ -537,10 +544,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             onClick={loadLiveTelemetry}
             disabled={loading}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
-            style={{
-              background:
-                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-            }}
+            style={{ background: getHeaderView(2) }}
           >
             <RefreshCw className={`h-3.5 w-3.5 text-white ${loading ? 'animate-spin' : ''}`} />
             <span>Refresh Live Telemetry</span>
@@ -569,17 +573,14 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               )
             }
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(4) }}
           >
             <Download className="h-3.5 w-3.5 text-white" />
             <span>Export 356 Checkpoints (Excel/CSV)</span>
           </button>
         </div>
 
-        {/* Navigation Switcher for All 9 Master Pillars */}
+        {/* Navigation Switcher for All 9 Master Pillars in Mixed Full Colours */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-2">
           {[
             { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry', icon: Building2 },
@@ -591,30 +592,31 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate', icon: Sparkles },
             { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS', icon: Wrench },
             { id: 'dev-register-31', label: '9. Dev Register', sub: '15-Pt Check', icon: CheckSquare },
-          ].map((tab) => {
+          ].map((tab, idx) => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
+            const tile = getTilePalette(idx);
+            const sym = getSymbolView(idx);
             return (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-left transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
-                  active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
+                className={`flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-2.5 py-1.5 text-left transition-all hover:-translate-y-0.5 ${
+                  active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'shadow-2xs'
                 }`}
+                style={{ backgroundColor: tile.bg, color: tile.text }}
               >
-                <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                  }}
-                >
-                  <Icon className="h-3 w-3 text-white" />
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                  <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate text-[10px] font-extrabold text-[#0A2B6D]">{tab.label}</div>
-                  <div className="truncate text-[8.5px] font-bold text-[#5A00D6]">{tab.sub}</div>
+                  <div className="truncate text-[10px] font-extrabold" style={{ color: tile.text }}>
+                    {tab.label}
+                  </div>
+                  <div className="truncate text-[8.5px] font-bold" style={{ color: tile.subtext }}>
+                    {tab.sub}
+                  </div>
                 </div>
               </button>
             );
