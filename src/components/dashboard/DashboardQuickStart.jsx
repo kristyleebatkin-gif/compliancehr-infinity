@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, BookOpen, LayoutGrid, ShieldAlert } from 'lucide-react';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 
 const STEPS = [
   {
@@ -44,10 +41,10 @@ export default function DashboardQuickStart() {
           <span
             id="dashboard-quick-start"
             className="inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-            style={{ background: BADGE_GRADIENT }}
+            style={{ background: getHeaderView(0) }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-              <BookOpen className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <BookOpen className="h-3.5 w-3.5 text-white" />
             </span>
             <span>Quick Start Guide — Finding Your Way Around ComplianceHR Infinity</span>
           </span>
@@ -55,13 +52,10 @@ export default function DashboardQuickStart() {
           <Link
             to="/user-guides"
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(2) }}
           >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-              <BookOpen className="h-3 w-3 text-[#0072FF]" />
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+              <BookOpen className="h-3 w-3 text-white" />
             </span>
             <span>View Full User Manual</span>
           </Link>
@@ -70,22 +64,22 @@ export default function DashboardQuickStart() {
         <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-left">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
+            const tile = getTilePalette(index + 1);
+            const sym = getSymbolView(index + 1);
             return (
               <li
                 key={step.title}
-                className="flex gap-3 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+                className="flex gap-3 rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-sm transition-all hover:-translate-y-0.5"
+                style={{ backgroundColor: tile.bg, color: tile.text }}
               >
-                <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
-                  style={{ background: ICON_GRADIENT }}
-                >
-                  <Icon className="h-4 w-4 text-white" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                  <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                 </div>
                 <div>
-                  <div className="text-sm font-extrabold text-[#0A2B6D]">
+                  <div className="text-sm font-extrabold" style={{ color: tile.text }}>
                     {index + 1}. {step.title}
                   </div>
-                  <p className="mt-0.5 text-xs font-bold leading-relaxed text-[#5A00D6]">
+                  <p className="mt-0.5 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
                     {step.text}
                   </p>
                 </div>

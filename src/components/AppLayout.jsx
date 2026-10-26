@@ -182,42 +182,36 @@ export default function AppLayout() {
       </div>
 
       <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 py-1 space-y-3">
-        {NAV_GROUPS.map((group) => {
+        {NAV_GROUPS.map((group, gIdx) => {
           const items = visiblePrimary.filter((item) => group.keys.includes(item.key) && !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff')));
           if (!items.length) return null;
           return (
             <div key={group.label} className="space-y-1.5">
               <div
                 className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white"
-                style={{
-                  background:
-                    'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-                }}
+                style={{ background: getHeaderView(gIdx) }}
               >
                 {group.label}
               </div>
-              <div className="space-y-1">
-                {items.map((item) => {
+              <div className="space-y-1.5">
+                {items.map((item, iIdx) => {
                   const Icon = item.icon;
                   const active = isActive(item.path);
+                  const tile = getTilePalette(gIdx * 3 + iIdx);
+                  const sym = getSymbolView(gIdx * 3 + iIdx);
                   return (
                     <Link
                       key={item.path}
                       to={item.path}
-                      className={`group relative flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
-                        active ? 'ring-2 ring-[#FF2E9A]' : ''
+                      className={`group relative flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold shadow-2xs transition-all hover:-translate-y-0.5 ${
+                        active ? 'ring-2 ring-[#0A2B6D]' : ''
                       }`}
+                      style={{ backgroundColor: tile.bg, color: tile.text }}
                     >
-                      <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                        style={{
-                          background:
-                            'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                        }}
-                      >
-                        <Icon className="h-3 w-3 text-white" />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                        <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="truncate">{navLabel(item)}</span>
+                      <span className="truncate" style={{ color: tile.text }}>{navLabel(item)}</span>
                     </Link>
                   );
                 })}

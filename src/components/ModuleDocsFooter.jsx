@@ -5,14 +5,17 @@ import { Eye, ExternalLink, FileText, FolderOpen, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { safeUrl } from '@/lib/safeUrl';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 import '@/components/employeeDocumentsCompact.css';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 
 const MODULE_DOCS = [
   {
@@ -164,22 +167,25 @@ export default function ModuleDocsFooter() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 pb-3">
             <div className="flex items-center gap-3">
               <span
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
-                style={{ background: ICON_GRADIENT }}
+                className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
+                style={{ background: getHeaderView(2) }}
               >
-                <FolderOpen className="h-4 w-4 text-white" />
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <FolderOpen className="h-3 w-3 text-white" />
+                </span>
+                <span>{cfg.title}</span>
               </span>
-              <div>
-                <div className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]">
-                  {cfg.title}
-                </div>
-                <div className="text-xs font-extrabold text-[#5A00D6]">{cfg.subtitle}</div>
+              <div
+                className="text-xs font-extrabold"
+                style={{ color: getSubheaderColourView(2) }}
+              >
+                {cfg.subtitle}
               </div>
             </div>
             <Link
               to={`/documents?focus=${cfg.focus}`}
               className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-              style={{ background: BADGE_GRADIENT }}
+              style={{ background: getHeaderView(0) }}
             >
               <span>Open in Document Vault</span>
               <ExternalLink className="h-3.5 w-3.5 text-white" />
@@ -197,25 +203,25 @@ export default function ModuleDocsFooter() {
               </div>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {items.map((d) => {
+                {items.map((d, idx) => {
                   const date = cfg.date(d);
+                  const tile = getTilePalette(idx);
+                  const sym = getSymbolView(idx);
                   return (
                     <div
                       key={d.id}
-                      className="flex flex-col gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-2xs"
+                      className="flex flex-col gap-2 rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-2xs"
+                      style={{ backgroundColor: tile.bg, color: tile.text }}
                     >
                       <div className="flex items-start gap-2">
-                        <span
-                          className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                          style={{ background: ICON_GRADIENT }}
-                        >
-                          <FileText className="h-3 w-3 text-white" />
+                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                          <FileText className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                         </span>
                         <div className="min-w-0">
-                          <div className="text-xs font-extrabold text-[#0A2B6D]" title={cfg.label(d)}>
+                          <div className="text-xs font-extrabold" style={{ color: tile.text }} title={cfg.label(d)}>
                             {cfg.label(d)}
                           </div>
-                          <div className="text-[11px] font-bold text-[#5A00D6]" title={cfg.meta(d)}>
+                          <div className="text-[11px] font-bold" style={{ color: tile.subtext }} title={cfg.meta(d)}>
                             {cfg.meta(d) || ' '}
                           </div>
                         </div>

@@ -4,11 +4,22 @@ import {
   AlertTriangle, FileText, DollarSign, GraduationCap, MessagesSquare, Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+} from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
+
+function hashIndex(str = '') {
+  let h = 0;
+  for (let i = 0; i < str.length; i += 1) {
+    h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
 
 function resolveSectionSubject(title = '', description = '') {
   const text = `${title} ${description}`.toLowerCase();
@@ -63,6 +74,7 @@ export default function SectionCard({
   const subjectInfo = resolveSectionSubject(title, description);
   const SubjectIcon = subjectInfo.Icon;
   const resolvedSubject = subject || subjectInfo.label;
+  const seed = hashIndex(`${title}-${resolvedSubject}`);
 
   return (
     <div
@@ -77,12 +89,13 @@ export default function SectionCard({
         {(title || action) && (
           <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 bg-white px-4 py-3.5 sm:px-5">
             <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2.5">
+              {/* Subject Header Pill with WHITE Small Symbol */}
               <span
                 className="inline-flex min-h-[34px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
-                style={{ background: BADGE_GRADIENT }}
+                style={{ background: getHeaderView(seed) }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                  <SubjectIcon className="h-3 w-3 text-[#FF2E9A]" />
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <SubjectIcon className="h-3 w-3 text-white" />
                 </span>
                 <span>{resolvedSubject}</span>
               </span>
@@ -95,25 +108,35 @@ export default function SectionCard({
                       aria-expanded={expanded}
                       aria-controls={contentId}
                       onClick={() => setExpanded((value) => !value)}
-                      className="flex items-center gap-2 text-left font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]"
+                      className="flex items-center gap-2 text-left font-editorial text-base sm:text-lg font-extrabold"
                     >
                       <ChevronDown
                         className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
                           expanded ? '' : '-rotate-90'
                         }`}
                       />
-                      <span data-panel-title>{title}</span>
+                      <span
+                        data-panel-title
+                        className="bg-clip-text text-transparent"
+                        style={{ backgroundImage: getTitleGradientView(seed) }}
+                      >
+                        {title}
+                      </span>
                     </button>
                   ) : (
                     <div
                       data-panel-title
-                      className="break-words font-editorial text-base sm:text-lg font-extrabold tracking-tight text-[#0A2B6D]"
+                      className="break-words font-editorial text-base sm:text-lg font-extrabold tracking-tight bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(seed) }}
                     >
                       {title}
                     </div>
                   ))}
                 {description && (
-                  <p className="mt-0.5 break-words text-xs font-extrabold text-[#5A00D6]">
+                  <p
+                    className="mt-0.5 break-words text-xs font-extrabold"
+                    style={{ color: getSubheaderColourView(seed) }}
+                  >
                     {description}
                   </p>
                 )}

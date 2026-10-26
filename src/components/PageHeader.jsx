@@ -5,13 +5,22 @@ import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
+import {
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+} from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+
+function hashIndex(str = '') {
+  let h = 0;
+  for (let i = 0; i < str.length; i += 1) {
+    h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
 
 function resolveHeaderSubject(title = '', seg = '') {
   const t = `${title} ${seg}`.toLowerCase();
@@ -47,53 +56,59 @@ export default function PageHeader({
   const modMeta = resolveAuditModule(seg);
   const description = subtitle || modMeta?.blurb || '';
   const subjectLabel = subject || modMeta?.group || resolveHeaderSubject(title, seg);
+  const seed = hashIndex(`${title}-${seg}`);
 
   return (
     <div className="space-y-3">
-      {/* Top Module Header Framed in Exact Landing Page Top Section Template */}
       <div
         className={cn('rounded-3xl p-[12px] shadow-lg', className)}
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2.5">
-          {/* Centred Subject & Module Pill Badges */}
+          {/* Centred Subject & Module Pill Badges — Different Views of App Colours + WHITE Small Symbols */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span
               className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-              style={{ background: BADGE_GRADIENT }}
+              style={{ background: getHeaderView(seed) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <Icon className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Icon className="h-3.5 w-3.5 text-white" />
               </span>
               <span>Subject: {subjectLabel}</span>
             </span>
 
-            <span className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
-              <span
-                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                style={{ background: ICON_GRADIENT }}
-              >
+            <span
+              className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
+              style={{ background: getHeaderView(seed + 3) }}
+            >
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
                 <Sparkles className="h-3 w-3 text-white" />
               </span>
               <span>Module: {title}</span>
             </span>
           </div>
 
-          {/* Centred Module Heading & Subtitle */}
+          {/* Centred Module Heading & Sub-Header in Different Views of App Design Colours */}
           <div className="mx-auto max-w-4xl space-y-1">
-            <h1 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
-              <span className="bg-gradient-to-r from-[#0A2B6D] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            <h1 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: getTitleGradientView(seed) }}
+              >
                 {title}
               </span>
             </h1>
             {description && (
-              <p className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold leading-relaxed text-[#5A00D6]">
+              <p
+                className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold leading-relaxed"
+                style={{ color: getSubheaderColourView(seed) }}
+              >
                 {description}
               </p>
             )}
           </div>
 
-          {/* Live Compliance Strip & Module Actions Inside the Top Header Card */}
+          {/* Live Compliance Strip & Module Actions */}
           <div
             className={cn(
               'mt-1 flex w-full flex-wrap items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white px-3 py-2 shadow-2xs',
@@ -126,7 +141,6 @@ export default function PageHeader({
   );
 }
 
-// Row of controls rendered just below the header card.
 export function HeaderUnderRow({ children, className }) {
   return (
     <div

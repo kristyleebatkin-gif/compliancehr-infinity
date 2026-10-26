@@ -84,13 +84,10 @@ export default function Dashboard() {
         <div className="rounded-[16px] bg-white p-4 sm:p-5 text-center space-y-3">
           <span
             className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-            style={{
-              background:
-                'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-            }}
+            style={{ background: getHeaderView(0) }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-              <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Sparkles className="h-3.5 w-3.5 text-white" />
             </span>
             <span>Merged Original &amp; Current Executive Dashboard</span>
           </span>
@@ -100,30 +97,31 @@ export default function Dashboard() {
           </p>
 
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-4">
-            {DASHBOARD_SUITES.map((s) => {
+            {DASHBOARD_SUITES.map((s, idx) => {
               const Icon = s.icon;
               const active = activeSuite === s.id;
+              const tile = getTilePalette(idx);
+              const sym = getSymbolView(idx);
               return (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => setActiveSuite(s.id)}
-                  className={`flex items-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-left transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
-                    active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
+                  className={`flex items-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-2 text-left transition-all hover:-translate-y-0.5 ${
+                    active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'shadow-2xs'
                   }`}
+                  style={{ backgroundColor: tile.bg, color: tile.text }}
                 >
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Icon className="h-3.5 w-3.5 text-white" />
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="text-xs font-extrabold text-[#0A2B6D] leading-tight">{s.label}</div>
-                    <div className="text-[10px] font-bold text-[#5A00D6] leading-tight">{s.sub}</div>
+                    <div className="text-xs font-extrabold leading-tight" style={{ color: tile.text }}>
+                      {s.label}
+                    </div>
+                    <div className="text-[10px] font-bold leading-tight" style={{ color: tile.subtext }}>
+                      {s.sub}
+                    </div>
                   </div>
                 </button>
               );

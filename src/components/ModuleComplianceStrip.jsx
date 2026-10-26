@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Clock3, ShieldCheck } from 'lucide-react';
 import { MODULE_TRACKERS, loadTrackerCounts } from '@/lib/moduleTrackers';
-
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+import { getTilePalette, getSymbolView } from '@/lib/fullColourTiles';
 
 export default function ModuleComplianceStrip({ path: requested }) {
   const path = MODULE_TRACKERS[requested] ? requested : '/compliance';
@@ -25,57 +21,61 @@ export default function ModuleComplianceStrip({ path: requested }) {
 
   if (!items) return null;
   if (!counts) {
+    const t0 = getTilePalette(0);
     return (
-      <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
-        <span
-          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-          style={{ background: ICON_GRADIENT }}
-        >
-          <ShieldCheck className="h-3 w-3 animate-pulse text-white" />
+      <span
+        className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold"
+        style={{ backgroundColor: t0.bg, color: t0.text }}
+      >
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+          <ShieldCheck className="h-3 w-3 animate-pulse text-[#0072FF]" />
         </span>
-        <span>Checking tracker…</span>
+        <span style={{ color: t0.text }}>Checking tracker…</span>
       </span>
     );
   }
 
   const alerts = counts.filter((c) => c.value > 0);
   if (alerts.length === 0) {
+    const tClear = getTilePalette(3);
     return (
       <span
-        className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold text-white shadow-2xs"
-        style={{ background: BADGE_GRADIENT }}
+        className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold shadow-2xs"
+        style={{ backgroundColor: tClear.bg, color: tClear.text }}
       >
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
           <ShieldCheck className="h-3 w-3 text-[#0072FF]" />
         </span>
-        <span>All in date</span>
+        <span style={{ color: tClear.text }}>All in date</span>
       </span>
     );
   }
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {alerts.map((a) => (
-        <span
-          key={a.label}
-          title={a.label}
-          className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
-        >
+      {alerts.map((a, idx) => {
+        const tile = getTilePalette(idx + 1);
+        const sym = getSymbolView(idx + 1);
+        return (
           <span
-            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-            style={{ background: ICON_GRADIENT }}
+            key={a.label}
+            title={a.label}
+            className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold shadow-2xs"
+            style={{ backgroundColor: tile.bg, color: tile.text }}
           >
-            {a.mode === 'soon' ? (
-              <Clock3 className="h-3 w-3 text-white" />
-            ) : (
-              <AlertTriangle className="h-3 w-3 text-white" />
-            )}
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+              {a.mode === 'soon' ? (
+                <Clock3 className="h-3 w-3" style={{ color: sym.iconColor }} />
+              ) : (
+                <AlertTriangle className="h-3 w-3" style={{ color: sym.iconColor }} />
+              )}
+            </span>
+            <span style={{ color: tile.text }}>
+              {a.value} {a.label}
+            </span>
           </span>
-          <span>
-            {a.value} {a.label}
-          </span>
-        </span>
-      ))}
+        );
+      })}
     </div>
   );
 }

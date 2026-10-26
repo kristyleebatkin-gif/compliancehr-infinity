@@ -7,13 +7,10 @@ import {
   Users, FolderOpen, ClipboardList, AlertTriangle, Megaphone, Plus, ShieldCheck, ArrowRight,
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 
 const QUICK_LINKS = [
   { to: '/staff', icon: Users, title: 'Staff Profiles', desc: 'Manage your team & credentials' },
@@ -93,29 +90,29 @@ export default function OriginalPublishedOverview() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="rounded-[16px] bg-white p-4 sm:p-5 space-y-4">
-        {/* 5-Card Compliance KPI Strip */}
+        {/* 5-Card Compliance KPI Strip in Mixed Full Colours */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
-          {cards.map((c) => {
+          {cards.map((c, idx) => {
             const Icon = c.icon;
+            const tile = getTilePalette(idx);
+            const sym = getSymbolView(idx);
             return (
               <Link
                 key={c.label}
                 to={c.to}
-                className="group rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                className="group rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ backgroundColor: tile.bg, color: tile.text }}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
-                    style={{ background: ICON_GRADIENT }}
-                  >
-                    <Icon className="h-4 w-4 text-white" />
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                    <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                   </span>
-                  <ArrowRight className="h-3.5 w-3.5 text-[#0072FF] transition-transform group-hover:translate-x-0.5" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" style={{ color: tile.text }} />
                 </div>
-                <p className="mt-2 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                <p className="mt-2 text-xs font-extrabold uppercase tracking-wider" style={{ color: tile.subtext }}>
                   {c.label}
                 </p>
-                <p className="mt-1 font-editorial text-2xl font-extrabold tabular-nums text-[#0A2B6D]">
+                <p className="mt-1 font-editorial text-2xl font-extrabold tabular-nums" style={{ color: tile.text }}>
                   {c.value}
                 </p>
               </Link>
@@ -128,10 +125,10 @@ export default function OriginalPublishedOverview() {
           <div className="lg:col-span-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 space-y-3 shadow-sm">
             <span
               className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
-              style={{ background: BADGE_GRADIENT }}
+              style={{ background: getHeaderView(3) }}
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <Megaphone className="h-3 w-3 text-[#FF2E9A]" />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <Megaphone className="h-3 w-3 text-white" />
               </span>
               <span>Organisation Announcements</span>
             </span>
@@ -142,24 +139,28 @@ export default function OriginalPublishedOverview() {
               </p>
             ) : (
               <div className="space-y-2">
-                {announcements.map((a) => (
-                  <div
-                    key={a.id}
-                    className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-2xs"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">{a.title}</p>
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                        {a.audience || 'All Staff'}
-                      </span>
+                {announcements.map((a, idx) => {
+                  const tile = getTilePalette(idx + 5);
+                  return (
+                    <div
+                      key={a.id}
+                      className="rounded-2xl border-2 border-[#0A2B6D] p-3 shadow-2xs"
+                      style={{ backgroundColor: tile.bg, color: tile.text }}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-xs sm:text-sm font-extrabold" style={{ color: tile.text }}>{a.title}</p>
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                          {a.audience || 'All Staff'}
+                        </span>
+                      </div>
+                      {a.body && (
+                        <p className="mt-1 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
+                          {a.body}
+                        </p>
+                      )}
                     </div>
-                    {a.body && (
-                      <p className="mt-1 text-xs font-bold leading-relaxed text-[#0A2B6D]/80">
-                        {a.body}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
@@ -186,9 +187,9 @@ export default function OriginalPublishedOverview() {
                 onClick={post}
                 disabled={posting || !newTitle.trim()}
                 className="rounded-full border-2 border-[#0A2B6D] font-extrabold text-white"
-                style={{ background: BADGE_GRADIENT }}
+                style={{ background: getHeaderView(0) }}
               >
-                <Plus className="mr-1 h-4 w-4" /> Post announcement
+                <Plus className="mr-1 h-4 w-4 text-white" /> Post announcement
               </Button>
             </div>
           </div>
@@ -196,31 +197,31 @@ export default function OriginalPublishedOverview() {
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 space-y-2.5 shadow-sm">
             <span
               className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
-              style={{ background: BADGE_GRADIENT }}
+              style={{ background: getHeaderView(4) }}
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                <ShieldCheck className="h-3 w-3 text-[#0072FF]" />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                <ShieldCheck className="h-3 w-3 text-white" />
               </span>
               <span>Quick Links</span>
             </span>
 
-            {QUICK_LINKS.map((q) => {
+            {QUICK_LINKS.map((q, idx) => {
               const Icon = q.icon;
+              const tile = getTilePalette(idx + 2);
+              const sym = getSymbolView(idx + 2);
               return (
                 <Link
                   key={q.to}
                   to={q.to}
-                  className="flex items-start gap-3 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-sm"
+                  className="flex items-start gap-3 rounded-2xl border-2 border-[#0A2B6D] p-3 transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                  style={{ backgroundColor: tile.bg, color: tile.text }}
                 >
-                  <div
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-2xs"
-                    style={{ background: ICON_GRADIENT }}
-                  >
-                    <Icon className="h-4 w-4 text-white" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                    <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">{q.title}</p>
-                    <p className="text-xs font-bold text-[#5A00D6]">{q.desc}</p>
+                    <p className="text-xs sm:text-sm font-extrabold" style={{ color: tile.text }}>{q.title}</p>
+                    <p className="text-xs font-bold" style={{ color: tile.subtext }}>{q.desc}</p>
                   </div>
                 </Link>
               );
