@@ -162,60 +162,60 @@ export default function LandingNav() {
               </div>
             </Link>
 
-            {/* Bottom Section: Centred NDIS Badge + Open, Landing, and Sign In Icons */}
-            <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 text-center">
+            {/* Bottom Section: NDIS Stretched Side-to-Side + Dashboard, Landing Page & Sign In 50% Smaller */}
+            <div className="mx-auto flex w-full flex-col items-center justify-center gap-2 text-center">
               <span
-                className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+                className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
                 style={{
                   background:
                     'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
                 }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                  <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
+                <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                  <ShieldCheck className="h-2.5 w-2.5 text-[#FF2E9A]" />
                 </span>
                 <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
               </span>
 
-              <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
+              <div className="grid w-full grid-cols-1 sm:grid-cols-3 items-center justify-center gap-1.5">
                 <Link
                   to="/dashboard"
-                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                   }}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                    <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
+                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                    <Sparkles className="h-2 w-2 text-[#0072FF]" />
                   </span>
                   <span className="whitespace-nowrap text-center">Open App Dashboard</span>
                 </Link>
 
                 <Link
                   to="/"
-                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                   }}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <Compass className="h-3.5 w-3.5 text-[#5A00D6]" />
+                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                    <Compass className="h-2 w-2 text-[#5A00D6]" />
                   </span>
                   <span className="whitespace-nowrap text-center">Landing Page</span>
                 </Link>
 
                 <Link
                   to={authed ? '/dashboard' : '/login'}
-                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                   }}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                    <UserCheck className="h-3.5 w-3.5 text-[#A100FF]" />
+                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                    <UserCheck className="h-2 w-2 text-[#A100FF]" />
                   </span>
                   <span className="whitespace-nowrap text-center">{authed ? 'Signed In' : 'Sign In'}</span>
                 </Link>

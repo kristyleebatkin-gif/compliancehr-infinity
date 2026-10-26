@@ -577,36 +577,33 @@ export default function MustHaveFunctionsReview() {
             return (
               <div
                 key={pillar.id}
-                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl border-2 p-1 shadow-2xs text-center"
-                style={{
-                  borderColor: ipadBorder,
-                  background: getHeaderView(pIdx),
-                }}
+                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl p-[2.5px] shadow-2xs text-center"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                {/* Top iPad Camera & Status Bar in App-Design Colour */}
-                <div className="mb-0.5 flex h-[14px] items-center justify-between px-1">
-                  <span
-                    className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider"
-                    style={{ color: getSymbolView(pIdx).iconColor }}
-                  >
-                    Pillar 0{pIdx + 1}
-                  </span>
-                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                    5G · 100%
-                  </span>
-                </div>
-
-                {/* Inner iPad Retina Screen — Minimised & Centred */}
+                {/* Spray Colour Inside Pillar & White Inside Writing Boxes */}
                 <div
-                  className="flex flex-1 rounded-lg p-[1.5px]"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 space-y-1 text-center"
+                  style={{ background: sprayBg }}
                 >
+                  {/* Top Pillar Status Bar */}
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between rounded-[7px] p-1 space-y-0.5 text-center"
-                    style={{ background: sprayBg }}
+                    className="gradient-brand flex h-[18px] w-full items-center justify-between rounded-full px-2 text-white"
+                    style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
                   >
-                    <div className="flex w-full flex-1 flex-col items-center justify-between space-y-0.5 text-center">
-                      {/* App-Coloured Pillar Header Bar */}
+                    <span
+                      className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider"
+                      style={{ color: getSymbolView(pIdx).iconColor }}
+                    >
+                      Pillar 0{pIdx + 1}
+                    </span>
+                    <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                      5G · 100%
+                    </span>
+                  </div>
+
+                  {/* Inner White & Spray Content */}
+                  <div className="flex w-full flex-1 flex-col items-center justify-between space-y-0.5 text-center">
+                    {/* App-Coloured Pillar Header Bar */}
                       <div
                         className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-white"
                         style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
@@ -658,7 +655,6 @@ export default function MustHaveFunctionsReview() {
                         </Link>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
             );

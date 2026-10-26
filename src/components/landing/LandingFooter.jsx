@@ -70,56 +70,58 @@ export default function LandingFooter() {
             </div>
           </Link>
 
-          <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 text-center">
+          <div className="mx-auto flex w-full flex-col items-center justify-center gap-2 text-center">
+            {/* NDIS Stretched From Side to Side */}
             <span
-              className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+              className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
               style={{ background: BADGE_GRADIENT }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                <ShieldCheck className="h-2.5 w-2.5 text-[#FF2E9A]" />
               </span>
               <span className="text-center">NDIS &amp; Aged Care Documentation &amp; Compliance</span>
             </span>
 
-            <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
+            {/* Dashboard, Landing Page & Signed In 50% Smaller */}
+            <div className="grid w-full grid-cols-1 sm:grid-cols-3 items-center justify-center gap-1.5">
               <Link
                 to="/dashboard"
-                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   background:
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                 }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                  <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                  <Sparkles className="h-2 w-2 text-[#0072FF]" />
                 </span>
                 <span className="whitespace-nowrap text-center">Dashboard</span>
               </Link>
 
               <Link
                 to="/"
-                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   background:
                     'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                 }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                  <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                  <ShieldCheck className="h-2 w-2 text-[#5A00D6]" />
                 </span>
                 <span className="whitespace-nowrap text-center">Landing Page</span>
               </Link>
 
               <Link
                 to="/dashboard"
-                className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                 style={{
                   background:
                     'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                 }}
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                  <Award className="h-3.5 w-3.5 text-[#A100FF]" />
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                  <Award className="h-2 w-2 text-[#A100FF]" />
                 </span>
                 <span className="whitespace-nowrap text-center">Signed In</span>
               </Link>
@@ -133,11 +135,11 @@ export default function LandingFooter() {
         className="rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-4 sm:px-6 sm:py-5 text-center space-y-3">
-          {/* Brand Title Lockup Matching Footer Logo Area */}
-          <div className="mx-auto flex w-full flex-col items-center justify-center text-center space-y-1">
-            <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight">
-              <span className="mx-auto block text-center">
+        <div className="flex w-full flex-col items-center justify-center overflow-hidden rounded-[16px] bg-white px-3 py-3 sm:px-5 sm:py-4 text-center space-y-2">
+          {/* Smaller Contact ComplianceHR Infinity on One Line */}
+          <div className="mx-auto flex w-full flex-col items-center justify-center text-center space-y-0.5">
+            <div className="mx-auto flex w-full items-center justify-center text-center font-editorial text-base sm:text-xl md:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+              <span className="mx-auto block whitespace-nowrap text-center">
                 Contact{' '}
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   ComplianceHR
@@ -147,28 +149,28 @@ export default function LandingFooter() {
                 </span>
               </span>
             </div>
-            <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 px-2 text-center text-xs sm:text-sm md:text-base font-extrabold">
+            <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-2 px-2 text-center text-[10px] sm:text-xs font-extrabold">
               <span className="text-[#0072FF]">Software Enquiries.</span>
               <span className="text-[#5A00D6]">Onboarding Support.</span>
               <span className="text-[#FF2E9A]">Direct Developer Contact.</span>
             </div>
           </div>
 
-          {/* Center Pill Badge Matching Footer Logo Area */}
+          {/* Contact Stretched From Side to Side */}
           <span
-            className="mx-auto inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+            className="flex min-h-[28px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
             style={{ background: BADGE_GRADIENT, color: '#FFFFFF' }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-              <Mail className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+              <Mail className="h-2.5 w-2.5 text-[#FF2E9A]" />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>
               Contact Us · Software &amp; Developer Support
             </span>
           </span>
 
-          {/* Software & Developer Cards With Pink/Blue/Purple Spray Frame, App-Design Headers, White Background & Dark Blue Writing */}
-          <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-2.5 sm:grid-cols-2 items-stretch text-center">
+          {/* Software & Developer Cards Stretched Side-to-Side */}
+          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 items-stretch text-center">
             {[
               {
                 num: '01',
@@ -192,39 +194,39 @@ export default function LandingFooter() {
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                  className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: getHeaderView(idx) }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] p-2 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[10px] p-1.5 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
                     {/* App-Design Coloured Pill Title With Coloured Symbol */}
                     <div
-                      className="gradient-brand flex min-h-[28px] w-full items-center justify-center gap-1.5 rounded-full border border-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full border border-white px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                       style={{ background: box.headerBg, color: '#FFFFFF' }}
                     >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-3 w-3" style={{ color: box.symColor }} />
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2.5 w-2.5" style={{ color: box.symColor }} />
                       </span>
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
                     {/* Crisp White Inner Box Framed in App-Design Border With Dark Blue Writing */}
                     <div
-                      className="w-full flex-1 rounded-xl p-[2px]"
+                      className="w-full flex-1 rounded-lg p-[1.5px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                      <div className="flex h-full min-h-[28px] w-full items-center justify-center rounded-[6px] bg-white px-2.5 py-1 text-center">
                         {box.href ? (
                           <a
                             href={box.href}
-                            className="text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D] underline"
+                            className="text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D] underline"
                           >
                             {box.text}
                           </a>
                         ) : (
-                          <p className="text-center text-[10px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                          <p className="text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D]">
                             {box.text}
                           </p>
                         )}
@@ -236,19 +238,19 @@ export default function LandingFooter() {
             })}
           </div>
 
-          {/* 3 Bottom Action Pills Matching Footer Logo Area */}
-          <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5 pt-1">
+          {/* Email, Help & Start 50% Smaller & Stretched Side-to-Side */}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-3 items-center justify-center gap-1.5 pt-0.5">
             <a
               href="mailto:kristyleebatkin@live.com.au"
-              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
               style={{
                 background:
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                 color: '#FFFFFF',
               }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                <Mail className="h-3.5 w-3.5 text-[#0072FF]" />
+              <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                <Mail className="h-2 w-2 text-[#0072FF]" />
               </span>
               <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
                 Email Developer
@@ -257,15 +259,15 @@ export default function LandingFooter() {
 
             <Link
               to="/help"
-              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
               style={{
                 background:
                   'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                 color: '#FFFFFF',
               }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+              <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                <ShieldCheck className="h-2 w-2 text-[#5A00D6]" />
               </span>
               <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
                 Help &amp; Support Centre
@@ -274,15 +276,15 @@ export default function LandingFooter() {
 
             <Link
               to="/register"
-              className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              className="inline-flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
               style={{
                 background:
                   'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                 color: '#FFFFFF',
               }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                <Sparkles className="h-3.5 w-3.5 text-[#A100FF]" />
+              <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                <Sparkles className="h-2 w-2 text-[#A100FF]" />
               </span>
               <span className="whitespace-nowrap text-center" style={{ color: '#FFFFFF' }}>
                 Start 14-Day Trial

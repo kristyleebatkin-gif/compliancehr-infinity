@@ -191,77 +191,86 @@ export default function PricingSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Top Package Title Header Without Price + White Subtitle Framed in App-Design Coloured Border */}
+        {/* Top Package Title Header on Two Lines + Minimised Evenly Fitted Writing Underneath */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-3">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-              <span className="text-[#0A2B6D]">Smart Enhanced </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                All-In-One Elite Packages
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-2">
+            {/* Smart Enhanced Sentence on Two Lines */}
+            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight text-center">
+              <span className="block">
+                <span className="text-[#0A2B6D]">Smart Enhanced </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  All-In-One Elite Packages
+                </span>
+              </span>
+              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                 &amp; Master Audit Suite
               </span>
             </h2>
 
+            {/* Minimised Writing Underneath Fitted Evenly */}
             <div
-              className="w-full max-w-4xl rounded-xl p-[3px] shadow-2xs"
+              className="w-full rounded-xl p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <div className="rounded-[9px] bg-white px-4 py-2.5 text-center">
-                <p className="mx-auto text-center text-[11px] sm:text-xs md:text-sm font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Every Smart Enhanced user tier includes full access to the ComplianceHR app, full access to over 100 documents downloadable at any stage &amp; tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message Credits, 50,000 Integration Credits, support, and Elite Package Tokens valued at $160/mo.
+              <div className="rounded-[9px] bg-white px-3 py-1.5 text-center">
+                <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  <span className="block">
+                    Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ documents tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery,
+                  </span>
+                  <span className="block">
+                    Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message + 50,000 Integration Credits, support &amp; $160/mo Elite Tokens.
+                  </span>
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Monthly & Annual Tiles + Smart Enhanced Banner With App-Design Coloured Symbols */}
-        <div className="w-full space-y-2">
+        {/* Smaller Monthly, Annual & Smart Enhanced Tiles */}
+        <div className="w-full space-y-1.5">
           <div className="grid w-full grid-cols-2 gap-1.5">
             <div
-              className="rounded-full p-[3px] shadow-2xs"
+              className="rounded-full p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <button
                 type="button"
                 onClick={() => setBilling('monthly')}
-                className={`gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white transition-all ${
-                  billing === 'monthly' ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-white transition-all ${
+                  billing === 'monthly' ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                 }`}
                 style={{ background: getHeaderView(0), color: '#FFFFFF' }}
               >
                 <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                   style={{ borderColor: getAppBorderView(0) }}
                 >
-                  <Sparkles className="h-3.5 w-3.5" style={{ color: getSymbolView(0).iconColor }} />
+                  <Sparkles className="h-2.5 w-2.5" style={{ color: getSymbolView(0).iconColor }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>Monthly Subscription</span>
               </button>
             </div>
 
             <div
-              className="rounded-full p-[3px] shadow-2xs"
+              className="rounded-full p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <button
                 type="button"
                 onClick={() => setBilling('yearly')}
-                className={`gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white transition-all ${
-                  billing === 'yearly' ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'opacity-95 hover:opacity-100'
+                className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-white transition-all ${
+                  billing === 'yearly' ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                 }`}
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
                 <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                   style={{ borderColor: getAppBorderView(2) }}
                 >
-                  <ShieldCheck className="h-3.5 w-3.5" style={{ color: getSymbolView(2).iconColor }} />
+                  <ShieldCheck className="h-2.5 w-2.5" style={{ color: getSymbolView(2).iconColor }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>Annual Billing</span>
               </button>
@@ -269,18 +278,18 @@ export default function PricingSection() {
           </div>
 
           <div
-            className="w-full rounded-full p-[3px] shadow-sm"
+            className="w-full rounded-full p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[10.5px] sm:text-xs font-extrabold tracking-wide text-white"
               style={{ background: getHeaderView(6), color: '#FFFFFF' }}
             >
               <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
                 style={{ borderColor: getAppBorderView(6) }}
               >
-                <Award className="h-4 w-4" style={{ color: getSymbolView(6).iconColor }} />
+                <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(6).iconColor }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
                 Smart Enhanced All-In-One Compliance Packages
@@ -441,64 +450,65 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* 6 Included Platform Pillar Benefits — App-Coloured Outer Frame (No Black Space), Pink/Blue/Purple Spray & White Box With Dark Blue Writing */}
+        {/* 6 Included Platform Pillar Benefits — Spray Colour Directly Inside Pillars & Pure White Inside Writing Boxes */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center items-stretch">
           {CORE_PLATFORM_BENEFITS.map((b, idx) => {
             const Icon = b.icon;
-            const borderCol = getAppBorderView(idx + 3);
             const sym = getSymbolView(idx);
             return (
               <div
                 key={b.title}
-                className="flex h-full flex-col justify-between rounded-[14px] border-2 p-1.5 shadow-2xs"
-                style={{
-                  borderColor: borderCol,
-                  background: getHeaderView(idx),
-                }}
+                className="flex h-full rounded-2xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="mb-1 flex items-center justify-between px-1">
-                  <span
-                    className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold uppercase tracking-wider"
-                    style={{ color: sym.iconColor }}
-                  >
-                    Pillar 0{idx + 1}
-                  </span>
-                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                    5G · 100%
-                  </span>
-                </div>
-
+                {/* Spray Colour Inside Pillar */}
                 <div
-                  className="flex flex-1 rounded-xl p-[1.5px]"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] p-1.5 text-center"
+                  style={{ background: UNIFORM_SPRAY_BG }}
                 >
+                  {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
+                    className="gradient-brand flex min-h-[22px] w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
-                    {/* App-Design Coloured Header Bar With Symbol */}
-                    <div
-                      className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-                      style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                    >
-                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                    <span className="inline-flex items-center gap-1">
+                      <span
+                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold"
+                        style={{ color: sym.iconColor }}
+                      >
+                        0{idx + 1}
                       </span>
-                      <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                        {b.title}
+                      <span className="text-[7px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                        Pillar 0{idx + 1}
                       </span>
-                    </div>
+                    </span>
+                    <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                      100%
+                    </span>
+                  </div>
 
-                    {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
-                    <div
-                      className="w-full flex-1 rounded-lg p-[1.5px]"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
-                        <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                          {b.desc}
-                        </p>
-                      </div>
+                  {/* App-Design Coloured Title Bar */}
+                  <div
+                    className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
+                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
+                  >
+                    <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
+                      <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span className="text-[7.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                      {b.title}
+                    </span>
+                  </div>
+
+                  {/* Pure White Inside Writing Box With Dark Blue Writing */}
+                  <div
+                    className="w-full flex-1 rounded-lg p-[1.5px]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                      <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        {b.desc}
+                      </p>
                     </div>
                   </div>
                 </div>
