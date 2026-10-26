@@ -2,7 +2,7 @@ import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'compliancehr_company_branding';
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
-export const OFFICIAL_LOGO_WITH_SLOGAN_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png';
+export const OFFICIAL_LOGO_WITH_SLOGAN_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/4f9e398f4_generated_image.png';
 export const COMPANY_LOGO_URL = OFFICIAL_LOGO_WITH_SLOGAN_URL;
 export const COMPANY_NAME = 'ComplianceHR Infinity';
 export const COMPANY_SLOGAN = 'Complete Control. Greater Confidence. Brighter Success.';
@@ -10,6 +10,7 @@ const LEGACY_LOGO_URLS = new Set([
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/8f4f0ca87_generated_image.png',
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/04a0fc5c9_generated_b2aad3e7.png',
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png',
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png',
 ]);
 const DEFAULTS = {
   companyName: 'ComplianceHR Infinity',

@@ -72,18 +72,23 @@ export default function LandingNav() {
               to="/"
               className="mx-auto flex w-full flex-col items-center justify-center bg-white text-center"
             >
-              {/* One Large Logo Above App Name (Exact Same Size & Position, Emblem Enlarged Without Name/Slogan Inside Logo) */}
-              <div className="-mt-3 sm:-mt-4 md:-mt-5 mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center">
-                <Image
+              {/* One Large Logo Above App Name (Logo Emblem Only — Name & Slogan Removed & Emblem Enlarged to Same Size & Location) */}
+              <div
+                className="mt-1 sm:mt-1.5 mx-auto relative overflow-hidden w-[15rem] sm:w-[19.5rem] md:w-[23rem]"
+                style={{ aspectRatio: '100 / 50.2' }}
+              >
+                <img
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                   alt="ComplianceHR Infinity logo"
-                  className="h-full w-full object-contain"
-                  fittingType="fit"
+                  className="w-full pointer-events-none select-none"
+                  style={{
+                    marginTop: '-3.5%',
+                  }}
                 />
               </div>
 
               {/* App Name & Slogan with Equal Visual Space to Logo Above and NDIS Badge Below */}
-              <div className="-mt-1 sm:-mt-2 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
+              <div className="mt-2 sm:mt-3 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
                 <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
                     Compliance
