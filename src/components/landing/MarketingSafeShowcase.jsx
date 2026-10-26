@@ -31,6 +31,9 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+const BRIGHT_PINK_WHITE_SPRAY =
+  'radial-gradient(circle at 18% 22%, rgba(255, 46, 154, 0.78) 0%, rgba(255, 110, 219, 0.52) 38%, rgba(255, 255, 255, 0.98) 74%), radial-gradient(circle at 82% 78%, rgba(255, 46, 154, 0.74) 0%, rgba(255, 133, 224, 0.48) 42%, #FFFFFF 100%)';
+
 const SPRAY_BGS = [
   'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
   'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.56) 0%, transparent 50%), #FFFFFF',
@@ -136,7 +139,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             <div className="flex flex-col items-center justify-center w-full rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
               <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
                 <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
-                <span className="text-[#0A2B6D]">Compliance</span>
+                <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Compliance
+                </span>
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   HR
                 </span>{' '}
@@ -633,14 +638,14 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </span>
                         </div>
 
-                        {/* Inner TV Screen — All Sections Lined Up Across Both TVs */}
+                        {/* Inner TV Screen — Bright Pink & White Radial Spray Background Across Both TV Tiles */}
                         <div
                           className="flex flex-col justify-between rounded-2xl p-[3px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <div
                             className="flex flex-col justify-between rounded-[13px] p-3 text-center space-y-2.5"
-                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
+                            style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                           >
                             {/* Strict Fixed-Height 30-Second Spotlight Banner ("Now Playing" Only) */}
                             <div
@@ -743,43 +748,62 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* 3. Important Package Info & Accurate Prices Below TV — Lined Up Across Both Columns */}
+                    {/* 3. Important Package Info & Accurate Prices Below TV — Bright Pink & White Spray + Compliance in Logo Colour + Outright on 2nd Line */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-2xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
                         className="grid h-full w-full grid-cols-1 grid-rows-[132px_38px_1fr] gap-2.5 rounded-[13px] p-3.5 text-center"
-                        style={{ background: SPRAY_BGS[(pIdx + 1) % SPRAY_BGS.length] }}
+                        style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                       >
-                        {/* Strict Fixed-Height Price Box: "ComplianceHR Subscription" Above $760 & "ComplianceHR" Above $999 */}
+                        {/* Strict Fixed-Height Price Box: "Compliance" in Logo Gradient Colour & Outright on 2nd Line */}
                         <div
                           className="flex h-[132px] w-full rounded-xl p-[2.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
                           <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center space-y-1">
-                            <div
-                              className="font-editorial text-sm sm:text-base font-extrabold uppercase tracking-wider"
-                              style={{ color: getSymbolView(pIdx).iconColor }}
-                            >
-                              {pack.topPriceHeading}
+                            <div className="font-editorial text-sm sm:text-base font-extrabold uppercase tracking-wider">
+                              <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                Compliance
+                              </span>
+                              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                HR
+                              </span>
+                              {pack.id === 'pack-1' ? (
+                                <span className="ml-1 bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                                  Subscription
+                                </span>
+                              ) : null}
                             </div>
-                            <div className="flex flex-wrap items-baseline justify-center gap-2">
-                              <span
-                                className="font-editorial text-2xl sm:text-3xl font-extrabold bg-clip-text text-transparent"
-                                style={{ backgroundImage: getTitleGradientView(pIdx) }}
-                              >
-                                {pack.priceMain}
-                              </span>
-                              <span
-                                className="text-xs font-extrabold"
-                                style={{ color: getSymbolView(pIdx + 2).iconColor }}
-                              >
-                                {pack.priceSuffix}
-                              </span>
+                            <div className="flex flex-col items-center justify-center leading-tight">
+                              <div className="flex flex-wrap items-baseline justify-center gap-1.5">
+                                <span
+                                  className="font-editorial text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent"
+                                  style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                                >
+                                  {pack.priceMain}
+                                </span>
+                                {pack.id === 'pack-1' && (
+                                  <span
+                                    className="text-xs font-extrabold"
+                                    style={{ color: getSymbolView(pIdx + 2).iconColor }}
+                                  >
+                                    {pack.priceSuffix}
+                                  </span>
+                                )}
+                              </div>
+                              {pack.id === 'pack-2' && (
+                                <span
+                                  className="text-[11px] font-extrabold"
+                                  style={{ color: getSymbolView(pIdx + 2).iconColor }}
+                                >
+                                  Outright · {pack.priceSuffix}
+                                </span>
+                              )}
                             </div>
                             <p
-                              className="text-center text-[10.5px] font-extrabold leading-snug"
+                              className="text-center text-[10px] font-extrabold leading-snug"
                               style={{ color: getSymbolView(pIdx + 1).iconColor }}
                             >
                               {pack.subtitle}

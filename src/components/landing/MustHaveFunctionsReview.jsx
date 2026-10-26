@@ -30,6 +30,9 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+const BRIGHT_PINK_WHITE_SPRAY =
+  'radial-gradient(circle at 18% 22%, rgba(255, 46, 154, 0.78) 0%, rgba(255, 110, 219, 0.52) 38%, rgba(255, 255, 255, 0.98) 74%), radial-gradient(circle at 82% 78%, rgba(255, 46, 154, 0.74) 0%, rgba(255, 133, 224, 0.48) 42%, #FFFFFF 100%)';
+
 const SPRAY_BGS = [
   'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
   'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.56) 0%, transparent 50%), #FFFFFF',
@@ -196,54 +199,62 @@ export default function MustHaveFunctionsReview() {
   return (
     <section
       id="must-haves"
-      className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
+      className="w-full scroll-mt-16 rounded-2xl p-[6px] shadow-md"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Black Subheading Inside Stretched App Design Coloured Border */}
+      <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-2.5 py-3 sm:px-3.5 sm:py-3.5 text-center space-y-2">
+        {/* 50% Smaller Heading & 2-Line Subtitle With Outright on 2nd Line + App-Coloured Frame Around Writing */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
-            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
-              <span className="text-[#0A2B6D]">Complete Review of Every </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                Must-Have Function,
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Resource &amp; Feature
-              </span>
-            </h2>
-            <p
-              className="mx-auto w-full text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
-              style={{ color: '#000000' }}
-            >
-              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · $760 per a month or $999 Outright Documents
-            </p>
-          </div>
-        </div>
-
-        {/* Stretched Side-to-Side "Full Review..." Banner Fitted Cleanly */}
-        <div
-          className="w-full rounded-full p-[3px] shadow-sm"
+          className="w-full rounded-xl p-[3px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white"
+            className="w-full rounded-[9px] p-2 text-center space-y-1"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <div className="rounded-lg bg-white px-3 py-2 text-center space-y-1">
+              <h2 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight leading-tight">
+                <span className="text-[#0A2B6D]">Complete Review of Every </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Must-Have Function,
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Resource &amp; Feature
+                </span>
+              </h2>
+              <p
+                className="mx-auto w-full text-center text-[10px] sm:text-xs font-extrabold leading-snug text-black"
+                style={{ color: '#000000' }}
+              >
+                <span className="block">
+                  {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
+                </span>
+                <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  $760 per a month or $999 Outright Documents
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 50% Smaller Stretched Side-to-Side "Full Review..." App-Coloured Header */}
+        <div
+          className="w-full rounded-full p-[2px] shadow-2xs"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div
+            className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-xs font-extrabold tracking-wide text-white"
             style={{ background: getHeaderView(0), color: '#FFFFFF' }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <BookOpen className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-            </span>
-            <span className="text-center leading-snug" style={{ color: '#FFFFFF' }}>
+            <BookOpen className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
               Full Review of Every Must-Have Function · 8 Core Pillars &amp; 356 Checkpoints
             </span>
           </div>
         </div>
 
-        {/* Executive KPI & Accurate Price Counter Pills (Numbered Tiles Display Category & Suitable Category Symbol) */}
-        <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 items-stretch">
+        {/* 50% Smaller 8 Executive KPI Tiles — App-Coloured Headers for All Titles & App-Design Colour Around Writing */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5 items-stretch">
           {[
             { category: 'Platform', icon: Layers, val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per a month' },
             { category: 'Documents', icon: BookOpen, val: 'All Documents', label: 'Full Access Incl.' },
@@ -255,52 +266,39 @@ export default function MustHaveFunctionsReview() {
             { category: 'Support', icon: Users, val: 'Full Support', label: '& 14-Day Trial' },
           ].map((stat, idx) => {
             const StatIcon = stat.icon;
-            const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
             const sym = getSymbolView(idx);
             return (
               <div
                 key={stat.label}
-                className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2 text-center"
-                  style={{ background: sprayBg }}
+                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex items-center justify-center gap-1">
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
-                      style={{ borderColor: getAppBorderView(idx) }}
+                  {/* App-Coloured Header Bar for Title */}
+                  <div
+                    className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                  >
+                    <StatIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>{stat.category}</span>
+                  </div>
+
+                  {/* Writing Area Surrounded by App-Design Colour */}
+                  <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
+                    <div
+                      className="font-editorial text-[9.5px] sm:text-[10.5px] font-extrabold leading-tight bg-clip-text text-transparent whitespace-nowrap"
+                      style={{ backgroundImage: getTitleGradientView(idx) }}
                     >
-                      <StatIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                    </span>
-                    <span
-                      className="rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider"
+                      {stat.val}
+                    </div>
+                    <div
+                      className="text-[7.5px] font-extrabold uppercase tracking-tight leading-tight whitespace-nowrap"
                       style={{ color: sym.iconColor }}
                     >
-                      {stat.category}
-                    </span>
-                  </div>
-                  <div
-                    className="flex h-full w-full rounded-xl p-[2px]"
-                    style={{ background: getHeaderView(idx) }}
-                  >
-                    <div
-                      className="flex min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
-                      style={{ background: sprayBg }}
-                    >
-                      <div
-                        className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent whitespace-nowrap"
-                        style={{ backgroundImage: getTitleGradientView(idx) }}
-                      >
-                        {stat.val}
-                      </div>
-                      <div
-                        className="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider leading-tight whitespace-nowrap"
-                        style={{ color: sym.iconColor }}
-                      >
-                        {stat.label}
-                      </div>
+                      {stat.label}
                     </div>
                   </div>
                 </div>
@@ -309,76 +307,96 @@ export default function MustHaveFunctionsReview() {
           })}
         </div>
 
-        {/* LEFT: $999 Outright Documents TV Screen · RIGHT: 4 Merged Tiles (All Sections Lined Up & in App Design Colours) */}
+        {/* 50% Smaller LEFT: $999 Outright Documents TV Screen (Bright Pink & White Spray + Compliance in Logo Colour + Outright on 2nd Line) · RIGHT: 4 Merged Tiles With App-Coloured Headers */}
         <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
+          className="w-full rounded-xl p-[3px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-stretch rounded-[12px] bg-white p-4 text-center">
-            {/* LEFT COLUMN: $999 Outright Documents TV Screen */}
+          <div
+            className="grid w-full grid-cols-1 lg:grid-cols-12 gap-2 items-stretch rounded-[9px] p-2 text-center"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            {/* LEFT COLUMN: 50% Smaller $999 Outright Documents TV Screen With Bright Pink & White Spray Background */}
             <div className="lg:col-span-5 flex flex-col items-center justify-between">
               <div
-                className="flex w-full flex-1 flex-col justify-between rounded-[22px] border-[4px] bg-[#0072FF] p-3 ring-4 ring-[#00C6FF]/75 shadow-lg"
+                className="flex w-full flex-1 flex-col justify-between rounded-[16px] border-[3px] bg-[#0072FF] p-2 ring-2 ring-[#00C6FF]/75 shadow-md"
                 style={{ borderColor: '#00C6FF' }}
               >
                 {/* Top TV Screen Bar */}
-                <div className="mb-2 flex items-center justify-between px-2">
-                  <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                    <Tv className="h-3.5 w-3.5 text-[#FFF3FA]" />
+                <div className="mb-1 flex items-center justify-between px-1.5">
+                  <span className="flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+                    <Tv className="h-3 w-3 text-[#FFF3FA]" />
                     $999 OUTRIGHT DOCUMENTS TV · LIT UP ✦
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
-                    <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/25 px-2 py-0 text-[7.5px] font-extrabold text-white">
+                    <Radio className="h-2 w-2 text-[#FF2E9A]" />
                     LIVE HD
                   </span>
                 </div>
 
-                {/* Inner TV Screen — All Writing Centered & in App Design Colours */}
+                {/* Inner TV Screen — Bright Pink & White Spray Background + App-Design Colour Around All Writing */}
                 <div
-                  className="flex flex-1 rounded-2xl p-[3px]"
+                  className="flex flex-1 rounded-xl p-[2.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex w-full flex-col items-center justify-between gap-3 rounded-[13px] p-4 text-center"
-                    style={{ background: SPRAY_BGS[2] }}
+                    className="flex w-full flex-col items-center justify-between gap-1.5 rounded-[9px] p-2 text-center"
+                    style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
                   >
                     <span
-                      className="gradient-brand inline-flex w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      className="gradient-brand inline-flex w-full items-center justify-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                       style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                     >
-                      <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Outright Documents &amp; Subscription Value</span>
                     </span>
 
                     <div
-                      className="flex-1 w-full rounded-xl p-[2.5px] shadow-2xs flex"
+                      className="flex-1 w-full rounded-lg p-[2px] shadow-2xs flex"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[9px] bg-white px-4 py-3.5 text-center">
-                        <div className="font-editorial text-sm font-extrabold uppercase tracking-wider text-[#0072FF]">
-                          ComplianceHR
-                        </div>
-                        <div className="font-editorial text-xl sm:text-2xl font-extrabold leading-tight">
-                          <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            $760 per a month or $999 Outright Documents
+                      <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[7px] bg-white px-2.5 py-1.5 text-center">
+                        {/* ComplianceHR Styled in Exact Logo Gradient Colour */}
+                        <div className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wider">
+                          <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            Compliance
+                          </span>
+                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            HR
+                          </span>{' '}
+                          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                            Infinity
                           </span>
                         </div>
-                        <div className="text-xs font-extrabold text-[#FF2E9A]">
+
+                        {/* Line 1: $760 per a month · Line 2: or $999 Outright Documents */}
+                        <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight">
+                          <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            $760 per a month
+                          </span>
+                          <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                            or $999 Outright Documents
+                          </span>
+                        </div>
+
+                        <div className="text-[9px] font-extrabold text-[#FF2E9A]">
                           or $125 per a month subscription, 24 month contract
                         </div>
+
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <p className="rounded-[8px] bg-white px-3 py-2 text-center text-[11px] font-extrabold leading-snug text-[#0072FF]">
+                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0072FF]">
                             Full access to document suite, Document access, tailor business details, only.
                           </p>
                         </div>
+
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <p className="rounded-[8px] bg-white px-3 py-2 text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#5A00D6]">
                             Our Elite package includes full access to our application, a resource to complete audits easier, simpler and faster.
                           </p>
                         </div>
@@ -387,111 +405,87 @@ export default function MustHaveFunctionsReview() {
 
                     <a
                       href="#pricing"
-                      className="gradient-brand inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                      className="gradient-brand inline-flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D] px-3 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs transition-all hover:-translate-y-0.5"
                       style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                     >
                       <span style={{ color: '#FFFFFF' }}>View Outright Documents &amp; Subscription Plans</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                     </a>
                   </div>
                 </div>
 
                 {/* Bottom TV Controls Bar */}
-                <div className="mt-2 flex items-center justify-between px-2">
-                  <span className="text-[8.5px] font-extrabold tracking-widest text-white">
+                <div className="mt-1 flex items-center justify-between px-1.5">
+                  <span className="text-[7.5px] font-extrabold tracking-widest text-white">
                     CHR-DOC-TV · LIVE HD
                   </span>
-                  <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
                 </div>
               </div>
 
               {/* TV Stand Legs & Base */}
-              <div className="h-2.5 w-10 bg-[#0A2B6D]" />
+              <div className="h-1.5 w-8 bg-[#0A2B6D]" />
               <div
-                className="h-2 w-24 rounded-full border-2 border-[#0A2B6D]"
+                className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
                 style={{ background: TOP_BORDER_GRADIENT }}
               />
             </div>
 
-            {/* RIGHT COLUMN: 4 Merged Tiles (All Sections Lined Up Horizontally & All Titles/Writing in App Design Colours) */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-2.5">
+            {/* RIGHT COLUMN: 50% Smaller 4 Merged Tiles With App-Coloured Headers for All Titles & App-Design Colour Around All Writing */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-1.5">
               <div
-                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                className="w-full rounded-full p-[2px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
+                  className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] sm:text-xs font-extrabold uppercase tracking-wider text-white"
                   style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                 >
-                  <TrendingUp className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <TrendingUp className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     What You Get in the $999 Outright Documents &amp; $760/mo Elite Packages
                   </span>
                 </div>
               </div>
 
-              <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+              <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 gap-1.5 items-stretch">
                 {WHAT_YOU_GET_ITEMS.map((item, idx) => {
-                  const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
                   const symTop = getSymbolView(idx);
-                  const symMid = getSymbolView(idx + 2);
                   const symBot = getSymbolView(idx + 4);
                   return (
                     <div
                       key={item.title}
-                      className="flex h-full rounded-2xl p-[3px] shadow-2xs"
+                      className="flex h-full rounded-xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[48px_38px_1fr] gap-2 rounded-[13px] p-3 text-center"
-                        style={{ background: sprayBg }}
+                        className="grid h-full w-full grid-cols-1 grid-rows-[26px_22px_1fr] gap-1 rounded-[9px] p-1.5 text-center"
+                        style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        {/* Section 1: Top Title Box Lined Up Across Neighbouring Tiles in App Design Colour */}
+                        {/* Section 1: App-Coloured Header Bar for Title */}
                         <div
-                          className="flex h-[48px] w-full rounded-xl p-[2px]"
-                          style={{ background: getHeaderView(idx) }}
+                          className="gradient-brand flex h-[26px] w-full items-center justify-center rounded-md px-2 py-0.5 text-center text-[9px] font-extrabold leading-tight text-white"
+                          style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                         >
-                          <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
-                            <span
-                              className="text-center text-xs font-extrabold leading-tight bg-clip-text text-transparent"
-                              style={{ backgroundImage: getTitleGradientView(idx) }}
-                            >
-                              {item.title}
-                            </span>
-                          </div>
+                          <span style={{ color: '#FFFFFF' }}>{item.title}</span>
                         </div>
 
-                        {/* Section 2: Middle Tile Title in App Design Colour & Lined Up Across Neighbouring Tiles */}
+                        {/* Section 2: App-Coloured Sub-Header Pill */}
                         <div
-                          className="flex h-[38px] w-full rounded-full p-[2px]"
-                          style={{ background: getHeaderView(idx + 1) }}
+                          className="gradient-brand flex h-[22px] w-full items-center justify-center rounded-full px-2 py-0.5 text-center text-[8px] font-extrabold leading-tight text-white"
+                          style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
                         >
-                          <div className="flex h-full w-full items-center justify-center rounded-full bg-white px-2.5 py-0.5 text-center">
-                            <span
-                              className="text-center text-[10.5px] font-extrabold leading-tight bg-clip-text text-transparent"
-                              style={{
-                                backgroundImage: getTitleGradientView(idx + 2),
-                                color: symMid.iconColor,
-                              }}
-                            >
-                              {item.included}
-                            </span>
-                          </div>
+                          <span style={{ color: '#FFFFFF' }}>{item.included}</span>
                         </div>
 
-                        {/* Section 3: Detail Box Lined Up Across Neighbouring Tiles in App Design Colour */}
-                        <div
-                          className="flex h-full min-h-[68px] w-full rounded-xl p-[2px]"
-                          style={{ background: getHeaderView(idx + 2) }}
-                        >
-                          <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                            <p
-                              className="text-center text-[10.5px] font-extrabold leading-snug"
-                              style={{ color: symBot.iconColor || symTop.iconColor }}
-                            >
-                              {item.detail}
-                            </p>
-                          </div>
+                        {/* Section 3: Writing Area Framed in App-Design Colour */}
+                        <div className="flex h-full min-h-[36px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
+                          <p
+                            className="text-center text-[8.5px] font-extrabold leading-tight"
+                            style={{ color: symBot.iconColor || symTop.iconColor }}
+                          >
+                            {item.detail}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -502,34 +496,34 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Selected Pillar Bar Framed in App-Design Colours Between Pillar & Side, Displaying Category & Suitable Symbol */}
+        {/* 50% Smaller Selected Pillar Bar With App-Coloured Headers for All Titles */}
         <div
-          className="w-full rounded-2xl p-[3.5px] shadow-sm"
+          className="w-full rounded-xl p-[2.5px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-2 rounded-[13px] p-2.5"
+            className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-1.5 rounded-[9px] p-1.5"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-xl p-[2px] shadow-2xs bg-white">
+            <div className="rounded-lg p-[2px] shadow-2xs" style={{ background: getHeaderView(0) }}>
               <button
                 type="button"
                 onClick={() => setSelectedPillar('all')}
-                className={`flex h-full min-h-[46px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold transition-all ${
-                  selectedPillar === 'all' ? 'ring-2 ring-[#FF2E9A]' : ''
+                className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
+                  selectedPillar === 'all' ? 'ring-2 ring-white' : ''
                 }`}
-                style={{ background: SPRAY_BGS[0] }}
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-                  <Layers className="h-3 w-3 text-[#0072FF]" />
-                </span>
-                <span
-                  className="font-extrabold leading-tight bg-clip-text text-transparent"
-                  style={{ backgroundImage: getTitleGradientView(0) }}
+                <div
+                  className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  All 8 Pillars
+                  <Layers className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>All 8 Pillars</span>
+                </div>
+                <span className="w-full rounded bg-white px-1 py-0 text-[7px] font-extrabold text-[#5A00D6]">
+                  All Categories
                 </span>
-                <span className="text-[8.5px] font-extrabold text-[#5A00D6]">All Categories</span>
               </button>
             </div>
 
@@ -550,30 +544,26 @@ export default function MustHaveFunctionsReview() {
               return (
                 <div
                   key={p.id}
-                  className="rounded-xl p-[2px] shadow-2xs bg-white"
+                  className="rounded-lg p-[2px] shadow-2xs"
+                  style={{ background: getHeaderView(idx + 1) }}
                 >
                   <button
                     type="button"
                     onClick={() => setSelectedPillar(p.id)}
-                    className={`flex h-full min-h-[46px] w-full flex-col items-center justify-center gap-0.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold transition-all ${
-                      active ? 'ring-2 ring-[#FF2E9A]' : ''
+                    className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
+                      active ? 'ring-2 ring-white' : ''
                     }`}
-                    style={{ background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length] }}
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
-                      style={{ borderColor: getAppBorderView(idx + 1) }}
+                    <div
+                      className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
+                      style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                     >
-                      <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                    </span>
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Pillar {idx + 1}</span>
+                    </div>
                     <span
-                      className="font-extrabold leading-tight bg-clip-text text-transparent"
-                      style={{ backgroundImage: getTitleGradientView(idx + 1) }}
-                    >
-                      Pillar {idx + 1}
-                    </span>
-                    <span
-                      className="text-[8.5px] font-extrabold leading-tight"
+                      className="w-full rounded bg-white px-1 py-0 text-[7px] font-extrabold truncate"
                       style={{ color: sym.iconColor }}
                     >
                       {shortCategories[idx]}
@@ -585,96 +575,85 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* 8 Must-Have Pillars Grid — Fixed Section Heights so Pillars 1&2, 3&4, 5&6, 7&8 Line Up Horizontally */}
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center items-stretch">
+        {/* 50% Smaller 8 Must-Have Pillars Grid — App-Coloured Headers for All Titles & App-Design Colour Around All Writing Areas */}
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-center items-stretch">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
             const ipadBorder = getAppBorderView(pIdx);
             return (
               <div
                 key={pillar.id}
-                className="flex h-full flex-col justify-between rounded-[26px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
+                className="flex h-full flex-col justify-between rounded-[16px] border-[3px] bg-[#0A2B6D] p-1.5 shadow-md"
                 style={{ borderColor: ipadBorder }}
               >
                 {/* Top iPad Camera & Status Bar */}
-                <div className="mb-2 flex h-[20px] items-center justify-between px-2.5">
-                  <span className="flex items-center gap-1.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+                <div className="mb-1 flex h-[14px] items-center justify-between px-1.5">
+                  <span className="flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
                     iPad Pro · Pillar 0{pIdx + 1}
                   </span>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] font-extrabold text-white/85">5G · 100%</span>
-                    <span className="h-2 w-3.5 rounded-xs border border-white bg-[#10B981]" />
+                  <div className="flex items-center gap-1">
+                    <span className="text-[7px] font-extrabold text-white/85">5G · 100%</span>
+                    <span className="h-1.5 w-2.5 rounded-xs border border-white bg-[#10B981]" />
                   </div>
                 </div>
 
-                {/* Inner iPad Retina Screen — Fixed Heights for Badge, Title Box, 6 Bullet Rows & Footer */}
+                {/* Inner iPad Retina Screen — 50% Smaller & App-Design Colour Around All Writing Areas */}
                 <div
-                  className="flex flex-1 rounded-[18px] p-[3px] shadow-inner"
+                  className="flex flex-1 rounded-[12px] p-[2px] shadow-inner"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex h-full w-full flex-col justify-between rounded-[15px] bg-white p-3.5">
-                    <div className="flex flex-1 flex-col justify-between space-y-2.5">
-                      <div className="space-y-2">
-                        {/* Stretched Pillar Header Badge — Full Text Always Visible */}
-                        <div
-                          className="w-full rounded-full p-[2.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
+                  <div
+                    className="flex h-full w-full flex-col justify-between rounded-[10px] p-1.5 space-y-1"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex flex-1 flex-col justify-between space-y-1">
+                      <div className="space-y-1">
+                        {/* App-Coloured Pillar Badge Bar */}
+                        <span
+                          className="gradient-brand inline-flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
+                          style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                         >
-                          <span
-                            className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider leading-tight text-center text-white"
-                            style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                          >
-                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                              <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                            </span>
-                            <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
-                          </span>
-                        </div>
+                          <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
+                        </span>
 
-                        {/* Equal-Height Heading & Subtitle Box so Every Pillar Pair Lines Up */}
-                        <div
-                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[98px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                            <h4
-                              className="font-editorial text-xs sm:text-sm font-extrabold leading-tight bg-clip-text text-transparent"
-                              style={{ backgroundImage: getTitleGradientView(pIdx) }}
-                            >
-                              {pillar.title}
-                            </h4>
-                            <p className="mt-1 text-[10.5px] font-bold leading-tight text-[#5A00D6]">
-                              {pillar.subtitle}
-                            </p>
+                        {/* App-Coloured Header for Pillar Title + White Subtitle Box */}
+                        <div className="w-full rounded-lg overflow-hidden border border-white/60">
+                          <div
+                            className="gradient-brand px-2 py-1 text-center text-[9px] font-extrabold leading-tight text-white"
+                            style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
+                          >
+                            <span style={{ color: '#FFFFFF' }}>{pillar.title}</span>
+                          </div>
+                          <div className="bg-white px-2 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#5A00D6]">
+                            {pillar.subtitle}
                           </div>
                         </div>
                       </div>
 
-                      {/* 6 Equal-Height Bullet Rows Lined Up Across Every Pillar & Its Neighbour */}
-                      <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1.5 pt-1">
+                      {/* 6 Compact Bullet Rows Framed in App-Design Colour */}
+                      <ul className="grid flex-1 grid-cols-1 grid-rows-6 gap-1">
                         {pillar.items.map((item, iIdx) => {
                           const idx = pIdx * 3 + iIdx;
                           const sym = getSymbolView(idx);
                           const borderCol = getAppBorderView(idx);
-                          const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
                           return (
                             <li
                               key={item}
-                              className="flex min-h-[58px] rounded-xl p-[2px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
+                              className="flex min-h-[28px] rounded-lg p-[1.5px] shadow-2xs"
+                              style={{ background: getHeaderView(idx) }}
                             >
-                              <div
-                                className="flex h-full w-full items-center justify-center gap-2 rounded-[10px] px-2.5 py-1 text-center text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                                style={{ background: sprayBg }}
-                              >
+                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5 text-center text-[8px] font-extrabold leading-tight">
                                 <span
-                                  className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
                                   style={{ borderColor: borderCol }}
                                 >
-                                  <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
+                                  <CheckCircle2 className="h-2 w-2" style={{ color: sym.iconColor }} />
                                 </span>
-                                <span className="flex-1 text-center" style={{ color: sym.iconColor }}>{item}</span>
+                                <span className="flex-1 text-center" style={{ color: sym.iconColor }}>
+                                  {item}
+                                </span>
                               </div>
                             </li>
                           );
@@ -682,26 +661,26 @@ export default function MustHaveFunctionsReview() {
                       </ul>
                     </div>
 
-                    {/* Fixed-Height Footer Bar */}
-                    <div className="mt-3 pt-2.5 border-t border-[#0A2B6D]/20 flex h-[42px] items-center justify-between">
-                      <span className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                    {/* 50% Smaller Footer Bar Framed in App-Design Colour */}
+                    <div className="flex h-[24px] items-center justify-between rounded-full bg-white px-2 py-0.5">
+                      <span className="text-[8px] font-extrabold text-[#5A00D6]">
                         From $760/mo Plan
                       </span>
                       <Link
                         to="/register"
-                        className="gradient-brand inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white"
+                        className="gradient-brand inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D] px-2 py-0 text-[8px] font-extrabold text-white"
                         style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
                       >
                         <span style={{ color: '#FFFFFF' }}>Activate</span>
-                        <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                        <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                       </Link>
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom iPad Home Indicator Bar */}
-                <div className="mt-2 flex h-[10px] items-center justify-center gap-2">
-                  <span className="h-1.5 w-16 rounded-full bg-white/80" />
+                <div className="mt-1 flex h-[6px] items-center justify-center">
+                  <span className="h-1 w-10 rounded-full bg-white/80" />
                 </div>
               </div>
             );
