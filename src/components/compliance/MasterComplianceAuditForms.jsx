@@ -822,44 +822,36 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
   return (
     <div
       id="audit-master-doc"
-      className="scroll-mt-14 rounded-xl border-2 bg-white p-1.5 shadow-2xs space-y-1.5"
+      className="scroll-mt-14 rounded-lg border bg-white p-1 shadow-2xs space-y-1"
       style={{ borderColor: getAppBorderView(0) }}
     >
       {/* 50% Smaller Master Compliance Header + Lined-Up Switcher Tiles */}
       <div
-        className="w-full rounded-xl p-[2px] shadow-2xs"
+        className="w-full rounded-lg p-[1.5px] shadow-2xs"
         style={{
           background:
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col items-center justify-center gap-1.5 rounded-[10px] bg-white p-2 text-center">
+        <div className="flex flex-col items-center justify-center gap-1 rounded-[8px] bg-white p-1 text-center">
           {/* 50% Smaller Master Compliance Header */}
           <div
-            className="w-full rounded-xl p-[2px] shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-            }}
+            className="gradient-brand flex min-h-[18px] w-full flex-nowrap items-center justify-center gap-1 rounded-md px-2 py-0 text-center text-white whitespace-nowrap overflow-hidden"
+            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
           >
-            <div
-              className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-[9px] px-2.5 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
-              style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-            >
-              <span
-                className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
-                style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
-              />
-              <ClipboardList className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span className="truncate text-[9px] sm:text-[10.5px] font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                Master Compliance Audit Checklist · 17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
-              </span>
-            </div>
+            <span
+              className="h-1.5 w-1.5 shrink-0 rounded-full border border-white bg-white"
+              style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
+            />
+            <ClipboardList className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+            <span className="truncate text-[7.5px] sm:text-[8.5px] font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+              Master Compliance Audit Checklist · 17 Categories · 356 Mandatory Checkpoints · 11 Pages
+            </span>
           </div>
 
           {/* 50% Smaller Side-to-Side Switcher Tiles */}
           <div
-            className={`grid w-full gap-1.5 ${
+            className={`grid w-full gap-1 ${
               smallFeatured ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'
             }`}
           >
@@ -873,7 +865,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
               return (
                 <div
                   key={btn.id}
-                  className="rounded-full p-[1.5px] shadow-2xs"
+                  className="rounded-full p-[1px] shadow-2xs"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -882,12 +874,12 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   <button
                     type="button"
                     onClick={() => setDisplayMode(btn.id)}
-                    className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
-                      active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
+                    className={`gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded-full px-2 py-0 text-[7.5px] font-extrabold text-white transition-all ${
+                      active ? 'ring-1 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                     }`}
                     style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
                   >
-                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                     <span className="truncate" style={{ color: '#FFFFFF' }}>{btn.label}</span>
                   </button>
                 </div>
@@ -895,7 +887,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
             })}
             {smallFeatured && (
               <div
-                className="rounded-full p-[1.5px] shadow-2xs"
+                className="rounded-full p-[1px] shadow-2xs"
                 style={{
                   background:
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -904,10 +896,10 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 <button
                   type="button"
                   onClick={() => setExpanded((v) => !v)}
-                  className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-sm transition-all hover:opacity-95"
+                  className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded-full px-2 py-0 text-[7.5px] font-extrabold text-white shadow-sm transition-all hover:opacity-95"
                   style={{ background: getHeaderView(4), color: '#FFFFFF' }}
                 >
-                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <CheckCircle2 className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span className="truncate" style={{ color: '#FFFFFF' }}>
                     {expanded ? 'Minimise Master Checklist' : 'Expand Full 11-Page Checklist'}
                   </span>
@@ -920,12 +912,11 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
 
       {/* 50% Smaller 6 Horizontal Page Tiles */}
       {smallFeatured && !expanded && (
-        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 auto-rows-fr items-stretch">
+        <div className="grid w-full grid-cols-3 sm:grid-cols-6 gap-1 auto-rows-fr items-stretch">
           {AUDIT_CATEGORIES_17.slice(0, 6).map((cat, idx) => (
             <div
               key={cat.number}
-              className="flex h-full rounded-xl p-[2px] shadow-2xs transition-all hover:-translate-y-0.5"
-              style={{ background: getHeaderView(idx) }}
+              className="flex h-full rounded-lg border border-[#0A2B6D]/30 bg-white p-0.5 shadow-2xs transition-all hover:-translate-y-0.5"
             >
               <button
                 type="button"
@@ -933,11 +924,10 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   setCategoryIndex(idx);
                   setExpanded(true);
                 }}
-                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] bg-white p-1.5 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[16px_1fr] gap-0.5 rounded-[6px] bg-white p-0.5 text-center"
               >
-                {/* Section 1: 50% Smaller Top Page Bar */}
                 <div
-                  className="gradient-brand flex h-[22px] w-full items-center justify-center rounded-md px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-white whitespace-nowrap"
+                  className="gradient-brand flex h-[16px] w-full items-center justify-center rounded px-1 py-0 text-center text-[6.5px] font-extrabold text-white whitespace-nowrap"
                   style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                 >
                   <span className="truncate" style={{ color: '#FFFFFF' }}>
@@ -945,8 +935,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   </span>
                 </div>
 
-                {/* Section 2: Pure White Writing Box */}
-                <div className="flex min-h-[28px] h-full w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                <div className="flex min-h-[18px] h-full w-full items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0 text-center text-[6.5px] font-extrabold text-[#0A2B6D] leading-tight">
                   {cat.title}
                 </div>
               </button>
@@ -1021,48 +1010,38 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
       )}
 
       {/* 50% Smaller Bottom Summary Box of Master Audit Checklist */}
-      <div
-        className="w-full rounded-xl p-[2px] shadow-2xs"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-        }}
-      >
-        <div className="flex flex-col gap-1 rounded-[9px] bg-white p-1.5 text-center">
-          <div
-            className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
-            style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-          >
-            <ClipboardList className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-            <span style={{ color: '#FFFFFF' }}>
-              11 Structured Pages · 17 NDIS &amp; Governance Categories · 356 Interactive Checkpoints
-            </span>
-          </div>
-
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-1.5">
-            <div
-              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
-              style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-            >
-              <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>
-                CHR-AUD-001 &amp; CHR-AUD-002 Included Free in Plan
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setExpanded((v) => !v)}
-              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
-              style={{ background: getHeaderView(5), color: '#FFFFFF' }}
-            >
-              <ShieldCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>
-                {expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}
-              </span>
-            </button>
-          </div>
+      <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1">
+        <div
+          className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded-full px-2 py-0 text-[7.5px] font-extrabold text-white"
+          style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+        >
+          <ClipboardList className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+          <span className="truncate" style={{ color: '#FFFFFF' }}>
+            11 Pages · 17 Categories · 356 Checkpoints
+          </span>
         </div>
+
+        <div
+          className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded-full px-2 py-0 text-[7.5px] font-extrabold text-white"
+          style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+        >
+          <CheckCircle2 className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+          <span className="truncate" style={{ color: '#FFFFFF' }}>
+            CHR-AUD-001 &amp; CHR-AUD-002 Included Free
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded-full px-2 py-0 text-[7.5px] font-extrabold text-white transition-all hover:opacity-95"
+          style={{ background: getHeaderView(5), color: '#FFFFFF' }}
+        >
+          <ShieldCheck className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+          <span className="truncate" style={{ color: '#FFFFFF' }}>
+            {expanded ? 'Collapse Checklist View' : 'Open All 11 Audit Pages'}
+          </span>
+        </button>
       </div>
     </div>
   );
