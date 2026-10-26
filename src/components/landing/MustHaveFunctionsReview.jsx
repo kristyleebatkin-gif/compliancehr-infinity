@@ -272,17 +272,21 @@ export default function MustHaveFunctionsReview() {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-col items-center justify-center rounded-[13px] px-2 py-2.5 text-center text-[#0A2B6D]"
+                  className="flex h-full flex-col items-center justify-center rounded-[13px] p-2 text-center text-[#0A2B6D]"
                   style={{ background: sprayBg }}
                 >
-                  <div className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
-                    {stat.val}
-                  </div>
                   <div
-                    className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-black"
-                    style={{ color: '#000000' }}
+                    className="w-full rounded-xl p-[2px]"
+                    style={{ background: getHeaderView(idx) }}
                   >
-                    {stat.label}
+                    <div className="rounded-[9px] bg-white px-2 py-1.5 text-center">
+                      <div className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                        {stat.val}
+                      </div>
+                      <div className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                        {stat.label}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -345,25 +349,28 @@ export default function MustHaveFunctionsReview() {
                         <div className="mt-0.5 text-xs font-extrabold text-[#5A00D6]">
                           or $125 per month · Full 125+ Document Suite
                         </div>
-                        <p
-                          className="mt-1.5 text-center text-xs font-bold leading-snug text-black"
-                          style={{ color: '#000000' }}
-                        >
+                        <p className="mt-1.5 text-center text-xs font-bold leading-snug text-[#5A00D6]">
                           Or subscribe to the full 46-Module Super-Platform from $660/mo ($7,920/yr) and replace $4,080+/mo of disconnected tools.
                         </p>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] font-extrabold">
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-3 py-0.5 text-[#0072FF]">
-                        125+ Master Docs
-                      </span>
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-3 py-0.5 text-[#5A00D6]">
-                        6 Binders
-                      </span>
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-3 py-0.5 text-[#FF2E9A]">
-                        356 Checkpoints
-                      </span>
+                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#0072FF]">
+                          125+ Master Docs
+                        </span>
+                      </div>
+                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#5A00D6]">
+                          6 Binders
+                        </span>
+                      </div>
+                      <div className="rounded-full p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+                        <span className="block rounded-full bg-white px-3 py-0.5 text-[#FF2E9A]">
+                          356 Checkpoints
+                        </span>
+                      </div>
                     </div>
 
                     <a
@@ -448,10 +455,7 @@ export default function MustHaveFunctionsReview() {
                           style={{ background: getHeaderView(idx + 2) }}
                         >
                           <div className="flex h-full min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1 text-center">
-                            <p
-                              className="text-center text-[10.5px] font-bold leading-tight text-black"
-                              style={{ color: '#000000' }}
-                            >
+                            <p className="text-center text-[10.5px] font-bold leading-tight text-[#5A00D6]">
                               {item.detail}
                             </p>
                           </div>
@@ -577,10 +581,7 @@ export default function MustHaveFunctionsReview() {
                             >
                               {pillar.title}
                             </h4>
-                            <p
-                              className="mt-1 text-[10.5px] font-bold leading-tight text-black"
-                              style={{ color: '#000000' }}
-                            >
+                            <p className="mt-1 text-[10.5px] font-bold leading-tight text-[#5A00D6]">
                               {pillar.subtitle}
                             </p>
                           </div>

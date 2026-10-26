@@ -360,9 +360,14 @@ export default function ExpressAuditSection() {
                       >
                         <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs">
-                        {v.label}
-                      </span>
+                      <div
+                        className="rounded-full p-[2px] shadow-2xs"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <span className="block rounded-full bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                          {v.label}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -427,10 +432,15 @@ export default function ExpressAuditSection() {
                     >
                       <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                     </span>
-                    <div className="w-full rounded-xl border border-[#0A2B6D]/20 bg-white/95 px-3 py-2 shadow-2xs">
-                      <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
-                        {activeMsg}
-                      </span>
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="w-full rounded-[9px] bg-white px-3 py-2">
+                        <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                          {activeMsg}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -518,13 +528,15 @@ export default function ExpressAuditSection() {
                     </div>
                   </div>
 
-                  <div className="flex min-h-[64px] w-full items-center justify-center rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
-                    <p
-                      className="text-xs font-extrabold leading-snug text-black"
-                      style={{ color: '#000000' }}
-                    >
-                      {currentNote.text}
-                    </p>
+                  <div
+                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex min-h-[64px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                      <p className="text-xs font-extrabold leading-snug text-[#5A00D6]">
+                        {currentNote.text}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -533,21 +545,26 @@ export default function ExpressAuditSection() {
                   className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
+                  <div className="rounded-[9px] bg-white p-2.5 text-left space-y-1.5">
                     <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
                       <span>Note {noteIdx + 1}/4</span>
                     </div>
-                    <ul className="space-y-1">
-                      {currentNote.functions.map((fn) => (
+                    <ul className="space-y-1.5">
+                      {currentNote.functions.map((fn, fIdx) => (
                         <li
                           key={fn}
-                          className="flex items-start gap-1.5 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                          className="flex items-center gap-2 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
                         >
-                          <CheckCircle2
-                            className="mt-0.5 h-3 w-3 shrink-0"
-                            style={{ color: STICKY_NOTE_BORDER }}
-                          />
+                          <span
+                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                            style={{ borderColor: getAppBorderView(index + fIdx + 2) }}
+                          >
+                            <CheckCircle2
+                              className="h-3 w-3"
+                              style={{ color: getSymbolView(index + fIdx + 2).iconColor }}
+                            />
+                          </span>
                           <span className="text-[#0A2B6D]">{fn}</span>
                         </li>
                       ))}

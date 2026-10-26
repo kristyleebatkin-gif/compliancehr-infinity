@@ -154,18 +154,28 @@ function TodaysRosterPictureCard() {
             className="flex h-full flex-col justify-between gap-2 rounded-[9px] p-3"
             style={{ background: UNIFORM_SPRAY_BG }}
           >
-            <div className="flex items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-3 py-1.5">
-              <span className="flex items-center gap-1.5 text-xs font-extrabold text-[#0A2B6D]">
-                <CalendarClock className="h-4 w-4 text-[#0072FF]" />
-                Visual Daily Shift Roster Board
-              </span>
-              <Link
-                to="/roster"
-                className="inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-              >
-                <span style={{ color: '#FFFFFF' }}>Open Roster</span>
-                <ArrowRight className="h-2.5 w-2.5 text-white" />
-              </Link>
+            <div
+              className="w-full rounded-lg p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="flex items-center justify-between gap-2 rounded-[6px] bg-white px-3 py-1.5">
+                <span className="flex items-center gap-1.5 text-xs font-extrabold text-[#0A2B6D]">
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white"
+                    style={{ borderColor: getAppBorderView(0) }}
+                  >
+                    <CalendarClock className="h-3.5 w-3.5 text-[#0072FF]" />
+                  </span>
+                  Visual Daily Shift Roster Board
+                </span>
+                <Link
+                  to="/roster"
+                  className="inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+                >
+                  <span style={{ color: '#FFFFFF' }}>Open Roster</span>
+                  <ArrowRight className="h-2.5 w-2.5 text-white" />
+                </Link>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-1.5">
@@ -239,8 +249,13 @@ function CommunicationAndMailboxTabs() {
                 <span>Communication Tab</span>
               </div>
             </div>
-            <div className="w-full rounded-lg border border-[#0A2B6D]/20 bg-white px-3 py-2 text-[11px] font-bold text-[#0A2B6D]">
-              Shift handover notes, team broadcasts, diary entries &amp; instant staff communications.
+            <div
+              className="w-full rounded-lg p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-bold text-[#5A00D6]">
+                Shift handover notes, team broadcasts, diary entries &amp; instant staff communications.
+              </div>
             </div>
             <Link
               to="/communications"
@@ -271,10 +286,15 @@ function CommunicationAndMailboxTabs() {
                 <span>Mailbox Tab</span>
               </div>
             </div>
-            <div className="w-full rounded-lg border border-[#0A2B6D]/20 bg-white px-3 py-2 text-[11px] font-bold text-[#0A2B6D]">
-              {hasAlertMail
-                ? `Alert Mailbox Active (${mailAlertCount} Unread Alerts & Escalations)`
-                : 'Communications Mailbox (All Clear · Live Inbox & Branded Emails)'}
+            <div
+              className="w-full rounded-lg p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-bold text-[#5A00D6]">
+                {hasAlertMail
+                  ? `Alert Mailbox Active (${mailAlertCount} Unread Alerts & Escalations)`
+                  : 'Communications Mailbox (All Clear · Live Inbox & Branded Emails)'}
+              </div>
             </div>
             <Link
               to="/communications"
