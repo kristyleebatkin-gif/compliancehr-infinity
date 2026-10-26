@@ -1,0 +1,34 @@
+/* Landing-only readability and touch sizing. Keep the existing brand palette. */
+.landing-page { overflow-wrap: anywhere; }
+.landing-page .landing-main > div { gap: 2rem; }
+.landing-page main > div.space-y-4 > * + * { margin-top: 2rem; }
+.landing-page section { scroll-margin-top: 1.5rem; }
+.landing-page :is(a, button):focus-visible { outline: 3px solid #0072FF; outline-offset: 4px; }
+.landing-page :is(a, button)[class*="rounded-full"],
+.landing-page nav a { min-height: 44px; padding-top: .625rem; padding-bottom: .625rem; }
+.landing-page :is(span, p, div, a)[class*="text-[7px]"],
+.landing-page :is(span, p, div, a)[class*="text-[8"],
+.landing-page :is(span, p, div, a)[class*="text-[9"],
+.landing-page :is(span, p, div, a)[class*="text-[10"],
+.landing-page :is(span, p, div, a)[class*="text-[11"] { font-size: .8125rem; line-height: 1.5; }
+.landing-page main li[class*="h-[20px]"] { height: auto; min-height: 36px; }
+.landing-page main li > div { white-space: normal; padding: .5rem; }
+.landing-page main [class*="grid-rows-[20px_24px]"] { grid-template-rows: auto auto; padding: .5rem; }
+.landing-page main [class*="h-[20px]"],
+.landing-page main [class*="h-[24px]"] { height: auto; min-height: 32px; }
+.landing-page main [class*="whitespace-nowrap"] { white-space: normal; }
+.landing-page main p { max-width: 75ch; }
+#top-landing > div:first-child { max-width: 1440px; margin-inline: auto; padding: .75rem; }
+#top-landing nav a span { white-space: normal; }
+@media (max-width: 639px) {
+  #top-landing [class*="text-3xl"] { font-size: clamp(1.25rem, 6vw, 1.875rem); white-space: normal; }
+  #top-landing [class*="text-3xl"] > span { white-space: normal; }
+  #top-landing [class*="w-[96%]"] { width: 100%; flex-wrap: wrap; justify-content: center; gap: .25rem .75rem; white-space: normal; }
+  #top-landing nav [aria-hidden="true"] { display: none; }
+  #top-landing button[aria-label="Menu"] { min-width: 44px; min-height: 44px; }
+  .landing-page main h1 { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+  .landing-page main > section > div { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-page *, .landing-page *::before, .landing-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
