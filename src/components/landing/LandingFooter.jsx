@@ -65,10 +65,10 @@ export default function LandingFooter() {
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-white px-2 py-5 sm:px-3 sm:py-6 text-center">
-            {/* Centred Logo (1.5x Larger, No Border) + Centred App Name + Centred Slogan Moved Slightly Up */}
+          <div className="flex w-full flex-col items-center justify-center gap-2.5 rounded-[16px] bg-white px-2 pt-1.5 pb-4 sm:px-3 sm:pt-2 sm:pb-4 text-center">
+            {/* Centred Logo (1.5x Larger, Closer to Top Border) + Centred App Name + Centred Slogan Moved Slightly Up */}
             <Link to="/" className="mx-auto flex w-full flex-col items-center justify-center text-center">
-              <div className="mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
+              <div className="-mt-1 sm:-mt-2 mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
                 <Image
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                   alt="ComplianceHR Infinity logo"
@@ -77,7 +77,7 @@ export default function LandingFooter() {
                 />
               </div>
 
-              <div className="-mt-3 sm:-mt-4 mx-auto flex w-full items-center justify-center bg-white text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+              <div className="-mt-6 sm:-mt-7 md:-mt-8 relative z-10 mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                 <span className="mx-auto block whitespace-nowrap text-center">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -89,7 +89,7 @@ export default function LandingFooter() {
                 </span>
               </div>
 
-              <div className="mt-1 mx-auto flex w-full flex-wrap items-center justify-center gap-x-1.5 bg-white px-2 text-center text-xs sm:text-sm font-extrabold">
+              <div className="mt-0.5 relative z-10 mx-auto flex w-full flex-wrap items-center justify-center gap-x-1.5 bg-transparent px-2 text-center text-xs sm:text-sm font-extrabold">
                 <span className="text-[#0072FF]">Complete Control.</span>
                 <span className="text-[#5A00D6]">Greater Confidence.</span>
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
@@ -97,7 +97,7 @@ export default function LandingFooter() {
             </Link>
 
             {/* NDIS & Aged care Documentation & Compliance Placed Just Above Slightly Increased & Centred Open, Landing and Signed In */}
-            <div className="mx-auto flex w-full flex-col items-center justify-center gap-3 pt-1 text-center">
+            <div className="mx-auto flex w-full flex-col items-center justify-center gap-2.5 pt-0.5 text-center">
               <span
                 className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
                 style={{
