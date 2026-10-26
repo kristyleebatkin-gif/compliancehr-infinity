@@ -87,13 +87,13 @@ export default function BlueprintPreviewSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* "An accurate map..." and Writing Under Inside a Stretched App Design Coloured Border */}
+        {/* "An accurate map..." and Black Writing Under Inside a Stretched App Design Coloured Border */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
+            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
               <span className="text-[#0A2B6D]">An accurate map of the </span>
               <span className="text-[#0A2B6D]">Compliance</span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -104,8 +104,8 @@ export default function BlueprintPreviewSection() {
               </span>
             </h2>
             <p
-              className="mx-auto max-w-3xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
-              style={{ color: getSubheaderColourView(1) }}
+              className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-black"
+              style={{ color: '#000000' }}
             >
               All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
             </p>
@@ -140,14 +140,17 @@ export default function BlueprintPreviewSection() {
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div
-                className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
-                style={{ background: getHeaderView(2) }}
+                className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
+                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                    <Workflow className="h-3.5 w-3.5 text-white" />
+                    <Workflow className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
                   </span>
-                  <span className="text-xs sm:text-sm md:text-base font-extrabold text-white">
+                  <span
+                    className="text-xs sm:text-sm md:text-base font-extrabold text-white"
+                    style={{ color: '#FFFFFF' }}
+                  >
                     How Information Connects &amp; Role-Based Access Model
                   </span>
                 </div>
@@ -156,9 +159,16 @@ export default function BlueprintPreviewSection() {
                   type="button"
                   onClick={() => setExpandConnections((v) => !v)}
                   className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border-2 border-white bg-white/15 px-3.5 py-1 text-xs font-extrabold text-white shadow-2xs transition-all hover:bg-white/25"
+                  style={{ color: '#FFFFFF' }}
                 >
-                  <span className="text-white">{expandConnections ? 'Minimise Panel' : 'Expand Panel'}</span>
-                  {expandConnections ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
+                  <span className="text-white" style={{ color: '#FFFFFF' }}>
+                    {expandConnections ? 'Minimise Panel' : 'Expand Panel'}
+                  </span>
+                  {expandConnections ? (
+                    <ChevronUp className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                  ) : (
+                    <ChevronDown className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                  )}
                 </button>
               </div>
             </div>
@@ -177,13 +187,19 @@ export default function BlueprintPreviewSection() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(0) }}
+                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
+                        style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                       >
-                        <h3 className="font-editorial text-sm sm:text-base font-extrabold text-white">
+                        <span
+                          className="font-editorial text-sm sm:text-base font-extrabold text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
                           How Information Connects Automatically
-                        </h3>
-                        <span className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white">
+                        </span>
+                        <span
+                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
                           Zero Double-Entry
                         </span>
                       </div>

@@ -175,11 +175,11 @@ export default function MustHaveFunctionsReview() {
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
         {/* Heading & Subheading Inside Stretched App Design Coloured Border */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
+            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
               <span className="text-[#0A2B6D]">Complete Review of Every </span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 Must-Have Function,
@@ -189,7 +189,7 @@ export default function MustHaveFunctionsReview() {
               </span>
             </h2>
             <p
-              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
+              className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-relaxed"
               style={{ color: getSubheaderColourView(1) }}
             >
               {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
@@ -254,37 +254,42 @@ export default function MustHaveFunctionsReview() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-stretch rounded-[12px] bg-white p-4 text-left">
-            <div className="lg:col-span-4 flex flex-col justify-center space-y-2.5">
-              <div
-                className="w-full rounded-full p-[2.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <span
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{ background: getHeaderView(1) }}
+            <div
+              className="lg:col-span-4 rounded-2xl p-[3.5px] shadow-2xs flex"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-2.5">
+                <div
+                  className="w-full rounded-full p-[2.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                    <TrendingUp className="h-3 w-3 text-white" />
-                  </span>
-                  <span>Why Providers Subscribe Monthly</span>
-                </span>
-              </div>
-              <div
-                className="w-full rounded-xl p-[3px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <div className="rounded-[9px] bg-white px-3.5 py-2">
-                  <h3
-                    className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
-                    style={{ backgroundImage: getTitleGradientView(2) }}
+                  <span
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
+                    style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                   >
-                    Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Subscription
-                  </h3>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                      <TrendingUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span style={{ color: '#FFFFFF' }}>Why Providers Subscribe Monthly</span>
+                  </span>
+                </div>
+                <div
+                  className="w-full rounded-xl p-[3px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="rounded-[9px] bg-white px-3.5 py-2.5 space-y-1.5">
+                    <h3
+                      className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
+                      style={{ backgroundImage: getTitleGradientView(2) }}
+                    >
+                      Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Subscription
+                    </h3>
+                    <p className="text-xs font-bold leading-relaxed text-[#0A2B6D]">
+                      Instead of paying for 8 separate HR, rostering, invoicing, LMS, incident, vault, messaging and audit tools, ComplianceHR Infinity unifies all {MODULE_DIRECTORY.length} modules + the $160/mo Elite Plan + the $355 Master Compliance Audit Checklist starting at $660/month.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <p className="text-xs font-bold leading-relaxed text-[#0A2B6D]">
-                Instead of paying for 8 separate HR, rostering, invoicing, LMS, incident, vault, messaging and audit tools, ComplianceHR Infinity unifies all {MODULE_DIRECTORY.length} modules + the $160/mo Elite Plan + the $355 Master Compliance Audit Checklist starting at $660/month.
-              </p>
             </div>
 
             <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 content-center">
