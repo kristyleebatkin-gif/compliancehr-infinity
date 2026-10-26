@@ -131,7 +131,7 @@ export function SmallSafeVaultBar() {
 }
 
 /**
- * 2. Today's Overview with a Picture of Roster (Instead of Modulars)
+ * 2. Today's Overview with Roster on a Flat Screen, Dark Blue Writing & Overhead Spotlights
  */
 function TodaysRosterPictureCard() {
   const sampleRosterRows = [
@@ -141,66 +141,120 @@ function TodaysRosterPictureCard() {
   ];
 
   return (
-    <WallHangingPictureFrame title="2. Today's Overview & Live Roster Picture" className="h-full">
-      <div className="flex h-full flex-col justify-between gap-2.5 bg-white">
-        <RosterMiniOverview />
+    <WallHangingPictureFrame title="2. Today's Overview & Flat Screen Live Roster" className="h-full">
+      <div className="flex h-full flex-col items-center justify-between gap-1.5 bg-white">
+        <div className="w-full">
+          <RosterMiniOverview />
+        </div>
 
-        {/* Visual Roster Board Picture (Replaces Modulars Grid) */}
+        {/* Overhead Spotlights Shining Down Onto Flat Screen Roster */}
+        <div className="flex w-full items-center justify-around px-4">
+          {[0, 1, 2].map((sp) => (
+            <div key={sp} className="flex flex-col items-center">
+              <span
+                className="h-2.5 w-5 rounded-b-full border border-white bg-white"
+                style={{
+                  boxShadow:
+                    '0 0 12px 4px #FFFFFF, 0 6px 16px 4px rgba(0, 198, 255, 0.75)',
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Flat Screen Monitor Frame Holding the Roster With Dark Blue Writing */}
         <div
-          className="w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="flex w-full flex-1 flex-col justify-between rounded-2xl border-[3px] border-[#00C6FF] bg-[#0A2B6D] p-2 shadow-lg"
+          style={{
+            boxShadow:
+              '0 0 16px 3px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(10, 43, 109, 0.3)',
+          }}
         >
+          {/* Top Flat Screen Bezel Bar */}
+          <div className="mb-1 flex items-center justify-between px-1.5">
+            <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+              <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
+              FLAT SCREEN 02 · LIVE ROSTER BOARD · SPOTLIGHTS ON ✦
+            </span>
+            <Link
+              to="/roster"
+              className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[8px] font-extrabold text-[#0A2B6D]"
+              style={{ color: '#0A2B6D' }}
+            >
+              <span style={{ color: '#0A2B6D' }}>Open Roster</span>
+              <ArrowRight className="h-2 w-2 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+            </Link>
+          </div>
+
+          {/* Inner Flat Screen Display — All Writing & Symbols in Dark Blue (#0A2B6D) */}
           <div
-            className="flex h-full flex-col justify-between gap-2 rounded-[9px] p-3"
-            style={{ background: UNIFORM_SPRAY_BG }}
+            className="flex-1 rounded-xl p-[2px]"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="w-full rounded-lg p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] p-2"
+              style={{ background: UNIFORM_SPRAY_BG }}
             >
-              <div className="flex items-center justify-between gap-2 rounded-[6px] bg-white px-3 py-1.5">
-                <span className="flex items-center gap-1.5 text-xs font-extrabold text-[#0A2B6D]">
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white"
-                    style={{ borderColor: getAppBorderView(0) }}
-                  >
-                    <CalendarClock className="h-3.5 w-3.5 text-[#0072FF]" />
-                  </span>
-                  Visual Daily Shift Roster Board
-                </span>
-                <Link
-                  to="/roster"
-                  className="inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+              <div className="flex items-center justify-between gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2.5 py-1">
+                <span
+                  className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
                 >
-                  <span style={{ color: '#FFFFFF' }}>Open Roster</span>
-                  <ArrowRight className="h-2.5 w-2.5 text-white" />
-                </Link>
+                  <CalendarClock className="h-3 w-3 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+                  Visual Daily Shift Roster Screen
+                </span>
+                <span
+                  className="rounded-full border border-[#0A2B6D]/30 bg-[#F5F0FF] px-2 py-0 text-[8px] font-extrabold text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  100% Screened
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 gap-1">
+                {sampleRosterRows.map((row, idx) => (
+                  <div
+                    key={row.shift}
+                    className="rounded-lg p-[1.5px]"
+                    style={{ background: getHeaderView(idx) }}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-1 text-left">
+                      <div>
+                        <div
+                          className="text-[9.5px] font-extrabold text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
+                        >
+                          {row.shift}
+                        </div>
+                        <div
+                          className="text-[8.5px] font-bold text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
+                        >
+                          Worker: {row.staff} · Participant: {row.participant}
+                        </div>
+                      </div>
+                      <span
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF] px-2 py-0 text-[8px] font-extrabold text-[#0A2B6D]"
+                        style={{ color: '#0A2B6D' }}
+                      >
+                        <CheckCircle2 className="h-2.5 w-2.5 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+                        {row.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="grid grid-cols-1 gap-1.5">
-              {sampleRosterRows.map((row, idx) => (
-                <div
-                  key={row.shift}
-                  className="rounded-xl p-[2px]"
-                  style={{ background: getHeaderView(idx) }}
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2 rounded-[9px] bg-white px-3 py-1.5 text-left">
-                    <div>
-                      <div className="text-[11px] font-extrabold text-[#0A2B6D]">{row.shift}</div>
-                      <div className="text-[10px] font-bold text-[#5A00D6]">
-                        Worker: {row.staff} · Participant: {row.participant}
-                      </div>
-                    </div>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF] px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0072FF]">
-                      <CheckCircle2 className="h-3 w-3 text-[#FF2E9A]" />
-                      {row.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
+        </div>
+
+        {/* Flat Screen Stand Neck & Base */}
+        <div className="flex flex-col items-center">
+          <div className="h-1.5 w-6 bg-[#0A2B6D]" />
+          <div
+            className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          />
         </div>
       </div>
     </WallHangingPictureFrame>

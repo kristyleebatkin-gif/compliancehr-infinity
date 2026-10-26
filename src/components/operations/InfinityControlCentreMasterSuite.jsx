@@ -522,22 +522,31 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-            <span className="text-[#0A2B6D]">Infinity </span>
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              Control Centre
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+        <div className="flex flex-col items-center justify-center rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-2.5">
+          {/* Header: Line 1 = Infinity Control Centre · Line 2 (under Control, beside Audit) = & Master Audit */}
+          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-center">
+            <span className="block">
+              <span className="text-[#0A2B6D]">Infinity </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                Control Centre
+              </span>
+            </span>
+            <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
               &amp; Master Audit
             </span>
           </h2>
 
+          {/* Subtitle: "End-of-Shift..." Placed on the 2nd Line Underneath */}
           <p
-            className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold text-black"
+            className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-snug text-black"
             style={{ color: '#000000' }}
           >
-            Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
+            <span className="block">
+              Unified Executive Oversight · Real Operational Evidence Verification
+            </span>
+            <span className="block">
+              End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
+            </span>
           </p>
 
           {/* Compact Refresh & Export Tiles Spanning the Exact Same Width Together as the 1-Line 17 Categories Bar Below */}
@@ -621,8 +630,8 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
           </div>
 
-          {/* 9 Numbered Command Navigation Tiles: Shine White Light, Thicker Borders, Category + Suitable Symbol & Pure White Behind Writing */}
-          <div className="grid w-full grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2.5 auto-rows-fr pt-1">
+          {/* 9 Numbered Command Navigation Tiles — 50% Smaller, App-Theme Headers With White Writing & White Spotlights */}
+          <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-1.5 auto-rows-fr pt-0.5">
             {[
               { id: 'control-centre', label: '1. Control Centre', category: 'Oversight', sub: 'Live Telemetry', icon: Building2 },
               { id: 'master-audit-356', label: '2. 356 Audit Checks', category: 'Audit', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
@@ -640,56 +649,58 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               return (
                 <div
                   key={tab.id}
-                  className={`flex h-full rounded-2xl p-[4.5px] shadow-md transition-all hover:-translate-y-0.5 ${
+                  className={`flex h-full rounded-xl p-[2.5px] shadow-sm transition-all hover:-translate-y-0.5 ${
                     active ? 'ring-2 ring-[#FF2E9A]' : ''
                   }`}
                   style={{
                     background: getHeaderView(idx),
-                    boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.95), 0 4px 10px rgba(90, 0, 214, 0.16)',
+                    boxShadow: '0 0 12px 3px rgba(255, 255, 255, 0.96), 0 3px 8px rgba(90, 0, 214, 0.16)',
                   }}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[82px] w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2 text-center"
+                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
-                    {/* Glowing White Light + Suitable Symbol + Category */}
-                    <div className="flex items-center justify-center gap-1">
+                    {/* App-Theme Tile Header With White Writing & White Spotlights */}
+                    <div
+                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-white"
+                      style={{
+                        background: getHeaderView(idx),
+                        color: '#FFFFFF',
+                        boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
+                      }}
+                    >
                       <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
-                        style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+                        className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                       />
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                       <span
-                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                        style={{ borderColor: getAppBorderView(idx) }}
-                      >
-                        <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                      </span>
-                      <span
-                        className="rounded-full border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider"
-                        style={{ color: sym.iconColor }}
+                        className="text-[7.5px] font-extrabold uppercase tracking-wider text-white leading-none"
+                        style={{ color: '#FFFFFF' }}
                       >
                         {tab.category}
                       </span>
                     </div>
+
                     <div
-                      className="w-full rounded-lg p-[2px] shadow-2xs"
+                      className="w-full rounded-md p-[1.5px] shadow-2xs"
                       style={{ background: getHeaderView(idx) }}
                     >
-                      {/* Pure White Background Behind Writing so You Can Read Clearly */}
-                      <div className="flex w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
+                      <div className="flex w-full flex-col items-center justify-center rounded-[5px] bg-white px-1 py-0.5 text-center">
                         <div
-                          className="text-[10px] font-extrabold leading-tight bg-clip-text text-transparent"
+                          className="text-[8.5px] font-extrabold leading-tight bg-clip-text text-transparent"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
                         >
                           {tab.label}
                         </div>
                         <div
-                          className="text-[8.5px] font-extrabold leading-tight"
+                          className="text-[7.5px] font-extrabold leading-tight"
                           style={{ color: sym.iconColor }}
                         >
                           {tab.sub}
@@ -704,11 +715,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 12 NUMBERED REGISTER TILES SHINING WHITE LIGHT, THICKER BORDERS & PURE WHITE BEHIND WRITING ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 50% SMALLER TILES WITH APP-THEME HEADERS, WHITE WRITING & WHITE SPOTLIGHTS ==================== */}
       {activeTab === 'control-centre' && (
-        <div className="p-2 space-y-3.5 bg-white text-center">
-          {/* 12 Live Operational Register Telemetry Tiles — Shine White Light, Display Category, Suitable Symbol & Pure White Behind Words */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 items-stretch">
+        <div className="p-1.5 space-y-2 bg-white text-center">
+          {/* 12 Live Operational Register Telemetry Tiles — 50% Smaller, App-Theme Headers With White Writing & White Spotlights */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
             {[
               { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
               { category: 'Care & Support', icon: HeartHandshake, label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
@@ -724,63 +735,59 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               { category: 'Finance & NDIS', icon: DollarSign, label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
             ].map((m, idx) => {
               const TileIcon = m.icon;
-              const sym = getSymbolView(idx);
               return (
                 <div
                   key={m.label}
-                  className="flex h-full rounded-2xl p-[4.5px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                  className="flex h-full rounded-xl p-[2.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                   style={{
                     background: getHeaderView(idx),
-                    boxShadow: '0 0 16px 3px rgba(255, 255, 255, 0.95), 0 4px 12px rgba(0, 114, 255, 0.18)',
+                    boxShadow: '0 0 12px 3px rgba(255, 255, 255, 0.96), 0 3px 8px rgba(0, 114, 255, 0.16)',
                   }}
                 >
                   <Link
                     to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[12px] p-2.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
-                    {/* Glowing White Light + Suitable Category Symbol + Category Badge */}
+                    {/* App-Theme Header With White Writing & White Spotlights */}
                     <div
-                      className="w-full rounded-full p-[2.5px] shadow-2xs"
-                      style={{ background: getHeaderView(idx) }}
+                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-white"
+                      style={{
+                        background: getHeaderView(idx),
+                        color: '#FFFFFF',
+                        boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.92)',
+                      }}
                     >
-                      <div className="flex min-h-[28px] items-center justify-center gap-1.5 rounded-full bg-white px-2 py-0.5">
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
-                          style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 14px 3px #00C6FF' }}
-                        />
-                        <span
-                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
-                          style={{ borderColor: getAppBorderView(idx) }}
-                        >
-                          <TileIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
-                        </span>
-                        <span
-                          className="text-[9px] font-extrabold uppercase tracking-wider"
-                          style={{ color: sym.iconColor }}
-                        >
-                          {m.category}
-                        </span>
-                      </div>
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                      />
+                      <TileIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span
+                        className="text-[8px] font-extrabold uppercase tracking-wider text-white leading-none"
+                        style={{ color: '#FFFFFF' }}
+                      >
+                        {m.category}
+                      </span>
                     </div>
 
-                    {/* Label & Number Value With Pure White Background Behind Words so You Can Read */}
+                    {/* 50% Smaller Label & Number Value With Pure White Background */}
                     <div
-                      className="w-full rounded-xl p-[2.5px]"
+                      className="w-full rounded-lg p-[1.5px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div className="flex min-h-[58px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                      <div className="flex min-h-[30px] flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
                         <span
-                          className="text-[9.5px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
+                          className="text-[8px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
                         >
                           {m.label}
                         </span>
                         <div
-                          className="font-editorial text-lg font-extrabold leading-tight bg-clip-text text-transparent"
+                          className="font-editorial text-xs font-extrabold leading-tight bg-clip-text text-transparent"
                           style={{ backgroundImage: getTitleGradientView(idx + 1) }}
                         >
                           {m.value}
@@ -788,13 +795,13 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </div>
                     </div>
 
-                    {/* Sub-Label With Pure White Background Behind Words so You Can Read */}
+                    {/* 50% Smaller Sub-Label */}
                     <div
-                      className="w-full flex-1 rounded-xl p-[2.5px]"
+                      className="w-full rounded-lg p-[1.5px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
                       <div
-                        className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold leading-tight"
+                        className="flex min-h-[18px] items-center justify-center rounded-[6px] bg-white px-1.5 py-0 text-center text-[8px] font-extrabold leading-tight"
                         style={{ color: getSymbolView(idx + 2).iconColor }}
                       >
                         {m.sub}
@@ -806,29 +813,35 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             })}
           </div>
 
-          {/* Non-Numbered Command Centre Tiles Cut in Size by 50% (12 Numbered Register Tiles Above Remain the Same) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch">
-            {/* Compact Central Management Approval Queue (50% Size) */}
+          {/* Non-Numbered Command Centre Tiles With App-Theme Headers, White Writing & White Spotlights */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch">
+            {/* Compact Central Management Approval Queue */}
             <div
               className="flex w-full rounded-xl p-[2px] shadow-2xs"
               style={{ background: getHeaderView(0) }}
             >
               <div
-                className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
+                className="flex w-full flex-col justify-between rounded-[9px] p-1 text-center space-y-1"
                 style={{
                   background:
                     'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                 }}
               >
                 <div
-                  className="w-full rounded-lg p-[1.5px]"
-                  style={{ background: getHeaderView(0) }}
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
+                  style={{
+                    background: getHeaderView(0),
+                    color: '#FFFFFF',
+                    boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
+                  }}
                 >
-                  <div className="rounded-[6px] bg-white px-2 py-1 text-center">
-                    <h3 className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      Central Management Approval Queue ({pendingApprovals.length} Active)
-                    </h3>
-                  </div>
+                  <span
+                    className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                    style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                  />
+                  <h3 className="text-[9px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                    Central Management Approval Queue ({pendingApprovals.length} Active)
+                  </h3>
                 </div>
 
                 {pendingApprovals.length === 0 ? (
@@ -883,16 +896,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 }}
               >
                 <div
-                  className="w-full rounded-lg p-[1.5px]"
-                  style={{ background: getHeaderView(4) }}
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
+                  style={{
+                    background: getHeaderView(4),
+                    color: '#FFFFFF',
+                    boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
+                  }}
                 >
-                  <div className="rounded-[6px] bg-white px-2 py-1 text-center">
-                    <div className="text-[10px] font-extrabold text-[#0A2B6D]">
-                      Master Audit Report &amp; 356-Checkpoint Summary
-                    </div>
-                    <div className="text-[9px] font-extrabold text-[#5A00D6]">
-                      17 Categories · {evidencedCount}/356 Checkpoints Evidenced · 98 Docs
-                    </div>
+                  <span
+                    className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                    style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                  />
+                  <div className="text-[9px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                    Master Audit Report &amp; 356-Checkpoint Summary ({evidencedCount}/356 Evidenced)
                   </div>
                 </div>
                 <div

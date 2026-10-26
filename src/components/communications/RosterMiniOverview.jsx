@@ -44,7 +44,8 @@ export default function RosterMiniOverview() {
         </div>
         <Link
           to="/roster"
-          className="rounded bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold text-purple-900 shadow-sm hover:bg-pink-50"
+          className="rounded bg-white px-1.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-sm hover:bg-pink-50"
+          style={{ color: '#0A2B6D' }}
         >
           Open Roster
         </Link>
@@ -54,14 +55,15 @@ export default function RosterMiniOverview() {
           {roster.slice(0, 4).map((s) => (
             <div
               key={s.id}
-              className="inline-flex items-center gap-1 rounded border border-purple-200 bg-purple-50/70 px-1.5 py-0 text-[8.5px] font-bold"
+              className="inline-flex items-center gap-1 rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[8.5px] font-bold text-[#0A2B6D]"
+              style={{ color: '#0A2B6D' }}
             >
-              <Clock className="h-2.5 w-2.5 shrink-0 text-purple-600" />
-              <span className="truncate max-w-[110px]">
+              <Clock className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+              <span className="truncate max-w-[110px] text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                 {s.employee_name || 'Unassigned'}
                 {s.participant_name ? ` · ${s.participant_name}` : ''}
               </span>
-              <span className="text-purple-800">{s.start_time || ''}</span>
+              <span className="text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>{s.start_time || ''}</span>
             </div>
           ))}
         </div>
