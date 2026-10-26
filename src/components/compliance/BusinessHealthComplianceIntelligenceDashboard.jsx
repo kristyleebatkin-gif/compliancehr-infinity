@@ -67,6 +67,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   const [refreshing, setRefreshing] = useState(false);
   const [litKpiIdx, setLitKpiIdx] = useState(4);
   const [trafficStep, setTrafficStep] = useState(0);
+  const [riskWaveTick, setRiskWaveTick] = useState(0);
   const [dayLightSwitches, setDayLightSwitches] = useState({
     '90': true,
     '60': true,
@@ -77,7 +78,16 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const toggleDaySwitch = (dayKey) => {
     setDayLightSwitches((prev) => ({ ...prev, [dayKey]: !prev[dayKey] }));
+    setRiskWaveTick((prev) => prev + 1);
   };
+
+  // Live moving pulse so Risk Charts visibly move with real-time & user changes
+  useEffect(() => {
+    const waveTimer = setInterval(() => {
+      setRiskWaveTick((prev) => (prev + 1) % 12);
+    }, 3500);
+    return () => clearInterval(waveTimer);
+  }, []);
 
   // Light up TWO tiles under Live Executive at a time for 30 seconds each, then go left to the next pair, cycling Green, Yellow & Red
   useEffect(() => {
@@ -629,23 +639,30 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           {/* Left 7 Columns: 8-Domain Health Cards (50% Smaller, App-Design Colour Outside Words, Live Tracker at Top of Governance Tile & Governance Lit in Yellow) */}
           <div className="lg:col-span-7 flex rounded-xl bg-white p-2 shadow-2xs">
             <div className="flex w-full flex-col justify-between space-y-1.5">
-              {/* Header 1: 8-Pillar Matrix Header Fitted on One Line */}
+              {/* Header 1: 8-Pillar Matrix Header With Glowing White Lights on Both Sides */}
               <div
                 className="mx-auto w-full rounded-full p-[2px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                style={{
+                  background: TOP_BORDER_GRADIENT,
+                  boxShadow: '0 0 12px 3px rgba(255, 255, 255, 0.95)',
+                }}
               >
                 <div
                   className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] sm:text-xs font-extrabold text-white whitespace-nowrap"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
                   <span
-                    className="h-2 w-2 shrink-0 rounded-full bg-white"
-                    style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
+                    className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                    style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 14px 3px #00C6FF' }}
                   />
                   <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span className="truncate" style={{ color: '#FFFFFF' }}>
                     8-Pillar Business Health &amp; NDIS Practice Standard Matrix
                   </span>
+                  <span
+                    className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                    style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+                  />
                 </div>
               </div>
 
@@ -706,24 +723,33 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           <span className="text-[7px] font-extrabold text-[#0A2B6D]">{dom.score}%</span>
                         </div>
 
-                        {/* One-Line Category Symbol + Header */}
+                        {/* One-Line Category Symbol + Header With Glowing White Light */}
                         <div
                           className="flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 py-0.5 text-[8px] font-extrabold leading-none text-center whitespace-nowrap"
                           style={{
                             background: isGovernance ? '#FEF08A' : '#FFFFFF',
                             color: '#0A2B6D',
+                            boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.95)',
                           }}
                         >
+                          <span
+                            className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                            style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                          />
                           <DomainIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
                           <span className="truncate text-[#0A2B6D]">
                             {dom.shortName} · {dom.score}%
                           </span>
                         </div>
 
-                        {/* 50% Smaller Writing Box 1: Pure White Inside App-Design Coloured Frame */}
+                        {/* 50% Smaller Writing Box 1 With White Light Next to Title */}
                         <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-0.5 text-center">
-                          <div className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {dom.name}
+                          <div className="flex items-center justify-center gap-1 text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                            <span
+                              className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                              style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                            />
+                            <span>{dom.name}</span>
                           </div>
                           <div className="text-[7.5px] font-bold text-[#0A2B6D] leading-tight">
                             {dom.standard}
@@ -895,74 +921,150 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       </div>
                     </div>
 
-                    {/* 4. SMALL FLAT SCREEN WITH TWO DIFFERENT RISK CHARTS REDUCED BY 50% */}
-                    <div className="flex flex-col items-center w-full">
-                      <div
-                        className="w-full rounded-xl border-2 border-[#00C6FF] bg-[#0A2B6D] p-1 shadow-2xs"
-                      >
-                        <div className="mb-0.5 flex items-center justify-between px-1">
-                          <span className="inline-flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
-                            <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
-                            FLAT SCREEN · 2 RISK CHARTS (50% COMPACT)
-                          </span>
-                          <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-white">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                            HD LIVE
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-1 rounded-lg bg-white p-1">
-                          {/* Risk Chart 1 (50% Reduced Height h-10) */}
-                          <div className="rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5">
-                            <div className="text-[7px] font-extrabold uppercase text-[#0A2B6D]">
-                              1. Risk Severity
+                    {/* 4. SMALL FLAT SCREEN WITH TWO LIVE MOVING RISK CHARTS + GLOWING WHITE LIGHTS */}
+                    {(() => {
+                      const domainIndex = Math.max(0, intelligenceDomains.findIndex((d) => d.id === selectedDomain.id));
+                      const activeSwitchCount = Object.values(dayLightSwitches).filter(Boolean).length;
+                      const waveOffset = (riskWaveTick + domainIndex + activeSwitchCount) % 4;
+                      const liveSeverityData = [
+                        {
+                          level: 'Low',
+                          count: Math.max(4, (liveCounts.risks || 14) - 4 + ((waveOffset + 1) % 3)),
+                          fill: '#0072FF',
+                        },
+                        {
+                          level: 'Med',
+                          count: Math.max(2, 3 + ((waveOffset + domainIndex) % 4)),
+                          fill: '#5A00D6',
+                        },
+                        {
+                          level: 'High',
+                          count: Math.max(1, (liveCounts.incidents || 2) + (waveOffset % 2)),
+                          fill: '#F97316',
+                        },
+                        {
+                          level: 'Crit',
+                          count: waveOffset === 3 ? 1 : 0,
+                          fill: '#EF4444',
+                        },
+                      ];
+                      const baseScore = Math.round(selectedDomain.score);
+                      const liveControlData = [
+                        { stage: 'Elim', pct: Math.min(100, Math.max(92, baseScore - 2 + (waveOffset % 3))) },
+                        { stage: 'Min', pct: Math.min(100, Math.max(94, baseScore - 1 + ((waveOffset + 1) % 2))) },
+                        { stage: 'Isol', pct: Math.min(100, Math.max(95, baseScore - (waveOffset % 2))) },
+                        { stage: 'Train', pct: 100 },
+                      ];
+
+                      return (
+                        <div className="flex flex-col items-center w-full">
+                          <div
+                            className="w-full rounded-xl border-2 border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-sm"
+                            style={{
+                              boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px rgba(0, 198, 255, 0.6)',
+                            }}
+                          >
+                            <div className="mb-1 flex items-center justify-between px-1">
+                              <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white">
+                                <span
+                                  className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
+                                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                                />
+                                <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
+                                <span>LIVE INTERACTIVE RISK CHARTS · {selectedDomain.shortName.toUpperCase()}</span>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setRiskWaveTick((prev) => prev + 1)}
+                                className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
+                              >
+                                <span
+                                  className="h-1.5 w-1.5 rounded-full bg-[#10B981]"
+                                  style={{ boxShadow: '0 0 6px 2px #10B981' }}
+                                />
+                                <span>Pulse Live ↻</span>
+                              </button>
                             </div>
-                            <div className="h-10 w-full">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={MINI_RISK_SEVERITY_DATA} margin={{ top: 2, right: 2, left: -26, bottom: 0 }}>
-                                  <XAxis dataKey="level" fontSize={6.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
-                                  <YAxis fontSize={6} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
-                                  <Bar dataKey="count" radius={[2, 2, 0, 0]} barSize={9}>
-                                    {MINI_RISK_SEVERITY_DATA.map((entry) => (
-                                      <Cell key={entry.level} fill={entry.fill} />
-                                    ))}
-                                  </Bar>
-                                </BarChart>
-                              </ResponsiveContainer>
+
+                            <div className="grid grid-cols-2 gap-1.5 rounded-lg bg-white p-1">
+                              {/* Risk Chart 1: Dynamic Moving Severity Matrix */}
+                              <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                                <div className="flex items-center justify-between text-[7px] font-extrabold uppercase text-[#0A2B6D]">
+                                  <span className="inline-flex items-center gap-1">
+                                    <span
+                                      className="h-2 w-2 rounded-full border border-[#0A2B6D]/30 bg-white"
+                                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                                    />
+                                    <span>1. Risk Severity</span>
+                                  </span>
+                                  <span>{liveSeverityData.reduce((s, d) => s + d.count, 0)} Active</span>
+                                </div>
+                                <div className="h-12 w-full">
+                                  <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={liveSeverityData} margin={{ top: 3, right: 2, left: -26, bottom: 0 }}>
+                                      <XAxis dataKey="level" fontSize={6.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
+                                      <YAxis fontSize={6} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                                      <Tooltip />
+                                      <Bar
+                                        dataKey="count"
+                                        radius={[3, 3, 0, 0]}
+                                        barSize={11}
+                                        isAnimationActive={true}
+                                        animationDuration={550}
+                                      >
+                                        {liveSeverityData.map((entry) => (
+                                          <Cell key={entry.level} fill={entry.fill} />
+                                        ))}
+                                      </Bar>
+                                    </BarChart>
+                                  </ResponsiveContainer>
+                                </div>
+                              </div>
+
+                              {/* Risk Chart 2: Dynamic Moving Control Hierarchy Curve */}
+                              <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                                <div className="flex items-center justify-between text-[7px] font-extrabold uppercase text-[#0A2B6D]">
+                                  <span className="inline-flex items-center gap-1">
+                                    <span
+                                      className="h-2 w-2 rounded-full border border-[#0A2B6D]/30 bg-white"
+                                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                                    />
+                                    <span>2. Control (%)</span>
+                                  </span>
+                                  <span>{liveControlData[1].pct}%</span>
+                                </div>
+                                <div className="h-12 w-full">
+                                  <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={liveControlData} margin={{ top: 3, right: 2, left: -26, bottom: 0 }}>
+                                      <XAxis dataKey="stage" fontSize={6.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
+                                      <YAxis domain={[90, 100]} fontSize={6} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                                      <Tooltip formatter={(v) => `${v}%`} />
+                                      <Area
+                                        type="monotone"
+                                        dataKey="pct"
+                                        stroke="#0A2B6D"
+                                        strokeWidth={2}
+                                        fill="#00C6FF"
+                                        fillOpacity={0.45}
+                                        isAnimationActive={true}
+                                        animationDuration={550}
+                                      />
+                                    </AreaChart>
+                                  </ResponsiveContainer>
+                                </div>
+                              </div>
                             </div>
                           </div>
-
-                          {/* Risk Chart 2 (50% Reduced Height h-10) */}
-                          <div className="rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5">
-                            <div className="text-[7px] font-extrabold uppercase text-[#0A2B6D]">
-                              2. Control (%)
-                            </div>
-                            <div className="h-10 w-full">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={MINI_RISK_CONTROL_DATA} margin={{ top: 2, right: 2, left: -26, bottom: 0 }}>
-                                  <XAxis dataKey="stage" fontSize={6.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
-                                  <YAxis domain={[90, 100]} fontSize={6} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
-                                  <Area
-                                    type="monotone"
-                                    dataKey="pct"
-                                    stroke="#0A2B6D"
-                                    strokeWidth={1.5}
-                                    fill="#00C6FF"
-                                    fillOpacity={0.35}
-                                  />
-                                </AreaChart>
-                              </ResponsiveContainer>
-                            </div>
-                          </div>
+                          <div className="h-1 w-6 bg-[#0A2B6D]" />
+                          <div
+                            className="h-1 w-12 rounded-full border border-[#0A2B6D]"
+                            style={{ background: TOP_BORDER_GRADIENT }}
+                          />
                         </div>
-                      </div>
-                      <div className="h-1 w-6 bg-[#0A2B6D]" />
-                      <div
-                        className="h-1 w-12 rounded-full border border-[#0A2B6D]"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      />
-                    </div>
+                      );
+                    })()}
 
-                    {/* 5. LEFT (CURRENT WRITING) & RIGHT (6 DIGITAL LIGHT LIVE TRACKERS) — 50% SMALLER & APP-DESIGN COLOUR OUTSIDE WORDS */}
+                    {/* 5. LEFT (CURRENT WRITING) & RIGHT (6 DIGITAL LIGHT LIVE TRACKERS) — WITH WHITE LIGHTS ON TITLES */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 items-stretch">
                       {/* Left Column: Current Writing in Dark Blue */}
                       <div
@@ -971,6 +1073,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       >
                         <div className="flex w-full flex-col justify-between rounded-[6px] bg-white p-1.5 text-left space-y-1">
                           <div className="flex items-center gap-1 border-b border-[#0A2B6D]/15 pb-0.5">
+                            <span
+                              className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                              style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                            />
                             <SelectedIcon className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
                             <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#0A2B6D] truncate">
                               {selectedDomain.shortName} Governance
@@ -999,15 +1105,19 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         </div>
                       </div>
 
-                      {/* Right Column: 6 Digital Light Live Trackers */}
+                      {/* Right Column: 6 Digital Light Live Trackers With White Light on Title */}
                       <div
                         className="flex rounded-lg p-[2.5px] shadow-2xs"
                         style={{ background: getHeaderView(5) }}
                       >
                         <div className="flex w-full flex-col justify-between rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
                           <div className="flex items-center justify-between border-b border-[#0A2B6D]/15 pb-0.5">
-                            <span className="text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                              Digital Light Live Trackers
+                            <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                              <span
+                                className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                                style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                              />
+                              <span>Digital Light Live Trackers</span>
                             </span>
                             <span className="text-[7px] font-extrabold text-[#0A2B6D]">6 LIVE</span>
                           </div>
@@ -1137,10 +1247,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       {/* Visual Analytics (Charts Reduced by 50%) & Predictive 90/60/30/21/14-Day Expiry Radar (Writing Moved to Left Side & App-Design Colour Between Side Border & Words) */}
       {!compact && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
-          {/* Chart 1: 6-Month Business Health Trajectory (Reduced by 50%) */}
+          {/* Chart 1: 6-Month Business Health Trajectory With Glowing White Lights */}
           <div
-            className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-2xs"
-            style={{ background: getHeaderView(0) }}
+            className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-sm"
+            style={{
+              background: getHeaderView(0),
+              boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px rgba(0, 198, 255, 0.45)',
+            }}
           >
             <div
               className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
@@ -1150,10 +1263,18 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 className="gradient-brand flex min-h-[24px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-white whitespace-nowrap"
                 style={{ background: getHeaderView(0), color: '#FFFFFF' }}
               >
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                />
                 <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span className="truncate text-[9px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
                   6-Month Compliance vs. Business Health
                 </span>
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                />
               </div>
 
               <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">
@@ -1185,10 +1306,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </div>
           </div>
 
-          {/* Chart 2: 8-Domain Benchmark Score Comparison (Reduced by 50%) */}
+          {/* Chart 2: 8-Domain Benchmark Score Comparison With Glowing White Lights */}
           <div
-            className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-2xs"
-            style={{ background: getHeaderView(2) }}
+            className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-sm"
+            style={{
+              background: getHeaderView(2),
+              boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px rgba(0, 198, 255, 0.45)',
+            }}
           >
             <div
               className="flex w-full flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
@@ -1198,10 +1322,18 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 className="gradient-brand flex min-h-[24px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-white whitespace-nowrap"
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
               >
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                />
                 <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span className="truncate text-[9px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
                   8-Domain Compliance Benchmark (%)
                 </span>
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                />
               </div>
 
               <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold text-[#0072FF] whitespace-nowrap">
