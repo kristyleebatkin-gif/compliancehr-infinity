@@ -51,10 +51,10 @@ const PACKS = [
     priceMain: '$760',
     priceSuffix: 'per month',
     subtitle:
-      'Per month, up to 20 users · Includes Elite Package Tokens, valued at $160 per a month · Includes full access to ComplianceHR app',
+      'Per month, up to 20 users · Includes Elite Package Tokens, valued at $160 per a month · Full access to ComplianceHR app, full access to all documents, 1,200 message credits, 50,000 integration credits & support',
     bullets: [
-      '1. Includes Elite Package Tokens valued at $160 per a month (2,500 Message & 20,000 Integration Credits)',
-      '2. Includes full access to ComplianceHR app & 356 Mandatory Verification Checkpoints',
+      '1. Includes Elite Package Tokens valued at $160 per a month (1,200 Message Credits & 50,000 Integration Credits)',
+      '2. Full access to ComplianceHR app, full access to all documents & dedicated support',
       '3. All 46 Connected Modules + Dual Interactive Office & Profile Workspace Views',
       '4. Smart Rostering, NDIS Price-Guide Invoicing, Payroll & 24h & 5d Incident Timers',
       '5. 14-Day $0 Upfront Free Trial + Consent-Gated External NDIS Auditor Portal',
@@ -64,7 +64,7 @@ const PACKS = [
       'Up to 20 Users: $760 per a month · 21–30 Users: $820 per a month',
       '31–40 Users: $920 per a month · 41–50 Users: $999 per a month',
       '51–100 Users: $1,100 per a month · 101+ Users: $1,220 per a month',
-      'Includes full access to ComplianceHR app & Elite Package Tokens ($160/mo value)',
+      'Full access to app & all documents · 1,200 message credits · 50,000 integration credits · Support',
     ],
     primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
     secondaryCta: { label: 'View All 6 User Tiers', href: '#pricing' },
@@ -348,13 +348,13 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 icon: Sparkles,
                 reasons: [
                   {
-                    title: 'AI Smart-Fill & +$160 Elite Included',
-                    sub: '2,500 Message + 20,000 Integration Credits',
-                    detail: 'Every subscription tier includes the Elite AI & Automation plan built right into the price.',
+                    title: 'AI Smart-Fill & $160 Elite Tokens Included',
+                    sub: '1,200 Message + 50,000 Integration Credits & Support',
+                    detail: 'Every subscription tier includes full access to all documents, Elite Package Tokens ($160/mo value) & support.',
                     points: [
-                      '1-Click Smart-Fill across forms, audits & letters',
-                      'AI Assistant for instant policy & NDIS answers',
-                      '65+ live automated workflows running 24/7',
+                      'Full access to ComplianceHR app & all documents',
+                      '1,200 message credits & 50,000 integration credits',
+                      'Dedicated support & 65+ live automated workflows',
                     ],
                   },
                   {

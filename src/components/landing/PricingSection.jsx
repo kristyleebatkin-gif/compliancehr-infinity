@@ -17,7 +17,7 @@ const TOP_BORDER_GRADIENT =
 const UNIFORM_SPRAY_BG =
   'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
 
-// Updated Monthly Tier Prices ($760, $820, $920, $999, $1,100, $1,220) — No Yearly Sums, Includes Elite Package Tokens ($160/mo) & Full Access to ComplianceHR App
+// Updated Monthly Tier Prices ($760, $820, $920, $999, $1,100, $1,220) — No Yearly Sums, Includes Elite Package Tokens ($160/mo), Full Access to App & All Documents, 1,200 Message Credits, 50,000 Integration Credits & Support
 export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-20',
@@ -29,15 +29,15 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 760,
     priceLabel: '$760 per a month',
-    messageCredits: '2,500 message credits / mo',
-    integrationCredits: '20,000 integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     featured: true,
     benefits: [
-      'Includes full access to ComplianceHR app (all 46 live modules)',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Dedicated compliance & technical support included',
       'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
-      'Employee & Participant Profiles, NDIS Screening & 3-Part Consents',
-      '16 Communication Modulars, Shared To-Do Command & 1-Click Audit Packs',
       '14-Day Free Trial — Test every module live with your team',
     ],
   },
@@ -51,15 +51,15 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 820,
     priceLabel: '$820 per a month',
-    messageCredits: '2,500 message credits / mo',
-    integrationCredits: '20,000 integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app for 21–30 users',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
-      'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Dedicated compliance & technical support included',
       'Smart Rostering, Shift Notes, NDIS Price Guide Invoicing & Payroll',
       '24h / 5d NDIS Reportable Incident Timers, Risk Matrix & Take-5 Checks',
-      'HR Paperwork Hub, LMS Training Academy & AI Course/Quiz Builder',
     ],
   },
   {
@@ -72,15 +72,15 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 920,
     priceLabel: '$920 per a month',
-    messageCredits: '2,500 message credits / mo',
-    integrationCredits: '20,000 integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app for 31–40 users',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
-      'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Dedicated compliance & technical support included',
       'Automated 30-Action & 30-Completed-Task PDF/CSV Audit Batch Reports',
       'Company Safe, Smart Document Vault, Read-Receipts & Expiry Calendars',
-      'Staff ID Badge Studio, Key Contacts & Automated Compliance Reminders',
     ],
   },
   {
@@ -93,15 +93,15 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 999,
     priceLabel: '$999 per a month',
-    messageCredits: '2,500 message credits / mo',
-    integrationCredits: '20,000 integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app for 41–50 users',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
-      'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Dedicated compliance & technical support included',
       'Multi-team Rostering, Labour Forecasting, Coverage Heatmap & Exceptions',
       'Quotes, Receipt Scanner, Bank Reconciliation & 3-Way Procurement Match',
-      'Consent-gated External NDIS Auditor Portal & Weekly Board Reports',
     ],
   },
   {
@@ -114,14 +114,14 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 1100,
     priceLabel: '$1,100 per a month',
-    messageCredits: '2,500+ message credits / mo',
-    integrationCredits: '20,000+ integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app for 51–100 users',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
-      'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Dedicated compliance & technical support included',
       '65+ Live Automated Workflows & 100+ Server Functions running 24/7',
-      'Departmental Compliance Dashboards, KPI Auto-Calc & Risk Heatmaps',
       'Full HR File Completeness Tracking, 360° Appraisals & Volunteer Hub',
     ],
   },
@@ -135,15 +135,15 @@ export const COMPLIANCE_HR_PACKAGES = [
     eliteAddon: 160,
     monthly: 1220,
     priceLabel: '$1,220 per a month',
-    messageCredits: '2,500+ message credits / mo',
-    integrationCredits: '20,000+ integration credits / mo',
+    messageCredits: '1,200 message credits / mo',
+    integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app for 101+ users',
+      'Includes full access to ComplianceHR app & full access to all documents',
       'Includes Elite Package Tokens, valued at $160 per a month',
-      'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
+      '1,200 message credits & 50,000 integration credits per month',
+      'Priority onboarding, bulk intake migration & dedicated compliance support',
       'Unlimited Multi-Site Governance, Auditor Portal & Executive Wall Scenes',
       'Custom Modular Screen & Data Selector across all organisational branches',
-      'Priority onboarding, bulk intake migration & dedicated compliance support',
     ],
   },
 ];
@@ -152,22 +152,22 @@ export const CORE_PLATFORM_BENEFITS = [
   {
     icon: ShieldCheck,
     title: 'Smart Enhanced All-In-One Elite Package',
-    desc: 'Every tier includes the Elite Plan (2,500 message credits & 20,000 integration credits) plus the Master Compliance Audit Suite.',
+    desc: 'Every tier includes Elite Package Tokens valued at $160/mo (1,200 message credits & 50,000 integration credits), full access to all documents & support.',
   },
   {
     icon: ClipboardCheck,
-    title: 'Master Compliance Audit Suite Included',
-    desc: 'Both ComplianceHR Infinity Governance (CHR-AUD-001) & Workforce Operations (CHR-AUD-002) 11-page, 17-category, 356-checkpoint audit documents included.',
+    title: 'Full Access to All Documents Included',
+    desc: 'Complete 125+ NDIS & Aged Care documents plus both CHR-AUD-001 & CHR-AUD-002 11-page, 17-category, 356-checkpoint audit suites included.',
   },
   {
     icon: Layers,
-    title: 'All 46 Connected Modules + Dual Views',
+    title: 'Full Access to All 46 Live App Modules',
     desc: 'Switch seamlessly between the Enhanced Executive Office View and General Profile View with custom screen selectors.',
   },
   {
     icon: Zap,
-    title: '14-Day Free Trial (Full Access Mode)',
-    desc: 'Build and test your application with full access, then scale into the Smart Enhanced All-In-One tier that matches your team size.',
+    title: '14-Day Free Trial & Dedicated Support',
+    desc: 'Experience full access to the ComplianceHR app, all documents, and dedicated compliance support from day one.',
   },
   {
     icon: Lock,
@@ -176,8 +176,8 @@ export const CORE_PLATFORM_BENEFITS = [
   },
   {
     icon: RefreshCw,
-    title: '65+ Workflows & 100+ Server Functions',
-    desc: '20,000 integration credits power automated NDIS timers, expiry scans, shift alerts, 30-action reports, and AI copilots.',
+    title: '50,000 Integration & 1,200 Message Credits',
+    desc: '50,000 integration credits and 1,200 message credits power automated NDIS timers, expiry scans, shift alerts, 30-action reports, and AI copilots.',
   },
 ];
 
@@ -216,7 +216,7 @@ export default function PricingSection() {
                   className="mx-auto text-center text-xs sm:text-sm md:text-base font-extrabold text-black"
                   style={{ color: '#000000' }}
                 >
-                  Every user tier includes 2,500 Message Credits, 20,000 Integration Credits, and the Master Compliance Audit Checklist (CHR-AUD-001 &amp; CHR-AUD-002).
+                  Every user tier includes full access to the ComplianceHR app, full access to all documents, 1,200 Message Credits, 50,000 Integration Credits, dedicated support, and Elite Package Tokens valued at $160 per a month.
                 </p>
               </div>
             </div>

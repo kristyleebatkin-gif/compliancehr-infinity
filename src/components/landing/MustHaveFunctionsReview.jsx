@@ -61,8 +61,8 @@ export const WHAT_YOU_GET_ITEMS = [
   },
   {
     title: 'Up to 20 Users ($760/mo) to 101+ Users',
-    included: 'Includes Full Access to ComplianceHR App',
-    detail: 'Includes Elite Package Tokens valued at $160 per a month (2,500 msgs & 20k credits).',
+    included: 'Full Access to App, All Documents & Support',
+    detail: 'Includes Elite Package Tokens ($160/mo value): 1,200 message credits, 50,000 integration credits & support.',
   },
   {
     title: '1-Click Smart-Fill Auto-Branding',
@@ -182,7 +182,7 @@ export const MUST_HAVE_PILLARS = [
     id: 'automation-engine',
     badge: 'PILLAR 8 · 100+ FUNCTIONS',
     title: '8. 24/7 Autonomous Compliance Engine & AI Copilots',
-    subtitle: 'Powered by 2,500 Message Credits & 20,000 Integration Credits on Elite Pack',
+    subtitle: 'Powered by 1,200 Message Credits, 50,000 Integration Credits & Dedicated Support',
     icon: Cpu,
     items: [
       '65+ live automated workflows running scheduled expiry scans & alerts',
@@ -256,13 +256,13 @@ export default function MustHaveFunctionsReview() {
         <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
             { val: `${MODULE_DIRECTORY.length} Modules`, label: 'From $760/mo' },
-            { val: '17 Categories', label: '356 Checkpoints' },
+            { val: 'All Documents', label: 'Full Access Incl.' },
             { val: '2 Editions', label: 'CHR-AUD 001 & 002' },
             { val: '$999 / $125m', label: '125+ Docs Suite' },
             { val: '$160/mo Value', label: 'Elite Tokens Incl.' },
-            { val: '100+ Functions', label: '20k Credits/mo' },
-            { val: '65+ Workflows', label: '2,500 Msgs/mo' },
-            { val: '14-Day Trial', label: 'Full App Access' },
+            { val: '50,000 Credits', label: 'Integration / mo' },
+            { val: '1,200 Credits', label: 'Message / mo' },
+            { val: 'Full Support', label: '& 14-Day Trial' },
           ].map((stat, idx) => {
             const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
             return (
