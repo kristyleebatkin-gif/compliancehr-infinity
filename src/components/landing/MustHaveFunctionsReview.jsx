@@ -347,47 +347,31 @@ export default function MustHaveFunctionsReview() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-[7px] bg-white px-2.5 py-1.5 text-center">
-                        {/* ComplianceHR Infinity in Compliance Colours */}
-                        <div className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wider">
-                          <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            Compliance
-                          </span>
-                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            HR
-                          </span>{' '}
-                          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                            Infinity
-                          </span>
+                        <div className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                          ComplianceHR Infinity
                         </div>
 
-                        {/* $ Amounts in ComplianceHR Colours on White Background */}
-                        <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight">
-                          <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                        <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight text-[#0A2B6D]">
+                          <span className="block text-[#0A2B6D]">
                             $760 per a month
                           </span>
-                          <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                          <span className="block text-[#0A2B6D]">
                             or $999 Outright Documents
                           </span>
                         </div>
 
-                        <div className="text-[9px] font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                        <div className="text-[9px] font-extrabold text-[#0A2B6D]">
                           or $125 per a month subscription, 24 month contract
                         </div>
 
-                        <div
-                          className="w-full rounded-lg p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        <div className="w-full rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5">
+                          <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                             Full access to document suite, Document access, tailor business details, only.
                           </p>
                         </div>
 
-                        <div
-                          className="w-full rounded-lg p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <p className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        <div className="w-full rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5">
+                          <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
                             Our Elite package includes full access to our application, a resource to complete audits easier, simpler and faster.
                           </p>
                         </div>
@@ -488,23 +472,16 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* 50% Smaller Selected Pillar Bar — Spray Between Borders & White Inside Writing Area */}
-        <div
-          className="w-full rounded-xl p-[2.5px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-1.5 rounded-[9px] p-1.5"
-            style={{ background: SPRAY_BGS[0] }}
-          >
-            <div className="rounded-lg p-[2px] shadow-2xs" style={{ background: getHeaderView(0) }}>
+        {/* Selected Pillar Bar — Pure White Inside Text Boxes */}
+        <div className="w-full rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs">
+          <div className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-1.5 rounded-[9px] bg-white">
+            <div className="rounded-lg border border-[#0A2B6D]/30 bg-white shadow-2xs">
               <button
                 type="button"
                 onClick={() => setSelectedPillar('all')}
-                className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
+                className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center text-[8px] font-extrabold transition-all ${
                   selectedPillar === 'all' ? 'ring-2 ring-[#FF2E9A]' : ''
                 }`}
-                style={{ background: SPRAY_BGS[0] }}
               >
                 <div
                   className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
@@ -535,16 +512,14 @@ export default function MustHaveFunctionsReview() {
               return (
                 <div
                   key={p.id}
-                  className="rounded-lg p-[2px] shadow-2xs"
-                  style={{ background: getHeaderView(idx + 1) }}
+                  className="rounded-lg border border-[#0A2B6D]/30 bg-white shadow-2xs"
                 >
                   <button
                     type="button"
                     onClick={() => setSelectedPillar(p.id)}
-                    className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] p-1 text-center text-[8px] font-extrabold transition-all ${
+                    className={`flex h-full min-h-[28px] w-full flex-col items-center justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center text-[8px] font-extrabold transition-all ${
                       active ? 'ring-2 ring-[#FF2E9A]' : ''
                     }`}
-                    style={{ background: SPRAY_BGS[(idx + 1) % SPRAY_BGS.length] }}
                   >
                     <div
                       className="gradient-brand flex w-full items-center justify-center gap-0.5 rounded px-1 py-0.5 text-[7.5px] font-extrabold text-white"
@@ -563,92 +538,73 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Reduced & Centred 8 Must-Have Pillars Grid — Spray Between Borders & Pure White Inside Writing Boxes */}
+        {/* Reduced & Centred 8 Must-Have Pillars Grid — Pure White Inside Writing Boxes */}
         <div className="mx-auto grid w-full grid-cols-2 sm:grid-cols-4 gap-1.5 text-center items-stretch justify-center">
           {visiblePillars.map((pillar, pIdx) => {
             const Icon = pillar.icon;
-            const sprayBg = SPRAY_BGS[pIdx % SPRAY_BGS.length];
             return (
               <div
                 key={pillar.id}
-                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl p-[2.5px] shadow-2xs text-center"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="mx-auto flex h-full w-full flex-col justify-between rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs text-center space-y-1"
               >
-                {/* Pink/Blue/Purple Spray Area Between Outer Border & Inner Writing Borders */}
+                {/* Top Pillar Status Bar */}
                 <div
-                  className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 space-y-1 text-center"
-                  style={{ background: sprayBg }}
+                  className="gradient-brand flex h-[18px] w-full items-center justify-between rounded-full px-2 text-white"
+                  style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
                 >
-                  {/* Top Pillar Status Bar */}
-                  <div
-                    className="gradient-brand flex h-[18px] w-full items-center justify-between rounded-full px-2 text-white"
-                    style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider"
+                    style={{ color: getSymbolView(pIdx).iconColor }}
                   >
-                    <span
-                      className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold uppercase tracking-wider"
-                      style={{ color: getSymbolView(pIdx).iconColor }}
-                    >
-                      Pillar 0{pIdx + 1}
-                    </span>
-                    <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                      5G · 100%
+                    Pillar 0{pIdx + 1}
+                  </span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
+                    5G · 100%
+                  </span>
+                </div>
+
+                {/* Inner Content */}
+                <div className="flex w-full flex-1 flex-col items-center justify-between space-y-0.5 text-center">
+                  {/* App-Coloured Pillar Header Bar */}
+                  <div
+                    className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-white"
+                    style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
+                  >
+                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="text-center text-white" style={{ color: '#FFFFFF' }}>
+                      {pillar.title}
                     </span>
                   </div>
 
-                  {/* Inner Content */}
-                  <div className="flex w-full flex-1 flex-col items-center justify-between space-y-0.5 text-center">
-                    {/* App-Coloured Pillar Header Bar */}
-                    <div
-                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-white"
-                      style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                    >
-                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                      <span className="text-center text-white" style={{ color: '#FFFFFF' }}>
-                        {pillar.title}
-                      </span>
-                    </div>
-
-                    {/* 4 Centred Compact Bullet Rows With Pure White Writing Boxes */}
-                    <ul className="grid w-full flex-1 grid-cols-1 grid-rows-4 gap-0.5 text-center">
-                      {pillar.items.slice(0, 4).map((item, iIdx) => {
-                        const idx = pIdx * 3 + iIdx;
-                        return (
-                          <li
-                            key={item}
-                            className="flex min-h-[20px] rounded p-[1px]"
-                            style={{ background: getHeaderView(idx) }}
-                          >
-                            <div className="flex h-full w-full items-center justify-center gap-1 rounded-[3px] bg-white px-1 py-0.5 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
-                              <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
-                              <span className="flex-1 text-center text-[#0A2B6D] line-clamp-1">
-                                {item}
-                              </span>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  {/* Minimised Centred Footer Bar */}
-                  <div
-                    className="w-full rounded-full p-[1px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex h-[18px] items-center justify-between rounded-full bg-white px-1.5">
-                      <span className="text-[7px] font-extrabold text-[#0A2B6D]">
-                        $760/mo
-                      </span>
-                      <Link
-                        to="/register"
-                        className="gradient-brand inline-flex items-center gap-0.5 rounded-full px-1.5 py-0 text-[7px] font-extrabold text-white"
-                        style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
+                  {/* 4 Centred Compact Bullet Rows With Pure White Writing Boxes */}
+                  <ul className="grid w-full flex-1 grid-cols-1 grid-rows-4 gap-0.5 text-center">
+                    {pillar.items.slice(0, 4).map((item) => (
+                      <li
+                        key={item}
+                        className="flex min-h-[20px] items-center justify-center gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]"
                       >
-                        <span style={{ color: '#FFFFFF' }}>Activate</span>
-                        <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                      </Link>
-                    </div>
-                  </div>
+                        <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
+                        <span className="flex-1 text-center text-[#0A2B6D] line-clamp-1">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Minimised Centred Footer Bar */}
+                <div className="flex h-[18px] w-full items-center justify-between rounded-full border border-[#0A2B6D]/25 bg-white px-1.5">
+                  <span className="text-[7px] font-extrabold text-[#0A2B6D]">
+                    $760/mo
+                  </span>
+                  <Link
+                    to="/register"
+                    className="gradient-brand inline-flex items-center gap-0.5 rounded-full px-1.5 py-0 text-[7px] font-extrabold text-white"
+                    style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
+                  >
+                    <span style={{ color: '#FFFFFF' }}>Activate</span>
+                    <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                  </Link>
                 </div>
               </div>
             );

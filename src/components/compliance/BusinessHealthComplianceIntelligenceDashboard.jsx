@@ -577,11 +577,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     : '0 0 8px 2px rgba(255, 255, 255, 0.85)',
               }}
             >
-              {/* Spray Between Outer Border & White Writing Boxes */}
-              <div
-                className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
+              <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1 text-center">
                 {/* App-Design Coloured Header Bar */}
                 <div
                   className="gradient-brand flex w-full items-center justify-between gap-1 rounded-full px-1.5 py-0.5 whitespace-nowrap text-white"
@@ -605,38 +601,28 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>SYS READY</span>
                 </div>
 
-                {/* Writing Box 1: Pure White Background Where the Writing Is */}
-                <div
-                  className="w-full rounded-[6px] p-[1.5px]"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
-                    <div className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight text-[#0A2B6D]">
-                      <span
-                        className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                        style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
-                      />
-                      <span>{k.label}</span>
-                    </div>
-                    <div className="flex items-baseline justify-center gap-1">
-                      <span className="font-editorial text-xs font-extrabold leading-none text-[#0A2B6D]">
-                        {k.value}
-                      </span>
-                      <span className="text-[7px] font-extrabold text-[#0A2B6D]">
-                        {k.badge}
-                      </span>
-                    </div>
+                {/* Writing Box 1: Pure White Background */}
+                <div className="flex min-h-[28px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center">
+                  <div className="flex items-center justify-center gap-1 text-[7.5px] font-extrabold uppercase leading-tight text-[#0A2B6D]">
+                    <span
+                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
+                    />
+                    <span>{k.label}</span>
+                  </div>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="font-editorial text-xs font-extrabold leading-none text-[#0A2B6D]">
+                      {k.value}
+                    </span>
+                    <span className="text-[7px] font-extrabold text-[#0A2B6D]">
+                      {k.badge}
+                    </span>
                   </div>
                 </div>
 
-                {/* Writing Box 2: Pure White Background Where the Writing Is */}
-                <div
-                  className="w-full rounded-[6px] p-[1.5px]"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <div className="flex min-h-[20px] w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                    {k.sub}
-                  </div>
+                {/* Writing Box 2: Pure White Background */}
+                <div className="flex min-h-[20px] w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                  {k.sub}
                 </div>
               </div>
             </div>
@@ -714,12 +700,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           : '0 0 8px 2px rgba(255, 255, 255, 0.9)',
                       }}
                     >
-                      {/* Spray Between Borders & Pure White Inside Writing Boxes */}
                       <button
                         type="button"
                         onClick={() => setSelectedDomainId(dom.id)}
-                        className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] p-1 text-center"
-                        style={{ background: UNIFORM_SPRAY_BG }}
+                        className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1 text-center"
                       >
                         {/* Live Tracker at Top of Tile Fitted on One Line (+ Yellow Light on Governance) */}
                         <div className="flex w-full items-center justify-between gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 whitespace-nowrap">
@@ -757,43 +741,33 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           </span>
                         </div>
 
-                        {/* Writing Box 1: Pure White Inside Writing Box */}
-                        <div
-                          className="w-full rounded-[6px] p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
-                            <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                              <span
-                                className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                                style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
-                              />
-                              <span>{dom.name}</span>
-                            </div>
-                            <div className="text-[7px] font-bold text-[#0A2B6D] leading-tight">
-                              {dom.standard}
-                            </div>
+                        {/* Writing Box 1: Pure White */}
+                        <div className="flex min-h-[30px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center">
+                          <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                            <span
+                              className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
+                              style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
+                            />
+                            <span>{dom.name}</span>
+                          </div>
+                          <div className="text-[7px] font-bold text-[#0A2B6D] leading-tight">
+                            {dom.standard}
                           </div>
                         </div>
 
-                        {/* Writing Box 2: Pure White Inside Writing Box */}
-                        <div
-                          className="w-full rounded-[6px] p-[1.5px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[5px] bg-white px-1.5 py-0.5 text-center">
-                            <div className="h-1 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
-                              <div
-                                className="h-full rounded-full"
-                                style={{
-                                  width: `${dom.score}%`,
-                                  background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
-                                }}
-                              />
-                            </div>
-                            <div className="text-center text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                              {dom.metricValue}
-                            </div>
+                        {/* Writing Box 2: Pure White */}
+                        <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center">
+                          <div className="h-1 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
+                            <div
+                              className="h-full rounded-full"
+                              style={{
+                                width: `${dom.score}%`,
+                                background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
+                              }}
+                            />
+                          </div>
+                          <div className="text-center text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
+                            {dom.metricValue}
                           </div>
                         </div>
                       </button>
@@ -863,12 +837,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               ];
 
               return (
-                <div
-                  className="relative flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1.5 text-center space-y-1 overflow-hidden"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
+                <div className="relative flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white p-1.5 text-center space-y-1 overflow-hidden">
                   {/* Top Live Tracker + Spotlights Fitted on One Single Line */}
-                  <div className="flex w-full items-center justify-between gap-1.5 rounded-full bg-white px-2.5 py-0.5 whitespace-nowrap">
+                  <div className="flex w-full items-center justify-between gap-1.5 rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 whitespace-nowrap">
                     <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase text-[#0A2B6D]">
                       <span
                         className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D]/40 bg-[#EAB308]"
@@ -877,7 +848,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       <span>LIVE TRACKER · GOVERNANCE YELLOW LIT ✦</span>
                     </span>
                     <div className="flex items-center gap-1.5">
-                      <div className="h-1.5 w-14 overflow-hidden rounded-full border border-[#0A2B6D]/25 bg-[#F5F0FF]">
+                      <div className="h-1.5 w-14 overflow-hidden rounded-full border border-[#0A2B6D]/25 bg-white">
                         <div
                           className="h-full rounded-full"
                           style={{ width: `${selectedDomain.score}%`, background: '#EAB308' }}
@@ -890,7 +861,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   </div>
 
                   <div className="w-full space-y-1">
-                    {/* 1. SELECTED & NDIS GOVERNANCE BESIDE EACH OTHER IN ONE LINE & LIT UP IN YELLOW */}
+                    {/* 1. SELECTED & NDIS GOVERNANCE BESIDE EACH OTHER IN ONE LINE — PURE WHITE INSIDE TEXT BOX */}
                     <div
                       className="w-full rounded-xl p-[2.5px]"
                       style={{
@@ -898,13 +869,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         boxShadow: '0 0 14px 3px rgba(234, 179, 8, 0.95)',
                       }}
                     >
-                      <div
-                        className="flex min-h-[28px] w-full items-center justify-center gap-1.5 rounded-[9px] px-2.5 py-1 text-center whitespace-nowrap"
-                        style={{ background: '#EAB308', color: '#0A2B6D' }}
-                      >
+                      <div className="flex min-h-[28px] w-full items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1 text-center text-[#0A2B6D] whitespace-nowrap">
                         <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D] bg-white"
-                          style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #EAB308' }}
+                          className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D] bg-[#EAB308]"
+                          style={{ boxShadow: '0 0 8px 3px #EAB308' }}
                         />
                         <SelectedIcon className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
                         <span
@@ -917,14 +885,14 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     </div>
 
                     {/* 2. AI INSIGHT UNDER SELECTED HEADER (ONE LINE) */}
-                    <div className="flex w-full items-center justify-center gap-1 rounded-lg bg-white px-2 py-0.5 text-center whitespace-nowrap overflow-hidden">
+                    <div className="flex w-full items-center justify-center gap-1 rounded-lg border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-center whitespace-nowrap overflow-hidden">
                       <Sparkles className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
                       <span className="truncate text-[8.5px] font-extrabold text-[#0A2B6D]">
                         AI Insight: {selectedDomain.name} verified at {selectedDomain.score}% ({selectedDomain.metricValue}).
                       </span>
                     </div>
 
-                    {/* 3. ANNUAL GOVERNANCE LIGHT UP BRIGHT RED (ONE LINE) */}
+                    {/* 3. ANNUAL GOVERNANCE LIGHT UP BRIGHT RED — PURE WHITE INSIDE TEXT BOX */}
                     <div
                       className="w-full rounded-lg p-[2px]"
                       style={{
@@ -932,14 +900,14 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         boxShadow: '0 0 12px 2px rgba(239, 68, 68, 0.85)',
                       }}
                     >
-                      <div className="flex items-center justify-center gap-1.5 rounded-[6px] bg-[#EF4444] px-2 py-0.5 text-center text-white whitespace-nowrap overflow-hidden">
+                      <div className="flex items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[#0A2B6D] whitespace-nowrap overflow-hidden">
                         <span
-                          className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
-                          style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
+                          className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D] bg-[#EF4444]"
+                          style={{ boxShadow: '0 0 8px 2px #EF4444' }}
                         />
                         <span
-                          className="truncate text-[8px] font-extrabold uppercase tracking-wide text-white"
-                          style={{ color: '#FFFFFF' }}
+                          className="truncate text-[8px] font-extrabold uppercase tracking-wide text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
                         >
                           RED ALERT LIVE · {selectedDomain.ActionItems[0]}
                         </span>
@@ -1012,10 +980,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               </button>
                             </div>
 
-                            <div
-                              className="grid grid-cols-2 gap-1.5 rounded-lg p-1"
-                              style={{ background: UNIFORM_SPRAY_BG }}
-                            >
+                            <div className="grid grid-cols-2 gap-1.5 rounded-lg bg-white p-1">
                               {/* Risk Chart 1: Dynamic Moving Severity Matrix */}
                               <div className="rounded border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
                                 <div className="flex items-center justify-between text-[7px] font-extrabold uppercase text-[#0A2B6D]">
@@ -1139,11 +1104,8 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         className="flex rounded-lg p-[2.5px] shadow-2xs"
                         style={{ background: getHeaderView(5) }}
                       >
-                        <div
-                          className="flex w-full flex-col justify-between rounded-[6px] p-1.5 text-left space-y-0.5"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
-                          <div className="flex items-center justify-between rounded bg-white px-1.5 py-0.5">
+                        <div className="flex w-full flex-col justify-between rounded-[6px] bg-white p-1.5 text-left space-y-0.5">
+                          <div className="flex items-center justify-between rounded border border-[#0A2B6D]/15 bg-white px-1.5 py-0.5">
                             <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                               <span
                                 className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -1176,7 +1138,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                       }}
                                     />
                                   </div>
-                                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-slate-100">
+                                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-white border border-[#0A2B6D]/15">
                                     <div
                                       className="h-full rounded-full"
                                       style={{ width: `${rt.trackerPct}%`, background: TOP_BORDER_GRADIENT }}
@@ -1190,7 +1152,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       </div>
                     </div>
 
-                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — Spray Between Borders & Pure White Inside Writing Boxes */}
+                    {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — Pure White Inside Writing Boxes */}
                     <div className="grid grid-cols-3 gap-1.5 items-stretch">
                       {[
                         { tag: '01 · PHONE', val: '27 Oct · 24°C', to: null },
@@ -1202,10 +1164,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           className="rounded-lg p-[2px]"
                           style={{ background: getHeaderView(dIdx) }}
                         >
-                          <div
-                            className="flex h-full flex-col justify-between gap-0.5 rounded-[6px] p-1 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
+                          <div className="flex h-full flex-col justify-between gap-0.5 rounded-[6px] bg-white p-1 text-center">
                             <div
                               className="gradient-brand rounded px-1 py-0 text-[6.5px] font-extrabold uppercase text-white"
                               style={{ background: getHeaderView(dIdx + 1), color: '#FFFFFF' }}
@@ -1404,10 +1363,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             className="lg:col-span-4 flex rounded-xl border-2 border-[#0A2B6D] p-[2.5px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
             >
-            <div
-              className="relative flex w-full flex-col justify-between rounded-[9px] p-1.5 text-left space-y-1 overflow-hidden"
-              style={{ background: UNIFORM_SPRAY_BG }}
-            >
+            <div className="relative flex w-full flex-col justify-between rounded-[9px] bg-white p-1.5 text-left space-y-1 overflow-hidden">
               {/* One-Line Top Spotlight & Predictive Header */}
               <div
                 className="gradient-brand flex min-h-[24px] w-full items-center justify-between gap-1.5 rounded-full px-2.5 py-0.5 text-white whitespace-nowrap"
@@ -1524,13 +1480,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               }}
                             />
 
-                            <span
-                              className="shrink-0 rounded-full border border-[#0A2B6D] px-1.5 py-0 text-[7px] font-extrabold"
-                              style={{
-                                backgroundColor: al.lightHex === '#FFFFFF' ? '#FFFFFF' : al.lightHex,
-                                color: al.lightHex === '#FFFFFF' ? '#0A2B6D' : '#FFFFFF',
-                              }}
-                            >
+                            <span className="shrink-0 rounded-full border border-[#0A2B6D] bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
                               {al.horizon}
                             </span>
 

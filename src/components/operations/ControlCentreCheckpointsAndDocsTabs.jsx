@@ -24,7 +24,7 @@ export function MasterAudit356Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#5A00D6] bg-purple-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D]/30 bg-white p-2.5">
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-purple-950">
             Section 4 — Master Compliance Audit: All 17 Categories &amp; 356 Individual Checkpoints (CHK-001 to CHK-356)
@@ -200,7 +200,7 @@ export function DocumentControl98Tab({
 }) {
   return (
     <div className="p-3 space-y-2.5 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#FF2E9A] bg-amber-50/60 p-2.5" style={{ borderTopWidth: '4px' }}>
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D]/30 bg-white p-2.5">
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-amber-950">
             Section 5 &amp; 25 — Master Document &amp; Document Control Register (All 98 Reconciled Entries · DOC-001 to DOC-098)

@@ -187,15 +187,9 @@ function TodaysRosterPictureCard() {
             </Link>
           </div>
 
-          {/* Minimised Inner Flat Screen Display — Compact Roster Rows With Dark Blue Writing (#0A2B6D) */}
-          <div
-            className="flex-1 rounded-xl p-[1.5px]"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div
-              className="flex h-full flex-col justify-between gap-1 rounded-[8px] p-1"
-              style={{ background: UNIFORM_SPRAY_BG }}
-            >
+          {/* Minimised Inner Flat Screen Display — Pure White Inside Text Boxes */}
+          <div className="flex-1 rounded-xl bg-white p-1">
+            <div className="flex h-full flex-col justify-between gap-1 rounded-[8px] bg-white">
               <div className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/25 bg-white px-2 py-0.5">
                 <span
                   className="flex items-center gap-1 text-[8px] font-extrabold text-[#0A2B6D]"
@@ -213,29 +207,26 @@ function TodaysRosterPictureCard() {
               </div>
 
               <div className="grid grid-cols-1 gap-0.5">
-                {sampleRosterRows.map((row, idx) => (
+                {sampleRosterRows.map((row) => (
                   <div
                     key={row.shift}
-                    className="rounded p-[1px]"
-                    style={{ background: getHeaderView(idx) }}
+                    className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-left"
                   >
-                    <div className="flex items-center justify-between gap-1 rounded-[3px] bg-white px-1.5 py-0.5 text-left">
-                      <div className="min-w-0 truncate">
-                        <span
-                          className="text-[7.5px] font-extrabold text-[#0A2B6D]"
-                          style={{ color: '#0A2B6D' }}
-                        >
-                          {row.shift} · {row.staff} → {row.participant}
-                        </span>
-                      </div>
+                    <div className="min-w-0 truncate">
                       <span
-                        className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+                        className="text-[7.5px] font-extrabold text-[#0A2B6D]"
                         style={{ color: '#0A2B6D' }}
                       >
-                        <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
-                        {row.status}
+                        {row.shift} · {row.staff} → {row.participant}
                       </span>
                     </div>
+                    <span
+                      className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+                      style={{ color: '#0A2B6D' }}
+                    >
+                      <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
+                      {row.status}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -307,31 +298,23 @@ function CommunicationAndMailboxTabs() {
                 </span>
               </div>
 
-              <div
-                className="w-full rounded-lg p-[1.5px]"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <div
-                  className="w-full space-y-0.5 rounded-[5px] p-1 text-left"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
-                  {[
-                    { tag: 'Shift Note', text: 'Morning SIL handover signed off' },
-                    { tag: 'Broadcast', text: 'NDIS 2026 Standards briefing live' },
-                    { tag: 'Team Diary', text: '3 participant goal notes synced' },
-                    { tag: 'Inbox SLA', text: 'Zero overdue · 24h SLA active' },
-                  ].map((msg) => (
-                    <div
-                      key={msg.tag}
-                      className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white/80 px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
-                    >
-                      <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
-                        {msg.tag}
-                      </span>
-                      <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="w-full space-y-0.5 rounded-lg bg-white text-left">
+                {[
+                  { tag: 'Shift Note', text: 'Morning SIL handover signed off' },
+                  { tag: 'Broadcast', text: 'NDIS 2026 Standards briefing live' },
+                  { tag: 'Team Diary', text: '3 participant goal notes synced' },
+                  { tag: 'Inbox SLA', text: 'Zero overdue · 24h SLA active' },
+                ].map((msg) => (
+                  <div
+                    key={msg.tag}
+                    className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+                  >
+                    <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
+                      {msg.tag}
+                    </span>
+                    <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -380,10 +363,7 @@ function CommunicationAndMailboxTabs() {
             }}
           >
             <div className="flex flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1.5 text-center">
-              <div
-                className="flex w-full items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/20 px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
+              <div className="flex w-full items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]">
                 <div className="flex items-center gap-1">
                   <span
                     className="h-2 w-2 shrink-0 rounded-full border border-white"
@@ -407,10 +387,7 @@ function CommunicationAndMailboxTabs() {
                 </button>
               </div>
 
-              <div
-                className="flex w-full flex-col items-center justify-center rounded-md border border-[#0A2B6D]/20 px-1.5 py-0.5 text-center"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
+              <div className="flex w-full flex-col items-center justify-center rounded-md border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center">
                 <svg
                   viewBox="0 0 220 68"
                   className="h-10 w-full max-w-[165px]"

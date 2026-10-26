@@ -97,7 +97,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                     isAct ? 'ring-1 ring-[#FF2E9A]' : ''
                   }`}
                   style={{
-                    background: isAct ? getHeaderView(idx) : UNIFORM_SPRAY_BG,
+                    background: isAct ? getHeaderView(idx) : '#FFFFFF',
                     color: isAct ? '#FFFFFF' : '#0A2B6D',
                   }}
                 >
@@ -112,15 +112,9 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
           })}
         </div>
 
-        {/* Interactive Visual Stage — Framed in App-Design Border With Pink/Blue/Purple Spray & Dark Blue Writing */}
-        <div
-          className="w-full rounded-lg p-[1.5px]"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="flex flex-col items-center justify-between gap-1 rounded-[6px] px-2 py-1 text-center"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
+        {/* Interactive Visual Stage — Pure White Inside Text Box */}
+        <div className="w-full rounded-lg border border-[#0A2B6D]/25 bg-white">
+          <div className="flex flex-col items-center justify-between gap-1 rounded-[6px] bg-white px-2 py-1 text-center">
             {activeMode === 'drone' && (
               <div className="flex w-full flex-col items-center gap-0.5">
                 <svg

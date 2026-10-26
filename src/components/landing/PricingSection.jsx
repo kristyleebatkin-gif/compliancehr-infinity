@@ -313,10 +313,7 @@ export default function PricingSection() {
                     '0 0 18px 4px rgba(255, 255, 255, 0.98), 0 0 12px 2px rgba(0, 198, 255, 0.55)',
                 }}
               >
-                <div
-                  className="flex h-full w-full flex-col justify-between rounded-[12px] p-2 text-center space-y-1.5"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="flex h-full w-full flex-col justify-between rounded-[12px] bg-white p-2 text-center space-y-1.5">
                   <div className="flex flex-1 flex-col justify-between space-y-1.5">
                     {/* Glowing White Lights Bar at Top of Subscription Card */}
                     <div className="flex items-center justify-center gap-1.5">
@@ -334,99 +331,68 @@ export default function PricingSection() {
 
                     {/* 50% Smaller Top Header */}
                     <div
-                      className="w-full rounded-lg p-[2px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      className="gradient-brand flex min-h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center text-white"
+                      style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                     >
-                      <div
-                        className="gradient-brand flex min-h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center text-white"
-                        style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                      >
-                        <div className="flex items-center justify-center gap-1.5">
-                          <span
-                            className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(pIdx) }}
-                          >
-                            <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(pIdx).iconColor }} />
-                          </span>
-                          <span
-                            className="text-[10.5px] font-extrabold tracking-wide leading-tight text-white"
-                            style={{ color: '#FFFFFF' }}
-                          >
-                            {pkg.packageName}
-                          </span>
-                        </div>
-                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#0A2B6D]">
-                          {pkg.users}
+                      <div className="flex items-center justify-center gap-1.5">
+                        <span
+                          className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
+                          style={{ borderColor: getAppBorderView(pIdx) }}
+                        >
+                          <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(pIdx).iconColor }} />
+                        </span>
+                        <span
+                          className="text-[10.5px] font-extrabold tracking-wide leading-tight text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          {pkg.packageName}
                         </span>
                       </div>
+                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#0A2B6D]">
+                        {pkg.users}
+                      </span>
                     </div>
 
-                    {/* 50% Smaller Package Title & Monthly Price — White Background & Coloured Border */}
-                    <div
-                      className="w-full rounded-lg p-[2px] shadow-2xs"
-                      style={{ background: getHeaderView(pIdx) }}
-                    >
-                      <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] bg-white px-2 py-1 text-center">
-                        <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
-                          {pkg.name}
-                        </h3>
-                        <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
-                          ${pkg.monthly.toLocaleString()} per a month
-                        </span>
-                        <span className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
-                          Includes 100+ Tailored Docs (WHS, Risk, Incident, Medication, Intake, Policies &amp; Registers)
-                        </span>
-                      </div>
+                    {/* Package Title & Monthly Price — Pure White Inside Text Box */}
+                    <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
+                      <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
+                        {pkg.name}
+                      </h3>
+                      <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
+                        ${pkg.monthly.toLocaleString()} per a month
+                      </span>
+                      <span className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                        Includes 100+ Tailored Docs (WHS, Risk, Incident, Medication, Intake, Policies &amp; Registers)
+                      </span>
                     </div>
 
-                    {/* 50% Smaller Credit Pills — White Background, Coloured Border & Coloured Symbols */}
+                    {/* Credit Pills — Pure White Inside Text Boxes */}
                     <div className="grid grid-cols-2 gap-1">
-                      <div
-                        className="rounded-lg p-[2px] shadow-2xs"
-                        style={{ background: getHeaderView(pIdx + 1) }}
-                      >
-                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
-                          <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx).iconColor }} />
-                          <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                            {pkg.messageCredits}
-                          </span>
-                        </div>
+                      <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                        <Zap className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                          {pkg.messageCredits}
+                        </span>
                       </div>
-                      <div
-                        className="rounded-lg p-[2px] shadow-2xs"
-                        style={{ background: getHeaderView(pIdx + 2) }}
-                      >
-                        <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] bg-white px-1.5 py-0.5">
-                          <Layers className="h-2.5 w-2.5 shrink-0" style={{ color: getSymbolView(pIdx + 1).iconColor }} />
-                          <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                            {pkg.integrationCredits}
-                          </span>
-                        </div>
+                      <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
+                        <Layers className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                          {pkg.integrationCredits}
+                        </span>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Benefits List — White Background & Coloured Border */}
+                    {/* Benefits List — Pure White Inside Text Boxes */}
                     <ul className="grid flex-1 grid-cols-1 gap-1 pt-0.5">
-                      {pkg.benefits.slice(0, 4).map((b, bIdx) => {
-                        const sym = getSymbolView(pIdx * 2 + bIdx);
-                        return (
-                          <li
-                            key={b}
-                            className="flex min-h-[26px] rounded-lg p-[2px] shadow-2xs"
-                            style={{ background: getHeaderView(pIdx + bIdx) }}
-                          >
-                            <div className="flex h-full w-full items-center gap-1.5 rounded-[6px] bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                              <span
-                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                                style={{ borderColor: getAppBorderView(pIdx * 2 + bIdx) }}
-                              >
-                                <Check className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
-                              </span>
-                              <span className="flex-1 text-center text-[#0A2B6D]">{b}</span>
-                            </div>
-                          </li>
-                        );
-                      })}
+                      {pkg.benefits.slice(0, 4).map((b) => (
+                        <li
+                          key={b}
+                          className="flex min-h-[26px] items-center gap-1.5 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <Check className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                          <span className="flex-1 text-center text-[#0A2B6D]">{b}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
@@ -463,10 +429,7 @@ export default function PricingSection() {
                 className="flex h-full rounded-2xl p-[3px] shadow-2xs"
                 style={{ background: getHeaderView(idx) }}
               >
-                <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] p-1.5 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] bg-white p-1.5 text-center">
                   {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
                   <div
                     className="gradient-brand flex min-h-[22px] w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
@@ -501,16 +464,11 @@ export default function PricingSection() {
                     </span>
                   </div>
 
-                  {/* Pure White Inside Writing Box With Coloured Border & Dark Blue Writing */}
-                  <div
-                    className="w-full flex-1 rounded-lg p-[2px]"
-                    style={{ background: getHeaderView(idx + 2) }}
-                  >
-                    <div className="flex h-full items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
-                      <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                        {b.desc}
-                      </p>
-                    </div>
+                  {/* Pure White Inside Writing Box */}
+                  <div className="flex w-full flex-1 items-center justify-center rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-1 text-center">
+                    <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                      {b.desc}
+                    </p>
                   </div>
                 </div>
               </div>

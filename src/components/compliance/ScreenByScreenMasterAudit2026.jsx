@@ -579,33 +579,19 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
       {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
       <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
-      {/* Search Screens Bar & Centered App-Coloured Filter Tiles Under Search */}
-      <div
-        className="w-full rounded-2xl p-[3.5px] shadow-sm"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-        }}
-      >
-        <div className="flex flex-col gap-3 rounded-[13px] bg-white p-3.5 text-center">
-          {/* Search Bar Inside App Design Coloured Border */}
-          <div
-            className="w-full rounded-full p-[3px] shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-            }}
-          >
-            <div className="relative flex w-full items-center rounded-full bg-white">
-              <Search className="pointer-events-none absolute left-4 h-4 w-4 text-[#5A00D6]" />
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search screens, topics, 2026 Smart-Fill documents, or audit tasks…"
-                className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-center text-xs sm:text-sm font-extrabold text-[#5A00D6] placeholder:text-[#5A00D6] focus:outline-none"
-              />
-            </div>
+      {/* Search Screens Bar & Centered Filter Tiles Under Search — No Colour Around Search Bar */}
+      <div className="w-full rounded-2xl border border-[#0A2B6D]/30 bg-white p-2.5 shadow-2xs">
+        <div className="flex flex-col gap-2 rounded-[11px] bg-white text-center">
+          {/* Search Bar on Clean White Background */}
+          <div className="relative flex w-full items-center rounded-full border border-[#0A2B6D]/35 bg-white">
+            <Search className="pointer-events-none absolute left-4 h-4 w-4 text-[#0A2B6D]" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search screens, topics, 2026 Smart-Fill documents, or audit tasks…"
+              className="h-8 w-full rounded-full bg-white pl-10 pr-4 text-center text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/70 focus:outline-none"
+            />
           </div>
 
           {/* Smaller 8 Group Filter Buttons Under Search */}
@@ -687,7 +673,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 type="text"
                 value={smartForm.title}
                 onChange={(e) => setSmartForm({ ...smartForm, title: e.target.value })}
-                className="mt-0.5 w-full rounded border border-purple-300 bg-purple-50/40 px-2 py-1 font-bold text-blue-950"
+                className="mt-0.5 w-full rounded border border-[#0A2B6D]/30 bg-white px-2 py-1 font-bold text-blue-950"
               />
             </div>
             <div>
@@ -696,7 +682,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 type="text"
                 value={`${smartForm.organisation} · ${smartForm.abn}`}
                 onChange={(e) => setSmartForm({ ...smartForm, organisation: e.target.value })}
-                className="mt-0.5 w-full rounded border border-purple-300 bg-purple-50/40 px-2 py-1 font-bold text-blue-950"
+                className="mt-0.5 w-full rounded border border-[#0A2B6D]/30 bg-white px-2 py-1 font-bold text-blue-950"
               />
             </div>
             <div>
@@ -704,7 +690,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               <select
                 value={smartForm.relatedPerson}
                 onChange={(e) => setSmartForm({ ...smartForm, relatedPerson: e.target.value })}
-                className="mt-0.5 w-full rounded border border-purple-300 bg-purple-50/40 px-2 py-1 font-bold text-blue-950"
+                className="mt-0.5 w-full rounded border border-[#0A2B6D]/30 bg-white px-2 py-1 font-bold text-blue-950"
               >
                 <option value="All Active Personnel & Participants">All Active Personnel &amp; Participants</option>
                 {staffList.map((s) => (
@@ -725,7 +711,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 type="text"
                 value={smartForm.complianceStandard}
                 onChange={(e) => setSmartForm({ ...smartForm, complianceStandard: e.target.value })}
-                className="mt-0.5 w-full rounded border border-purple-300 bg-purple-50/40 px-2 py-1 font-bold text-blue-950"
+                className="mt-0.5 w-full rounded border border-[#0A2B6D]/30 bg-white px-2 py-1 font-bold text-blue-950"
               />
             </div>
           </div>

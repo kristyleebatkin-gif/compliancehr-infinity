@@ -181,7 +181,7 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
   return (
     <div className="space-y-2 bg-white p-1">
       {/* Ordered Business Identity Card */}
-      <div className="rounded-xl border-2 border-blue-400 bg-gradient-to-br from-blue-50/70 via-white to-violet-50/60 p-2.5 shadow-sm">
+      <div className="rounded-xl border-2 border-[#0A2B6D]/30 bg-white p-2.5 shadow-sm">
         <div
           className="mb-2 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
           style={{ background: SQUISHED_GRADIENT }}
@@ -225,7 +225,7 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
       </div>
 
       {/* Smart Vault & Document Subjects */}
-      <div className="rounded-xl border-2 border-purple-400 bg-gradient-to-br from-purple-50/70 via-white to-pink-50/60 p-2.5 shadow-sm">
+      <div className="rounded-xl border-2 border-[#0A2B6D]/30 bg-white p-2.5 shadow-sm">
         <div
           className="mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
           style={{ background: SQUISHED_GRADIENT }}
@@ -260,7 +260,7 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
       </div>
 
       {/* Staff Badge & Security Posture Preview */}
-      <div className="rounded-xl border-2 border-pink-400 bg-gradient-to-br from-pink-50/70 via-white to-amber-50/50 p-2.5 shadow-sm">
+      <div className="rounded-xl border-2 border-[#0A2B6D]/30 bg-white p-2.5 shadow-sm">
         <div
           className="mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1 text-white"
           style={{ background: SQUISHED_GRADIENT }}
@@ -394,7 +394,7 @@ export function ComplianceAndOperationsMaterialPanel() {
               borderColor: `${c.color}88`,
               borderTopWidth: '4px',
               borderTopColor: c.color,
-              background: `linear-gradient(145deg, ${c.color}14 0%, #ffffff 70%)`,
+              background: '#ffffff',
             }}
           >
             <div>

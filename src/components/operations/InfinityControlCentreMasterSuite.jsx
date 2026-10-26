@@ -536,12 +536,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </span>
           </h2>
 
-          {/* Subtitle: "End-of-Shift..." Placed on the 2nd Line Underneath */}
-          <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-snug">
-            <span className="block bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+          {/* Subtitle: Dark Writing on Pure White Background */}
+          <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D] bg-white">
+            <span className="block text-[#0A2B6D]">
               Unified Executive Oversight · Real Operational Evidence Verification
             </span>
-            <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            <span className="block text-[#0A2B6D]">
               End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
             </span>
           </p>
@@ -657,11 +657,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   <button
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
-                    style={{
-                      background:
-                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
-                    }}
+                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center"
                   >
                     {/* App-Theme Tile Header With White Writing & White Spotlights */}
                     <div
@@ -685,17 +681,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </span>
                     </div>
 
-                    <div
-                      className="w-full rounded-md p-[1.5px] shadow-2xs"
-                      style={{ background: getHeaderView(idx) }}
-                    >
-                      <div className="flex w-full flex-col items-center justify-center rounded-[5px] bg-white px-1 py-0.5 text-center">
-                        <div className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                          {tab.label}
-                        </div>
-                        <div className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                          {tab.sub}
-                        </div>
+                    <div className="flex w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1 py-0.5 text-center">
+                      <div className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        {tab.label}
+                      </div>
+                      <div className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                        {tab.sub}
                       </div>
                     </div>
                   </button>
@@ -706,17 +697,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — SPRAY BETWEEN BORDERS & PURE WHITE INSIDE WRITING BOXES ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — PURE WHITE INSIDE TEXT BOXES ==================== */}
       {activeTab === 'control-centre' && (
-        <div
-          className="p-1.5 space-y-2 text-center rounded-xl"
-          style={{
-            background:
-              'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-          }}
-        >
+        <div className="p-1.5 space-y-2 text-center rounded-xl bg-white">
           {/* 12 Live Operational Register Telemetry Tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch bg-white">
             {[
               { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
               { category: 'Care & Support', icon: HeartHandshake, label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
@@ -735,19 +720,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               return (
                 <div
                   key={m.label}
-                  className="flex h-full rounded-xl p-[2.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  style={{
-                    background: getHeaderView(idx),
-                    boxShadow: '0 0 12px 3px rgba(255, 255, 255, 0.96), 0 3px 8px rgba(0, 114, 255, 0.16)',
-                  }}
+                  className="flex h-full rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <Link
                     to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
-                    style={{
-                      background:
-                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                    }}
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[7px] bg-white text-center"
                   >
                     {/* App-Theme Header With White Writing & White Spotlights */}
                     <div
@@ -755,7 +732,6 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       style={{
                         background: getHeaderView(idx),
                         color: '#FFFFFF',
-                        boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.92)',
                       }}
                     >
                       <span
@@ -771,29 +747,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </span>
                     </div>
 
-                    {/* 50% Smaller Label & Number Value With Pure White Writing Box */}
-                    <div
-                      className="w-full rounded p-[1px]"
-                      style={{ background: getHeaderView(idx + 1) }}
-                    >
-                      <div className="flex min-h-[24px] flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
-                        <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D] leading-tight">
-                          {m.label}
-                        </span>
-                        <div className="font-editorial text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
-                          {m.value}
-                        </div>
+                    {/* Label & Number Value With Pure White Writing Box */}
+                    <div className="flex min-h-[24px] w-full flex-col items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
+                      <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D] leading-tight">
+                        {m.label}
+                      </span>
+                      <div className="font-editorial text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
+                        {m.value}
                       </div>
                     </div>
 
-                    {/* 50% Smaller Sub-Label With Pure White Writing Box */}
-                    <div
-                      className="w-full rounded p-[1px]"
-                      style={{ background: getHeaderView(idx + 2) }}
-                    >
-                      <div className="flex min-h-[16px] items-center justify-center rounded-[3px] bg-white px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
-                        {m.sub}
-                      </div>
+                    {/* Sub-Label With Pure White Writing Box */}
+                    <div className="flex min-h-[16px] w-full items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
+                      {m.sub}
                     </div>
                   </Link>
                 </div>
@@ -801,26 +767,16 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             })}
           </div>
 
-          {/* Non-Numbered Command Centre Tiles With App-Theme Headers, White Writing & White Spotlights */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch">
+          {/* Non-Numbered Command Centre Tiles With Pure White Inside Text Boxes */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 items-stretch bg-white">
             {/* Compact Central Management Approval Queue */}
-            <div
-              className="flex w-full rounded-xl p-[2px] shadow-2xs"
-              style={{ background: getHeaderView(0) }}
-            >
-              <div
-                className="flex w-full flex-col justify-between rounded-[9px] p-1 text-center space-y-1"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                }}
-              >
+            <div className="flex w-full rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs">
+              <div className="flex w-full flex-col justify-between rounded-[7px] bg-white text-center space-y-1">
                 <div
                   className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
                   style={{
                     background: getHeaderView(0),
                     color: '#FFFFFF',
-                    boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
                   }}
                 >
                   <span
@@ -833,36 +789,33 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 </div>
 
                 {pendingApprovals.length === 0 ? (
-                  <div className="flex flex-1 items-center justify-center rounded-lg border border-[#0A2B6D]/20 bg-white px-2 py-1 text-center text-[10px] font-extrabold text-[#0072FF]">
+                  <div className="flex flex-1 items-center justify-center rounded-lg border border-[#0A2B6D]/20 bg-white px-2 py-1 text-center text-[10px] font-extrabold text-[#0A2B6D]">
                     All management approvals and incident sign-offs are up to date.
                   </div>
                 ) : (
-                  <div className="space-y-1 max-h-24 overflow-y-auto">
-                    {pendingApprovals.map((item, idx) => (
+                  <div className="space-y-1 max-h-24 overflow-y-auto bg-white">
+                    {pendingApprovals.map((item) => (
                       <div
                         key={`${item.entity}-${item.id}`}
-                        className="rounded-lg p-[1.5px]"
-                        style={{ background: getHeaderView(idx) }}
+                        className="flex items-center justify-between gap-1.5 rounded-lg border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center"
                       >
-                        <div className="flex items-center justify-between gap-1.5 rounded-[6px] bg-white px-2 py-1 text-center">
-                          <div className="min-w-0 flex-1 text-center text-[9.5px] font-extrabold text-[#0A2B6D] truncate">
-                            {item.kind} · {item.title}
-                          </div>
-                          <div className="flex items-center gap-1 shrink-0">
-                            <Button
-                              size="sm"
-                              onClick={() => handleQuickApprove(item)}
-                              className="h-5 rounded-full bg-[#5A00D6] px-2 text-[8.5px] font-extrabold text-white"
-                            >
-                              Approve
-                            </Button>
-                            <Link
-                              to={item.route}
-                              className="inline-flex h-5 items-center rounded-full border border-[#0A2B6D] bg-white px-2 text-[8.5px] font-extrabold text-[#0072FF]"
-                            >
-                              Open
-                            </Link>
-                          </div>
+                        <div className="min-w-0 flex-1 text-center text-[9.5px] font-extrabold text-[#0A2B6D] truncate">
+                          {item.kind} · {item.title}
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <Button
+                            size="sm"
+                            onClick={() => handleQuickApprove(item)}
+                            className="h-5 rounded-full bg-[#5A00D6] px-2 text-[8.5px] font-extrabold text-white"
+                          >
+                            Approve
+                          </Button>
+                          <Link
+                            to={item.route}
+                            className="inline-flex h-5 items-center rounded-full border border-[#0A2B6D] bg-white px-2 text-[8.5px] font-extrabold text-[#0A2B6D]"
+                          >
+                            Open
+                          </Link>
                         </div>
                       </div>
                     ))}
@@ -871,24 +824,14 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               </div>
             </div>
 
-            {/* Compact Master Audit Report Summary Tile (50% Size) */}
-            <div
-              className="flex w-full rounded-xl p-[2px] shadow-2xs"
-              style={{ background: getHeaderView(4) }}
-            >
-              <div
-                className="flex w-full flex-col items-center justify-between gap-1.5 rounded-[9px] p-1.5 text-center"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                }}
-              >
+            {/* Compact Master Audit Report Summary Tile */}
+            <div className="flex w-full rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs">
+              <div className="flex w-full flex-col items-center justify-between gap-1.5 rounded-[7px] bg-white text-center">
                 <div
                   className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
                   style={{
                     background: getHeaderView(4),
                     color: '#FFFFFF',
-                    boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
                   }}
                 >
                   <span
@@ -899,19 +842,14 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                     Master Audit Report &amp; 356-Checkpoint Summary ({evidencedCount}/356 Evidenced)
                   </div>
                 </div>
-                <div
-                  className="rounded-full p-[1.5px]"
-                  style={{ background: getHeaderView(5) }}
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('master-audit-356')}
+                  className="gradient-brand rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
+                  style={{ background: getHeaderView(5), color: '#FFFFFF' }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('master-audit-356')}
-                    className="gradient-brand rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white"
-                    style={{ background: getHeaderView(5), color: '#FFFFFF' }}
-                  >
-                    <span style={{ color: '#FFFFFF' }}>Open 356-Checkpoint Report →</span>
-                  </button>
-                </div>
+                  <span style={{ color: '#FFFFFF' }}>Open 356-Checkpoint Report →</span>
+                </button>
               </div>
             </div>
           </div>

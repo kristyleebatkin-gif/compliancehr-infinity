@@ -153,8 +153,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
 
           <Link
             to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
-            style={{ background: UNIFORM_SPRAY_BG }}
+            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
           >
             <span className="inline-flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
@@ -165,8 +164,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
 
           <Link
             to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
-            style={{ background: UNIFORM_SPRAY_BG }}
+            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
           >
             <span className="inline-flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
@@ -176,122 +174,106 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
           </Link>
         </div>
 
-        {/* 3. Mini Quick-Press Communication Function Squares — Pink/Blue/Purple Spray & Dark Blue Writing */}
-        <div
-          className="w-full rounded-lg p-[1.5px]"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="rounded-[6px] p-1"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
-            <div className="mb-0.5 flex items-center justify-between px-1">
-              <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Communication Function Squares
-              </span>
-              <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">10 Channels</span>
-            </div>
-            <div className="grid grid-cols-5 gap-1">
-              {MINI_COMM_SQUARES.map((sq) => {
-                const SqIcon = sq.icon;
-                return (
-                  <Link
-                    key={sq.key}
-                    to="/communications"
-                    className="flex flex-col items-center justify-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white/85 p-0.5 text-center transition-transform hover:-translate-y-0.5"
-                    style={{ borderTopWidth: '2.5px', borderTopColor: sq.color }}
+        {/* 3. Mini Quick-Press Communication Function Squares — Pure White Inside Text Boxes */}
+        <div className="w-full rounded-lg border border-[#0A2B6D]/25 bg-white p-1">
+          <div className="mb-0.5 flex items-center justify-between px-1">
+            <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              Communication Function Squares
+            </span>
+            <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">10 Channels</span>
+          </div>
+          <div className="grid grid-cols-5 gap-1">
+            {MINI_COMM_SQUARES.map((sq) => {
+              const SqIcon = sq.icon;
+              return (
+                <Link
+                  key={sq.key}
+                  to="/communications"
+                  className="flex flex-col items-center justify-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white p-0.5 text-center transition-transform hover:-translate-y-0.5"
+                  style={{ borderTopWidth: '2.5px', borderTopColor: sq.color }}
+                >
+                  <span
+                    className="flex h-3.5 w-3.5 items-center justify-center rounded text-white"
+                    style={{ background: sq.color }}
                   >
-                    <span
-                      className="flex h-3.5 w-3.5 items-center justify-center rounded text-white"
-                      style={{ background: sq.color }}
-                    >
-                      <SqIcon className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
-                    <span className="text-[6.5px] font-extrabold leading-none text-[#0A2B6D]">
-                      {sq.label}
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
+                    <SqIcon className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                  </span>
+                  <span className="text-[6.5px] font-extrabold leading-none text-[#0A2B6D]">
+                    {sq.label}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Pink/Blue/Purple Spray & Dark Blue Writing */}
-        <div
-          className="w-full flex-1 rounded-lg p-[1.5px]"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
+        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Pure White Inside Text Boxes */}
+        <div className="flex w-full flex-1 flex-col justify-between gap-1 rounded-lg border border-[#0A2B6D]/25 bg-white p-1.5 text-left">
           <div
-            className="flex h-full flex-col justify-between gap-1 rounded-[6px] p-1.5 text-left"
-            style={{ background: UNIFORM_SPRAY_BG }}
+            className="gradient-brand flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
+            style={{ background: getHeaderView(4), color: '#FFFFFF' }}
           >
-            <div
-              className="gradient-brand flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
-              style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+            <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+              <ListTodo className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Small Shared To-Do List</span>
+            </span>
+            <Link
+              to="/shared-to-do"
+              className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
             >
-              <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                <ListTodo className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Small Shared To-Do List</span>
-              </span>
-              <Link
-                to="/shared-to-do"
-                className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
-              >
-                Full Board →
-              </Link>
-            </div>
+              Full Board →
+            </Link>
+          </div>
 
-            {/* Compact Quick-Add Shared To-Do Input */}
-            <div className="flex items-center gap-1">
-              <input
-                type="text"
-                value={newTodoText}
-                onChange={(e) => setNewTodoText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleAddSmallTodo();
-                }}
-                placeholder="Quick add shared to-do…"
-                className="min-w-0 flex-1 rounded border border-[#0A2B6D]/30 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/60 focus:outline-none"
-              />
-              <button
-                type="button"
-                onClick={handleAddSmallTodo}
-                className="gradient-brand inline-flex shrink-0 items-center gap-0.5 rounded px-1.5 py-0.5 text-[7px] font-extrabold text-white"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <Plus className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Add</span>
-              </button>
-            </div>
+          {/* Compact Quick-Add Shared To-Do Input */}
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              value={newTodoText}
+              onChange={(e) => setNewTodoText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleAddSmallTodo();
+              }}
+              placeholder="Quick add shared to-do…"
+              className="min-w-0 flex-1 rounded border border-[#0A2B6D]/30 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/60 focus:outline-none"
+            />
+            <button
+              type="button"
+              onClick={handleAddSmallTodo}
+              className="gradient-brand inline-flex shrink-0 items-center gap-0.5 rounded px-1.5 py-0.5 text-[7px] font-extrabold text-white"
+              style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+            >
+              <Plus className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Add</span>
+            </button>
+          </div>
 
-            {/* Compact Shared To-Do Items */}
-            <div className="space-y-0.5">
-              {todos.slice(0, 3).map((item, idx) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-[#F5F0FF]/55 px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+          {/* Compact Shared To-Do Items */}
+          <div className="space-y-0.5">
+            {todos.slice(0, 3).map((item, idx) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleCompleteTodo(item)}
+                  title="Mark shared task done"
+                  className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white text-[#0072FF] hover:bg-[#0072FF] hover:text-white"
                 >
-                  <button
-                    type="button"
-                    onClick={() => handleCompleteTodo(item)}
-                    title="Mark shared task done"
-                    className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white text-[#0072FF] hover:bg-[#0072FF] hover:text-white"
-                  >
-                    <CheckCircle2 className="h-2 w-2" />
-                  </button>
-                  <span className="min-w-0 flex-1 truncate text-left text-[#0A2B6D]">
-                    {item.title}
-                  </span>
-                  <span
-                    className="shrink-0 rounded px-1 py-0 text-[6.5px] font-extrabold text-white"
-                    style={{ background: getHeaderView(idx) }}
-                  >
-                    {item.module}
-                  </span>
-                </div>
-              ))}
-            </div>
+                  <CheckCircle2 className="h-2 w-2" />
+                </button>
+                <span className="min-w-0 flex-1 truncate text-left text-[#0A2B6D]">
+                  {item.title}
+                </span>
+                <span
+                  className="shrink-0 rounded px-1 py-0 text-[6.5px] font-extrabold text-white"
+                  style={{ background: getHeaderView(idx) }}
+                >
+                  {item.module}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

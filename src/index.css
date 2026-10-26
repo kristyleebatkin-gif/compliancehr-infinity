@@ -207,10 +207,10 @@
   :root:not(.dark) .app-readable :is(.bg-pink-500, .bg-pink-600, .bg-rose-600, .bg-red-600, .bg-red-500, .bg-orange-500, .bg-orange-600) { background-color: #FF2E9A !important; color: #ffffff !important; }
   :root:not(.dark) .app-readable :is(.bg-blue-600, .bg-blue-700, .bg-sky-600, .bg-blue-500) { background-color: #0072FF !important; color: #ffffff !important; }
   :root:not(.dark) .app-readable :is(.bg-blue-900, .bg-blue-950, .bg-purple-950, .bg-violet-950, .bg-indigo-950) { background-color: #0A2B6D !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-emerald-50, .bg-green-50, .bg-teal-50, .bg-cyan-50, .bg-sky-50, [class*="bg-emerald-50/"], [class*="bg-teal-50/"]) { background-color: rgba(0, 198, 255, 0.12) !important; }
-  :root:not(.dark) .app-readable :is(.bg-blue-50, .bg-indigo-50, [class*="bg-blue-50/"], [class*="bg-indigo-50/"]) { background-color: rgba(0, 114, 255, 0.10) !important; }
-  :root:not(.dark) .app-readable :is(.bg-purple-50, .bg-violet-50, [class*="bg-purple-50/"], [class*="bg-violet-50/"]) { background-color: rgba(192, 132, 252, 0.16) !important; }
-  :root:not(.dark) .app-readable :is(.bg-pink-50, .bg-rose-50, .bg-red-50, .bg-amber-50, .bg-orange-50, .bg-fuchsia-50, [class*="bg-pink-50/"], [class*="bg-rose-50/"], [class*="bg-amber-50/"]) { background-color: rgba(255, 110, 219, 0.14) !important; }
+  :root:not(.dark) .app-readable :is(.bg-emerald-50, .bg-green-50, .bg-teal-50, .bg-cyan-50, .bg-sky-50, [class*="bg-emerald-50/"], [class*="bg-teal-50/"]) { background-color: #FFFFFF !important; }
+  :root:not(.dark) .app-readable :is(.bg-blue-50, .bg-indigo-50, [class*="bg-blue-50/"], [class*="bg-indigo-50/"]) { background-color: #FFFFFF !important; }
+  :root:not(.dark) .app-readable :is(.bg-purple-50, .bg-violet-50, [class*="bg-purple-50/"], [class*="bg-violet-50/"]) { background-color: #FFFFFF !important; }
+  :root:not(.dark) .app-readable :is(.bg-pink-50, .bg-rose-50, .bg-red-50, .bg-amber-50, .bg-orange-50, .bg-fuchsia-50, [class*="bg-pink-50/"], [class*="bg-rose-50/"], [class*="bg-amber-50/"]) { background-color: #FFFFFF !important; }
   :root:not(.dark) .app-readable :is(.border-purple-100, .border-purple-200, .border-purple-300, .border-purple-400, .border-purple-500, .border-purple-600, .border-purple-700, .border-violet-200, .border-violet-300, .border-violet-400, .border-pink-100, .border-pink-200, .border-pink-300, .border-pink-400, .border-pink-500, .border-amber-200, .border-amber-300, .border-amber-400, .border-blue-100, .border-blue-200, .border-blue-300, .border-blue-400, .border-blue-500, .border-emerald-200, .border-emerald-300, .border-red-300, .border-red-400, .border-orange-200, .border-orange-300) { border-color: rgba(192, 132, 252, 0.55) !important; }
   /* Keep supporting copy legible without changing contrasting button labels. */
   .app-readable [class*="text-foreground/"] {
@@ -582,8 +582,8 @@
   :root:not(.dark) nav a:not(.gradient-brand) {
     color: #0A2B6D;
   }
-  :root:not(.dark) :is(.bg-slate-50, .bg-slate-100, .bg-zinc-50, .bg-zinc-100) { background-color: #F5F0FF; }
-  :root:not(.dark) :is(.bg-slate-200, .bg-zinc-200) { background-color: #EDE9FE; }
+  :root:not(.dark) :is(.bg-slate-50, .bg-slate-100, .bg-zinc-50, .bg-zinc-100) { background-color: #FFFFFF; }
+  :root:not(.dark) :is(.bg-slate-200, .bg-zinc-200) { background-color: #FFFFFF; }
   :root:not(.dark) :is(.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, .bg-zinc-800, .bg-zinc-900) { background-color: #0A2B6D; }
   :root:not(.dark) :is(.border-slate-100, .border-slate-200, .border-slate-300, .border-zinc-200) { border-color: rgba(192, 132, 252, 0.42); }
   :root:not(.dark) :is(.border-slate-700, .border-slate-800, .border-slate-900, .border-black) { border-color: #0A2B6D; }

@@ -605,95 +605,63 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </span>
                         </div>
 
-                        {/* Inner TV Screen — Spray Between Borders & Pure White Inside Writing Boxes */}
-                        <div
-                          className="flex flex-col justify-between rounded-xl p-[2px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div
-                            className="flex flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
-                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
-                          >
-                            {/* Outright & Subscription Inside Live HD TV Screen With White Background & ComplianceHR Colours in Name & $ Amounts */}
-                            <div
-                              className="w-full rounded-lg p-[1.5px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
-                            >
-                              <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
-                                <div className="font-editorial text-[10.5px] font-extrabold uppercase tracking-wider">
-                                  <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                    Compliance
-                                  </span>
-                                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                    HR
-                                  </span>{' '}
-                                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                                    {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
-                                  </span>
-                                </div>
-                                <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
-                                  <span className="font-editorial text-xs sm:text-sm font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                    {pack.priceMain}
-                                  </span>
-                                  <span className="text-[8px] font-extrabold bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                                    {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
-                                  </span>
-                                </div>
-                              </div>
+                        {/* Inner TV Screen — Pure White Inside Text Boxes */}
+                        <div className="flex flex-col justify-between rounded-xl bg-white p-1.5 text-center space-y-1">
+                          {/* Outright & Subscription Inside Live HD TV Screen With White Background & Dark Blue Text */}
+                          <div className="flex flex-col items-center justify-center rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
+                            <div className="font-editorial text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                              ComplianceHR {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
                             </div>
-
-                            {/* Compact 30-Second Spotlight Banner */}
-                            <div
-                              className="gradient-brand flex min-h-[26px] items-center justify-between gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
-                              style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
-                            >
-                              <div className="min-w-0 flex-1 text-center">
-                                <span className="text-[7.5px] font-extrabold leading-tight text-white line-clamp-1" style={{ color: '#FFFFFF' }}>
-                                  {pack.nowPlayingLabel}: {currentSpotlight}
-                                </span>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
-                                className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
-                                style={{ color: '#FFFFFF' }}
-                              >
-                                Next ▸
-                              </button>
+                            <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
+                              <span className="font-editorial text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                                {pack.priceMain}
+                              </span>
+                              <span className="text-[8px] font-extrabold text-[#0A2B6D]">
+                                {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
+                              </span>
                             </div>
-
-                            {/* All 5 Package Benefits — Pure White Inside Writing Boxes */}
-                            <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
-                              {pack.bullets.map((line, idx) => {
-                                const borderCol = getAppBorderView(pIdx * 3 + idx);
-                                const isCurrent = idx === activeBenefitIdx % 5;
-                                return (
-                                  <li
-                                    key={line}
-                                    onClick={() => setActiveBenefitIdx(idx)}
-                                    className="flex h-[26px] cursor-pointer rounded-lg p-[1.5px] shadow-2xs transition-all"
-                                    style={{ background: TOP_BORDER_GRADIENT }}
-                                  >
-                                    <div
-                                      className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center ${
-                                        isCurrent ? 'ring-1 ring-[#FF2E9A]' : ''
-                                      }`}
-                                    >
-                                      <span
-                                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
-                                        style={{ borderColor: borderCol }}
-                                      >
-                                        <CheckCircle2 className="h-2.5 w-2.5 text-[#0A2B6D]" />
-                                      </span>
-                                      <span className="flex-1 truncate text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                                        {line}
-                                      </span>
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                            </ul>
                           </div>
+
+                          {/* Compact 30-Second Spotlight Banner */}
+                          <div
+                            className="gradient-brand flex min-h-[26px] items-center justify-between gap-1.5 rounded-lg px-2 py-0.5 text-center text-white"
+                            style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
+                          >
+                            <div className="min-w-0 flex-1 text-center">
+                              <span className="text-[7.5px] font-extrabold leading-tight text-white line-clamp-1" style={{ color: '#FFFFFF' }}>
+                                {pack.nowPlayingLabel}: {currentSpotlight}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                              className="shrink-0 rounded-full border border-white bg-white/20 px-1.5 py-0 text-[7px] font-extrabold text-white"
+                              style={{ color: '#FFFFFF' }}
+                            >
+                              Next ▸
+                            </button>
+                          </div>
+
+                          {/* All 5 Package Benefits — Pure White Inside Writing Boxes */}
+                          <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
+                            {pack.bullets.map((line, idx) => {
+                              const isCurrent = idx === activeBenefitIdx % 5;
+                              return (
+                                <li
+                                  key={line}
+                                  onClick={() => setActiveBenefitIdx(idx)}
+                                  className={`flex h-[26px] cursor-pointer items-center justify-center gap-1.5 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 text-center transition-all ${
+                                    isCurrent ? 'ring-1 ring-[#FF2E9A]' : ''
+                                  }`}
+                                >
+                                  <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                                  <span className="flex-1 truncate text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
+                                    {line}
+                                  </span>
+                                </li>
+                              );
+                            })}
+                          </ul>
                         </div>
 
                         {/* Bottom TV Speaker Bar */}
@@ -725,44 +693,25 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* 3. Lined-Up Package Info & Prices Below TV — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
-                    <div
-                      className="flex w-full flex-1 flex-col justify-between rounded-xl p-[2px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] p-2 text-center"
-                        style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
-                      >
-                        {/* Row 1: Aligned Price Box — White Background & ComplianceHR Colours in Name and $ Amounts */}
-                        <div
-                          className="flex min-h-[60px] w-full rounded-lg p-[1.5px] shadow-2xs"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1 text-center">
-                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider">
-                              <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                Compliance
-                              </span>
-                              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                HR
-                              </span>{' '}
-                              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                                {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
-                              </span>
-                            </div>
-                            <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
-                              <span className="font-editorial text-sm sm:text-base font-extrabold bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                {pack.priceMain}
-                              </span>
-                              <span className="text-[8.5px] font-extrabold bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                                {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
-                              </span>
-                            </div>
-                            <p className="w-full text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
-                              {pack.subtitle}
-                            </p>
+                    {/* 3. Lined-Up Package Info & Prices Below TV — Pure White Inside Text Boxes */}
+                    <div className="flex w-full flex-1 flex-col justify-between rounded-xl border border-[#0A2B6D]/30 bg-white p-2 shadow-2xs">
+                      <div className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] bg-white text-center">
+                        {/* Row 1: Aligned Price Box — Pure White Background & Dark Blue Text */}
+                        <div className="flex min-h-[60px] w-full flex-col items-center justify-center rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
+                          <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                            ComplianceHR {pack.id === 'pack-1' ? 'Infinity Subscription' : 'Infinity Outright'}
                           </div>
+                          <div className="flex flex-wrap items-baseline justify-center gap-1 leading-tight">
+                            <span className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                              {pack.priceMain}
+                            </span>
+                            <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                              {pack.id === 'pack-2' ? `Outright · ${pack.priceSuffix}` : pack.priceSuffix}
+                            </span>
+                          </div>
+                          <p className="w-full text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
+                            {pack.subtitle}
+                          </p>
                         </div>
 
                         {/* Row 2: Aligned Important Info Header */}
@@ -779,15 +728,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           {pack.importantInfoRows.map((info) => (
                             <div
                               key={info}
-                              className="flex h-[24px] rounded-lg p-[1.5px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
+                              className="flex h-[24px] items-center justify-center gap-1.5 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
                             >
-                              <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                                <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                                <span className="flex-1 truncate text-center text-[#0A2B6D]">
-                                  {info}
-                                </span>
-                              </div>
+                              <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                              <span className="flex-1 truncate text-center text-[#0A2B6D]">
+                                {info}
+                              </span>
                             </div>
                           ))}
                         </div>

@@ -132,30 +132,25 @@ export default function SilverScreenSplit() {
 
       {/* Two Halves Inside the Silver Screen */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-        {/* LEFT HALF: LIVE WEATHER UPDATES */}
-        <div
-          className="flex flex-col justify-between rounded-lg border border-sky-300 p-1.5 text-white shadow-inner"
-          style={{
-            background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 60%, #7c3aed 100%)',
-          }}
-        >
+        {/* LEFT HALF: LIVE WEATHER UPDATES — PURE WHITE INSIDE TEXT BOX */}
+        <div className="flex flex-col justify-between rounded-lg border border-[#0A2B6D] bg-white p-1.5 text-[#0A2B6D]">
           <div className="flex items-center justify-between">
-            <span className="text-[8px] font-extrabold uppercase tracking-wider text-white/95">
+            <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
               Live Weather
             </span>
-            <span className="rounded-full bg-white/20 px-1 py-0 text-[7px] font-extrabold text-white">
+            <span className="rounded-full border border-[#0A2B6D]/30 bg-white px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
               LIVE
             </span>
           </div>
           <div className="mt-0.5 flex items-center gap-1.5">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/20 ring-1 ring-white/40">
-              <WeatherIcon className="h-3.5 w-3.5 text-amber-200" />
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#0A2B6D]/25 bg-white">
+              <WeatherIcon className="h-3.5 w-3.5 text-[#0A2B6D]" />
             </div>
             <div className="min-w-0">
-              <div className="truncate text-[11px] font-extrabold leading-tight text-white">
+              <div className="truncate text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
                 {current ? `${Math.round(current.temperature_2m)}°C · ${weatherLabel}` : '27°C · Sunny'}
               </div>
-              <div className="truncate text-[8px] font-bold text-white/90">
+              <div className="truncate text-[8px] font-bold text-[#0A2B6D]">
                 {weather?.daily
                   ? `${Math.round(weather.daily.temperature_2m_min[0])}°–${Math.round(weather.daily.temperature_2m_max[0])}°C · ${Math.round(current?.wind_speed_10m || 12)}km/h`
                   : 'Live Weather Feed'}
@@ -164,15 +159,15 @@ export default function SilverScreenSplit() {
           </div>
         </div>
 
-        {/* RIGHT HALF: LIVE SERVICES & NDIS UPDATES */}
-        <div className="flex flex-col justify-between rounded-lg border-2 border-[#0A2B6D] bg-white p-1.5 text-foreground shadow-inner">
+        {/* RIGHT HALF: LIVE SERVICES & NDIS UPDATES — PURE WHITE INSIDE TEXT BOXES */}
+        <div className="flex flex-col justify-between rounded-lg border border-[#0A2B6D] bg-white p-1.5 text-[#0A2B6D]">
           <div className="mb-0.5 flex items-center justify-between">
             <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              <Newspaper className="h-2.5 w-2.5 text-pink-600" /> Active Services &amp; NDIS
+              <Newspaper className="h-2.5 w-2.5 text-[#0A2B6D]" /> Active Services &amp; NDIS
             </span>
             <Link
               to="/referrals"
-              className="inline-flex items-center gap-0.5 rounded bg-pink-100 px-1 py-0 text-[7.5px] font-extrabold text-pink-800 hover:bg-pink-200"
+              className="inline-flex items-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white px-1 py-0 text-[7.5px] font-extrabold text-[#0A2B6D]"
             >
               Services <ExternalLink className="h-2 w-2" />
             </Link>
@@ -187,7 +182,7 @@ export default function SilverScreenSplit() {
               <Link
                 key={srv.label}
                 to={srv.to}
-                className="rounded border border-[#0A2B6D] bg-[#F5F0FF] px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D] hover:bg-purple-100"
+                className="rounded border border-[#0A2B6D]/30 bg-white px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
               >
                 {srv.label}
               </Link>
@@ -197,12 +192,12 @@ export default function SilverScreenSplit() {
             {ndisItems.slice(0, 2).map((item, idx) => (
               <li
                 key={item.id || idx}
-                className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D] bg-purple-50/70 px-1 py-0 text-[8px]"
+                className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/30 bg-white px-1 py-0 text-[8px]"
               >
                 <span className="truncate font-extrabold text-[#0A2B6D]">
                   {item.title || item.headline || 'NDIS Update'}
                 </span>
-                <span className="shrink-0 rounded bg-purple-200/80 px-1 py-0 text-[7px] font-extrabold text-purple-900">
+                <span className="shrink-0 rounded border border-[#0A2B6D]/30 bg-white px-1 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
                   {item.category || 'NDIS'}
                 </span>
               </li>

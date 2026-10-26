@@ -235,16 +235,16 @@ export function SingleMasterComplianceAuditForm({
         sectionRibbonText: 'text-white',
         circleIconBg: '#0A2B6D',
         circleIconRing: 'ring-[#00C6FF]',
-        cardBorder: 'border-[#C084FC]/60',
-        cardTint: 'bg-[#F5F0FF]',
-        cardRowAlt: 'bg-[#EDE9FE]/60',
+        cardBorder: 'border-[#0A2B6D]/30',
+        cardTint: 'bg-white',
+        cardRowAlt: 'bg-white',
         labelIconBg: 'bg-[#0A2B6D] text-[#00C6FF]',
         stepBadgeBg: 'bg-[#0072FF] text-white border border-[#0A2B6D]',
         tableHeaderGradient: 'linear-gradient(90deg, #0A2B6D 0%, #0072FF 50%, #5A00D6 100%)',
-        tableSubHeaderBg: 'bg-[#F5F0FF] text-[#0A2B6D] border-[#C084FC]',
-        tableRowEven: 'bg-[#F5F0FF]/60',
+        tableSubHeaderBg: 'bg-white text-[#0A2B6D] border-[#0A2B6D]/25',
+        tableRowEven: 'bg-white',
         tableRowOdd: 'bg-white',
-        tableBorder: 'border-[#C084FC]/50',
+        tableBorder: 'border-[#0A2B6D]/25',
         pagePillBg: 'bg-[#0A2B6D] text-white',
       }
     : {
@@ -255,14 +255,14 @@ export function SingleMasterComplianceAuditForm({
         sectionRibbonText: 'text-white',
         circleIconBg: '#5A00D6',
         circleIconRing: 'ring-[#FF6EDB]',
-        cardBorder: 'border-[#C084FC]/60',
-        cardTint: 'bg-[#F5F0FF]',
-        cardRowAlt: 'bg-[#EDE9FE]/60',
+        cardBorder: 'border-[#0A2B6D]/30',
+        cardTint: 'bg-white',
+        cardRowAlt: 'bg-white',
         labelIconBg: 'bg-[#5A00D6] text-[#FF6EDB]',
         stepBadgeBg: 'bg-[#FF2E9A] text-white border border-[#FF6EDB]',
         tableHeaderGradient: 'linear-gradient(90deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
-        tableSubHeaderBg: 'bg-[#F5F0FF] text-[#0A2B6D] border-[#C084FC]',
-        tableRowEven: 'bg-[#F5F0FF]/60',
+        tableSubHeaderBg: 'bg-white text-[#0A2B6D] border-[#0A2B6D]/25',
+        tableRowEven: 'bg-white',
         tableRowOdd: 'bg-white',
         tableBorder: 'border-[#C084FC]/50',
         pagePillBg: 'bg-[#5A00D6] text-white',
@@ -933,11 +933,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   setCategoryIndex(idx);
                   setExpanded(true);
                 }}
-                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] p-1.5 text-center"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                }}
+                className="grid h-full w-full grid-cols-1 grid-rows-[22px_1fr] gap-1 rounded-[9px] bg-white p-1.5 text-center"
               >
                 {/* Section 1: 50% Smaller Top Page Bar */}
                 <div
@@ -950,13 +946,8 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 </div>
 
                 {/* Section 2: Pure White Writing Box */}
-                <div
-                  className="flex h-full w-full rounded-md p-[1.5px]"
-                  style={{ background: getHeaderView(idx) }}
-                >
-                  <div className="flex min-h-[28px] h-full w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                    {cat.title}
-                  </div>
+                <div className="flex min-h-[28px] h-full w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5 text-center text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                  {cat.title}
                 </div>
               </button>
             </div>
