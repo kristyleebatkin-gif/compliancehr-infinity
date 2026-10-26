@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
-  getTilePalette,
   getHeaderView,
   getSymbolView,
   getAppBorderView,
@@ -116,90 +115,117 @@ export default function ExpressAuditSection() {
           <span className="text-center">The Two-Minute Express Audit</span>
         </div>
 
-        {/* 1. Store & Action Pills in Mixed Full Colours */}
-        <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-5 lg:grid-cols-10">
-          {VERBS.map((v, idx) => {
-            const Icon = v.icon;
-            const tile = getTilePalette(idx);
-            const sym = getSymbolView(idx);
-            return (
-              <div
-                key={v.label}
-                className="flex items-center justify-center gap-2 rounded-full border-2 px-3 py-1.5 text-center shadow-sm"
-                style={{
-                  backgroundColor: tile.bg,
-                  color: tile.text,
-                  borderColor: getAppBorderView(idx),
-                }}
-              >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
-                  <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                </span>
-                <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ color: tile.text }}>
-                  {v.label}
-                </span>
-              </div>
-            );
-          })}
+        {/* 1. Store, Copy & Other Action Tiles in App Design Colour Border + App Coloured Background */}
+        <div
+          className="w-full rounded-2xl p-[4px] shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="grid w-full grid-cols-2 gap-2.5 rounded-[12px] bg-white p-3 sm:grid-cols-5 lg:grid-cols-10">
+            {VERBS.map((v, idx) => {
+              const Icon = v.icon;
+              const sym = getSymbolView(idx);
+              const borderCol = getAppBorderView(idx);
+              return (
+                <div
+                  key={v.label}
+                  className="rounded-full p-[2.5px] shadow-sm"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div
+                    className="flex h-full w-full items-center justify-center gap-2 rounded-full px-3 py-1.5 text-center text-white"
+                    style={{ background: getHeaderView(idx) }}
+                  >
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                      style={{ borderColor: borderCol }}
+                    >
+                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-white">
+                      {v.label}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 2. 4 Compact Proof Pills in Mixed Full Colours */}
+        {/* 2. 4 Compact Proof Tiles in App Design Colour Border + App Coloured Background */}
         <div className="grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4 text-left">
           {PROOF.map(({ icon: Icon, text }, idx) => {
-            const tile = getTilePalette(idx + 3);
             const sym = getSymbolView(idx + 3);
+            const borderCol = getAppBorderView(idx + 3);
             return (
               <div
                 key={text}
-                className="flex items-center gap-2.5 rounded-2xl border-2 px-4 py-2.5 shadow-sm"
-                style={{
-                  backgroundColor: tile.bg,
-                  color: tile.text,
-                  borderColor: getAppBorderView(idx + 3),
-                }}
+                className="flex h-full rounded-2xl p-[3px] shadow-sm"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
-                  <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                </span>
-                <span className="text-xs font-extrabold leading-snug" style={{ color: tile.text }}>
-                  {text}
-                </span>
+                <div
+                  className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-4 py-3 text-white"
+                  style={{ background: getHeaderView(idx + 2) }}
+                >
+                  <span
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                    style={{ borderColor: borderCol }}
+                  >
+                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                  </span>
+                  <span className="text-xs font-extrabold leading-snug text-white">
+                    {text}
+                  </span>
+                </div>
               </div>
             );
           })}
         </div>
 
-        {/* 3. 4 Detailed Step Cards in Mixed Full Colours */}
-        <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-left">
+        {/* 3. 4 Detailed Step Cards in App Design Colour Border + App Coloured Background */}
+        <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
-            const tile = getTilePalette(index + 5);
             const sym = getSymbolView(index + 5);
+            const borderCol = getAppBorderView(index + 5);
             return (
               <Reveal
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group flex flex-col justify-between rounded-2xl border-2 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{
-                  backgroundColor: tile.bg,
-                  color: tile.text,
-                  borderColor: getAppBorderView(index + 5),
-                }}
+                className="group flex h-full flex-col rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm">
+                <div
+                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-4 text-white space-y-2.5"
+                  style={{ background: getHeaderView(index + 4) }}
+                >
+                  <div className="flex items-center justify-center gap-2.5">
+                    <span
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                      style={{ borderColor: borderCol }}
+                    >
                       <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                     </span>
-                    <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 font-editorial text-xs font-extrabold text-[#0A2B6D]">
+                    <span
+                      className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                      style={{ borderColor: borderCol }}
+                    >
                       Step {item.step}
                     </span>
                   </div>
-                  <h3 className="mt-3 font-editorial text-base font-extrabold" style={{ color: tile.text }}>
-                    {item.title}
-                  </h3>
-                  <p className="mt-1.5 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
+
+                  <div
+                    className="w-full rounded-xl p-[3px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                      <h3 className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-relaxed text-white">
                     {item.text}
                   </p>
                 </div>

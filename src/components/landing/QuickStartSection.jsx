@@ -89,15 +89,22 @@ export default function QuickStartSection() {
                   </span>
                 </div>
 
-                {/* Information Inside a White Bordered Box with All Dark Blue Writing */}
+                {/* Information Inside a White Bordered Box with Heading in App Design Coloured Border & All Dark Blue Writing */}
                 <div
-                  className="flex w-full flex-1 flex-col items-center justify-between rounded-xl border-2 bg-white px-4 py-3.5 text-center shadow-2xs"
+                  className="flex w-full flex-1 flex-col items-center justify-between rounded-xl border-2 bg-white p-3.5 text-center shadow-2xs space-y-2.5"
                   style={{ borderColor: borderCol }}
                 >
-                  <h3 className="font-editorial text-sm sm:text-[15px] font-extrabold leading-snug text-center text-[#0A2B6D]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
+                  <div
+                    className="w-full rounded-xl p-[3px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex min-h-[46px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                      <h3 className="font-editorial text-sm sm:text-[15px] font-extrabold leading-snug text-center text-[#0A2B6D]">
+                        {step.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
                     {step.text}
                   </p>
                 </div>
