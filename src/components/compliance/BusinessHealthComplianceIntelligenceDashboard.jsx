@@ -605,18 +605,21 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       {!compact && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
           {/* Chart 1: 6-Month Business Health, Compliance Readiness & Revenue Trajectory */}
-          <div className="lg:col-span-4 rounded-xl border-2 border-indigo-500 bg-white p-2.5 shadow-sm">
+          <div
+            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm"
+            style={{ borderColor: getAppBorderView(0), borderTopWidth: '5px' }}
+          >
             <div className="flex items-center justify-between gap-1 mb-1">
               <div>
-                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-blue-950">
-                  <TrendingUp className="mr-1 inline h-3.5 w-3.5 text-indigo-600" />
+                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-[#0072FF]">
+                  <TrendingUp className="mr-1 inline h-3.5 w-3.5 text-[#0072FF]" />
                   6-Month Compliance vs. Business Health Trajectory
                 </h3>
-                <p className="font-body text-[7px] font-bold text-purple-800">
+                <p className="font-body text-[7px] font-bold text-[#0072FF]">
                   Audit Readiness (%) &amp; Monthly NDIS Billing ($K)
                 </p>
               </div>
-              <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-body text-[7px] font-black text-emerald-900">
+              <span className="rounded-full bg-[#0072FF] px-2 py-0.5 font-body text-[7px] font-black text-white">
                 98.7% Peak
               </span>
             </div>
@@ -645,18 +648,21 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           </div>
 
           {/* Chart 2: 8-Domain Benchmark Score Comparison */}
-          <div className="lg:col-span-4 rounded-xl border-2 border-purple-600 bg-white p-2.5 shadow-sm">
+          <div
+            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm"
+            style={{ borderColor: getAppBorderView(2), borderTopWidth: '5px' }}
+          >
             <div className="flex items-center justify-between gap-1 mb-1">
               <div>
-                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-blue-950">
-                  <BarChart3 className="mr-1 inline h-3.5 w-3.5 text-purple-700" />
+                <h3 className="font-body text-[8.5px] font-black uppercase tracking-wider text-[#5A00D6]">
+                  <BarChart3 className="mr-1 inline h-3.5 w-3.5 text-[#5A00D6]" />
                   8-Domain Compliance Benchmark (%)
                 </h3>
-                <p className="font-body text-[7px] font-bold text-purple-800">
+                <p className="font-body text-[7px] font-bold text-[#0072FF]">
                   Every department exceeds the 95% NDIS Audit Threshold
                 </p>
               </div>
-              <span className="rounded-full bg-purple-100 px-2 py-0.5 font-body text-[7px] font-black text-purple-950">
+              <span className="rounded-full bg-[#5A00D6] px-2 py-0.5 font-body text-[7px] font-black text-white">
                 Target ≥ 95%
               </span>
             </div>
@@ -684,7 +690,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           </div>
 
           {/* Column 3: Predictive 14/30/60/90-Day Risk, Credential & Review Radar */}
-          <div className="lg:col-span-4 rounded-xl border-2 border-pink-600 bg-white p-2.5 shadow-sm flex flex-col justify-between">
+          <div
+            className="lg:col-span-4 rounded-2xl border-2 bg-white p-2.5 shadow-sm flex flex-col justify-between"
+            style={{ borderColor: getAppBorderView(1), borderTopWidth: '5px' }}
+          >
             <div>
               <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5">
                 <div>
