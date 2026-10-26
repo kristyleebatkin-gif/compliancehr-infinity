@@ -64,7 +64,14 @@ export default function CommunicationNavigation({ tabs }) {
   const hasAlerts = totalAlerts > 0;
 
   return (
-    <div className="space-y-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-md">
+    <div
+      className="rounded-3xl p-[12px] shadow-lg"
+      style={{
+        background:
+          'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+      }}
+    >
+      <div className="space-y-2.5 rounded-[16px] bg-white p-3">
       {/* Top Alert Lamps + Colour-Changing Alert Mailbox */}
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-12 items-stretch">
         {/* Interactive Mailbox That Changes Colour When There Are Alerts */}
@@ -200,6 +207,7 @@ export default function CommunicationNavigation({ tabs }) {
             </span>
           </TabsTrigger>
         </TabsList>
+      </div>
       </div>
     </div>
   );

@@ -2,26 +2,50 @@ import React from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarRange, CalendarDays, CalendarClock, ClipboardCheck, ClipboardList, Flame, Wallet, Repeat, CalendarPlus } from 'lucide-react';
 
+const ICON_GRADIENT =
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
+
 const ITEMS = [
-  ['roster', 'Roster board', CalendarRange, 'from-teal/40 to-teal/20 text-teal', 'Weekly shifts and planning'],
-  ['calendar', 'Calendar', CalendarDays, 'from-primary/40 to-primary/20 text-primary', 'Dates and staff schedules'],
-  ['shifts', 'Shift register', CalendarClock, 'from-warning/40 to-warning/20 text-warning', 'Shift records and updates'],
-  ['approvals', 'Approvals', ClipboardCheck, 'from-chart-5/40 to-chart-5/20 text-chart-5', 'Review staff timesheets'],
-  ['ops', 'Ops overview', ClipboardList, 'from-hr-evidence/40 to-hr-evidence/20 text-hr-evidence', 'Roster operations'],
-  ['coverage', 'Coverage map', Flame, 'from-danger/40 to-danger/20 text-danger', 'Staffing and coverage'],
-  ['patterns', 'Patterns', Repeat, 'from-primary/40 to-primary/20 text-primary', 'Recurring shift patterns'],
-  ['shift-details', 'Shift details', ClipboardList, 'from-teal/40 to-teal/20 text-teal', 'Participant shift information'],
-  ['leave', 'Leave', CalendarPlus, 'from-warning/40 to-warning/20 text-warning', 'Staff leave and absences'],
-  ['availability', 'Availability', CalendarPlus, 'from-chart-5/40 to-chart-5/20 text-chart-5', 'Staff availability'],
-  ['benchmark', 'SCHADS & PRODA Suite', ClipboardCheck, 'from-primary/40 to-primary/20 text-primary', 'Award forecaster & PRODA CSV'],
-  ['payroll', 'Payroll report', Wallet, 'from-safe/40 to-safe/20 text-safe', 'Payroll tools and shift reports'],
+  ['roster', 'Roster board', CalendarRange, 'Weekly shifts and planning'],
+  ['calendar', 'Calendar', CalendarDays, 'Dates and staff schedules'],
+  ['shifts', 'Shift register', CalendarClock, 'Shift records and updates'],
+  ['approvals', 'Approvals', ClipboardCheck, 'Review staff timesheets'],
+  ['ops', 'Ops overview', ClipboardList, 'Roster operations'],
+  ['coverage', 'Coverage map', Flame, 'Staffing and coverage'],
+  ['patterns', 'Patterns', Repeat, 'Recurring shift patterns'],
+  ['shift-details', 'Shift details', ClipboardList, 'Participant shift information'],
+  ['leave', 'Leave', CalendarPlus, 'Staff leave and absences'],
+  ['availability', 'Availability', CalendarPlus, 'Staff availability'],
+  ['benchmark', 'SCHADS & PRODA Suite', ClipboardCheck, 'Award forecaster & PRODA CSV'],
+  ['payroll', 'Payroll report', Wallet, 'Payroll tools and shift reports'],
 ];
+
 export default function RosterDashboardNavigation({ profile, profileKind }) {
-  const items = ITEMS.filter(([key]) => (key !== 'payroll' || profileKind !== 'participant') && (['roster', 'calendar', 'shifts'].includes(key) || (key === 'availability' ? profileKind !== 'participant' : !profile)));
-  return <TabsList aria-label="Rostering dashboard" className="grid h-auto w-full grid-cols-2 gap-2 bg-transparent p-0 sm:grid-cols-3 lg:grid-cols-4">
-    {items.map(([key, label, Icon, tone, hint]) => <TabsTrigger key={key} value={key} style={key === 'payroll' ? { '--dashboard-tone': 'var(--payroll)', '--profile-tone': 'var(--profile-mint)' } : undefined} className={`flex min-w-0 whitespace-normal rounded-xl border border-border bg-gradient-to-br p-2 text-left shadow-sm data-[state=active]:border-primary data-[state=active]:ring-1 data-[state=active]:ring-primary ${key === 'payroll' ? 'col-span-full min-h-12 flex-row justify-start gap-3' : 'min-h-16 flex-col items-start justify-center gap-1'} ${tone}`}>
-      <span className="flex items-center gap-2"><Icon className="h-4 w-4 shrink-0" /><span className="text-xs font-bold">{label}</span></span>
-      <span className="text-[11px] font-medium text-muted-foreground">{hint}</span>
-    </TabsTrigger>)}
-  </TabsList>;
+  const items = ITEMS.filter(
+    ([key]) =>
+      (key !== 'payroll' || profileKind !== 'participant') &&
+      (['roster', 'calendar', 'shifts'].includes(key) || (key === 'availability' ? profileKind !== 'participant' : !profile))
+  );
+  return (
+    <TabsList aria-label="Rostering dashboard" className="grid h-auto w-full grid-cols-2 gap-2.5 bg-white p-1 sm:grid-cols-3 lg:grid-cols-4 border-0 shadow-none">
+      {items.map(([key, label, Icon, hint]) => (
+        <TabsTrigger
+          key={key}
+          value={key}
+          className="flex min-h-[46px] min-w-0 flex-row items-center justify-start gap-2.5 whitespace-normal rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-left text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] data-[state=active]:ring-2 data-[state=active]:ring-[#FF2E9A]"
+        >
+          <span
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+            style={{ background: ICON_GRADIENT }}
+          >
+            <Icon className="h-3.5 w-3.5 text-white" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-xs font-extrabold leading-tight">{label}</span>
+            <span className="block text-[10px] font-bold text-[#5A00D6] leading-tight">{hint}</span>
+          </span>
+        </TabsTrigger>
+      ))}
+    </TabsList>
+  );
 }
