@@ -53,85 +53,94 @@ export default function LandingNav() {
     >
       {/* Full-width app-coloured background with 0.5cm side spacing */}
       <div className="w-full px-[0.5cm] py-2.5 space-y-2.5">
-        {/* Top Bar: Zero Gap Between Logo & Border, True-Centered App Name, and Small Landing Page Under Open App Dashboard */}
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-3xl border-3 border-[#0A2B6D] bg-white px-3 py-2.5 sm:px-4 sm:py-3 shadow-lg ring-2 ring-[#00C6FF]">
-          {/* Logo Filled Tightly to Border (No Extra Gap Between Logo & Border) */}
-          <Link
-            to="/"
-            className="flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-0 shadow-sm transition-transform hover:scale-102"
+        {/* Bigger Top Bar: Entire Logo Fitted Inside Square Border, True-Centered App Name, and Open + Landing Icons at Bottom of Section */}
+        <div className="relative flex flex-col items-center justify-center gap-3 rounded-3xl border-3 border-[#0A2B6D] bg-white px-5 py-5 sm:px-7 sm:py-6 shadow-lg ring-2 ring-[#00C6FF]">
+          {/* Mobile menu toggle in top-right corner */}
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="md:hidden absolute right-4 top-4 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 text-[#0A2B6D]"
+            aria-label="Menu"
           >
-            <Image
-              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-              alt="ComplianceHR Infinity logo"
-              className="h-16 w-28 sm:h-20 sm:w-36 md:h-24 md:w-44 block object-cover"
-              fittingType="fill"
-            />
-          </Link>
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
 
-          {/* True-Centered Brand Name Fitted Properly + "NDIS & Aged Care Compliance" Centered Underneath in Bright Pink */}
-          <Link
-            to="/"
-            className="flex min-w-0 flex-col items-center justify-center bg-white text-center px-1"
-          >
-            <span className="font-editorial text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-none whitespace-nowrap">
-              Compliance
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                HR
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Infinity
+          {/* Main Centered Header Row: Entire Logo Fitted Inside Tight Square Border + Centered App Name */}
+          <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
+            <Link
+              to="/"
+              className="flex h-28 w-28 sm:h-32 sm:w-32 md:h-36 md:w-36 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-3 border-[#0A2B6D] bg-white p-1 shadow-md transition-transform hover:scale-102"
+            >
+              <Image
+                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                alt="ComplianceHR Infinity logo"
+                className="h-full w-full object-contain"
+                fittingType="fit"
+              />
+            </Link>
+
+            {/* True-Centered App Name + Bright Pink Subtitle */}
+            <Link
+              to="/"
+              className="flex flex-col items-center justify-center bg-white text-center"
+            >
+              <span className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight">
+                Compliance
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  HR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
+                </span>
               </span>
-            </span>
-            <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-3.5 py-0.5 text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
-              NDIS &amp; Aged Care Compliance
-            </span>
-          </Link>
+              <span className="mt-2 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white shadow-sm">
+                NDIS &amp; Aged Care Compliance
+              </span>
+            </Link>
+          </div>
 
-          {/* Right Column: Open App Dashboard on Top, Small Landing Page Directly Underneath */}
-          <div className="hidden shrink-0 flex-col items-center justify-center gap-1 md:flex">
+          {/* Bottom of Top Bar Section: Open App Dashboard (in App Colours) + Landing Page Icons Centered at Bottom */}
+          <div className="flex w-full flex-wrap items-center justify-center gap-2 border-t-2 border-[#0A2B6D]/20 pt-3">
             <Link
               to="/dashboard"
-              className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5"
               style={{
                 background:
                   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
               }}
             >
-              Open App Dashboard
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                <Sparkles className="h-3 w-3 text-[#5A00D6]" />
+              </span>
+              <span>Open App Dashboard</span>
             </Link>
-            <div className="flex items-center justify-center gap-1">
-              <Link
-                to="/"
-                className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
-              >
-                Landing Page
-              </Link>
-              {!authed && (
-                <>
-                  <Link
-                    to="/login"
-                    className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                  >
-                    Sign in
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="inline-flex items-center justify-center rounded-full border border-[#0A2B6D] bg-[#FF2E9A] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white hover:bg-[#5A00D6]"
-                  >
-                    Get started
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
 
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden rounded-xl border-2 border-[#0A2B6D] bg-white p-2 text-[#0A2B6D]"
-            aria-label="Menu"
-          >
-            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0A2B6D] bg-[#0072FF] text-white">
+                <ShieldCheck className="h-3 w-3 text-white" />
+              </span>
+              <span>Landing Page</span>
+            </Link>
+
+            {!authed && (
+              <>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/register"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm hover:bg-[#5A00D6]"
+                >
+                  Get started
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Features Listed — Circular Feature Icons + All Writing Fitted Properly Inside Every Pill (6 Per Line) */}

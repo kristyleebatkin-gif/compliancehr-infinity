@@ -75,15 +75,17 @@ export default function LandingHero() {
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            {/* Logo Tightly Fitted to Its Border (Decreased Area Between Logo & Border) + Centered App Name */}
-            <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-[#0A2B6D] bg-white p-0 shadow-md">
-              <Image
-                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                alt="ComplianceHR Infinity logo"
-                className="h-56 w-full sm:h-72 md:h-80 block object-cover"
-                fittingType="fill"
-              />
-              <div className="flex w-full flex-col items-center justify-center border-t-2 border-[#0A2B6D] bg-white px-3 py-2 text-center">
+            {/* Entire Logo Fitted Inside Square Border + Centered App Name */}
+            <div className="mx-auto flex w-full flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-md">
+              <div className="flex h-60 w-60 sm:h-72 sm:w-72 md:h-80 md:w-80 items-center justify-center overflow-hidden rounded-2xl border-3 border-[#0A2B6D] bg-white p-1 shadow-sm">
+                <Image
+                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                  alt="ComplianceHR Infinity logo"
+                  className="h-full w-full object-contain"
+                  fittingType="fit"
+                />
+              </div>
+              <div className="mt-2.5 flex w-full flex-col items-center justify-center bg-white px-3 py-1 text-center">
                 <div className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -93,7 +95,7 @@ export default function LandingHero() {
                     Infinity
                   </span>
                 </div>
-                <span className="mt-1 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-0.5 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white shadow-sm">
+                <span className="mt-1.5 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-5 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white shadow-sm">
                   NDIS &amp; Aged Care Compliance
                 </span>
               </div>

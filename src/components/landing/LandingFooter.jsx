@@ -79,12 +79,12 @@ export default function LandingFooter() {
           </Link>
 
           <Link to="/" className="mt-1 flex flex-col items-center gap-1.5">
-            <div className="flex h-20 w-36 items-center justify-center overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-0 shadow-sm">
+            <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white p-1 shadow-sm">
               <Image
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                 alt="ComplianceHR Infinity logo"
-                className="h-full w-full block object-cover"
-                fittingType="fill"
+                className="h-full w-full object-contain"
+                fittingType="fit"
               />
             </div>
             <span className="font-editorial text-2xl sm:text-3xl font-extrabold tracking-wide text-[#0A2B6D]">
