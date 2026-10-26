@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Sparkles, Layers, CheckCircle2 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getHeaderView, getAppBorderView } from '@/lib/fullColourTiles';
+import { getHeaderView, getAppBorderView, getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
@@ -45,6 +45,7 @@ function ThreeTopSirenLights() {
 
 function IpadModuleScreenCard({ item, idx }) {
   const Icon = item.icon;
+  const sym = getSymbolView(idx);
   const borderCol = getAppBorderView(idx);
   const bullets = getModuleBulletPoints(item);
 
@@ -52,56 +53,72 @@ function IpadModuleScreenCard({ item, idx }) {
     <Link
       to={item.path}
       title={item.blurb}
-      className="group relative flex w-[285px] sm:w-[310px] min-h-[192px] shrink-0 flex-col justify-between rounded-[24px] border-[3px] bg-[#0A2B6D] p-2.5 shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl"
+      className="group relative flex w-[285px] sm:w-[310px] h-[220px] shrink-0 flex-col justify-between rounded-[24px] border-[3px] bg-[#0A2B6D] p-2.5 shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl"
       style={{ borderColor: borderCol }}
     >
-      {/* Top iPad Bezel Camera & Status Bar */}
-      <div className="mb-1.5 flex items-center justify-between px-2">
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-white/85">
-          iPad Live View
+      {/* Top iPad Bezel Camera & Status Bar (Removed "View") */}
+      <div className="mb-1.5 flex h-[16px] items-center justify-between px-2">
+        <span className="text-[9px] font-extrabold uppercase tracking-wider text-white/90">
+          IPAD #{String(idx + 1).padStart(2, '0')}
         </span>
         <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
-        <span className="text-[9px] font-extrabold text-white/85">LIVE</span>
+        <span className="text-[9px] font-extrabold text-white/90">LIVE</span>
       </div>
 
-      {/* Inner iPad Display Screen */}
+      {/* Inner iPad Display Screen — All Sections Lined Up With Neighbouring iPads */}
       <div
-        className="flex flex-1 flex-col justify-between rounded-[16px] border-2 bg-white p-3 text-left space-y-2.5"
+        className="grid flex-1 grid-cols-1 grid-rows-[50px_1fr] gap-2 rounded-[16px] border-2 bg-white p-2.5 text-left"
         style={{ borderColor: borderCol }}
       >
-        {/* Different App-Colour Heading with White Writing & White Symbol */}
+        {/* Top Section: White Frame with App-Design Coloured Symbol & App-Design Coloured Words */}
         <div
-          className="flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-1.5 text-white shadow-2xs"
-          style={{ background: getHeaderView(idx) }}
+          className="flex h-[50px] w-full rounded-xl p-[2.5px] shadow-2xs"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Icon className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="min-w-0 flex-1 whitespace-normal break-words text-xs font-extrabold leading-tight text-white">
-            {item.label}
-          </span>
+          <div className="flex h-full w-full items-center justify-center gap-2 rounded-[9px] bg-white px-2.5 py-1 text-center">
+            <span
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+              style={{ borderColor: borderCol }}
+            >
+              <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+            </span>
+            <span
+              className="min-w-0 flex-1 whitespace-normal break-words text-center text-xs font-extrabold leading-tight"
+              style={{ color: sym.iconColor }}
+            >
+              {item.label}
+            </span>
+          </div>
         </div>
 
-        {/* Works on iPad in List Order with App-Design-Colour Symbol at Front & Dark Purple Writing */}
-        <ul className="flex flex-1 flex-col justify-center space-y-1.5">
-          {bullets.map((point, bIdx) => (
-            <li key={bIdx} className="flex items-start gap-2 text-[11px] font-extrabold leading-snug text-[#5A00D6]">
-              <span
-                className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                style={{ background: getHeaderView(idx + bIdx) }}
-              >
-                <CheckCircle2 className="h-2.5 w-2.5 text-white" />
-              </span>
-              <span className="min-w-0 flex-1 whitespace-normal break-words text-[#5A00D6]">
-                {point}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {/* Bottom Section: Lined-Up Bullet Points with App-Design Coloured Symbols & Words */}
+        <div
+          className="flex h-full w-full rounded-xl p-[2px]"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <ul className="flex h-full w-full flex-col justify-center gap-1 rounded-[9px] bg-white px-2.5 py-1.5">
+            {bullets.slice(0, 2).map((point, bIdx) => {
+              const bSym = getSymbolView(idx + bIdx + 1);
+              return (
+                <li key={bIdx} className="flex items-center gap-2 text-[10.5px] font-extrabold leading-tight">
+                  <span
+                    className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                    style={{ borderColor: getAppBorderView(idx + bIdx + 1) }}
+                  >
+                    <CheckCircle2 className="h-2.5 w-2.5" style={{ color: bSym.iconColor }} />
+                  </span>
+                  <span className="min-w-0 flex-1 whitespace-normal break-words text-[#5A00D6]">
+                    {point}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
 
       {/* Bottom iPad Home Indicator Bar */}
-      <div className="mt-2 flex justify-center">
+      <div className="mt-1.5 flex h-[8px] items-center justify-center">
         <span className="h-1 w-12 rounded-full bg-white/80" />
       </div>
     </Link>

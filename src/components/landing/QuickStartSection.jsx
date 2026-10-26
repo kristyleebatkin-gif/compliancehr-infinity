@@ -144,89 +144,86 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Refined Executive Heading — "Start Using ComplianceHR Infinity in Four Simple, Effortless Steps." */}
+        {/* Heading Sized to Fit on One Line + Black Sentence Underneath */}
         <div
           className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-6 sm:px-10 sm:py-8 text-center space-y-3">
-            <h2 className="mx-auto max-w-5xl text-center font-editorial text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
-              <span className="text-[#0A2B6D]">Start Using </span>
-              <span className="text-[#0A2B6D]">Compliance</span>
+          <div className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
+            <h2 className="mx-auto w-full text-center font-editorial text-lg sm:text-2xl md:text-[26px] lg:text-4xl font-extrabold tracking-tight leading-snug sm:whitespace-nowrap">
+              <span className="text-[#0A2B6D]">Start Using Compliance</span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
               </span>{' '}
-              <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] bg-clip-text text-transparent">
-                Infinity
-              </span>{' '}
-              <span className="block sm:inline text-[#0A2B6D]">in </span>
               <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Four Simple, Effortless Steps.
+                in Four Simple, Effortless Steps.
               </span>
             </h2>
-            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#5A00D6]">
+            <p
+              className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold leading-relaxed text-black"
+              style={{ color: '#000000' }}
+            >
               From 1-click account registration and role-scoped dashboards to connected workflows and live 24/7 audit readiness.
             </p>
-            <div
-              className="h-2 w-full rounded-full"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            />
           </div>
         </div>
 
-        {/* Stretched Banner — Top: Enlarged "Our Quick 4-Step Start Guide", Bottom Row: "Sticky Notes with Functions" on Left in White Border Beside Flip Button */}
+        {/* Stretched Banner — Reduced Header so "Guide" Fits on Same Line + Sticky Notes & Flip All on One Row Together */}
         <div
-          className="flex min-h-[88px] w-full flex-col items-center justify-between gap-2.5 rounded-2xl border-2 border-[#0A2B6D] px-5 sm:px-7 py-3.5 text-white shadow-sm"
+          className="flex min-h-[76px] w-full flex-col items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] px-4 sm:px-6 py-2.5 text-white shadow-sm"
           style={{ background: getHeaderView(4), color: '#FFFFFF' }}
         >
-          <div className="flex items-center justify-center gap-3 font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-white">
-            <span className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-2xs">
-              <Compass className="h-4.5 w-4.5 sm:h-5 sm:w-5 text-white" style={{ color: '#FFFFFF' }} />
+          <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white whitespace-nowrap">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-2xs">
+              <Compass className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
-            <span className="text-center" style={{ color: '#FFFFFF' }}>
+            <span className="text-center whitespace-nowrap" style={{ color: '#FFFFFF' }}>
               Our Quick 4-Step Start Guide
             </span>
           </div>
 
-          <div className="flex w-full flex-wrap items-center justify-between gap-2.5 pt-1">
+          <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
             <div
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white shadow-2xs"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
-              <Pin className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions (4 Steps · 16 Notes)</span>
+              <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
             </div>
 
             <button
               type="button"
               onClick={cycleAllNotes}
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs hover:bg-white/30"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
-              <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
               <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
             </button>
           </div>
         </div>
 
-        {/* 4 Steps on Changeable Sticky Notes in the Exact Same Sticky Note Design with Bigger Step Numbers */}
+        {/* 4 Steps on Changeable Sticky Notes — App-Design Outlines, App-Design Coloured Writing & Symbols, and "&" Placed on Line 2 */}
         <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             const sym = getSymbolView(index);
-            const borderCol = getAppBorderView(index + 1);
+            const borderCol = getAppBorderView(index);
             const activeNoteIdx = noteIndices[index] % step.notes.length;
             const currentNote = step.notes[activeNoteIdx];
+            const ampParts = currentNote.title.includes(' & ')
+              ? currentNote.title.split(' & ')
+              : null;
 
             return (
               <Reveal
                 key={`step-${index}`}
                 as="li"
                 delay={index * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
                   background: STICKY_NOTE_BG,
-                  borderColor: STICKY_NOTE_BORDER,
+                  borderColor: borderCol,
                   borderBottomRightRadius: '26px',
                 }}
               >
@@ -245,18 +242,18 @@ export default function QuickStartSection() {
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Top Row: Symbol + Bigger Step Badge + "Next Note ▸" Button */}
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
+                  {/* Top Row: App-Coloured Symbol + App-Coloured Outlined Step Badge + Compact "Next Note ▸" Button */}
+                  <div className="flex w-full items-center justify-between gap-1.5">
+                    <div className="flex items-center gap-1.5">
                       <span
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                         style={{ borderColor: borderCol }}
                       >
-                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                        <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
-                        style={{ borderColor: borderCol }}
+                        className="rounded-full border-2 bg-white px-3 py-0.5 font-editorial text-sm sm:text-base font-extrabold shadow-2xs whitespace-nowrap"
+                        style={{ borderColor: borderCol, color: sym.iconColor }}
                       >
                         Step 0{index + 1}
                       </span>
@@ -265,22 +262,32 @@ export default function QuickStartSection() {
                     <button
                       type="button"
                       onClick={() => cycleSingleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
 
-                  {/* Heading in App Design Coloured Border */}
+                  {/* Heading in App Design Coloured Border — "&" Placed on Second Line */}
                   <div
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-center text-[#0A2B6D]">
-                        {currentNote.title}
+                    <div className="flex min-h-[54px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                      <h3
+                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight text-center"
+                        style={{ color: sym.iconColor }}
+                      >
+                        {ampParts ? (
+                          <>
+                            <span className="block">{ampParts[0]}</span>
+                            <span className="block">&amp; {ampParts.slice(1).join(' & ')}</span>
+                          </>
+                        ) : (
+                          currentNote.title
+                        )}
                       </h3>
                     </div>
                   </div>
@@ -290,7 +297,7 @@ export default function QuickStartSection() {
                     className="w-full rounded-xl p-[2.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[64px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
                       <p className="text-xs font-extrabold leading-snug text-center text-[#5A00D6]">
                         {currentNote.text}
                       </p>
@@ -298,7 +305,7 @@ export default function QuickStartSection() {
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Sticky Note With App-Design Coloured Symbol Borders */}
+                {/* Live Functions Listed on Each Sticky Note With App-Design Coloured Symbols & Writing */}
                 <div
                   className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
@@ -309,23 +316,35 @@ export default function QuickStartSection() {
                       <span>Note {activeNoteIdx + 1}/4</span>
                     </div>
                     <ul className="space-y-1.5">
-                      {currentNote.functions.map((fn, fIdx) => (
-                        <li
-                          key={fn}
-                          className="flex items-center gap-2 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
-                        >
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(index + fIdx) }}
+                      {currentNote.functions.map((fn, fIdx) => {
+                        const fSym = getSymbolView(index + fIdx);
+                        return (
+                          <li
+                            key={fn}
+                            className="flex items-center gap-2 text-[11px] font-extrabold leading-tight"
                           >
-                            <CheckCircle2
-                              className="h-3 w-3"
-                              style={{ color: getSymbolView(index + fIdx).iconColor }}
-                            />
-                          </span>
-                          <span className="text-[#0A2B6D]">{fn}</span>
-                        </li>
-                      ))}
+                            <span
+                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(index + fIdx) }}
+                            >
+                              <CheckCircle2
+                                className="h-3 w-3"
+                                style={{ color: fSym.iconColor }}
+                              />
+                            </span>
+                            <span style={{ color: fSym.iconColor }}>
+                              {fn.includes(' & ') ? (
+                                <>
+                                  <span className="block">{fn.split(' & ')[0]}</span>
+                                  <span className="block">&amp; {fn.split(' & ').slice(1).join(' & ')}</span>
+                                </>
+                              ) : (
+                                fn
+                              )}
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>

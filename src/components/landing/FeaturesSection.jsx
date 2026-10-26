@@ -325,84 +325,91 @@ export default function FeaturesSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Subheading in App Design Coloured Border */}
+        {/* Bigger "An impossible standard, achieved effortlessly" + Black Sentence Underneath */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          <div className="w-full rounded-[12px] bg-white px-5 py-5 sm:px-8 sm:py-6 text-center space-y-2.5">
+            <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
               <span className="text-[#0A2B6D]">An impossible </span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 standard,
               </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                achieved effortlessly
+              <span className="inline-block whitespace-nowrap bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                achieved effortlessly.
               </span>
             </h2>
             <p
-              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
-              style={{ color: getSubheaderColourView(1) }}
+              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
+              style={{ color: '#000000' }}
             >
               One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
             </p>
           </div>
         </div>
 
-        {/* Stretched Banner — Line 1: Latest Platform Capabilities, Line 2: Sticky Notes with Functions, Line 3: Flip All Button Below */}
+        {/* Stretched Banner — Reduced Header, "12 Connected Engines" on Line 2, and Sticky Notes + Flip All Beside Each Other on One Line */}
         <div
           className="w-full rounded-3xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[88px] w-full flex-col items-center justify-between gap-2.5 rounded-[21px] px-5 sm:px-7 py-3.5 text-center text-white"
+            className="gradient-brand flex min-h-[82px] w-full flex-col items-center justify-between gap-2 rounded-[21px] px-4 sm:px-6 py-2.5 text-center text-white"
             style={{ background: getHeaderView(5), color: '#FFFFFF' }}
           >
-            <div className="flex items-center justify-center gap-3 font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wide text-white">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Sparkles className="h-4.5 w-4.5 text-white" style={{ color: '#FFFFFF' }} />
-              </span>
-              <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Latest Platform Capabilities · 12 Connected Engines
+            <div className="flex flex-col items-center justify-center leading-tight">
+              <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                  <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+                <span className="text-center" style={{ color: '#FFFFFF' }}>
+                  Latest Platform Capabilities
+                </span>
+              </div>
+              <span className="mt-0.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                · 12 Connected Engines
               </span>
             </div>
-            <div className="flex w-full flex-wrap items-center justify-between gap-2.5 pt-1">
+
+            <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
               <div
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <Pin className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions (12 Engines · 36 Notes)</span>
+                <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
               </div>
               <button
                 type="button"
                 onClick={cycleAllNotes}
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs hover:bg-white/30"
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-3 py-0.5 text-[10.5px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes with Functions — Bigger Numbers, Better Framed Info & Consistent Design */}
-        <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center">
+        {/* 12 Capability Sticky Notes — App-Coloured Numbers & Symbols, Smaller Next Note Button, All Sections Lined Up, App-Coloured Writing */}
+        <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center items-stretch">
           {FEATURES.map((f, index) => {
             const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
             const activeNoteIdx = noteIndices[index] % f.notes.length;
             const currentNote = f.notes[activeNoteIdx];
+            const titleAmpParts = f.title.includes(' & ') ? f.title.split(' & ') : null;
 
             return (
               <Reveal
                 key={f.title}
                 delay={(index % 6) * 0.04}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-3.5 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
                   background: STICKY_NOTE_BG,
-                  borderColor: STICKY_NOTE_BORDER,
+                  borderColor: borderCol,
                   borderBottomRightRadius: '26px',
                 }}
               >
@@ -420,19 +427,19 @@ export default function FeaturesSection() {
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Top Row: Symbol + Bigger Number Badge + "Next Note ▸" Button */}
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
+                <div className="flex w-full flex-col items-center space-y-2">
+                  {/* Top Row: App-Coloured Symbol + App-Coloured Number Badge + Reduced "Next Note ▸" Button */}
+                  <div className="flex min-h-[38px] w-full items-center justify-between gap-1.5">
+                    <div className="flex items-center gap-1.5">
                       <span
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
                         style={{ borderColor: borderCol }}
                       >
-                        <f.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                        <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
-                        style={{ borderColor: borderCol }}
+                        className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs whitespace-nowrap"
+                        style={{ borderColor: borderCol, color: sym.iconColor }}
                       >
                         #{String(index + 1).padStart(2, '0')}
                       </span>
@@ -441,67 +448,80 @@ export default function FeaturesSection() {
                     <button
                       type="button"
                       onClick={() => cycleNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
 
-                  {/* Heading in App Design Coloured Border */}
+                  {/* Section 1: Fixed-Height Heading Box in App Design Colour */}
                   <div
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[46px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
-                      <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-[#0A2B6D]">
-                        {f.title}
+                    <div className="flex min-h-[52px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                      <h3
+                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight"
+                        style={{ color: sym.iconColor }}
+                      >
+                        {titleAmpParts ? (
+                          <>
+                            <span className="block">{titleAmpParts[0]}</span>
+                            <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
+                          </>
+                        ) : (
+                          f.title
+                        )}
                       </h3>
                     </div>
                   </div>
 
-                  {/* White Info Box Framed in App-Design Coloured Border */}
+                  {/* Section 2: Fixed-Height Info Box in App Design Colour */}
                   <div
                     className="w-full rounded-xl p-[2.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[60px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <p className="text-xs font-extrabold leading-snug text-[#5A00D6]">
+                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                      <p className="text-[11.5px] font-extrabold leading-snug text-[#5A00D6]">
                         {currentNote.desc}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Sticky Note With App-Design Coloured Symbol Borders */}
+                {/* Section 3: Fixed-Height Live Functions Box Lined Up Across All 12 Tiles */}
                 <div
-                  className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="mt-2.5 w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white p-2.5 text-left space-y-1.5">
-                    <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <div className="flex min-h-[124px] flex-col justify-between rounded-[9px] bg-white p-2.5 text-left">
+                    <div className="flex items-center justify-between text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
                       <span>Note {activeNoteIdx + 1}/{f.notes.length}</span>
                     </div>
-                    <ul className="space-y-1.5">
-                      {currentNote.functions.map((fn, fIdx) => (
-                        <li
-                          key={fn}
-                          className="flex items-center gap-2 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
-                        >
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(index + fIdx) }}
+                    <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
+                      {currentNote.functions.map((fn, fIdx) => {
+                        const fSym = getSymbolView(index + fIdx);
+                        return (
+                          <li
+                            key={fn}
+                            className="flex min-h-[28px] items-center gap-1.5 text-[10.5px] font-extrabold leading-tight"
                           >
-                            <CheckCircle2
-                              className="h-3 w-3"
-                              style={{ color: getSymbolView(index + fIdx).iconColor }}
-                            />
-                          </span>
-                          <span className="text-[#0A2B6D]">{fn}</span>
-                        </li>
-                      ))}
+                            <span
+                              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(index + fIdx) }}
+                            >
+                              <CheckCircle2
+                                className="h-2.5 w-2.5"
+                                style={{ color: fSym.iconColor }}
+                              />
+                            </span>
+                            <span style={{ color: fSym.iconColor }}>{fn}</span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>

@@ -239,22 +239,27 @@ export default function ExpressAuditSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-3.5">
-        {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
+        {/* Heading Strictly in Two Lines + Black Subheading */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-[12px] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
-            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-              <span className="text-[#0A2B6D]">From first question to </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                audit-ready report
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            <h2 className="font-editorial text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">
+              <span className="block sm:whitespace-nowrap">
+                <span className="text-[#0A2B6D]">From first question to </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  audit-ready report
+                </span>
+              </span>
+              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                 in two minutes.
               </span>
             </h2>
-            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
+            <p
+              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
+              style={{ color: '#000000' }}
+            >
               The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
             </p>
           </div>
@@ -277,43 +282,43 @@ export default function ExpressAuditSection() {
           </Link>
         </div>
 
-        {/* Stretched Banner — Line 1: The Two-Minute Express Audit, Line 2: Sticky Notes with Functions, Line 3: Flip All Button */}
+        {/* Stretched Banner — Sticky Notes & Flip All Squished Together on One Single Line */}
         <div
           className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[88px] w-full flex-col items-center justify-between gap-2.5 rounded-[13px] px-5 sm:px-7 py-3.5 text-white"
+            className="gradient-brand flex min-h-[76px] w-full flex-col items-center justify-between gap-2 rounded-[13px] px-4 sm:px-6 py-2.5 text-white"
             style={{ background: getHeaderView(6), color: '#FFFFFF' }}
           >
-            <div className="flex items-center justify-center gap-3 font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wide text-white">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Timer className="h-4.5 w-4.5 text-white" style={{ color: '#FFFFFF' }} />
+            <div className="flex items-center justify-center gap-2 font-editorial text-sm sm:text-lg md:text-xl font-extrabold tracking-wide text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Timer className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>The Two-Minute Express Audit</span>
             </div>
-            <div className="flex w-full flex-wrap items-center justify-between gap-2.5 pt-1">
+            <div className="flex w-full flex-nowrap items-center justify-between gap-2 pt-0.5">
               <div
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-white bg-white/20 px-2.5 py-0.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <Pin className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions · 14 Live iPads &amp; 4 Audit Steps</span>
+                <Pin className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Sticky Notes with Functions</span>
               </div>
               <button
                 type="button"
                 onClick={cycleAllStepNotes}
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-white bg-white/20 px-4 py-1 text-xs sm:text-sm font-extrabold text-white shadow-2xs hover:bg-white/30"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-white bg-white/20 px-2.5 py-0.5 text-[10px] sm:text-xs font-extrabold text-white shadow-2xs hover:bg-white/30 whitespace-nowrap"
                 style={{ color: '#FFFFFF' }}
               >
-                <RefreshCw className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Flip All 4 Audit Step Sticky Notes ▸</span>
+                <RefreshCw className="h-3 w-3 text-white shrink-0" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* 1. Store, Copy & Other Action Tiles Above Steps — Bold Stand-Out iPad Screens with Larger Symbol & Word */}
+        {/* 1. Store, Copy & Other Action Tiles Above Steps — App-Design Coloured Symbols & Words */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -348,7 +353,7 @@ export default function ExpressAuditSection() {
                     />
                   </div>
 
-                  {/* Inner iPad Display — High-Contrast Word & Symbol Stand Out Boldly */}
+                  {/* Inner iPad Display — App-Design Coloured Symbol & Word */}
                   <div
                     className="rounded-xl p-[2.5px] shadow-inner"
                     style={{ background: TOP_BORDER_GRADIENT }}
@@ -367,7 +372,10 @@ export default function ExpressAuditSection() {
                         className="rounded-full p-[2px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <span className="block rounded-full bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        <span
+                          className="block rounded-full bg-white px-2.5 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider"
+                          style={{ color: sym.iconColor }}
+                        >
                           {v.label}
                         </span>
                       </div>
@@ -384,7 +392,7 @@ export default function ExpressAuditSection() {
           </div>
         </div>
 
-        {/* 2. Top 4 Proof iPad Screens Above Steps — Clean Centered Live Info, Lighting Up 1-by-1 & Changing Every 30 Secs */}
+        {/* 2. Top 4 Proof iPad Screens Above Steps — App-Design Coloured Symbols & Writing, Lined Up */}
         <div className="grid w-full gap-3.5 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {PROOF.map(({ icon: Icon, messages }, idx) => {
             const sym = getSymbolView(idx + 3);
@@ -420,13 +428,13 @@ export default function ExpressAuditSection() {
                   </button>
                 </div>
 
-                {/* Inner iPad Screen — Centered Symbol + Framed Live Info */}
+                {/* Inner iPad Screen — App-Design Coloured Symbol + App-Design Coloured Writing */}
                 <div
                   className="flex flex-1 rounded-2xl p-[2.5px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[13px] px-3.5 py-3 text-center text-[#0A2B6D]"
+                    className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-[13px] px-3.5 py-3 text-center"
                     style={{ background: sprayBg }}
                   >
                     <span
@@ -439,8 +447,8 @@ export default function ExpressAuditSection() {
                       className="w-full rounded-xl p-[2.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="w-full rounded-[9px] bg-white px-3 py-2">
-                        <span className="text-xs font-extrabold leading-snug text-[#0A2B6D]">
+                      <div className="flex min-h-[52px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2">
+                        <span className="text-xs font-extrabold leading-snug" style={{ color: sym.iconColor }}>
                           {activeMsg}
                         </span>
                       </div>
@@ -457,7 +465,7 @@ export default function ExpressAuditSection() {
           })}
         </div>
 
-        {/* 3. Four Audit Steps Placed on Changeable Sticky Notes with Bigger Step Badges & Accurate 4-Step / 4-Note Count */}
+        {/* 3. Four Audit Steps Placed on Changeable Sticky Notes — App-Design Coloured Outlines, Symbols & Writing */}
         <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {FLOW.map((item, index) => {
             const Icon = item.icon;
@@ -465,20 +473,23 @@ export default function ExpressAuditSection() {
             const borderCol = getAppBorderView(index + 5);
             const noteIdx = stepNoteIndices[index] % item.notes.length;
             const currentNote = item.notes[noteIdx];
+            const titleAmpParts = currentNote.title.includes(' & ')
+              ? currentNote.title.split(' & ')
+              : null;
 
             return (
               <Reveal
                 key={item.step}
                 as="li"
                 delay={(index % 4) * 0.06}
-                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3.5px] p-3.5 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
                   background: STICKY_NOTE_BG,
-                  borderColor: STICKY_NOTE_BORDER,
+                  borderColor: borderCol,
                   borderBottomRightRadius: '26px',
                 }}
               >
-                {/* Top Sticky Tape Strip + Pin — Accurate 4-Step & 4-Note Count */}
+                {/* Top Sticky Tape Strip + Pin */}
                 <div
                   className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-0.5 shadow-sm"
                   style={{ background: STICKY_NOTE_TAPE }}
@@ -492,18 +503,18 @@ export default function ExpressAuditSection() {
                   </span>
                 </div>
 
-                <div className="flex w-full flex-col items-center space-y-2.5">
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
+                <div className="flex w-full flex-col items-center space-y-2">
+                  <div className="flex min-h-[38px] w-full items-center justify-between gap-1.5">
+                    <div className="flex items-center gap-1.5">
                       <span
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
                         style={{ borderColor: borderCol }}
                       >
-                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                       </span>
                       <span
-                        className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-sm sm:text-base md:text-lg font-extrabold text-[#0A2B6D] shadow-2xs"
-                        style={{ borderColor: borderCol }}
+                        className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs whitespace-nowrap"
+                        style={{ borderColor: borderCol, color: sym.iconColor }}
                       >
                         Step {item.step}
                       </span>
@@ -512,10 +523,10 @@ export default function ExpressAuditSection() {
                     <button
                       type="button"
                       onClick={() => cycleStepNote(index)}
-                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-3 py-1 text-[10px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
                       style={{ color: '#FFFFFF' }}
                     >
-                      <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                       <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
                     </button>
                   </div>
@@ -524,9 +535,19 @@ export default function ExpressAuditSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[48px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <h3 className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
-                        {currentNote.title}
+                    <div className="flex min-h-[52px] w-full flex-col items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                      <h3
+                        className="font-editorial text-sm sm:text-[15px] font-extrabold leading-tight"
+                        style={{ color: sym.iconColor }}
+                      >
+                        {titleAmpParts ? (
+                          <>
+                            <span className="block">{titleAmpParts[0]}</span>
+                            <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
+                          </>
+                        ) : (
+                          currentNote.title
+                        )}
                       </h3>
                     </div>
                   </div>
@@ -535,42 +556,45 @@ export default function ExpressAuditSection() {
                     className="w-full rounded-xl p-[2.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[64px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
-                      <p className="text-xs font-extrabold leading-snug text-[#5A00D6]">
+                    <div className="flex min-h-[68px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                      <p className="text-[11.5px] font-extrabold leading-snug text-[#5A00D6]">
                         {currentNote.text}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Live Functions Listed on Each Step Sticky Note */}
+                {/* Live Functions Listed on Each Step Sticky Note in App Design Colour */}
                 <div
-                  className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="mt-2.5 w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white p-2.5 text-left space-y-1.5">
-                    <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <div className="flex min-h-[118px] flex-col justify-between rounded-[9px] bg-white p-2.5 text-left">
+                    <div className="flex items-center justify-between text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       <span>Live Functions Included:</span>
                       <span>Note {noteIdx + 1}/4</span>
                     </div>
-                    <ul className="space-y-1.5">
-                      {currentNote.functions.map((fn, fIdx) => (
-                        <li
-                          key={fn}
-                          className="flex items-center gap-2 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
-                        >
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                            style={{ borderColor: getAppBorderView(index + fIdx + 2) }}
+                    <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
+                      {currentNote.functions.map((fn, fIdx) => {
+                        const fSym = getSymbolView(index + fIdx + 2);
+                        return (
+                          <li
+                            key={fn}
+                            className="flex min-h-[26px] items-center gap-1.5 text-[10.5px] font-extrabold leading-tight"
                           >
-                            <CheckCircle2
-                              className="h-3 w-3"
-                              style={{ color: getSymbolView(index + fIdx + 2).iconColor }}
-                            />
-                          </span>
-                          <span className="text-[#0A2B6D]">{fn}</span>
-                        </li>
-                      ))}
+                            <span
+                              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                              style={{ borderColor: getAppBorderView(index + fIdx + 2) }}
+                            >
+                              <CheckCircle2
+                                className="h-2.5 w-2.5"
+                                style={{ color: fSym.iconColor }}
+                              />
+                            </span>
+                            <span style={{ color: fSym.iconColor }}>{fn}</span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>

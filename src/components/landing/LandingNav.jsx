@@ -8,20 +8,20 @@ import { base44 } from '@/api/base44Client';
 import QuickAppBar from '@/components/QuickAppBar';
 import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
 
-// 12 Highlights & Features with Verified Section Counts
+// 12 Compact Highlights & Features Without Numbers, Fitted Cleanly
 const LISTED_FEATURES = [
-  { label: '01 · 4-Step Start', href: '#quick-start', icon: Compass },
-  { label: '02 · 12 Core Engines', href: '#features', icon: Sparkles },
-  { label: '03 · 2-Min Audit (4 Steps)', href: '#express-audit', icon: ClipboardCheck },
-  { label: '04 · 46-Module Map', href: '#blueprint', icon: Layers },
-  { label: '05 · 6 Provider Benefits', href: '#benefits', icon: ShieldCheck },
-  { label: '06 · 8 Must-Have Pillars', href: '#must-haves', icon: BookOpen },
-  { label: '07 · 12 1-Click Ops', href: '#infinity-one-click-operations', icon: Zap },
-  { label: '08 · 48-Page Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
-  { label: '09 · 8-Domain Health AI', href: '#business-health-intelligence', icon: Activity },
-  { label: '10 · 12 Core Pipelines', href: '#infinity-core-engine', icon: Cpu },
-  { label: '11 · 9-Tab Control Suite', href: '#infinity-control-centre', icon: Building2 },
-  { label: '12 · 6 Pricing Tiers', href: '#pricing', icon: DollarSign },
+  { label: '4-Step Start', href: '#quick-start', icon: Compass },
+  { label: 'Core Engines', href: '#features', icon: Sparkles },
+  { label: 'Express Audit', href: '#express-audit', icon: ClipboardCheck },
+  { label: 'App Map', href: '#blueprint', icon: Layers },
+  { label: 'Why Choose Us', href: '#benefits', icon: ShieldCheck },
+  { label: 'Must-Haves', href: '#must-haves', icon: BookOpen },
+  { label: 'One-Click Ops', href: '#infinity-one-click-operations', icon: Zap },
+  { label: 'Screen Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
+  { label: 'Health AI', href: '#business-health-intelligence', icon: Activity },
+  { label: 'Core Engine', href: '#infinity-core-engine', icon: Cpu },
+  { label: 'Control Centre', href: '#infinity-control-centre', icon: Building2 },
+  { label: 'Pricing & Packs', href: '#pricing', icon: DollarSign },
 ];
 
 // Three small purple clipboards with a small checklist + ticks on each and a flow between them
@@ -241,9 +241,9 @@ export default function LandingNav() {
             >
               <ThreeClipboardsFlow />
 
-              <div className="flex min-w-0 flex-1 flex-col items-center justify-center text-center leading-tight">
+              <div className="flex min-w-0 flex-1 items-center justify-center text-center leading-tight">
                 <span className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold tracking-wide text-white">
-                  12 Highlights and Features
+                  Highlights and Features
                 </span>
               </div>
 
@@ -260,7 +260,7 @@ export default function LandingNav() {
                   <a
                     key={l.href}
                     href={l.href}
-                    className="flex h-full min-h-[38px] items-center justify-center gap-1.5 rounded-xl border-2 px-2.5 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex h-full min-h-[40px] items-center justify-center gap-1.5 rounded-xl border-2 px-2 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                     style={{
                       background: getHeaderView(idx),
                       color: '#FFFFFF',
@@ -273,7 +273,7 @@ export default function LandingNav() {
                     >
                       <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                     </span>
-                    <span className="min-w-0 flex-1 whitespace-normal break-words text-center text-[10.5px] font-extrabold leading-tight text-white">
+                    <span className="min-w-0 flex-1 text-center text-[10px] sm:text-[10.5px] font-extrabold leading-tight text-white whitespace-nowrap">
                       {l.label}
                     </span>
                   </a>

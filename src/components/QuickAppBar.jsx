@@ -189,18 +189,18 @@ export default function QuickAppBar() {
                 <Compass className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Quick App Bar — Instant Workspace Navigation (18 Live iPads)
+                Quick App Bar — Instant Workspace Navigation
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white">
               <Radio className="h-3.5 w-3.5 text-[#00C6FF]" />
               <span style={{ color: '#FFFFFF' }}>
-                18 Live iPad Screens · Screen #{String(litIdx + 1).padStart(2, '0')} of {QUICK_LINKS.length} Lit · 30s View {(cycleIdx % 3) + 1}/3
+                Live iPad Screens · Screen #{String(litIdx + 1).padStart(2, '0')} of {QUICK_LINKS.length} Lit · 30s ({(cycleIdx % 3) + 1}/3)
               </span>
             </div>
           </div>
 
-          {/* 18 Modular Tiles Styled as Identical-Size iPad Screens */}
+          {/* 18 Modular Tiles Styled as Identical-Size iPad Screens — All Sections Lined Up Horizontally */}
           <div className="grid w-full grid-cols-1 gap-3.5 rounded-2xl bg-white p-1.5 sm:grid-cols-2 md:grid-cols-3 auto-rows-fr items-stretch">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
@@ -214,7 +214,7 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`group flex h-full min-h-[176px] flex-col justify-between rounded-[22px] border-[3px] p-2.5 transition-all duration-300 ${
+                  className={`group flex h-full min-h-[184px] flex-col justify-between rounded-[22px] border-[3px] p-2.5 transition-all duration-300 ${
                     isLit
                       ? 'bg-[#0072FF] -translate-y-0.5 ring-4 ring-[#00C6FF]/70 shadow-xl'
                       : active
@@ -227,7 +227,7 @@ export default function QuickAppBar() {
                   <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
                     <span className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
                       <Tablet className="h-3 w-3 text-[#00C6FF]" />
-                      IPAD {String(idx + 1).padStart(2, '0')}/{QUICK_LINKS.length} · {isLit ? 'LIT UP ✦' : `CH ${(cycleIdx % 3) + 1}/3`}
+                      IPAD {String(idx + 1).padStart(2, '0')} · {isLit ? 'LIT UP ✦' : `CH ${(cycleIdx % 3) + 1}`}
                     </span>
                     <span
                       className={`h-2 w-2 rounded-full border border-white/80 ${
@@ -241,41 +241,44 @@ export default function QuickAppBar() {
                     />
                   </div>
 
-                  {/* Inner iPad Display Screen — Clean Centered Fit */}
+                  {/* Inner iPad Display Screen — Fixed Equal Heights So Every iPad Section Lines Up With Neighbour */}
                   <div
                     className="flex flex-1 rounded-2xl p-[2.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] px-3 py-2.5 text-center"
+                      className="grid h-full w-full grid-cols-1 grid-rows-[1fr_auto] gap-2 rounded-[13px] px-3 py-2.5 text-center"
                       style={{ background: isLit ? LIT_IPAD_SPRAY_BG : UNIFORM_IPAD_SPRAY_BG }}
                     >
-                      {/* Fixed-Height Module Title Box with Bold Symbol & Word */}
+                      {/* Section 1: Fixed-Height Module Title Box with App-Design Coloured Symbol & App-Design Coloured Words */}
                       <div
-                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                        className="flex h-full w-full rounded-xl p-[2.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[50px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                        <div className="flex min-h-[54px] h-full w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
                           <span
                             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
                             style={{ borderColor: getAppBorderView(idx) }}
                           >
                             <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                           </span>
-                          <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                          <span
+                            className="text-xs sm:text-sm font-extrabold leading-tight"
+                            style={{ color: sym.iconColor }}
+                          >
                             {item.label}
                           </span>
                         </div>
                       </div>
 
-                      {/* Centered 30-Second Rotating Info Box Framed in App-Design Coloured Border */}
+                      {/* Section 2: Fixed-Height 30-Second Rotating Info Box With App-Design Coloured Words */}
                       <div
                         className="w-full rounded-xl p-[2.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="flex min-h-[36px] w-full items-center justify-between gap-2 rounded-[9px] bg-white px-2.5 py-1">
+                        <div className="flex min-h-[40px] w-full items-center justify-between gap-2 rounded-[9px] bg-white px-2.5 py-1">
                           <span
-                            className="flex-1 text-center text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                            className="flex-1 text-center text-[11px] font-extrabold leading-tight text-[#5A00D6]"
                           >
                             {currentSub}
                           </span>
