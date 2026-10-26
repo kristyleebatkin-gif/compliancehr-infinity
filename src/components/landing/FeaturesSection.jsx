@@ -47,36 +47,44 @@ export default function FeaturesSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
-        <span
-          className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+        {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
+        <div
+          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
+            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0A2B6D]">An impossible </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                standard,
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                achieved effortlessly
+              </span>
+            </h2>
+            <p
+              className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
+              style={{ color: getSubheaderColourView(1) }}
+            >
+              One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
+            </p>
+          </div>
+        </div>
+
+        {/* Stretched Side-to-Side "Latest Platform Capabilities · 12 Connected Engines" Underneath Writing */}
+        <div
+          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
           style={{ background: getHeaderView(5) }}
         >
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
             <Sparkles className="h-3.5 w-3.5 text-white" />
           </span>
           <span className="text-center">Latest Platform Capabilities · 12 Connected Engines</span>
-        </span>
-
-        <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-            <span className="text-[#0A2B6D]">An impossible </span>
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              standard,
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-              achieved effortlessly
-            </span>
-          </h2>
-          <p
-            className="text-xs sm:text-sm md:text-base font-extrabold"
-            style={{ color: getSubheaderColourView(1) }}
-          >
-            One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
-          </p>
         </div>
 
-        <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 auto-rows-fr text-left">
+        {/* 12 Capability Cards with Balanced 4-Column Fit */}
+        <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-left">
           {FEATURES.map((f, index) => {
             const tile = getTilePalette(index);
             const sym = getSymbolView(index);
@@ -100,10 +108,10 @@ export default function FeaturesSection() {
                       #{index + 1}
                     </span>
                   </div>
-                  <h3 className="mt-3 font-editorial text-sm font-extrabold leading-snug" style={{ color: tile.text }}>
+                  <h3 className="mt-3 font-editorial text-sm sm:text-base font-extrabold leading-snug" style={{ color: tile.text }}>
                     {f.title}
                   </h3>
-                  <p className="mt-1 text-xs font-bold leading-snug" style={{ color: tile.subtext }}>
+                  <p className="mt-1.5 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
                     {f.desc}
                   </p>
                 </div>

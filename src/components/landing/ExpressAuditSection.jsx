@@ -83,30 +83,37 @@ export default function ExpressAuditSection() {
       className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
-        <span
-          className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
+        {/* Heading & Subheading First in Clean Bordered Frame so Writing Fits Better */}
+        <div
+          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3 sm:p-4 shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-5 py-4 sm:px-8 sm:py-5 text-center space-y-2">
+            <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0A2B6D]">From first question to </span>
+              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                audit-ready report
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                in two minutes.
+              </span>
+            </h2>
+            <p className="mx-auto max-w-4xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
+              The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
+            </p>
+          </div>
+        </div>
+
+        {/* Stretched Side-to-Side "The Two-Minute Express Audit" Underneath Writing */}
+        <div
+          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
           style={{ background: getHeaderView(6) }}
         >
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
             <Timer className="h-3.5 w-3.5 text-white" />
           </span>
           <span className="text-center">The Two-Minute Express Audit</span>
-        </span>
-
-        <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-            <span className="text-[#0A2B6D]">From first question to </span>
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              audit-ready report
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-              in two minutes.
-            </span>
-          </h2>
-          <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#0A2B6D]">
-            The fastest, safest way to complete an internal audit: one checklist, every document in every section, evidence attached, corrective actions filed, and a professional branded report generated the moment you finish.
-          </p>
         </div>
 
         {/* 1. Store & Action Pills in Mixed Full Colours */}

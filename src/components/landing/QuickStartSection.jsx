@@ -12,23 +12,23 @@ const TOP_BORDER_GRADIENT =
 const STEPS = [
   {
     icon: ShieldCheck,
-    title: 'Register an account, request access',
-    text: 'Register an account, request access, new accounts approval pending for Provider Administrator.',
+    title: 'Register an Account & Request Access',
+    text: 'Register your account and request access. New accounts are placed in pending approval for your Provider Administrator.',
   },
   {
     icon: LayoutDashboard,
-    title: 'Open your dashboard',
-    text: 'Your dashboard shows the modules and information available for your role.',
+    title: 'Open Your Role Dashboard',
+    text: 'Your personalised dashboard displays the exact modules, live registers, and tools configured for your role.',
   },
   {
     icon: Workflow,
-    title: 'Follow the connected workflow',
-    text: 'Use Intake, profiles and rostering for service delivery, or open the relevant safety, HR, finance or governance module.',
+    title: 'Follow the Connected Workflow',
+    text: 'Move seamlessly from intake, profiles, and rostering right through to safety, HR, finance, and governance.',
   },
   {
     icon: Bell,
-    title: 'Stay up to date',
-    text: 'Live compliance trackers show what is in date across every module, alerts surface anything due, and the User Guides library holds current instructions.',
+    title: 'Stay Audit-Ready Every Day',
+    text: 'Live compliance trackers monitor due dates across every module, with instant alerts and step-by-step user guides.',
   },
 ];
 
@@ -40,13 +40,13 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading with App Design Colour Between Outer Border & Inner Writing Border, All Dark Blue Writing */}
+        {/* Heading with Generous Space Around "Start using ComplianceHR in four simple and effortless steps" */}
         <div
-          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-2.5 shadow-sm"
+          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-3.5 sm:p-4 shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-3 text-center">
-            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-[#0A2B6D]">
+          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-6 py-5 sm:px-10 sm:py-7 text-center">
+            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug text-[#0A2B6D]">
               Start using ComplianceHR in four simple and effortless steps
             </h2>
           </div>
@@ -63,7 +63,7 @@ export default function QuickStartSection() {
           <span className="text-center">Our Quick 4 Step Start Guide</span>
         </div>
 
-        {/* 4 Step Tiles: App Design Colour Between Outer Border & Inner Writing Border, White Symbols & Steps, All Dark Blue Writing */}
+        {/* 4 Step Tiles: App Design Colour Between Outer Border & Inner Writing Border, White Symbols & Steps, Balanced Dark Blue Wording */}
         <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
@@ -91,13 +91,13 @@ export default function QuickStartSection() {
 
                 {/* Information Inside a White Bordered Box with All Dark Blue Writing */}
                 <div
-                  className="flex w-full flex-1 flex-col items-center justify-center rounded-xl border-2 bg-white px-3.5 py-3 text-center shadow-2xs"
+                  className="flex w-full flex-1 flex-col items-center justify-between rounded-xl border-2 bg-white px-4 py-3.5 text-center shadow-2xs"
                   style={{ borderColor: borderCol }}
                 >
-                  <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-center text-[#0A2B6D]">
+                  <h3 className="font-editorial text-sm sm:text-[15px] font-extrabold leading-snug text-center text-[#0A2B6D]">
                     {step.title}
                   </h3>
-                  <p className="mt-1.5 text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
+                  <p className="mt-2 text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
                     {step.text}
                   </p>
                 </div>

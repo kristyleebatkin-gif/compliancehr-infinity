@@ -149,10 +149,15 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Pillar Cards — App Design Colour Borders Around Pillars, Pillar Numbers Under Writing, 4 Tiles (White, Light Blue, Light Pink, Light Purple) with App Design Colour Borders */}
+          {/* 3 Pillar Cards — App Design Colour Borders Around Pillars, Pillar Numbers Under Writing, 4 Tiles with White, Pink, Purple & Blue Sprays of Colour */}
           <div className="grid w-full gap-4 text-left sm:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => {
-              const PILLAR_TILE_BGS = ['#FFFFFF', '#BAE6FD', '#FBCFE8', '#E9D5FF'];
+              const PILLAR_SPRAY_BGS = [
+                'radial-gradient(circle at 12% 20%, rgba(255, 133, 224, 0.55) 0%, transparent 45%), radial-gradient(circle at 88% 25%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), radial-gradient(circle at 52% 85%, rgba(192, 132, 252, 0.55) 0%, transparent 50%), #FFFFFF',
+                'radial-gradient(circle at 18% 80%, rgba(56, 189, 248, 0.58) 0%, transparent 46%), radial-gradient(circle at 82% 20%, rgba(192, 132, 252, 0.55) 0%, transparent 46%), radial-gradient(circle at 50% 35%, rgba(255, 133, 224, 0.5) 0%, transparent 48%), #FFFFFF',
+                'radial-gradient(circle at 15% 30%, rgba(192, 132, 252, 0.58) 0%, transparent 46%), radial-gradient(circle at 85% 75%, rgba(255, 133, 224, 0.58) 0%, transparent 46%), radial-gradient(circle at 55% 20%, rgba(56, 189, 248, 0.52) 0%, transparent 48%), #FFFFFF',
+                'radial-gradient(circle at 85% 22%, rgba(255, 133, 224, 0.58) 0%, transparent 46%), radial-gradient(circle at 15% 78%, rgba(56, 189, 248, 0.56) 0%, transparent 46%), radial-gradient(circle at 48% 50%, rgba(192, 132, 252, 0.52) 0%, transparent 50%), #FFFFFF',
+              ];
               return (
                 <Reveal
                   key={title}
@@ -181,11 +186,11 @@ export default function LandingHero() {
                         </span>
                       </div>
 
-                      {/* 4 Equal-Height Rows Lined Up Horizontally: White, Light Blue, Light Pink, Light Purple + App Design Colour Borders */}
+                      {/* 4 Equal-Height Rows Lined Up Horizontally: White, Pink, Purple & Blue Sprays of Colour + App Design Colour Borders */}
                       <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-2.5">
                         {reasons.map((r, rIdx) => {
                           const sym = getSymbolView(index * 3 + rIdx);
-                          const tileBg = PILLAR_TILE_BGS[rIdx % PILLAR_TILE_BGS.length];
+                          const sprayBg = PILLAR_SPRAY_BGS[(index + rIdx) % PILLAR_SPRAY_BGS.length];
                           return (
                             <li
                               key={r}
@@ -194,10 +199,10 @@ export default function LandingHero() {
                             >
                               <div
                                 className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-3.5 py-2 text-xs font-extrabold leading-snug text-[#0A2B6D]"
-                                style={{ backgroundColor: tileBg }}
+                                style={{ background: sprayBg }}
                               >
                                 <span
-                                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white"
+                                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                   style={{ borderColor: getAppBorderView(index * 3 + rIdx) }}
                                 >
                                   <CheckCircle2 className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
