@@ -60,9 +60,9 @@ export const WHAT_YOU_GET_ITEMS = [
     detail: 'Service Agreements, 24h/5d Incidents, Risk Matrix, Screening & Consents.',
   },
   {
-    title: 'Up to 20 Users ($660/mo) to 101+ Users',
-    included: 'Replaces $4,080+/mo of Separate Tools',
-    detail: 'All 46 live modules + $160/mo Elite AI tier (2,500 msgs & 20k credits).',
+    title: 'Up to 20 Users ($760/mo) to 101+ Users',
+    included: 'Includes Full Access to ComplianceHR App',
+    detail: 'Includes Elite Package Tokens valued at $160 per a month (2,500 msgs & 20k credits).',
   },
   {
     title: '1-Click Smart-Fill Auto-Branding',
@@ -229,12 +229,12 @@ export default function MustHaveFunctionsReview() {
               className="mx-auto w-full text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
               style={{ color: '#000000' }}
             >
-              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · From $660/mo or $999 Outright Docs
+              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · From $760 per a month or $999 Outright Docs
             </p>
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Full Review..." Banner Fitted Cleanly (No $355 Reference) */}
+        {/* Stretched Side-to-Side "Full Review..." Banner Fitted Cleanly */}
         <div
           className="w-full rounded-full p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -252,17 +252,17 @@ export default function MustHaveFunctionsReview() {
           </div>
         </div>
 
-        {/* Executive KPI & Accurate Price Counter Pills (No $355 Reference) */}
+        {/* Executive KPI & Accurate Price Counter Pills */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
-            { val: `${MODULE_DIRECTORY.length} Modules`, label: 'From $660/mo' },
+            { val: `${MODULE_DIRECTORY.length} Modules`, label: 'From $760/mo' },
             { val: '17 Categories', label: '356 Checkpoints' },
             { val: '2 Editions', label: 'CHR-AUD 001 & 002' },
             { val: '$999 / $125m', label: '125+ Docs Suite' },
-            { val: '+$160/mo', label: 'Elite Included' },
+            { val: '$160/mo Value', label: 'Elite Tokens Incl.' },
             { val: '100+ Functions', label: '20k Credits/mo' },
             { val: '65+ Workflows', label: '2,500 Msgs/mo' },
-            { val: '14-Day Trial', label: '$0 Upfront' },
+            { val: '14-Day Trial', label: 'Full App Access' },
           ].map((stat, idx) => {
             const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
             return (
@@ -340,6 +340,9 @@ export default function MustHaveFunctionsReview() {
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div className="flex flex-col items-center justify-center rounded-[9px] bg-white px-3.5 py-3 text-center">
+                        <div className="font-editorial text-sm font-extrabold uppercase tracking-wider text-[#0072FF]">
+                          ComplianceHR
+                        </div>
                         <div className="font-editorial text-2xl sm:text-3xl font-extrabold leading-tight">
                           <span className="text-[#0A2B6D]">$999 </span>
                           <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -347,10 +350,10 @@ export default function MustHaveFunctionsReview() {
                           </span>
                         </div>
                         <div className="mt-0.5 text-xs font-extrabold text-[#5A00D6]">
-                          or $125 per month · Full 125+ Document Suite
+                          or $125 per a month · Full 125+ Document Suite
                         </div>
                         <p className="mt-1.5 text-center text-xs font-bold leading-snug text-[#5A00D6]">
-                          Or subscribe to the full 46-Module Super-Platform from $660/mo ($7,920/yr) and replace $4,080+/mo of disconnected tools.
+                          Or subscribe to ComplianceHR Subscription from $760 per a month (up to 20 users, includes Elite Package Tokens valued at $160 per a month &amp; full access to ComplianceHR app).
                         </p>
                       </div>
                     </div>
@@ -621,8 +624,8 @@ export default function MustHaveFunctionsReview() {
 
                     {/* Fixed-Height Footer Bar */}
                     <div className="mt-3 pt-2.5 border-t border-[#0A2B6D]/20 flex h-[42px] items-center justify-between">
-                      <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
-                        From $660/mo Plan
+                      <span className="text-[10.5px] font-extrabold text-[#5A00D6]">
+                        From $760/mo Plan
                       </span>
                       <Link
                         to="/register"

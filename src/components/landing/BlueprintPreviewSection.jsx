@@ -37,10 +37,10 @@ const UNIFORM_SPRAY_BG =
 
 const FLOW_TILE_STYLES = [
   { bg: '#FF2E9A', text: '#FFFFFF' },
-  { bg: '#38BDF8', text: '#0A2B6D' },
-  { bg: '#9333EA', text: '#FFFFFF' },
   { bg: '#0072FF', text: '#FFFFFF' },
+  { bg: '#9333EA', text: '#FFFFFF' },
   { bg: '#5A00D6', text: '#FFFFFF' },
+  { bg: '#C80064', text: '#FFFFFF' },
 ];
 
 const POP_SONGS = [
@@ -399,7 +399,7 @@ const ACCESS_LEVELS = [
   },
 ];
 
-// Reusable uniform section/group header bar — supports optional secondLine so "& YouTube Music Clips" sits on line 2
+// Reusable uniform section/group header bar — Title on Line 1, optional secondLine on Line 2, and badgeText at the bottom of the header
 function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, viewIndex = 0 }) {
   return (
     <div
@@ -407,16 +407,16 @@ function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, view
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div
-        className="gradient-brand flex min-h-[54px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-4 py-2 text-center text-white sm:flex-row sm:justify-between"
+        className="gradient-brand flex min-h-[64px] w-full flex-col items-center justify-center gap-1.5 rounded-[13px] px-4 py-2.5 text-center text-white"
         style={{ background: getHeaderView(viewIndex), color: '#FFFFFF' }}
       >
-        <div className="flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-2.5">
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="flex items-center justify-center gap-2.5">
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span
-              className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white whitespace-nowrap"
               style={{ color: '#FFFFFF' }}
             >
               {title}
@@ -424,7 +424,7 @@ function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, view
           </div>
           {secondLine ? (
             <span
-              className="mt-0.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white sm:pl-8"
+              className="mt-0.5 text-xs sm:text-sm font-extrabold tracking-wide text-white"
               style={{ color: '#FFFFFF' }}
             >
               {secondLine}
@@ -433,7 +433,7 @@ function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, view
         </div>
         {badgeText ? (
           <span
-            className="shrink-0 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10.5px] font-extrabold text-white"
+            className="shrink-0 rounded-full border border-white bg-white/20 px-3.5 py-0.5 text-[10.5px] font-extrabold text-white"
             style={{ color: '#FFFFFF' }}
           >
             {badgeText}
@@ -565,10 +565,11 @@ export default function BlueprintPreviewSection() {
           </div>
         </div>
 
-        {/* Uniform Header #1: Current Platform Blueprint */}
+        {/* Uniform Header #1: Current Platform Blueprint on Line 1, "46 Connected Modules" on Line 2 */}
         <UniformBlueprintHeader
           icon={Layers}
-          title={`Current Platform Blueprint · ${moduleCount} Connected Modules`}
+          title="Current Platform Blueprint"
+          secondLine={`${moduleCount} Connected Modules`}
           badgeText="100% Connected Architecture"
           viewIndex={1}
         />
@@ -579,10 +580,11 @@ export default function BlueprintPreviewSection() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-[12px] bg-white p-4 text-left space-y-3.5">
-            {/* Uniform Header #2: How Information Connects & Role-Based Access Model */}
+            {/* Uniform Header #2: "How Information Connects" on Line 1, "& Role-Based Access Model" on Line 2 */}
             <UniformBlueprintHeader
               icon={Workflow}
-              title="How Information Connects & Role-Based Access Model"
+              title="How Information Connects"
+              secondLine="& Role-Based Access Model"
               badgeText="5 Live Pipelines + 5 TV Channels"
               viewIndex={2}
             />
@@ -603,63 +605,73 @@ export default function BlueprintPreviewSection() {
                     />
 
                     <div className="flex flex-1 flex-col justify-between gap-3">
-                      {DATA_FLOWS.map((flow, fIdx) => (
-                        <div
-                          key={flow.label}
-                          className="rounded-2xl p-[2.5px] shadow-2xs overflow-hidden"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
+                      {DATA_FLOWS.map((flow, fIdx) => {
+                        const fSym = getSymbolView(fIdx);
+                        return (
                           <div
-                            className="flex flex-col items-center justify-center gap-2 rounded-[13px] px-4 py-3 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
+                            key={flow.label}
+                            className="rounded-2xl p-[3.5px] shadow-2xs overflow-hidden"
+                            style={{ background: TOP_BORDER_GRADIENT }}
                           >
                             <div
-                              className="rounded-full p-[2px] shadow-2xs"
-                              style={{ background: TOP_BORDER_GRADIENT }}
+                              className="flex flex-col items-center justify-center gap-2.5 rounded-[13px] px-4 py-3 text-center"
+                              style={{ background: UNIFORM_SPRAY_BG }}
                             >
-                              <span className="block rounded-full bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                                {flow.label}
-                              </span>
-                            </div>
+                              {/* Thicker App-Design Coloured Border Around Flow Heading */}
+                              <div
+                                className="rounded-full p-[4px] shadow-sm"
+                                style={{ background: TOP_BORDER_GRADIENT }}
+                              >
+                                <span
+                                  className="block rounded-full border-2 bg-white px-4 py-1 text-[10.5px] font-extrabold uppercase tracking-wider"
+                                  style={{
+                                    borderColor: getAppBorderView(fIdx),
+                                    color: fSym.iconColor,
+                                  }}
+                                >
+                                  {flow.label}
+                                </span>
+                              </div>
 
-                            <div
-                              className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1.5 py-1"
-                              style={{ animationDelay: `${fIdx * 0.6}s` }}
-                            >
-                              {flow.steps.map((item, index) => {
-                                const idx = fIdx * 5 + index;
-                                const flowTile = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
-                                return (
-                                  <React.Fragment key={item}>
-                                    <div
-                                      className="rounded-full p-[2px] shadow-2xs"
-                                      style={{ background: TOP_BORDER_GRADIENT }}
-                                    >
-                                      <span
-                                        className="block rounded-full px-3 py-1 text-[11px] font-extrabold whitespace-nowrap"
-                                        style={{
-                                          backgroundColor: flowTile.bg,
-                                          color: flowTile.text,
-                                        }}
+                              <div
+                                className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1.5 py-1"
+                                style={{ animationDelay: `${fIdx * 0.6}s` }}
+                              >
+                                {flow.steps.map((item, index) => {
+                                  const idx = fIdx * 5 + index;
+                                  const flowTile = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
+                                  return (
+                                    <React.Fragment key={item}>
+                                      <div
+                                        className="rounded-full p-[2.5px] shadow-2xs"
+                                        style={{ background: TOP_BORDER_GRADIENT }}
                                       >
-                                        {item}
-                                      </span>
-                                    </div>
-                                    {index < flow.steps.length - 1 && (
-                                      <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
-                                    )}
-                                  </React.Fragment>
-                                );
-                              })}
+                                        <span
+                                          className="block rounded-full px-3 py-1 text-[11px] font-extrabold text-white whitespace-nowrap"
+                                          style={{
+                                            backgroundColor: flowTile.bg,
+                                            color: '#FFFFFF',
+                                          }}
+                                        >
+                                          {item}
+                                        </span>
+                                      </div>
+                                      {index < flow.steps.length - 1 && (
+                                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
+                                      )}
+                                    </React.Fragment>
+                                  );
+                                })}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
 
-                {/* Right Column: Access Follows Role — Constantly Lit Live HD TVs on Channels 7, 9, 10, 2, 29 */}
+                {/* Right Column: Access Follows Role — Constantly Lit Live HD TVs With App-Design Coloured Symbols & Writing */}
                 <div
                   className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
@@ -696,35 +708,38 @@ export default function BlueprintPreviewSection() {
                                 </span>
                               </div>
 
-                              {/* Inner Flat Screen TV Display — Centered in the Middle of the Screen */}
+                              {/* Inner Flat Screen TV Display — App-Design Coloured Symbols & Writing */}
                               <div
                                 className="rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
                                 <div
-                                  className="flex flex-col items-center justify-center gap-2 rounded-[10px] px-4 py-3 text-center text-[#0A2B6D]"
+                                  className="flex flex-col items-center justify-center gap-2 rounded-[10px] px-4 py-3 text-center"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
                                   <span
-                                    className="inline-flex items-center gap-1 rounded-full border bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6] shadow-2xs"
-                                    style={{ borderColor: borderCol }}
+                                    className="inline-flex items-center gap-1.5 rounded-full border-2 bg-white px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider shadow-2xs"
+                                    style={{ borderColor: borderCol, color: sym.iconColor }}
                                   >
-                                    <CheckCircle2 className="h-3 w-3 text-[#FF2E9A]" />
+                                    <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
                                     {lvl.scopeBadge}
                                   </span>
 
                                   <div
-                                    className="w-full max-w-xl rounded-xl p-[2px] shadow-2xs"
+                                    className="w-full max-w-xl rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[42px] items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                                    <div className="flex min-h-[44px] items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
                                         className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
                                       >
                                         <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                      <span
+                                        className="text-xs sm:text-sm font-extrabold leading-tight"
+                                        style={{ color: sym.iconColor }}
+                                      >
                                         {lvl.title}
                                       </span>
                                     </div>
@@ -892,35 +907,35 @@ export default function BlueprintPreviewSection() {
                               className="group flex w-full flex-1 flex-col rounded-t-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md transition-shadow hover:shadow-lg"
                               style={{ borderColor: borderCol }}
                             >
-                              {/* Laptop Webcam & Bezel Bar */}
-                              <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
-                                <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                                  <Laptop className="h-2.5 w-2.5 text-[#00C6FF]" />
-                                  LAPTOP {String(idx + 1).padStart(2, '0')} · LIVE MODULE
+                              {/* Laptop Webcam & Bezel Bar — Flat on Top in One Single Line */}
+                              <div className="mb-1.5 flex h-[20px] w-full flex-nowrap items-center justify-between px-2 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+                                  <Laptop className="h-2.5 w-2.5 text-[#00C6FF] shrink-0" />
+                                  <span>LAPTOP {String(idx + 1).padStart(2, '0')} · CLIP #{String(idx + 1).padStart(2, '0')}</span>
                                 </span>
-                                <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB]">
-                                  <Youtube className="h-3 w-3 text-[#FF2E9A]" />
-                                  CLIP #{idx + 1}
+                                <span className="inline-flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB] whitespace-nowrap">
+                                  <Youtube className="h-3 w-3 text-[#FF2E9A] shrink-0" />
+                                  <span>LIVE</span>
                                   <span className="h-2 w-2 rounded-full bg-[#10B981]" />
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen — Expanded White Areas & YouTube Video Screen at the Bottom */}
+                              {/* Inner Laptop Screen — Lined-Up Sections, App-Design Coloured Symbols & Writing */}
                               <div
                                 className="flex flex-1 rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
                                 <div
-                                  className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
+                                  className="grid h-full w-full grid-cols-1 grid-rows-[62px_1fr_auto] gap-2.5 rounded-[10px] p-3 text-center"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* 1. Top: Spacious White Module Header Box */}
+                                  {/* 1. Top: Fixed-Height White Module Header Box With App-Design Coloured Symbol & Writing */}
                                   <Link
                                     to={mod.path}
-                                    className="w-full rounded-xl p-[2.5px] shadow-2xs transition-transform hover:scale-[1.01]"
+                                    className="flex h-[62px] w-full rounded-xl p-[2.5px] shadow-2xs transition-transform hover:scale-[1.01]"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[54px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-2 text-center">
+                                    <div className="flex h-full w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
                                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
@@ -928,29 +943,35 @@ export default function BlueprintPreviewSection() {
                                         <Icon className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                                       </span>
                                       <div className="flex flex-col items-center">
-                                        <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                        <span
+                                          className="text-xs sm:text-sm font-extrabold leading-tight"
+                                          style={{ color: sym.iconColor }}
+                                        >
                                           {mod.label}
                                         </span>
-                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                                          Module #{String(idx + 1).padStart(2, '0')} · Clip #{idx + 1}
+                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6] whitespace-nowrap">
+                                          Laptop #{String(idx + 1).padStart(2, '0')} · Clip #{String(idx + 1).padStart(2, '0')}
                                         </span>
                                       </div>
                                     </div>
                                   </Link>
 
-                                  {/* 2. Middle: Expanded White Info Box Framed in App-Design Coloured Border */}
+                                  {/* 2. Middle: Fixed-Height White Info Box Framed in App-Design Coloured Border */}
                                   <Link
                                     to={mod.path}
-                                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                                    className="flex h-full min-h-[116px] w-full rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[96px] w-full flex-col items-center justify-between rounded-[9px] bg-white px-3.5 py-2.5 text-center">
-                                      <p className="text-center text-[11px] font-extrabold leading-relaxed text-[#5A00D6]">
+                                    <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white px-3 py-2.5 text-center">
+                                      <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
                                         {mod.blurb}
                                       </p>
-                                      <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
-                                        <span style={{ color: '#FFFFFF' }}>Open {mod.label}</span>
-                                        <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                                      <span
+                                        className="mt-2 inline-flex items-center gap-1 rounded-full border-2 bg-white px-3 py-0.5 text-[9.5px] font-extrabold shadow-2xs"
+                                        style={{ borderColor: borderCol, color: sym.iconColor }}
+                                      >
+                                        <span style={{ color: sym.iconColor }}>Open {mod.label}</span>
+                                        <ArrowRight className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                                       </span>
                                     </div>
                                   </Link>
@@ -1067,14 +1088,14 @@ export default function BlueprintPreviewSection() {
                               className="flex w-full flex-1 flex-col rounded-t-2xl border-[3px] bg-[#0A2B6D] p-2.5 shadow-md"
                               style={{ borderColor: borderCol }}
                             >
-                              <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
-                                <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                                  <Laptop className="h-2.5 w-2.5 text-[#00C6FF]" />
-                                  LAPTOP {String(idx + 1).padStart(2, '0')} · YOUTUBE STAGE
+                              <div className="mb-1.5 flex h-[20px] w-full flex-nowrap items-center justify-between px-2 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+                                  <Laptop className="h-2.5 w-2.5 text-[#00C6FF] shrink-0" />
+                                  <span>LAPTOP {String(idx + 1).padStart(2, '0')} · CLIP #{String(idx + 1).padStart(2, '0')}</span>
                                 </span>
-                                <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB]">
-                                  <Youtube className="h-3 w-3 text-[#FF2E9A]" />
-                                  CLIP #{idx + 1}
+                                <span className="inline-flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB] whitespace-nowrap">
+                                  <Youtube className="h-3 w-3 text-[#FF2E9A] shrink-0" />
+                                  <span>LIVE</span>
                                   <span className="h-2 w-2 rounded-full bg-[#10B981]" />
                                 </span>
                               </div>
@@ -1084,14 +1105,14 @@ export default function BlueprintPreviewSection() {
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
                                 <div
-                                  className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
+                                  className="grid h-full w-full grid-cols-1 grid-rows-[62px_1fr_auto] gap-2.5 rounded-[10px] p-3 text-center"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
                                   <div
-                                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                                    className="flex h-[62px] w-full rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[54px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-2 text-center">
+                                    <div className="flex h-full w-full items-center justify-center gap-2.5 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
                                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
@@ -1099,26 +1120,32 @@ export default function BlueprintPreviewSection() {
                                         <Music className="h-4.5 w-4.5" style={{ color: sym.iconColor }} />
                                       </span>
                                       <div className="flex flex-col items-center">
-                                        <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                        <span
+                                          className="text-xs sm:text-sm font-extrabold leading-tight"
+                                          style={{ color: sym.iconColor }}
+                                        >
                                           {yt.label}
                                         </span>
-                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                                          Stage #{String(idx + 1).padStart(2, '0')} · Clip #{idx + 1}
+                                        <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6] whitespace-nowrap">
+                                          Laptop #{String(idx + 1).padStart(2, '0')} · Clip #{String(idx + 1).padStart(2, '0')}
                                         </span>
                                       </div>
                                     </div>
                                   </div>
 
                                   <div
-                                    className="flex w-full flex-1 rounded-xl p-[2.5px] shadow-2xs"
+                                    className="flex h-full min-h-[116px] w-full rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex min-h-[96px] w-full flex-col items-center justify-between rounded-[9px] bg-white px-3.5 py-2.5 text-center">
-                                      <p className="text-center text-[11px] font-extrabold leading-relaxed text-[#5A00D6]">
+                                    <div className="flex h-full w-full flex-col items-center justify-between rounded-[9px] bg-white px-3 py-2.5 text-center">
+                                      <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
                                         {yt.blurb}
                                       </p>
-                                      <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
-                                        <span style={{ color: '#FFFFFF' }}>YouTube Music Stage</span>
+                                      <span
+                                        className="mt-2 inline-flex items-center gap-1 rounded-full border-2 bg-white px-3 py-0.5 text-[9.5px] font-extrabold shadow-2xs"
+                                        style={{ borderColor: borderCol, color: sym.iconColor }}
+                                      >
+                                        <span style={{ color: sym.iconColor }}>YouTube Music Stage</span>
                                       </span>
                                     </div>
                                   </div>

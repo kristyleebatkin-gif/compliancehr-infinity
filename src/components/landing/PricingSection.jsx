@@ -17,25 +17,25 @@ const TOP_BORDER_GRADIENT =
 const UNIFORM_SPRAY_BG =
   'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
 
-// Package name on top line, users on 2nd line underneath, no price in header or white title box
+// Updated Monthly Tier Prices ($760, $820, $920, $999, $1,100, $1,220) — No Yearly Sums, Includes Elite Package Tokens ($160/mo) & Full Access to ComplianceHR App
 export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-20',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · Up to 20 Users',
     badge: 'Most Popular · Elite Pack Included',
     users: 'Up to 20 Users',
-    previousMonthly: 500,
+    previousMonthly: 600,
     eliteAddon: 160,
-    monthly: 660,
-    yearly: 7920,
+    monthly: 760,
+    priceLabel: '$760 per a month',
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     featured: true,
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app (all 46 live modules)',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
-      'All 46 ComplianceHR Infinity Modules + Dual Office & Profile Views',
       'Employee & Participant Profiles, NDIS Screening & 3-Part Consents',
       '16 Communication Modulars, Shared To-Do Command & 1-Click Audit Packs',
       '14-Day Free Trial — Test every module live with your team',
@@ -43,20 +43,20 @@ export const COMPLIANCE_HR_PACKAGES = [
   },
   {
     id: 'tier-30',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · 21–30 Users',
     badge: 'Elite Pack Included',
     users: '21–30 Users',
-    previousMonthly: 563,
+    previousMonthly: 660,
     eliteAddon: 160,
-    monthly: 723,
-    yearly: 8670,
+    monthly: 820,
+    priceLabel: '$820 per a month',
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app for 21–30 users',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
-      'Full 46-Module Smart Enhanced All-In-One Compliance Pack for 21–30 users',
       'Smart Rostering, Shift Notes, NDIS Price Guide Invoicing & Payroll',
       '24h / 5d NDIS Reportable Incident Timers, Risk Matrix & Take-5 Checks',
       'HR Paperwork Hub, LMS Training Academy & AI Course/Quiz Builder',
@@ -64,20 +64,20 @@ export const COMPLIANCE_HR_PACKAGES = [
   },
   {
     id: 'tier-40',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · 31–40 Users',
     badge: 'Elite Pack Included',
     users: '31–40 Users',
-    previousMonthly: 625,
+    previousMonthly: 760,
     eliteAddon: 160,
-    monthly: 785,
-    yearly: 9420,
+    monthly: 920,
+    priceLabel: '$920 per a month',
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app for 31–40 users',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
-      'Complete Smart Enhanced All-In-One Compliance Pack for 31–40 users',
       'Automated 30-Action & 30-Completed-Task PDF/CSV Audit Batch Reports',
       'Company Safe, Smart Document Vault, Read-Receipts & Expiry Calendars',
       'Staff ID Badge Studio, Key Contacts & Automated Compliance Reminders',
@@ -85,20 +85,20 @@ export const COMPLIANCE_HR_PACKAGES = [
   },
   {
     id: 'tier-50',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · 41–50 Users',
     badge: 'Elite Pack Included',
     users: '41–50 Users',
-    previousMonthly: 688,
+    previousMonthly: 839,
     eliteAddon: 160,
-    monthly: 848,
-    yearly: 10170,
+    monthly: 999,
+    priceLabel: '$999 per a month',
     messageCredits: '2,500 message credits / mo',
     integrationCredits: '20,000 integration credits / mo',
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app for 41–50 users',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
-      'Complete Smart Enhanced All-In-One Compliance Pack for 41–50 users',
       'Multi-team Rostering, Labour Forecasting, Coverage Heatmap & Exceptions',
       'Quotes, Receipt Scanner, Bank Reconciliation & 3-Way Procurement Match',
       'Consent-gated External NDIS Auditor Portal & Weekly Board Reports',
@@ -106,20 +106,20 @@ export const COMPLIANCE_HR_PACKAGES = [
   },
   {
     id: 'tier-100',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · 51–100 Users',
     badge: 'Elite Pack Included',
     users: '51–100 Users',
-    previousMonthly: 750,
+    previousMonthly: 940,
     eliteAddon: 160,
-    monthly: 910,
-    yearly: 10920,
+    monthly: 1100,
+    priceLabel: '$1,100 per a month',
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app for 51–100 users',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
-      'Complete Smart Enhanced All-In-One Compliance Pack for 51–100 users',
       '65+ Live Automated Workflows & 100+ Server Functions running 24/7',
       'Departmental Compliance Dashboards, KPI Auto-Calc & Risk Heatmaps',
       'Full HR File Completeness Tracking, 360° Appraisals & Volunteer Hub',
@@ -127,20 +127,20 @@ export const COMPLIANCE_HR_PACKAGES = [
   },
   {
     id: 'tier-101-plus',
-    packageName: 'Smart Enhanced Elite Package',
+    packageName: 'ComplianceHR Subscription',
     name: 'Smart Enhanced All-In-One Elite Package · 101+ Users',
     badge: 'Enterprise · Elite Pack Included',
     users: '101+ Users',
-    previousMonthly: 875,
+    previousMonthly: 1060,
     eliteAddon: 160,
-    monthly: 1035,
-    yearly: 12420,
+    monthly: 1220,
+    priceLabel: '$1,220 per a month',
     messageCredits: '2,500+ message credits / mo',
     integrationCredits: '20,000+ integration credits / mo',
     benefits: [
-      'Includes Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      'Includes full access to ComplianceHR app for 101+ users',
+      'Includes Elite Package Tokens, valued at $160 per a month',
       'Includes Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
-      'Enterprise Smart Enhanced All-In-One Compliance Pack for 101+ users',
       'Unlimited Multi-Site Governance, Auditor Portal & Executive Wall Scenes',
       'Custom Modular Screen & Data Selector across all organisational branches',
       'Priority onboarding, bulk intake migration & dedicated compliance support',
@@ -335,18 +335,21 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* White Area Framed in App-Design Coloured Border: Just the Title of the Package (No Price) */}
+                    {/* White Area Framed in App-Design Coloured Border: Package Title & Monthly Price (No Yearly Sums) */}
                     <div
                       className="w-full rounded-xl p-[3px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex min-h-[64px] flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2.5 text-center">
+                      <div className="flex min-h-[86px] flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-3 py-2.5 text-center">
                         <h3
                           className="font-editorial text-sm sm:text-base font-extrabold leading-snug bg-clip-text text-transparent text-center"
                           style={{ backgroundImage: getTitleGradientView(pIdx) }}
                         >
                           {pkg.name}
                         </h3>
+                        <span className="font-editorial text-lg sm:text-xl font-extrabold text-[#5A00D6]">
+                          ${pkg.monthly.toLocaleString()} per a month
+                        </span>
                       </div>
                     </div>
 

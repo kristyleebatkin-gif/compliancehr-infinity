@@ -13,6 +13,8 @@ import {
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
+  getSymbolView,
+  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
@@ -193,12 +195,14 @@ export default function BenefitsSection() {
           <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
             <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
               <span className="text-[#0A2B6D]">Why providers choose </span>
-              <span className="text-[#0A2B6D]">Compliance</span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                HR
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Infinity
+              <span className="inline-block whitespace-nowrap">
+                <span className="text-[#0A2B6D]">Compliance</span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  HR
+                </span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
+                </span>
               </span>
             </h2>
             <p
@@ -236,12 +240,15 @@ export default function BenefitsSection() {
           </div>
         </div>
 
-        {/* 6 Projector Screens Designed Identically with Next Button Moved to Top Beside Bigger Numbers */}
+        {/* 6 Projector Screens — All Sections Lined Up Horizontally, Symbols & Writing in App Design Colour */}
         <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center items-stretch">
           {BENEFITS.map((b, index) => {
+            const sym = getSymbolView(index);
+            const borderCol = getAppBorderView(index);
             const totalNotes = b.notes.length;
             const activeNoteIdx = noteIndices[index] % totalNotes;
             const currentFunctions = b.notes[activeNoteIdx];
+            const titleAmpParts = b.title.includes(' & ') ? b.title.split(' & ') : null;
             return (
               <Reveal
                 key={b.title}
@@ -266,77 +273,86 @@ export default function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Pull-Down Projector Screen Canvas — Designed the Exact Same Across All 6 */}
+                {/* Pull-Down Projector Screen Canvas — Fixed Section Heights So All 6 Line Up */}
                 <div
                   className="mx-auto flex w-[96%] flex-1 flex-col border-x-[3px] border-b-[3px] border-[#0A2B6D] bg-white p-[3px] shadow-md transition-all group-hover:shadow-lg"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full flex-1 flex-col items-center justify-between rounded-b-[10px] p-3 text-center space-y-2.5"
+                    className="grid h-full flex-1 grid-cols-1 grid-rows-[38px_48px_68px_1fr] gap-2 rounded-b-[10px] p-3 text-center"
                     style={{ background: UNIFORM_SCREEN_SPRAY_BG }}
                   >
-                    {/* Top Row on Projector Screen: Icon + Bigger Number + "Next ▸" Moved to Top Beside Number */}
-                    <div className="flex w-full flex-1 flex-col items-center justify-between space-y-2">
-                      <div className="flex w-full items-center justify-between gap-1.5">
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                            style={{ borderColor: UNIFORM_ICON_BORDER }}
-                          >
-                            <b.icon className="h-4 w-4" style={{ color: UNIFORM_ICON_COLOR }} />
-                          </span>
-                          <span
-                            className="rounded-full border-2 bg-white px-3 py-0.5 font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-2xs"
-                            style={{ borderColor: UNIFORM_ICON_BORDER }}
-                          >
-                            #0{index + 1}
-                          </span>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => cycleNote(index)}
-                          className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
-                          style={{ color: '#FFFFFF' }}
+                    {/* Section 1: Fixed-Height Top Row (Symbol + Number + Next Button) */}
+                    <div className="flex h-[38px] w-full items-center justify-between gap-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                          style={{ borderColor: borderCol }}
                         >
-                          <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                          <span style={{ color: '#FFFFFF' }}>Next ▸</span>
-                        </button>
+                          <b.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                        </span>
+                        <span
+                          className="rounded-full border-2 bg-white px-2.5 py-0.5 font-editorial text-xs sm:text-sm font-extrabold shadow-2xs"
+                          style={{ borderColor: borderCol, color: sym.iconColor }}
+                        >
+                          #0{index + 1}
+                        </span>
                       </div>
 
-                      <div
-                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
+                      <button
+                        type="button"
+                        onClick={() => cycleNote(index)}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2 py-0.5 text-[9px] font-extrabold text-white shadow-2xs hover:opacity-95 whitespace-nowrap"
+                        style={{ color: '#FFFFFF' }}
                       >
-                        <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                          <h3 className="font-editorial text-xs sm:text-sm font-extrabold leading-tight text-center text-[#0A2B6D]">
-                            {b.title}
-                          </h3>
-                        </div>
-                      </div>
+                        <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                        <span style={{ color: '#FFFFFF' }}>Next ▸</span>
+                      </button>
+                    </div>
 
-                      <div
-                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <div className="flex min-h-[58px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                          <p className="text-center text-[11px] font-extrabold leading-snug text-[#5A00D6]">
-                            {b.desc}
-                          </p>
-                        </div>
+                    {/* Section 2: Fixed-Height Title Box in App Design Colour */}
+                    <div
+                      className="flex h-[48px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                        <h3
+                          className="font-editorial text-xs sm:text-sm font-extrabold leading-tight text-center"
+                          style={{ color: sym.iconColor }}
+                        >
+                          {titleAmpParts ? (
+                            <>
+                              <span className="block">{titleAmpParts[0]}</span>
+                              <span className="block">&amp; {titleAmpParts.slice(1).join(' & ')}</span>
+                            </>
+                          ) : (
+                            b.title
+                          )}
+                        </h3>
                       </div>
                     </div>
 
-                    {/* Changeable Sticky Note With App-Design Framed White Area & App-Coloured Symbols */}
+                    {/* Section 3: Fixed-Height Description Box in App Design Colour */}
                     <div
-                      className="relative mt-2 flex w-full flex-col justify-between rounded-2xl border-[2.5px] p-2.5 pt-4 text-left shadow-md"
+                      className="flex h-[68px] w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                        <p className="text-center text-[10.5px] font-extrabold leading-snug text-[#5A00D6]">
+                          {b.desc}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Section 4: Changeable Sticky Note With App-Design Coloured Outline, Symbols & Writing */}
+                    <div
+                      className="relative mt-1 flex h-full w-full flex-col justify-between rounded-2xl border-[2.5px] p-2.5 pt-4 text-left shadow-md"
                       style={{
                         background: STICKY_NOTE_BG,
-                        borderColor: STICKY_NOTE_BORDER,
+                        borderColor: borderCol,
                         borderBottomRightRadius: '20px',
                       }}
                     >
-                      {/* Top Sticky Tape Strip + Pin — Accurate Note Count (Note X of 3) */}
                       <div
                         className="absolute -top-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
                         style={{ background: STICKY_NOTE_TAPE }}
@@ -351,37 +367,40 @@ export default function BenefitsSection() {
                       </div>
 
                       <div
-                        className="w-full rounded-xl p-[2px]"
+                        className="flex h-full w-full rounded-xl p-[2px]"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
-                        <div className="rounded-[9px] bg-white p-2 space-y-1">
+                        <div className="flex h-full w-full flex-col justify-between rounded-[9px] bg-white p-2">
                           <div className="flex items-center justify-between gap-1">
                             <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                               Live Functions:
                             </span>
-                            <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">
+                            <span className="text-[8.5px] font-extrabold" style={{ color: sym.iconColor }}>
                               {activeNoteIdx + 1} of {totalNotes}
                             </span>
                           </div>
 
-                          <ul className="space-y-1">
-                            {currentFunctions.map((fn) => (
-                              <li
-                                key={fn}
-                                className="flex items-center gap-1.5 text-[10px] font-extrabold leading-tight text-[#0A2B6D]"
-                              >
-                                <span
-                                  className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
-                                  style={{ borderColor: UNIFORM_ICON_BORDER }}
+                          <ul className="grid grid-cols-1 grid-rows-3 gap-1 pt-1">
+                            {currentFunctions.map((fn, fIdx) => {
+                              const fSym = getSymbolView(index + fIdx);
+                              return (
+                                <li
+                                  key={fn}
+                                  className="flex min-h-[24px] items-center gap-1.5 text-[10px] font-extrabold leading-tight"
                                 >
-                                  <CheckCircle2
-                                    className="h-2.5 w-2.5"
-                                    style={{ color: STICKY_NOTE_BORDER }}
-                                  />
-                                </span>
-                                <span className="text-[#0A2B6D]">{fn}</span>
-                              </li>
-                            ))}
+                                  <span
+                                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
+                                    style={{ borderColor: getAppBorderView(index + fIdx) }}
+                                  >
+                                    <CheckCircle2
+                                      className="h-2.5 w-2.5"
+                                      style={{ color: fSym.iconColor }}
+                                    />
+                                  </span>
+                                  <span style={{ color: fSym.iconColor }}>{fn}</span>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                       </div>

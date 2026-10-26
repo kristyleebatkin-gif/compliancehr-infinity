@@ -928,13 +928,13 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </div>
       </div>
 
-      {/* 6 Horizontal Page Tiles From Side-to-Side: Top Section "Page" Tile Bar Styled in App Design Colour */}
+      {/* 6 Horizontal Page Tiles From Side-to-Side: All Sections of Pages Lined Up With Neighbouring Page Tiles */}
       {smallFeatured && !expanded && (
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3 auto-rows-fr items-stretch">
           {AUDIT_CATEGORIES_17.slice(0, 6).map((cat, idx) => (
             <div
               key={cat.number}
-              className="rounded-2xl p-[3.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="flex h-full rounded-2xl p-[3.5px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
               style={{ background: getHeaderView(idx) }}
             >
               <button
@@ -943,22 +943,22 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   setCategoryIndex(idx);
                   setExpanded(true);
                 }}
-                className="flex w-full flex-col items-center justify-center gap-2 rounded-[13px] p-3 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[42px_1fr] gap-2 rounded-[13px] p-3 text-center"
                 style={{
                   background:
                     'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                 }}
               >
-                {/* Line 1: Top Section "Page" Tile Styled in App Design Colour */}
+                {/* Section 1: Fixed-Height Top "Page" Tile Bar Styled in App Design Colour */}
                 <div
-                  className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                  className="flex h-[42px] w-full rounded-xl p-[2.5px] shadow-2xs"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
                   }}
                 >
                   <div
-                    className="gradient-brand flex min-h-[36px] w-full items-center justify-center rounded-[9px] px-3 py-1 text-center text-xs font-extrabold text-white"
+                    className="gradient-brand flex h-full w-full items-center justify-center rounded-[9px] px-3 py-1 text-center text-xs font-extrabold text-white"
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
                     <span style={{ color: '#FFFFFF' }}>
@@ -967,12 +967,12 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                   </div>
                 </div>
 
-                {/* Line 2 Inside App Design Border */}
+                {/* Section 2: Fixed-Height Title Section Inside App Design Border */}
                 <div
-                  className="w-full rounded-xl p-[2.5px]"
+                  className="flex min-h-[48px] h-full w-full rounded-xl p-[2.5px]"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                  <div className="flex h-full w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center text-xs sm:text-sm font-extrabold text-[#5A00D6]">
                     {cat.title}
                   </div>
                 </div>

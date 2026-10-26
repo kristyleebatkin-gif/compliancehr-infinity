@@ -808,73 +808,70 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
               }}
             >
               <div
-                className="flex h-full w-full flex-col justify-between overflow-hidden rounded-[13px] p-2.5 text-center"
+                className="grid h-full w-full grid-cols-1 grid-rows-[68px_72px_72px_34px] gap-2 overflow-hidden rounded-[13px] p-2.5 text-center"
                 style={{ background: sprayBg }}
               >
-                <div className="flex flex-1 flex-col justify-between space-y-2">
-                  {/* Centered Header That Fits Cleanly Across All 48 Screen Tiles */}
+                {/* Section 1: Fixed-Height Centered Header Across All 48 Page Tiles */}
+                <div
+                  className="flex h-[68px] w-full rounded-xl p-[2px] shadow-2xs"
+                  style={{ background: getHeaderView(index) }}
+                >
                   <div
-                    className="w-full rounded-xl p-[2px] shadow-2xs"
-                    style={{ background: getHeaderView(index) }}
+                    className="gradient-brand flex h-full w-full flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
+                    style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                   >
-                    <div
-                      className="gradient-brand flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-[9px] px-2 py-1.5 text-center text-white"
-                      style={{ background: getHeaderView(index), color: '#FFFFFF' }}
-                    >
-                      <div className="flex items-center justify-center gap-1.5 w-full">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                          <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                        </span>
-                        <span
-                          className="text-[10.5px] font-extrabold leading-tight text-center text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          #{index + 1} {mod.label}
-                        </span>
-                      </div>
-                      <Link
-                        to={mod.path}
-                        className="inline-flex items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]"
+                    <div className="flex items-center justify-center gap-1.5 w-full">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                        <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      </span>
+                      <span
+                        className="text-[10.5px] font-extrabold leading-tight text-center text-white"
+                        style={{ color: '#FFFFFF' }}
                       >
-                        Open <ExternalLink className="h-2 w-2 text-[#0072FF]" />
-                      </Link>
+                        Page #{index + 1} · {mod.label}
+                      </span>
                     </div>
-                  </div>
-
-                  {/* Centered White Writing Sections Lined Up With Every Neighbouring Tile */}
-                  <div className="grid flex-1 grid-cols-1 grid-rows-2 gap-1.5 text-[10px] leading-snug text-[#0A2B6D]">
-                    <div
-                      className="flex min-h-[68px] rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(index) }}
+                    <Link
+                      to={mod.path}
+                      className="inline-flex items-center justify-center gap-0.5 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-[#5A00D6]"
                     >
-                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
-                        <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#5A00D6]">
-                          Topic
-                        </span>
-                        <span className="text-center font-extrabold leading-tight text-[#0A2B6D]">
-                          {bp.topic}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div
-                      className="flex min-h-[68px] rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(index + 1) }}
-                    >
-                      <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
-                        <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#0072FF]">
-                          2026 Smart Doc
-                        </span>
-                        <span className="text-center font-extrabold leading-tight text-[#0A2B6D]">
-                          {bp.smartDoc2026}
-                        </span>
-                      </div>
-                    </div>
+                      Open <ExternalLink className="h-2 w-2 text-[#0072FF]" />
+                    </Link>
                   </div>
                 </div>
 
-                {/* Bottom Action Buttons (Doc, Task, Done) in White Inside App Design Borders */}
-                <div className="mt-2 grid h-[32px] grid-cols-3 gap-1.5 pt-1 border-t border-[#0A2B6D]/15">
+                {/* Section 2: Fixed-Height Topic Box Lined Up Across Every Row */}
+                <div
+                  className="flex h-[72px] w-full rounded-xl p-[2px] text-[10px] leading-snug"
+                  style={{ background: getHeaderView(index) }}
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                    <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#0072FF]">
+                      Topic
+                    </span>
+                    <span className="text-center font-extrabold leading-tight text-[#5A00D6]">
+                      {bp.topic}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Section 3: Fixed-Height 2026 Smart Doc Box Lined Up Across Every Row */}
+                <div
+                  className="flex h-[72px] w-full rounded-xl p-[2px] text-[10px] leading-snug"
+                  style={{ background: getHeaderView(index + 1) }}
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                    <span className="font-extrabold uppercase tracking-wider text-[8.5px] text-[#FF2E9A]">
+                      2026 Smart Doc
+                    </span>
+                    <span className="text-center font-extrabold leading-tight text-[#5A00D6]">
+                      {bp.smartDoc2026}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Section 4: Fixed-Height Bottom Action Buttons (Doc, Task, Done) */}
+                <div className="grid h-[34px] grid-cols-3 gap-1.5 pt-1 border-t border-[#0A2B6D]/15">
                   <div
                     className="rounded-full p-[2px]"
                     style={{ background: getHeaderView(index) }}
