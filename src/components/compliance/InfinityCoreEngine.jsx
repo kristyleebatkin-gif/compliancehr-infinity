@@ -387,36 +387,36 @@ export default function InfinityCoreEngine({ compact = false }) {
             </p>
           </div>
 
-          {/* Minimised Core Engine Telemetry Bar & 3 Action Tiles */}
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-1">
+          {/* Reduced Core Engine Telemetry Bar & Run, 1-Click and Export Tiles */}
+          <div className="mx-auto flex w-full max-w-md flex-col items-center gap-0.5">
             <div
-              className="w-full rounded-full p-[1.5px] shadow-2xs"
+              className="w-full rounded-full p-[1px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <span
-                className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1.5 rounded-full px-3 text-[8.5px] sm:text-[9.5px] font-extrabold tracking-wide text-white whitespace-nowrap"
+                className="gradient-brand flex h-[16px] w-full items-center justify-center gap-1 rounded-full px-2 text-[7px] sm:text-[7.5px] font-extrabold tracking-wide text-white whitespace-nowrap"
                 style={{ background: getHeaderView(4), color: '#FFFFFF' }}
               >
-                <Cpu className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <Cpu className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>
                   Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}
                 </span>
               </span>
             </div>
 
-            <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1">
+            <div className="grid w-full grid-cols-3 gap-1">
               <div
-                className="rounded-full p-[1.5px] shadow-2xs"
+                className="rounded-full p-[1px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <button
                   type="button"
                   onClick={handleRunCoreSweep}
                   disabled={sweeping}
-                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                  className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1.5 text-[7px] sm:text-[7.5px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <RefreshCw className={`h-2.5 w-2.5 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                  <RefreshCw className={`h-2 w-2 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     {sweeping ? 'Sweeping…' : 'Run Core Engine Sweep'}
                   </span>
@@ -424,17 +424,17 @@ export default function InfinityCoreEngine({ compact = false }) {
               </div>
 
               <div
-                className="rounded-full p-[1.5px] shadow-2xs"
+                className="rounded-full p-[1px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <button
                   type="button"
                   onClick={handleLogDiagnosticTask}
                   disabled={creatingTask}
-                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                  className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1.5 text-[7px] sm:text-[7.5px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
                   style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                 >
-                  <ClipboardCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <ClipboardCheck className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     {creatingTask ? 'Logging…' : '1-Click Log Audit Task'}
                   </span>
@@ -442,16 +442,16 @@ export default function InfinityCoreEngine({ compact = false }) {
               </div>
 
               <div
-                className="rounded-full p-[1.5px] shadow-2xs"
+                className="rounded-full p-[1px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <button
                   type="button"
                   onClick={handleExportPdf}
-                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
+                  className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1.5 text-[7px] sm:text-[7.5px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
                   style={{ background: getHeaderView(6), color: '#FFFFFF' }}
                 >
-                  <Download className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <Download className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     Export Core Engine A4 PDF
                   </span>
