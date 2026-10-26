@@ -621,7 +621,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
           </div>
 
-          {/* 9 Numbered Navigation Tiles Underneath: Display Category, Suitable Symbol, White Background with Pink/Blue/Purple Spray Behind Words & Writing in App Design Colours */}
+          {/* 9 Numbered Command Navigation Tiles: Shine White Light, Thicker Borders, Category + Suitable Symbol & Pure White Behind Writing */}
           <div className="grid w-full grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2.5 auto-rows-fr pt-1">
             {[
               { id: 'control-centre', label: '1. Control Centre', category: 'Oversight', sub: 'Live Telemetry', icon: Building2 },
@@ -640,23 +640,31 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               return (
                 <div
                   key={tab.id}
-                  className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all hover:-translate-y-0.5 ${
+                  className={`flex h-full rounded-2xl p-[4.5px] shadow-md transition-all hover:-translate-y-0.5 ${
                     active ? 'ring-2 ring-[#FF2E9A]' : ''
                   }`}
-                  style={{ background: getHeaderView(idx) }}
+                  style={{
+                    background: getHeaderView(idx),
+                    boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.95), 0 4px 10px rgba(90, 0, 214, 0.16)',
+                  }}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[76px] w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2 text-center"
+                    className="flex h-full min-h-[82px] w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.72) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.72) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.72) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
+                    {/* Glowing White Light + Suitable Symbol + Category */}
                     <div className="flex items-center justify-center gap-1">
                       <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                        className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                        style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+                      />
+                      <span
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                         style={{ borderColor: getAppBorderView(idx) }}
                       >
                         <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
@@ -669,16 +677,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </span>
                     </div>
                     <div
-                      className="w-full rounded-lg p-[1.5px] shadow-2xs"
+                      className="w-full rounded-lg p-[2px] shadow-2xs"
                       style={{ background: getHeaderView(idx) }}
                     >
-                      <div
-                        className="flex w-full flex-col items-center justify-center rounded-[6px] px-1.5 py-1 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                        }}
-                      >
+                      {/* Pure White Background Behind Writing so You Can Read Clearly */}
+                      <div className="flex w-full flex-col items-center justify-center rounded-[6px] bg-white px-1.5 py-1 text-center">
                         <div
                           className="text-[10px] font-extrabold leading-tight bg-clip-text text-transparent"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
@@ -701,10 +704,10 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 12 NUMBERED REGISTER TILES WITH CATEGORY, SUITABLE SYMBOL, SPRAY BEHIND WORDS & APP-COLOURED WRITING ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — 12 NUMBERED REGISTER TILES SHINING WHITE LIGHT, THICKER BORDERS & PURE WHITE BEHIND WRITING ==================== */}
       {activeTab === 'control-centre' && (
         <div className="p-2 space-y-3.5 bg-white text-center">
-          {/* 12 Live Operational Register Telemetry Tiles — Numbered Tiles Display Category & Suitable Category Symbol */}
+          {/* 12 Live Operational Register Telemetry Tiles — Shine White Light, Display Category, Suitable Symbol & Pure White Behind Words */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 items-stretch">
             {[
               { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
@@ -725,23 +728,30 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               return (
                 <div
                   key={m.label}
-                  className="flex h-full rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  style={{ background: getHeaderView(idx) }}
+                  className="flex h-full rounded-2xl p-[4.5px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                  style={{
+                    background: getHeaderView(idx),
+                    boxShadow: '0 0 16px 3px rgba(255, 255, 255, 0.95), 0 4px 12px rgba(0, 114, 255, 0.18)',
+                  }}
                 >
                   <Link
                     to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-2.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[12px] p-2.5 text-center"
                     style={{
                       background:
                         'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                     }}
                   >
-                    {/* Suitable Category Symbol + Category Badge Inside App Design Coloured Border */}
+                    {/* Glowing White Light + Suitable Category Symbol + Category Badge */}
                     <div
-                      className="w-full rounded-full p-[2px] shadow-2xs"
+                      className="w-full rounded-full p-[2.5px] shadow-2xs"
                       style={{ background: getHeaderView(idx) }}
                     >
                       <div className="flex min-h-[28px] items-center justify-center gap-1.5 rounded-full bg-white px-2 py-0.5">
+                        <span
+                          className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
+                          style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+                        />
                         <span
                           className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
                           style={{ borderColor: getAppBorderView(idx) }}
@@ -757,18 +767,12 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </div>
                     </div>
 
-                    {/* Label & Number Value With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
+                    {/* Label & Number Value With Pure White Background Behind Words so You Can Read */}
                     <div
-                      className="w-full rounded-xl p-[2px]"
+                      className="w-full rounded-xl p-[2.5px]"
                       style={{ background: getHeaderView(idx + 1) }}
                     >
-                      <div
-                        className="flex min-h-[58px] flex-col items-center justify-center rounded-[9px] px-2 py-1 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                        }}
-                      >
+                      <div className="flex min-h-[58px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
                         <span
                           className="text-[9.5px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
                           style={{ backgroundImage: getTitleGradientView(idx) }}
@@ -784,18 +788,14 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       </div>
                     </div>
 
-                    {/* Sub-Label With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
+                    {/* Sub-Label With Pure White Background Behind Words so You Can Read */}
                     <div
-                      className="w-full flex-1 rounded-xl p-[2px]"
+                      className="w-full flex-1 rounded-xl p-[2.5px]"
                       style={{ background: getHeaderView(idx + 2) }}
                     >
                       <div
-                        className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] px-2 py-0.5 text-center text-[9.5px] font-extrabold leading-tight"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                          color: getSymbolView(idx + 2).iconColor,
-                        }}
+                        className="flex h-full min-h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold leading-tight"
+                        style={{ color: getSymbolView(idx + 2).iconColor }}
                       >
                         {m.sub}
                       </div>

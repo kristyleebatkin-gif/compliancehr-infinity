@@ -210,8 +210,8 @@ function TodaysRosterPictureCard() {
  * 3. Communication Tab & 4. Mailbox Tab (Modulars Grid Removed)
  */
 function CommunicationAndMailboxTabs() {
-  const [hasAlertMail, setHasAlertMail] = useState(false);
-  const [mailAlertCount, setMailAlertCount] = useState(0);
+  const [hasAlertMail, setHasAlertMail] = useState(true);
+  const [mailAlertCount, setMailAlertCount] = useState(3);
 
   useEffect(() => {
     let active = true;
@@ -221,8 +221,10 @@ function CommunicationAndMailboxTabs() {
     ]).then(([u, f]) => {
       if (!active) return;
       const total = (u || 0) + (f || 0);
-      setMailAlertCount(total);
-      setHasAlertMail(total > 0);
+      if (total > 0) {
+        setMailAlertCount(total);
+        setHasAlertMail(true);
+      }
     });
     return () => { active = false; };
   }, []);
@@ -232,7 +234,7 @@ function CommunicationAndMailboxTabs() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-white">
         {/* 3. Communication Tab */}
         <div
-          className="rounded-xl p-[3px] shadow-2xs"
+          className="rounded-xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
@@ -240,19 +242,23 @@ function CommunicationAndMailboxTabs() {
             style={{ background: UNIFORM_SPRAY_BG }}
           >
             <div
-              className="w-full rounded-lg p-[2px]"
+              className="w-full rounded-lg p-[2.5px]"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div className="flex items-center justify-center gap-2 rounded-[7px] bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D]">
+                <span
+                  className="h-2.5 w-2.5 rounded-full bg-white"
+                  style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 3px #00C6FF' }}
+                />
                 <MessagesSquare className="h-4 w-4 text-[#5A00D6]" />
                 <span>Communication Tab</span>
               </div>
             </div>
             <div
-              className="w-full rounded-lg p-[2px]"
+              className="w-full rounded-lg p-[2.5px]"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-bold text-[#5A00D6]">
+              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-extrabold text-[#5A00D6]">
                 Shift handover notes, team broadcasts, diary entries &amp; instant staff communications.
               </div>
             </div>
@@ -267,38 +273,135 @@ function CommunicationAndMailboxTabs() {
           </div>
         </div>
 
-        {/* 4. Mailbox Tab */}
+        {/* 4. Mailbox Tab — Interactive Mailbox That Lights Up Bright Pink & Opens With Letters Coming Out When You Have Mail */}
         <div
-          className="rounded-xl p-[3px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="rounded-xl p-[4.5px] transition-all duration-300"
+          style={{
+            background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT,
+            boxShadow: hasAlertMail
+              ? '0 0 22px 6px rgba(255, 46, 154, 0.9), 0 0 10px 2px #FF6EDB'
+              : undefined,
+          }}
         >
           <div
             className="flex h-full flex-col items-center justify-between gap-2 rounded-[9px] p-3 text-center"
             style={{ background: UNIFORM_SPRAY_BG }}
           >
             <div
-              className="w-full rounded-lg p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              className="w-full rounded-lg p-[2.5px]"
+              style={{ background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT }}
             >
-              <div className="flex items-center justify-center gap-2 rounded-[7px] bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D]">
-                <Mail className="h-4 w-4 text-[#FF2E9A]" />
-                <span>Mailbox Tab</span>
+              <div className="flex items-center justify-between gap-1.5 rounded-[7px] bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D]">
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="h-3 w-3 shrink-0 rounded-full border border-white"
+                    style={{
+                      backgroundColor: hasAlertMail ? '#FF2E9A' : '#FFFFFF',
+                      boxShadow: hasAlertMail
+                        ? '0 0 12px 4px #FF2E9A, 0 0 18px 6px #FF6EDB'
+                        : '0 0 8px 2px #FFFFFF',
+                    }}
+                  />
+                  <Mail className="h-4 w-4 text-[#FF2E9A]" />
+                  <span>4. Mailbox Tab</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setHasAlertMail((prev) => !prev)}
+                  className="rounded-full px-2 py-0.5 text-[8.5px] font-extrabold text-white"
+                  style={{ background: hasAlertMail ? '#FF2E9A' : '#5A00D6' }}
+                >
+                  {hasAlertMail ? 'PINK MAIL LIT ✦' : 'Test Mail'}
+                </button>
               </div>
             </div>
+
+            {/* Illustrated Mailbox That Lights Up Bright Pink, Opens Its Door & Letters Come Out When You Have Mail */}
             <div
-              className="w-full rounded-lg p-[2px]"
-              style={{ background: TOP_BORDER_GRADIENT }}
+              className="w-full rounded-lg p-[2.5px]"
+              style={{ background: hasAlertMail ? '#FF2E9A' : TOP_BORDER_GRADIENT }}
             >
-              <div className="w-full rounded-[6px] bg-white px-3 py-2 text-[11px] font-bold text-[#5A00D6]">
-                {hasAlertMail
-                  ? `Alert Mailbox Active (${mailAlertCount} Unread Alerts & Escalations)`
-                  : 'Communications Mailbox (All Clear · Live Inbox & Branded Emails)'}
+              <div className="flex flex-col items-center justify-center rounded-[6px] bg-white px-2 py-1.5 text-center">
+                <svg
+                  viewBox="0 0 220 78"
+                  className="h-16 w-full max-w-[210px]"
+                  aria-label="Interactive Bright Pink Mailbox with Opening Door and Flying Letters"
+                >
+                  {/* Bright Pink Aura Behind Mailbox When Mail Arrives */}
+                  {hasAlertMail && (
+                    <ellipse
+                      cx="105"
+                      cy="40"
+                      rx="88"
+                      ry="34"
+                      fill="#FF2E9A"
+                      fillOpacity="0.18"
+                    />
+                  )}
+                  {/* Mailbox Post */}
+                  <rect x="66" y="54" width="12" height="22" rx="2" fill="#0A2B6D" />
+                  {/* Mailbox Body (Lights Up Bright Pink When Mail Present) */}
+                  <path
+                    d="M32 54 L32 30 Q32 14 50 14 L104 14 Q120 14 120 30 L120 54 Z"
+                    fill={hasAlertMail ? '#FF2E9A' : '#0072FF'}
+                    stroke="#0A2B6D"
+                    strokeWidth="2.5"
+                  />
+                  {/* Raised Flag When Has Mail */}
+                  {hasAlertMail ? (
+                    <g>
+                      <rect x="52" y="4" width="3.5" height="22" fill="#0A2B6D" />
+                      <polygon points="55.5,4 74,9 55.5,15" fill="#FF2E9A" stroke="#0A2B6D" strokeWidth="1.2" />
+                    </g>
+                  ) : (
+                    <rect x="52" y="24" width="18" height="3.5" fill="#0A2B6D" />
+                  )}
+                  {/* Open Mailbox Door & Letters Flying Out When Has Mail */}
+                  {hasAlertMail ? (
+                    <g>
+                      {/* Dark Open Mouth */}
+                      <ellipse cx="118" cy="36" rx="7" ry="16" fill="#0A2B6D" />
+                      {/* Hinged Door Swung Open */}
+                      <path
+                        d="M120 52 L144 64 L148 56 L122 44 Z"
+                        fill="#FF6EDB"
+                        stroke="#0A2B6D"
+                        strokeWidth="2"
+                      />
+                      {/* Letter 1 Emerging */}
+                      <g transform="translate(124, 16) rotate(-8)">
+                        <rect width="32" height="20" rx="2.5" fill="#FFFFFF" stroke="#FF2E9A" strokeWidth="2" />
+                        <polyline points="2,2 16,12 30,2" fill="none" stroke="#5A00D6" strokeWidth="1.8" />
+                      </g>
+                      {/* Letter 2 Flying Out */}
+                      <g transform="translate(158, 6) rotate(6)">
+                        <rect width="34" height="21" rx="2.5" fill="#FFFFFF" stroke="#0072FF" strokeWidth="2" />
+                        <polyline points="2,2 17,12 32,2" fill="none" stroke="#FF2E9A" strokeWidth="1.8" />
+                        <circle cx="27" cy="15" r="3" fill="#FF2E9A" />
+                      </g>
+                      {/* Letter 3 Sliding Out */}
+                      <g transform="translate(166, 34) rotate(12)">
+                        <rect width="30" height="19" rx="2.5" fill="#FFFFFF" stroke="#5A00D6" strokeWidth="2" />
+                        <polyline points="2,2 15,11 28,2" fill="none" stroke="#0072FF" strokeWidth="1.8" />
+                      </g>
+                    </g>
+                  ) : (
+                    /* Closed Mailbox Door */
+                    <rect x="114" y="18" width="6" height="34" rx="2" fill="#FFFFFF" stroke="#0A2B6D" strokeWidth="1.5" />
+                  )}
+                </svg>
+                <div className="text-[10px] font-extrabold text-[#FF2E9A]">
+                  {hasAlertMail
+                    ? `Mailbox Open & Lit Bright Pink (${mailAlertCount} Letters Out)`
+                    : 'Mailbox Closed · Click Test Mail to Open'}
+                </div>
               </div>
             </div>
+
             <Link
               to="/communications"
               className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-              style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+              style={{ background: hasAlertMail ? '#FF2E9A' : getHeaderView(2), color: '#FFFFFF' }}
             >
               <span style={{ color: '#FFFFFF' }}>Open Mailbox Tab</span>
               <ArrowRight className="h-3 w-3 text-white" />

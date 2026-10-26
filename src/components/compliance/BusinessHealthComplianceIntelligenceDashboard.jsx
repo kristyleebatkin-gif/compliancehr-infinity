@@ -50,10 +50,21 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   const [selectedDomainId, setSelectedDomainId] = useState('governance');
   const [horizonFilter, setHorizonFilter] = useState('ALL');
   const [refreshing, setRefreshing] = useState(false);
-  const [litKpiIdx, setLitKpiIdx] = useState(5);
+  const [litKpiIdx, setLitKpiIdx] = useState(4);
   const [trafficStep, setTrafficStep] = useState(0);
+  const [dayLightSwitches, setDayLightSwitches] = useState({
+    '90': true,
+    '60': true,
+    '30': true,
+    '21': true,
+    '14': true,
+  });
 
-  // Light up tiles under Live Executive one at a time for 30 seconds each, then go left to the next tile, cycling Green, Yellow & Red
+  const toggleDaySwitch = (dayKey) => {
+    setDayLightSwitches((prev) => ({ ...prev, [dayKey]: !prev[dayKey] }));
+  };
+
+  // Light up TWO tiles under Live Executive at a time for 30 seconds each, then go left to the next pair, cycling Green, Yellow & Red
   useEffect(() => {
     const timer30 = setInterval(() => {
       setLitKpiIdx((prev) => (prev - 1 + 6) % 6);
@@ -261,56 +272,82 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
     },
   ];
 
+  // Ordered descending by days (90 -> 60 -> 30 -> 21 -> 14): Largest amount of days is RED, then ORANGE, GREEN, BLUE, WHITE real lights
   const predictiveAlerts = [
     {
-      id: 'AL-1',
-      horizon: '14 DAYS',
-      severity: 'High',
-      colour: '#FF2E9A',
-      title: '2 Staff HLTAID009 CPR Certificates Approaching Annual Renewal',
-      action: 'Auto-reminder sent · Refresher booked via Training & LMS Centre',
-      owner: 'Human Resources Manager',
-      route: '/certificates',
+      id: 'AL-5',
+      dayKey: '90',
+      days: 90,
+      horizon: '90 DAYS',
+      lightName: 'RED LIGHT',
+      lightHex: '#EF4444',
+      lightGlow: '0 0 14px 4px rgba(239, 68, 68, 0.95)',
+      severity: 'Critical Horizon',
+      colour: '#EF4444',
+      title: 'NDIS Mid-Term Quality & Safeguards Commission Readiness Mock Audit',
+      action: 'Auto-scheduled · 356 Checkpoints at 98.7% verified readiness',
+      owner: 'Provider Administrator',
+      route: '/compliance',
+    },
+    {
+      id: 'AL-4',
+      dayKey: '60',
+      days: 60,
+      horizon: '60 DAYS',
+      lightName: 'ORANGE LIGHT',
+      lightHex: '#F97316',
+      lightGlow: '0 0 14px 4px rgba(249, 115, 22, 0.95)',
+      severity: 'High Horizon',
+      colour: '#F97316',
+      title: 'Q4 6-Monthly Facility Fire Evacuation Drill & First Aid Kit Restock',
+      action: 'Auto-calendar sync active · Kit checklist (CHR-2026-SAF-03) assigned',
+      owner: 'Facility Warden',
+      route: '/emergency-response',
     },
     {
       id: 'AL-2',
+      dayKey: '30',
+      days: 30,
       horizon: '30 DAYS',
-      severity: 'Medium',
-      colour: '#5A00D6',
+      lightName: 'GREEN LIGHT',
+      lightHex: '#10B981',
+      lightGlow: '0 0 14px 4px rgba(16, 185, 129, 0.95)',
+      severity: 'Medium Horizon',
+      colour: '#10B981',
       title: '4 Participant 10-Weekly Progress Snapshots & Plan Budget Reviews Due',
-      action: 'Pre-filled 2026 Progress Review Forms queued for Team Leader sign-off',
+      action: 'Auto-filled 2026 Progress Review Forms queued for Team Leader sign-off',
       owner: 'Team Leader / Support Coordination',
       route: '/our-participants',
     },
     {
       id: 'AL-3',
-      horizon: '30 DAYS',
-      severity: 'Medium',
+      dayKey: '21',
+      days: 21,
+      horizon: '21 DAYS',
+      lightName: 'BLUE LIGHT',
+      lightHex: '#0072FF',
+      lightGlow: '0 0 14px 4px rgba(0, 114, 255, 0.95)',
+      severity: 'Active Horizon',
       colour: '#0072FF',
       title: '6-Monthly Home Environment Risk Assessment & PEEP Check Cycle',
-      action: 'Scheduled on Review Due Board (CHR-2026-SAF-02 printable sheet ready)',
+      action: 'Auto-queued on Review Due Board (CHR-2026-SAF-02 printable sheet ready)',
       owner: 'Compliance & Safety Officer',
       route: '/risks',
     },
     {
-      id: 'AL-4',
-      horizon: '60 DAYS',
-      severity: 'Low',
-      colour: '#A100FF',
-      title: 'Q4 6-Monthly Facility Fire Evacuation Drill & First Aid Kit Restock',
-      action: 'Calendar sync active · Kit checklist (CHR-2026-SAF-03) assigned',
-      owner: 'Facility Warden',
-      route: '/emergency-response',
-    },
-    {
-      id: 'AL-5',
-      horizon: '90 DAYS',
-      severity: 'Low',
+      id: 'AL-1',
+      dayKey: '14',
+      days: 14,
+      horizon: '14 DAYS',
+      lightName: 'WHITE LIGHT',
+      lightHex: '#FFFFFF',
+      lightGlow: '0 0 16px 5px rgba(255, 255, 255, 1), 0 0 8px 2px #00C6FF',
+      severity: 'Immediate',
       colour: '#0A2B6D',
-      title: 'NDIS Mid-Term Quality & Safeguards Commission Readiness Mock Audit',
-      action: '356 Checkpoints across 17 Categories currently at 98.7% verified readiness',
-      owner: 'Provider Administrator',
-      route: '/compliance',
+      title: '2 Staff HLTAID009 CPR Certificates Approaching Annual Renewal',
+      action: 'Auto-reminder sent · Refresher booked via Training & LMS Centre',
+      owner: 'Human Resources Manager',
+      route: '/certificates',
     },
   ];
 
@@ -439,22 +476,36 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </div>
           </div>
 
-          {/* Better-Fitted Live Executive Command Tile */}
+          {/* Live Executive Command With Thick App-Design Border & Glowing White Lights */}
           <div
-            className="w-full rounded-2xl p-[3px] shadow-2xs"
+            className="w-full rounded-2xl border-2 border-[#0A2B6D] p-[5px] shadow-md"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[60px] w-full flex-col items-center justify-center gap-1 rounded-[13px] px-6 py-2.5 text-center text-white"
-              style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+              className="gradient-brand relative flex min-h-[54px] w-full flex-col items-center justify-center gap-1 rounded-[12px] border-2 border-white px-5 py-2 text-center text-white"
+              style={{
+                background: getHeaderView(3),
+                color: '#FFFFFF',
+                boxShadow: '0 0 18px 3px rgba(255, 255, 255, 0.9), inset 0 0 12px rgba(255, 255, 255, 0.5)',
+              }}
             >
-              <div className="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                  <Activity className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              {/* Glowing White Lights Bar Along Top of Live Executive Command */}
+              <div className="flex items-center justify-center gap-2 pb-0.5">
+                {[0, 1, 2, 3, 4, 5].map((bulb) => (
+                  <span
+                    key={bulb}
+                    className="h-2 w-2 rounded-full bg-white"
+                    style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 14px 4px #00C6FF' }}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                  <Activity className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>Live Executive Command</span>
               </div>
-              <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+              <div className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
                 98.7% Overall Business Health &amp; Verified 2026 NDIS Audit Readiness
               </div>
             </div>
@@ -462,16 +513,16 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         </div>
       </div>
 
-      {/* 6 Executive Intelligence KPI Tiles Under Live Executive — Display Category, Suitable Category Symbol, White Spray Background, App-Coloured Writing & 30s Leftward Green/Yellow/Red Glow */}
+      {/* 6 Executive Intelligence KPI Tiles Under Live Executive — TWO Tiles Light Up at a Time for 30s & Move Left in Green, Yellow & Red + White Lights & White Behind Writing */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 items-stretch">
         {topKpis.map((k, idx) => {
           const KpiIcon = k.icon;
           const sym = getSymbolView(idx);
-          const isLit = litKpiIdx === idx;
+          const isLit = idx === litKpiIdx || idx === (litKpiIdx + 1) % 6;
           const trafficPalette = [
-            { label: 'GREEN', bg: '#10B981', ring: 'rgba(16, 185, 129, 0.75)' },
-            { label: 'YELLOW', bg: '#EAB308', ring: 'rgba(234, 179, 8, 0.75)' },
-            { label: 'RED', bg: '#EF4444', ring: 'rgba(239, 68, 68, 0.75)' },
+            { label: 'GREEN', bg: '#10B981', ring: 'rgba(16, 185, 129, 0.85)' },
+            { label: 'YELLOW', bg: '#EAB308', ring: 'rgba(234, 179, 8, 0.85)' },
+            { label: 'RED', bg: '#EF4444', ring: 'rgba(239, 68, 68, 0.85)' },
           ][trafficStep % 3];
           return (
             <div
@@ -480,65 +531,73 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 setLitKpiIdx(idx);
                 setTrafficStep((prev) => (prev + 1) % 3);
               }}
-              className={`flex h-full cursor-pointer rounded-2xl p-[3.5px] transition-all duration-300 ${
-                isLit ? '-translate-y-1 shadow-xl' : 'shadow-sm'
+              className={`flex h-full cursor-pointer rounded-2xl p-[4.5px] transition-all duration-300 ${
+                isLit ? '-translate-y-1 shadow-xl' : 'shadow-md'
               }`}
               style={{
                 background: isLit ? trafficPalette.bg : getHeaderView(idx),
-                boxShadow: isLit ? `0 0 0 4px ${trafficPalette.ring}` : undefined,
+                boxShadow: isLit
+                  ? `0 0 0 4px ${trafficPalette.ring}, 0 0 18px 4px rgba(255, 255, 255, 0.95)`
+                  : '0 0 12px 2px rgba(255, 255, 255, 0.85)',
               }}
             >
               <div
-                className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-3 text-center"
+                className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2.5 text-center"
                 style={{ background: UNIFORM_SPRAY_BG }}
               >
-                {/* Suitable Category Symbol + Category Header Pill */}
+                {/* White Light Indicator at Top of Tile */}
+                <div className="flex items-center justify-center gap-1.5">
+                  <span
+                    className="h-2.5 w-2.5 rounded-full border border-white bg-white"
+                    style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 14px 3px #00C6FF' }}
+                  />
+                  <span className="rounded-full bg-white px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    {isLit ? `2 TILES LIT · ${trafficPalette.label}` : 'WHITE LIGHT ON'}
+                  </span>
+                </div>
+
+                {/* Suitable Category Symbol + Category Header Pill (50% Smaller Title) */}
                 <div
                   className="w-full rounded-full p-[2px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx) }}
                 >
                   <div
-                    className="flex min-h-[34px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
+                    className="flex min-h-[24px] items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold leading-tight text-center text-white"
                     style={{
                       background: isLit ? trafficPalette.bg : getHeaderView(idx),
                       color: '#FFFFFF',
                     }}
                   >
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
                       <KpiIcon
-                        className="h-3 w-3"
+                        className="h-2.5 w-2.5"
                         style={{ color: isLit ? trafficPalette.bg : sym.iconColor }}
                       />
                     </span>
-                    <span style={{ color: '#FFFFFF' }}>
-                      {isLit ? `✦ ${trafficPalette.label} · ${k.category} ◂` : k.category}
-                    </span>
+                    <span style={{ color: '#FFFFFF' }}>{k.category}</span>
                   </div>
                 </div>
 
-                {/* Writing Box 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
+                {/* Writing Box 1: Pure White Background Behind Words so You Can Read Clearly */}
                 <div
-                  className="w-full rounded-xl p-[2px]"
+                  className="w-full rounded-xl p-[2.5px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 1) }}
                 >
-                  <div
-                    className="flex min-h-[72px] flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
-                  >
+                  <div className="flex min-h-[58px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
                     <div
-                      className="text-[9.5px] font-extrabold uppercase tracking-wider leading-tight"
+                      className="text-[8.5px] font-extrabold uppercase tracking-wider leading-tight"
                       style={{ color: sym.iconColor }}
                     >
                       {k.label}
                     </div>
                     <div
-                      className="mt-0.5 font-editorial text-lg sm:text-xl font-extrabold leading-none bg-clip-text text-transparent"
+                      className="mt-0.5 font-editorial text-base sm:text-lg font-extrabold leading-none bg-clip-text text-transparent"
                       style={{ backgroundImage: getTitleGradientView(idx) }}
                     >
                       {k.value}
                     </div>
                     <div
-                      className="mt-0.5 text-[9px] font-extrabold"
+                      className="mt-0.5 text-[8.5px] font-extrabold"
                       style={{ color: getSymbolView(idx + 2).iconColor }}
                     >
                       {k.badge}
@@ -546,14 +605,14 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   </div>
                 </div>
 
-                {/* Writing Box 2: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
+                {/* Writing Box 2: Pure White Background Behind Words so You Can Read Clearly */}
                 <div
-                  className="w-full flex-1 rounded-xl p-[2px]"
+                  className="w-full flex-1 rounded-xl p-[2.5px]"
                   style={{ background: isLit ? trafficPalette.bg : getHeaderView(idx + 2) }}
                 >
                   <div
-                    className="flex h-full min-h-[46px] items-center justify-center rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold leading-tight"
-                    style={{ background: UNIFORM_SPRAY_BG, color: getSymbolView(idx + 1).iconColor }}
+                    className="flex h-full min-h-[38px] items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center text-[9.5px] font-extrabold leading-tight"
+                    style={{ color: getSymbolView(idx + 1).iconColor }}
                   >
                     {k.sub}
                   </div>
@@ -564,27 +623,32 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         })}
       </div>
 
-      {/* 8-Pillar Matrix + Selected Pillar Side Panel Framed Together With App-Design Coloured Background Between Pillar & Side */}
+      {/* 8-Pillar Matrix + Selected Pillar Side Panel Framed With Thicker App-Design Borders, White Lights, Spotlights & 50% Smaller Titles/Selected Tiles */}
       <div
-        className="w-full rounded-3xl p-[5px] shadow-md"
+        className="w-full rounded-3xl p-[6px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div
           className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch rounded-[19px] p-2.5"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          {/* Left 8 Columns: 8-Domain Health Cards With Suitable Category Symbols, Category Display, Spray Background & App-Coloured Writing */}
-          <div className="lg:col-span-8 flex rounded-2xl bg-white p-3.5 shadow-sm">
-            <div className="flex w-full flex-col justify-between space-y-3">
+          {/* Left 8 Columns: 8-Domain Health Cards With White Lights, Thicker Borders & Pure White Behind Writing */}
+          <div className="lg:col-span-8 flex rounded-2xl bg-white p-3 shadow-sm">
+            <div className="flex w-full flex-col justify-between space-y-2.5">
+              {/* 50% Smaller Title Bar Above Pillars & Selected Pillar */}
               <div
-                className="w-full rounded-full p-[2.5px] shadow-2xs"
+                className="mx-auto w-full rounded-full p-[3px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[42px] w-full flex-wrap items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold text-white"
+                  className="gradient-brand flex min-h-[26px] w-full flex-wrap items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] font-extrabold text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <ShieldCheck className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <span
+                    className="h-2 w-2 rounded-full bg-white"
+                    style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
+                  />
+                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix
                   </span>
@@ -599,29 +663,43 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   return (
                     <div
                       key={dom.id}
-                      className={`flex h-full rounded-2xl p-[3px] shadow-2xs transition-all ${
+                      className={`flex h-full rounded-2xl p-[4.5px] shadow-sm transition-all ${
                         isSelected ? 'ring-2 ring-[#FF2E9A] scale-[1.01]' : ''
                       }`}
-                      style={{ background: getHeaderView(idx) }}
+                      style={{
+                        background: getHeaderView(idx),
+                        boxShadow: '0 0 12px 2px rgba(255, 255, 255, 0.9)',
+                      }}
                     >
                       <button
                         type="button"
                         onClick={() => setSelectedDomainId(dom.id)}
-                        className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] bg-white p-3 text-center"
+                        className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2.5 text-center"
                         style={{ background: UNIFORM_SPRAY_BG }}
                       >
-                        <div className="flex w-full flex-col items-center space-y-2">
+                        <div className="flex w-full flex-col items-center space-y-1.5">
+                          {/* White Light on Tile */}
+                          <div className="flex items-center justify-center gap-1">
+                            <span
+                              className="h-2 w-2 rounded-full bg-white"
+                              style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                            />
+                            <span className="rounded-full bg-white px-1.5 py-0 text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
+                              WHITE LIGHT
+                            </span>
+                          </div>
+
                           {/* Suitable Category Symbol + Category & Number Header */}
                           <div
-                            className="w-full rounded-full p-[2px]"
+                            className="w-full rounded-full p-[2.5px]"
                             style={{ background: getHeaderView(idx) }}
                           >
                             <div
-                              className="gradient-brand flex min-h-[36px] items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-extrabold leading-tight text-center text-white"
+                              className="gradient-brand flex min-h-[28px] items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold leading-tight text-center text-white"
                               style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                             >
-                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white">
-                                <DomainIcon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                                <DomainIcon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
                               </span>
                               <span style={{ color: '#FFFFFF' }}>
                                 {dom.shortName} · {dom.score}%
@@ -629,23 +707,20 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             </div>
                           </div>
 
-                          {/* Writing Box 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
+                          {/* Writing Box 1: Pure White Background Behind Words so You Can Read */}
                           <div
-                            className="w-full rounded-xl p-[2px]"
+                            className="w-full rounded-xl p-[2.5px]"
                             style={{ background: getHeaderView(idx + 1) }}
                           >
-                            <div
-                              className="flex min-h-[68px] flex-col items-center justify-center rounded-[9px] px-2.5 py-1.5 text-center"
-                              style={{ background: UNIFORM_SPRAY_BG }}
-                            >
+                            <div className="flex min-h-[54px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
                               <div
-                                className="text-xs font-extrabold leading-tight bg-clip-text text-transparent"
+                                className="text-[11px] font-extrabold leading-tight bg-clip-text text-transparent"
                                 style={{ backgroundImage: getTitleGradientView(idx) }}
                               >
                                 {dom.name}
                               </div>
                               <div
-                                className="mt-0.5 text-[10px] font-extrabold"
+                                className="mt-0.5 text-[9.5px] font-extrabold"
                                 style={{ color: sym.iconColor }}
                               >
                                 {dom.standard}
@@ -654,23 +729,20 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           </div>
                         </div>
 
-                        {/* Writing Box 2: White Background With Pink, Blue & Purple Spray Behind Words & App-Design Coloured Writing */}
+                        {/* Writing Box 2: Pure White Background Behind Words so You Can Read */}
                         <div
-                          className="w-full rounded-xl p-[2px]"
+                          className="w-full rounded-xl p-[2.5px]"
                           style={{ background: getHeaderView(idx + 2) }}
                         >
-                          <div
-                            className="flex flex-col items-center justify-center gap-1 rounded-[9px] p-2 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
-                            <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-white">
+                          <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white p-1.5 text-center">
+                            <div className="h-1.5 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
                               <div
                                 className="h-full rounded-full"
                                 style={{ width: `${dom.score}%`, background: TOP_BORDER_GRADIENT }}
                               />
                             </div>
                             <div
-                              className="text-center text-[10px] font-extrabold"
+                              className="text-center text-[9.5px] font-extrabold"
                               style={{ color: getSymbolView(idx + 1).iconColor }}
                             >
                               {dom.metricValue}
@@ -685,71 +757,86 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </div>
           </div>
 
-          {/* Right 4 Columns: Selected Intelligence Pillar Side Panel — White Background Container, Tiles With Pink/Blue/Purple Spray Behind Words, Suitable Category Symbol & App-Design Coloured Writing */}
-          <div className="lg:col-span-4 flex rounded-2xl bg-white p-3.5 shadow-sm">
+          {/* Right 4 Columns: Selected Pillar Side Panel — Overhead Spotlights, Thicker App-Design Borders, 50% Smaller Tiles & Pure White Behind Writing */}
+          <div
+            className="lg:col-span-4 flex rounded-2xl p-[5px] shadow-md"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
             {(() => {
               const SelectedIcon = selectedDomain.icon;
               return (
-                <div className="flex h-full w-full flex-col items-center justify-between text-center space-y-2.5">
-                  <div className="w-full space-y-2.5">
-                    {/* Selected Pillar Header With Suitable Category Symbol */}
+                <div
+                  className="relative flex h-full w-full flex-col items-center justify-between rounded-[12px] bg-white p-2.5 text-center space-y-1.5 overflow-hidden"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.98) 0%, rgba(0,198,255,0.18) 38%, rgba(255,46,154,0.12) 72%, #FFFFFF 100%)',
+                  }}
+                >
+                  {/* Overhead Dual Spotlights Shining Down on Selected Pillar Tiles */}
+                  <div className="flex w-full items-center justify-around pb-0.5">
+                    {[1, 2].map((sp) => (
+                      <div key={sp} className="flex flex-col items-center">
+                        <div className="h-2 w-7 rounded-t-md bg-[#0A2B6D] border border-white flex items-center justify-center">
+                          <span
+                            className="h-2 w-4 rounded-full bg-white"
+                            style={{ boxShadow: '0 0 12px 4px #FFFFFF, 0 4px 18px 6px rgba(0,198,255,0.85)' }}
+                          />
+                        </div>
+                        <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#0072FF]">
+                          SPOTLIGHT {sp}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="w-full space-y-1.5">
+                    {/* 50% Smaller Selected Pillar Title Above Selected Pillar */}
                     <div
-                      className="w-full rounded-full p-[2.5px] shadow-2xs"
+                      className="w-full rounded-full p-[3.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="gradient-brand flex min-h-[44px] items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-center text-white"
+                        className="gradient-brand flex min-h-[26px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-white"
                         style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white">
-                          <SelectedIcon className="h-3.5 w-3.5 text-[#5A00D6]" />
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                          <SelectedIcon className="h-2.5 w-2.5 text-[#5A00D6]" />
                         </span>
-                        <div className="text-center">
-                          <div className="text-[9px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                            SELECTED PILLAR · {selectedDomain.shortName} · {selectedDomain.score}%
-                          </div>
-                          <div className="text-xs font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
-                            {selectedDomain.name}
-                          </div>
-                        </div>
+                        <span className="text-[9.5px] font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
+                          SELECTED · {selectedDomain.shortName} ({selectedDomain.score}%)
+                        </span>
                       </div>
                     </div>
 
-                    {/* Side Tile 1: White Background With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
+                    {/* 50% Smaller Side Tile 1: Thicker App-Design Border & Pure White Behind Words */}
                     <div
-                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      className="w-full rounded-xl p-[4px] shadow-2xs"
                       style={{ background: getHeaderView(3) }}
                     >
-                      <div
-                        className="rounded-[9px] p-2.5 text-center space-y-1"
-                        style={{ background: UNIFORM_SPRAY_BG }}
-                      >
-                        <div className="inline-flex items-center justify-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                          <SelectedIcon className="h-3.5 w-3.5 text-[#0072FF]" />
+                      <div className="rounded-[8px] bg-white px-2 py-1 text-center space-y-0.5">
+                        <div className="inline-flex items-center justify-center gap-1 text-[8.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                          <SelectedIcon className="h-2.5 w-2.5 text-[#0072FF]" />
                           <span>{selectedDomain.shortName} · {selectedDomain.metricLabel}</span>
                         </div>
                         <div
-                          className="text-xs sm:text-sm font-extrabold bg-clip-text text-transparent"
+                          className="text-[11px] font-extrabold bg-clip-text text-transparent leading-tight"
                           style={{ backgroundImage: getTitleGradientView(1) }}
                         >
                           {selectedDomain.metricValue}
                         </div>
-                        <p className="text-[11px] font-extrabold text-[#0072FF] leading-snug">
+                        <p className="text-[9.5px] font-extrabold text-[#0072FF] leading-tight">
                           {selectedDomain.detail}
                         </p>
                       </div>
                     </div>
 
-                    {/* Side Tiles List: White Background With Pink, Blue & Purple Spray Behind Words & App-Coloured Writing */}
-                    <div className="space-y-1.5 text-center">
+                    {/* 50% Smaller Side Tiles List: Thicker App-Design Borders & Pure White Behind Words */}
+                    <div className="space-y-1 text-center">
                       <div
-                        className="w-full rounded-full p-[2px]"
+                        className="w-full rounded-full p-[3px]"
                         style={{ background: getHeaderView(4) }}
                       >
-                        <div
-                          className="rounded-full py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]"
-                          style={{ background: UNIFORM_SPRAY_BG }}
-                        >
+                        <div className="rounded-full bg-white py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                           Verified 2026 {selectedDomain.shortName} Controls
                         </div>
                       </div>
@@ -758,18 +845,18 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         return (
                           <div
                             key={item}
-                            className="rounded-xl p-[2px]"
+                            className="rounded-xl p-[3.5px]"
                             style={{ background: getHeaderView(aIdx + 4) }}
                           >
                             <div
-                              className="flex items-center justify-center gap-1.5 rounded-[9px] px-2.5 py-1.5 text-center text-[10.5px] font-extrabold"
-                              style={{ background: UNIFORM_SPRAY_BG, color: aSym.iconColor }}
+                              className="flex items-center justify-center gap-1 rounded-[8px] bg-white px-2 py-1 text-center text-[9px] font-extrabold leading-tight"
+                              style={{ color: aSym.iconColor }}
                             >
                               <span
-                                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                                 style={{ borderColor: getAppBorderView(aIdx + 1) }}
                               >
-                                <SelectedIcon className="h-3 w-3" style={{ color: aSym.iconColor }} />
+                                <SelectedIcon className="h-2.5 w-2.5" style={{ color: aSym.iconColor }} />
                               </span>
                               <span className="text-center" style={{ color: aSym.iconColor }}>
                                 {item}
@@ -781,22 +868,22 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     </div>
                   </div>
 
-                  <div className="grid w-full grid-cols-2 gap-2 pt-2 border-t border-[#0A2B6D]/20">
+                  <div className="grid w-full grid-cols-2 gap-1.5 pt-1 border-t border-[#0A2B6D]/20">
                     <div
-                      className="rounded-full p-[2px]"
+                      className="rounded-full p-[3px]"
                       style={{ background: getHeaderView(0) }}
                     >
                       <Link
                         to={selectedDomain.route}
-                        className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-white"
+                        className="gradient-brand inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white"
                         style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                       >
                         <span style={{ color: '#FFFFFF' }}>Open {selectedDomain.shortName}</span>
-                        <ArrowUpRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                        <ArrowUpRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                       </Link>
                     </div>
                     <div
-                      className="rounded-full p-[2px]"
+                      className="rounded-full p-[3px]"
                       style={{ background: getHeaderView(1) }}
                     >
                       <button
@@ -809,10 +896,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             predictiveAlerts,
                           })
                         }
-                        className="inline-flex min-h-[34px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-extrabold text-[#5A00D6]"
-                        style={{ background: UNIFORM_SPRAY_BG }}
+                        className="inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#5A00D6]"
                       >
-                        <Download className="h-3 w-3 text-[#0072FF]" />
+                        <Download className="h-2.5 w-2.5 text-[#0072FF]" />
                         <span>Pillar PDF</span>
                       </button>
                     </div>
@@ -956,88 +1042,188 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </div>
           </div>
 
-          {/* Column 3: Predictive 14/30/60/90-Day Expiry Radar */}
+          {/* Column 3: Predictive 90 / 60 / 30 / 21 / 14-Day Descending Expiry Radar — Overhead Spotlights, Thicker App-Design Borders, 50% Smaller Tiles, Light Switches in Front of Days, Red/Orange/Green/Blue/White Real Lights & Action Tile on Right of Auto */}
           <div
-            className="lg:col-span-4 flex rounded-2xl p-[3.5px] shadow-sm"
-            style={{ background: getHeaderView(4) }}
+            className="lg:col-span-4 flex rounded-2xl p-[5px] shadow-md"
+            style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="flex w-full flex-col justify-between rounded-[13px] p-3 text-center space-y-2"
-              style={{ background: UNIFORM_SPRAY_BG }}
+              className="relative flex w-full flex-col justify-between rounded-[12px] bg-white p-2 text-center space-y-1.5 overflow-hidden"
+              style={{
+                backgroundImage:
+                  'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.98) 0%, rgba(0,198,255,0.18) 38%, rgba(255,46,154,0.12) 72%, #FFFFFF 100%)',
+              }}
             >
+              {/* Overhead Dual Spotlights Shining on Predictive Tiles */}
+              <div className="flex w-full items-center justify-around pb-0.5">
+                {[1, 2].map((sp) => (
+                  <div key={sp} className="flex flex-col items-center">
+                    <div className="h-2 w-7 rounded-t-md bg-[#0A2B6D] border border-white flex items-center justify-center">
+                      <span
+                        className="h-2 w-4 rounded-full bg-white"
+                        style={{ boxShadow: '0 0 12px 4px #FFFFFF, 0 4px 18px 6px rgba(255,46,154,0.85)' }}
+                      />
+                    </div>
+                    <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#5A00D6]">
+                      SPOTLIGHT {sp}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
               <div
-                className="w-full rounded-full p-[2px]"
+                className="w-full rounded-full p-[3.5px]"
                 style={{ background: getHeaderView(4) }}
               >
                 <div
-                  className="gradient-brand flex min-h-[38px] items-center justify-center gap-2 rounded-full px-3 py-1 text-white"
+                  className="gradient-brand flex min-h-[26px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <ShieldCheck className="h-3 w-3 text-[#5A00D6]" />
-                  </span>
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
-                    Predictive 14 / 30 / 60 / 90-Day Expiry Radar
+                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
+                    Predictive 90 / 60 / 30 / 21 / 14-Day Radar
                   </span>
                 </div>
               </div>
 
+              {/* Descending Days Filter Bar With Light Switches in Front of Days & Real Lights (90d Red, 60d Orange, 30d Green, 21d Blue, 14d White) */}
               <div
-                className="w-full rounded-xl p-[2px]"
+                className="w-full rounded-xl p-[3.5px]"
                 style={{ background: getHeaderView(5) }}
               >
-                <div className="flex items-center justify-center gap-1 rounded-[9px] bg-white py-1">
-                  {['ALL', '14', '30', '60'].map((h) => (
-                    <button
-                      key={h}
-                      type="button"
-                      onClick={() => setHorizonFilter(h)}
-                      className={`rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold ${
-                        horizonFilter === h
-                          ? 'bg-[#5A00D6] text-white'
-                          : 'border border-[#0A2B6D]/30 bg-white text-[#0A2B6D]'
-                      }`}
-                    >
-                      {h === 'ALL' ? 'All' : `${h}d`}
-                    </button>
-                  ))}
+                <div className="flex flex-wrap items-center justify-center gap-1 rounded-[8px] bg-white px-1.5 py-1">
+                  <button
+                    type="button"
+                    onClick={() => setHorizonFilter('ALL')}
+                    className={`rounded-full px-2 py-0.5 text-[8.5px] font-extrabold ${
+                      horizonFilter === 'ALL'
+                        ? 'bg-[#5A00D6] text-white'
+                        : 'border border-[#0A2B6D]/30 bg-white text-[#0A2B6D]'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {[
+                    { key: '90', label: '90d', hex: '#EF4444', glow: '0 0 8px 2px #EF4444' },
+                    { key: '60', label: '60d', hex: '#F97316', glow: '0 0 8px 2px #F97316' },
+                    { key: '30', label: '30d', hex: '#10B981', glow: '0 0 8px 2px #10B981' },
+                    { key: '21', label: '21d', hex: '#0072FF', glow: '0 0 8px 2px #0072FF' },
+                    { key: '14', label: '14d', hex: '#FFFFFF', glow: '0 0 8px 2px #00C6FF' },
+                  ].map((d) => {
+                    const isOn = dayLightSwitches[d.key] !== false;
+                    return (
+                      <div
+                        key={d.key}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/30 bg-white px-1.5 py-0.5"
+                      >
+                        {/* Light Switch in Front of Day */}
+                        <button
+                          type="button"
+                          onClick={() => toggleDaySwitch(d.key)}
+                          title={`Toggle ${d.label} light switch`}
+                          className={`relative inline-flex h-3 w-5 shrink-0 items-center rounded-full border border-[#0A2B6D] transition-all ${
+                            isOn ? 'bg-[#0A2B6D]' : 'bg-slate-200'
+                          }`}
+                        >
+                          <span
+                            className={`inline-block h-2 w-2 rounded-full bg-white transition-transform ${
+                              isOn ? 'translate-x-2.5' : 'translate-x-0.5'
+                            }`}
+                          />
+                        </button>
+                        {/* Real Glowing Light Bulb */}
+                        <span
+                          className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D]/40"
+                          style={{
+                            backgroundColor: isOn ? d.hex : '#cbd5e1',
+                            boxShadow: isOn ? d.glow : 'none',
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setHorizonFilter(d.key)}
+                          className={`text-[8.5px] font-extrabold ${
+                            horizonFilter === d.key ? 'text-[#FF2E9A] underline' : 'text-[#0A2B6D]'
+                          }`}
+                        >
+                          {d.label}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="space-y-1.5 max-h-44 overflow-y-auto pr-0.5">
-                {filteredAlerts.map((al, aIdx) => (
-                  <div
-                    key={al.id}
-                    className="rounded-xl p-[2px]"
-                    style={{ background: getHeaderView(aIdx) }}
-                  >
-                    <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white p-2 text-center">
-                      <div className="flex flex-wrap items-center justify-center gap-1.5">
-                        <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D]/30 bg-[#F5F0FF] text-[#5A00D6]">
-                          <ShieldCheck className="h-2.5 w-2.5 text-[#5A00D6]" />
-                        </span>
-                        <span
-                          className="rounded-full px-2 py-0.5 text-[8.5px] font-extrabold text-white"
-                          style={{ background: al.colour }}
-                        >
-                          {al.horizon}
-                        </span>
-                        <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
-                          {al.title}
-                        </span>
+              {/* 50% Smaller Predictive Alert Tiles With Thicker App-Design Borders, Switch + Real Light in Front of Days, Pure White Behind Words & Action Tile on Right Side of Auto */}
+              <div className="space-y-1 max-h-48 overflow-y-auto pr-0.5">
+                {filteredAlerts.map((al, aIdx) => {
+                  const isLightOn = dayLightSwitches[al.dayKey] !== false;
+                  return (
+                    <div
+                      key={al.id}
+                      className="rounded-xl p-[3.5px]"
+                      style={{ background: getHeaderView(aIdx) }}
+                    >
+                      <div className="flex flex-col justify-center gap-0.5 rounded-[8px] bg-white px-2 py-1 text-center">
+                        <div className="flex flex-wrap items-center justify-center gap-1">
+                          {/* Light Switch in Front of Days Listed */}
+                          <button
+                            type="button"
+                            onClick={() => toggleDaySwitch(al.dayKey)}
+                            title="Light Switch"
+                            className={`relative inline-flex h-3.5 w-6 shrink-0 items-center rounded-full border border-[#0A2B6D] transition-all ${
+                              isLightOn ? 'bg-[#0A2B6D]' : 'bg-slate-200'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-2.5 w-2.5 rounded-full bg-white transition-transform ${
+                                isLightOn ? 'translate-x-3' : 'translate-x-0.5'
+                              }`}
+                            />
+                          </button>
+
+                          {/* Real Glowing Light (Red=90d, Orange=60d, Green=30d, Blue=21d, White=14d) */}
+                          <span
+                            className="h-3 w-3 shrink-0 rounded-full border border-[#0A2B6D]"
+                            style={{
+                              backgroundColor: isLightOn ? al.lightHex : '#cbd5e1',
+                              boxShadow: isLightOn ? al.lightGlow : 'none',
+                            }}
+                          />
+
+                          {/* Days Listed Badge */}
+                          <span
+                            className="rounded-full border border-[#0A2B6D] px-2 py-0 text-[8px] font-extrabold"
+                            style={{
+                              backgroundColor: al.lightHex === '#FFFFFF' ? '#FFFFFF' : al.lightHex,
+                              color: al.lightHex === '#FFFFFF' ? '#0A2B6D' : '#FFFFFF',
+                            }}
+                          >
+                            {al.horizon}
+                          </span>
+
+                          <span className="text-[9px] font-extrabold text-[#0A2B6D] leading-tight">
+                            {al.title}
+                          </span>
+                        </div>
+
+                        {/* Auto Text on Left + Action Tile Moved to Right Side of Auto */}
+                        <div className="flex items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 pt-0.5">
+                          <span className="flex-1 text-left text-[8.5px] font-extrabold text-[#5A00D6] leading-tight">
+                            {al.action}
+                          </span>
+                          <Link
+                            to={al.route}
+                            className="gradient-brand shrink-0 rounded-full border border-[#0A2B6D] px-2 py-0.5 text-[8px] font-extrabold text-white whitespace-nowrap"
+                            style={{ background: getHeaderView(aIdx), color: '#FFFFFF' }}
+                          >
+                            <span style={{ color: '#FFFFFF' }}>Action →</span>
+                          </Link>
+                        </div>
                       </div>
-                      <div className="text-[9.5px] font-bold text-[#5A00D6]">
-                        {al.action}
-                      </div>
-                      <Link
-                        to={al.route}
-                        className="rounded-full border border-[#0A2B6D] bg-[#F5F0FF] px-2.5 py-0.5 text-[9px] font-extrabold text-[#0072FF]"
-                      >
-                        Action →
-                      </Link>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

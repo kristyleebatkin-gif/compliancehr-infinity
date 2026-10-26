@@ -477,7 +477,7 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* Top Live Telemetry Strip (The 8 Numbered Tiles): Display Category, Suitable Category Symbol, Pink/Blue/Purple Spray Behind Words & Writing in App Design Colours */}
+        {/* Top Live Telemetry Strip (The 8 Numbered Command Tiles): Shine White Light, Thicker Borders, Suitable Category Symbol & Pure White Behind Writing */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
             { category: 'Edge Compute', label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
@@ -494,14 +494,22 @@ export default function InfinityCoreEngine({ compact = false }) {
             return (
               <div
                 key={stat.label}
-                className="flex h-full rounded-2xl p-[3px] shadow-sm"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="flex h-full rounded-2xl p-[4.5px] shadow-md"
+                style={{
+                  background: TOP_BORDER_GRADIENT,
+                  boxShadow: '0 0 14px 3px rgba(255, 255, 255, 0.95), 0 4px 12px rgba(0, 114, 255, 0.18)',
+                }}
               >
                 <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[13px] bg-white p-2.5 text-center"
+                  className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2.5 text-center"
                   style={{ background: UNIFORM_SPRAY_BG }}
                 >
-                  <div className="flex items-center justify-center gap-1.5">
+                  {/* Glowing White Light Bulb on Command Tile */}
+                  <div className="flex items-center justify-center gap-1">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full border border-white bg-white"
+                      style={{ boxShadow: '0 0 10px 4px #FFFFFF, 0 0 16px 4px #00C6FF' }}
+                    />
                     <span
                       className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                       style={{ borderColor: getAppBorderView(idx) }}
@@ -516,13 +524,11 @@ export default function InfinityCoreEngine({ compact = false }) {
                     </span>
                   </div>
                   <div
-                    className="w-full flex-1 rounded-xl p-[2px]"
+                    className="w-full flex-1 rounded-xl p-[2.5px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full flex-col items-center justify-center rounded-[9px] px-2 py-1.5 text-center"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
+                    {/* Pure White Background Behind Writing so You Can Read Clearly */}
+                    <div className="flex h-full flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1.5 text-center">
                       <span
                         className="block text-[9.5px] font-extrabold uppercase tracking-wider"
                         style={{ color: sym.iconColor }}
