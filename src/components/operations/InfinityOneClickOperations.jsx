@@ -536,56 +536,59 @@ export default function InfinityOneClickOperations({ compact = false }) {
   return (
     <section
       id="infinity-one-click-operations"
-      className="scroll-mt-14 overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl"
+      className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Squished Blue-Purple-Pink Executive Banner */}
-      <div className="px-3 py-2 text-white" style={{ background: SQUISHED_GRADIENT }}>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="flex h-10 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
-              <Image
-                src={CHR_LOGO}
-                alt="ComplianceHR Infinity"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-blue-950">
-                  <Zap className="h-2.5 w-2.5" /> INFINITY ONE-CLICK OPERATIONS · EXECUTIVE COMMAND DECK
-                </span>
-                <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[7.5px] font-black text-white">
-                  ● 12 INSTANT EXECUTIVE ACTIONS ARMED
-                </span>
-              </div>
-              <h2 className="mt-0.5 text-sm sm:text-base font-black tracking-tight text-white">
-                Infinity One-Click Operations — Audit Packs, Smart-Fill Docs, Roster/Task Dispatch &amp; Incident/Risk Sweeps
-              </h2>
-              <p className="text-[8px] font-extrabold text-amber-100">
-                Software: ComplianceHR Infinity · Business: ComplianceHR Infinity · Developer: Kristy Lee Whelan · Email: kristyleebatkin@live.com.au
-              </p>
-            </div>
-          </div>
+      {/* Top Section of Landing Page Header Template */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{
+            background:
+              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+          }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+            <Zap className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          </span>
+          <span>Infinity One-Click Operations · 12 Instant Executive Actions Armed</span>
+        </span>
 
-          <div className="flex flex-wrap items-center gap-1.5">
-            <button
-              type="button"
-              onClick={handleRunMasterAllOperations}
-              disabled={runningMaster}
-              className="inline-flex items-center gap-1 rounded-lg bg-amber-300 px-3 py-1.5 text-[8.5px] font-black uppercase tracking-wide text-blue-950 shadow hover:bg-amber-200 disabled:opacity-60"
-            >
-              <RefreshCw className={`h-3 w-3 ${runningMaster ? 'animate-spin' : ''}`} />
-              {runningMaster ? 'Executing All 3 Pillars…' : '⚡ Execute Master 1-Click Sweep (All 3 Pillars)'}
-            </button>
-            <Link
-              to="/operations-centre"
-              className="inline-flex items-center gap-1 rounded-lg bg-white px-2.5 py-1.5 text-[8.5px] font-black text-purple-950 shadow hover:bg-purple-50"
-            >
-              <Building2 className="h-3 w-3 text-purple-700" />
-              Open Full Executive Operations Centre
-            </Link>
-          </div>
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
+          Infinity{' '}
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            One-Click Operations
+          </span>
+        </h2>
+
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+          Audit Packs, Smart-Fill Docs, Roster &amp; Task Dispatch, and Incident &amp; Risk Sweeps.
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={handleRunMasterAllOperations}
+            disabled={runningMaster}
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+            }}
+          >
+            <RefreshCw className={`h-3.5 w-3.5 text-white ${runningMaster ? 'animate-spin' : ''}`} />
+            <span>{runningMaster ? 'Executing All 3 Pillars…' : 'Execute Master 1-Click Sweep (All 3 Pillars)'}</span>
+          </button>
+          <Link
+            to="/operations-centre"
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+            style={{
+              background:
+                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+            }}
+          >
+            <Building2 className="h-3.5 w-3.5 text-white" />
+            <span>Open Full Executive Operations Centre</span>
+          </Link>
         </div>
       </div>
 

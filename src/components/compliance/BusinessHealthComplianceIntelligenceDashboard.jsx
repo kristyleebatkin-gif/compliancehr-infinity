@@ -352,43 +352,46 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   return (
     <section
       id="business-health-intelligence"
-      className="scroll-mt-14 rounded-2xl border-2 border-purple-600 bg-white p-2 sm:p-3 shadow-sm space-y-2.5"
+      className="scroll-mt-14 rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Top Banner Header */}
-      <div
-        className="app-section-card-header flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
-        style={{ background: HEADER_GRADIENT }}
-      >
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/30 bg-white/15 shadow-sm">
-            <Activity className="h-5 w-5 text-white" />
-          </div>
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="rounded-full bg-white/20 px-2 py-0.5 font-body text-[7.5px] font-black uppercase tracking-wider text-white">
-                LIVE EXECUTIVE COMMAND &amp; PREDICTIVE GOVERNANCE
-              </span>
-              <span className="rounded-full bg-amber-300 px-2 py-0.5 font-body text-[7.5px] font-black text-blue-950">
-                98.7% OVERALL HEALTH &amp; 2026 AUDIT READINESS
-              </span>
-            </div>
-            <h2 className="font-body text-sm sm:text-base font-black uppercase tracking-tight text-white">
-              Business Health &amp; Compliance Intelligence Dashboard
-            </h2>
-            <p className="font-body text-[8px] font-bold text-white">
-              Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
-            </p>
-          </div>
-        </div>
+      {/* Top Banner Header — Top Section of Landing Page Template */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{
+            background:
+              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+          }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+            <Activity className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          </span>
+          <span>Live Executive Command · 98.7% Overall Health &amp; 2026 Audit Readiness</span>
+        </span>
 
-        <div className="flex flex-wrap items-center gap-1.5">
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
+          Business Health &amp;{' '}
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Compliance Intelligence
+          </span>
+        </h2>
+
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+          Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <button
             type="button"
             onClick={loadLiveIntelligence}
-            className="inline-flex items-center gap-1 rounded-lg border border-white/40 bg-white/15 px-2.5 py-1 font-body text-[7.8px] font-black text-white hover:bg-white/25"
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+            style={{
+              background:
+                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+            }}
           >
-            <RefreshCw className={`h-3 w-3 ${refreshing ? 'animate-spin' : ''}`} />
-            Sync Live Telemetry
+            <RefreshCw className={`h-3.5 w-3.5 text-white ${refreshing ? 'animate-spin' : ''}`} />
+            <span>Sync Live Telemetry</span>
           </button>
           <button
             type="button"
@@ -400,9 +403,14 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 predictiveAlerts,
               })
             }
-            className="inline-flex items-center gap-1 rounded-lg bg-amber-300 px-2.5 py-1 font-body text-[7.8px] font-black text-blue-950 shadow hover:bg-amber-200"
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+            }}
           >
-            <Download className="h-3 w-3" /> Export Board Intelligence Report (A4 PDF)
+            <Download className="h-3.5 w-3.5 text-white" />
+            <span>Export Board Intelligence Report (A4 PDF)</span>
           </button>
         </div>
       </div>

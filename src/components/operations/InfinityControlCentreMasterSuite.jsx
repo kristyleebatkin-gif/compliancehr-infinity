@@ -504,81 +504,93 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
   ).length;
 
   return (
-    <section className="overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
-      {/* ==================== MASTER HEADER BANNER ==================== */}
-      <div className="px-4 py-3 text-white" style={{ background: HEADER_GRADIENT }}>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-blue-950">
-                <ShieldCheck className="h-3 w-3 text-purple-700" /> PRIORITY 0–2 MASTER CONTROL &amp; VERIFICATION SUITE
-              </span>
-              <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[8px] font-black text-white">
-                ● 17 CATEGORIES · 356 CHECKPOINTS · 98 CONTROLLED DOCS · 31 DEV REGISTER ITEMS
-              </span>
-            </div>
-            <h2 className="mt-1 text-base sm:text-lg font-black tracking-tight text-white">
-              Infinity Control Centre, 356-Checkpoint Audit, 98-Document Control &amp; Base44 Development Register
-            </h2>
-            <p className="text-[9px] font-bold text-amber-100">
-              Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
-            </p>
-          </div>
+    <section className="overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
+      {/* ==================== MASTER HEADER BANNER — TOP SECTION TEMPLATE ==================== */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-3 shadow-sm">
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{
+            background:
+              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+          }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
+          </span>
+          <span>17 Categories · 356 Checkpoints · 98 Controlled Docs · 31 Dev Register Items</span>
+        </span>
 
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={loadLiveTelemetry}
-              disabled={loading}
-              className="h-7 border-white/40 bg-white/15 px-2.5 text-[9px] font-black text-white hover:bg-white/25"
-            >
-              <RefreshCw className={`mr-1 h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
-              Refresh Live Telemetry
-            </Button>
-            <Button
-              size="sm"
-              onClick={() =>
-                downloadCsv(
-                  'compliancehr-infinity-356-checkpoints-audit.csv',
-                  [
-                    { key: 'id', label: 'Checkpoint ID' },
-                    { key: 'categoryId', label: 'Category ID' },
-                    { key: 'categoryTitle', label: 'Category' },
-                    { key: 'subject', label: 'Subject / Control' },
-                    { key: 'legislation', label: 'Legislation & Standard' },
-                    { key: 'requiredDocCode', label: 'Required Document' },
-                    { key: 'evidenceEntity', label: 'Operational Register' },
-                    { key: 'evidenceCount', label: 'Live Record Count' },
-                    { key: 'assessmentResult', label: 'Assessment Status' },
-                    { key: 'gapIdentified', label: 'Gap / Verification Note' },
-                    { key: 'correctiveAction', label: 'Corrective Action' },
-                    { key: 'dueDate', label: 'Due Date' },
-                    { key: 'owner', label: 'Owner' },
-                  ],
-                  all356Checkpoints
-                )
-              }
-              className="h-7 bg-white px-2.5 text-[9px] font-black text-purple-950 hover:bg-purple-50"
-            >
-              <Download className="mr-1 h-3 w-3 text-purple-700" />
-              Export 356 Checkpoints (Excel/CSV)
-            </Button>
-          </div>
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
+          Infinity{' '}
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Control Centre &amp; Master Audit
+          </span>
+        </h2>
+
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+          Unified Executive Oversight · Real Operational Evidence Verification · End-of-Shift Workflow · Full Word, PDF &amp; Excel Register Exports
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={loadLiveTelemetry}
+            disabled={loading}
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60"
+            style={{
+              background:
+                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
+            }}
+          >
+            <RefreshCw className={`h-3.5 w-3.5 text-white ${loading ? 'animate-spin' : ''}`} />
+            <span>Refresh Live Telemetry</span>
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              downloadCsv(
+                'compliancehr-infinity-356-checkpoints-audit.csv',
+                [
+                  { key: 'id', label: 'Checkpoint ID' },
+                  { key: 'categoryId', label: 'Category ID' },
+                  { key: 'categoryTitle', label: 'Category' },
+                  { key: 'subject', label: 'Subject / Control' },
+                  { key: 'legislation', label: 'Legislation & Standard' },
+                  { key: 'requiredDocCode', label: 'Required Document' },
+                  { key: 'evidenceEntity', label: 'Operational Register' },
+                  { key: 'evidenceCount', label: 'Live Record Count' },
+                  { key: 'assessmentResult', label: 'Assessment Status' },
+                  { key: 'gapIdentified', label: 'Gap / Verification Note' },
+                  { key: 'correctiveAction', label: 'Corrective Action' },
+                  { key: 'dueDate', label: 'Due Date' },
+                  { key: 'owner', label: 'Owner' },
+                ],
+                all356Checkpoints
+              )
+            }
+            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+            }}
+          >
+            <Download className="h-3.5 w-3.5 text-white" />
+            <span>Export 356 Checkpoints (Excel/CSV)</span>
+          </button>
         </div>
 
-        {/* Navigation Switcher for All Priority 0, 1, 2 & Best-In-Class Master Pillars */}
-        <div className="mt-2.5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-1.5">
+        {/* Navigation Switcher for All 9 Master Pillars */}
+        <div className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-2">
           {[
-            { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry & Queue', icon: Building2, hex: '#0072FF' },
-            { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `17 Cats · ${evidencedCount}/356`, icon: ClipboardCheck, hex: '#0A2B6D' },
-            { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText, hex: '#5A00D6' },
-            { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out & Handover', icon: Clock, hex: '#A100FF' },
-            { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency & Sign-Off', icon: Award, hex: '#FF2E9A' },
-            { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Classify & Route', icon: Layers, hex: '#A100FF' },
-            { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate & Twin Sim', icon: Sparkles, hex: '#5A00D6' },
-            { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS · CAPA', icon: Wrench, hex: '#0A2B6D' },
-            { id: 'dev-register-31', label: '9. Dev Register (31)', sub: '17 Cols & 15-Pt Check', icon: CheckSquare, hex: '#0072FF' },
+            { id: 'control-centre', label: '1. Control Centre', sub: 'Live Telemetry', icon: Building2 },
+            { id: 'master-audit-356', label: '2. 356 Audit Checks', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
+            { id: 'document-control-98', label: '3. 98 Master Docs', sub: 'Word, PDF & Excel', icon: FileText },
+            { id: 'end-of-shift', label: '4. End-of-Shift', sub: 'Clock-Out', icon: Clock },
+            { id: 'skills-17-point', label: '5. Skills & 17-Pt', sub: 'Competency', icon: Award },
+            { id: 'smart-mailroom', label: '6. Smart Mailroom', sub: 'Auto-Route', icon: Layers },
+            { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', sub: 'Human Gate', icon: Sparkles },
+            { id: 'best-in-class', label: '8. Best-In-Class', sub: 'PRODA · SCHADS', icon: Wrench },
+            { id: 'dev-register-31', label: '9. Dev Register', sub: '15-Pt Check', icon: CheckSquare },
           ].map((tab) => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
@@ -587,20 +599,22 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
-                  active
-                    ? 'border-pink-500 bg-white text-blue-950 shadow-md ring-2 ring-amber-300'
-                    : 'border-white/30 bg-white/15 text-white hover:bg-white/25'
+                className={`flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-left transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] ${
+                  active ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
                 }`}
               >
-                <div className="flex items-center gap-1.5">
-                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: active ? tab.hex : '#fde68a' }} />
-                  <span className={`truncate text-[9.5px] font-black ${active ? 'text-blue-950' : 'text-white'}`}>
-                    {tab.label}
-                  </span>
-                </div>
-                <div className={`mt-0.5 truncate text-[7.5px] font-bold ${active ? 'text-purple-800' : 'text-white/95'}`}>
-                  {tab.sub}
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
+                  }}
+                >
+                  <Icon className="h-3 w-3 text-white" />
+                </span>
+                <div className="min-w-0">
+                  <div className="truncate text-[10px] font-extrabold text-[#0A2B6D]">{tab.label}</div>
+                  <div className="truncate text-[8.5px] font-bold text-[#5A00D6]">{tab.sub}</div>
                 </div>
               </button>
             );

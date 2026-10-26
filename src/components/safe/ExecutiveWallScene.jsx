@@ -765,52 +765,56 @@ export default function ExecutiveWallScene({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border-4 border-purple-700 bg-white shadow-xl">
-      {/* Top Ceiling Crown Moulding / Gallery Lighting Bar with Side-by-Side & Single View Switcher */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-white"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5 shadow">
-            <Image src={frameSrc} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
-          </div>
-          <div className="min-w-0">
-            <div className="truncate text-[9.5px] font-extrabold uppercase tracking-wider text-white">
-              {companyName} · {FULL_SLOGAN}
-            </div>
-          </div>
-        </div>
+    <div className="relative overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
+      {/* Top Section of Landing Page Header Template */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{
+            background:
+              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+          }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+            <Building2 className="h-3.5 w-3.5 text-[#0072FF]" />
+          </span>
+          <span>{companyName} · Dual Executive Office &amp; Profile Workspace</span>
+        </span>
 
-        {/* View Comparison Switcher: Both Views Beside Each Other vs Office Only vs Profiles/Data Only */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <div className="flex flex-wrap items-center gap-1 rounded-full bg-white/20 p-0.5 backdrop-blur-sm">
-            {LAYOUT_CHOICES.map((choice) => {
-              const Icon = choice.icon;
-              const active = viewMode === choice.id;
-              return (
-                <button
-                  key={choice.id}
-                  type="button"
-                  onClick={() => selectMode(choice.id)}
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
-                    active
-                      ? 'bg-white text-blue-950 shadow-sm'
-                      : 'text-white hover:bg-white/15'
-                  }`}
-                >
-                  <Icon className={`h-2.5 w-2.5 ${active ? 'text-pink-600' : 'text-white'}`} />
-                  {choice.label}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {LAYOUT_CHOICES.map((choice) => {
+            const Icon = choice.icon;
+            const active = viewMode === choice.id;
+            return (
+              <button
+                key={choice.id}
+                type="button"
+                onClick={() => selectMode(choice.id)}
+                className={`inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold transition-all ${
+                  active
+                    ? 'text-white shadow-sm'
+                    : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                }`}
+                style={
+                  active
+                    ? {
+                        background:
+                          'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                      }
+                    : undefined
+                }
+              >
+                <Icon className={`h-3.5 w-3.5 ${active ? 'text-white' : 'text-[#5A00D6]'}`} />
+                <span>{choice.label}</span>
+              </button>
+            );
+          })}
           <Link
             to="/login"
-            className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold text-blue-950 shadow-sm hover:bg-pink-50"
+            className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
           >
-            <LogIn className="h-2.5 w-2.5 text-blue-600" />
-            Sign In
+            <LogIn className="h-3.5 w-3.5 text-[#FF2E9A]" />
+            <span>Sign In</span>
           </Link>
         </div>
       </div>

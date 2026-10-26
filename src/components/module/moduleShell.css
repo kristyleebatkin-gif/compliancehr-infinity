@@ -1,17 +1,20 @@
-/* Standard module layout: white cards with light borders & subtle shadows, blue/purple buttons & controls, pink/magenta accents. */
+/* Standard module layout: Top Section of Landing Page design template — thick app-coloured gradient borders, crisp white panels, #0A2B6D pill buttons & circular gradient icons. */
 .module-shell-actions {
   gap: 0.5rem !important;
 }
 .module-shell-actions :is(button, a):not([role="tab"]) {
-  background: linear-gradient(135deg, rgba(0, 114, 255, 0.12), rgba(90, 0, 214, 0.10));
-  border: 1px solid rgba(90, 0, 214, 0.32);
+  background: #ffffff;
+  border: 2px solid #0A2B6D !important;
+  border-radius: 9999px !important;
   color: #0A2B6D;
-  font-weight: 700;
-  box-shadow: 0 2px 8px -3px rgba(90, 0, 214, 0.18);
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  box-shadow: 0 2px 6px rgba(10, 43, 109, 0.08);
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .module-shell-actions :is(button, a):not([role="tab"]):hover {
-  background: linear-gradient(135deg, #0072FF, #5A00D6);
-  color: #ffffff;
+  background: linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%) !important;
+  color: #ffffff !important;
   transform: translateY(-1px);
 }
 .module-shell-tiles {
@@ -20,9 +23,9 @@
 .module-shell-tiles > * {
   position: relative;
   overflow: hidden;
-  background: #ffffff;
-  border: 1px solid rgba(192, 132, 252, 0.45);
-  border-top: 3px solid var(--module-colour, #0072FF);
+  background: #ffffff !important;
+  border: 2px solid #0A2B6D !important;
+  border-radius: 1rem !important;
   color: #0A2B6D;
   box-shadow: 0 2px 10px -3px rgba(10, 43, 109, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -32,20 +35,25 @@
   box-shadow: 0 8px 20px -8px rgba(90, 0, 214, 0.18);
 }
 
-/* Audit Checklist + Audit Report: top right, Blue/Purple and Pink/Magenta pills with crisp white text. */
+/* Audit Checklist + Audit Report: rounded-full pills with #0A2B6D border and app gradients. */
 .module-audit-buttons {
   gap: 0.5rem !important;
 }
 .module-audit-buttons > button {
   color: #ffffff !important;
-  border: none !important;
-  font-weight: 700;
+  border: 2px solid #0A2B6D !important;
+  border-radius: 9999px !important;
+  font-weight: 800;
   box-shadow: 0 4px 12px -4px rgba(0, 114, 255, 0.35);
 }
-.module-audit-buttons > button:nth-child(1) { background: linear-gradient(135deg, #0072FF, #5A00D6) !important; }
-.module-audit-buttons > button:nth-child(2) { background: linear-gradient(135deg, #FF2E9A, #FF6EDB) !important; }
+.module-audit-buttons > button:nth-child(1) {
+  background: linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%) !important;
+}
+.module-audit-buttons > button:nth-child(2) {
+  background: linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%) !important;
+}
 .module-audit-buttons > button:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
 }
 .module-audit-buttons > button svg {
   color: #ffffff !important;

@@ -779,37 +779,29 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
   const [expanded, setExpanded] = useState(!smallFeatured);
 
   return (
-    <div id="audit-master-doc" className="scroll-mt-14 rounded-xl border-2 border-[#0A2B6D] bg-white p-2 shadow-md space-y-1.5">
-      {/* Top Control & Edition Switcher Bar */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
-        style={{
-          background:
-            'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)',
-        }}
-      >
-        <div className="flex items-center gap-1.5 min-w-0">
-          <ClipboardList className="h-3.5 w-3.5 shrink-0 text-amber-200" />
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="truncate text-[9px] font-black uppercase tracking-wider">
-                COMPLIANCEHR INFINITY · MASTER COMPLIANCE AUDIT CHECKLIST (17 AUDIT CATEGORIES | 356 CHECKPOINTS)
-              </span>
-              <span className="rounded-full bg-amber-300 px-2 py-0.5 text-[7.5px] font-black text-blue-950">
-                INCLUDED IN $999 OUTRIGHT OR $125/MO (24-MO) DOCS PACKAGE &amp; FULL APP PLANS
-              </span>
-            </div>
-            <div className="truncate text-[7.5px] font-bold text-amber-100">
-              Governance &amp; NDIS Edition (CHR-AUD-001) + Workforce &amp; Operations Edition (CHR-AUD-002) — Interactive &amp; Printable 11-Page Visual Forms
-            </div>
-          </div>
+    <div id="audit-master-doc" className="scroll-mt-14 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
+      {/* Top Control & Edition Switcher Bar — Top Section Template */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2.5">
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <span
+            className="inline-flex min-h-[34px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+            }}
+          >
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+              <ClipboardList className="h-3 w-3 text-[#FF2E9A]" />
+            </span>
+            <span>Master Compliance Audit Checklist · 17 Categories · 356 Checkpoints</span>
+          </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1.5">
           {[
             { id: 'both', label: 'Both Editions Side-by-Side', icon: Columns },
-            { id: 'infinity', label: 'Infinity Purple Edition (CHR-AUD-002)', icon: InfinityIcon },
-            { id: 'gold', label: 'Executive Gold Edition (CHR-AUD-001)', icon: ShieldCheck },
+            { id: 'infinity', label: 'Infinity Edition (CHR-AUD-002)', icon: InfinityIcon },
+            { id: 'gold', label: 'Governance Edition (CHR-AUD-001)', icon: ShieldCheck },
           ].map((btn) => {
             const Icon = btn.icon;
             const active = displayMode === btn.id;
@@ -818,14 +810,22 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 key={btn.id}
                 type="button"
                 onClick={() => setDisplayMode(btn.id)}
-                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[7.5px] font-extrabold transition-all ${
+                className={`inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold transition-all ${
                   active
-                    ? 'bg-white text-blue-950 shadow-sm'
-                    : 'bg-white/15 text-white hover:bg-white/25'
+                    ? 'text-white shadow-sm'
+                    : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
                 }`}
+                style={
+                  active
+                    ? {
+                        background:
+                          'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+                      }
+                    : undefined
+                }
               >
-                <Icon className={`h-2.5 w-2.5 ${active ? 'text-pink-600' : 'text-white'}`} />
-                {btn.label}
+                <Icon className={`h-3 w-3 ${active ? 'text-white' : 'text-[#5A00D6]'}`} />
+                <span>{btn.label}</span>
               </button>
             );
           })}
@@ -833,7 +833,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="rounded-full border border-white bg-[#FF2E9A] px-2.5 py-0.5 text-[7.5px] font-black text-white shadow-sm hover:bg-[#A100FF]"
+              className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF]"
             >
               {expanded ? 'Minimise Master Checklist' : 'Expand Full 11-Page Checklist'}
             </button>

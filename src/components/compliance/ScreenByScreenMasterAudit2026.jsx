@@ -484,70 +484,88 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
   return (
     <section
       id="screen-by-screen-audit"
-      className="rounded-2xl border-2 border-purple-600 bg-white p-2 sm:p-3 shadow-md space-y-2"
+      className="rounded-2xl bg-white p-2 sm:p-3 space-y-3"
     >
-      {/* Header Banner — App Colours + White Body Font */}
-      <div
-        className="app-section-card-header flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"
-        style={{ background: HEADER_GRADIENT }}
-      >
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-white" />
-            <h2 className="font-body text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-              2026 State-of-the-Art Screen-by-Screen Audit of All 45 Modulars · Smart-Fill Docs &amp; 1-Click Task Flows
-            </h2>
-            <span className="rounded-full bg-white/20 px-2 py-0.5 font-body text-[8px] font-black text-white">
-              45 SCREENS AUDITED · 45 SMART-FILL 2026 DOCS · 1-CLICK TASK COMPLETION
-            </span>
-          </div>
-          <p className="font-body text-[8.5px] font-bold text-white">
-            Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
-          </p>
-        </div>
+      {/* Header Banner — Top Section of Landing Page Template */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 text-center space-y-2.5 shadow-sm">
+        <span
+          className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          style={{
+            background:
+              'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+          }}
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          </span>
+          <span>45 Screens Audited · 45 Smart-Fill 2026 Docs · 1-Click Task Completion</span>
+        </span>
 
-        <div className="flex flex-wrap items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => openSmartFillDoc(MODULE_DIRECTORY[13])}
-            className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 font-body text-[8px] font-black text-blue-950 shadow-sm hover:bg-pink-50"
-          >
-            <Wand2 className="h-3 w-3 text-pink-600" /> Open 2026 Smart-Fill Doc Studio
-          </button>
-        </div>
+        <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-[#0A2B6D]">
+          2026 Screen-by-Screen Audit of{' '}
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            All 45 Modulars
+          </span>
+        </h2>
+
+        <p className="mx-auto max-w-4xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
+          Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
+        </p>
+
+        <button
+          type="button"
+          onClick={() => openSmartFillDoc(MODULE_DIRECTORY[13])}
+          className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+          style={{
+            background:
+              'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
+          }}
+        >
+          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+            <Wand2 className="h-3 w-3 text-[#FF2E9A]" />
+          </span>
+          <span>Open 2026 Smart-Fill Doc Studio</span>
+        </button>
       </div>
 
       {/* Featured Small Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002) */}
       <MasterComplianceAuditForms compact={true} smallFeatured={true} />
 
       {/* Group Filter Pills + Search */}
-      <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-xl border border-purple-200 bg-purple-50/50 p-1.5">
-        <div className="flex flex-wrap items-center gap-1">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-2xs">
+        <div className="flex flex-wrap items-center gap-1.5">
           {['All', ...NAV_GROUPS.map((g) => g.label)].map((grp) => (
             <button
               key={grp}
               type="button"
               onClick={() => setSelectedGroup(grp)}
-              className={`rounded-full px-2.5 py-0.5 font-body text-[7.8px] font-extrabold transition-all ${
+              className={`rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold transition-all ${
                 selectedGroup === grp
                   ? 'text-white shadow-sm'
-                  : 'border border-purple-200 bg-white text-blue-950 hover:bg-purple-100'
+                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
-              style={selectedGroup === grp ? { background: HEADER_GRADIENT } : undefined}
+              style={
+                selectedGroup === grp
+                  ? {
+                      background:
+                        'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
+                    }
+                  : undefined
+              }
             >
               {grp}
             </button>
           ))}
         </div>
 
-        <div className="relative min-w-[180px] flex-1 max-w-xs">
-          <Search className="pointer-events-none absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-purple-600" />
+        <div className="relative min-w-[200px] flex-1 max-w-xs">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5A00D6]" />
           <input
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search any of the 45 screens, topics, 2026 docs or tasks…"
-            className="h-6 w-full rounded-full border border-purple-300 bg-white pl-6 pr-2 font-body text-[8px] font-bold text-blue-950 placeholder:text-purple-400 focus:outline-none"
+            className="h-8 w-full rounded-full border-2 border-[#0A2B6D] bg-white pl-8 pr-3 text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6]/60 focus:outline-none"
           />
         </div>
       </div>
