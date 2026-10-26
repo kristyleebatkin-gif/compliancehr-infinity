@@ -2,27 +2,75 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Menu, X, Compass, Zap, Cpu, Activity, ShieldCheck, Building2,
-  ClipboardCheck, Layers, Sparkles, DollarSign, BookOpen, UserCheck,
+  ClipboardCheck, Layers, Sparkles, DollarSign, BookOpen, UserCheck, ArrowRight,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import QuickAppBar from '@/components/QuickAppBar';
-import { getTilePalette, getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
+import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
 
-// 12 Best Highlights & Features of ComplianceHR Infinity
+// 12 Compact Highlights & Features (smaller, fewer words, light pink bg, white font, app-colour symbols & borders)
 const LISTED_FEATURES = [
-  { label: 'Our Quick 4 Step Start Guide', href: '#quick-start', icon: Compass },
-  { label: '12 Connected Core Engines', href: '#features', icon: Sparkles },
-  { label: '2-Minute Express Internal Audit', href: '#express-audit', icon: ClipboardCheck },
-  { label: '46-Module App Map & Live Workspace', href: '#blueprint', icon: Layers },
-  { label: 'Why Providers Choose ComplianceHR', href: '#benefits', icon: ShieldCheck },
-  { label: 'Must-Have Functions & $355 Audit Suite', href: '#must-haves', icon: BookOpen },
-  { label: 'Infinity One-Click Operations', href: '#infinity-one-click-operations', icon: Zap },
-  { label: '2026 Screen-by-Screen Smart-Fill Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
-  { label: 'Business Health & NDIS Intelligence', href: '#business-health-intelligence', icon: Activity },
-  { label: 'Infinity Core AI & Validation Engine', href: '#infinity-core-engine', icon: Cpu },
-  { label: 'Unified Control Centre & 356 Checks', href: '#infinity-control-centre', icon: Building2 },
-  { label: 'Smart Enhanced Pricing & Doc Pack', href: '#pricing', icon: DollarSign },
+  { label: '4-Step Start', href: '#quick-start', icon: Compass },
+  { label: '12 Core Engines', href: '#features', icon: Sparkles },
+  { label: '2-Min Audit', href: '#express-audit', icon: ClipboardCheck },
+  { label: 'App Map', href: '#blueprint', icon: Layers },
+  { label: 'Why Choose Us', href: '#benefits', icon: ShieldCheck },
+  { label: 'Must-Haves', href: '#must-haves', icon: BookOpen },
+  { label: '1-Click Ops', href: '#infinity-one-click-operations', icon: Zap },
+  { label: 'Screen Audit', href: '#screen-by-screen-audit', icon: ClipboardCheck },
+  { label: 'Health AI', href: '#business-health-intelligence', icon: Activity },
+  { label: 'Core Engine', href: '#infinity-core-engine', icon: Cpu },
+  { label: 'Control Centre', href: '#infinity-control-centre', icon: Building2 },
+  { label: 'Pricing & Packs', href: '#pricing', icon: DollarSign },
 ];
+
+// Three small clipboards with a small checklist + ticks on each and a flow between them
+function MiniClipboardWithTicks({ accent = '#0072FF' }) {
+  return (
+    <div
+      className="relative flex h-8 w-6 sm:h-9 sm:w-7 shrink-0 flex-col justify-between rounded-md border-2 bg-white px-1 pt-1.5 pb-1 shadow-2xs"
+      style={{ borderColor: accent }}
+    >
+      {/* Top clipboard clip */}
+      <span
+        className="absolute -top-1 left-1/2 h-1.5 w-3.5 -translate-x-1/2 rounded-sm border border-white"
+        style={{ backgroundColor: accent }}
+      />
+      {/* 3 mini checklist rows with ticks */}
+      {[0, 1, 2].map((row) => (
+        <div key={row} className="flex items-center gap-0.5 leading-none">
+          <span
+            className="flex h-2 w-2 shrink-0 items-center justify-center rounded-[2px] text-[6px] font-black text-white"
+            style={{ backgroundColor: accent }}
+          >
+            ✓
+          </span>
+          <span
+            className="h-[2px] flex-1 rounded-full"
+            style={{ backgroundColor: accent, opacity: 0.75 }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ThreeClipboardsFlow({ offset = 0 }) {
+  const colors = [
+    getAppBorderView(offset),
+    getAppBorderView(offset + 2),
+    getAppBorderView(offset + 4),
+  ];
+  return (
+    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0" aria-hidden="true">
+      <MiniClipboardWithTicks accent={colors[0]} />
+      <ArrowRight className="h-3.5 w-3.5 text-white shrink-0 stroke-[3]" />
+      <MiniClipboardWithTicks accent={colors[1]} />
+      <ArrowRight className="h-3.5 w-3.5 text-white shrink-0 stroke-[3]" />
+      <MiniClipboardWithTicks accent={colors[2]} />
+    </div>
+  );
+}
 
 export default function LandingNav() {
   const [open, setOpen] = useState(false);
@@ -49,7 +97,7 @@ export default function LandingNav() {
     >
       {/* Clean white outer area with 0.5cm side spacing */}
       <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
-        {/* Top Section — Protected & Untouched Design with Slightly Increased Slogan Size */}
+        {/* Top Section — Protected & Untouched Design */}
         <div
           className="rounded-3xl p-[12px] shadow-lg"
           style={{
@@ -99,7 +147,7 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* App Name & Slightly Increased Slogan */}
+              {/* App Name & Slogan */}
               <div className="mt-2 sm:mt-3 mb-5 sm:mb-6 relative z-10 mx-auto flex w-full flex-col items-center justify-center text-center">
                 <div className="mx-auto flex w-full items-center justify-center bg-transparent text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
                   <span className="mx-auto block whitespace-nowrap text-center">
@@ -183,7 +231,7 @@ export default function LandingNav() {
           </div>
         </div>
 
-        {/* ComplianceHR Infinity Highlights & Features */}
+        {/* ComplianceHR Infinity Highlights & Features — Full-Width Stretched Header with 3 Clipboards Flow on Both Sides */}
         <nav
           aria-label="ComplianceHR Infinity Highlights & Features"
           className="rounded-3xl p-[12px] shadow-lg"
@@ -192,39 +240,52 @@ export default function LandingNav() {
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="rounded-[16px] bg-white px-3 py-4 sm:px-4 sm:py-4 text-center space-y-3">
-            <span
-              className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+          <div className="rounded-[16px] bg-white px-3 py-3.5 sm:px-4 sm:py-4 text-center space-y-2.5">
+            {/* Full-Width Stretched Title Bar with 3 Small Clipboards + Ticks + Flow on Both Sides */}
+            <div
+              className="flex w-full items-center justify-between gap-2 rounded-full border-2 border-[#0A2B6D] px-3 sm:px-5 py-1.5 text-white shadow-sm"
               style={{ background: getHeaderView(0) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Sparkles className="h-3.5 w-3.5 text-white" />
-              </span>
-              <span className="text-center">ComplianceHR Infinity Highlights &amp; Features</span>
-            </span>
+              <ThreeClipboardsFlow offset={0} />
 
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 auto-rows-fr">
+              <div className="flex min-w-0 flex-1 items-center justify-center gap-2 text-center">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                  <Sparkles className="h-3.5 w-3.5 text-white" />
+                </span>
+                <span className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+                  ComplianceHR Infinity Highlights &amp; Features
+                </span>
+              </div>
+
+              <ThreeClipboardsFlow offset={3} />
+            </div>
+
+            {/* Smaller Tiles with Fewer Words, Light Pink Background, White Font Tone, App-Colour Symbols & Different App-Colour Borders */}
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
               {LISTED_FEATURES.map((l, idx) => {
                 const Icon = l.icon;
-                const tile = getTilePalette(idx);
                 const sym = getSymbolView(idx);
+                const borderCol = getAppBorderView(idx);
                 return (
                   <a
                     key={l.href}
                     href={l.href}
-                    className="flex h-full min-h-[48px] items-center gap-2.5 rounded-2xl border-2 px-3 py-2 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex h-full min-h-[36px] items-center justify-center gap-1.5 rounded-full border-2 px-2.5 py-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                     style={{
-                      backgroundColor: tile.bg,
-                      color: tile.text,
-                      borderColor: getAppBorderView(idx),
+                      backgroundColor: '#FF85E0',
+                      color: '#FFFFFF',
+                      borderColor: borderCol,
                     }}
                   >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
-                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    <span
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
+                      style={{ borderColor: borderCol }}
+                    >
+                      <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                     </span>
                     <span
-                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-xs font-extrabold leading-snug"
-                      style={{ color: tile.text }}
+                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10.5px] font-extrabold leading-tight text-white"
+                      style={{ textShadow: '0 1px 2px rgba(10, 43, 109, 0.45)' }}
                     >
                       {l.label}
                     </span>
@@ -243,36 +304,26 @@ export default function LandingNav() {
           <div className="grid grid-cols-2 gap-1.5">
             {LISTED_FEATURES.map((l, idx) => {
               const Icon = l.icon;
-              const tile = getTilePalette(idx);
               const sym = getSymbolView(idx);
+              const borderCol = getAppBorderView(idx);
               return (
                 <a
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2 rounded-2xl border-2 px-2.5 py-2 text-xs font-extrabold"
+                  className="flex items-center gap-1.5 rounded-full border-2 px-2.5 py-1.5 text-[11px] font-extrabold text-white"
                   style={{
-                    backgroundColor: tile.bg,
-                    color: tile.text,
-                    borderColor: getAppBorderView(idx),
+                    backgroundColor: '#FF85E0',
+                    borderColor: borderCol,
                   }}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white" style={{ borderColor: borderCol }}>
                     <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="whitespace-normal break-words leading-snug">{l.label}</span>
+                  <span className="whitespace-normal break-words leading-snug text-white">{l.label}</span>
                 </a>
               );
             })}
-          </div>
-          <div className="mt-2 flex flex-col gap-1.5">
-            <Link
-              to="/dashboard"
-              onClick={() => setOpen(false)}
-              className="rounded-full border-2 border-[#0A2B6D] bg-[#0072FF] px-4 py-2 text-center text-xs font-extrabold text-white"
-            >
-              Dashboard
-            </Link>
           </div>
         </div>
       )}
