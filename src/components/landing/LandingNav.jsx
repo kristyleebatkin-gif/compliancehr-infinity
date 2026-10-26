@@ -57,7 +57,7 @@ export default function LandingNav() {
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="relative flex w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center">
+          <div className="relative flex w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-white px-2 py-5 sm:px-3 sm:py-6 text-center">
             {/* Mobile menu toggle in top-right corner */}
             <button
               onClick={() => setOpen((v) => !v)}
@@ -82,9 +82,9 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* Centred App Name on One Line */}
-              <div className="mx-auto flex w-full items-center justify-center bg-white px-2 text-center font-editorial text-[clamp(1.75rem,4.8vw,3.75rem)] font-extrabold text-[#0A2B6D] leading-tight whitespace-nowrap">
-                <span className="whitespace-nowrap text-center">
+              {/* Centred App Name on One Line — Larger & Perfectly Centred */}
+              <div className="mx-auto flex w-full items-center justify-center bg-white text-center font-editorial text-3xl sm:text-5xl md:text-[3.35rem] lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+                <span className="mx-auto block whitespace-nowrap text-center">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                     HR
