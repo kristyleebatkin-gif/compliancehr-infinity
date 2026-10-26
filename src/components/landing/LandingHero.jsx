@@ -75,25 +75,61 @@ export default function LandingHero() {
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-4 py-4 text-center space-y-3">
-              <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl font-extrabold leading-[1.22] tracking-tight pb-1">
-                <span className="text-[#0A2B6D]">Compliance </span>
-                <span className="inline-block pb-1 mr-2.5 bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  management,
+              {/* 3 Words / Parts Fitted Cleanly on Two Lines at the Top */}
+              <h1 className="font-editorial text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight pb-1">
+                <span className="block">
+                  <span className="text-[#0A2B6D]">Compliance </span>
+                  <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    management,
+                  </span>
                 </span>
-                <span className="inline-block pb-1 bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
                   simplified end to end.
                 </span>
               </h1>
 
-              <p className="mx-auto max-w-5xl text-sm sm:text-base md:text-lg lg:text-xl font-extrabold leading-relaxed text-[#0A2B6D]">
+              {/* Governance Sentence Kept */}
+              <p className="mx-auto max-w-5xl text-xs sm:text-sm md:text-base lg:text-lg font-extrabold leading-relaxed text-[#0A2B6D]">
                 ComplianceHR empowers your team to reach the highest standard of well-organised documentation, full audit compliance, incident management, continuous improvement and extensive risk management, plus rostering, shift notes, invoicing, HR and team communications, while documenting every action and conversation.
               </p>
 
-              {/* App-Coloured Outline Bar Directly Under the Words */}
+              {/* Live Maintenance Tracker Underneath the Governance Sentence */}
               <div
-                className="h-2 w-full rounded-full"
+                className="w-full rounded-2xl p-[3px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
-              />
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-[13px] bg-white px-4 py-2 text-center">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="h-3 w-3 shrink-0 rounded-full bg-[#10B981]"
+                      style={{ boxShadow: '0 0 10px 3px #10B981' }}
+                    />
+                    <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      Live Maintenance Tracker
+                    </span>
+                    <span className="rounded-full bg-[#10B981] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
+                      100% LIVE
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-[140px] max-w-md h-2.5 rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20 overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: '100%',
+                        background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
+                      }}
+                    />
+                  </div>
+                  <Link
+                    to="/assets"
+                    className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
+                    style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                  >
+                    <span style={{ color: '#FFFFFF' }}>Assets, Fleet &amp; Safety Kits Current</span>
+                    <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
 

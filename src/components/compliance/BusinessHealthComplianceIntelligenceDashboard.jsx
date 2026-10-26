@@ -790,81 +790,102 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   </div>
 
                   <div className="w-full space-y-1.5">
-                    {/* 50% Smaller Selected Pillar Title Above Selected Pillar */}
+                    {/* 3 Words Fitted Cleanly on Two Lines at the Top of Selected Pillar */}
                     <div
-                      className="w-full rounded-full p-[3.5px] shadow-2xs"
+                      className="w-full rounded-2xl p-[3.5px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="gradient-brand flex min-h-[26px] items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-white"
+                        className="gradient-brand flex flex-col items-center justify-center gap-0.5 rounded-[12px] px-2.5 py-1 text-center text-white"
                         style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                       >
-                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
-                          <SelectedIcon className="h-2.5 w-2.5 text-[#5A00D6]" />
-                        </span>
+                        <div className="flex items-center justify-center gap-1">
+                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
+                            <SelectedIcon className="h-2.5 w-2.5 text-[#5A00D6]" />
+                          </span>
+                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-white leading-tight" style={{ color: '#FFFFFF' }}>
+                            SELECTED · {selectedDomain.shortName}
+                          </span>
+                        </div>
                         <span className="text-[9.5px] font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
-                          SELECTED · {selectedDomain.shortName} ({selectedDomain.score}%)
+                          {selectedDomain.score}% Audit Ready
                         </span>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Side Tile 1: Thicker App-Design Border & Pure White Behind Words */}
+                    {/* Topic Tile Section With Writing — Keeps the Governance Sentence */}
                     <div
                       className="w-full rounded-xl p-[4px] shadow-2xs"
                       style={{ background: getHeaderView(3) }}
                     >
-                      <div className="rounded-[8px] bg-white px-2 py-1 text-center space-y-0.5">
-                        <div className="inline-flex items-center justify-center gap-1 text-[8.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                          <SelectedIcon className="h-2.5 w-2.5 text-[#0072FF]" />
-                          <span>{selectedDomain.shortName} · {selectedDomain.metricLabel}</span>
+                      <div className="rounded-[8px] bg-white px-2.5 py-1.5 text-center space-y-1">
+                        <div className="leading-tight">
+                          <span className="block text-[8.5px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                            {selectedDomain.shortName} Topic
+                          </span>
+                          <span
+                            className="block text-[10.5px] font-extrabold bg-clip-text text-transparent leading-tight"
+                            style={{ backgroundImage: getTitleGradientView(1) }}
+                          >
+                            {selectedDomain.metricValue}
+                          </span>
                         </div>
-                        <div
-                          className="text-[11px] font-extrabold bg-clip-text text-transparent leading-tight"
-                          style={{ backgroundImage: getTitleGradientView(1) }}
-                        >
-                          {selectedDomain.metricValue}
-                        </div>
-                        <p className="text-[9.5px] font-extrabold text-[#0072FF] leading-tight">
-                          {selectedDomain.detail}
+                        <p className="text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
+                          {selectedDomain.ActionItems[0]}
                         </p>
                       </div>
                     </div>
 
-                    {/* 50% Smaller Side Tiles List: Thicker App-Design Borders & Pure White Behind Words */}
-                    <div className="space-y-1 text-center">
-                      <div
-                        className="w-full rounded-full p-[3px]"
-                        style={{ background: getHeaderView(4) }}
-                      >
-                        <div className="rounded-full bg-white py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                          Verified 2026 {selectedDomain.shortName} Controls
+                    {/* Live Maintenance Tracker Underneath the Governance Sentence */}
+                    <div
+                      className="w-full rounded-xl p-[4px] shadow-2xs"
+                      style={{ background: getHeaderView(5) }}
+                    >
+                      <div className="rounded-[8px] bg-white px-2.5 py-1.5 text-center space-y-1">
+                        <div className="flex items-center justify-center gap-1.5">
+                          <span
+                            className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#10B981]"
+                            style={{ boxShadow: '0 0 8px 2px #10B981' }}
+                          />
+                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                            Live Maintenance Tracker
+                          </span>
+                          <span className="rounded-full bg-[#10B981] px-1.5 py-0 text-[7.5px] font-extrabold text-white">
+                            LIVE
+                          </span>
+                        </div>
+
+                        <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: '100%',
+                              background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
+                            }}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-1 text-[8px] font-extrabold">
+                          <Link
+                            to="/assets"
+                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#0072FF]"
+                          >
+                            Assets: 100%
+                          </Link>
+                          <Link
+                            to="/emergency-response"
+                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#5A00D6]"
+                          >
+                            Drills: {liveCounts.drills} Live
+                          </Link>
+                          <Link
+                            to="/risks"
+                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#FF2E9A]"
+                          >
+                            Risks: {liveCounts.risks} Safe
+                          </Link>
                         </div>
                       </div>
-                      {selectedDomain.ActionItems.map((item, aIdx) => {
-                        const aSym = getSymbolView(aIdx + 1);
-                        return (
-                          <div
-                            key={item}
-                            className="rounded-xl p-[3.5px]"
-                            style={{ background: getHeaderView(aIdx + 4) }}
-                          >
-                            <div
-                              className="flex items-center justify-center gap-1 rounded-[8px] bg-white px-2 py-1 text-center text-[9px] font-extrabold leading-tight"
-                              style={{ color: aSym.iconColor }}
-                            >
-                              <span
-                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                                style={{ borderColor: getAppBorderView(aIdx + 1) }}
-                              >
-                                <SelectedIcon className="h-2.5 w-2.5" style={{ color: aSym.iconColor }} />
-                              </span>
-                              <span className="text-center" style={{ color: aSym.iconColor }}>
-                                {item}
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })}
                     </div>
                   </div>
 
