@@ -59,15 +59,15 @@ export default function LandingFooter() {
       <div className="w-full rounded-3xl border-3 border-[#0A2B6D] bg-white p-5 sm:p-6 shadow-2xl space-y-5">
         {/* Footer Brand & Bottom Controls Matching Top Header Layout */}
         <div
-          className="rounded-3xl p-[7px] shadow-md"
+          className="rounded-3xl p-[12px] shadow-lg"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex flex-col items-center justify-center gap-4 rounded-[18px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center">
-            {/* Centred Logo (1.5x Larger, No Border) + Slightly Larger Centred App Name + Slogan Underneath with Clear Spacing */}
-            <Link to="/" className="flex w-full flex-col items-center justify-center gap-3.5 text-center">
+          <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center">
+            {/* Centred Logo (1.5x Larger, No Border) + Centred App Name + Centred Slogan Underneath with Clear Spacing */}
+            <Link to="/" className="mx-auto flex w-full flex-col items-center justify-center gap-3.5 text-center">
               <div className="mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
                 <Image
                   src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
@@ -77,79 +77,81 @@ export default function LandingFooter() {
                 />
               </div>
 
-              <span className="mx-auto bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
-                Compliance
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
+              <div className="mx-auto flex w-full items-center justify-center bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#0A2B6D] leading-tight">
+                <span className="text-center">
+                  Compliance
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
                 </span>
-              </span>
+              </div>
 
-              <div className="mx-auto bg-white px-2 text-center text-xs sm:text-sm font-extrabold tracking-wide">
-                <span className="text-[#0072FF]">Complete Control.</span>{' '}
-                <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+              <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-1.5 bg-white px-2 text-center text-xs sm:text-sm font-extrabold">
+                <span className="text-[#0072FF]">Complete Control.</span>
+                <span className="text-[#5A00D6]">Greater Confidence.</span>
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
               </div>
             </Link>
 
-            {/* NDIS & Aged care Documentation & Compliance Placed Just Above Open, Landing and Signed In (Just Smaller) */}
-            <div className="flex w-full flex-col items-center justify-center gap-2.5 pt-1">
+            {/* NDIS & Aged care Documentation & Compliance Placed Just Above Slightly Increased & Centred Open, Landing and Signed In */}
+            <div className="mx-auto flex w-full flex-col items-center justify-center gap-3 pt-1 text-center">
               <span
-                className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+                className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
                 style={{
                   background:
                     'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
                 }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                  <ShieldCheck className="h-3 w-3 text-[#FF2E9A]" />
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
                 </span>
-                <span>NDIS &amp; Aged care Documentation &amp; Compliance</span>
+                <span className="text-center">NDIS &amp; Aged care Documentation &amp; Compliance</span>
               </span>
 
-              <div className="grid w-full max-w-lg grid-cols-1 sm:grid-cols-3 items-stretch justify-center gap-2">
+              <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
                 <Link
                   to="/dashboard"
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                    <Sparkles className="h-2.5 w-2.5 text-[#0072FF]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
                   </span>
-                  <span className="whitespace-nowrap">Open App Dashboard</span>
+                  <span className="whitespace-nowrap text-center">Open App Dashboard</span>
                 </Link>
 
                 <Link
                   to="/"
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <ShieldCheck className="h-2.5 w-2.5 text-[#5A00D6]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
                   </span>
-                  <span className="whitespace-nowrap">Landing Page</span>
+                  <span className="whitespace-nowrap text-center">Landing Page</span>
                 </Link>
 
                 <Link
                   to="/dashboard"
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                    <Award className="h-2.5 w-2.5 text-[#A100FF]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                    <Award className="h-3.5 w-3.5 text-[#A100FF]" />
                   </span>
-                  <span className="whitespace-nowrap">Signed In</span>
+                  <span className="whitespace-nowrap text-center">Signed In</span>
                 </Link>
               </div>
             </div>

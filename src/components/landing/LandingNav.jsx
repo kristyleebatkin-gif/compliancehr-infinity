@@ -49,15 +49,15 @@ export default function LandingNav() {
     >
       {/* Clean white outer area with 0.5cm side spacing — colour strictly inside borders */}
       <div className="w-full bg-white px-[0.5cm] py-2 space-y-2">
-        {/* Top Section with Doubled App-Coloured Border Thickness */}
+        {/* Top Section with Increased App-Coloured Border Thickness */}
         <div
-          className="rounded-3xl p-[7px] shadow-md"
+          className="rounded-3xl p-[12px] shadow-lg"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
           }}
         >
-          <div className="relative flex flex-col items-center justify-center gap-4 rounded-[18px] bg-white px-4 py-4 sm:px-6 sm:py-5">
+          <div className="relative flex w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center">
             {/* Mobile menu toggle in top-right corner */}
             <button
               onClick={() => setOpen((v) => !v)}
@@ -67,10 +67,10 @@ export default function LandingNav() {
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
 
-            {/* Centred Logo (1.5x Larger, No Border) + Slightly Larger Centred App Name + Slogan Underneath with Clear Spacing */}
+            {/* Centred Logo (1.5x Larger, No Border) + Centred App Name + Centred Slogan Underneath with Clear Spacing */}
             <Link
               to="/"
-              className="flex w-full flex-col items-center justify-center gap-3.5 bg-white text-center"
+              className="mx-auto flex w-full flex-col items-center justify-center gap-3.5 bg-white text-center"
             >
               {/* One Large Logo Above App Name (1.5x Size, No Border) */}
               <div className="mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center bg-white">
@@ -82,83 +82,85 @@ export default function LandingNav() {
                 />
               </div>
 
-              {/* Centred App Name (Slightly Increased Size, No Border) */}
-              <span className="mx-auto bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wide text-[#0A2B6D] leading-tight whitespace-nowrap">
-                Compliance
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
+              {/* Centred App Name */}
+              <div className="mx-auto flex w-full items-center justify-center bg-white px-2 text-center font-editorial text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#0A2B6D] leading-tight">
+                <span className="text-center">
+                  Compliance
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
                 </span>
-              </span>
+              </div>
 
-              {/* Slogan Directly Under App Name */}
-              <div className="mx-auto bg-white px-2 text-center text-xs sm:text-sm md:text-base font-extrabold tracking-wide">
-                <span className="text-[#0072FF]">Complete Control.</span>{' '}
-                <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
+              {/* Centred Slogan Directly Under App Name */}
+              <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-x-1.5 bg-white px-2 text-center text-xs sm:text-sm md:text-base font-extrabold">
+                <span className="text-[#0072FF]">Complete Control.</span>
+                <span className="text-[#5A00D6]">Greater Confidence.</span>
                 <span className="text-[#FF2E9A]">Brighter Success.</span>
               </div>
             </Link>
 
-            {/* Bottom Section: NDIS & Aged care Documentation & Compliance + Open, Landing and Signed In Just Smaller */}
-            <div className="flex w-full flex-col items-center justify-center gap-2.5 pt-1">
+            {/* Bottom Section: Centred NDIS Badge + Slightly Increased & Centred Open, Landing, and Sign In Icons */}
+            <div className="mx-auto flex w-full flex-col items-center justify-center gap-3 pt-1 text-center">
               {/* NDIS & Aged care Documentation & Compliance Badge */}
               <span
-                className="inline-flex h-9 items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
+                className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
                 style={{
                   background:
                     'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
                 }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                  <ShieldCheck className="h-3 w-3 text-[#FF2E9A]" />
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#FF2E9A]" />
                 </span>
-                <span>NDIS &amp; Aged care Documentation &amp; Compliance</span>
+                <span className="text-center">NDIS &amp; Aged care Documentation &amp; Compliance</span>
               </span>
 
-              {/* Open, Landing, and Signed In Icons — Just Smaller Than NDIS & Aged care Documentation & Compliance */}
-              <div className="grid w-full max-w-lg grid-cols-1 sm:grid-cols-3 items-stretch justify-center gap-2">
+              {/* Slightly Increased & Centred Open, Landing, and Signed In Icons */}
+              <div className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-3 items-center justify-center gap-2.5">
                 <Link
                   to="/dashboard"
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                    <Sparkles className="h-2.5 w-2.5 text-[#0072FF]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
                   </span>
-                  <span className="whitespace-nowrap">Open App Dashboard</span>
+                  <span className="whitespace-nowrap text-center">Open App Dashboard</span>
                 </Link>
 
                 <Link
                   to="/"
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <Compass className="h-2.5 w-2.5 text-[#5A00D6]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
+                    <Compass className="h-3.5 w-3.5 text-[#5A00D6]" />
                   </span>
-                  <span className="whitespace-nowrap">Landing Page</span>
+                  <span className="whitespace-nowrap text-center">Landing Page</span>
                 </Link>
 
                 <Link
                   to={authed ? '/dashboard' : '/login'}
-                  className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 text-[10.5px] sm:text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                  className="mx-auto inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
                   style={{
                     background:
                       'linear-gradient(120deg, #0072FF 0%, #A100FF 48%, #FF2E9A 82%, #00C6FF 100%)',
                   }}
                 >
-                  <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
-                    <UserCheck className="h-2.5 w-2.5 text-[#A100FF]" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#A100FF]">
+                    <UserCheck className="h-3.5 w-3.5 text-[#A100FF]" />
                   </span>
-                  <span className="whitespace-nowrap">{authed ? 'Signed In' : 'Sign In'}</span>
+                  <span className="whitespace-nowrap text-center">{authed ? 'Signed In' : 'Sign In'}</span>
                 </Link>
               </div>
             </div>
