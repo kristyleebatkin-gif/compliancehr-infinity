@@ -47,20 +47,20 @@ export default function QuickAppBar() {
         }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-4 sm:px-5 sm:py-5 text-center space-y-3.5">
-          {/* Enlarged Full-Width Stretched Instant Workspace Navigation (Live Modules) Header */}
+          {/* Enlarged Full-Width Stretched Instant Workspace Navigation (Live Modules) Header on One Line */}
           <div
-            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl border-2 border-[#0A2B6D] px-6 py-2.5 text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-white shadow-sm"
+            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl border-2 border-[#0A2B6D] px-4 sm:px-6 py-2.5 text-xs sm:text-base md:text-lg font-extrabold tracking-wide text-white shadow-sm"
             style={{ background: getHeaderView(1) }}
           >
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Compass className="h-4 w-4 text-white" />
             </span>
-            <span className="text-center">
+            <span className="whitespace-nowrap text-center">
               Quick App Bar — Instant Workspace Navigation (Live Modules)
             </span>
           </div>
 
-          {/* White Background Panel + Well-Shaped Rounded Card Tiles with App-Coloured Borders, App-Colour Symbols & Dark Purple Writing */}
+          {/* White Background + Modular Tiles in App Colour (Different Views), White Writing & One-Line Fit */}
           <div className="grid w-full grid-cols-2 gap-2.5 rounded-2xl bg-white p-1 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
@@ -71,22 +71,22 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex h-full min-h-[46px] items-center gap-2 rounded-xl border-2 bg-white px-3 py-2 text-[11px] font-extrabold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
-                    active ? 'ring-2 ring-[#5A00D6]' : ''
+                  className={`flex h-full min-h-[44px] items-center gap-1.5 rounded-xl border-2 px-2.5 py-1.5 text-[10px] sm:text-[10.5px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                    active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
                   style={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#5A00D6',
+                    background: getHeaderView(idx),
+                    color: '#FFFFFF',
                     borderColor: borderCol,
                   }}
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-2 bg-white shadow-2xs"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border bg-white shadow-2xs"
                     style={{ borderColor: borderCol }}
                   >
-                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight text-[#5A00D6]">
+                  <span className="min-w-0 flex-1 whitespace-nowrap overflow-hidden text-ellipsis text-left leading-tight text-white">
                     {item.label}
                   </span>
                 </Link>

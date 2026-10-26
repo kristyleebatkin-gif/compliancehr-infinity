@@ -1,65 +1,120 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Sparkles, Layers } from 'lucide-react';
+import { Home, Sparkles, Layers, CheckCircle2 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
+import { getHeaderView, getAppBorderView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-function IpadModuleScreenCard({ item, idx }) {
-  const Icon = item.icon;
-  const sym = getSymbolView(idx);
-  const borderCol = getAppBorderView(idx);
+// Split a module blurb into 2–3 concise list items so it displays in list order inside the iPad screen
+function getModuleBulletPoints(item) {
+  const raw = String(item.blurb || '')
+    .split(/[,.;]+|\s+and\s+|\s+with\s+/i)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 2);
+
+  if (raw.length >= 2) {
+    return raw.slice(0, 3).map((line) => line.charAt(0).toUpperCase() + line.slice(1));
+  }
+  return [
+    item.blurb || `${item.label} workspace`,
+    'Live compliance & audit ready',
+  ];
+}
+
+// Three siren-like dome lights on top of the iPad border (Green, Orange, Red slowly changing colours)
+function ThreeSirenLights({ size = 'sm' }) {
+  const domeClass =
+    size === 'lg'
+      ? 'h-4 w-5 rounded-t-full border-2 border-[#0A2B6D]'
+      : 'h-3 w-4 rounded-t-full border border-white/90';
 
   return (
-    <Link
-      to={item.path}
-      title={item.blurb}
-      className="group relative flex w-[230px] sm:w-[250px] shrink-0 flex-col justify-between rounded-[22px] border-[3px] bg-[#0A2B6D] p-2 shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl"
-      style={{ borderColor: borderCol }}
-    >
-      {/* Top iPad Camera Dot & Status Bar */}
-      <div className="mb-1 flex items-center justify-between px-2">
-        <span className="text-[8px] font-extrabold uppercase tracking-wider text-white/80">
-          iPad Live View
-        </span>
-        <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-        <span className="text-[8px] font-extrabold text-white/80">100%</span>
+    <div className="flex items-end justify-center gap-2" aria-hidden="true">
+      <div className="flex flex-col items-center">
+        <span className={`${domeClass} chr-siren-light-1`} />
+        <span className="h-1 w-5 rounded-full bg-[#0A2B6D]" />
       </div>
+      <div className="flex flex-col items-center">
+        <span className={`${domeClass} chr-siren-light-2`} />
+        <span className="h-1 w-5 rounded-full bg-[#0A2B6D]" />
+      </div>
+      <div className="flex flex-col items-center">
+        <span className={`${domeClass} chr-siren-light-3`} />
+        <span className="h-1 w-5 rounded-full bg-[#0A2B6D]" />
+      </div>
+    </div>
+  );
+}
 
-      {/* Inner iPad Display Screen */}
-      <div
-        className="flex flex-1 flex-col justify-between rounded-[14px] border-2 bg-white p-2.5 text-left space-y-2"
+function IpadModuleScreenCard({ item, idx }) {
+  const Icon = item.icon;
+  const borderCol = getAppBorderView(idx);
+  const bullets = getModuleBulletPoints(item);
+
+  return (
+    <div className="flex flex-col items-center pt-1">
+      {/* Three Siren-Like Lights Positioned on Top of Each iPad Border */}
+      <ThreeSirenLights size="sm" />
+
+      <Link
+        to={item.path}
+        title={item.blurb}
+        className="group relative flex w-[285px] sm:w-[310px] min-h-[192px] shrink-0 flex-col justify-between rounded-[24px] border-[3px] bg-[#0A2B6D] p-2.5 shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl"
         style={{ borderColor: borderCol }}
       >
-        {/* Module Title with White Background & App-Coloured Border */}
-        <div
-          className="flex items-center gap-2 rounded-xl border-2 bg-white px-2.5 py-1.5 shadow-2xs"
-          style={{ borderColor: borderCol }}
-        >
-          <span
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white"
-            style={{ borderColor: borderCol }}
-          >
-            <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+        {/* Top iPad Bezel Camera & Status Bar */}
+        <div className="mb-1.5 flex items-center justify-between px-2">
+          <span className="text-[9px] font-extrabold uppercase tracking-wider text-white/85">
+            iPad Live View
           </span>
-          <span className="min-w-0 flex-1 whitespace-normal break-words text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
-            {item.label}
-          </span>
+          <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+          <span className="text-[9px] font-extrabold text-white/85">LIVE</span>
         </div>
 
-        {/* Short Description Inside the iPad Screen */}
-        <p className="line-clamp-2 text-[10px] font-bold leading-snug text-[#0072FF]">
-          {item.blurb}
-        </p>
-      </div>
+        {/* Inner iPad Display Screen */}
+        <div
+          className="flex flex-1 flex-col justify-between rounded-[16px] border-2 bg-white p-3 text-left space-y-2.5"
+          style={{ borderColor: borderCol }}
+        >
+          {/* Different App-Colour Heading with White Writing & White Symbol */}
+          <div
+            className="flex items-center gap-2 rounded-xl border-2 border-[#0A2B6D] px-3 py-1.5 text-white shadow-2xs"
+            style={{ background: getHeaderView(idx) }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Icon className="h-3.5 w-3.5 text-white" />
+            </span>
+            <span className="min-w-0 flex-1 whitespace-normal break-words text-xs font-extrabold leading-tight text-white">
+              {item.label}
+            </span>
+          </div>
 
-      {/* Bottom iPad Home Indicator Bar */}
-      <div className="mt-1.5 flex justify-center">
-        <span className="h-1 w-10 rounded-full bg-white/75" />
-      </div>
-    </Link>
+          {/* Works on iPad in List Order with App-Design-Colour Symbol at Front & Dark Purple Writing */}
+          <ul className="flex flex-1 flex-col justify-center space-y-1.5">
+            {bullets.map((point, bIdx) => (
+              <li key={bIdx} className="flex items-start gap-2 text-[11px] font-extrabold leading-snug text-[#5A00D6]">
+                <span
+                  className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
+                  style={{ background: getHeaderView(idx + bIdx) }}
+                >
+                  <CheckCircle2 className="h-2.5 w-2.5 text-white" />
+                </span>
+                <span className="min-w-0 flex-1 whitespace-normal break-words text-[#5A00D6]">
+                  {point}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Bottom iPad Home Indicator Bar */}
+        <div className="mt-2 flex justify-center">
+          <span className="h-1 w-12 rounded-full bg-white/80" />
+        </div>
+      </Link>
+    </div>
   );
 }
 
@@ -77,83 +132,145 @@ export default function ModuleChipStrip() {
       label: 'Dashboard',
       path: '/dashboard',
       icon: Sparkles,
-      blurb: 'Open ComplianceHR Infinity Executive & Role-Based Dashboard.',
+      blurb: 'Executive oversight, role-based workspaces, and live compliance metrics.',
     },
     {
       key: 'landing-page-bottom-right',
       label: 'Landing Page',
       path: '/',
       icon: Home,
-      blurb: 'Main ComplianceHR Infinity Overview, Audits & Pricing Hub.',
+      blurb: 'Main ComplianceHR Infinity overview, express audits, and pricing hub.',
     },
   ];
 
-  // Split into 2 rows of iPad screens that slowly glide from left to right
-  const half = Math.ceil(fullGridItems.length / 2);
-  const row1 = fullGridItems.slice(0, half);
-  const row2 = fullGridItems.slice(half);
+  // Split into 3 rows of live iPads
+  const third = Math.ceil(fullGridItems.length / 3);
+  const row1 = fullGridItems.slice(0, third);
+  const row2 = fullGridItems.slice(third, third * 2);
+  const row3 = fullGridItems.slice(third * 2);
 
   return (
-    <div
-      className="w-full rounded-3xl p-[12px] shadow-lg"
-      style={{ background: TOP_BORDER_GRADIENT }}
-    >
-      <style>{`
-        @keyframes chr-ipad-left-to-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0%); }
-        }
-        .chr-ipad-marquee-ltr {
-          display: flex;
-          width: max-content;
-          animation: chr-ipad-left-to-right 85s linear infinite;
-        }
-        .chr-ipad-marquee-ltr-slow {
-          display: flex;
-          width: max-content;
-          animation: chr-ipad-left-to-right 95s linear infinite;
-        }
-        .chr-ipad-marquee-ltr:hover,
-        .chr-ipad-marquee-ltr-slow:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+    <div className="w-full pt-2">
+      {/* Three Siren-Like Lights on Top of the Main iPad Section Border */}
+      <div className="mb-1 flex justify-center">
+        <ThreeSirenLights size="lg" />
+      </div>
 
-      <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-4 sm:px-5 sm:py-5 text-center space-y-4 overflow-hidden">
-        {/* Stretched Full-Width Header: ComplianceHR infinity App Modules (Live) */}
-        <div
-          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(3) }}
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Layers className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">ComplianceHR infinity App Modules (Live)</span>
-        </div>
+      <div
+        className="w-full rounded-3xl p-[12px] shadow-lg"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <style>{`
+          @keyframes chr-ipad-left-to-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+          }
+          @keyframes chr-siren-cycle {
+            0%, 100% {
+              background-color: #10B981;
+              box-shadow: 0 0 10px 2px rgba(16, 185, 129, 0.85);
+            }
+            33% {
+              background-color: #F97316;
+              box-shadow: 0 0 10px 2px rgba(249, 115, 22, 0.85);
+            }
+            66% {
+              background-color: #EF4444;
+              box-shadow: 0 0 10px 2px rgba(239, 68, 68, 0.85);
+            }
+          }
+          .chr-siren-light-1 {
+            animation: chr-siren-cycle 6s ease-in-out infinite;
+          }
+          .chr-siren-light-2 {
+            animation: chr-siren-cycle 6s ease-in-out infinite 2s;
+          }
+          .chr-siren-light-3 {
+            animation: chr-siren-cycle 6s ease-in-out infinite 4s;
+          }
+          .chr-ipad-row-1 {
+            display: flex;
+            width: max-content;
+            animation: chr-ipad-left-to-right 75s linear infinite;
+          }
+          .chr-ipad-row-2 {
+            display: flex;
+            width: max-content;
+            animation: chr-ipad-left-to-right 85s linear infinite;
+          }
+          .chr-ipad-row-3 {
+            display: flex;
+            width: max-content;
+            animation: chr-ipad-left-to-right 95s linear infinite;
+          }
+          .chr-ipad-row-1:hover,
+          .chr-ipad-row-2:hover,
+          .chr-ipad-row-3:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
 
-        {/* Row 1 of iPad Screens Slowly Gliding from Left to Right */}
-        <div className="w-full overflow-hidden py-1">
-          <div className="chr-ipad-marquee-ltr gap-3">
-            {[...row1, ...row1].map((item, idx) => (
-              <IpadModuleScreenCard
-                key={`r1-${item.key}-${idx}`}
-                item={item}
-                idx={idx % row1.length}
-              />
-            ))}
+        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-4 sm:px-5 sm:py-5 text-center space-y-4 overflow-hidden">
+          {/* Top Header in Border (Like Above): All ComplianceHR modules are Live, Effortless and Simple. */}
+          <div
+            className="w-full rounded-2xl border-2 border-[#0A2B6D] p-2.5 shadow-sm"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-3 text-center">
+              <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-[#0A2B6D]">
+                All ComplianceHR modules are Live, Effortless and Simple.
+              </h2>
+            </div>
           </div>
-        </div>
 
-        {/* Row 2 of iPad Screens Slowly Gliding from Left to Right */}
-        <div className="w-full overflow-hidden py-1">
-          <div className="chr-ipad-marquee-ltr-slow gap-3">
-            {[...row2, ...row2].map((item, idx) => (
-              <IpadModuleScreenCard
-                key={`r2-${item.key}-${idx}`}
-                item={item}
-                idx={(idx % row2.length) + 3}
-              />
-            ))}
+          {/* Stretched Full-Width Header: ComplianceHR infinity App Modules (Live) */}
+          <div
+            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
+            style={{ background: getHeaderView(3) }}
+          >
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Layers className="h-3.5 w-3.5 text-white" />
+            </span>
+            <span className="text-center">ComplianceHR infinity App Modules (Live)</span>
+          </div>
+
+          {/* Row 1 of Live iPads */}
+          <div className="w-full overflow-hidden py-1">
+            <div className="chr-ipad-row-1 gap-3.5">
+              {[...row1, ...row1].map((item, idx) => (
+                <IpadModuleScreenCard
+                  key={`r1-${item.key}-${idx}`}
+                  item={item}
+                  idx={idx % row1.length}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2 of Live iPads */}
+          <div className="w-full overflow-hidden py-1">
+            <div className="chr-ipad-row-2 gap-3.5">
+              {[...row2, ...row2].map((item, idx) => (
+                <IpadModuleScreenCard
+                  key={`r2-${item.key}-${idx}`}
+                  item={item}
+                  idx={(idx % row2.length) + 2}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Row 3 of Live iPads */}
+          <div className="w-full overflow-hidden py-1">
+            <div className="chr-ipad-row-3 gap-3.5">
+              {[...row3, ...row3].map((item, idx) => (
+                <IpadModuleScreenCard
+                  key={`r3-${item.key}-${idx}`}
+                  item={item}
+                  idx={(idx % row3.length) + 5}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

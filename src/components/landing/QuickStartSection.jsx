@@ -3,7 +3,6 @@ import { Bell, Compass, LayoutDashboard, ShieldCheck, Workflow } from 'lucide-re
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
-  getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 
@@ -41,21 +40,16 @@ export default function QuickStartSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Centred Heading in an App-Coloured Border: "Start using ComplianceHR in four simple and effortless steps" */}
+        {/* Heading with App Design Colour Between Outer Border & Inner Writing Border, All Dark Blue Writing */}
         <div
-          className="w-full rounded-2xl border-2 bg-white px-4 py-3.5 text-center shadow-2xs"
-          style={{ borderColor: '#5A00D6' }}
+          className="w-full rounded-2xl border-2 border-[#0A2B6D] p-2.5 shadow-sm"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-            <span className="text-[#0A2B6D]">Start using </span>
-            <span className="text-[#0A2B6D]">Compliance</span>
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              HR
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-              in four simple and effortless steps
-            </span>
-          </h2>
+          <div className="w-full rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-3 text-center">
+            <h2 className="mx-auto text-center font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-[#0A2B6D]">
+              Start using ComplianceHR in four simple and effortless steps
+            </h2>
+          </div>
         </div>
 
         {/* Stretched Side-to-Side "Our Quick 4 Step Start Guide" Directly Above the Tiles */}
@@ -69,11 +63,10 @@ export default function QuickStartSection() {
           <span className="text-center">Our Quick 4 Step Start Guide</span>
         </div>
 
-        {/* 4 Step Tiles: Light Pink Background, App-Coloured Borders, App-Colour Symbols & Step Badges, Information in a Border & Centred Writing */}
+        {/* 4 Step Tiles: App Design Colour Between Outer Border & Inner Writing Border, White Symbols & Steps, All Dark Blue Writing */}
         <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
-            const sym = getSymbolView(index + 1);
             const borderCol = getAppBorderView(index + 1);
             return (
               <Reveal
@@ -82,30 +75,21 @@ export default function QuickStartSection() {
                 delay={index * 0.06}
                 className="group flex h-full flex-col items-center justify-between rounded-2xl border-[3px] p-3.5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                 style={{
-                  backgroundColor: '#FF85E0',
+                  background: getHeaderView(index),
                   borderColor: borderCol,
                 }}
               >
-                {/* Top Row: App-Coloured Symbol & App-Coloured Step Pill */}
+                {/* Top Row: White Symbol & White Step Pill */}
                 <div className="mb-3 flex w-full items-center justify-center gap-2.5">
-                  <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
-                    style={{ borderColor: borderCol }}
-                  >
-                    <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-sm">
+                    <Icon className="h-5 w-5 text-white" />
                   </span>
-                  <span
-                    className="rounded-full border-2 bg-white px-3.5 py-1 font-editorial text-xs font-extrabold shadow-2xs"
-                    style={{
-                      color: sym.iconColor,
-                      borderColor: borderCol,
-                    }}
-                  >
+                  <span className="rounded-full border-2 border-white bg-white/20 px-3.5 py-1 font-editorial text-xs font-extrabold text-white shadow-2xs">
                     Step 0{index + 1}
                   </span>
                 </div>
 
-                {/* Information Inside a Bordered Box with Centred Writing */}
+                {/* Information Inside a White Bordered Box with All Dark Blue Writing */}
                 <div
                   className="flex w-full flex-1 flex-col items-center justify-center rounded-xl border-2 bg-white px-3.5 py-3 text-center shadow-2xs"
                   style={{ borderColor: borderCol }}
@@ -113,7 +97,7 @@ export default function QuickStartSection() {
                   <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-center text-[#0A2B6D]">
                     {step.title}
                   </h3>
-                  <p className="mt-1.5 text-xs font-bold leading-relaxed text-center text-[#5A00D6]">
+                  <p className="mt-1.5 text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
                     {step.text}
                   </p>
                 </div>

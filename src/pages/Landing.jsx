@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
-import QuickStartSection from '@/components/landing/QuickStartSection';
 import ModuleChipStrip from '@/components/landing/ModuleChipStrip';
+import QuickStartSection from '@/components/landing/QuickStartSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
 import ExpressAuditSection from '@/components/landing/ExpressAuditSection';
 import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
@@ -22,15 +22,15 @@ export default function Landing() {
       <LandingNav />
 
       <main className="relative z-10 w-full bg-white px-[0.5cm] py-2 space-y-4 pb-8">
-        {/* 1. Hero — Styled with Top Section Template */}
+        {/* 1. Hero — Compliance Management, Simplified End to End */}
         <LandingHero />
 
         <div className="w-full space-y-4">
-          {/* 2. Our Quick 4 Step Start Guide */}
-          <QuickStartSection />
-
-          {/* 3. ComplianceHR infinity App Modules (Live) — Moved Under Our Quick Start */}
+          {/* 2. Live iPads — Moved Underneath Compliance Simplified */}
           <ModuleChipStrip />
+
+          {/* 3. Our Quick 4 Step Start Guide */}
+          <QuickStartSection />
 
           {/* 4. An Impossible Standard, Achieved Effortlessly */}
           <FeaturesSection />
