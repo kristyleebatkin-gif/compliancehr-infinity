@@ -681,7 +681,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
       {/* ==================== TAB 1: INFINITY CONTROL CENTRE — ALL TILES WITH APP DESIGN COLOURS IN DIFFERENT VIEWS, SPRAY PINK/BLUE/PURPLE BACKGROUND & UNIFORM BORDERS ==================== */}
       {activeTab === 'control-centre' && (
         <div className="p-2 space-y-3.5 bg-white text-center">
-          {/* 12 Live Operational Register Telemetry Tiles */}
+          {/* 12 Live Operational Register Telemetry Tiles — App Design Coloured Borders Around All Work Areas, Tiles & Symbols */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 items-stretch">
             {[
               { label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
@@ -696,33 +696,63 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               { label: 'Leave Requests', value: counts.leaveRequests, route: '/hr', sub: 'Roster Integrated' },
               { label: 'Quality CAPA Items', value: counts.qualityItems, route: '/quality', sub: 'Continuous Improvement' },
               { label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
-            ].map((m, idx) => (
-              <div
-                key={m.label}
-                className="flex h-full rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: getHeaderView(idx) }}
-              >
-                <Link
-                  to={m.route}
-                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[13px] p-3 text-center"
-                  style={{
-                    background:
-                      'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                  }}
+            ].map((m, idx) => {
+              const sym = getSymbolView(idx);
+              return (
+                <div
+                  key={m.label}
+                  className="flex h-full rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ background: getHeaderView(idx) }}
                 >
-                  <div className="w-full rounded-xl border border-[#0A2B6D]/20 bg-white px-2 py-1 text-center">
-                    <span
-                      className="text-[10px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
-                      style={{ backgroundImage: getTitleGradientView(idx) }}
+                  <Link
+                    to={m.route}
+                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-2.5 text-center"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+                    }}
+                  >
+                    {/* Symbol Inside App Design Coloured Border */}
+                    <div
+                      className="rounded-full p-[2px] shadow-2xs"
+                      style={{ background: getHeaderView(idx) }}
                     >
-                      {m.label}
-                    </span>
-                  </div>
-                  <div className="font-editorial text-lg font-extrabold text-[#0A2B6D]">{m.value}</div>
-                  <div className="text-[10px] font-extrabold text-[#5A00D6] leading-tight">{m.sub}</div>
-                </Link>
-              </div>
-            ))}
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+                        <ShieldCheck className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                      </span>
+                    </div>
+
+                    {/* Label & Value Inside App Design Coloured Border */}
+                    <div
+                      className="w-full rounded-xl p-[2px]"
+                      style={{ background: getHeaderView(idx + 1) }}
+                    >
+                      <div className="flex h-[56px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
+                        <span
+                          className="text-[9.5px] font-extrabold uppercase tracking-wider bg-clip-text text-transparent leading-tight"
+                          style={{ backgroundImage: getTitleGradientView(idx) }}
+                        >
+                          {m.label}
+                        </span>
+                        <div className="font-editorial text-lg font-extrabold leading-tight text-[#0A2B6D]">
+                          {m.value}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Sub-Label Inside App Design Coloured Border */}
+                    <div
+                      className="w-full rounded-xl p-[2px]"
+                      style={{ background: getHeaderView(idx + 2) }}
+                    >
+                      <div className="flex h-[32px] items-center justify-center rounded-[9px] bg-white px-2 py-0.5 text-center text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
+                        {m.sub}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
 
           {/* Central Management Approval Queue + Role & Access Governance — Uniform App Design Borders & Spray Background */}
