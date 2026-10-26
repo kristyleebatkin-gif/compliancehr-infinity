@@ -172,14 +172,14 @@ export default function LandingFooter() {
             </span>
           </span>
 
-          {/* Software & Developer Cards Stretched Side-to-Side — White Writing Background */}
-          <div className="grid w-full grid-cols-1 gap-1.5 sm:grid-cols-2 items-stretch text-center">
+          {/* Minimised Software & Lead Developer Cards Stretched Side-to-Side — White Writing Background */}
+          <div className="grid w-full grid-cols-1 gap-1 sm:grid-cols-2 items-stretch text-center">
             {[
               {
                 num: '01',
                 icon: Cpu,
                 title: '01 · Software Platform',
-                text: 'ComplianceHR Infinity — NDIS & Aged Care Compliance Super-Platform (46 Connected Modules & 356 Audit Checkpoints)',
+                text: 'ComplianceHR Infinity — NDIS & Aged Care Compliance Super-Platform',
                 headerBg: getHeaderView(0),
                 symColor: getSymbolView(0).iconColor,
               },
@@ -197,39 +197,39 @@ export default function LandingFooter() {
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                  className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
                   style={{ background: getHeaderView(idx) }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
+                    className="grid h-full w-full grid-cols-1 grid-rows-[16px_20px] gap-0.5 rounded-[7px] p-0.5 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
-                    {/* App-Design Coloured Pill Title With Coloured Symbol */}
+                    {/* Minimised App-Design Coloured Pill Title */}
                     <div
-                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      className="gradient-brand flex h-[16px] w-full items-center justify-center gap-1 rounded-full border border-white px-1.5 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                       style={{ background: box.headerBg, color: '#FFFFFF' }}
                     >
-                      <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-2 w-2" style={{ color: box.symColor }} />
+                      <span className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-1.5 w-1.5" style={{ color: box.symColor }} />
                       </span>
                       <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
-                    {/* Clean White Inner Writing Box Framed in App-Design Border With Dark Blue Writing */}
+                    {/* Minimised Clean White Inner Writing Box */}
                     <div
-                      className="w-full flex-1 rounded-lg p-[1.5px]"
+                      className="w-full rounded p-[1px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-full min-h-[24px] w-full items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
+                      <div className="flex h-[18px] w-full items-center justify-center rounded-[3px] bg-white px-1.5 py-0 text-center">
                         {box.href ? (
                           <a
                             href={box.href}
-                            className="text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D] underline"
+                            className="truncate text-center text-[8px] sm:text-[8.5px] font-extrabold leading-none text-[#0A2B6D] underline"
                           >
                             {box.text}
                           </a>
                         ) : (
-                          <p className="text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D]">
+                          <p className="truncate text-center text-[8px] sm:text-[8.5px] font-extrabold leading-none text-[#0A2B6D]">
                             {box.text}
                           </p>
                         )}

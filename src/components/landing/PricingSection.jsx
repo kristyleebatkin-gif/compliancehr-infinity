@@ -199,25 +199,33 @@ export default function PricingSection() {
           className="w-full rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-4 py-2.5 sm:px-6 sm:py-3 text-center space-y-1.5">
-            {/* Smart Enhanced Sentence on One Single Line */}
-            <h2 className="font-editorial text-sm sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight leading-snug text-center whitespace-nowrap">
-              <span className="text-[#0A2B6D]">Smart Enhanced </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                All-In-One Elite Packages
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                &amp; Master Audit Suite
+          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-3 py-2 sm:px-5 sm:py-2.5 text-center space-y-1.5">
+            {/* Smart Enhanced Sentence on 2 Balanced Lines */}
+            <h2 className="font-editorial text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight text-center">
+              <span className="block">
+                <span className="text-[#0A2B6D]">Smart Enhanced </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  All-In-One
+                </span>
+              </span>
+              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                Elite Packages &amp; Master Audit Suite
               </span>
             </h2>
 
-            {/* Writing Underneath With Border & Spray Colour Removed */}
-            <p className="mx-auto text-center text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug text-[#0A2B6D] bg-white">
+            {/* Dark Writing Reduced to Exactly Four Lines */}
+            <p className="mx-auto text-center text-[8.5px] sm:text-[9.5px] font-extrabold leading-snug text-[#0A2B6D] bg-white">
               <span className="block text-[#0A2B6D]">
-                Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ documents tailored to Business Details (WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery,
+                Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ tailored Business Details documents:
               </span>
               <span className="block text-[#0A2B6D]">
-                Infection Control, Continuity, Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans), 1,200 Message + 50,000 Integration Credits, support &amp; $160/mo Elite Tokens.
+                WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control &amp; Continuity,
+              </span>
+              <span className="block text-[#0A2B6D]">
+                Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans,
+              </span>
+              <span className="block text-[#0A2B6D]">
+                plus 1,200 Message Credits, 50,000 Integration Credits, dedicated support &amp; $160/mo Elite Tokens.
               </span>
             </p>
           </div>

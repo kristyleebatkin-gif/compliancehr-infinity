@@ -879,11 +879,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         </div>
       </div>
 
-      {/* 5. Core Engines — Normal Clean Border With Spray Between Outer Border & Inner Writing Borders */}
+      {/* 5. Core Engines — Normal Clean Border With Clean White Background */}
       <div
         id="infinity-core-engine"
-        className="w-full scroll-mt-16 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:p-3 shadow-sm"
-        style={{ background: SPRAY_BGS[0] }}
+        className="w-full scroll-mt-16 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 sm:p-3 shadow-sm"
       >
         <InfinityCoreEngine />
       </div>

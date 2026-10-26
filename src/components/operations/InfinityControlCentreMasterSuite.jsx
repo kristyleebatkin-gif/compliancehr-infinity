@@ -546,11 +546,11 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </span>
           </p>
 
-          {/* Compact Refresh & Export Tiles Spanning the Exact Same Width Together as the 1-Line 17 Categories Bar Below */}
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-2">
-            <div className="grid w-full grid-cols-2 gap-2">
+          {/* Minimised Refresh, Export & 17 Categories Tiles Spanning the Same Compact Width */}
+          <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-1">
+            <div className="grid w-full grid-cols-2 gap-1">
               <div
-                className="rounded-full p-[2px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{
                   background:
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -560,16 +560,16 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                   type="button"
                   onClick={loadLiveTelemetry}
                   disabled={loading}
-                  className="gradient-brand flex h-[32px] w-full items-center justify-center gap-1.5 rounded-full px-3 text-[11px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
                   style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                 >
-                  <RefreshCw className={`h-3 w-3 shrink-0 text-white ${loading ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                  <RefreshCw className={`h-2.5 w-2.5 shrink-0 text-white ${loading ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>Refresh Live Telemetry</span>
                 </button>
               </div>
 
               <div
-                className="rounded-full p-[2px] shadow-2xs"
+                className="rounded-full p-[1.5px] shadow-2xs"
                 style={{
                   background:
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -598,28 +598,28 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                       all356Checkpoints
                     )
                   }
-                  className="gradient-brand flex h-[32px] w-full items-center justify-center gap-1.5 rounded-full px-3 text-[11px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
+                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
                   style={{ background: getHeaderView(4), color: '#FFFFFF' }}
                 >
-                  <Download className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <Download className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>Export 356 Checkpoints (Excel/CSV)</span>
                 </button>
               </div>
             </div>
 
-            {/* Reduced 1-Line 17 Categories Tile Matching the Exact Combined Width Above */}
+            {/* Minimised 1-Line 17 Categories Tile Matching the Exact Combined Width Above */}
             <div
-              className="w-full rounded-full p-[2px] shadow-2xs"
+              className="w-full rounded-full p-[1.5px] shadow-2xs"
               style={{
                 background:
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
               }}
             >
               <div
-                className="gradient-brand flex h-[32px] w-full items-center justify-center gap-2 rounded-full px-4 text-[10.5px] sm:text-xs font-extrabold tracking-wide text-white whitespace-nowrap"
+                className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 text-[8.5px] sm:text-[9px] font-extrabold tracking-wide text-white whitespace-nowrap"
                 style={{ background: getHeaderView(6), color: '#FFFFFF' }}
               >
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <ShieldCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>
                   17 Categories · 356 Checkpoints · 98 Controlled Docs · 31 Dev Register Items
                 </span>

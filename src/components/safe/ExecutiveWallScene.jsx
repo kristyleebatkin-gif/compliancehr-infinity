@@ -144,29 +144,28 @@ function TodaysRosterPictureCard() {
 
   return (
     <WallHangingPictureFrame title="2. Today's Overview & Flat Screen Live Roster" className="h-full">
-      <div className="flex h-full flex-col items-center justify-between gap-1.5 bg-white">
+      <div className="flex h-full flex-col items-center justify-start gap-0.5 bg-white">
         <div className="w-full">
           <RosterMiniOverview />
         </div>
 
-        {/* Overhead Spotlights Shining Down Onto Flat Screen Roster */}
-        <div className="flex w-full items-center justify-around px-4">
+        {/* Overhead Spotlights Shining Down Flush Onto Flat Screen Roster (Minimal Gap) */}
+        <div className="flex w-full items-center justify-around px-4 leading-none">
           {[0, 1, 2].map((sp) => (
-            <div key={sp} className="flex flex-col items-center">
-              <span
-                className="h-2.5 w-5 rounded-b-full border border-white bg-white"
-                style={{
-                  boxShadow:
-                    '0 0 12px 4px #FFFFFF, 0 6px 16px 4px rgba(0, 198, 255, 0.75)',
-                }}
-              />
-            </div>
+            <span
+              key={sp}
+              className="h-1.5 w-4 rounded-b-full border border-white bg-white"
+              style={{
+                boxShadow:
+                  '0 0 8px 2px #FFFFFF, 0 3px 8px 2px rgba(0, 198, 255, 0.7)',
+              }}
+            />
           ))}
         </div>
 
-        {/* Flat Screen Monitor Frame Holding the Roster With Dark Blue Writing */}
+        {/* Flat Screen Monitor Frame Holding the Roster Directly Below Today's Roster */}
         <div
-          className="flex w-full flex-1 flex-col justify-between rounded-2xl border-[3px] border-[#00C6FF] bg-[#0A2B6D] p-2 shadow-lg"
+          className="flex w-full flex-col justify-between rounded-2xl border-[3px] border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-lg"
           style={{
             boxShadow:
               '0 0 16px 3px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(10, 43, 109, 0.3)',
@@ -714,84 +713,92 @@ export default function ExecutiveWallScene({
 
   return (
     <div className="relative overflow-hidden rounded-xl bg-white p-1.5 sm:p-2 space-y-2">
-      {/* 50% Smaller Dual Executive Office Header + Mode Tiles */}
+      {/* Top Section: Logo on One Side on Left · Dual Executive Header & Sign, Office, Both & Roster Tabs on Right Section */}
       <div
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[9px] bg-white p-2 text-center space-y-1.5">
-          <div
-            className="w-full rounded-full p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div
-              className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-xs font-extrabold tracking-wide text-white"
-              style={{ background: getHeaderView(7), color: '#FFFFFF' }}
-            >
-              <span
-                className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white"
-                style={{ borderColor: getAppBorderView(7) }}
-              >
-                <Building2 className="h-2.5 w-2.5" style={{ color: getSymbolView(7).iconColor }} />
-              </span>
-              <span style={{ color: '#FFFFFF' }}>
-                {companyName} · Dual Executive Office &amp; Profile Workspace (50% Compact)
-              </span>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch rounded-[9px] bg-white p-2">
+          {/* Left Side: Fixed Logo & Brand Slogan */}
+          <div className="sm:col-span-4 lg:col-span-3 flex flex-col">
+            <ComplianceHrPhotoFrame logoUrl={frameSrc} />
           </div>
 
-          <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1.5">
-            {LAYOUT_CHOICES.map((choice, idx) => {
-              const Icon = choice.icon;
-              const active = viewMode === choice.id;
-              const sym = getSymbolView(idx);
-              return (
-                <div
-                  key={choice.id}
-                  className="rounded-full p-[2px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => selectMode(choice.id)}
-                    className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all ${
-                      active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
-                    }`}
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                  >
-                    <span
-                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                      style={{ borderColor: getAppBorderView(idx) }}
-                    >
-                      <Icon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
-                    </span>
-                    <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
-                      {choice.label}
-                    </span>
-                  </button>
-                </div>
-              );
-            })}
-
+          {/* Right Section: Dual Executive Office Banner + Sign, Office, Both & Roster Tabs */}
+          <div className="sm:col-span-8 lg:col-span-9 flex flex-col justify-center gap-2 rounded-xl border border-[#0A2B6D]/20 bg-white p-2 text-center">
             <div
-              className="rounded-full p-[2px] shadow-2xs"
+              className="w-full rounded-full p-[2px] shadow-2xs"
               style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <Link
-                to="/login"
-                className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
-                style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+              <div
+                className="gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] sm:text-[11px] font-extrabold tracking-wide text-white"
+                style={{ background: getHeaderView(7), color: '#FFFFFF' }}
               >
                 <span
                   className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
-                  style={{ borderColor: getAppBorderView(3) }}
+                  style={{ borderColor: getAppBorderView(7) }}
                 >
-                  <LogIn className="h-2.5 w-2.5" style={{ color: getSymbolView(3).iconColor }} />
+                  <Building2 className="h-2.5 w-2.5" style={{ color: getSymbolView(7).iconColor }} />
                 </span>
-                <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
-                  Sign In
+                <span style={{ color: '#FFFFFF' }}>
+                  {companyName} · Dual Executive Office &amp; Profile Workspace
                 </span>
-              </Link>
+              </div>
+            </div>
+
+            <div className="grid w-full grid-cols-2 gap-1.5">
+              {LAYOUT_CHOICES.map((choice, idx) => {
+                const Icon = choice.icon;
+                const active = viewMode === choice.id;
+                const sym = getSymbolView(idx);
+                return (
+                  <div
+                    key={choice.id}
+                    className="rounded-full p-[1.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => selectMode(choice.id)}
+                      className={`gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all ${
+                        active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
+                      }`}
+                      style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                    >
+                      <span
+                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                        style={{ borderColor: getAppBorderView(idx) }}
+                      >
+                        <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
+                      </span>
+                      <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                        {choice.label}
+                      </span>
+                    </button>
+                  </div>
+                );
+              })}
+
+              <div
+                className="rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <Link
+                  to="/login"
+                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all hover:opacity-95"
+                  style={{ background: getHeaderView(3), color: '#FFFFFF' }}
+                >
+                  <span
+                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
+                    style={{ borderColor: getAppBorderView(3) }}
+                  >
+                    <LogIn className="h-2 w-2" style={{ color: getSymbolView(3).iconColor }} />
+                  </span>
+                  <span className="truncate text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                    Sign In
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -803,15 +810,12 @@ export default function ExecutiveWallScene({
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="rounded-[9px] bg-white p-2 space-y-2">
-          {/* Top Row: (1) Fixed Logo + (2) Today's Overview + (3/4) iPad + Red Letterbox + Mini Communication Board */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
-            <div className="lg:col-span-3 flex flex-col">
-              <ComplianceHrPhotoFrame logoUrl={frameSrc} />
-            </div>
-            <div className="lg:col-span-4 flex flex-col">
+          {/* Top Row: (2) Today's Overview & Flat Screen Live Roster + (3/4) Mini Comms Above Red Letterbox & Mini Communication Centre */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch">
+            <div className="md:col-span-5 flex flex-col">
               <TodaysRosterPictureCard />
             </div>
-            <div className="lg:col-span-5 flex flex-col">
+            <div className="md:col-span-7 flex flex-col">
               <CommunicationAndMailboxTabs />
             </div>
           </div>

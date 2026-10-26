@@ -363,123 +363,124 @@ export default function InfinityCoreEngine({ compact = false }) {
       id="infinity-core-engine"
       className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3.5 text-center"
     >
-      {/* Normal Clean Border Around Core Engine Header */}
+      {/* Fixed Core Engine Header — 2 Balanced Title Lines + Minimised Badges & Action Buttons */}
       <div
-        className="w-full rounded-2xl p-[2px] shadow-2xs"
+        className="w-full rounded-2xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="flex flex-col items-center justify-center rounded-[14px] bg-white p-2.5 sm:p-3 text-center space-y-2">
-          <div className="w-full rounded-xl bg-white px-3 py-1 text-center space-y-1">
-            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight tracking-tight">
-              <span className="bg-gradient-to-r from-[#00C6FF] via-[#0072FF] to-[#5A00D6] bg-clip-text text-transparent">
-                Infinity{' '}
+        <div className="flex flex-col items-center justify-center rounded-[13px] bg-white px-3 py-2 sm:px-5 sm:py-2.5 text-center space-y-1.5">
+          <div className="w-full rounded-xl bg-white px-2 py-0.5 text-center space-y-0.5">
+            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-center">
+              <span className="block">
+                <span className="text-[#0A2B6D]">Infinity </span>
+                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Core Engine
+                </span>
               </span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                Core Engine
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                — AI Automation &amp; Real-Time Validation
+              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                AI Automation &amp; Real-Time Validation
               </span>
             </h2>
 
-            <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+            <p className="mx-auto max-w-3xl text-center text-[10px] sm:text-xs font-extrabold text-[#0A2B6D]">
               Complete Control. Greater Confidence. Brighter Success.
             </p>
           </div>
 
-          {/* Minimised Core Engine Tile Fitted on One Line */}
-          <div
-            className="mx-auto rounded-full p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <span
-              className="gradient-brand inline-flex h-[32px] items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[10.5px] sm:text-xs font-extrabold tracking-wide text-white whitespace-nowrap"
-              style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+          {/* Minimised Core Engine Telemetry Bar & 3 Action Tiles */}
+          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-1">
+            <div
+              className="w-full rounded-full p-[1.5px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
             >
-              <Cpu className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>
-                Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}
+              <span
+                className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1.5 rounded-full px-3 text-[8.5px] sm:text-[9.5px] font-extrabold tracking-wide text-white whitespace-nowrap"
+                style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+              >
+                <Cpu className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>
+                  Infinity Core Engine · 104 Functions · 65 Workflows · Last Sweep {lastSweepAt}
+                </span>
               </span>
-            </span>
-          </div>
-
-          {/* Three Action Tiles Underneath — Responsive & Fitted Without Truncation */}
-          <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2">
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={handleRunCoreSweep}
-                disabled={sweeping}
-                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
-                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-              >
-                <RefreshCw className={`h-3.5 w-3.5 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>
-                  {sweeping ? 'Sweeping…' : 'Run Core Engine Sweep'}
-                </span>
-              </button>
             </div>
 
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={handleLogDiagnosticTask}
-                disabled={creatingTask}
-                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+            <div className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1">
+              <div
+                className="rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <ClipboardCheck className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>
-                  {creatingTask ? 'Logging…' : '1-Click Log Audit Task'}
-                </span>
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={handleRunCoreSweep}
+                  disabled={sweeping}
+                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <RefreshCw className={`h-2.5 w-2.5 shrink-0 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>
+                    {sweeping ? 'Sweeping…' : 'Run Core Engine Sweep'}
+                  </span>
+                </button>
+              </div>
 
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={handleExportPdf}
-                className="gradient-brand flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white transition-all hover:opacity-95"
-                style={{ background: getHeaderView(6), color: '#FFFFFF' }}
+              <div
+                className="rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <Download className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>
-                  Export Core Engine A4 PDF
-                </span>
-              </button>
+                <button
+                  type="button"
+                  onClick={handleLogDiagnosticTask}
+                  disabled={creatingTask}
+                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 disabled:opacity-60 whitespace-nowrap"
+                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                >
+                  <ClipboardCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>
+                    {creatingTask ? 'Logging…' : '1-Click Log Audit Task'}
+                  </span>
+                </button>
+              </div>
+
+              <div
+                className="rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <button
+                  type="button"
+                  onClick={handleExportPdf}
+                  className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-[8.5px] sm:text-[9px] font-extrabold text-white transition-all hover:opacity-95 whitespace-nowrap"
+                  style={{ background: getHeaderView(6), color: '#FFFFFF' }}
+                >
+                  <Download className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>
+                    Export Core Engine A4 PDF
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-1 space-y-3.5">
+      <div className="bg-white p-0.5 space-y-2">
         {statusBanner && (
-          <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D]">
+          <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
               {statusBanner}
             </span>
             <button
               type="button"
               onClick={() => setStatusBanner('')}
-              className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+              className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]"
             >
               Dismiss
             </button>
           </div>
         )}
 
-        {/* Top Live Telemetry Strip — Reduced by 50% With Dark Blue Writing */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
+        {/* Top Live Telemetry Strip — Smaller & Lined Up in Sections With Pure White Background Around Tiles */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1 bg-white">
           {[
             { category: 'Edge Compute', label: 'Server Functions', value: '104', sub: 'Deno Edge Endpoints', icon: Cpu },
             { category: 'Automation', label: '24/7 Workflows', value: '65', sub: 'Event & Cron Triggers', icon: Zap },
@@ -494,41 +495,35 @@ export default function InfinityCoreEngine({ compact = false }) {
             return (
               <div
                 key={stat.label}
-                className="flex h-full rounded-xl p-[2px] shadow-2xs"
-                style={{
-                  background: TOP_BORDER_GRADIENT,
-                  boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.95)',
-                }}
+                className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
-                  style={{ background: UNIFORM_SPRAY_BG }}
-                >
+                <div className="grid h-full w-full grid-cols-1 grid-rows-[16px_38px] gap-0.5 rounded-[7px] bg-white p-0.5 text-center">
                   <div
-                    className="gradient-brand flex h-[18px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-white"
+                    className="gradient-brand flex h-[16px] w-full items-center justify-center gap-0.5 rounded-full px-1 text-white"
                     style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                   >
                     <span
                       className="h-1.5 w-1.5 shrink-0 rounded-full bg-white"
-                      style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
+                      style={{ boxShadow: '0 0 4px 1px #FFFFFF' }}
                     />
-                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                    <span className="truncate text-[7px] font-extrabold uppercase text-white" style={{ color: '#FFFFFF' }}>
+                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="truncate text-[6.5px] font-extrabold uppercase text-white" style={{ color: '#FFFFFF' }}>
                       {stat.category}
                     </span>
                   </div>
                   <div
-                    className="w-full flex-1 rounded-lg p-[1.5px]"
+                    className="w-full rounded p-[1px]"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex h-full flex-col items-center justify-center rounded-[5px] bg-white px-1 py-0.5 text-center">
-                      <span className="block text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
+                    <div className="flex h-full flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0 text-center">
+                      <span className="block truncate text-[6.5px] font-extrabold uppercase text-[#0A2B6D] leading-tight">
                         {stat.label}
                       </span>
-                      <div className="font-editorial text-xs font-extrabold leading-none text-[#0A2B6D]">
+                      <div className="font-editorial text-[10.5px] font-extrabold leading-none text-[#0A2B6D]">
                         {stat.value}
                       </div>
-                      <div className="text-[7px] font-extrabold text-[#0A2B6D]">
+                      <div className="truncate text-[6px] font-extrabold text-[#0A2B6D] leading-tight">
                         {stat.sub}
                       </div>
                     </div>
@@ -539,58 +534,55 @@ export default function InfinityCoreEngine({ compact = false }) {
           })}
         </div>
 
-        {/* Search Bar Surrounded by Vibrant App-Design Colours + App-Coloured Core Engine Switcher Headers */}
+        {/* Search Bar & Core Engine Switcher Tiles — Colour Removed From Around Search and Tiles (Pure White Background) */}
         <div
-          className="rounded-2xl p-[4px] shadow-md"
+          className="rounded-xl p-[2px] shadow-2xs"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div
-            className="flex flex-col items-center justify-center gap-2.5 rounded-[13px] p-3"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            {/* Search Bar Surrounded by App-Design Gradient Frame */}
+          <div className="flex flex-col items-center justify-center gap-1.5 rounded-[10px] bg-white p-2">
+            {/* Search Bar Inside Clean Border on Pure White Background */}
             <div
-              className="w-full rounded-full border-2 border-white p-[3px] shadow-sm"
-              style={{ background: getHeaderView(4) }}
+              className="w-full rounded-full p-[1.5px] shadow-2xs"
+              style={{ background: TOP_BORDER_GRADIENT }}
             >
               <div className="relative flex w-full items-center rounded-full bg-white">
-                <Search className="pointer-events-none absolute left-4 h-4 w-4 text-[#5A00D6]" />
+                <Search className="pointer-events-none absolute left-3 h-3.5 w-3.5 text-[#5A00D6]" />
                 <input
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search functions, workflows, validation gates & smart-fill engines…"
-                  className="h-9 w-full rounded-full bg-white pl-10 pr-4 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6] focus:outline-none"
+                  className="h-7 w-full rounded-full bg-white pl-8 pr-3 text-center text-[10px] sm:text-xs font-extrabold text-[#0A2B6D] placeholder:text-[#5A00D6] focus:outline-none"
                 />
               </div>
             </div>
 
-            {/* All 3 Core Engines Switcher Tiles in App-Design Colours */}
-            <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1.5 items-stretch">
+            {/* Smaller Core Engine Switcher Tiles on Pure White Background */}
+            <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1 bg-white items-stretch">
               {PILLAR_TABS.map((tab, idx) => {
                 const Icon = tab.icon;
                 const active = activePillar === tab.id;
                 return (
                   <div
                     key={tab.id}
-                    className={`flex h-full rounded-xl border border-white p-[2px] shadow-2xs transition-all ${
-                      active ? 'ring-2 ring-white scale-[1.01]' : ''
+                    className={`flex h-full rounded-full p-[1.5px] shadow-2xs transition-all ${
+                      active ? 'ring-2 ring-[#0A2B6D]' : ''
                     }`}
-                    style={{ background: getHeaderView(idx) }}
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <button
                       type="button"
                       onClick={() => setActivePillar(tab.id)}
-                      className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-[9px] px-2 py-1 text-center text-[10px] font-extrabold text-white transition-all"
+                      className="gradient-brand flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 text-center text-[8.5px] font-extrabold text-white transition-all whitespace-nowrap"
                       style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                     >
                       <span
-                        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
+                        className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full border bg-white"
                         style={{ borderColor: getAppBorderView(idx) }}
                       >
-                        <Icon className="h-2.5 w-2.5" style={{ color: getSymbolView(idx).iconColor }} />
+                        <Icon className="h-2 w-2" style={{ color: getSymbolView(idx).iconColor }} />
                       </span>
-                      <span className="leading-tight text-center text-white" style={{ color: '#FFFFFF' }}>
+                      <span className="truncate leading-none text-center text-white" style={{ color: '#FFFFFF' }}>
                         {tab.label}
                       </span>
                     </button>
@@ -601,78 +593,75 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         </div>
 
-        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — ONE-LINE HEADER & WHITE WRITING BOXES ==================== */}
+        {/* ==================== PILLAR 1: AI & AUTOMATION COMMAND HUB — SMALLER TILES LINED UP IN SECTIONS ON PURE WHITE ==================== */}
         {(activePillar === 'all' || activePillar === 'automation') && (
           <div
-            className="rounded-2xl p-[2px] shadow-2xs"
+            className="rounded-xl p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[12px] bg-white p-1.5 space-y-1.5">
+            <div className="rounded-[10px] bg-white p-1.5 space-y-1">
               <div
                 className="w-full rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
+                  className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
-                  <Zap className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span className="truncate text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                    SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB · 104 Server Functions &amp; 65 Live Workflows · Zero-Touch Pipelines
+                  <Zap className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="text-[8px] sm:text-[9.5px] font-extrabold uppercase tracking-wide text-white leading-tight" style={{ color: '#FFFFFF' }}>
+                    SUB-ENGINE 1 · AI &amp; AUTOMATION COMMAND HUB · 104 FUNCTIONS &amp; 65 LIVE WORKFLOWS
                   </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 bg-white items-stretch">
                 {(compact ? filteredPipelines.slice(0, 6) : filteredPipelines).map((pipe, pIdx) => (
                   <div
                     key={pipe.code}
-                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                    className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
-                        <div
-                          className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
-                          style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                        >
-                          <span className="truncate" style={{ color: '#FFFFFF' }}>{pipe.code}</span>
-                          <span className="rounded-full bg-white px-1 py-0 text-[6px] font-extrabold text-[#0A2B6D]">
-                            {pipe.status}
-                          </span>
-                        </div>
+                    <div className="grid h-full w-full grid-cols-1 grid-rows-[16px_24px_28px_16px] gap-0.5 rounded-[6px] bg-white p-1 text-center">
+                      {/* Section 1: Code & Status Header */}
+                      <div
+                        className="gradient-brand flex h-[16px] w-full items-center justify-between gap-1 rounded px-1 text-[6.5px] font-extrabold text-white"
+                        style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
+                      >
+                        <span className="truncate" style={{ color: '#FFFFFF' }}>{pipe.code}</span>
+                        <span className="rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold text-[#0A2B6D]">
+                          {pipe.status}
+                        </span>
+                      </div>
 
-                        <div
-                          className="w-full rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {pipe.title}
-                          </div>
-                        </div>
-
-                        <div
-                          className="flex flex-1 rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] bg-white p-1 text-center">
-                            <div className="text-[7px] font-extrabold text-[#0A2B6D] leading-tight line-clamp-2">
-                              {pipe.action}
-                            </div>
-                          </div>
+                      {/* Section 2: Lined-Up Title Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {pipe.title}
                         </div>
                       </div>
 
-                      <div className="flex h-[18px] w-full items-center justify-between gap-1">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]">
+                      {/* Section 3: Lined-Up Action Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[6.5px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {pipe.action}
+                        </div>
+                      </div>
+
+                      {/* Section 4: Lined-Up Function & Open Bar */}
+                      <div className="flex h-[16px] w-full items-center justify-between gap-0.5">
+                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6px] font-extrabold text-[#0A2B6D]">
                           {pipe.functionName}
                         </span>
                         <Link
                           to={pipe.path}
-                          className="gradient-brand inline-flex h-[16px] items-center justify-center gap-0.5 rounded-full px-1.5 text-[6.5px] font-extrabold text-white"
+                          className="gradient-brand inline-flex h-[15px] shrink-0 items-center justify-center rounded-full px-1.5 text-[6px] font-extrabold text-white"
                           style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>Open</span>
@@ -686,78 +675,78 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* ==================== PILLAR 2: REAL-TIME VALIDATION ENGINE — ONE-LINE HEADER & WHITE WRITING BOXES ==================== */}
+        {/* ==================== PILLAR 2: REAL-TIME VALIDATION ENGINE — "6 LIVE" TOGETHER ON BOTTOM LINE WITH VALIDATION + SMALLER LINED-UP TILES ==================== */}
         {(activePillar === 'all' || activePillar === 'validation') && (
           <div
-            className="rounded-2xl p-[2px] shadow-2xs"
+            className="rounded-xl p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[12px] bg-white p-1.5 space-y-1.5">
+            <div className="rounded-[10px] bg-white p-1.5 space-y-1">
               <div
-                className="w-full rounded-full p-[1.5px] shadow-2xs"
+                className="w-full rounded-xl p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
+                  className="gradient-brand flex flex-col items-center justify-center rounded-[10px] px-2.5 py-0.5 text-center text-white leading-tight"
                   style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                 >
-                  <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span className="truncate text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                    SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER VALIDATION ENGINE · 6 Live Validation Gates
+                  <span className="inline-flex items-center gap-1 text-[8px] sm:text-[9px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+                    <ShieldCheck className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <span style={{ color: '#FFFFFF' }}>SUB-ENGINE 2 · REAL-TIME COMPLIANCE, RISK &amp; ROSTER</span>
+                  </span>
+                  <span className="text-[8px] sm:text-[9px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+                    VALIDATION ENGINE · 6 LIVE VALIDATION GATES
                   </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 bg-white items-stretch">
                 {validationGates.map((gate, gIdx) => (
                   <div
                     key={gate.code}
-                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                    className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
-                        <div
-                          className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
-                          style={{ background: getHeaderView(gIdx + 1), color: '#FFFFFF' }}
-                        >
-                          <span className="truncate" style={{ color: '#FFFFFF' }}>{gate.code}</span>
-                          <span className="rounded-full bg-white px-1 py-0 text-[6px] font-extrabold text-[#0A2B6D]">
-                            {gate.badge}
-                          </span>
-                        </div>
+                    <div className="grid h-full w-full grid-cols-1 grid-rows-[16px_24px_28px_16px] gap-0.5 rounded-[6px] bg-white p-1 text-center">
+                      {/* Section 1: Code & Badge Header */}
+                      <div
+                        className="gradient-brand flex h-[16px] w-full items-center justify-between gap-1 rounded px-1 text-[6.5px] font-extrabold text-white"
+                        style={{ background: getHeaderView(gIdx + 1), color: '#FFFFFF' }}
+                      >
+                        <span className="truncate" style={{ color: '#FFFFFF' }}>{gate.code}</span>
+                        <span className="rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold text-[#0A2B6D]">
+                          {gate.badge}
+                        </span>
+                      </div>
 
-                        <div
-                          className="w-full rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {gate.name}
-                          </div>
-                        </div>
-
-                        <div
-                          className="flex flex-1 rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex w-full items-center justify-center rounded-[3px] bg-white p-1 text-center">
-                            <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
-                              {gate.ruleSummary}
-                            </p>
-                          </div>
+                      {/* Section 2: Lined-Up Gate Title Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {gate.name}
                         </div>
                       </div>
 
-                      <div className="flex h-[18px] w-full items-center justify-between">
-                        <span className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]">
+                      {/* Section 3: Lined-Up Rule Summary Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[6.5px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {gate.ruleSummary}
+                        </div>
+                      </div>
+
+                      {/* Section 4: Lined-Up Gate Active & Open Bar */}
+                      <div className="flex h-[16px] w-full items-center justify-between gap-0.5">
+                        <span className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 text-[6px] font-extrabold text-[#0A2B6D]">
                           <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" /> Gate Active
                         </span>
                         <Link
                           to={gate.path}
-                          className="gradient-brand inline-flex h-[16px] items-center justify-center gap-0.5 rounded-full px-1.5 text-[6.5px] font-extrabold text-white"
+                          className="gradient-brand inline-flex h-[15px] shrink-0 items-center justify-center rounded-full px-1.5 text-[6px] font-extrabold text-white"
                           style={{ background: getHeaderView(gIdx + 2), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>Open</span>
@@ -771,78 +760,75 @@ export default function InfinityCoreEngine({ compact = false }) {
           </div>
         )}
 
-        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — ONE-LINE HEADER & WHITE WRITING BOXES ==================== */}
+        {/* ==================== PILLAR 3: SMART-FILL DOCUMENT, AUDIT & PREDICTIVE ALERT ENGINE — SMALLER TILES LINED UP IN SECTIONS ==================== */}
         {(activePillar === 'all' || activePillar === 'smartfill') && (
           <div
-            className="rounded-2xl p-[2px] shadow-2xs"
+            className="rounded-xl p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="rounded-[12px] bg-white p-1.5 space-y-1.5">
+            <div className="rounded-[10px] bg-white p-1.5 space-y-1">
               <div
                 className="w-full rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[24px] w-full flex-nowrap items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-center text-white whitespace-nowrap overflow-hidden"
+                  className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-center text-white"
                   style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                 >
-                  <Sparkles className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span className="truncate text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
+                  <Sparkles className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                  <span className="text-[8px] sm:text-[9.5px] font-extrabold uppercase tracking-wide text-white leading-tight" style={{ color: '#FFFFFF' }}>
                     SUB-ENGINE 3 · SMART-FILL DOCUMENT, AUDIT &amp; PREDICTIVE ALERT ENGINE · 100+ DOCS
                   </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 bg-white items-stretch">
                 {SMART_FILL_ENGINES.map((eng, eIdx) => (
                   <div
                     key={eng.code}
-                    className="flex h-full rounded-xl p-[2px] shadow-2xs"
+                    className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col items-center justify-between rounded-[9px] p-1 text-center space-y-1"
-                      style={{ background: UNIFORM_SPRAY_BG }}
-                    >
-                      <div className="flex w-full flex-1 flex-col justify-between space-y-1">
-                        <div
-                          className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded px-1.5 text-[7px] font-extrabold text-white"
-                          style={{ background: getHeaderView(eIdx + 2), color: '#FFFFFF' }}
-                        >
-                          <span className="truncate" style={{ color: '#FFFFFF' }}>{eng.code}</span>
-                          <span className="rounded-full bg-white px-1 py-0 text-[6px] font-extrabold text-[#0A2B6D]">
-                            {eng.badge}
-                          </span>
-                        </div>
+                    <div className="grid h-full w-full grid-cols-1 grid-rows-[16px_24px_28px_16px] gap-0.5 rounded-[6px] bg-white p-1 text-center">
+                      {/* Section 1: Code & Badge Header */}
+                      <div
+                        className="gradient-brand flex h-[16px] w-full items-center justify-between gap-1 rounded px-1 text-[6.5px] font-extrabold text-white"
+                        style={{ background: getHeaderView(eIdx + 2), color: '#FFFFFF' }}
+                      >
+                        <span className="truncate" style={{ color: '#FFFFFF' }}>{eng.code}</span>
+                        <span className="rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold text-[#0A2B6D]">
+                          {eng.badge}
+                        </span>
+                      </div>
 
-                        <div
-                          className="w-full rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex min-h-[22px] items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center text-[8px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {eng.title}
-                          </div>
-                        </div>
-
-                        <div
-                          className="flex flex-1 rounded p-[1px]"
-                          style={{ background: TOP_BORDER_GRADIENT }}
-                        >
-                          <div className="flex w-full flex-col items-center justify-center gap-0.5 rounded-[3px] bg-white p-1 text-center">
-                            <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
-                              {eng.output}
-                            </p>
-                          </div>
+                      {/* Section 2: Lined-Up Engine Title Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {eng.title}
                         </div>
                       </div>
 
-                      <div className="flex h-[18px] w-full items-center justify-between gap-1">
-                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6.5px] font-extrabold text-[#0A2B6D]">
+                      {/* Section 3: Lined-Up Output Box */}
+                      <div
+                        className="w-full rounded p-[1px]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex h-full items-center justify-center rounded-[3px] bg-white px-1 text-center text-[6.5px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
+                          {eng.output}
+                        </div>
+                      </div>
+
+                      {/* Section 4: Lined-Up Function Label & Open Bar */}
+                      <div className="flex h-[16px] w-full items-center justify-between gap-0.5">
+                        <span className="truncate rounded-full border border-[#0A2B6D]/25 bg-white px-1 py-0 font-mono text-[6px] font-extrabold text-[#0A2B6D]">
                           {eng.fnLabel}
                         </span>
                         <Link
                           to={eng.link}
-                          className="gradient-brand inline-flex h-[16px] items-center justify-center gap-0.5 rounded-full px-1.5 text-[6.5px] font-extrabold text-white"
+                          className="gradient-brand inline-flex h-[15px] shrink-0 items-center justify-center rounded-full px-1.5 text-[6px] font-extrabold text-white"
                           style={{ background: getHeaderView(eIdx + 3), color: '#FFFFFF' }}
                         >
                           <span style={{ color: '#FFFFFF' }}>Open</span>
