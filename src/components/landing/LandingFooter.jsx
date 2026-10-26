@@ -128,99 +128,89 @@ export default function LandingFooter() {
         </div>
       </div>
 
-      {/* 2. Contact Us Section Reduced by 50% in Size, With Thicker App-Design Coloured Borders & Pure White Behind Writing */}
+      {/* 2. Smaller Software & Developer Section Infused With Rich App-Design Colours */}
       <div
-        className="mx-auto max-w-3xl rounded-2xl p-[6px] shadow-md"
+        className="mx-auto max-w-xl rounded-2xl p-[5px] shadow-md"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[12px] bg-white p-2 sm:p-3 space-y-2 text-center">
-          {/* 50% Smaller Contact Us Header */}
+        <div
+          className="rounded-[12px] p-1.5 sm:p-2 space-y-1.5 text-center"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          {/* Compact Contact Us Header */}
           <div
-            className="w-full rounded-full p-[3px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
+            className="w-full rounded-full p-[2px] shadow-2xs"
+            style={{ background: BADGE_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white"
+              className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white"
               style={{ background: getHeaderView(4), color: '#FFFFFF' }}
             >
               <span
-                className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
+                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white"
                 style={{ borderColor: getAppBorderView(4) }}
               >
-                <Mail className="h-2.5 w-2.5" style={{ color: getSymbolView(4).iconColor }} />
+                <Mail className="h-2.5 w-2.5 text-[#0A2B6D]" />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Contact Us — Official Software &amp; Developer Details
+                Contact Us · Software &amp; Developer
               </span>
             </div>
           </div>
 
-          {/* 50% Smaller Software & Developer Tiles With Thick App-Design Borders & White Behind Writing */}
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-2 sm:grid-cols-2 items-stretch text-center">
+          {/* Decreased-Size Software & Developer Tiles With More App-Design Colour */}
+          <div className="mx-auto grid grid-cols-1 gap-1.5 sm:grid-cols-2 items-stretch text-center">
             {[
               {
                 icon: Cpu,
                 title: 'Software',
-                text: 'ComplianceHR Infinity — NDIS & Aged Care Documentation & Compliance Super-Platform',
+                text: 'ComplianceHR Infinity — NDIS & Aged Care Compliance Super-Platform',
+                headerBg: getHeaderView(0),
               },
               {
                 icon: Mail,
                 title: 'Developer',
                 text: 'Kristy Lee Whelan · kristyleebatkin@live.com.au',
                 href: 'mailto:kristyleebatkin@live.com.au',
+                headerBg: getHeaderView(2),
               },
             ].map((box, idx) => {
               const Icon = box.icon;
-              const sym = getSymbolView(idx);
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-2xl p-[4px] shadow-sm"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex h-full rounded-xl p-[3px] shadow-sm"
+                  style={{ background: BADGE_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-1.5 rounded-[12px] p-2 text-center"
-                    style={{ background: UNIFORM_SPRAY_BG }}
+                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1.5 text-center"
+                    style={{ background: TOP_BORDER_GRADIENT }}
                   >
+                    {/* App-Design Coloured Pill Title */}
                     <div
-                      className="rounded-full p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
+                      className="flex w-full items-center justify-center gap-1 rounded-full border border-white px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      style={{ background: box.headerBg, color: '#FFFFFF' }}
                     >
-                      <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white"
-                        style={{ borderColor: getAppBorderView(idx) }}
-                      >
-                        <Icon className="h-3 w-3" style={{ color: sym.iconColor }} />
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
+                        <Icon className="h-2.5 w-2.5 text-[#0A2B6D]" />
                       </span>
+                      <span style={{ color: '#FFFFFF' }}>{box.title}</span>
                     </div>
 
-                    <div
-                      className="w-full rounded-xl p-[2.5px]"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex min-h-[22px] items-center justify-center rounded-[8px] bg-white px-2 py-0.5 text-center text-[10px] font-extrabold text-[#0A2B6D]">
-                        {box.title}
-                      </div>
-                    </div>
-
-                    <div
-                      className="w-full flex-1 rounded-xl p-[2.5px]"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex h-full min-h-[30px] w-full items-center justify-center rounded-[8px] bg-white px-2 py-1 text-center">
-                        {box.href ? (
-                          <a
-                            href={box.href}
-                            className="text-center text-[10px] font-extrabold leading-tight text-[#5A00D6] underline"
-                          >
-                            {box.text}
-                          </a>
-                        ) : (
-                          <p className="text-center text-[10px] font-extrabold leading-tight text-[#5A00D6]">
-                            {box.text}
-                          </p>
-                        )}
-                      </div>
+                    {/* Crisp White Inner Box With Dark Blue Writing */}
+                    <div className="flex w-full flex-1 items-center justify-center rounded-[7px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
+                      {box.href ? (
+                        <a
+                          href={box.href}
+                          className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D] underline"
+                        >
+                          {box.text}
+                        </a>
+                      ) : (
+                        <p className="text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                          {box.text}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

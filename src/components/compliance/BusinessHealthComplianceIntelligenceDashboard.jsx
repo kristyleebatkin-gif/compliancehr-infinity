@@ -4,11 +4,12 @@ import {
   Activity, ShieldCheck, Users, HeartHandshake, AlertTriangle,
   Flame, DollarSign, Award, Lock, Download, RefreshCw,
   ArrowUpRight, CheckCircle2, Clock, TrendingUp,
-  BarChart3, Layers,
+  BarChart3, Layers, Sparkles, Monitor, Smartphone, Tablet,
+  Sun, CloudSun, Mail, Calendar, MessageSquare, ClipboardCheck, Radio,
 } from 'lucide-react';
 import {
   ResponsiveContainer, ComposedChart, Area, Bar, XAxis, YAxis,
-  Tooltip, CartesianGrid, BarChart, Cell,
+  Tooltip, CartesianGrid, BarChart, Cell, AreaChart,
 } from 'recharts';
 import { base44 } from '@/api/base44Client';
 import { downloadBusinessHealthIntelligencePdf } from '@/lib/businessHealthIntelligencePdf';
@@ -32,6 +33,20 @@ const TREND_DATA_2026 = [
   { month: 'Aug 26', compliance: 97.3, health: 96.8, revenueK: 141, auditReadiness: 97 },
   { month: 'Sep 26', compliance: 98.1, health: 97.7, revenueK: 149, auditReadiness: 98 },
   { month: 'Oct 26', compliance: 98.7, health: 98.4, revenueK: 158, auditReadiness: 99 },
+];
+
+const MINI_RISK_SEVERITY_DATA = [
+  { level: 'Low', count: 8, fill: '#0072FF' },
+  { level: 'Med', count: 4, fill: '#5A00D6' },
+  { level: 'High', count: 2, fill: '#F97316' },
+  { level: 'Crit', count: 0, fill: '#EF4444' },
+];
+
+const MINI_RISK_CONTROL_DATA = [
+  { stage: 'Elim', pct: 96 },
+  { stage: 'Min', pct: 99 },
+  { stage: 'Isol', pct: 98 },
+  { stage: 'Train', pct: 100 },
 ];
 
 export default function BusinessHealthComplianceIntelligenceDashboard({ compact = false }) {
@@ -632,25 +647,38 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch rounded-[19px] p-2.5"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          {/* Left 8 Columns: 8-Domain Health Cards With White Lights, Thicker Borders & Pure White Behind Writing */}
-          <div className="lg:col-span-8 flex rounded-2xl bg-white p-3 shadow-sm">
+          {/* Left 7 Columns: 8-Domain Health Cards With AI Insight Under Header, White Lights & Dark Blue Writing/Symbols */}
+          <div className="lg:col-span-7 flex rounded-2xl bg-white p-3 shadow-sm">
             <div className="flex w-full flex-col justify-between space-y-2.5">
-              {/* 50% Smaller Title Bar Above Pillars & Selected Pillar */}
+              {/* Header 1: 8-Pillar Matrix Header */}
               <div
                 className="mx-auto w-full rounded-full p-[3px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="gradient-brand flex min-h-[26px] w-full flex-wrap items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] font-extrabold text-white"
+                  className="gradient-brand flex min-h-[34px] w-full flex-wrap items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs sm:text-sm font-extrabold text-white"
                   style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                 >
                   <span
-                    className="h-2 w-2 rounded-full bg-white"
+                    className="h-2.5 w-2.5 rounded-full bg-white"
                     style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
                   />
-                  <ShieldCheck className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <ShieldCheck className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
                   <span style={{ color: '#FFFFFF' }}>
                     8-Pillar Business Health &amp; NDIS Practice Standard Intelligence Matrix
+                  </span>
+                </div>
+              </div>
+
+              {/* AI Insight Under Header 1 */}
+              <div
+                className="w-full rounded-xl p-[3px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div className="flex items-center justify-center gap-1.5 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
+                  <span className="text-[10px] sm:text-xs font-extrabold text-[#0A2B6D]">
+                    AI Insight: All 8 NDIS Practice Standard pillars exceed the 97.9% benchmark with 100% worker screening and zero overdue SLAs.
                   </span>
                 </div>
               </div>
@@ -658,7 +686,6 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 items-stretch">
                 {intelligenceDomains.map((dom, idx) => {
                   const DomainIcon = dom.icon;
-                  const sym = getSymbolView(idx);
                   const isSelected = dom.id === selectedDomain.id;
                   return (
                     <div
@@ -689,7 +716,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             </span>
                           </div>
 
-                          {/* Suitable Category Symbol + Category & Number Header */}
+                          {/* Category Symbol in Dark Blue + Header */}
                           <div
                             className="w-full rounded-full p-[2.5px]"
                             style={{ background: getHeaderView(idx) }}
@@ -699,7 +726,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                             >
                               <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
-                                <DomainIcon className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
+                                <DomainIcon className="h-2.5 w-2.5 text-[#0A2B6D]" />
                               </span>
                               <span style={{ color: '#FFFFFF' }}>
                                 {dom.shortName} · {dom.score}%
@@ -707,29 +734,23 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             </div>
                           </div>
 
-                          {/* Writing Box 1: Pure White Background Behind Words so You Can Read */}
+                          {/* Writing Box 1: Pure White Background With Dark Blue Writing */}
                           <div
                             className="w-full rounded-xl p-[2.5px]"
                             style={{ background: getHeaderView(idx + 1) }}
                           >
                             <div className="flex min-h-[54px] flex-col items-center justify-center rounded-[9px] bg-white px-2 py-1 text-center">
-                              <div
-                                className="text-[11px] font-extrabold leading-tight bg-clip-text text-transparent"
-                                style={{ backgroundImage: getTitleGradientView(idx) }}
-                              >
+                              <div className="text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
                                 {dom.name}
                               </div>
-                              <div
-                                className="mt-0.5 text-[9.5px] font-extrabold"
-                                style={{ color: sym.iconColor }}
-                              >
+                              <div className="mt-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
                                 {dom.standard}
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Writing Box 2: Pure White Background Behind Words so You Can Read */}
+                        {/* Writing Box 2: Pure White Background With Dark Blue Writing */}
                         <div
                           className="w-full rounded-xl p-[2.5px]"
                           style={{ background: getHeaderView(idx + 2) }}
@@ -741,10 +762,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                 style={{ width: `${dom.score}%`, background: TOP_BORDER_GRADIENT }}
                               />
                             </div>
-                            <div
-                              className="text-center text-[9.5px] font-extrabold"
-                              style={{ color: getSymbolView(idx + 1).iconColor }}
-                            >
+                            <div className="text-center text-[9.5px] font-extrabold text-[#0A2B6D]">
                               {dom.metricValue}
                             </div>
                           </div>
@@ -757,16 +775,67 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </div>
           </div>
 
-          {/* Right 4 Columns: Selected Pillar Side Panel — Overhead Spotlights, Thicker App-Design Borders, 50% Smaller Tiles & Pure White Behind Writing */}
+          {/* Right 5 Columns: Selected Pillar Side Panel — Enlarged Side-by-Side Header, AI Insight, Red-Lit Annual Governance, Small Flat Screen With 2 Risk Charts, Left/Right Split With Digital Lights + Live Trackers, and Phone / Computer / iPad Row */}
           <div
-            className="lg:col-span-4 flex rounded-2xl p-[5px] shadow-md"
+            className="lg:col-span-5 flex rounded-2xl p-[5px] shadow-md"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             {(() => {
               const SelectedIcon = selectedDomain.icon;
+              const rightTrackerItems = [
+                {
+                  label: 'Communication - Emails',
+                  icon: Mail,
+                  lightColor: '#10B981',
+                  trackerPct: 100,
+                  statusText: '24/7 Synced · 0 Queued',
+                  route: '/communications',
+                },
+                {
+                  label: 'Rosters',
+                  icon: Calendar,
+                  lightColor: '#00C6FF',
+                  trackerPct: 99,
+                  statusText: `${liveCounts.staff} Staff · 100% Screened`,
+                  route: '/roster',
+                },
+                {
+                  label: 'Risk',
+                  icon: AlertTriangle,
+                  lightColor: '#F97316',
+                  trackerPct: 98,
+                  statusText: `${liveCounts.risks} Active Controls`,
+                  route: '/risks',
+                },
+                {
+                  label: 'Incidents',
+                  icon: Flame,
+                  lightColor: '#EF4444',
+                  trackerPct: 100,
+                  statusText: `${liveCounts.incidents} Logged · 24h SLA Met`,
+                  route: '/incidents',
+                },
+                {
+                  label: 'Feedback',
+                  icon: MessageSquare,
+                  lightColor: '#A100FF',
+                  trackerPct: 99,
+                  statusText: '100% Acknowledged <24h',
+                  route: '/feedback',
+                },
+                {
+                  label: 'Audits',
+                  icon: ClipboardCheck,
+                  lightColor: '#0072FF',
+                  trackerPct: 100,
+                  statusText: `${liveCounts.audits} Audits · 356 Checkpoints`,
+                  route: '/compliance',
+                },
+              ];
+
               return (
                 <div
-                  className="relative flex h-full w-full flex-col items-center justify-between rounded-[12px] bg-white p-2.5 text-center space-y-1.5 overflow-hidden"
+                  className="relative flex h-full w-full flex-col items-center justify-between rounded-[12px] bg-white p-2.5 text-center space-y-2 overflow-hidden"
                   style={{
                     backgroundImage:
                       'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.98) 0%, rgba(0,198,255,0.18) 38%, rgba(255,46,154,0.12) 72%, #FFFFFF 100%)',
@@ -782,108 +851,342 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             style={{ boxShadow: '0 0 12px 4px #FFFFFF, 0 4px 18px 6px rgba(0,198,255,0.85)' }}
                           />
                         </div>
-                        <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#0072FF]">
+                        <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#0A2B6D]">
                           SPOTLIGHT {sp}
                         </span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="w-full space-y-1.5">
-                    {/* 3 Words Fitted Cleanly on Two Lines at the Top of Selected Pillar */}
+                  <div className="w-full space-y-2">
+                    {/* 1. SELECTED & NDIS GOVERNANCE BESIDE EACH OTHER & MADE BIGGER */}
                     <div
-                      className="w-full rounded-2xl p-[3.5px] shadow-2xs"
+                      className="w-full rounded-2xl p-[4px] shadow-sm"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
                       <div
-                        className="gradient-brand flex flex-col items-center justify-center gap-0.5 rounded-[12px] px-2.5 py-1 text-center text-white"
+                        className="gradient-brand flex min-h-[44px] w-full flex-wrap items-center justify-center gap-2 rounded-[12px] px-3.5 py-2 text-center text-white"
                         style={{ background: getHeaderView(2), color: '#FFFFFF' }}
                       >
-                        <div className="flex items-center justify-center gap-1">
-                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-white">
-                            <SelectedIcon className="h-2.5 w-2.5 text-[#5A00D6]" />
-                          </span>
-                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-white leading-tight" style={{ color: '#FFFFFF' }}>
-                            SELECTED · {selectedDomain.shortName}
-                          </span>
-                        </div>
-                        <span className="text-[9.5px] font-extrabold text-white leading-tight" style={{ color: '#FFFFFF' }}>
-                          {selectedDomain.score}% Audit Ready
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white">
+                          <SelectedIcon className="h-3.5 w-3.5 text-[#0A2B6D]" />
+                        </span>
+                        <span
+                          className="font-editorial text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-wide text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          SELECTED · NDIS {selectedDomain.shortName.toUpperCase()} ({selectedDomain.score}%)
                         </span>
                       </div>
                     </div>
 
-                    {/* Topic Tile Section With Writing — Keeps the Governance Sentence */}
+                    {/* 2. AI INSIGHT UNDER SELECTED HEADER */}
                     <div
-                      className="w-full rounded-xl p-[4px] shadow-2xs"
-                      style={{ background: getHeaderView(3) }}
+                      className="w-full rounded-xl p-[3px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="rounded-[8px] bg-white px-2.5 py-1.5 text-center space-y-1">
-                        <div className="leading-tight">
-                          <span className="block text-[8.5px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                            {selectedDomain.shortName} Topic
-                          </span>
-                          <span
-                            className="block text-[10.5px] font-extrabold bg-clip-text text-transparent leading-tight"
-                            style={{ backgroundImage: getTitleGradientView(1) }}
-                          >
-                            {selectedDomain.metricValue}
-                          </span>
-                        </div>
-                        <p className="text-[9.5px] font-extrabold text-[#5A00D6] leading-tight">
-                          {selectedDomain.ActionItems[0]}
-                        </p>
+                      <div className="flex items-center justify-center gap-1.5 rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                        <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
+                        <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                          AI Insight: {selectedDomain.name} is verified at {selectedDomain.score}% readiness ({selectedDomain.metricValue}).
+                        </span>
                       </div>
                     </div>
 
-                    {/* Live Maintenance Tracker Underneath the Governance Sentence */}
+                    {/* 3. ANNUAL GOVERNANCE LIGHT UP BRIGHT RED */}
                     <div
-                      className="w-full rounded-xl p-[4px] shadow-2xs"
-                      style={{ background: getHeaderView(5) }}
+                      className="w-full rounded-xl p-[3.5px]"
+                      style={{
+                        background: '#EF4444',
+                        boxShadow: '0 0 16px 4px rgba(239, 68, 68, 0.85)',
+                      }}
                     >
-                      <div className="rounded-[8px] bg-white px-2.5 py-1.5 text-center space-y-1">
-                        <div className="flex items-center justify-center gap-1.5">
-                          <span
-                            className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#10B981]"
-                            style={{ boxShadow: '0 0 8px 2px #10B981' }}
-                          />
-                          <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                            Live Maintenance Tracker
+                      <div className="flex items-center justify-center gap-2 rounded-[9px] bg-[#EF4444] px-3 py-1.5 text-center text-white">
+                        <span
+                          className="h-3 w-3 shrink-0 rounded-full border border-white bg-white"
+                          style={{ boxShadow: '0 0 10px 3px #FFFFFF, 0 0 16px 5px #EF4444' }}
+                        />
+                        <span
+                          className="text-[9.5px] sm:text-[10.5px] font-extrabold uppercase tracking-wide text-white leading-tight"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          RED ALERT LIVE · {selectedDomain.ActionItems[0]}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* 4. SMALL FLAT SCREEN WITH TWO DIFFERENT RISK CHARTS */}
+                    <div className="flex flex-col items-center w-full">
+                      <div
+                        className="w-full rounded-2xl border-[3px] border-[#00C6FF] bg-[#0A2B6D] p-2 shadow-md"
+                        style={{ boxShadow: '0 0 14px 2px rgba(0, 198, 255, 0.45)' }}
+                      >
+                        <div className="mb-1 flex items-center justify-between px-1.5">
+                          <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+                            <Monitor className="h-3 w-3 text-[#00C6FF]" />
+                            FLAT SCREEN · DUAL LIVE RISK CHARTS
                           </span>
-                          <span className="rounded-full bg-[#10B981] px-1.5 py-0 text-[7.5px] font-extrabold text-white">
-                            LIVE
+                          <span className="inline-flex items-center gap-1 text-[8px] font-extrabold text-white">
+                            <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                            HD LIVE
                           </span>
                         </div>
+                        <div className="grid grid-cols-2 gap-1.5 rounded-xl bg-white p-1.5">
+                          {/* Risk Chart 1: Severity Matrix Bar Chart */}
+                          <div className="rounded-lg border border-[#0A2B6D]/20 bg-white p-1">
+                            <div className="text-[8px] font-extrabold uppercase text-[#0A2B6D]">
+                              1. Risk Severity Matrix
+                            </div>
+                            <div className="h-20 w-full">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={MINI_RISK_SEVERITY_DATA} margin={{ top: 4, right: 4, left: -24, bottom: 0 }}>
+                                  <XAxis dataKey="level" fontSize={7.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
+                                  <YAxis fontSize={7} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                                  <Bar dataKey="count" radius={[3, 3, 0, 0]} barSize={12}>
+                                    {MINI_RISK_SEVERITY_DATA.map((entry) => (
+                                      <Cell key={entry.level} fill={entry.fill} />
+                                    ))}
+                                  </Bar>
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
 
-                        <div className="h-2 w-full overflow-hidden rounded-full border border-[#0A2B6D]/20 bg-[#F5F0FF]">
+                          {/* Risk Chart 2: Control Hierarchy Area Chart */}
+                          <div className="rounded-lg border border-[#0A2B6D]/20 bg-white p-1">
+                            <div className="text-[8px] font-extrabold uppercase text-[#0A2B6D]">
+                              2. Control Effectiveness (%)
+                            </div>
+                            <div className="h-20 w-full">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={MINI_RISK_CONTROL_DATA} margin={{ top: 4, right: 4, left: -24, bottom: 0 }}>
+                                  <XAxis dataKey="stage" fontSize={7.5} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
+                                  <YAxis domain={[90, 100]} fontSize={7} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                                  <Area
+                                    type="monotone"
+                                    dataKey="pct"
+                                    stroke="#0A2B6D"
+                                    strokeWidth={2}
+                                    fill="#00C6FF"
+                                    fillOpacity={0.35}
+                                  />
+                                </AreaChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="h-1.5 w-8 bg-[#0A2B6D]" />
+                      <div
+                        className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      />
+                    </div>
+
+                    {/* 5. LEFT (CURRENT WRITING) & RIGHT (6 MODULE SELECTIONS WITH DIGITAL LIGHTS & LIVE TRACKER UNDERNEATH EACH HEADING) — ALL DARK BLUE WRITING & SYMBOLS */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 items-stretch">
+                      {/* Left Column: Current Writing in Dark Blue */}
+                      <div
+                        className="flex rounded-xl p-[3.5px] shadow-2xs"
+                        style={{ background: getHeaderView(3) }}
+                      >
+                        <div className="flex w-full flex-col justify-between rounded-[8px] bg-white p-2 text-left space-y-1.5">
+                          <div className="flex items-center gap-1.5 border-b border-[#0A2B6D]/15 pb-1">
+                            <SelectedIcon className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
+                            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                              {selectedDomain.shortName} Topic &amp; Governance
+                            </span>
+                          </div>
+
+                          <div className="text-[10px] font-extrabold text-[#0A2B6D] leading-tight">
+                            {selectedDomain.metricLabel}: {selectedDomain.metricValue}
+                          </div>
+
+                          <p className="text-[9px] font-extrabold text-[#0A2B6D] leading-snug">
+                            {selectedDomain.detail}
+                          </p>
+
+                          <div className="space-y-1 pt-0.5">
+                            {selectedDomain.ActionItems.slice(1).map((item) => (
+                              <div
+                                key={item}
+                                className="flex items-start gap-1 rounded-md border border-[#0A2B6D]/20 bg-[#F5F0FF]/50 px-1.5 py-1 text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight"
+                              >
+                                <CheckCircle2 className="h-3 w-3 shrink-0 text-[#0A2B6D] mt-0.5" />
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Live Maintenance Tracker Inside Left Box */}
+                          <div className="rounded-lg border border-[#0A2B6D]/25 bg-white p-1.5 space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase text-[#0A2B6D]">
+                                <span
+                                  className="h-2 w-2 rounded-full bg-[#10B981]"
+                                  style={{ boxShadow: '0 0 6px 2px #10B981' }}
+                                />
+                                Live Maintenance Tracker
+                              </span>
+                              <span className="text-[8px] font-extrabold text-[#0A2B6D]">100%</span>
+                            </div>
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20">
+                              <div
+                                className="h-full rounded-full"
+                                style={{ width: '100%', background: TOP_BORDER_GRADIENT }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Column: Text Box With Communication - Emails, Rosters, Risk, Incidents, Feedback, Audits + Digital Lights & Live Tracker Underneath Each Heading */}
+                      <div
+                        className="flex rounded-xl p-[3.5px] shadow-2xs"
+                        style={{ background: getHeaderView(5) }}
+                      >
+                        <div className="flex w-full flex-col justify-between rounded-[8px] bg-white p-2 text-left space-y-1">
+                          <div className="flex items-center justify-between border-b border-[#0A2B6D]/15 pb-1">
+                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                              Digital Light Live Trackers
+                            </span>
+                            <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold text-[#0A2B6D]">
+                              <span
+                                className="h-2 w-2 rounded-full bg-[#10B981]"
+                                style={{ boxShadow: '0 0 6px 2px #10B981' }}
+                              />
+                              6 LIVE
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            {rightTrackerItems.map((rt) => {
+                              const RtIcon = rt.icon;
+                              return (
+                                <Link
+                                  key={rt.label}
+                                  to={rt.route}
+                                  className="block rounded-lg border border-[#0A2B6D]/25 bg-white px-2 py-1 transition-all hover:bg-[#F5F0FF]"
+                                >
+                                  {/* Heading + Dark Blue Symbol + Digital Lights */}
+                                  <div className="flex items-center justify-between gap-1">
+                                    <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                                      <RtIcon className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
+                                      <span>{rt.label}</span>
+                                    </span>
+                                    <span className="inline-flex items-center gap-1">
+                                      <span
+                                        className="h-2 w-2 rounded-full border border-[#0A2B6D]/40"
+                                        style={{
+                                          backgroundColor: rt.lightColor,
+                                          boxShadow: `0 0 6px 2px ${rt.lightColor}`,
+                                        }}
+                                      />
+                                      <span
+                                        className="h-2 w-2 rounded-full border border-[#0A2B6D]/40 bg-white"
+                                        style={{ boxShadow: '0 0 5px 1px #00C6FF' }}
+                                      />
+                                    </span>
+                                  </div>
+                                  {/* Live Tracker Displayed Underneath the Heading */}
+                                  <div className="mt-0.5 space-y-0.5">
+                                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F5F0FF] border border-[#0A2B6D]/20">
+                                      <div
+                                        className="h-full rounded-full"
+                                        style={{
+                                          width: `${rt.trackerPct}%`,
+                                          background: TOP_BORDER_GRADIENT,
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="flex items-center justify-between text-[7.5px] font-extrabold text-[#0A2B6D]">
+                                      <span>{rt.statusText}</span>
+                                      <span>{rt.trackerPct}%</span>
+                                    </div>
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 6. THREE DEVICES ROW: PHONE ON LEFT (DATE + TEMP), COMPUTER SCREEN IN MIDDLE (NDIS UPDATES), IPAD ON RIGHT (LIGHT WEATHER CHANNEL) */}
+                    <div className="grid grid-cols-3 gap-1.5 items-stretch pt-0.5">
+                      {/* Left: Phone With Date & Temp */}
+                      <div className="flex flex-col items-center">
+                        <div className="flex h-full w-full flex-col justify-between rounded-[16px] border-[2.5px] border-[#0A2B6D] bg-[#0A2B6D] p-1.5 shadow-sm">
+                          <div className="mx-auto mb-1 h-1 w-6 rounded-full bg-white/80" />
+                          <div className="flex flex-1 flex-col items-center justify-center gap-0.5 rounded-[10px] bg-white px-1.5 py-1.5 text-center">
+                            <div className="inline-flex items-center gap-0.5 text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
+                              <Smartphone className="h-2.5 w-2.5 text-[#0A2B6D]" />
+                              <span>PHONE · LIVE</span>
+                            </div>
+                            <div className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                              Tue 27 Oct 2026
+                            </div>
+                            <div className="inline-flex items-center gap-0.5 rounded-full border border-[#0A2B6D]/30 bg-[#F5F0FF] px-1.5 py-0 text-[8.5px] font-extrabold text-[#0A2B6D]">
+                              <Sun className="h-2.5 w-2.5 text-[#0A2B6D]" />
+                              <span>24°C Sunny</span>
+                            </div>
+                          </div>
+                          <div className="mx-auto mt-1 h-1 w-5 rounded-full bg-white/80" />
+                        </div>
+                      </div>
+
+                      {/* Middle: Computer Screen With NDIS Updates */}
+                      <div className="flex flex-col items-center">
+                        <div className="flex h-full w-full flex-col justify-between rounded-xl border-[2.5px] border-[#0072FF] bg-[#0A2B6D] p-1.5 shadow-sm">
+                          <div className="mb-0.5 flex items-center justify-between px-1">
+                            <span className="text-[7px] font-extrabold uppercase text-white">PC MONITOR</span>
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                          </div>
+                          <Link
+                            to="/ndis-updates"
+                            className="flex flex-1 flex-col items-center justify-center gap-0.5 rounded-lg bg-white px-1.5 py-1.5 text-center"
+                          >
+                            <div className="inline-flex items-center gap-0.5 text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
+                              <Radio className="h-2.5 w-2.5 text-[#0A2B6D]" />
+                              <span>NDIS UPDATES</span>
+                            </div>
+                            <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                              2026 Price Guide &amp; Practice Alerts Live
+                            </div>
+                            <span className="rounded-full border border-[#0A2B6D]/30 bg-[#F5F0FF] px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+                              Open Feed →
+                            </span>
+                          </Link>
+                        </div>
+                        <div className="h-1 w-5 bg-[#0A2B6D]" />
+                        <div className="h-1 w-10 rounded-full bg-[#0A2B6D]" />
+                      </div>
+
+                      {/* Right: iPad With Light Weather Channel */}
+                      <div className="flex flex-col items-center">
+                        <div className="flex h-full w-full flex-col justify-between rounded-[14px] border-[2.5px] border-[#00C6FF] bg-[#0A2B6D] p-1.5 shadow-sm">
+                          <div className="mb-0.5 flex items-center justify-between px-1">
+                            <span className="text-[7px] font-extrabold uppercase text-white">IPAD</span>
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+                          </div>
                           <div
-                            className="h-full rounded-full"
+                            className="flex flex-1 flex-col items-center justify-center gap-0.5 rounded-[9px] border border-[#00C6FF]/50 px-1.5 py-1.5 text-center"
                             style={{
-                              width: '100%',
-                              background: 'linear-gradient(90deg, #0072FF 0%, #10B981 50%, #FF2E9A 100%)',
+                              background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
                             }}
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-1 text-[8px] font-extrabold">
-                          <Link
-                            to="/assets"
-                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#0072FF]"
                           >
-                            Assets: 100%
-                          </Link>
-                          <Link
-                            to="/emergency-response"
-                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#5A00D6]"
-                          >
-                            Drills: {liveCounts.drills} Live
-                          </Link>
-                          <Link
-                            to="/risks"
-                            className="rounded-md border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-[#FF2E9A]"
-                          >
-                            Risks: {liveCounts.risks} Safe
-                          </Link>
+                            <div className="inline-flex items-center gap-0.5 text-[7.5px] font-extrabold uppercase text-[#0A2B6D]">
+                              <CloudSun className="h-2.5 w-2.5 text-[#0A2B6D]" />
+                              <span>WEATHER CH.</span>
+                            </div>
+                            <div className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
+                              Sydney 24°C · Light Breeze
+                            </div>
+                            <span className="rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+                              UV Low · Clear
+                            </span>
+                          </div>
+                          <div className="mx-auto mt-1 h-0.5 w-6 rounded-full bg-white/80" />
                         </div>
                       </div>
                     </div>
@@ -917,9 +1220,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             predictiveAlerts,
                           })
                         }
-                        className="inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#5A00D6]"
+                        className="inline-flex min-h-[26px] w-full items-center justify-center gap-1 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]"
                       >
-                        <Download className="h-2.5 w-2.5 text-[#0072FF]" />
+                        <Download className="h-2.5 w-2.5 text-[#0A2B6D]" />
                         <span>Pillar PDF</span>
                       </button>
                     </div>
