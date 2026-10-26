@@ -755,155 +755,74 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             })}
           </div>
 
-          {/* Central Management Approval Queue + Role & Access Governance — Uniform App Design Borders & Spray Background */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 items-stretch">
+          {/* Central Management Approval Queue (Section 3 & Section 24–29 Removed) */}
+          <div
+            className="flex w-full rounded-2xl p-[3.5px] shadow-sm"
+            style={{ background: getHeaderView(0) }}
+          >
             <div
-              className="flex rounded-2xl p-[3.5px] shadow-sm"
-              style={{ background: getHeaderView(0) }}
+              className="flex w-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
+              style={{
+                background:
+                  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+              }}
             >
               <div
-                className="flex w-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                }}
+                className="w-full rounded-xl p-[2px]"
+                style={{ background: getHeaderView(0) }}
               >
-                <div
-                  className="w-full rounded-xl p-[2px]"
-                  style={{ background: getHeaderView(0) }}
-                >
-                  <div className="rounded-[9px] bg-white px-3 py-2 text-center space-y-0.5">
-                    <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      Central Management Approval &amp; Escalation Queue ({pendingApprovals.length} Active)
-                    </h3>
-                    <p className="text-[10.5px] font-bold text-[#5A00D6]">
-                      Live pending tasks, sign-offs, and open incident reviews requiring management verification
-                    </p>
-                  </div>
+                <div className="rounded-[9px] bg-white px-3 py-2 text-center space-y-0.5">
+                  <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    Central Management Approval &amp; Escalation Queue ({pendingApprovals.length} Active)
+                  </h3>
+                  <p className="text-[10.5px] font-bold text-[#5A00D6]">
+                    Live pending tasks, sign-offs, and open incident reviews requiring management verification
+                  </p>
                 </div>
-
-                {pendingApprovals.length === 0 ? (
-                  <div className="flex flex-1 items-center justify-center rounded-xl border border-[#0A2B6D]/20 bg-white p-4 text-center text-xs font-extrabold text-[#0072FF]">
-                    All management approvals and incident sign-offs are up to date.
-                  </div>
-                ) : (
-                  <div className="space-y-1.5 max-h-56 overflow-y-auto">
-                    {pendingApprovals.map((item, idx) => (
-                      <div
-                        key={`${item.entity}-${item.id}`}
-                        className="rounded-xl p-[2px]"
-                        style={{ background: getHeaderView(idx) }}
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-2 rounded-[9px] bg-white px-3 py-2 text-center sm:text-left">
-                          <div className="min-w-0 flex-1 text-center">
-                            <div className="text-xs font-extrabold text-[#0A2B6D]">
-                              {item.kind} · {item.title}
-                            </div>
-                            <div className="text-[10px] font-bold text-[#5A00D6]">
-                              Status: {item.status} · Priority: {item.priority}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-center gap-1.5 w-full sm:w-auto">
-                            <Button
-                              size="sm"
-                              onClick={() => handleQuickApprove(item)}
-                              className="h-7 rounded-full bg-[#5A00D6] px-3 text-[10px] font-extrabold text-white"
-                            >
-                              <CheckCircle2 className="mr-1 h-3 w-3" />
-                              Approve
-                            </Button>
-                            <Link
-                              to={item.route}
-                              className="inline-flex h-7 items-center rounded-full border border-[#0A2B6D] bg-white px-3 text-[10px] font-extrabold text-[#0072FF]"
-                            >
-                              Open
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
-            </div>
 
-            {/* Section 3: 7 Core User Roles + Section 23/24 Approved Brand Palette */}
-            <div
-              className="flex rounded-2xl p-[3.5px] shadow-sm"
-              style={{ background: getHeaderView(2) }}
-            >
-              <div
-                className="flex w-full flex-col justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-                }}
-              >
-                <div
-                  className="w-full rounded-xl p-[2px]"
-                  style={{ background: getHeaderView(2) }}
-                >
-                  <div className="flex flex-col items-center justify-center gap-1 rounded-[9px] bg-white px-3 py-2 text-center">
-                    <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      Section 3 Role Governance &amp; Approved Visual Identity
-                    </h3>
-                    <p className="text-[10.5px] font-bold text-[#5A00D6]">
-                      7 Core Roles + Custom Roles · View, Edit, Submit &amp; Approve Separation
-                    </p>
-                  </div>
+              {pendingApprovals.length === 0 ? (
+                <div className="flex flex-1 items-center justify-center rounded-xl border border-[#0A2B6D]/20 bg-white p-4 text-center text-xs font-extrabold text-[#0072FF]">
+                  All management approvals and incident sign-offs are up to date.
                 </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {[
-                    { role: 'Guest', scope: 'Public & Portal Preview' },
-                    { role: 'Participant', scope: 'Own Plan, Goals & Docs' },
-                    { role: 'Employee', scope: 'Roster, Shift Notes & HR' },
-                    { role: 'Administration', scope: 'Operational Registers' },
-                    { role: 'Compliance Admin', scope: '356 Checks & 98 Docs' },
-                    { role: 'Provider Admin', scope: 'Full Executive Control' },
-                    { role: 'Auditor', scope: 'Consented Evidence Portal' },
-                    { role: 'Custom Roles', scope: 'HR, Finance & Quality' },
-                  ].map((r, i) => (
+              ) : (
+                <div className="space-y-1.5 max-h-56 overflow-y-auto">
+                  {pendingApprovals.map((item, idx) => (
                     <div
-                      key={r.role}
-                      className="rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(i) }}
-                    >
-                      <div
-                        className="flex h-full flex-col items-center justify-center rounded-[9px] p-2 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.55) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), #FFFFFF',
-                        }}
-                      >
-                        <div className="text-[10px] font-extrabold text-[#0A2B6D]">{r.role}</div>
-                        <div className="text-[9px] font-bold text-[#5A00D6]">{r.scope}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
-                  {Object.entries(INFINITY_APPROVED_PALETTE).map(([name, hex], idx) => (
-                    <div
-                      key={name}
+                      key={`${item.entity}-${item.id}`}
                       className="rounded-xl p-[2px]"
                       style={{ background: getHeaderView(idx) }}
                     >
-                      <div
-                        className="rounded-[9px] p-1.5 text-center"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.55) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), #FFFFFF',
-                        }}
-                      >
-                        <div className="text-[8.5px] font-extrabold uppercase text-[#0A2B6D]">{name}</div>
-                        <div className="text-[8.5px] font-mono font-bold text-[#5A00D6]">{hex}</div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[9px] bg-white px-3 py-2 text-center sm:text-left">
+                        <div className="min-w-0 flex-1 text-center">
+                          <div className="text-xs font-extrabold text-[#0A2B6D]">
+                            {item.kind} · {item.title}
+                          </div>
+                          <div className="text-[10px] font-bold text-[#5A00D6]">
+                            Status: {item.status} · Priority: {item.priority}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                          <Button
+                            size="sm"
+                            onClick={() => handleQuickApprove(item)}
+                            className="h-7 rounded-full bg-[#5A00D6] px-3 text-[10px] font-extrabold text-white"
+                          >
+                            <CheckCircle2 className="mr-1 h-3 w-3" />
+                            Approve
+                          </Button>
+                          <Link
+                            to={item.route}
+                            className="inline-flex h-7 items-center rounded-full border border-[#0A2B6D] bg-white px-3 text-[10px] font-extrabold text-[#0072FF]"
+                          >
+                            Open
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -939,54 +858,6 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
                 >
                   <span style={{ color: '#FFFFFF' }}>Open Full 356-Checkpoint Report →</span>
                 </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Section 24 — 29 Module-Specific Semantic Colours Launch Strip */}
-          <div
-            className="rounded-2xl p-[3.5px] shadow-sm"
-            style={{ background: getHeaderView(6) }}
-          >
-            <div className="rounded-[13px] bg-white p-3.5 space-y-2.5">
-              <div
-                className="w-full rounded-xl p-[2px]"
-                style={{ background: getHeaderView(6) }}
-              >
-                <div className="rounded-[9px] bg-white px-3 py-1.5 text-center">
-                  <div className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                    Section 24 — 29 Module-Specific Semantic Colours
-                  </div>
-                  <div className="text-[10.5px] font-bold text-[#5A00D6]">
-                    Click any domain to open its live operational workspace
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                {SECTION_24_MODULE_COLOURS.map((mc, idx) => (
-                  <div
-                    key={mc.module}
-                    className="rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: getHeaderView(idx) }}
-                  >
-                    <Link
-                      to={mc.path}
-                      className="flex h-full flex-col items-center justify-center rounded-[9px] px-2.5 py-2 text-center hover:shadow-sm"
-                      style={{
-                        background:
-                          'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.58) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.58) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
-                      }}
-                    >
-                      <div className="text-[10.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                        {mc.module}
-                      </div>
-                      <div className="mt-0.5 text-[9px] font-extrabold text-[#5A00D6]">
-                        {mc.toneName} · {mc.hex}
-                      </div>
-                    </Link>
-                  </div>
-                ))}
               </div>
             </div>
           </div>

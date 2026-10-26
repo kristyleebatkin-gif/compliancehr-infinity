@@ -852,8 +852,13 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                 </span>
                 <span style={{ color: '#FFFFFF' }}>Master Compliance Audit Checklist</span>
               </div>
-              <div className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints · 11 Interactive Pages
+              <div className="flex flex-col items-center justify-center gap-0.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+                <span style={{ color: '#FFFFFF' }}>
+                  17 NDIS &amp; Governance Categories · 356 Mandatory Checkpoints
+                </span>
+                <span className="whitespace-nowrap" style={{ color: '#FFFFFF' }}>
+                  11 Interactive Pages
+                </span>
               </div>
             </div>
           </div>
@@ -923,7 +928,7 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
         </div>
       </div>
 
-      {/* 6 Horizontal Page Tiles From Side-to-Side: 2 Tiles per Row × 3 Rows, White Spray Background, App Design Borders in Different Views, 2 Lines in Borders */}
+      {/* 6 Horizontal Page Tiles From Side-to-Side: Top Section "Page" Tile Bar Styled in App Design Colour */}
       {smallFeatured && !expanded && (
         <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3">
           {AUDIT_CATEGORIES_17.slice(0, 6).map((cat, idx) => (
@@ -944,22 +949,30 @@ export default function MasterComplianceAuditForms({ compact = false, defaultVie
                     'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
                 }}
               >
-                {/* Line 1 Inside App Design Border */}
+                {/* Line 1: Top Section "Page" Tile Styled in App Design Colour */}
                 <div
-                  className="w-full rounded-xl p-[2px]"
-                  style={{ background: getHeaderView(idx) }}
+                  className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+                  }}
                 >
-                  <div className="flex min-h-[32px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs font-extrabold text-[#5A00D6]">
-                    Page {cat.page} · {cat.rows.length} Mandatory Audit Checkpoints — Click to Open
+                  <div
+                    className="gradient-brand flex min-h-[36px] w-full items-center justify-center rounded-[9px] px-3 py-1 text-center text-xs font-extrabold text-white"
+                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                  >
+                    <span style={{ color: '#FFFFFF' }}>
+                      Page {cat.page} · {cat.rows.length} Mandatory Audit Checkpoints — Click to Open
+                    </span>
                   </div>
                 </div>
 
                 {/* Line 2 Inside App Design Border */}
                 <div
-                  className="w-full rounded-xl p-[2px]"
+                  className="w-full rounded-xl p-[2.5px]"
                   style={{ background: getHeaderView(idx) }}
                 >
-                  <div className="flex min-h-[36px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                  <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
                     {cat.title}
                   </div>
                 </div>

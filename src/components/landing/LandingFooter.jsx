@@ -134,17 +134,20 @@ export default function LandingFooter() {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="rounded-[16px] bg-white p-4 sm:p-6 space-y-4 text-center">
-          {/* Stretched Contact Us Header */}
+          {/* Stretched Contact Us Header with App-Design Coloured Symbol */}
           <div
-            className="w-full rounded-full p-[3px] shadow-sm"
+            className="w-full rounded-full p-[4px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="gradient-brand flex min-h-[46px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold uppercase tracking-wider text-white"
+              className="gradient-brand flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold uppercase tracking-wider text-white"
               style={{ background: getHeaderView(4), color: '#FFFFFF' }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Mail className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                style={{ borderColor: getAppBorderView(4) }}
+              >
+                <Mail className="h-4 w-4" style={{ color: getSymbolView(4).iconColor }} />
               </span>
               <span className="text-center" style={{ color: '#FFFFFF' }}>
                 Contact Us — Official Software &amp; Developer Details
@@ -152,8 +155,8 @@ export default function LandingFooter() {
             </div>
           </div>
 
-          {/* Minimised Contact Us — Software & Developer Tiles Only (2 Balanced Side-by-Side Tiles) */}
-          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-3.5 sm:grid-cols-2 items-stretch text-center">
+          {/* Contact Us — Software & Developer Tiles With Thick App-Design Coloured Borders Around Outside & White Sections + App-Coloured Symbols */}
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 items-stretch text-center">
             {[
               {
                 icon: Cpu,
@@ -168,49 +171,55 @@ export default function LandingFooter() {
               },
             ].map((box, idx) => {
               const Icon = box.icon;
-              const sym = getSymbolView(idx + 4);
+              const sym = getSymbolView(idx);
               return (
                 <div
                   key={box.title}
-                  className="flex h-full rounded-2xl p-[3px] shadow-sm"
-                  style={{ background: getHeaderView(idx + 1) }}
+                  className="flex h-full rounded-3xl p-[6px] shadow-md"
+                  style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div
-                    className="flex h-full w-full flex-col items-center justify-between gap-2 rounded-[13px] p-3.5 text-center"
+                    className="flex h-full w-full flex-col items-center justify-between gap-3 rounded-[18px] p-4 text-center"
                     style={{ background: UNIFORM_SPRAY_BG }}
                   >
+                    {/* Symbol Inside Thick App-Design Coloured Border & App-Design Symbol Colour */}
                     <div
-                      className="rounded-full p-[2.5px] shadow-2xs"
+                      className="rounded-full p-[4px] shadow-sm"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
-                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                      <span
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 bg-white"
+                        style={{ borderColor: getAppBorderView(idx) }}
+                      >
+                        <Icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
                     </div>
 
+                    {/* White Title Section Inside Thick App-Design Coloured Border */}
                     <div
-                      className="w-full rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(idx) }}
+                      className="w-full rounded-2xl p-[4px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-[38px] items-center justify-center rounded-[9px] bg-white px-3 py-1 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                      <div className="flex min-h-[42px] items-center justify-center rounded-[12px] bg-white px-3 py-1.5 text-center text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
                         {box.title}
                       </div>
                     </div>
 
+                    {/* White Details Section Inside Thick App-Design Coloured Border */}
                     <div
-                      className="w-full flex-1 rounded-xl p-[2px]"
-                      style={{ background: getHeaderView(idx + 2) }}
+                      className="w-full flex-1 rounded-2xl p-[4px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div className="flex h-[52px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                      <div className="flex h-full min-h-[58px] w-full items-center justify-center rounded-[12px] bg-white px-3.5 py-2 text-center">
                         {box.href ? (
                           <a
                             href={box.href}
-                            className="text-center text-xs font-extrabold leading-tight text-[#5A00D6] underline"
+                            className="text-center text-xs font-extrabold leading-snug text-[#5A00D6] underline"
                           >
                             {box.text}
                           </a>
                         ) : (
-                          <p className="text-center text-xs font-extrabold leading-tight text-[#5A00D6]">
+                          <p className="text-center text-xs font-extrabold leading-snug text-[#5A00D6]">
                             {box.text}
                           </p>
                         )}

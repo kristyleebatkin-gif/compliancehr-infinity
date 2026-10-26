@@ -105,25 +105,41 @@ export default function KidsZoneTreasurePath() {
         background: 'linear-gradient(165deg, #00C6FF 0%, #17B8C4 34%, #7FE7DC 52%, #F4E0B2 64%, #E8C988 100%)',
       }}
     >
-      {/* Centered Header Bar */}
-      <div className="relative z-10 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white px-4 py-3 text-center shadow-sm">
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <span className="inline-flex h-6 items-center rounded-full bg-[#0072FF] px-3 text-[11px] font-extrabold uppercase tracking-wider text-white">
-            Treasure Hunt · Visual Routine
+      {/* Centered Header Bar Matching Scene 2 & Scene 3 With Framed Sentence Underneath */}
+      <div
+        className="relative z-10 w-full rounded-2xl p-[3.5px] shadow-sm"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+        }}
+      >
+        <div className="flex flex-col items-center justify-center gap-2.5 rounded-[13px] bg-white px-5 py-4 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-[#0072FF] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+            <span>🏖️ Treasure Hunt · Visual Routine</span>
           </span>
-          <h3 className="font-editorial text-base sm:text-lg md:text-xl font-extrabold text-[#0A2B6D]">
+
+          <h3 className="font-editorial text-lg sm:text-xl md:text-2xl font-extrabold leading-tight text-[#0A2B6D]">
             🏖️ Tropical Treasure Hunt Island Path &amp; Chest Prizes
           </h3>
-        </div>
-        <p
-          className="mx-auto max-w-3xl text-center text-xs font-extrabold text-black"
-          style={{ color: '#000000' }}
-        >
-          Tap each seashell stepping stone for island marimba chimes &amp; walk across the beach to burst open the golden treasure chest!
-        </p>
 
-        {/* Centered Controls Row */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+          <div
+            className="w-full max-w-3xl rounded-xl p-[2.5px] shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-4 py-2 text-center">
+              <p
+                className="mx-auto text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]"
+              >
+                Tap each seashell stepping stone for island marimba chimes &amp; walk across the beach to burst open the golden treasure chest!
+              </p>
+            </div>
+          </div>
+
+          {/* Centered Controls Row */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
           <button
             type="button"
             onClick={() => setSoundMuted((m) => !m)}
@@ -167,6 +183,7 @@ export default function KidsZoneTreasurePath() {
           >
             <RotateCcw className="h-3.5 w-3.5" /> New Island Run
           </Button>
+          </div>
         </div>
       </div>
 

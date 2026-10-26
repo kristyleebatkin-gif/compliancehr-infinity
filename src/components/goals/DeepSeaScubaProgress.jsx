@@ -195,23 +195,23 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
               style={{ borderTopWidth: '5px', borderTopColor: '#00C6FF' }}
             >
               <div className="flex flex-col items-center space-y-2.5">
-                {/* Top Participant & Percentage Badges */}
+                {/* Top Participant & Percentage Badges — Framed so Percentages Fit Cleanly */}
                 <div className="flex w-full items-center justify-between gap-2">
-                  <span className="rounded-full border border-[#0A2B6D] bg-[#F5F0FF] px-3 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                  <span className="rounded-full border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]">
                     {g.participant_name || 'Participant'}
                   </span>
-                  <span className="rounded-full border border-[#0A2B6D] bg-[#FFE066] px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                  <span className="inline-flex min-w-[84px] items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-[#FFE066] px-3.5 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
                     {pct}% Full
                   </span>
                 </div>
 
-                {/* Centered Scuba Cylinder + Goal Title Side-by-Side */}
-                <div className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#0A2B6D]/20 bg-[#F0F9FF] p-2.5">
+                {/* Centered Wider Scuba Cylinder + Goal Title Side-by-Side So Tank Percentages Fit Comfortably */}
+                <div className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#0A2B6D]/25 bg-[#F0F9FF] p-3">
                   <div className="flex flex-col items-center shrink-0">
-                    <div className="h-2 w-6 rounded-t border border-[#0A2B6D] bg-[#00C6FF]" />
+                    <div className="h-2.5 w-8 rounded-t border-2 border-[#0A2B6D] bg-[#00C6FF]" />
                     <div
-                      style={{ height: 108, width: 44 }}
-                      className="relative flex h-[108px] w-[44px] shrink-0 flex-col justify-end overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#031026] shadow-sm"
+                      style={{ height: 116, width: 62 }}
+                      className="relative flex h-[116px] w-[62px] shrink-0 flex-col justify-end overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-[#031026] shadow-sm"
                     >
                       <div
                         className="w-full transition-all duration-500"
@@ -222,16 +222,16 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                             : 'linear-gradient(180deg, rgba(0,245,212,0.92) 0%, rgba(0,198,255,0.85) 100%)',
                         }}
                       />
-                      <div className="pointer-events-none absolute inset-0 flex flex-col justify-between py-1 px-1 text-[7.5px] font-extrabold text-white">
-                        <span>100%</span>
-                        <span>50%</span>
-                        <span>0%</span>
+                      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-1.5 px-1 text-[9px] font-extrabold text-white">
+                        <span className="rounded-full bg-[#0A2B6D]/85 px-1.5 py-0.5 leading-none">100%</span>
+                        <span className="rounded-full bg-[#0A2B6D]/85 px-1.5 py-0.5 leading-none">50%</span>
+                        <span className="rounded-full bg-[#0A2B6D]/85 px-1.5 py-0.5 leading-none">0%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex-1 text-center space-y-1">
-                    <span className="inline-block rounded-full bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                  <div className="flex-1 text-center space-y-1.5">
+                    <span className="inline-block rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF]">
                       {g.category || 'Goal Track'}
                     </span>
                     <p className="text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D]">
@@ -307,26 +307,26 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
                 </div>
               </div>
 
-              {/* Submarine Slider Control */}
-              <div className="mt-2.5 border-t border-[#0A2B6D]/20 bg-white pt-2">
-                <div className="mb-1.5 flex items-center justify-between text-[10px] font-extrabold text-[#0A2B6D]">
-                  <span>🚢 Submarine Depth Slider</span>
-                  <div className="flex gap-1">
-                    {[25, 50, 75, 100].map((step) => (
-                      <button
-                        key={step}
-                        type="button"
-                        onClick={() => handleDiveChange(g, step, idx)}
-                        className={`rounded-full border border-[#0A2B6D] px-2 py-0.5 text-[9px] font-extrabold ${
-                          pct === step
-                            ? 'bg-[#FFE066] text-[#0A2B6D]'
-                            : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-                        }`}
-                      >
-                        {step}%
-                      </button>
-                    ))}
-                  </div>
+              {/* Submarine Slider Control — Full-Width 4-Column Percentage Buttons So Every Percentage Fits Cleanly */}
+              <div className="mt-2.5 border-t border-[#0A2B6D]/20 bg-white pt-2.5 space-y-1.5">
+                <div className="text-center text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  🚢 Submarine Depth Slider ({pct}%)
+                </div>
+                <div className="grid w-full grid-cols-4 gap-1.5">
+                  {[25, 50, 75, 100].map((step) => (
+                    <button
+                      key={step}
+                      type="button"
+                      onClick={() => handleDiveChange(g, step, idx)}
+                      className={`flex min-h-[30px] w-full items-center justify-center rounded-full border-2 border-[#0A2B6D] px-2 py-0.5 text-[10.5px] font-extrabold transition-all ${
+                        pct === step
+                          ? 'bg-[#FFE066] text-[#0A2B6D] shadow-2xs'
+                          : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                      }`}
+                    >
+                      {step}%
+                    </button>
+                  ))}
                 </div>
 
                 <div className="relative flex h-8 items-center">
