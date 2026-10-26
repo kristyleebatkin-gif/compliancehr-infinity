@@ -67,7 +67,7 @@ export default function LandingHero() {
   ];
 
   return (
-    <section className="w-full space-y-4">
+    <section className="landing-hero w-full space-y-4">
       <div
         className="rounded-3xl p-[12px] shadow-lg"
         style={{ background: TOP_BORDER_GRADIENT }}
