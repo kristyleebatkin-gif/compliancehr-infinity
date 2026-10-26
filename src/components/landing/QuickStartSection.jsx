@@ -1,38 +1,122 @@
-import React from 'react';
-import { Bell, Compass, LayoutDashboard, ShieldCheck, Workflow } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Bell, CheckCircle2, Compass, LayoutDashboard, Pin, RefreshCw, ShieldCheck, Workflow } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
+  getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+const STICKY_NOTE_BG = 'linear-gradient(180deg, #FFF3FA 0%, #FFE4F5 100%)';
+const STICKY_NOTE_BORDER = '#FF2E9A';
+const STICKY_NOTE_TAPE = 'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
+
 const STEPS = [
   {
     icon: ShieldCheck,
-    title: 'Register an Account & Request Access',
-    text: 'Register your account and request access. New accounts are placed in pending approval for your Provider Administrator.',
+    notes: [
+      {
+        title: 'Register an Account & Request Access',
+        text: 'Register your account and request access. New accounts are placed in pending approval for your Provider Administrator.',
+        functions: ['Email & OTP Verification', 'Admin Approval Security Gate', 'Role-Scoped Workspace Setup'],
+      },
+      {
+        title: 'Invite Staff, Managers & Auditors',
+        text: 'Send 1-click portal invitations to employees, participants or external NDIS auditors with pre-assigned permissions.',
+        functions: ['1-Click Portal Invites', '15 Granular Role Levels', 'Consent-Gated Auditor Access'],
+      },
+      {
+        title: 'Configure Company Branding & Safe',
+        text: 'Add your organisation logo, ABN, NDIS registration number and key personnel so every PDF and form is pre-stamped.',
+        functions: ['Auto-Branded PDF Headers', 'Company Safe Vault Setup', 'Key Business Contacts'],
+      },
+    ],
   },
   {
     icon: LayoutDashboard,
-    title: 'Open Your Role Dashboard',
-    text: 'Your personalised dashboard displays the exact modules, live registers, and tools configured for your role.',
+    notes: [
+      {
+        title: 'Open Your Role Dashboard',
+        text: 'Your personalised dashboard displays the exact modules, live registers, and tools configured for your role.',
+        functions: ['Executive & Staff Views', 'Live Compliance Score Ring', 'Morning AI Shift Briefing'],
+      },
+      {
+        title: 'Switch Between Office & Profile Views',
+        text: 'Toggle seamlessly between the interactive Executive Office Wall and the structured Profile & Register Workspace.',
+        functions: ['Executive Wall Scene', 'Quick App Bar iPad Strip', 'Global Instant Search'],
+      },
+      {
+        title: 'Launch 1-Click Operations Sweeps',
+        text: 'Run any of the 12 armed operational sweeps across compliance, rostering, incidents and staff files in one tap.',
+        functions: ['12 Armed Operations Sweeps', 'Live Execution Audit Trail', 'Automated Task Dispatch'],
+      },
+    ],
   },
   {
     icon: Workflow,
-    title: 'Follow the Connected Workflow',
-    text: 'Move seamlessly from intake, profiles, and rostering right through to safety, HR, finance, and governance.',
+    notes: [
+      {
+        title: 'Follow the Connected Workflow',
+        text: 'Move seamlessly from intake, profiles, and rostering right through to safety, HR, finance, and governance.',
+        functions: ['Intake → Profile Auto-Sync', 'Roster → NDIS Invoice Flow', 'Shift Note → Goal Update'],
+      },
+      {
+        title: 'Eliminate Double Data Entry',
+        text: 'Use AI Smart-Fill and connected registers so participant and staff details populate across forms automatically.',
+        functions: ['AI Smart-Fill Form Engine', '125+ Printable A4 Templates', 'Digital Signature Capture'],
+      },
+      {
+        title: 'Connect Rosters, Payroll & Claims',
+        text: 'Validate worker screening and fatigue on the roster, then generate NDIS invoices and staff payslips in seconds.',
+        functions: ['SCHADS & Screening Gate', 'NDIS Price Guide Lookup', 'AI Receipt & Bank Match'],
+      },
+    ],
   },
   {
     icon: Bell,
-    title: 'Stay Audit-Ready Every Day',
-    text: 'Live compliance trackers monitor due dates across every module, with instant alerts and step-by-step user guides.',
+    notes: [
+      {
+        title: 'Stay Audit-Ready Every Day',
+        text: 'Live compliance trackers monitor due dates across every module, with instant alerts and step-by-step user guides.',
+        functions: ['90/60/30-Day Expiry Scans', '2-Minute Express Audits', '1-Click NDIS Board Pack'],
+      },
+      {
+        title: 'Track 24h & 5d NDIS Timers',
+        text: 'Built-in statutory countdown timers keep reportable incidents, complaints and risk reviews on schedule.',
+        functions: ['24h & 5d NDIS Clocks', 'ISO 31000 Risk Matrix', 'Continuous Improvement Log'],
+      },
+      {
+        title: 'Auto-Generate 30-Action Reports',
+        text: 'Every 30 actions or completed tasks automatically compiles a permanent PDF and CSV governance batch report.',
+        functions: ['30-Action PDF/CSV Batches', '30-Task Completion Packs', 'Tamper-Evident Audit Trail'],
+      },
+    ],
   },
 ];
 
 export default function QuickStartSection() {
+  const [noteIndices, setNoteIndices] = useState([0, 0, 0, 0]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNoteIndices((prev) => prev.map((v) => (v + 1) % 3));
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const cycleSingleNote = (stepIdx) => {
+    setNoteIndices((prev) =>
+      prev.map((val, i) => (i === stepIdx ? (val + 1) % STEPS[stepIdx].notes.length : val))
+    );
+  };
+
+  const cycleAllNotes = () => {
+    setNoteIndices((prev) => prev.map((v) => (v + 1) % 3));
+  };
+
   return (
     <section
       id="quick-start"
@@ -58,61 +142,145 @@ export default function QuickStartSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Our Quick 4 Step Start Guide" Directly Above the Tiles */}
+        {/* Stretched Side-to-Side "Our Quick 4 Step Start Guide" Directly Above the Sticky Notes */}
         <div
-          className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: getHeaderView(4) }}
+          className="flex min-h-[56px] w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-[#0A2B6D] px-6 py-2 text-white shadow-sm"
+          style={{ background: getHeaderView(4), color: '#FFFFFF' }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-            <Compass className="h-3.5 w-3.5 text-white" />
-          </span>
-          <span className="text-center">Our Quick 4 Step Start Guide</span>
+          <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Compass className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+            </span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>
+              Our Quick 4 Step Start Guide
+            </span>
+            <button
+              type="button"
+              onClick={cycleAllNotes}
+              className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white hover:bg-white/30"
+              style={{ color: '#FFFFFF' }}
+            >
+              <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+              <span style={{ color: '#FFFFFF' }}>Flip All 4 Sticky Notes ▸</span>
+            </button>
+          </div>
+          <div
+            className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
+            style={{ color: '#FFFFFF' }}
+          >
+            Sticky Notes with Functions · Click Any Note to Change to Next Note
+          </div>
         </div>
 
-        {/* 4 Step Tiles: App Design Colour Between Outer Border & Inner Writing Border, White Symbols & Steps, Balanced Dark Blue Wording */}
-        <ol className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
+        {/* 4 Steps on Changeable Sticky Notes in the Exact Same Sticky Note Design */}
+        <ol className="grid w-full gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4 text-center items-stretch">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
+            const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index + 1);
+            const activeNoteIdx = noteIndices[index] % step.notes.length;
+            const currentNote = step.notes[activeNoteIdx];
+
             return (
               <Reveal
-                key={step.title}
+                key={`step-${index}`}
                 as="li"
                 delay={index * 0.06}
-                className="group flex h-full flex-col items-center justify-between rounded-2xl border-[3px] p-3.5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border-[3px] p-4 pt-5 text-center shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
-                  background: getHeaderView(index),
-                  borderColor: borderCol,
+                  background: STICKY_NOTE_BG,
+                  borderColor: STICKY_NOTE_BORDER,
+                  borderBottomRightRadius: '26px',
                 }}
               >
-                {/* Top Row: White Symbol & Slightly Larger White Step Pill */}
-                <div className="mb-3 flex w-full items-center justify-center gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white shadow-sm">
-                    <Icon className="h-5 w-5 text-white" />
-                  </span>
-                  <span className="rounded-full border-2 border-white bg-white/20 px-4 py-1.5 font-editorial text-sm sm:text-base font-extrabold text-white shadow-2xs">
-                    Step 0{index + 1}
+                {/* Top Sticky Tape Strip + Pin */}
+                <div
+                  className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 shadow-sm"
+                  style={{ background: STICKY_NOTE_TAPE }}
+                >
+                  <Pin className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                  <span
+                    className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    Step 0{index + 1} Note ({activeNoteIdx + 1}/{step.notes.length})
                   </span>
                 </div>
 
-                {/* Information Inside a White Bordered Box with Heading in App Design Coloured Border & All Dark Blue Writing */}
-                <div
-                  className="flex w-full flex-1 flex-col items-center justify-between rounded-xl border-2 bg-white p-3.5 text-center shadow-2xs space-y-2.5"
-                  style={{ borderColor: borderCol }}
-                >
+                <div className="flex w-full flex-col items-center space-y-2.5">
+                  {/* Top Row: Symbol, Step Number & "Next Note ▸" Button */}
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm"
+                        style={{ borderColor: borderCol }}
+                      >
+                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                      </span>
+                      <span
+                        className="rounded-full border-2 bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                        style={{ borderColor: borderCol }}
+                      >
+                        Step 0{index + 1}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => cycleSingleNote(index)}
+                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      style={{ color: '#FFFFFF' }}
+                    >
+                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
+                    </button>
+                  </div>
+
+                  {/* Heading in App Design Coloured Border */}
                   <div
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[46px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-2 text-center">
+                    <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
                       <h3 className="font-editorial text-sm sm:text-[15px] font-extrabold leading-snug text-center text-[#0A2B6D]">
-                        {step.title}
+                        {currentNote.title}
                       </h3>
                     </div>
                   </div>
-                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-relaxed text-center text-[#0A2B6D]">
-                    {step.text}
+
+                  <p
+                    className="text-xs font-bold leading-snug text-center text-black"
+                    style={{ color: '#000000' }}
+                  >
+                    {currentNote.text}
                   </p>
+                </div>
+
+                {/* Live Functions Listed on Each Sticky Note */}
+                <div
+                  className="mt-3 w-full rounded-xl p-[2.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
+                    <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      <span>Live Functions Included:</span>
+                      <span>Note {activeNoteIdx + 1}/3</span>
+                    </div>
+                    <ul className="space-y-1">
+                      {currentNote.functions.map((fn) => (
+                        <li
+                          key={fn}
+                          className="flex items-start gap-1.5 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <CheckCircle2
+                            className="mt-0.5 h-3 w-3 shrink-0"
+                            style={{ color: STICKY_NOTE_BORDER }}
+                          />
+                          <span className="text-[#0A2B6D]">{fn}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </Reveal>
             );

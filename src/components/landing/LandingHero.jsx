@@ -32,10 +32,10 @@ export default function LandingHero() {
       badge: 'PILLAR 1 · PEOPLE & PROFILES',
       title: 'People Connected',
       reasons: [
-        'Staff, participants, volunteers and key personnel in one place',
-        'Intake flows straight into live, kept-current profiles',
-        'Consents, screening and certificates tracked automatically',
-        'Teams, support workers and supervisors always visible',
+        'Staff, participants & volunteers in one hub',
+        'Intake flows straight into live profiles',
+        'Consents, screening & certs auto-tracked',
+        'Teams, workers & supervisors visible live',
       ],
     },
     {
@@ -43,10 +43,10 @@ export default function LandingHero() {
       badge: 'PILLAR 2 · ROSTER & FINANCE',
       title: 'Operations Connected',
       reasons: [
-        'Rosters, shift notes, invoices and payroll in one flow',
-        'Registers, alerts and reminders run themselves',
-        'Every action and conversation documented as it happens',
-        'Quotes, receipts, assets and purchase orders reconciled',
+        'Rosters, shift notes, invoices & payroll',
+        'Registers, alerts & reminders run 24/7',
+        'Every action & shift note logged live',
+        'Quotes, receipts, assets & POs reconciled',
       ],
     },
     {
@@ -54,10 +54,10 @@ export default function LandingHero() {
       badge: 'PILLAR 3 · NDIS & GOVERNANCE',
       title: 'Audit Confidence',
       reasons: [
-        'Two-minute internal audits with branded reports',
-        'Evidence attached as you work, ready for your NDIS auditor',
-        'Live trackers prove every document is compliant, every day',
-        'Corrective actions raised and closed with full history',
+        'Two-minute audits with branded PDF packs',
+        'Evidence attached ready for NDIS auditors',
+        'Live trackers prove daily full compliance',
+        'Corrective actions tracked to completion',
       ],
     },
   ];
@@ -149,8 +149,8 @@ export default function LandingHero() {
             ))}
           </div>
 
-          {/* 3 Pillar Cards — App Design Colour Borders Around Pillars, Pillar Numbers Under Writing, 4 Tiles with White, Pink, Purple & Blue Sprays of Colour */}
-          <div className="grid w-full gap-4 text-left sm:grid-cols-3 items-stretch">
+          {/* 3 Pillar Cards — Balanced Writing Sizing so Every Heading, Badge & Bullet Fits Cleanly */}
+          <div className="grid w-full gap-4 text-center md:grid-cols-3 items-stretch">
             {highlights.map(({ icon: Icon, badge, title, reasons }, index) => {
               const PILLAR_SPRAY_BGS = [
                 'radial-gradient(circle at 12% 20%, rgba(255, 133, 224, 0.55) 0%, transparent 45%), radial-gradient(circle at 88% 25%, rgba(56, 189, 248, 0.55) 0%, transparent 48%), radial-gradient(circle at 52% 85%, rgba(192, 132, 252, 0.55) 0%, transparent 50%), #FFFFFF',
@@ -165,40 +165,50 @@ export default function LandingHero() {
                   className="flex h-full flex-col rounded-3xl p-[6px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex h-full flex-1 flex-col justify-between rounded-[18px] bg-white p-4">
-                    <div className="flex flex-1 flex-col justify-between space-y-3">
-                      {/* Pillar Title Writing First, Pillar Number Badge Underneath */}
+                  <div className="flex h-full flex-1 flex-col justify-between rounded-[18px] bg-white p-3.5">
+                    <div className="flex flex-1 flex-col justify-between space-y-2.5">
+                      {/* Pillar Title Inside Clean App-Coloured Frame + Full-Fit Pillar Badge Underneath */}
                       <div className="flex flex-col items-center text-center space-y-2">
-                        <h3 className="font-editorial text-xl sm:text-2xl font-extrabold leading-tight">
-                          <span className="text-[#0A2B6D]">{title.split(' ')[0]} </span>
-                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                            {title.split(' ').slice(1).join(' ')}
-                          </span>
-                        </h3>
-                        <span
-                          className="inline-flex h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-2xs whitespace-nowrap"
-                          style={{ background: getHeaderView(index) }}
+                        <div
+                          className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                          style={{ background: TOP_BORDER_GRADIENT }}
+                        >
+                          <div className="flex min-h-[44px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                            <h3 className="font-editorial text-base sm:text-lg lg:text-xl font-extrabold leading-tight">
+                              <span className="text-[#0A2B6D]">{title.split(' ')[0]} </span>
+                              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                                {title.split(' ').slice(1).join(' ')}
+                              </span>
+                            </h3>
+                          </div>
+                        </div>
+
+                        <div
+                          className="flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] px-2.5 py-1 text-[10px] lg:text-[11px] font-extrabold uppercase tracking-wide text-white shadow-2xs"
+                          style={{ background: getHeaderView(index), color: '#FFFFFF' }}
                         >
                           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                            <Icon className="h-3 w-3 text-white" />
+                            <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span className="truncate">{badge}</span>
-                        </span>
+                          <span className="text-center leading-tight" style={{ color: '#FFFFFF' }}>
+                            {badge}
+                          </span>
+                        </div>
                       </div>
 
-                      {/* 4 Equal-Height Rows Lined Up Horizontally: White, Pink, Purple & Blue Sprays of Colour + App Design Colour Borders */}
-                      <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-2.5">
+                      {/* 4 Equal-Height Rows Formatted to Fit Comfortably Without Crowding */}
+                      <ul className="grid flex-1 grid-cols-1 grid-rows-4 gap-2">
                         {reasons.map((r, rIdx) => {
                           const sym = getSymbolView(index * 3 + rIdx);
                           const sprayBg = PILLAR_SPRAY_BGS[(index + rIdx) % PILLAR_SPRAY_BGS.length];
                           return (
                             <li
                               key={r}
-                              className="flex h-full min-h-[62px] rounded-2xl p-[3px] shadow-2xs"
+                              className="flex h-full min-h-[54px] rounded-2xl p-[2.5px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-3.5 py-2 text-xs font-extrabold leading-snug text-[#0A2B6D]"
+                                className="flex h-full w-full items-center gap-2 rounded-[13px] px-2.5 py-2 text-left text-[11px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]"
                                 style={{ background: sprayBg }}
                               >
                                 <span
@@ -215,16 +225,16 @@ export default function LandingHero() {
                       </ul>
                     </div>
 
-                    <div className="mt-4 flex justify-center">
+                    <div className="mt-3 flex justify-center">
                       <Link
                         to="/dashboard"
-                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-5 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                        style={{ background: getHeaderView(index + 1) }}
+                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                        style={{ background: getHeaderView(index + 1), color: '#FFFFFF' }}
                       >
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                          <ArrowRight className="h-3 w-3 text-white" />
+                          <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                         </span>
-                        <span>Explore in Dashboard</span>
+                        <span style={{ color: '#FFFFFF' }}>Explore in Dashboard</span>
                       </Link>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AlertTriangle,
   BadgeCheck,
@@ -11,6 +11,7 @@ import {
   Heart,
   MapPinned,
   Pin,
+  RefreshCw,
   ShieldAlert,
   Sparkles,
   Users,
@@ -34,126 +35,289 @@ const FEATURES = [
   {
     icon: Users,
     title: 'Workforce Records',
-    desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.',
-    functions: [
-      '100-Point Staff File Completeness',
-      'NDIS Screening & Blue Card expiry alerts',
-      'Instant Staff ID Badge & Name Tag Studio',
+    notes: [
+      {
+        desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.',
+        functions: [
+          '100-Point Staff File Completeness',
+          'NDIS Screening & Blue Card expiry alerts',
+          'Instant Staff ID Badge & Name Tag Studio',
+        ],
+      },
+      {
+        desc: 'Automated workforce assurance, qualification checks and team leader assignments.',
+        functions: [
+          '2-Week & 90-Day Credential Warnings',
+          'Staff Audit Consent Service-Role Lock',
+          '1-Click Printable Staff File Audit PDF',
+        ],
+      },
     ],
   },
   {
     icon: Heart,
     title: 'Participant Records',
-    desc: 'Participant profiles, support plans, agreements and folder compliance checklists.',
-    functions: [
-      '1-Click Intake-to-Profile onboarding',
-      '3-Part Consents (Sharing, Advocacy, Meds)',
-      '10-weekly & 3-monthly review trackers',
+    notes: [
+      {
+        desc: 'Participant profiles, support plans, agreements and folder compliance checklists.',
+        functions: [
+          '1-Click Intake-to-Profile onboarding',
+          '3-Part Consents (Sharing, Advocacy, Meds)',
+          '10-weekly & 3-monthly review trackers',
+        ],
+      },
+      {
+        desc: 'Person-centred goals, medication charts, risk profiles and nominee approvals.',
+        functions: [
+          'Participant Portal & Visual Routines',
+          'SAM Medication & Behaviour Support Plans',
+          'Automated Details Check Email Reminders',
+        ],
+      },
     ],
   },
   {
     icon: CalendarClock,
     title: 'Rostering & Shift Notes',
-    desc: 'Plan by participant or worker, shifts, availability, handovers and payable hours.',
-    functions: [
-      'SCHADS qualification & fatigue gatekeeper',
-      'Coverage heatmap & labour cost forecast',
-      'Shift handover notes & goal progress sync',
+    notes: [
+      {
+        desc: 'Plan by participant or worker, shifts, availability, handovers and payable hours.',
+        functions: [
+          'SCHADS qualification & fatigue gatekeeper',
+          'Coverage heatmap & labour cost forecast',
+          'Shift handover notes & goal progress sync',
+        ],
+      },
+      {
+        desc: '2-way calendar sync, open shift fill suggestions and weekly sign-off ledgers.',
+        functions: [
+          'Google Calendar & iCal 2-Way Feed',
+          'AI Best-Match Worker Shift Suggestions',
+          'Weekly Roster Sign-Off & Exception Log',
+        ],
+      },
     ],
   },
   {
     icon: BriefcaseBusiness,
     title: 'Performance Reviews',
-    desc: 'Online appraisals, review schedules and connected employment records.',
-    functions: [
-      '360° Staff Performance Appraisals',
-      'Digital Employment Contracts & signing',
-      'Automated probation & milestone reminders',
+    notes: [
+      {
+        desc: 'Online appraisals, review schedules and connected employment records.',
+        functions: [
+          '360° Staff Performance Appraisals',
+          'Digital Employment Contracts & signing',
+          'Automated probation & milestone reminders',
+        ],
+      },
+      {
+        desc: 'Position descriptions, HR letter generators and buddy shift onboarding trackers.',
+        functions: [
+          'Official HR Letter & Contract Templates',
+          'Buddy Shift & Induction Checklist',
+          'Employee Recognition & Milestone Awards',
+        ],
+      },
     ],
   },
   {
     icon: FileSpreadsheet,
     title: 'Invoicing & Payroll',
-    desc: 'NDIS invoices from rostered shifts, price-guide items and payroll reports.',
-    functions: [
-      'Shift-to-Invoice NDIS Price Guide builder',
-      'Automated Staff Payslips & Pay Runs',
-      'AI Receipt Scanner & Bank Reconciliation',
+    notes: [
+      {
+        desc: 'NDIS invoices from rostered shifts, price-guide items and payroll reports.',
+        functions: [
+          'Shift-to-Invoice NDIS Price Guide builder',
+          'Automated Staff Payslips & Pay Runs',
+          'AI Receipt Scanner & Bank Reconciliation',
+        ],
+      },
+      {
+        desc: 'Aged receivables, NDIS service quotes, purchase orders and 3-way matching.',
+        functions: [
+          'NDIS Support Catalogue Item Suggest',
+          '3-Way PO, Invoice & Receipt Match',
+          '1-Click Email Payslips & Branded Quotes',
+        ],
+      },
     ],
   },
   {
     icon: AlertTriangle,
     title: 'Incident Clinic',
-    desc: 'Log, investigate and resolve incidents with 24h/5d alerts and full audit trails.',
-    functions: [
-      '24-hour & 5-day NDIS Commission timers',
-      'Root-cause investigation & photo evidence',
-      'Auto-routing to Compliance & Quality',
+    notes: [
+      {
+        desc: 'Log, investigate and resolve incidents with 24h/5d alerts and full audit trails.',
+        functions: [
+          '24-hour & 5-day NDIS Commission timers',
+          'Root-cause investigation & photo evidence',
+          'Auto-routing to Compliance & Quality',
+        ],
+      },
+      {
+        desc: 'WHS regulator notifications, medication response logs and trend heatmaps.',
+        functions: [
+          'Reportable Incident Decision Guide',
+          'Participant & Nominee Notification Log',
+          'Live Incident Analytics & Severity Charts',
+        ],
+      },
     ],
   },
   {
     icon: ShieldAlert,
     title: 'Risk Management',
-    desc: 'Identify, assess and treat risks and hazards with a live register and controls.',
-    functions: [
-      'ISO 31000 Hierarchy of Controls matrix',
-      '6-monthly Individual & Home Assessments',
-      'Pre-shift Take-5 & vehicle safety checks',
+    notes: [
+      {
+        desc: 'Identify, assess and treat risks and hazards with a live register and controls.',
+        functions: [
+          'ISO 31000 Hierarchy of Controls matrix',
+          '6-monthly Individual & Home Assessments',
+          'Pre-shift Take-5 & vehicle safety checks',
+        ],
+      },
+      {
+        desc: 'Eliminate, minimise and isolate hazards with scheduled control reviews.',
+        functions: [
+          'Common NDIS Risk Library Starters',
+          'Emergency Drills & Fire Kit Checklists',
+          'MSDS Chemical & Equipment Manuals',
+        ],
+      },
     ],
   },
   {
     icon: GraduationCap,
     title: 'Training Tracking',
-    desc: 'Assign modules, track completions and stay on top of expiring certifications.',
-    functions: [
-      'Interactive LMS Learner Portal & streaks',
-      'AI Course Author & AI Competency Quizzes',
-      'Auto-issued signed PDF Certificates',
+    notes: [
+      {
+        desc: 'Assign modules, track completions and stay on top of expiring certifications.',
+        functions: [
+          'Interactive LMS Learner Portal & streaks',
+          'AI Course Author & AI Competency Quizzes',
+          'Auto-issued signed PDF Certificates',
+        ],
+      },
+      {
+        desc: 'Skills gap analytics, volunteer training matrices and mandatory induction paths.',
+        functions: [
+          'Department Skills Gap Heatmap',
+          'Automated 30-Day Cert Expiry Emails',
+          'Master Skills & Instructions Studio',
+        ],
+      },
     ],
   },
   {
     icon: BadgeCheck,
     title: 'NDIS Governance',
-    desc: 'Registration groups, scheduled audits, renewals, reminders and Commission portals.',
-    functions: [
-      '8 NDIS Practice Standards control map',
-      'Consent-gated External Auditor Portal',
-      'Live NDIS Commission news & updates',
+    notes: [
+      {
+        desc: 'Registration groups, scheduled audits, renewals, reminders and Commission portals.',
+        functions: [
+          '8 NDIS Practice Standards control map',
+          'Consent-gated External Auditor Portal',
+          'Live NDIS Commission news & updates',
+        ],
+      },
+      {
+        desc: 'Board governance packs, KPI auto-calculators and statutory deadline trackers.',
+        functions: [
+          'NDIS Registration Group Scope Matrix',
+          'Automated KPI & Quality Indicator Sync',
+          '1-Click Executive Board Report PDF',
+        ],
+      },
     ],
   },
   {
     icon: ClipboardCheck,
     title: 'Express Audit & Certs',
-    desc: 'Complete internal audits in minutes with evidence attached and branded reports.',
-    functions: [
-      '2-Minute Express Audit generator',
-      '356-Checkpoint Master Audit (CHR-AUD-001)',
-      '1-Click Printable PDF Audit & Board Pack',
+    notes: [
+      {
+        desc: 'Complete internal audits in minutes with evidence attached and branded reports.',
+        functions: [
+          '2-Minute Express Audit generator',
+          '356-Checkpoint Master Audit (CHR-AUD-001)',
+          '1-Click Printable PDF Audit & Board Pack',
+        ],
+      },
+      {
+        desc: '6 structured compliance binders and 12 A4 printable master templates included.',
+        functions: [
+          '2026 Standard Printable Templates Suite',
+          'Auto-Filed Corrective Action Tasks',
+          'Weekly Automated Compliance Digest',
+        ],
+      },
     ],
   },
   {
     icon: MapPinned,
     title: 'Community Referral',
-    desc: 'Essential crisis contacts, verified providers and local services by postcode.',
-    functions: [
-      'Postcode-matched local referral directory',
-      '24/7 Emergency & Crisis Quick-Dial hub',
-      'Community Council & accessible events',
+    notes: [
+      {
+        desc: 'Essential crisis contacts, verified providers and local services by postcode.',
+        functions: [
+          'Postcode-matched local referral directory',
+          '24/7 Emergency & Crisis Quick-Dial hub',
+          'Community Council & accessible events',
+        ],
+      },
+      {
+        desc: 'Send warm referrals, generate event flyers with AI and log community outcomes.',
+        functions: [
+          '1-Click Referral Form & Email Dispatch',
+          'AI Event Ad & Flyer Image Builder',
+          'Local Council Lookup by Postcode',
+        ],
+      },
     ],
   },
   {
     icon: Sparkles,
     title: 'Automation & Excel',
-    desc: 'Assisted checks, scheduled reminders and secure Excel import, preview and export.',
-    functions: [
-      '65+ live workflows & 100+ server functions',
-      '30-Action & 30-Task PDF/CSV batch reports',
-      '1-Click CSV/Excel import & export exchange',
+    notes: [
+      {
+        desc: 'Assisted checks, scheduled reminders and secure Excel import, preview and export.',
+        functions: [
+          '65+ live workflows & 100+ server functions',
+          '30-Action & 30-Task PDF/CSV batch reports',
+          '1-Click CSV/Excel import & export exchange',
+        ],
+      },
+      {
+        desc: 'AI Assistant chat, troubleshooter diagnostics and bi-directional GitHub sync.',
+        functions: [
+          '24/7 In-App Compliance AI Assistant',
+          'Automated Daily Module Status Snapshots',
+          'Tamper-Evident Data Control & Breach Log',
+        ],
+      },
     ],
   },
 ];
 
 export default function FeaturesSection() {
+  const [noteIndices, setNoteIndices] = useState(() => FEATURES.map(() => 0));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNoteIndices((prev) => prev.map((v, i) => (v + 1) % FEATURES[i].notes.length));
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const cycleNote = (idx) => {
+    setNoteIndices((prev) =>
+      prev.map((v, i) => (i === idx ? (v + 1) % FEATURES[idx].notes.length : v))
+    );
+  };
+
+  const cycleAllNotes = () => {
+    setNoteIndices((prev) => prev.map((v, i) => (v + 1) % FEATURES[i].notes.length));
+  };
+
   return (
     <section
       id="features"
@@ -185,29 +349,49 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Latest Platform Capabilities · 12 Connected Engines" Underneath Writing */}
+        {/* Stretched Banner — Line 1: Latest Platform Capabilities · 12 Connected Engines, Line 2: Sticky Notes with Functions */}
         <div
-          className="w-full rounded-full p-[3px] shadow-sm"
+          className="w-full rounded-3xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            className="gradient-brand flex min-h-[58px] w-full flex-col items-center justify-center gap-1 rounded-[21px] px-6 py-2.5 text-center text-white"
             style={{ background: getHeaderView(5), color: '#FFFFFF' }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-            </span>
-            <span className="text-center" style={{ color: '#FFFFFF' }}>
-              Latest Platform Capabilities · 12 Connected Engines (Sticky Notes with Functions)
-            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              </span>
+              <span className="text-center" style={{ color: '#FFFFFF' }}>
+                Latest Platform Capabilities · 12 Connected Engines
+              </span>
+              <button
+                type="button"
+                onClick={cycleAllNotes}
+                className="inline-flex items-center gap-1 rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white hover:bg-white/30"
+                style={{ color: '#FFFFFF' }}
+              >
+                <RefreshCw className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                <span style={{ color: '#FFFFFF' }}>Flip All 12 Sticky Notes ▸</span>
+              </button>
+            </div>
+            <div
+              className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-white"
+              style={{ color: '#FFFFFF' }}
+            >
+              Sticky Notes with Functions
+            </div>
           </div>
         </div>
 
-        {/* 12 Capability Sticky Notes with Functions */}
+        {/* 12 Capability Sticky Notes with Functions — Changeable & Identical Sticky Note Design */}
         <div className="grid w-full grid-cols-1 gap-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr text-center">
           {FEATURES.map((f, index) => {
             const sym = getSymbolView(index);
             const borderCol = getAppBorderView(index);
+            const activeNoteIdx = noteIndices[index] % f.notes.length;
+            const currentNote = f.notes[activeNoteIdx];
+
             return (
               <Reveal
                 key={f.title}
@@ -229,25 +413,37 @@ export default function FeaturesSection() {
                     className="text-[9.5px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
                     style={{ color: '#FFFFFF' }}
                   >
-                    Capability Note #{index + 1}
+                    Capability Note #{index + 1} ({activeNoteIdx + 1}/{f.notes.length})
                   </span>
                 </div>
 
                 <div className="flex w-full flex-col items-center space-y-2.5">
-                  {/* Symbol and Number Beside Each Other */}
-                  <div className="flex items-center justify-center gap-2">
-                    <span
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                      style={{ borderColor: borderCol }}
+                  {/* Symbol, Number & "Next Note ▸" Button */}
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                        style={{ borderColor: borderCol }}
+                      >
+                        <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                      </span>
+                      <span
+                        className="rounded-full border-2 bg-white px-2.5 py-0.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                        style={{ borderColor: borderCol }}
+                      >
+                        #{index + 1}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => cycleNote(index)}
+                      className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-1 text-[9.5px] font-extrabold text-white shadow-2xs hover:opacity-95"
+                      style={{ color: '#FFFFFF' }}
                     >
-                      <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                    </span>
-                    <span
-                      className="rounded-full border-2 bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
-                      style={{ borderColor: borderCol }}
-                    >
-                      #{index + 1}
-                    </span>
+                      <RefreshCw className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Next Note ▸</span>
+                    </button>
                   </div>
 
                   {/* Heading in App Design Coloured Border */}
@@ -255,7 +451,7 @@ export default function FeaturesSection() {
                     className="w-full rounded-xl p-[3px] shadow-2xs"
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
-                    <div className="flex min-h-[40px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
+                    <div className="flex min-h-[42px] w-full items-center justify-center rounded-[9px] bg-white px-3 py-1.5 text-center">
                       <h3 className="font-editorial text-sm sm:text-base font-extrabold leading-snug text-[#0A2B6D]">
                         {f.title}
                       </h3>
@@ -266,7 +462,7 @@ export default function FeaturesSection() {
                     className="text-xs font-bold leading-snug text-black"
                     style={{ color: '#000000' }}
                   >
-                    {f.desc}
+                    {currentNote.desc}
                   </p>
                 </div>
 
@@ -276,11 +472,12 @@ export default function FeaturesSection() {
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="rounded-[9px] bg-white/95 p-2.5 text-left space-y-1">
-                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      Live Functions Included:
+                    <div className="flex items-center justify-between text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      <span>Live Functions Included:</span>
+                      <span>Note {activeNoteIdx + 1}/{f.notes.length}</span>
                     </div>
                     <ul className="space-y-1">
-                      {f.functions.map((fn) => (
+                      {currentNote.functions.map((fn) => (
                         <li
                           key={fn}
                           className="flex items-start gap-1.5 text-[11px] font-extrabold leading-tight text-[#0A2B6D]"

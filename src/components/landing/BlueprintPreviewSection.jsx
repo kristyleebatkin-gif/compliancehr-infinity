@@ -61,24 +61,24 @@ const POP_SONGS = [
   },
 ];
 
-// Curated YouTube Music Clips so every laptop displays a distinct music clip
+// Curated YouTube Music Clips so every laptop displays a distinct music clip screen at the bottom
 const YOUTUBE_CLIPS = [
-  { title: 'Dua Lipa — Levitating (Official Clip)', videoId: 'TUVcZfQe-Kw', channel: 'YouTube Music Pop HD' },
-  { title: 'The Weeknd — Blinding Lights (Official Clip)', videoId: '4NRXx6U8ABQ', channel: 'YouTube Synthwave TV' },
-  { title: 'Bruno Mars — 24K Magic (Official Clip)', videoId: 'UqyT8IEBkvY', channel: 'YouTube Funk Hits' },
-  { title: 'Mark Ronson ft. Bruno Mars — Uptown Funk', videoId: 'OPf0YbXqDm0', channel: 'YouTube Party Classics' },
-  { title: 'Justin Timberlake — Can’t Stop the Feeling!', videoId: 'ru0K8uYEZWw', channel: 'YouTube Feel-Good Pop' },
-  { title: 'Pharrell Williams — Happy (Official Clip)', videoId: 'ZbZSe6N_BXs', channel: 'YouTube Sunshine Hits' },
-  { title: 'Katy Perry — Roar (Official Music Clip)', videoId: 'CevxZvSJLk8', channel: 'YouTube Pop Anthems' },
-  { title: 'Taylor Swift — Shake It Off (Official Clip)', videoId: 'nfWlot6h_JM', channel: 'YouTube Chart Toppers' },
-  { title: 'Ed Sheeran — Shape of You (Official Clip)', videoId: 'JGwWNGJdvx8', channel: 'YouTube Acoustic Pop' },
-  { title: 'Harry Styles — As It Was (Official Clip)', videoId: 'H5v3kku4y6Q', channel: 'YouTube Indie Pop HD' },
-  { title: 'Coldplay — Higher Power (Official Clip)', videoId: '3lfnR7OhZY8', channel: 'YouTube Arena Live' },
-  { title: 'Daft Punk — Get Lucky (Official Audio Clip)', videoId: '5NV6Rdv1a3I', channel: 'YouTube Disco Groove' },
-  { title: 'Calvin Harris — Feel So Close (Official Clip)', videoId: 'dGghkjpNCQ8', channel: 'YouTube Dance Club' },
-  { title: 'Miley Cyrus — Flowers (Official Music Clip)', videoId: 'G7KNmW9a75Y', channel: 'YouTube Global Hits' },
-  { title: 'OneRepublic — Counting Stars (Official Clip)', videoId: 'hT_nvWreIhg', channel: 'YouTube Pop Rock HD' },
-  { title: 'Maroon 5 — Sugar (Official Music Clip)', videoId: '09R8_2nJtjg', channel: 'YouTube Spotlight TV' },
+  { title: 'Dua Lipa — Levitating', videoId: 'TUVcZfQe-Kw', channel: 'YouTube Pop HD' },
+  { title: 'The Weeknd — Blinding Lights', videoId: '4NRXx6U8ABQ', channel: 'YouTube Synthwave' },
+  { title: 'Bruno Mars — 24K Magic', videoId: 'UqyT8IEBkvY', channel: 'YouTube Funk Hits' },
+  { title: 'Mark Ronson ft. Bruno Mars — Uptown Funk', videoId: 'OPf0YbXqDm0', channel: 'YouTube Party HD' },
+  { title: 'Justin Timberlake — Can’t Stop the Feeling!', videoId: 'ru0K8uYEZWw', channel: 'YouTube Feel-Good' },
+  { title: 'Pharrell Williams — Happy', videoId: 'ZbZSe6N_BXs', channel: 'YouTube Sunshine' },
+  { title: 'Katy Perry — Roar', videoId: 'CevxZvSJLk8', channel: 'YouTube Anthems' },
+  { title: 'Taylor Swift — Shake It Off', videoId: 'nfWlot6h_JM', channel: 'YouTube Chart HD' },
+  { title: 'Ed Sheeran — Shape of You', videoId: 'JGwWNGJdvx8', channel: 'YouTube Acoustic' },
+  { title: 'Harry Styles — As It Was', videoId: 'H5v3kku4y6Q', channel: 'YouTube Indie Pop' },
+  { title: 'Coldplay — Higher Power', videoId: '3lfnR7OhZY8', channel: 'YouTube Arena HD' },
+  { title: 'Daft Punk — Get Lucky', videoId: '5NV6Rdv1a3I', channel: 'YouTube Disco' },
+  { title: 'Calvin Harris — Feel So Close', videoId: 'dGghkjpNCQ8', channel: 'YouTube Dance HD' },
+  { title: 'Miley Cyrus — Flowers', videoId: 'G7KNmW9a75Y', channel: 'YouTube Global' },
+  { title: 'OneRepublic — Counting Stars', videoId: 'hT_nvWreIhg', channel: 'YouTube Pop Rock' },
+  { title: 'Maroon 5 — Sugar', videoId: '09R8_2nJtjg', channel: 'YouTube Spotlight' },
 ];
 
 const byKey = Object.fromEntries(MODULE_DIRECTORY.map((m) => [m.key, m]));
@@ -94,7 +94,6 @@ const pick = (...keys) =>
       icon: m.icon,
     }));
 
-// Each group includes filler YouTube Video Laptops in the blank grid spaces so 2-col and 3-col grids have zero empty cells
 const APP_MODULE_GROUPS = [
   {
     title: 'People, intake and profiles',
@@ -113,17 +112,17 @@ const APP_MODULE_GROUPS = [
     youtubeFillers: [
       {
         id: 'yt-filler-1',
-        badge: 'YOUTUBE MUSIC STAGE 01',
-        title: 'Dua Lipa — Levitating (YouTube Pop Stage)',
-        subtitle: 'Live YouTube Music Video Stream · Synced to Workspace Beat',
+        label: 'YouTube Stage 01',
+        blurb: 'Live YouTube Pop Stream synced to your workspace beat — Dua Lipa · Levitating.',
+        clipTitle: 'Dua Lipa — Levitating (Official Clip)',
         videoId: 'TUVcZfQe-Kw',
         visibilityClass: 'flex',
       },
       {
         id: 'yt-filler-2',
-        badge: 'YOUTUBE MUSIC STAGE 02',
-        title: 'The Weeknd — Blinding Lights (YouTube Live Clip)',
-        subtitle: 'Official YouTube HD Music Clip · 1080p Studio Stream',
+        label: 'YouTube Stage 02',
+        blurb: 'Official YouTube Synthwave HD Music Clip — The Weeknd · Blinding Lights.',
+        clipTitle: 'The Weeknd — Blinding Lights (Official Clip)',
         videoId: '4NRXx6U8ABQ',
         visibilityClass: 'flex',
       },
@@ -144,17 +143,17 @@ const APP_MODULE_GROUPS = [
     youtubeFillers: [
       {
         id: 'yt-filler-3',
-        badge: 'YOUTUBE MUSIC STAGE 03',
-        title: 'Mark Ronson ft. Bruno Mars — Uptown Funk',
-        subtitle: 'Official YouTube Music Video · Service Delivery Groove',
+        label: 'YouTube Stage 03',
+        blurb: 'Service Delivery Groove & Workforce Energy — Mark Ronson ft. Bruno Mars · Uptown Funk.',
+        clipTitle: 'Mark Ronson ft. Bruno Mars — Uptown Funk',
         videoId: 'OPf0YbXqDm0',
         visibilityClass: 'flex',
       },
       {
         id: 'yt-filler-4',
-        badge: 'YOUTUBE MUSIC STAGE 04',
-        title: 'Justin Timberlake — Can’t Stop the Feeling!',
-        subtitle: 'Official YouTube HD Clip · Workforce Energy Channel',
+        label: 'YouTube Stage 04',
+        blurb: 'Feel-Good Shift Pop Channel — Justin Timberlake · Can’t Stop the Feeling!',
+        clipTitle: 'Justin Timberlake — Can’t Stop the Feeling!',
         videoId: 'ru0K8uYEZWw',
         visibilityClass: 'hidden sm:flex lg:hidden',
       },
@@ -176,9 +175,9 @@ const APP_MODULE_GROUPS = [
     youtubeFillers: [
       {
         id: 'yt-filler-5',
-        badge: 'YOUTUBE MUSIC STAGE 05',
-        title: 'Pharrell Williams — Happy (YouTube Music Clip)',
-        subtitle: 'Official YouTube HD Video · Audit-Ready Celebration Clip',
+        label: 'YouTube Stage 05',
+        blurb: 'Audit-Ready Celebration Music Clip — Pharrell Williams · Happy.',
+        clipTitle: 'Pharrell Williams — Happy (Official Clip)',
         videoId: 'ZbZSe6N_BXs',
         visibilityClass: 'hidden sm:flex lg:hidden',
       },
@@ -200,9 +199,9 @@ const APP_MODULE_GROUPS = [
     youtubeFillers: [
       {
         id: 'yt-filler-6',
-        badge: 'YOUTUBE MUSIC STAGE 06',
-        title: 'Bruno Mars — 24K Magic (YouTube Music Clip)',
-        subtitle: 'Official YouTube HD Video · Executive Finance & Growth',
+        label: 'YouTube Stage 06',
+        blurb: 'Executive Finance & Growth Pop Stream — Bruno Mars · 24K Magic.',
+        clipTitle: 'Bruno Mars — 24K Magic (Official Clip)',
         videoId: 'UqyT8IEBkvY',
         visibilityClass: 'hidden sm:flex lg:hidden',
       },
@@ -225,17 +224,17 @@ const APP_MODULE_GROUPS = [
     youtubeFillers: [
       {
         id: 'yt-filler-7',
-        badge: 'YOUTUBE MUSIC STAGE 07',
-        title: 'Harry Styles — As It Was (YouTube Music Clip)',
-        subtitle: 'Official YouTube HD Video · Provider Network Stream',
+        label: 'YouTube Stage 07',
+        blurb: 'Provider Network Indie Pop Stream — Harry Styles · As It Was.',
+        clipTitle: 'Harry Styles — As It Was (Official Clip)',
         videoId: 'H5v3kku4y6Q',
         visibilityClass: 'flex',
       },
       {
         id: 'yt-filler-8',
-        badge: 'YOUTUBE MUSIC STAGE 08',
-        title: 'Coldplay — Higher Power (YouTube Music Clip)',
-        subtitle: 'Official YouTube HD Video · Infinity Assistant Live Clip',
+        label: 'YouTube Stage 08',
+        blurb: 'Infinity Assistant Live Arena Clip — Coldplay · Higher Power.',
+        clipTitle: 'Coldplay — Higher Power (Official Clip)',
         videoId: '3lfnR7OhZY8',
         visibilityClass: 'flex',
       },
@@ -266,7 +265,7 @@ const DATA_FLOWS = [
   },
 ];
 
-// Accurate to current permissions in src/lib/roles.js (FULL_ACCESS, OPERATIONS, PERSONAL, PARTICIPANT, AUDITOR/GUEST)
+// Channel 29 for External NDIS Auditors & Guests, without repeating "Auditor Portal" twice
 const ACCESS_LEVELS = [
   {
     channelBadge: 'CHANNEL 7 · LIVE HD',
@@ -297,19 +296,54 @@ const ACCESS_LEVELS = [
     desc: 'Personal access to My Profile, Participant Profiles, Goal Progress, Visual Boards, Roster & Shifts, Programs & Events, Feedback, Community Hub & NDIS News.',
   },
   {
-    channelBadge: 'CHANNEL 28 (SBS) · LIVE HD',
-    channelProgram: 'Ch 28 · Verification & Guest',
+    channelBadge: 'CHANNEL 29 · LIVE HD',
+    channelProgram: 'Ch 29 · Verification & Guest',
     title: 'External NDIS Auditors & Guests',
     scopeBadge: 'AUDITOR & GUEST · Consent-Gated Access',
-    desc: 'Auditors are strictly scoped to the consent-verified External Auditor Portal (`auditor-portal`); Guests explore public tools & request role approval.',
+    desc: 'Auditors have dedicated, consent-verified read-only access in the External Auditor Portal, while Guests explore public tools and request role approval.',
   },
 ];
+
+// Reusable uniform section/group header bar so every header with writing in Accurate Map is the exact same size
+function UniformBlueprintHeader({ icon: Icon, title, badgeText, viewIndex = 0 }) {
+  return (
+    <div
+      className="w-full rounded-2xl p-[3px] shadow-2xs"
+      style={{ background: TOP_BORDER_GRADIENT }}
+    >
+      <div
+        className="gradient-brand flex min-h-[48px] w-full flex-wrap items-center justify-between gap-2.5 rounded-[13px] px-4 py-2 text-white"
+        style={{ background: getHeaderView(viewIndex), color: '#FFFFFF' }}
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+          </span>
+          <span
+            className="text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            style={{ color: '#FFFFFF' }}
+          >
+            {title}
+          </span>
+        </div>
+        {badgeText ? (
+          <span
+            className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10.5px] font-extrabold text-white"
+            style={{ color: '#FFFFFF' }}
+          >
+            {badgeText}
+          </span>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 export default function BlueprintPreviewSection() {
   const [expandConnections, setExpandConnections] = useState(true);
   const [isPlayingPop, setIsPlayingPop] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [songIndex, setSongIndex] = useState(0);
+  const [songIndex] = useState(0);
   const [beatStep, setBeatStep] = useState(0);
   const [activeVideoLaptopKey, setActiveVideoLaptopKey] = useState('yt-filler-1');
   const audioCtxRef = useRef(null);
@@ -384,15 +418,15 @@ export default function BlueprintPreviewSection() {
         }
         @keyframes laptopDanceA {
           0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          25% { transform: translateY(-3px) rotate(-0.8deg) scale(1.008); }
-          50% { transform: translateY(-1px) rotate(0deg) scale(1.012); }
-          75% { transform: translateY(-3px) rotate(0.8deg) scale(1.008); }
+          25% { transform: translateY(-2.5px) rotate(-0.6deg) scale(1.006); }
+          50% { transform: translateY(-1px) rotate(0deg) scale(1.01); }
+          75% { transform: translateY(-2.5px) rotate(0.6deg) scale(1.006); }
         }
         @keyframes laptopDanceB {
           0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          25% { transform: translateY(-3px) rotate(0.8deg) scale(1.008); }
-          50% { transform: translateY(-1px) rotate(0deg) scale(1.012); }
-          75% { transform: translateY(-3px) rotate(-0.8deg) scale(1.008); }
+          25% { transform: translateY(-2.5px) rotate(0.6deg) scale(1.006); }
+          50% { transform: translateY(-1px) rotate(0deg) scale(1.01); }
+          75% { transform: translateY(-2.5px) rotate(-0.6deg) scale(1.006); }
         }
         .laptop-beat-a {
           animation: laptopDanceA 1.15s infinite ease-in-out;
@@ -428,21 +462,13 @@ export default function BlueprintPreviewSection() {
           </div>
         </div>
 
-        {/* Stretched Side-to-Side "Current Platform Blueprint" Underneath Writing in App Design Coloured Border */}
-        <div
-          className="w-full rounded-full p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
-            style={{ background: getHeaderView(1) }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Layers className="h-3.5 w-3.5 text-white" />
-            </span>
-            <span className="text-center">Current Platform Blueprint · {moduleCount} Connected Modules</span>
-          </div>
-        </div>
+        {/* Uniform Header #1: Current Platform Blueprint */}
+        <UniformBlueprintHeader
+          icon={Layers}
+          title={`Current Platform Blueprint · ${moduleCount} Connected Modules`}
+          badgeText="100% Connected Architecture"
+          viewIndex={1}
+        />
 
         {/* How Information Connects & Role-Based Access Model — App Design Coloured Border */}
         <div
@@ -450,58 +476,29 @@ export default function BlueprintPreviewSection() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-[12px] bg-white p-4 text-left space-y-3.5">
-            {/* Stretched Header Border with White Writing */}
-            <div
-              className="w-full rounded-2xl p-[3px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div
-                className="gradient-brand flex w-full items-center justify-center gap-2.5 rounded-[13px] px-4 py-2.5 text-white"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                  <Workflow className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                </span>
-                <span
-                  className="text-xs sm:text-sm md:text-base font-extrabold text-white"
-                  style={{ color: '#FFFFFF' }}
-                >
-                  How Information Connects &amp; Role-Based Access Model
-                </span>
-              </div>
-            </div>
+            {/* Uniform Header #2: How Information Connects & Role-Based Access Model */}
+            <UniformBlueprintHeader
+              icon={Workflow}
+              title="How Information Connects & Role-Based Access Model"
+              badgeText="5 Live Pipelines + 5 TV Channels"
+              viewIndex={2}
+            />
 
             {expandConnections && (
               <div className="grid gap-4 lg:grid-cols-12 items-stretch">
-                {/* Left Column: How Information Connects Automatically (Tiles Slowly Moving Together Left to Right) */}
+                {/* Left Column: How Information Connects Automatically */}
                 <div
                   className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Stretched Header in App Design Coloured Border with White Writing */}
-                    <div
-                      className="w-full rounded-xl p-[3px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div
-                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                      >
-                        <span
-                          className="font-editorial text-sm sm:text-base font-extrabold text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          How Information Connects Automatically
-                        </span>
-                        <span
-                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          Live Left → Right Sync
-                        </span>
-                      </div>
-                    </div>
+                    {/* Uniform Header #3 */}
+                    <UniformBlueprintHeader
+                      icon={Workflow}
+                      title="How Information Connects Automatically"
+                      badgeText="Live Left → Right Sync"
+                      viewIndex={0}
+                    />
 
                     <div className="flex flex-1 flex-col justify-between gap-3">
                       {DATA_FLOWS.map((flow, fIdx) => (
@@ -556,40 +553,19 @@ export default function BlueprintPreviewSection() {
                   </div>
                 </div>
 
-                {/* Right Column: Access Follows Role — Centered on Flat Screen TVs Tuned to Channels */}
+                {/* Right Column: Access Follows Role — Centered on Flat Screen TVs Tuned to Channels (Ch 7, 9, 10, 2, 29) */}
                 <div
                   className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Stretched Header in App Design Coloured Border with White Writing */}
-                    <div
-                      className="w-full rounded-xl p-[3px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div
-                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(5), color: '#FFFFFF' }}
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Lock className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                          <span
-                            className="font-editorial text-sm sm:text-base font-extrabold text-white"
-                            style={{ color: '#FFFFFF' }}
-                          >
-                            Access Follows Role (Live TV Channels)
-                          </span>
-                        </div>
-                        <span
-                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-[10px] font-extrabold text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          Channels 7 · 9 · 10 · 2 · 28
-                        </span>
-                      </div>
-                    </div>
+                    {/* Uniform Header #4 */}
+                    <UniformBlueprintHeader
+                      icon={Lock}
+                      title="Access Follows Role (Live TV Channels)"
+                      badgeText="Channels 7 · 9 · 10 · 2 · 29"
+                      viewIndex={5}
+                    />
 
                     {/* 5 Role Permission Levels Centered Inside Flat Screen TVs on Channels */}
                     <div className="grid grid-cols-1 gap-3">
@@ -638,7 +614,7 @@ export default function BlueprintPreviewSection() {
                                     className="w-full max-w-xl rounded-xl p-[2px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                                    <div className="flex min-h-[42px] items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
                                         className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
@@ -702,81 +678,66 @@ export default function BlueprintPreviewSection() {
           </div>
         </div>
 
-        {/* Live Workspace Groups — Laptops Showing Accurate Module Info + Different YouTube Music Clips + Full YouTube Video Laptops in Blank Spaces */}
+        {/* Organisation Live Workspace — Uniform Header + Clean Action Row + Identically Designed Laptops with Screens at the Bottom */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="w-full rounded-[12px] bg-white p-4 space-y-4 text-left">
-            {/* Stretched Header Border for Organisation Live Workspace */}
-            <div
-              className="w-full rounded-2xl p-[3px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
+            {/* Uniform Header #5: Organisation Live Workspace */}
+            <UniformBlueprintHeader
+              icon={LayoutDashboard}
+              title="Organisation Live Workspace · Interactive Laptops & YouTube Music Clips"
+              badgeText="All Laptops Designed Identically"
+              viewIndex={7}
+            />
+
+            {/* Clean Symmetrical 3-Tile Action Row Below Header (Fixes the First Two Tiles / Header Crowding) */}
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               <div
-                className="flex w-full flex-wrap items-center justify-between gap-2 rounded-[13px] px-4 py-2.5 text-white"
-                style={{ background: getHeaderView(7) }}
+                className="rounded-xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                    <LayoutDashboard className="h-3.5 w-3.5 text-white" />
+                <button
+                  type="button"
+                  onClick={togglePopSound}
+                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+                >
+                  {soundEnabled ? (
+                    <Volume2 className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  ) : (
+                    <VolumeX className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  )}
+                  <span style={{ color: '#FFFFFF' }}>
+                    {soundEnabled ? 'Pop Beat Audio: ON ♫' : 'Play Pop Song Audio ♫'}
                   </span>
-                  <span className="text-xs sm:text-sm md:text-base font-extrabold text-white">
-                    Organisation Live Workspace · Interactive Laptops &amp; YouTube Music Clips
-                  </span>
+                </button>
+              </div>
+
+              <div
+                className="rounded-xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                >
+                  <FileSpreadsheet className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>Spreadsheet Exchange</span>
                 </div>
+              </div>
 
-                <div className="flex flex-wrap items-center gap-2">
-                  {/* Pop Music Controller Pill */}
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <button
-                      type="button"
-                      onClick={togglePopSound}
-                      className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-                      style={{ background: getHeaderView(4), color: '#FFFFFF' }}
-                    >
-                      {soundEnabled ? (
-                        <Volume2 className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                      ) : (
-                        <VolumeX className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                      )}
-                      <span style={{ color: '#FFFFFF' }}>
-                        {soundEnabled ? 'Pop Beat Audio: ON ♫' : 'Play Pop Song Audio ♫'}
-                      </span>
-                    </button>
-                  </div>
-
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <span
-                      className="gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                    >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                        <FileSpreadsheet className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                      </span>
-                      <span style={{ color: '#FFFFFF' }}>Spreadsheet Exchange</span>
-                    </span>
-                  </div>
-                  <div
-                    className="rounded-full p-[2px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <span
-                      className="gradient-brand inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold text-white"
-                      style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-                    >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                        <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                      </span>
-                      <span style={{ color: '#FFFFFF' }}>AI Assistant</span>
-                    </span>
-                  </div>
+              <div
+                className="rounded-xl p-[2.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white"
+                  style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+                >
+                  <Sparkles className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+                  <span style={{ color: '#FFFFFF' }}>24/7 AI Assistant</span>
                 </div>
               </div>
             </div>
@@ -789,37 +750,16 @@ export default function BlueprintPreviewSection() {
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
                   <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-                    {/* Stretched Group Header Border */}
-                    <div
-                      className="w-full rounded-xl p-[3px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div
-                        className="gradient-brand flex w-full flex-wrap items-center justify-between gap-2 rounded-[9px] px-4 py-2 text-white"
-                        style={{ background: getHeaderView(gIdx), color: '#FFFFFF' }}
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Laptop className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                          </span>
-                          <span
-                            className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white"
-                            style={{ color: '#FFFFFF' }}
-                          >
-                            {group.title}
-                          </span>
-                        </div>
-                        <span
-                          className="rounded-full border border-white bg-white/20 px-3 py-0.5 text-xs font-extrabold text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          {group.modules.length} Live Modules + YouTube Stage Laptops
-                        </span>
-                      </div>
-                    </div>
+                    {/* Uniform Group Header — Exact Same Size as All Other Blueprint Headers */}
+                    <UniformBlueprintHeader
+                      icon={Laptop}
+                      title={group.title}
+                      badgeText={`${group.modules.length} Live Modules + YouTube Stage Laptops`}
+                      viewIndex={gIdx}
+                    />
 
-                    {/* Grid of Laptops — Every Module Laptop Centered + Distinct YouTube Music Clip, Plus Full YouTube Video Laptops in Blank Spaces */}
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr pt-1">
+                    {/* Grid of Laptops — Every Laptop (Including First Two Tiles & Filler Laptops) Has Identical Design & Screen at the Bottom */}
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr pt-1 items-stretch">
                       {group.modules.map((mod, mIdx) => {
                         const Icon = mod.icon || ShieldCheck;
                         const idx = gIdx * 10 + mIdx;
@@ -847,19 +787,19 @@ export default function BlueprintPreviewSection() {
                               style={{ borderColor: borderCol }}
                             >
                               {/* Laptop Webcam & Bezel Bar */}
-                              <div className="mb-1.5 flex items-center justify-between px-2">
+                              <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
                                 <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
                                   <Laptop className="h-2.5 w-2.5 text-[#00C6FF]" />
-                                  LAPTOP {idx + 1} · LIVE MODULE
+                                  LAPTOP {String(idx + 1).padStart(2, '0')} · LIVE MODULE
                                 </span>
                                 <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB]">
                                   <Youtube className="h-3 w-3 text-[#FF2E9A]" />
-                                  YT CLIP #{idx + 1}
+                                  CLIP #{idx + 1}
                                   <span className="h-2 w-2 rounded-full bg-[#10B981]" />
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen — Centered Middle Layout */}
+                              {/* Inner Laptop Screen — Uniform Top Header, Centered Writing, and YouTube Video Screen at the Bottom */}
                               <div
                                 className="flex flex-1 rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
@@ -868,18 +808,18 @@ export default function BlueprintPreviewSection() {
                                   className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* Centered Module Header in App Design Coloured Border */}
+                                  {/* 1. Top: Fixed-Height Centered Module Header Box (First Two Tiles & All Others Match Size) */}
                                   <Link
                                     to={mod.path}
-                                    className="w-full rounded-xl p-[2px] shadow-2xs transition-transform hover:scale-[1.01]"
+                                    className="w-full rounded-xl p-[2.5px] shadow-2xs transition-transform hover:scale-[1.01]"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-2 text-center">
+                                    <div className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
-                                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                                        <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
                                       </span>
                                       <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
                                         {mod.label}
@@ -887,10 +827,10 @@ export default function BlueprintPreviewSection() {
                                     </div>
                                   </Link>
 
-                                  {/* Centered Accurate Module Description */}
+                                  {/* 2. Middle: Crisp Centered Module Writing & Open Module Link */}
                                   <Link
                                     to={mod.path}
-                                    className="flex flex-1 flex-col items-center justify-center px-1.5 text-center"
+                                    className="flex min-h-[68px] w-full flex-col items-center justify-between rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs"
                                   >
                                     <p
                                       className="text-center text-[11px] font-extrabold leading-snug text-black"
@@ -898,75 +838,85 @@ export default function BlueprintPreviewSection() {
                                     >
                                       {mod.blurb}
                                     </p>
-                                    <span className="mt-1.5 inline-flex items-center gap-1 rounded-full border border-[#0A2B6D]/20 bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0072FF]">
-                                      Open {mod.label} <ArrowRight className="h-2.5 w-2.5" />
+                                    <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-[#0072FF] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                      <span style={{ color: '#FFFFFF' }}>Open {mod.label}</span>
+                                      <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                                     </span>
                                   </Link>
 
-                                  {/* Different YouTube Music Clip Player on Every Laptop */}
-                                  <div
-                                    className="w-full rounded-xl p-[2px] shadow-2xs"
-                                    style={{ background: TOP_BORDER_GRADIENT }}
-                                  >
-                                    <div className="flex flex-col gap-1.5 rounded-[9px] bg-white p-2 text-left">
+                                  {/* 3. Bottom: YouTube Music Video Screen at the Bottom of Every Laptop */}
+                                  <div className="w-full space-y-1.5">
+                                    <div className="w-full overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] shadow-sm aspect-video">
                                       {isEmbedOpen ? (
-                                        <div className="relative w-full overflow-hidden rounded-lg border border-[#0A2B6D] bg-black aspect-video">
-                                          <iframe
-                                            title={ytClip.title}
-                                            src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?rel=0`}
-                                            className="h-full w-full"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen
-                                          />
-                                        </div>
-                                      ) : null}
-
-                                      <div className="flex items-center justify-between gap-1.5">
-                                        <span className="inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-white">
-                                          <Play className="h-2.5 w-2.5 fill-white text-white" />
-                                          YouTube Clip
-                                        </span>
-                                        <div className="flex items-end gap-0.5 h-3">
-                                          {[0, 1, 2, 3].map((b) => (
-                                            <span
-                                              key={b}
-                                              className="w-1 rounded-full transition-all duration-150"
-                                              style={{
-                                                height: `${((beatStep + idx + b) % 4) * 3 + 4}px`,
-                                                backgroundColor: b % 2 === 0 ? '#FF2E9A' : '#0072FF',
-                                              }}
-                                            />
-                                          ))}
-                                        </div>
-                                      </div>
-
-                                      <div className="text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                                        ♫ {ytClip.title}
-                                      </div>
-
-                                      <div className="flex items-center justify-between gap-1 pt-0.5">
+                                        <iframe
+                                          title={ytClip.title}
+                                          src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&rel=0`}
+                                          className="h-full w-full"
+                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                        />
+                                      ) : (
                                         <button
                                           type="button"
-                                          onClick={() =>
-                                            setActiveVideoLaptopKey(isEmbedOpen ? null : mod.key)
-                                          }
-                                          className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white hover:opacity-95"
-                                          style={{ color: '#FFFFFF' }}
+                                          onClick={() => setActiveVideoLaptopKey(mod.key)}
+                                          className="group/yt relative flex h-full w-full flex-col items-center justify-center gap-1.5 p-2.5 text-center text-white"
+                                          style={{ background: getHeaderView(idx) }}
                                         >
-                                          <Play className="h-2.5 w-2.5 fill-white text-white" />
-                                          <span style={{ color: '#FFFFFF' }}>
-                                            {isEmbedOpen ? 'Hide YouTube Screen' : 'Play Clip on Laptop'}
+                                          <div className="flex items-center gap-1.5">
+                                            <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#FF2E9A] text-white shadow-md transition-transform group-hover/yt:scale-110">
+                                              <Play className="h-4 w-4 fill-white text-white" />
+                                            </span>
+                                            <div className="flex items-end gap-0.5 h-4">
+                                              {[0, 1, 2, 3].map((b) => (
+                                                <span
+                                                  key={b}
+                                                  className="w-1 rounded-full bg-white transition-all duration-150"
+                                                  style={{
+                                                    height: `${((beatStep + idx + b) % 4) * 3 + 4}px`,
+                                                  }}
+                                                />
+                                              ))}
+                                            </div>
+                                          </div>
+                                          <span
+                                            className="text-[10.5px] font-extrabold leading-tight text-white px-2"
+                                            style={{ color: '#FFFFFF' }}
+                                          >
+                                            ♫ {ytClip.title}
+                                          </span>
+                                          <span
+                                            className="rounded-full border border-white/60 bg-white/20 px-2.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-white"
+                                            style={{ color: '#FFFFFF' }}
+                                          >
+                                            {ytClip.channel} · Click to Play
                                           </span>
                                         </button>
-                                        <a
-                                          href={`https://www.youtube.com/watch?v=${ytClip.videoId}`}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-[9px] font-extrabold text-[#0072FF] underline"
-                                        >
-                                          YouTube ↗
-                                        </a>
-                                      </div>
+                                      )}
+                                    </div>
+
+                                    {/* Bottom Screen Control Bar */}
+                                    <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1">
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          setActiveVideoLaptopKey(isEmbedOpen ? null : mod.key)
+                                        }
+                                        className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
+                                        style={{ color: '#FFFFFF' }}
+                                      >
+                                        <Play className="h-2.5 w-2.5 fill-white text-white" />
+                                        <span style={{ color: '#FFFFFF' }}>
+                                          {isEmbedOpen ? 'Stop Clip' : 'Play Clip'}
+                                        </span>
+                                      </button>
+                                      <a
+                                        href={`https://www.youtube.com/watch?v=${ytClip.videoId}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[9px] font-extrabold text-[#0072FF] underline"
+                                      >
+                                        YouTube ↗
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
@@ -986,9 +936,10 @@ export default function BlueprintPreviewSection() {
                         );
                       })}
 
-                      {/* Dedicated YouTube Video Laptops Placed in Every Blank Grid Space */}
+                      {/* Filler YouTube Video Laptops in Blank Grid Spaces — Designed the Exact Same as Module Laptops */}
                       {group.youtubeFillers.map((yt, yIdx) => {
                         const idx = gIdx * 10 + group.modules.length + yIdx;
+                        const sym = getSymbolView(idx);
                         const borderCol = getAppBorderView(idx);
                         const isLive = activeVideoLaptopKey === yt.id;
                         return (
@@ -1002,18 +953,19 @@ export default function BlueprintPreviewSection() {
                               style={{ borderColor: borderCol }}
                             >
                               {/* Laptop Webcam & Bezel Bar */}
-                              <div className="mb-1.5 flex items-center justify-between px-2">
+                              <div className="mb-1.5 flex h-[18px] items-center justify-between px-2">
                                 <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                                  <Youtube className="h-3 w-3 text-[#FF2E9A]" />
-                                  {yt.badge}
+                                  <Laptop className="h-2.5 w-2.5 text-[#00C6FF]" />
+                                  LAPTOP {String(idx + 1).padStart(2, '0')} · YOUTUBE STAGE
                                 </span>
-                                <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#00C6FF]">
-                                  ♫ YOUTUBE HD
-                                  <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
+                                <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#FF6EDB]">
+                                  <Youtube className="h-3 w-3 text-[#FF2E9A]" />
+                                  CLIP #{idx + 1}
+                                  <span className="h-2 w-2 rounded-full bg-[#10B981]" />
                                 </span>
                               </div>
 
-                              {/* Inner Laptop Screen with Live YouTube Video */}
+                              {/* Inner Laptop Screen — Exact Same 3-Part Layout (Header Top, Writing Middle, YouTube Screen Bottom) */}
                               <div
                                 className="flex flex-1 rounded-xl p-[2.5px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
@@ -1022,83 +974,98 @@ export default function BlueprintPreviewSection() {
                                   className="flex h-full w-full flex-col items-center justify-between gap-2.5 rounded-[10px] p-3 text-center text-[#0A2B6D]"
                                   style={{ background: UNIFORM_SPRAY_BG }}
                                 >
-                                  {/* Header in App Design Coloured Border */}
+                                  {/* 1. Top: Fixed-Height Centered Header Box */}
                                   <div
-                                    className="w-full rounded-xl p-[2px] shadow-2xs"
+                                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
                                     style={{ background: TOP_BORDER_GRADIENT }}
                                   >
-                                    <div className="flex items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
+                                    <div className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[9px] bg-white px-3 py-1.5 text-center">
                                       <span
-                                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
                                         style={{ borderColor: borderCol }}
                                       >
-                                        <Music className="h-3.5 w-3.5 text-[#FF2E9A]" />
+                                        <Music className="h-4 w-4" style={{ color: sym.iconColor }} />
                                       </span>
-                                      <span className="text-xs font-extrabold leading-tight text-[#0A2B6D]">
-                                        {yt.title}
+                                      <span className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                                        {yt.label}
                                       </span>
                                     </div>
                                   </div>
 
-                                  {/* Live YouTube Video Embed or High-Contrast Stage Preview */}
-                                  <div className="w-full overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] shadow-sm aspect-video">
-                                    {isLive ? (
-                                      <iframe
-                                        title={yt.title}
-                                        src={`https://www.youtube-nocookie.com/embed/${yt.videoId}?autoplay=1&rel=0`}
-                                        className="h-full w-full"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                      />
-                                    ) : (
-                                      <button
-                                        type="button"
-                                        onClick={() => setActiveVideoLaptopKey(yt.id)}
-                                        className="group relative flex h-full w-full flex-col items-center justify-center gap-1.5 p-3 text-center text-white"
-                                        style={{ background: getHeaderView(gIdx + yIdx) }}
-                                      >
-                                        <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-[#FF2E9A] text-white shadow-md transition-transform group-hover:scale-110">
-                                          <Play className="h-5 w-5 fill-white text-white" />
-                                        </span>
-                                        <span
-                                          className="text-[11px] font-extrabold leading-tight text-white"
-                                          style={{ color: '#FFFFFF' }}
-                                        >
-                                          Click to Play YouTube Music Video
-                                        </span>
-                                        <span
-                                          className="text-[9.5px] font-bold text-white/90"
-                                          style={{ color: '#FFFFFF' }}
-                                        >
-                                          {yt.subtitle}
-                                        </span>
-                                      </button>
-                                    )}
+                                  {/* 2. Middle: Crisp Centered Writing Box */}
+                                  <div className="flex min-h-[68px] w-full flex-col items-center justify-between rounded-xl border border-[#0A2B6D]/15 bg-white/95 px-3 py-2 text-center shadow-2xs">
+                                    <p
+                                      className="text-center text-[11px] font-extrabold leading-snug text-black"
+                                      style={{ color: '#000000' }}
+                                    >
+                                      {yt.blurb}
+                                    </p>
+                                    <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-3 py-0.5 text-[9.5px] font-extrabold text-white">
+                                      <span style={{ color: '#FFFFFF' }}>YouTube Music Stage</span>
+                                    </span>
                                   </div>
 
-                                  {/* Bottom Controls Bar */}
-                                  <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1.5">
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        setActiveVideoLaptopKey(isLive ? null : yt.id)
-                                      }
-                                      className="inline-flex items-center gap-1 rounded-full bg-[#FF2E9A] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white"
-                                      style={{ color: '#FFFFFF' }}
-                                    >
-                                      <Play className="h-2.5 w-2.5 fill-white text-white" />
-                                      <span style={{ color: '#FFFFFF' }}>
-                                        {isLive ? 'Stop Video' : 'Stream Clip'}
-                                      </span>
-                                    </button>
-                                    <a
-                                      href={`https://www.youtube.com/watch?v=${yt.videoId}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[9.5px] font-extrabold text-[#0072FF] underline"
-                                    >
-                                      Watch on YouTube ↗
-                                    </a>
+                                  {/* 3. Bottom: YouTube Music Video Screen at the Bottom */}
+                                  <div className="w-full space-y-1.5">
+                                    <div className="w-full overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] shadow-sm aspect-video">
+                                      {isLive ? (
+                                        <iframe
+                                          title={yt.clipTitle}
+                                          src={`https://www.youtube-nocookie.com/embed/${yt.videoId}?autoplay=1&rel=0`}
+                                          className="h-full w-full"
+                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                        />
+                                      ) : (
+                                        <button
+                                          type="button"
+                                          onClick={() => setActiveVideoLaptopKey(yt.id)}
+                                          className="group/yt relative flex h-full w-full flex-col items-center justify-center gap-1.5 p-2.5 text-center text-white"
+                                          style={{ background: getHeaderView(gIdx + yIdx) }}
+                                        >
+                                          <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#FF2E9A] text-white shadow-md transition-transform group-hover/yt:scale-110">
+                                            <Play className="h-4 w-4 fill-white text-white" />
+                                          </span>
+                                          <span
+                                            className="text-[10.5px] font-extrabold leading-tight text-white px-2"
+                                            style={{ color: '#FFFFFF' }}
+                                          >
+                                            ♫ {yt.clipTitle}
+                                          </span>
+                                          <span
+                                            className="rounded-full border border-white/60 bg-white/20 px-2.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-white"
+                                            style={{ color: '#FFFFFF' }}
+                                          >
+                                            YouTube Stage HD · Click to Play
+                                          </span>
+                                        </button>
+                                      )}
+                                    </div>
+
+                                    {/* Bottom Controls Bar */}
+                                    <div className="flex w-full items-center justify-between gap-2 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1">
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          setActiveVideoLaptopKey(isLive ? null : yt.id)
+                                        }
+                                        className="inline-flex items-center gap-1 rounded-full bg-[#5A00D6] px-2.5 py-0.5 text-[9px] font-extrabold text-white"
+                                        style={{ color: '#FFFFFF' }}
+                                      >
+                                        <Play className="h-2.5 w-2.5 fill-white text-white" />
+                                        <span style={{ color: '#FFFFFF' }}>
+                                          {isLive ? 'Stop Clip' : 'Play Clip'}
+                                        </span>
+                                      </button>
+                                      <a
+                                        href={`https://www.youtube.com/watch?v=${yt.videoId}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[9px] font-extrabold text-[#0072FF] underline"
+                                      >
+                                        YouTube ↗
+                                      </a>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
