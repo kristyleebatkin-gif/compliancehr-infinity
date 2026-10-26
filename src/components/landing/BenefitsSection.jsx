@@ -1,9 +1,17 @@
 import React from 'react';
-import { ShieldCheck, ShieldAlert, TrendingUp, ClipboardCheck, RefreshCw, Lock } from 'lucide-react';
+import {
+  ShieldCheck,
+  ShieldAlert,
+  TrendingUp,
+  ClipboardCheck,
+  RefreshCw,
+  Lock,
+  CheckCircle2,
+  Pin,
+} from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
-  getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
@@ -18,13 +26,72 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
+// All 6 sticky notes use the exact same warm sticky-note colour & border
+const STICKY_NOTE_BG = 'linear-gradient(180deg, #FFF3FA 0%, #FFE4F5 100%)';
+const STICKY_NOTE_BORDER = '#FF2E9A';
+const STICKY_NOTE_TAPE = 'linear-gradient(90deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
+
 const BENEFITS = [
-  { icon: ShieldCheck, title: 'Stay Compliant', desc: 'Live compliance trackers show every document in every area is fully compliant, every day.' },
-  { icon: ShieldAlert, title: 'Reduce Risk', desc: 'Identify, assess, and manage risks before they become incidents.' },
-  { icon: TrendingUp, title: 'Improve Quality', desc: 'Deliver safe, consistent, and high-quality supports across every shift.' },
-  { icon: ClipboardCheck, title: 'Audit Ready in Minutes', desc: 'Express internal audits with evidence and corrective actions captured automatically.' },
-  { icon: RefreshCw, title: 'Continuous Improvement', desc: 'Use live data and feedback to drive better participant and workforce outcomes.' },
-  { icon: Lock, title: 'Secure & Role-Based', desc: 'Granular access keeps sensitive participant and staff data protected and private.' },
+  {
+    icon: ShieldCheck,
+    title: 'Stay Compliant',
+    desc: 'Live compliance trackers show every document in every area is fully compliant, every day.',
+    functions: [
+      'Automated 90/60/30-day expiry scans',
+      '100-Point Staff File Completeness',
+      'Live NDIS Practice Standards matrix',
+    ],
+  },
+  {
+    icon: ShieldAlert,
+    title: 'Reduce Risk',
+    desc: 'Identify, assess, and manage risks before they become incidents.',
+    functions: [
+      '24h & 5-day NDIS Commission timers',
+      'Hierarchy of Controls risk register',
+      'Pre-shift Take-5 & 6-monthly checks',
+    ],
+  },
+  {
+    icon: TrendingUp,
+    title: 'Improve Quality',
+    desc: 'Deliver safe, consistent, and high-quality supports across every shift.',
+    functions: [
+      'Shift handover notes & goal logs',
+      'Continuous improvement action board',
+      'Participant satisfaction surveys',
+    ],
+  },
+  {
+    icon: ClipboardCheck,
+    title: 'Audit Ready in Minutes',
+    desc: 'Express internal audits with evidence and corrective actions captured automatically.',
+    functions: [
+      '2-Minute Express Audit generator',
+      '356-Checkpoint Master Audit Suite',
+      '1-Click Printable PDF Audit Pack',
+    ],
+  },
+  {
+    icon: RefreshCw,
+    title: 'Continuous Improvement',
+    desc: 'Use live data and feedback to drive better participant and workforce outcomes.',
+    functions: [
+      'Auto-routed feedback & complaints',
+      '30-Action & 30-Task batch reports',
+      'KPI auto-calculation & board packs',
+    ],
+  },
+  {
+    icon: Lock,
+    title: 'Secure & Role-Based',
+    desc: 'Granular access keeps sensitive participant and staff data protected and private.',
+    functions: [
+      'Strict RLS across 115+ database entities',
+      'Service-role 3-Part Consent locks',
+      'Consent-gated NDIS Auditor Portal',
+    ],
+  },
 ];
 
 export default function BenefitsSection() {
@@ -35,13 +102,13 @@ export default function BenefitsSection() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Subheading Inside Stretched App Design Coloured Border */}
+        {/* Heading & Black Subheading Centred Inside Stretched App Design Coloured Border */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
-            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
+          <div className="flex w-full flex-col items-center justify-center rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
+            <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
               <span className="text-[#0A2B6D]">Why providers choose </span>
               <span className="text-[#0A2B6D]">Compliance</span>
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -52,8 +119,8 @@ export default function BenefitsSection() {
               </span>
             </h2>
             <p
-              className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-relaxed"
-              style={{ color: getSubheaderColourView(1) }}
+              className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
+              style={{ color: '#000000' }}
             >
               The smartest, simplest, easiest and most effortless way to store, copy, use, audit, share, scan, send, sort, file and report on every document, conversation and outcome, while saving you time, money and effort.
             </p>
@@ -66,17 +133,19 @@ export default function BenefitsSection() {
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
-            style={{ background: getHeaderView(3) }}
+            className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+            style={{ background: getHeaderView(3), color: '#FFFFFF' }}
           >
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <ShieldCheck className="h-3.5 w-3.5 text-white" />
+              <ShieldCheck className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
-            <span className="text-center">Built For Better Services · Why Providers Choose Us</span>
+            <span className="text-center" style={{ color: '#FFFFFF' }}>
+              Built For Better Services · Why Providers Choose Us
+            </span>
           </div>
         </div>
 
-        {/* 6 Benefits in Pink, Blue & Purple Spray Background + App Design Coloured Borders */}
+        {/* 6 Tiles Under Built For Better Services + 6 Sticky Notes in the Exact Same Colour with Functions */}
         <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center">
           {BENEFITS.map((b, index) => {
             const sym = getSymbolView(index + 2);
@@ -90,30 +159,74 @@ export default function BenefitsSection() {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-4 text-center space-y-2.5"
+                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
                   style={{ background: sprayBg }}
                 >
-                  <span
-                    className="flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                    style={{ borderColor: borderCol }}
-                  >
-                    <b.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
-                  </span>
+                  <div className="flex w-full flex-col items-center space-y-2">
+                    <span
+                      className="flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                      style={{ borderColor: borderCol }}
+                    >
+                      <b.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
+                    </span>
 
-                  <div
-                    className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
-                  >
-                    <div className="flex min-h-[40px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                      <h3 className="font-editorial text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-                        {b.title}
-                      </h3>
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                        <h3 className="font-editorial text-xs sm:text-sm font-extrabold text-center text-[#0A2B6D]">
+                          {b.title}
+                        </h3>
+                      </div>
                     </div>
+
+                    <p
+                      className="text-center text-xs font-bold leading-snug text-black"
+                      style={{ color: '#000000' }}
+                    >
+                      {b.desc}
+                    </p>
                   </div>
 
-                  <p className="flex-1 flex items-center justify-center text-xs font-bold leading-snug text-[#0A2B6D]">
-                    {b.desc}
-                  </p>
+                  {/* Sticky Note in the Same Colour Across All 6 Tiles with Live Functions */}
+                  <div
+                    className="relative mt-2 flex w-full flex-col justify-between rounded-xl border-2 p-2.5 pt-3.5 text-left shadow-md"
+                    style={{
+                      background: STICKY_NOTE_BG,
+                      borderColor: STICKY_NOTE_BORDER,
+                      borderBottomRightRadius: '18px',
+                    }}
+                  >
+                    {/* Top Sticky Tape Strip + Pin */}
+                    <div
+                      className="absolute -top-2 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
+                      style={{ background: STICKY_NOTE_TAPE }}
+                    >
+                      <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                      <span
+                        className="text-[9px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                        style={{ color: '#FFFFFF' }}
+                      >
+                        Functions Note
+                      </span>
+                    </div>
+
+                    <ul className="space-y-1 pt-0.5">
+                      {b.functions.map((fn) => (
+                        <li
+                          key={fn}
+                          className="flex items-start gap-1.5 text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                        >
+                          <CheckCircle2
+                            className="mt-0.5 h-3 w-3 shrink-0"
+                            style={{ color: STICKY_NOTE_BORDER }}
+                          />
+                          <span className="text-[#0A2B6D]">{fn}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </Reveal>
             );

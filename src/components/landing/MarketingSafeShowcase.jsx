@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Zap, Award, FileCheck2 } from 'lucide-react';
+import {
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  ShieldCheck,
+  Zap,
+  Award,
+  FileCheck2,
+  Tv,
+  Monitor,
+  Radio,
+} from 'lucide-react';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import MustHaveFunctionsReview from '@/components/landing/MustHaveFunctionsReview';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
@@ -13,7 +24,6 @@ import BeachDeepSeaWallShowcase from '@/components/safe/BeachDeepSeaWallShowcase
 import {
   getHeaderView,
   getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
@@ -32,15 +42,18 @@ const PACKS = [
   {
     id: 'pack-1',
     icon: Sparkles,
+    tvChannel: 'CH 01 · ALL-IN-ONE LIVE TV',
     badge: 'Pack 1 · Smart Enhanced All-In-One Subscription',
     pricePrefix: 'From',
     priceMain: '$660',
-    priceSuffix: '/ month',
+    priceSuffix: '/ month ($7,920/yr)',
     subtitle: 'All 46 live modules + $160/mo Elite Engine Suite + $355 Master Audit Document included',
     bullets: [
-      'Includes +$160/mo Elite Automation & Intelligence Pack',
-      'Includes $355 Master Compliance Audit Checklist (356 Checkpoints)',
-      'Unlimited Staff, Participant & Auditor Portal Workflows',
+      '1. Includes +$160/mo Elite Plan (2,500 Message & 20,000 Integration Credits)',
+      '2. Includes $355 Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      '3. All 46 Connected Modules + Dual Interactive Office & Profile Workspace Views',
+      '4. Smart Rostering, NDIS Price-Guide Invoicing, Payroll & 24h/5d Incident Timers',
+      '5. Unlimited Staff, Participant & Consent-Gated External Auditor Portal Workflows',
     ],
     primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
     secondaryCta: { label: 'View Tier Pricing', href: '#pricing' },
@@ -48,15 +61,18 @@ const PACKS = [
   {
     id: 'pack-2',
     icon: FileCheck2,
+    tvChannel: 'CH 02 · OUTRIGHT DOCS TV',
     badge: 'Pack 2 · Outright Audit & Compliance Doc Pack',
     pricePrefix: 'Outright',
     priceMain: '$999',
     priceSuffix: 'or $125 / month',
-    subtitle: 'Complete 98-Document NDIS & Aged Care Audit Library + $355 Master Audit Checklist',
+    subtitle: 'Complete 125+ Document NDIS & Aged Care Audit Library + $355 Master Audit Checklist',
     bullets: [
-      'All 98 NDIS & Aged Care Policies, Registers & Intake Forms',
-      'Includes $355 Master Audit Checklist (CHR-AUD-001 & 002)',
-      '12 Printable A4 Office Masters + Smart-Fill Auto-Branding',
+      '1. Complete 125+ NDIS & Aged Care Policies, Procedures, Registers & Intake Forms',
+      '2. Includes $355 Master Compliance Audit Checklist (CHR-AUD-001 & CHR-AUD-002)',
+      '3. 6 Structured Compliance Binders + 12 Printable A4 Executive Office Masters',
+      '4. Smart-Fill Auto-Branding with Organisation Logo, ABN, NDIS Number & Signatories',
+      '5. Instant 1-Click PDF & CSV Audit Evidence Packs Ready for NDIS Commission Audits',
     ],
     primaryCta: { label: 'Select $999 Outright / $125m Pack', href: '#pricing' },
     secondaryCta: { label: 'Preview Audit Docs', to: '/compliance' },
@@ -64,6 +80,16 @@ const PACKS = [
 ];
 
 export default function MarketingSafeShowcase({ embedded = false }) {
+  const [activeBenefitIdx, setActiveBenefitIdx] = useState(0);
+
+  // Changes every 30 seconds to cycle through the 5 package benefits on the TV screen
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveBenefitIdx((prev) => (prev + 1) % 5);
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className={embedded ? 'w-full space-y-4' : 'w-full bg-white p-3 sm:p-4 space-y-4'}>
       {/* CENTERED "Why Every Provider Subscribes" */}
@@ -72,12 +98,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-          {/* Heading & Subtitle Inside Stretched App Design Coloured Border */}
+          {/* Heading & Black Subtitle Inside Stretched App Design Coloured Border */}
           <div
             className="w-full rounded-2xl p-[4px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
+            <div className="w-full rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
               <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
                 <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
                 <span className="text-[#0A2B6D]">Compliance</span>
@@ -90,8 +116,8 @@ export default function MarketingSafeShowcase({ embedded = false }) {
               </h2>
 
               <p
-                className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-relaxed"
-                style={{ color: getSubheaderColourView(1) }}
+                className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
+                style={{ color: '#000000' }}
               >
                 Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
               </p>
@@ -104,173 +130,308 @@ export default function MarketingSafeShowcase({ embedded = false }) {
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             <div
-              className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
-              style={{ background: getHeaderView(1) }}
+              className="gradient-brand flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
+              style={{ background: getHeaderView(1), color: '#FFFFFF' }}
             >
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Sparkles className="h-3.5 w-3.5 text-white" />
+                <Sparkles className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
               </span>
-              <span className="text-center">Executive Marketing &amp; Sales Suite · 14-Day Free Trial</span>
+              <span className="text-center" style={{ color: '#FFFFFF' }}>
+                Executive Marketing &amp; Sales Suite · 14-Day Free Trial
+              </span>
             </div>
           </div>
 
-          {/* 4 High-Impact Subscriber Value Pills in Pink, Blue & Purple Spray + App Design Coloured Borders */}
-          <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+          {/* 4 High-Impact Subscriber Value Tiles Inside Small Flat Screen Monitors */}
+          <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: ShieldCheck, title: '46 Live Modules', sub: '100% Connected' },
-              { icon: Zap, title: '2-Min Audits', sub: 'Instant PDF Pack' },
-              { icon: Award, title: '356 Checkpoints', sub: '98 Master Docs' },
-              { icon: Sparkles, title: 'AI Smart-Fill', sub: 'Zero Double-Entry' },
+              { icon: ShieldCheck, title: '46 Live Modules', sub: '100% Connected · From $660/mo' },
+              { icon: Zap, title: '2-Min Audits', sub: 'Instant PDF Pack · $355 Doc Free' },
+              { icon: Award, title: '356 Checkpoints', sub: '125+ Master Docs · $999 Outright' },
+              { icon: Sparkles, title: 'AI Smart-Fill', sub: 'Zero Double-Entry · +$160/m Elite' },
             ].map((p, idx) => {
               const Icon = p.icon;
               const sym = getSymbolView(idx + 1);
               const borderCol = getAppBorderView(idx + 1);
               const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
               return (
-                <div
-                  key={p.title}
-                  className="rounded-2xl p-[3px] shadow-sm"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
+                <div key={p.title} className="flex flex-col items-center">
+                  {/* Small Flat Screen Monitor Frame */}
                   <div
-                    className="flex h-full items-center justify-center gap-2.5 rounded-[13px] px-4 py-3 text-left text-[#0A2B6D]"
-                    style={{ background: sprayBg }}
+                    className="w-full rounded-2xl border-[3px] bg-[#0A2B6D] p-2 shadow-md"
+                    style={{ borderColor: borderCol }}
                   >
-                    <span
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-                      style={{ borderColor: borderCol }}
+                    {/* Top Monitor Bezel Bar */}
+                    <div className="mb-1.5 flex items-center justify-between px-2">
+                      <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                        <Monitor className="h-2.5 w-2.5 text-[#00C6FF]" />
+                        FLAT SCREEN 0{idx + 1}
+                      </span>
+                      <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                    </div>
+
+                    {/* Inner Monitor Display */}
+                    <div
+                      className="rounded-xl p-[2.5px]"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                    </span>
-                    <div>
-                      <div className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
-                        {p.title}
-                      </div>
-                      <div className="text-[11px] font-bold leading-tight text-[#0A2B6D]">
-                        {p.sub}
+                      <div
+                        className="flex items-center justify-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left text-[#0A2B6D]"
+                        style={{ background: sprayBg }}
+                      >
+                        <span
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
+                          style={{ borderColor: borderCol }}
+                        >
+                          <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs sm:text-sm font-extrabold leading-tight text-[#0A2B6D]">
+                            {p.title}
+                          </div>
+                          <div className="text-[11px] font-bold leading-tight text-black" style={{ color: '#000000' }}>
+                            {p.sub}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {/* Flat Screen Monitor Stand Neck & Base */}
+                  <div className="h-2 w-6 bg-[#0A2B6D]" />
+                  <div
+                    className="h-1.5 w-16 rounded-full border border-[#0A2B6D]"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  />
                 </div>
               );
             })}
           </div>
 
-          {/* Pack 1 and Pack 2 — App Design Coloured Borders & Spray Bullet Tiles */}
+          {/* Pack 1 and Pack 2 — Identical Design Side-by-Side with 5 Benefits on a Live 30-Sec Cycling TV Screen */}
           <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
             {PACKS.map((pack, pIdx) => {
               const PackIcon = pack.icon;
+              const currentSpotlight = pack.bullets[activeBenefitIdx % pack.bullets.length];
               return (
                 <div
                   key={pack.id}
                   className="flex h-full rounded-2xl p-[4px] shadow-sm"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-between rounded-[12px] bg-white p-5 text-center">
-                    <div className="flex flex-1 flex-col items-center justify-between w-full space-y-3">
+                  <div className="flex h-full w-full flex-col items-center justify-between rounded-[12px] bg-white p-4 sm:p-5 text-center space-y-3.5">
+                    <div className="flex w-full flex-col items-center space-y-2.5">
+                      {/* Stretched Package Header Badge */}
                       <div
                         className="w-full rounded-full p-[2.5px] shadow-2xs"
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
                         <span
-                          className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                          style={{ background: getHeaderView(pIdx * 2 + 2) }}
+                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                          style={{ background: getHeaderView(pIdx * 2 + 2), color: '#FFFFFF' }}
                         >
                           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                            <PackIcon className="h-3 w-3 text-white" />
+                            <PackIcon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span>{pack.badge}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pack.badge}</span>
                         </span>
                       </div>
 
-                      <div className="flex items-baseline justify-center gap-2 pt-1">
-                        <span className="text-xs font-extrabold uppercase text-[#0072FF]">
-                          {pack.pricePrefix}
-                        </span>
-                        <span
-                          className="font-editorial text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent"
-                          style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                      {/* Price Display Inside App Design Coloured Border */}
+                      <div
+                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex flex-col items-center justify-center rounded-[9px] bg-white px-3 py-2">
+                          <div className="flex flex-wrap items-baseline justify-center gap-2">
+                            <span className="text-xs font-extrabold uppercase text-[#0072FF]">
+                              {pack.pricePrefix}
+                            </span>
+                            <span
+                              className="font-editorial text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent"
+                              style={{ backgroundImage: getTitleGradientView(pIdx) }}
+                            >
+                              {pack.priceMain}
+                            </span>
+                            <span className="text-xs font-extrabold text-[#5A00D6]">
+                              {pack.priceSuffix}
+                            </span>
+                          </div>
+                          <p
+                            className="mt-1 text-center text-xs font-extrabold text-black"
+                            style={{ color: '#000000' }}
+                          >
+                            {pack.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Widescreen TV Screen Showing All 5 Listed Benefits + 30-Second Auto-Changing Benefit Spotlight */}
+                    <div className="flex w-full flex-1 flex-col items-center">
+                      <div
+                        className=" flex w-full flex-1 flex-col justify-between rounded-[22px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
+                        style={{ borderColor: getAppBorderView(pIdx) }}
+                      >
+                        {/* Top TV Bezel Status Bar */}
+                        <div className="mb-2 flex items-center justify-between px-2">
+                          <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                            <Tv className="h-3.5 w-3.5 text-[#00C6FF]" />
+                            {pack.tvChannel}
+                          </span>
+                          <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
+                            <Radio className="h-2.5 w-2.5 text-[#FF2E9A]" />
+                            30s Auto-Cycle · Benefit {(activeBenefitIdx % 5) + 1} of 5
+                          </span>
+                        </div>
+
+                        {/* Inner TV Screen */}
+                        <div
+                          className="flex flex-1 flex-col justify-between rounded-2xl p-[3px]"
+                          style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          {pack.priceMain}
-                        </span>
-                        <span className="text-xs font-extrabold text-[#5A00D6]">
-                          {pack.priceSuffix}
-                        </span>
-                      </div>
-
-                      <p className="text-xs font-extrabold text-[#0A2B6D]">
-                        {pack.subtitle}
-                      </p>
-
-                      <ul className="grid w-full grid-cols-1 auto-rows-fr gap-2 pt-1 text-left text-xs font-extrabold">
-                        {pack.bullets.map((line, idx) => {
-                          const sym = getSymbolView(pIdx * 3 + idx);
-                          const borderCol = getAppBorderView(pIdx * 3 + idx);
-                          const sprayBg = SPRAY_BGS[(pIdx * 3 + idx) % SPRAY_BGS.length];
-                          return (
-                            <li
-                              key={line}
-                              className="flex h-full rounded-2xl p-[2.5px] shadow-2xs"
+                          <div
+                            className="flex h-full flex-col justify-between rounded-[13px] p-3 text-left space-y-2.5"
+                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
+                          >
+                            {/* 30-Second Changing Spotlight Banner at Top of TV Screen */}
+                            <div
+                              className="w-full rounded-xl p-[2px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
                               <div
-                                className="flex h-full w-full items-center gap-2.5 rounded-[13px] px-3.5 py-2 text-[#0A2B6D]"
-                                style={{ background: sprayBg }}
+                                className="gradient-brand flex items-center justify-between gap-2 rounded-[9px] px-3 py-2 text-white"
+                                style={{ background: getHeaderView((activeBenefitIdx + pIdx) % 8), color: '#FFFFFF' }}
                               >
-                                <span
-                                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 bg-white"
-                                  style={{ borderColor: borderCol }}
+                                <div className="min-w-0 flex-1">
+                                  <div
+                                    className="text-[9px] font-extrabold uppercase tracking-wider text-white"
+                                    style={{ color: '#FFFFFF' }}
+                                  >
+                                    Now Playing on TV (Changes Every 30 Secs):
+                                  </div>
+                                  <div
+                                    className="text-xs font-extrabold leading-snug text-white"
+                                    style={{ color: '#FFFFFF' }}
+                                  >
+                                    {currentSpotlight}
+                                  </div>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => setActiveBenefitIdx((prev) => (prev + 1) % 5)}
+                                  className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0.5 text-[9px] font-extrabold text-white hover:bg-white/30"
+                                  style={{ color: '#FFFFFF' }}
                                 >
-                                  <CheckCircle2 className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                                </span>
-                                <span className="text-[#0A2B6D]">{line}</span>
+                                  Next ▸
+                                </button>
                               </div>
-                            </li>
-                          );
-                        })}
-                      </ul>
+                            </div>
+
+                            {/* All 5 Package Benefits Listed on the TV Screen */}
+                            <ul className="grid w-full grid-cols-1 gap-1.5 text-left text-xs font-extrabold">
+                              {pack.bullets.map((line, idx) => {
+                                const sym = getSymbolView(pIdx * 3 + idx);
+                                const borderCol = getAppBorderView(pIdx * 3 + idx);
+                                const isCurrent = idx === activeBenefitIdx % 5;
+                                return (
+                                  <li
+                                    key={line}
+                                    onClick={() => setActiveBenefitIdx(idx)}
+                                    className="cursor-pointer rounded-xl p-[2px] shadow-2xs transition-all"
+                                    style={{ background: TOP_BORDER_GRADIENT }}
+                                  >
+                                    <div
+                                      className={`flex items-center gap-2 rounded-[9px] px-2.5 py-1.5 ${
+                                        isCurrent ? 'bg-white ring-2 ring-[#FF2E9A]' : 'bg-white/95'
+                                      }`}
+                                    >
+                                      <span
+                                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-white"
+                                        style={{ borderColor: borderCol }}
+                                      >
+                                        <CheckCircle2 className="h-3 w-3" style={{ color: sym.iconColor }} />
+                                      </span>
+                                      <span className="flex-1 text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
+                                        {line}
+                                      </span>
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/* Bottom TV Speaker Bar & Power LED */}
+                        <div className="mt-2 flex items-center justify-between px-3">
+                          <span className="text-[9px] font-extrabold tracking-widest text-white/80">
+                            COMPLIANCEHR INFINITY HD TV
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            {[0, 1, 2, 3, 4].map((dot) => (
+                              <button
+                                key={dot}
+                                type="button"
+                                aria-label={`Show benefit ${dot + 1}`}
+                                onClick={() => setActiveBenefitIdx(dot)}
+                                className={`h-2 w-2 rounded-full transition-all ${
+                                  activeBenefitIdx % 5 === dot ? 'bg-[#FF2E9A] scale-125' : 'bg-white/40'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* TV Pedestal Neck & Stand Base */}
+                      <div className="h-2.5 w-12 bg-[#0A2B6D]" />
+                      <div
+                        className="h-2 w-28 rounded-full border-2 border-[#0A2B6D] shadow-sm"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      />
                     </div>
 
-                    <div className="mt-4 grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {/* Package Action Buttons */}
+                    <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                       {pack.primaryCta.to ? (
                         <Link
                           to={pack.primaryCta.to}
-                          className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                          style={{ background: getHeaderView(0) }}
+                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                         >
                           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-3 w-3 text-white" />
+                            <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span>{pack.primaryCta.label}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
                         </Link>
                       ) : (
                         <a
                           href={pack.primaryCta.href}
-                          className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                          style={{ background: getHeaderView(0) }}
+                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                         >
                           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <ArrowRight className="h-3 w-3 text-white" />
+                            <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span>{pack.primaryCta.label}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pack.primaryCta.label}</span>
                         </a>
                       )}
 
                       {pack.secondaryCta.to ? (
                         <Link
                           to={pack.secondaryCta.to}
-                          className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                          style={{ background: getHeaderView(3) }}
+                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
                         >
-                          <span>{pack.secondaryCta.label}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
                         </Link>
                       ) : (
                         <a
                           href={pack.secondaryCta.href}
-                          className="inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                          style={{ background: getHeaderView(3) }}
+                          className="gradient-brand inline-flex min-h-[38px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                          style={{ background: getHeaderView(3), color: '#FFFFFF' }}
                         >
-                          <span>{pack.secondaryCta.label}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pack.secondaryCta.label}</span>
                         </a>
                       )}
                     </div>

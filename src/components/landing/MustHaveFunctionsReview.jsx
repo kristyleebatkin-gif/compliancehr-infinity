@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ClipboardCheck, Users, CalendarClock,
-  AlertTriangle, GraduationCap, MessagesSquare, Building2,
-  CheckCircle2, ArrowRight, Cpu, TrendingUp, BookOpen, Layers, Sparkles,
+  ClipboardCheck,
+  Users,
+  CalendarClock,
+  AlertTriangle,
+  GraduationCap,
+  MessagesSquare,
+  Building2,
+  CheckCircle2,
+  ArrowRight,
+  Cpu,
+  TrendingUp,
+  BookOpen,
+  Layers,
+  Sparkles,
+  Monitor,
+  Tv,
+  Radio,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
   getHeaderView,
   getTitleGradientView,
-  getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';
@@ -24,15 +37,48 @@ const SPRAY_BGS = [
   'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
 ];
 
+// Accurate ComplianceHR Infinity tier & package prices + what they replace
 export const REPLACED_SOFTWARE_STACK = [
-  { tool: 'Standalone NDIS Audit Consultant & Templates', typicalCost: '$1,200/mo' },
-  { tool: 'HR Information System & Digital Contracts', typicalCost: '$450/mo' },
-  { tool: 'Shift Rostering & Award/Timesheet Software', typicalCost: '$550/mo' },
-  { tool: 'NDIS Price Guide Invoicing & Claiming Tool', typicalCost: '$400/mo' },
-  { tool: 'Incident, Risk & WHS Compliance Software', typicalCost: '$480/mo' },
-  { tool: 'LMS Staff Training & Certificate Generator', typicalCost: '$390/mo' },
-  { tool: 'Team Messaging, Diary & Task Boards', typicalCost: '$320/mo' },
-  { tool: 'Document Vault, Read-Receipts & E-Sign', typicalCost: '$290/mo' },
+  {
+    tool: 'Up to 20 Users · Smart Enhanced Elite Plan',
+    accuratePrice: '$660/mo ($7,920/yr)',
+    replaces: 'Replaces $1,200/mo Audit Consultant',
+  },
+  {
+    tool: '21–30 Users · Smart Enhanced Elite Plan',
+    accuratePrice: '$723/mo ($8,670/yr)',
+    replaces: 'Replaces $450/mo HRIS & Contracts',
+  },
+  {
+    tool: '31–40 Users · Smart Enhanced Elite Plan',
+    accuratePrice: '$785/mo ($9,420/yr)',
+    replaces: 'Replaces $550/mo Rostering & Timesheets',
+  },
+  {
+    tool: '41–50 Users · Smart Enhanced Elite Plan',
+    accuratePrice: '$848/mo ($10,170/yr)',
+    replaces: 'Replaces $400/mo NDIS Claiming Tool',
+  },
+  {
+    tool: '51–100 Users · Smart Enhanced Elite Plan',
+    accuratePrice: '$910/mo ($10,920/yr)',
+    replaces: 'Replaces $480/mo Incident & Risk Software',
+  },
+  {
+    tool: '101+ Users · Enterprise Smart Enhanced Plan',
+    accuratePrice: '$1,035/mo ($12,420/yr)',
+    replaces: 'Replaces $390/mo LMS & Certificates',
+  },
+  {
+    tool: 'Outright 125+ Compliance & Audit Doc Pack',
+    accuratePrice: '$999 Outright or $125/mo',
+    replaces: 'Replaces $320/mo Team & Task Boards',
+  },
+  {
+    tool: 'Master Audit Checklist (CHR-AUD-001 & 002)',
+    accuratePrice: '$355 Value · FREE in Plan',
+    replaces: 'Replaces $290/mo Document Vault',
+  },
 ];
 
 export const MUST_HAVE_PILLARS = [
@@ -173,7 +219,7 @@ export default function MustHaveFunctionsReview() {
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* Heading & Subheading Inside Stretched App Design Coloured Border */}
+        {/* Heading & Black Subheading Inside Stretched App Design Coloured Border */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
@@ -189,41 +235,43 @@ export default function MustHaveFunctionsReview() {
               </span>
             </h2>
             <p
-              className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-relaxed"
-              style={{ color: getSubheaderColourView(1) }}
+              className="mx-auto w-full text-center text-xs sm:text-sm font-extrabold leading-relaxed text-black"
+              style={{ color: '#000000' }}
             >
-              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
+              {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows · From $660/mo or $999 Outright Docs
             </p>
           </div>
         </div>
 
-        {/* Stretched Side-to-Side Banner Underneath in App Design Coloured Border */}
+        {/* Stretched Side-to-Side "Full Review..." Banner Fitted Cleanly in App Design Coloured Border */}
         <div
           className="w-full rounded-full p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className="flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full px-6 py-2 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white"
-            style={{ background: getHeaderView(0) }}
+            className="gradient-brand flex min-h-[42px] w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white"
+            style={{ background: getHeaderView(0), color: '#FFFFFF' }}
           >
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <BookOpen className="h-3.5 w-3.5 text-white" />
+              <BookOpen className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
-            <span className="text-center">Full Review of Every Must-Have Function · Includes $355 Audit Doc Free</span>
+            <span className="text-center leading-snug" style={{ color: '#FFFFFF' }}>
+              Full Review of Every Must-Have Function · Includes $355 Audit Doc Free
+            </span>
           </div>
         </div>
 
-        {/* Executive KPI Counter Pills in Pink, Blue & Purple Spray + App Design Coloured Borders */}
+        {/* Executive KPI & Accurate Price Counter Pills in Pink, Blue & Purple Spray + App Design Coloured Borders */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {[
-            { val: `${MODULE_DIRECTORY.length}`, label: 'Connected Modules' },
-            { val: '17', label: 'Audit Categories' },
-            { val: '356', label: 'Audit Checkpoints' },
+            { val: `${MODULE_DIRECTORY.length} Modules`, label: 'From $660/mo' },
+            { val: '17 Categories', label: '356 Checkpoints' },
+            { val: '$355 Value', label: 'Audit Doc FREE' },
             { val: '$999 / $125m', label: '125+ Docs Suite' },
-            { val: '100+', label: 'Server Functions' },
-            { val: '65+', label: 'Live Workflows' },
-            { val: '115+', label: 'Secured Entities' },
-            { val: '+$160/m', label: 'Elite Pack Included' },
+            { val: '+$160/mo', label: 'Elite Included' },
+            { val: '100+ Functions', label: '20k Credits/mo' },
+            { val: '65+ Workflows', label: '2,500 Msgs/mo' },
+            { val: '14-Day Trial', label: '$0 Upfront' },
           ].map((stat, idx) => {
             const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
             return (
@@ -233,13 +281,16 @@ export default function MustHaveFunctionsReview() {
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
                 <div
-                  className="flex h-full flex-col items-center justify-center rounded-[13px] px-2.5 py-2.5 text-center text-[#0A2B6D]"
+                  className="flex h-full flex-col items-center justify-center rounded-[13px] px-2 py-2.5 text-center text-[#0A2B6D]"
                   style={{ background: sprayBg }}
                 >
-                  <div className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]">
+                  <div className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
                     {stat.val}
                   </div>
-                  <div className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  <div
+                    className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wider text-black"
+                    style={{ color: '#000000' }}
+                  >
                     {stat.label}
                   </div>
                 </div>
@@ -248,50 +299,88 @@ export default function MustHaveFunctionsReview() {
           })}
         </div>
 
-        {/* Replace 8 Disconnected Subscriptions Card + Outright Pack in App Design Coloured Border */}
+        {/* Flat Screen Monitor ("Why Providers Subscribe Monthly") + Accurate Price Tiles + TV Screen ("Outright Docs Package") */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div className="grid w-full grid-cols-1 lg:grid-cols-12 gap-4 items-stretch rounded-[12px] bg-white p-4 text-left">
-            <div
-              className="lg:col-span-4 rounded-2xl p-[3.5px] shadow-2xs flex"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-2.5">
-                <div
-                  className="w-full rounded-full p-[2.5px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <span
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
-                    style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                      <TrendingUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                    </span>
-                    <span style={{ color: '#FFFFFF' }}>Why Providers Subscribe Monthly</span>
+            {/* Left Column: "Why Providers Subscribe Monthly" Inside a Flat Screen Monitor */}
+            <div className="lg:col-span-4 flex flex-col items-center justify-between">
+              <div
+                className="flex w-full flex-1 flex-col justify-between rounded-[22px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
+                style={{ borderColor: getAppBorderView(1) }}
+              >
+                {/* Top Flat Screen Monitor Bezel */}
+                <div className="mb-2 flex items-center justify-between px-2">
+                  <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                    <Monitor className="h-3.5 w-3.5 text-[#00C6FF]" />
+                    FLAT SCREEN MONITOR
                   </span>
+                  <span className="h-2 w-2 rounded-full bg-[#10B981]" />
                 </div>
+
+                {/* Inner Monitor Screen */}
                 <div
-                  className="w-full rounded-xl p-[3px] shadow-2xs"
+                  className="flex flex-1 flex-col justify-between rounded-2xl p-[3px]"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <div className="rounded-[9px] bg-white px-3.5 py-2.5 space-y-1.5">
-                    <h3
-                      className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
-                      style={{ backgroundImage: getTitleGradientView(2) }}
+                  <div
+                    className="flex h-full flex-col justify-between rounded-[13px] p-3.5 space-y-2.5"
+                    style={{ background: SPRAY_BGS[0] }}
+                  >
+                    <div
+                      className="w-full rounded-full p-[2px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Subscription
-                    </h3>
-                    <p className="text-xs font-bold leading-relaxed text-[#0A2B6D]">
-                      Instead of paying for 8 separate HR, rostering, invoicing, LMS, incident, vault, messaging and audit tools, ComplianceHR Infinity unifies all {MODULE_DIRECTORY.length} modules + the $160/mo Elite Plan + the $355 Master Compliance Audit Checklist starting at $660/month.
-                    </p>
+                      <span
+                        className="gradient-brand inline-flex w-full items-center justify-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white"
+                        style={{ background: getHeaderView(1), color: '#FFFFFF' }}
+                      >
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                          <TrendingUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                        </span>
+                        <span style={{ color: '#FFFFFF' }}>Why Providers Subscribe Monthly</span>
+                      </span>
+                    </div>
+
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="rounded-[9px] bg-white px-3.5 py-2.5 space-y-1.5">
+                        <h3
+                          className="font-editorial text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
+                          style={{ backgroundImage: getTitleGradientView(2) }}
+                        >
+                          Replace $4,080+/Month of Disconnected Software &amp; Consultants With One Subscription
+                        </h3>
+                        <p
+                          className="text-xs font-bold leading-relaxed text-black"
+                          style={{ color: '#000000' }}
+                        >
+                          Instead of paying $4,080+/mo for 8 separate tools, ComplianceHR Infinity unifies all {MODULE_DIRECTORY.length} modules + the $160/mo Elite Plan + the $355 Master Audit Checklist from $660/mo ($7,920/yr).
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {/* Bottom Monitor Bezel Bar */}
+                <div className="mt-2 flex items-center justify-center">
+                  <span className="h-1 w-12 rounded-full bg-white/70" />
+                </div>
               </div>
+
+              {/* Flat Screen Monitor Neck & Stand */}
+              <div className="h-2.5 w-10 bg-[#0A2B6D]" />
+              <div
+                className="h-2 w-24 rounded-full border-2 border-[#0A2B6D]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              />
             </div>
 
+            {/* Middle Column: 8 Tiles With Accurate ComplianceHR Infinity Prices + Replaced Software Costs */}
             <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 content-center">
               {REPLACED_SOFTWARE_STACK.map((item, idx) => {
                 const sprayBg = SPRAY_BGS[idx % SPRAY_BGS.length];
@@ -302,58 +391,114 @@ export default function MustHaveFunctionsReview() {
                     style={{ background: TOP_BORDER_GRADIENT }}
                   >
                     <div
-                      className="flex h-full items-center justify-between gap-2 rounded-[13px] px-3 py-2 text-xs font-extrabold text-[#0A2B6D]"
+                      className="flex h-full flex-col justify-between gap-1.5 rounded-[13px] px-3 py-2 text-xs font-extrabold text-[#0A2B6D]"
                       style={{ background: sprayBg }}
                     >
                       <span className="min-w-0 leading-tight text-[#0A2B6D]">{item.tool}</span>
-                      <span className="shrink-0 rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF] line-through">
-                        {item.typicalCost}
-                      </span>
+                      <div className="flex flex-wrap items-center justify-between gap-1 pt-0.5">
+                        <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                          {item.accuratePrice}
+                        </span>
+                        <span className="text-[9.5px] font-bold text-black line-through" style={{ color: '#000000' }}>
+                          {item.replaces}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            {/* Outright Docs Package — Styled to Match Top Section in Colours */}
-            <div
-              className="lg:col-span-3 rounded-2xl p-[6px] shadow-md flex"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <div className="flex w-full flex-col items-center justify-between gap-2.5 rounded-[12px] bg-white p-3.5 text-center">
-                <span
-                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
-                  style={{ background: getHeaderView(0) }}
-                >
-                  <Sparkles className="h-3 w-3 text-white" />
-                  <span>Outright Docs Package</span>
-                </span>
-
-                <div className="font-editorial text-lg sm:text-xl font-extrabold leading-tight">
-                  <span className="text-[#0A2B6D]">$999 </span>
-                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Outright
-                  </span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent text-sm">
-                    or $125/mo
+            {/* Right Column: Outright Docs Package on a TV Screen */}
+            <div className="lg:col-span-3 flex flex-col items-center justify-between">
+              <div
+                className="flex w-full flex-1 flex-col justify-between rounded-[22px] border-[4px] bg-[#0A2B6D] p-3 shadow-lg"
+                style={{ borderColor: getAppBorderView(4) }}
+              >
+                {/* Top TV Screen Bar */}
+                <div className="mb-2 flex items-center justify-between px-2">
+                  <span className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                    <Tv className="h-3.5 w-3.5 text-[#FF2E9A]" />
+                    OUTRIGHT TV
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[9px] font-extrabold text-white">
+                    <Radio className="h-2.5 w-2.5 text-[#00C6FF]" />
+                    LIVE HD
                   </span>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-1 text-[10.5px] font-extrabold">
-                  <span className="text-[#0072FF]">125+ Docs.</span>
-                  <span className="text-[#5A00D6]">6 Binders.</span>
-                  <span className="text-[#FF2E9A]">CHR-AUD-001 &amp; 002.</span>
+                {/* Inner TV Screen */}
+                <div
+                  className="flex flex-1 rounded-2xl p-[3px]"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div
+                    className="flex w-full flex-col items-center justify-between gap-2.5 rounded-[13px] p-3.5 text-center"
+                    style={{ background: SPRAY_BGS[2] }}
+                  >
+                    <span
+                      className="gradient-brand inline-flex w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                      style={{ background: getHeaderView(0), color: '#FFFFFF' }}
+                    >
+                      <Sparkles className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>Outright Docs Package</span>
+                    </span>
+
+                    <div
+                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                      style={{ background: TOP_BORDER_GRADIENT }}
+                    >
+                      <div className="rounded-[9px] bg-white px-2.5 py-2">
+                        <div className="font-editorial text-lg sm:text-xl font-extrabold leading-tight">
+                          <span className="text-[#0A2B6D]">$999 </span>
+                          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                            Outright
+                          </span>
+                        </div>
+                        <div className="mt-0.5 text-xs font-extrabold text-[#5A00D6]">
+                          or $125 / month
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-center gap-1 text-[10.5px] font-extrabold">
+                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[#0072FF]">
+                        125+ Docs
+                      </span>
+                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[#5A00D6]">
+                        6 Binders
+                      </span>
+                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2 py-0.5 text-[#FF2E9A]">
+                        +$355 Audit Doc
+                      </span>
+                    </div>
+
+                    <a
+                      href="#pricing"
+                      className="gradient-brand inline-flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+                      style={{ background: getHeaderView(2), color: '#FFFFFF' }}
+                    >
+                      <span style={{ color: '#FFFFFF' }}>View Plans</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                    </a>
+                  </div>
                 </div>
 
-                <a
-                  href="#pricing"
-                  className="inline-flex min-h-[36px] w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: getHeaderView(2) }}
-                >
-                  <span>View Plans</span>
-                  <ArrowRight className="h-3.5 w-3.5 text-white" />
-                </a>
+                {/* Bottom TV Controls Bar */}
+                <div className="mt-2 flex items-center justify-between px-2">
+                  <span className="text-[8.5px] font-extrabold tracking-widest text-white/80">
+                    CHR-DOC-TV
+                  </span>
+                  <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
+                </div>
               </div>
+
+              {/* TV Stand Legs & Base */}
+              <div className="h-2.5 w-10 bg-[#0A2B6D]" />
+              <div
+                className="h-2 w-24 rounded-full border-2 border-[#0A2B6D]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              />
             </div>
           </div>
         </div>
@@ -430,13 +575,13 @@ export default function MustHaveFunctionsReview() {
                         style={{ background: TOP_BORDER_GRADIENT }}
                       >
                         <span
-                          className="inline-flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
-                          style={{ background: getHeaderView(pIdx) }}
+                          className="gradient-brand inline-flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white"
+                          style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
                         >
                           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                            <Icon className="h-3 w-3 text-white" />
+                            <Icon className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
-                          <span>{pillar.badge}</span>
+                          <span style={{ color: '#FFFFFF' }}>{pillar.badge}</span>
                         </span>
                       </div>
 
@@ -452,7 +597,10 @@ export default function MustHaveFunctionsReview() {
                           >
                             {pillar.title}
                           </h4>
-                          <p className="mt-0.5 text-[11px] font-bold text-[#0A2B6D]">
+                          <p
+                            className="mt-0.5 text-[11px] font-bold text-black"
+                            style={{ color: '#000000' }}
+                          >
                             {pillar.subtitle}
                           </p>
                         </div>
@@ -491,14 +639,15 @@ export default function MustHaveFunctionsReview() {
 
                   <div className="mt-4 pt-2.5 border-t border-[#0A2B6D]/20 flex items-center justify-between">
                     <span className="text-[10.5px] font-extrabold text-[#0A2B6D]">
-                      Included in Plan
+                      From $660/mo Plan
                     </span>
                     <Link
                       to="/register"
-                      className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white"
-                      style={{ background: getHeaderView(pIdx + 2) }}
+                      className="gradient-brand inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white"
+                      style={{ background: getHeaderView(pIdx + 2), color: '#FFFFFF' }}
                     >
-                      Activate <ArrowRight className="h-3 w-3 text-white" />
+                      <span style={{ color: '#FFFFFF' }}>Activate</span>
+                      <ArrowRight className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
                     </Link>
                   </div>
                 </div>
