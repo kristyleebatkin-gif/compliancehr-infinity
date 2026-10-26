@@ -72,10 +72,10 @@ export default function LandingNav() {
               to="/"
               className="mx-auto flex w-full flex-col items-center justify-center bg-white text-center"
             >
-              {/* One Large Logo Above App Name (1.5x Size, No Border, Slightly Reduced Area to Top Border) */}
+              {/* One Large Logo Above App Name (Exact Same Size & Position, Emblem Enlarged Without Name/Slogan Inside Logo) */}
               <div className="-mt-3 sm:-mt-4 md:-mt-5 mx-auto flex h-[10.5rem] w-[10.5rem] sm:h-[13.5rem] sm:w-[13.5rem] md:h-60 md:w-60 items-center justify-center">
                 <Image
-                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                   alt="ComplianceHR Infinity logo"
                   className="h-full w-full object-contain"
                   fittingType="fit"
