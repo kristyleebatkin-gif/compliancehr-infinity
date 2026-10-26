@@ -540,25 +540,35 @@ export default function BlueprintPreviewSection() {
       `}</style>
 
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-        {/* "An accurate map..." and Black Writing Under Inside a Stretched App Design Coloured Border */}
+        {/* "An accurate map..." — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
         <div
           className="w-full rounded-2xl p-[4px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="w-full rounded-[12px] bg-white px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-1.5">
-            <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
-              <span className="text-[#0A2B6D]">An accurate map of the </span>
-              <span className="text-[#0A2B6D]">Compliance</span>
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                HR
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Infinity app
-              </span>
-            </h2>
-            <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
-            </p>
+          <div className="w-full rounded-[12px] bg-white p-2 text-center">
+            <div
+              className="w-full rounded-xl p-[2px]"
+              style={{ background: TOP_BORDER_GRADIENT }}
+            >
+              <div
+                className="w-full rounded-[10px] px-4 py-3 sm:px-6 sm:py-3.5 text-center space-y-1.5"
+                style={{ background: UNIFORM_SPRAY_BG }}
+              >
+                <h2 className="font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
+                  <span className="text-[#0A2B6D]">An accurate map of the </span>
+                  <span className="text-[#0A2B6D]">Compliance</span>
+                  <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    HR
+                  </span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity app
+                  </span>
+                </h2>
+                <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D]">
+                  All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -608,11 +618,8 @@ export default function BlueprintPreviewSection() {
                           className="flex h-full rounded-xl p-[2.5px] shadow-2xs overflow-hidden"
                           style={{ background: getHeaderView(fIdx) }}
                         >
-                          {/* Spray Pink, Blue & Purple Between Outer Border & White Writing Box */}
-                          <div
-                            className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
+                          {/* White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
+                          <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center">
                             {/* App-Design Coloured Flow Heading Bar With Number */}
                             <div
                               className="gradient-brand flex w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
@@ -627,12 +634,15 @@ export default function BlueprintPreviewSection() {
                               <span style={{ color: '#FFFFFF' }}>{flow.label}</span>
                             </div>
 
-                            {/* Pure White Background Behind Dark Blue Writing */}
+                            {/* Pink/Blue/Purple Spray Behind Dark Blue Writing */}
                             <div
                               className="w-full flex-1 rounded-lg p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-2 py-0.5">
+                              <div
+                                className="flex h-full w-full items-center justify-center rounded-[5px] px-2 py-0.5"
+                                style={{ background: UNIFORM_SPRAY_BG }}
+                              >
                                 <div
                                   className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1"
                                   style={{ animationDelay: `${fIdx * 0.6}s` }}
@@ -643,7 +653,7 @@ export default function BlueprintPreviewSection() {
                                     return (
                                       <React.Fragment key={item}>
                                         <span
-                                          className="rounded-full border bg-white px-2 py-0 text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap"
+                                          className="rounded-full border bg-white/80 px-2 py-0 text-[7.5px] font-extrabold text-[#0A2B6D] whitespace-nowrap"
                                           style={{ borderColor: borderCol }}
                                         >
                                           {item}
@@ -705,15 +715,12 @@ export default function BlueprintPreviewSection() {
                               </span>
                             </div>
 
-                            {/* Inner Flat Screen TV Display — White Background & Dark Blue Writing */}
+                            {/* Inner Flat Screen TV Display — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                             <div
                               className="flex flex-1 rounded-lg p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div
-                                className="flex h-full w-full flex-col items-center justify-between gap-0.5 rounded-[6px] px-1.5 py-0.5 text-center"
-                                style={{ background: UNIFORM_SPRAY_BG }}
-                              >
+                              <div className="flex h-full w-full flex-col items-center justify-between gap-0.5 rounded-[6px] bg-white px-1.5 py-0.5 text-center">
                                 <div
                                   className="gradient-brand flex w-full items-center justify-between gap-1 rounded px-1.5 py-0 text-[7.5px] font-extrabold text-white"
                                   style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
@@ -727,10 +734,18 @@ export default function BlueprintPreviewSection() {
                                   </span>
                                 </div>
 
-                                <div className="flex flex-1 w-full items-center justify-center rounded bg-white px-1.5 py-0.5 text-center">
-                                  <p className="mx-auto text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                                    {lvl.desc}
-                                  </p>
+                                <div
+                                  className="flex flex-1 w-full rounded p-[1px]"
+                                  style={{ background: TOP_BORDER_GRADIENT }}
+                                >
+                                  <div
+                                    className="flex flex-1 w-full items-center justify-center rounded-[3px] px-1.5 py-0.5 text-center"
+                                    style={{ background: UNIFORM_SPRAY_BG }}
+                                  >
+                                    <p className="mx-auto text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                                      {lvl.desc}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -897,15 +912,12 @@ export default function BlueprintPreviewSection() {
                                 </span>
                               </div>
 
-                              {/* Inner Minimised Laptop Screen — Spray Pink, Blue & Purple Between Outer & White Writing Border */}
+                              {/* Inner Minimised Laptop Screen — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                               <div
                                 className="flex flex-1 rounded-md p-[1px]"
                                 style={{ background: TOP_BORDER_GRADIENT }}
                               >
-                                <div
-                                  className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[5px] p-1 text-center"
-                                  style={{ background: UNIFORM_SPRAY_BG }}
-                                >
+                                <div className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[5px] bg-white p-1 text-center">
                                   <Link
                                     to={mod.path}
                                     className="gradient-brand flex min-h-[18px] w-full items-center justify-center gap-1 rounded px-1 py-0.5 text-center text-white"
@@ -925,7 +937,8 @@ export default function BlueprintPreviewSection() {
                                   >
                                     <Link
                                       to={mod.path}
-                                      className="flex h-full w-full items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center"
+                                      className="flex h-full w-full items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
+                                      style={{ background: UNIFORM_SPRAY_BG }}
                                     >
                                       <p className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                                         {mod.blurb}

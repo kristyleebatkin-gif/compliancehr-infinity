@@ -131,28 +131,38 @@ export default function MarketingSafeShowcase({ embedded = false }) {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4">
-          {/* Heading & Centered Black Subtitle Inside Stretched App Design Coloured Border */}
+          {/* Heading & Subtitle — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
           <div
             className="w-full rounded-2xl p-[4px] shadow-sm"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex flex-col items-center justify-center w-full rounded-[12px] bg-white px-4 py-4 sm:px-6 sm:py-5 text-center space-y-2">
-              <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
-                <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
-                <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Compliance
-                </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
-                </span>
-              </h2>
+            <div className="flex flex-col items-center justify-center w-full rounded-[12px] bg-white p-2 text-center">
+              <div
+                className="w-full rounded-xl p-[2px]"
+                style={{ background: TOP_BORDER_GRADIENT }}
+              >
+                <div
+                  className="flex flex-col items-center justify-center w-full rounded-[10px] px-4 py-3.5 sm:px-6 sm:py-4 text-center space-y-2"
+                  style={{ background: SPRAY_BGS[0] }}
+                >
+                  <h2 className="mx-auto text-center font-editorial text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug">
+                    <span className="text-[#0A2B6D]">Why Every Provider Subscribes to </span>
+                    <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                      Compliance
+                    </span>
+                    <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                      HR
+                    </span>{' '}
+                    <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+                      Infinity
+                    </span>
+                  </h2>
 
-              <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
-              </p>
+                  <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm font-extrabold leading-relaxed text-[#0A2B6D]">
+                    Replace 8 disconnected software subscriptions with one connected super-platform uniting all 46 live modules, 1-Click Operations, Screen-by-Screen 2026 Smart-Fill Audits, Business Health Intelligence, Core Risk &amp; Roster Engines, and our Outright Audit &amp; Compliance Doc Pack.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -441,15 +451,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       </span>
                     </div>
 
-                    {/* Inner Monitor Display — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Headers, White Box & Dark Blue Writing */}
+                    {/* Inner Monitor Display — White Outside Border, App-Coloured Headers & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                     <div
                       className="flex flex-1 rounded-lg p-[2px]"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[20px_42px_36px_1fr] gap-1 rounded-[7px] p-1.5 text-center"
-                        style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
-                      >
+                      <div className="grid h-full w-full grid-cols-1 grid-rows-[20px_42px_36px_1fr] gap-1 rounded-[7px] bg-white p-1.5 text-center">
                         {/* Row 1: App-Design Coloured Flat Screen Reason Header Tile */}
                         <div
                           className="gradient-brand relative flex h-[20px] w-full items-center justify-center rounded-full px-2 text-white"
@@ -483,25 +490,31 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                 {activeReason.title}
                               </span>
                             </div>
-                            <div className="flex h-[17px] items-center justify-center bg-white px-1 text-center text-[7px] font-extrabold text-[#0A2B6D] leading-none truncate">
+                            <div
+                              className="flex h-[17px] items-center justify-center px-1 text-center text-[7px] font-extrabold text-[#0A2B6D] leading-none truncate"
+                              style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
+                            >
                               {activeReason.sub}
                             </div>
                           </div>
                         </div>
 
-                        {/* Row 3: Compact Summary Explanation Framed in App-Design Border (Aligned Height) */}
+                        {/* Row 3: Compact Summary Explanation Framed in App-Design Border — Pink/Blue/Purple Spray & Dark Blue Writing */}
                         <div
                           className="flex h-[36px] w-full rounded-lg p-[1.5px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-1.5 py-0.5 text-center">
+                          <div
+                            className="flex h-full w-full items-center justify-center rounded-[5px] px-1.5 py-0.5 text-center"
+                            style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
+                          >
                             <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-2">
                               {activeReason.detail}
                             </p>
                           </div>
                         </div>
 
-                        {/* Row 4: 3 Lined-Up Subscriber Proof Points — White Background & Dark Blue Writing */}
+                        {/* Row 4: 3 Lined-Up Subscriber Proof Points — Pink/Blue/Purple Spray & Dark Blue Writing */}
                         <ul className="grid h-full w-full grid-cols-1 grid-rows-3 gap-1 text-center">
                           {activeReason.points.map((pt) => (
                             <li
@@ -509,7 +522,10 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               className="flex h-[24px] rounded-md p-[1.5px]"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] bg-white px-1.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                              <div
+                                className="flex h-full w-full items-center justify-center gap-1 rounded-[4px] px-1.5 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                                style={{ background: SPRAY_BGS[idx % SPRAY_BGS.length] }}
+                              >
                                 <CheckCircle2 className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                                 <span className="truncate text-center text-[#0A2B6D]">
                                   {pt}
@@ -602,15 +618,12 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           </span>
                         </div>
 
-                        {/* Inner TV Screen — Bright Pink & White Radial Spray Background */}
+                        {/* Inner TV Screen — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                         <div
                           className="flex flex-col justify-between rounded-xl p-[2px]"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div
-                            className="flex flex-col justify-between rounded-[9px] p-1.5 text-center space-y-1"
-                            style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
-                          >
+                          <div className="flex flex-col justify-between rounded-[9px] bg-white p-1.5 text-center space-y-1">
                             {/* Compact 30-Second Spotlight Banner */}
                             <div
                               className="gradient-brand flex min-h-[34px] items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-center text-white"
@@ -631,7 +644,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                               </button>
                             </div>
 
-                            {/* All 5 Package Benefits — Lined Up in Equal Rows With Dark Blue Writing */}
+                            {/* All 5 Package Benefits — Lined Up in Equal Rows With Pink/Blue/Purple Spray & Dark Blue Writing */}
                             <ul className="grid w-full grid-cols-1 grid-rows-5 gap-1 text-center">
                               {pack.bullets.map((line, idx) => {
                                 const borderCol = getAppBorderView(pIdx * 3 + idx);
@@ -645,8 +658,9 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                                   >
                                     <div
                                       className={`flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 text-center ${
-                                        isCurrent ? 'bg-white ring-1 ring-[#FF2E9A]' : 'bg-white'
+                                        isCurrent ? 'ring-1 ring-[#FF2E9A]' : ''
                                       }`}
+                                      style={{ background: SPRAY_BGS[(pIdx + idx) % SPRAY_BGS.length] }}
                                     >
                                       <span
                                         className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -694,33 +708,23 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                       />
                     </div>
 
-                    {/* 3. Lined-Up Package Info & Prices Below TV — Bright Pink & White Spray + Dark Blue Writing */}
+                    {/* 3. Lined-Up Package Info & Prices Below TV — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
                     <div
                       className="flex w-full flex-1 flex-col justify-between rounded-xl p-[2px] shadow-2xs"
                       style={{ background: TOP_BORDER_GRADIENT }}
                     >
-                      <div
-                        className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] p-2 text-center"
-                        style={{ background: BRIGHT_PINK_WHITE_SPRAY }}
-                      >
+                      <div className="grid h-full w-full grid-cols-1 grid-rows-[64px_22px_1fr] gap-1.5 rounded-[9px] bg-white p-2 text-center">
                         {/* Row 1: Aligned Price Box */}
                         <div
                           className="flex h-[64px] w-full rounded-lg p-[1.5px] shadow-2xs"
                           style={{ background: TOP_BORDER_GRADIENT }}
                         >
-                          <div className="flex h-full w-full flex-col items-center justify-center rounded-[6px] bg-white px-2 py-0.5 text-center">
-                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider">
-                              <span className="bg-gradient-to-r from-[#00C6FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                Compliance
-                              </span>
-                              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                                HR
-                              </span>
-                              {pack.id === 'pack-1' ? (
-                                <span className="ml-1 bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                                  Subscription
-                                </span>
-                              ) : null}
+                          <div
+                            className="flex h-full w-full flex-col items-center justify-center rounded-[6px] px-2 py-0.5 text-center"
+                            style={{ background: SPRAY_BGS[pIdx % SPRAY_BGS.length] }}
+                          >
+                            <div className="font-editorial text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                              ComplianceHR{pack.id === 'pack-1' ? ' Subscription' : ''}
                             </div>
                             <div className="flex flex-wrap items-baseline justify-center gap-1 leading-none">
                               <span className="font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]">
@@ -745,15 +749,18 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                           <span style={{ color: '#FFFFFF' }}>{pack.importantInfoTitle}</span>
                         </div>
 
-                        {/* Row 3: 4 Aligned Rows With Dark Blue Writing */}
+                        {/* Row 3: 4 Aligned Rows With Pink/Blue/Purple Spray & Dark Blue Writing */}
                         <div className="grid grid-cols-1 grid-rows-4 gap-1">
-                          {pack.importantInfoRows.map((info) => (
+                          {pack.importantInfoRows.map((info, iIdx) => (
                             <div
                               key={info}
                               className="flex h-[24px] rounded-lg p-[1.5px] shadow-2xs"
                               style={{ background: TOP_BORDER_GRADIENT }}
                             >
-                              <div className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] bg-white px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                              <div
+                                className="flex h-full w-full items-center justify-center gap-1.5 rounded-[6px] px-2 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                                style={{ background: SPRAY_BGS[(pIdx + iIdx) % SPRAY_BGS.length] }}
+                              >
                                 <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
                                 <span className="flex-1 truncate text-center text-[#0A2B6D]">
                                   {info}

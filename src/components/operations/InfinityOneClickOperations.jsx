@@ -740,13 +740,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
                   : '0 0 8px 2px rgba(255, 255, 255, 0.88)',
               }}
             >
-              <div
-                className="grid h-full w-full grid-cols-1 grid-rows-[18px_32px_32px_20px] gap-1 rounded-[9px] p-1 text-center"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
-                }}
-              >
+              <div className="grid h-full w-full grid-cols-1 grid-rows-[18px_32px_32px_20px] gap-1 rounded-[9px] bg-white p-1 text-center">
                 {/* Section 1: Reduced SYS READY Header Pill */}
                 <div
                   className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded-full px-1.5 text-[7px] font-extrabold uppercase tracking-wider leading-none text-white whitespace-nowrap"
@@ -767,8 +761,14 @@ export default function InfinityOneClickOperations({ compact = false }) {
                   </span>
                 </div>
 
-                {/* Section 2: Centered Card Title Box With Dark Blue Writing */}
-                <div className="flex h-[32px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
+                {/* Section 2: Centered Card Title Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                <div
+                  className="flex h-[32px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 px-1 py-0.5 text-center"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                  }}
+                >
                   <div className="flex items-center justify-center gap-1 w-full">
                     <span
                       className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
@@ -783,8 +783,14 @@ export default function InfinityOneClickOperations({ compact = false }) {
                   </div>
                 </div>
 
-                {/* Section 3: Centered Description Box With Dark Blue Writing */}
-                <div className="flex h-[32px] w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
+                {/* Section 3: Centered Description Box — Pink/Blue/Purple Spray & Dark Blue Writing */}
+                <div
+                  className="flex h-[32px] w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 px-1 py-0.5 text-center"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                  }}
+                >
                   <p className="text-center text-[7px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
                     {op.description}
                   </p>
@@ -865,13 +871,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
                 className="flex h-full rounded-lg p-[1.5px] shadow-2xs"
                 style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <div
-                  className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[7px] p-1 text-center"
-                  style={{
-                    background:
-                      'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
-                  }}
-                >
+                <div className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[7px] bg-white p-1 text-center">
                   {/* Top App-Coloured Header Bar */}
                   <div
                     className="gradient-brand flex items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
@@ -889,8 +889,14 @@ export default function InfinityOneClickOperations({ compact = false }) {
                     </span>
                   </div>
 
-                  {/* White Box With Dark Blue Writing */}
-                  <div className="rounded bg-white px-2 py-0.5 text-center">
+                  {/* Pink/Blue/Purple Spray Box With Dark Blue Writing */}
+                  <div
+                    className="rounded border border-[#0A2B6D]/20 px-2 py-0.5 text-center"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+                    }}
+                  >
                     <div className="text-[8px] font-extrabold text-[#0A2B6D]">
                       {entry.pillar} · {entry.title}
                     </div>

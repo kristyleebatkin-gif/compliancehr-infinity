@@ -523,7 +523,13 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
             }}
           >
-            <div className="rounded-[13px] bg-white px-4 py-3 text-center space-y-1.5">
+            <div
+              className="rounded-[13px] px-4 py-3 text-center space-y-1.5"
+              style={{
+                background:
+                  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
+              }}
+            >
               <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
                 <span className="text-[#0A2B6D]">2026 Screen-by-Screen </span>
                 <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -534,10 +540,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                 </span>
               </h2>
 
-              <p
-                className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-black"
-                style={{ color: '#000000' }}
-              >
+              <p className="mx-auto max-w-4xl text-center text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#0A2B6D]">
                 Every module below shows: (1) What is the Topic, (2) What is Inside, (3) Its 2026 Smart-Fill Compliant Document, and (4) The Easiest 1-Click Way to Complete Any Related Task.
               </p>
             </div>
@@ -830,10 +833,7 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
               }}
             >
-              <div
-                className="flex h-full w-full flex-col justify-between gap-0.5 overflow-hidden rounded-[8px] p-1 text-center"
-                style={{ background: sprayBg }}
-              >
+              <div className="flex h-full w-full flex-col justify-between gap-0.5 overflow-hidden rounded-[8px] bg-white p-1 text-center">
                 {/* Section 1: 50% Smaller App-Coloured Header Bar */}
                 <div
                   className="gradient-brand flex h-[20px] w-full items-center justify-between gap-1 rounded px-1.5 text-white"
@@ -851,26 +851,30 @@ export default function ScreenByScreenMasterAudit2026({ compact = false }) {
                   </Link>
                 </div>
 
-                {/* Section 2: White Box With Dark Blue Writing */}
+                {/* Section 2: Pink/Blue/Purple Spray Box With Dark Blue Writing */}
                 <div
                   className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index) }}
                 >
-                  <div className="flex items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center">
+                  <div
+                    className="flex items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
+                    style={{ background: sprayBg }}
+                  >
                     <span className="truncate text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
                       {bp.smartDoc2026}
                     </span>
                   </div>
                 </div>
 
-                {/* Section 3: Assets Centred Above Live Compliance Tracker */}
+                {/* Section 3: Assets Centred Above Live Compliance Tracker — Pink/Blue/Purple Spray & Dark Blue Writing */}
                 <div
                   className="w-full rounded p-[1px]"
                   style={{ background: getHeaderView(index + 1) }}
                 >
                   <Link
                     to="/assets"
-                    className="flex flex-col items-center justify-center rounded-[3px] bg-white px-1 py-0.5 text-center"
+                    className="flex flex-col items-center justify-center rounded-[3px] px-1 py-0.5 text-center"
+                    style={{ background: sprayBg }}
                   >
                     <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">
                       {maintenanceStats.assets} Assets Current
