@@ -7,8 +7,6 @@ import LiveSuperPlatformPulseBar from '@/components/landing/LiveSuperPlatformPul
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
   getHeaderView,
-  getSymbolView,
-  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
