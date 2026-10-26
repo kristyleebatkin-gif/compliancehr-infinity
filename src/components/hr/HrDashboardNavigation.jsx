@@ -1,8 +1,9 @@
 import React from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarClock, ClipboardCheck, ChartNoAxesCombined, FileSignature, FolderCheck, Library, Wallet, HeartHandshake, Tv } from 'lucide-react';
+import { CalendarClock, ClipboardCheck, ChartNoAxesCombined, FileSignature, FolderCheck, Library, Wallet, HeartHandshake, Tv, Sun } from 'lucide-react';
 
 const ITEMS = [
+  { key: 'shoreline', label: 'Shoreline Command', Icon: Sun, tone: 'from-amber-200/60 to-cyan-200/40 text-[#0A2B6D]', hint: '44×44px heatmap & beach cheers' },
   { key: 'leave', label: 'Leave requests', Icon: CalendarClock, tone: 'from-teal/40 to-teal/20 text-teal', hint: 'Requests and approvals' },
   { key: 'reviews', label: 'Performance reviews', Icon: ClipboardCheck, tone: 'from-primary/40 to-primary/20 text-primary', hint: 'Reviews and development' },
   { key: 'volunteering', label: 'Volunteering & Placement', Icon: HeartHandshake, tone: 'from-pink-500/30 to-purple-500/20 text-[#5A00D6]', hint: 'Volunteers & student placements' },
@@ -18,7 +19,7 @@ const ITEMS = [
 export default function HrDashboardNavigation({ isManager, payrollVisible }) {
   return (
     <TabsList aria-label="HR dashboard" className="grid h-auto w-full grid-cols-2 gap-2 bg-transparent p-0 sm:grid-cols-3 lg:grid-cols-5">
-      {ITEMS.filter((item) => isManager || ['leave', 'reviews', 'volunteering', 'media-goals', 'paperwork'].includes(item.key) || (item.key === 'payroll' && payrollVisible)).map(({ key, label, Icon, tone, hint }) => (
+      {ITEMS.filter((item) => isManager || ['shoreline', 'leave', 'reviews', 'volunteering', 'media-goals', 'paperwork'].includes(item.key) || (item.key === 'payroll' && payrollVisible)).map(({ key, label, Icon, tone, hint }) => (
         <TabsTrigger
           key={key}
           value={key}

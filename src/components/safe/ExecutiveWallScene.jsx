@@ -23,6 +23,7 @@ import {
 import ModularScreenDataSelector, { MODULAR_SCREEN_DECKS } from '@/components/safe/ModularScreenDataSelector';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
+import BeachDeepSeaWallShowcase from '@/components/safe/BeachDeepSeaWallShowcase';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 
@@ -485,6 +486,7 @@ function ProfilesAndDataDisplayColumn({
 
   const dataTabs = [
     { id: 'modular-picker', label: 'Select Modulars & Data', icon: LayoutGrid },
+    { id: 'beach-deep-sea', label: 'Beach · Scuba · Treasure', icon: Sparkles },
     { id: 'profiles', label: 'General Profiles', icon: Users },
     { id: 'safe', label: 'Safe & Identity', icon: Lock },
     { id: 'compliance', label: 'Compliance & Plans', icon: ShieldCheck },
@@ -523,7 +525,7 @@ function ProfilesAndDataDisplayColumn({
         </div>
 
         {/* Data Display Choice Tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-1">
           {dataTabs.map((t) => {
             const Icon = t.icon;
             const active = activeDataTab === t.id;
@@ -692,6 +694,10 @@ function ProfilesAndDataDisplayColumn({
 
         {activeDataTab === 'compliance' && (
           <ComplianceAndOperationsMaterialPanel />
+        )}
+
+        {activeDataTab === 'beach-deep-sea' && (
+          <BeachDeepSeaWallShowcase defaultScene="deep-sea" compact={true} />
         )}
       </div>
 
@@ -1003,8 +1009,9 @@ export default function ExecutiveWallScene({
         </div>
       </div>
 
-      {/* Infinity Core Engine + Recreated Master Compliance Audit Checklist Forms (CHR-AUD-001 & CHR-AUD-002) */}
+      {/* Beach, Treasure Hunt, Shoreline & Deep Sea Scuba Wall Showcase + Infinity Core Engine + Audit Forms */}
       <div className="bg-white px-1 pb-1 space-y-1">
+        <BeachDeepSeaWallShowcase defaultScene="deep-sea" compact={true} />
         <InfinityCoreEngine compact={true} />
         <MasterComplianceAuditForms />
       </div>

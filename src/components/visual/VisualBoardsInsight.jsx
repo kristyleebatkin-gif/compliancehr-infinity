@@ -10,6 +10,7 @@ const TIPS = {
   speech: 'Save frequent phrases in the speech pad to speed up communication.',
   signs: 'Use sign prompts alongside spoken words to reinforce understanding.',
   translator: 'Confirm key information (medication, safety) with an interpreter, not only the translator.',
+  'kids-zone': 'Walk the 44×44px seashell & sand dollar stepping stones with the crab or pirate avatar to burst open the 132×132px golden treasure chest!',
 };
 
 export default function VisualBoardsInsight({ tab }) {

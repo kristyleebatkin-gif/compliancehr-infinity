@@ -10,6 +10,7 @@ const TAB_MODULES = {
   speech: 'our-participants',
   signs: 'training',
   translator: 'ndis-provider',
+  'kids-zone': 'programs',
 };
 
 function hexToHslChannels(hex) {

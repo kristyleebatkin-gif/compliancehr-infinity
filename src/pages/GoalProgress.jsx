@@ -24,11 +24,12 @@ import GoalInsights from '@/components/goals/GoalInsights';
 import GoalCoach from '@/components/goals/GoalCoach';
 import FundingOutcomeChart from '@/components/goals/FundingOutcomeChart';
 import StaffGoals from '@/components/goals/StaffGoals';
+import DeepSeaScubaProgress from '@/components/goals/DeepSeaScubaProgress';
 
 function GoalProgress({ profile, profileKind, ourView = false, embedded = false } = {}) {
   const { role, isAdmin } = useRole();
   const [goals, setGoals] = useState([]);
-  const [activeTab, setActiveTab] = useState(profileKind === 'staff' ? 'staff' : 'all');
+  const [activeTab, setActiveTab] = useState(profileKind === 'staff' ? 'staff' : 'deep-sea');
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -167,7 +168,8 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 rounded-xl border border-border/60 p-1 sm:grid-cols-3 xl:grid-cols-6 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 rounded-xl border border-border/60 p-1 sm:grid-cols-4 xl:grid-cols-7 [&>button]:min-h-8 [&>button]:whitespace-normal [&>button]:px-2 [&>button]:text-xs">
+            <TabsTrigger value="deep-sea">🤿 Deep Sea Progress</TabsTrigger>
             <TabsTrigger value="all">All goals</TabsTrigger>
             <TabsTrigger value="participants">Progress by participant</TabsTrigger>
             {role !== ROLES.PARTICIPANT && <TabsTrigger value="staff">Progress by staff</TabsTrigger>}
@@ -175,6 +177,10 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
             <TabsTrigger value="coach">AI goal coach</TabsTrigger>
             <TabsTrigger value="funding">Funding outcomes</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="deep-sea" className="mt-4">
+            <DeepSeaScubaProgress goals={goals} onProgress={setProgress} />
+          </TabsContent>
 
           <TabsContent value="all" className="mt-4">
             {goals.length === 0 ? (

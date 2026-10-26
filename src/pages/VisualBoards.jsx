@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarDays, Clock as ClockIcon, CloudSun, Hand, Languages, ListChecks, MessageSquareText, MessagesSquare } from 'lucide-react';
+import { CalendarDays, Clock as ClockIcon, CloudSun, Compass, Hand, Languages, ListChecks, MessageSquareText, MessagesSquare } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import VisualBoardsInsight from '@/components/visual/VisualBoardsInsight';
@@ -13,11 +13,12 @@ import CommunicationBoard from '@/components/visual/CommunicationBoard';
 import WeatherBoard from '@/components/visual/WeatherBoard';
 import DayDateBoard from '@/components/visual/DayDateBoard';
 import TranslatorPanel from '@/components/visual/TranslatorPanel';
+import KidsZoneTreasurePath from '@/components/visual/KidsZoneTreasurePath';
 
-const BOARDS = [['clock', 'Clock'], ['routine', 'Visual Routine'], ['communication', 'Communication'], ['weather', 'Weather'], ['daydate', 'Day & Date'], ['speech', 'Speech'], ['signs', 'Sign Prompts'], ['translator', 'Translator']];
+const BOARDS = [['kids-zone', 'Kids Zone'], ['clock', 'Clock'], ['routine', 'Visual Routine'], ['communication', 'Communication'], ['weather', 'Weather'], ['daydate', 'Day & Date'], ['speech', 'Speech'], ['signs', 'Sign Prompts'], ['translator', 'Translator']];
 
 export default function VisualBoards({ embedded = false } = {}) {
-  const [tab, setTab] = useState('clock');
+  const [tab, setTab] = useState('kids-zone');
   const [query, setQuery] = useState('');
   const search = (q) => {
     setQuery(q);
@@ -35,6 +36,7 @@ export default function VisualBoards({ embedded = false } = {}) {
         search={<ModuleSearchBar value={query} onChange={search} placeholder="Search boards (clock, routine, weather, translator…)" />}
         insight={<VisualBoardsInsight tab={tab} />}
         tabs={<TabsList>
+          <TabsTrigger value="kids-zone" style={visualBoardTabTone('kids-zone')}><Compass className="mr-1 inline h-3.5 w-3.5" />Kids Zone</TabsTrigger>
           <TabsTrigger value="clock" style={visualBoardTabTone('clock')}><ClockIcon className="mr-1 inline h-3.5 w-3.5" />Clock</TabsTrigger>
           <TabsTrigger value="routine" style={visualBoardTabTone('routine')}><ListChecks className="mr-1 inline h-3.5 w-3.5" />Visual Routine</TabsTrigger>
           <TabsTrigger value="communication" style={visualBoardTabTone('communication')}><MessagesSquare className="mr-1 inline h-3.5 w-3.5" />Communication</TabsTrigger>
@@ -45,6 +47,7 @@ export default function VisualBoards({ embedded = false } = {}) {
           <TabsTrigger value="translator" style={visualBoardTabTone('translator')}><Languages className="mr-1 inline h-3.5 w-3.5" />Translator</TabsTrigger>
         </TabsList>}
       >
+        <TabsContent value="kids-zone"><KidsZoneTreasurePath /></TabsContent>
         <TabsContent value="clock"><VisualClock /></TabsContent>
         <TabsContent value="routine"><VisualRoutine /></TabsContent>
         <TabsContent value="communication"><CommunicationBoard /></TabsContent>

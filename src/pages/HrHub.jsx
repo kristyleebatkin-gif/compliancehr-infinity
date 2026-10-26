@@ -21,6 +21,7 @@ import MyPayroll from '@/components/payroll/MyPayroll';
 import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';
 import Volunteers from '@/pages/Volunteers';
 import HrMediaGoalsHobbiesHub from '@/components/hr/HrMediaGoalsHobbiesHub';
+import ShorelineCommandCenter from '@/components/hr/ShorelineCommandCenter';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -182,8 +183,15 @@ export default function HrHub({ profile, embedded = false } = {}) {
         search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave, volunteering and reviews…" />}
         small={tiles}
       >
+        {/* Shoreline Command Center (Base-44 44x44px Sand-to-Deep-Teal Heatmap & Fast-Cheer Icons) */}
+        <ShorelineCommandCenter />
+
         {/* TV, Radio, Phone & Computer Hub for Achieving Goals, Opening Doors & Hobbies */}
         <HrMediaGoalsHobbiesHub />
+
+        <TabsContent value="shoreline" className="mt-4">
+          <ShorelineCommandCenter />
+        </TabsContent>
 
         <TabsContent value="leave" className="mt-4 space-y-2">
           {embedded && <div className="flex gap-2">
