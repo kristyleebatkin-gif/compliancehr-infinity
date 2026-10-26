@@ -7,6 +7,7 @@ import {
 import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
 import QuickAppBar from '@/components/QuickAppBar';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 
 // 12 Listed Features — 6 on each line, CIRCULAR feature icons + crisp WHITE background behind dark blue writing!
 const LISTED_FEATURES = [
@@ -189,7 +190,7 @@ export default function LandingNav() {
           </div>
         </div>
 
-        {/* Features Listed — Matching Top Section Border, Spacing, Colours & Style */}
+        {/* Features Listed — White Symbol in Header, Mixed 8 Full-Colour Tiles & App-Coloured Symbols */}
         <nav
           aria-label="Listed features navigation"
           className="rounded-3xl p-[12px] shadow-lg"
@@ -201,36 +202,35 @@ export default function LandingNav() {
           <div className="rounded-[16px] bg-white px-3 py-4 sm:px-4 sm:py-4 text-center space-y-3">
             <span
               className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-              style={{
-                background:
-                  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-              }}
+              style={{ background: getHeaderView(0) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Sparkles className="h-3.5 w-3.5 text-white" />
               </span>
               <span className="text-center">12 Listed Landing Page Sections &amp; Highlights</span>
             </span>
 
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
-              {LISTED_FEATURES.map((l) => {
+              {LISTED_FEATURES.map((l, idx) => {
                 const Icon = l.icon;
+                const tile = getTilePalette(idx);
+                const sym = getSymbolView(idx);
                 return (
                   <a
                     key={l.href}
                     href={l.href}
-                    className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                    className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    style={{ backgroundColor: tile.bg, color: tile.text }}
                   >
                     <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                      style={{
-                        background:
-                          'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                      }}
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs"
                     >
-                      <Icon className="h-3 w-3 text-white" />
+                      <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                     </span>
-                    <span className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10px] lg:text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
+                    <span
+                      className="min-w-0 flex-1 whitespace-normal break-words text-left text-[10px] lg:text-[11px] font-extrabold leading-tight"
+                      style={{ color: tile.text }}
+                    >
                       {l.label}
                     </span>
                   </a>

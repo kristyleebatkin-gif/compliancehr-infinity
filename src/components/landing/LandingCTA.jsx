@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Compass } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Reveal from '@/components/landing/Reveal';
+import {
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+} from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 export default function LandingCTA() {
   const [authed, setAuthed] = useState(false);
@@ -24,22 +27,25 @@ export default function LandingCTA() {
       <Reveal className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-6 sm:px-8 sm:py-8 text-center space-y-4">
         <span
           className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: BADGE_GRADIENT }}
+          style={{ background: getHeaderView(7) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Sparkles className="h-3.5 w-3.5 text-white" />
           </span>
           <span className="text-center">Why ComplianceHR Infinity</span>
         </span>
 
-        <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
-          Ready to simplify your{' '}
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            NDIS &amp; Aged Care compliance?
-          </span>
+        <h2
+          className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
+          style={{ backgroundImage: getTitleGradientView(4) }}
+        >
+          Ready to simplify your NDIS &amp; Aged Care compliance?
         </h2>
 
-        <p className="mx-auto max-w-2xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-[#5A00D6]">
+        <p
+          className="mx-auto max-w-2xl text-xs sm:text-sm md:text-base font-extrabold leading-relaxed"
+          style={{ color: getSubheaderColourView(4) }}
+        >
           Join providers who trust ComplianceHR Infinity to keep their records, teams, and participants audit-ready every single day.
         </p>
 
@@ -47,13 +53,10 @@ export default function LandingCTA() {
           <Link
             to={authed ? '/dashboard' : '/register'}
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-            }}
+            style={{ background: getHeaderView(0) }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-              <ArrowRight className="h-3.5 w-3.5 text-[#0072FF]" />
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <ArrowRight className="h-3.5 w-3.5 text-white" />
             </span>
             <span>{authed ? 'Go to Dashboard' : 'Get Started Free'}</span>
           </Link>
@@ -61,13 +64,10 @@ export default function LandingCTA() {
           <Link
             to="/dashboard"
             className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{
-              background:
-                'linear-gradient(120deg, #5A00D6 0%, #0072FF 36%, #A100FF 70%, #FF6EDB 100%)',
-            }}
+            style={{ background: getHeaderView(2) }}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-              <Compass className="h-3.5 w-3.5 text-[#5A00D6]" />
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+              <Compass className="h-3.5 w-3.5 text-white" />
             </span>
             <span>Open Live Dashboard</span>
           </Link>

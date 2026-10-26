@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Award, Sparkles, ShieldCheck, Layers } from 'lucide-react';
-import { Image } from '@/components/ui/image';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 const BADGE_GRADIENT =
   'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
@@ -175,86 +173,74 @@ export default function LandingFooter() {
       >
         <div className="rounded-[16px] bg-white p-4 sm:p-6 space-y-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {cols.map((c) => (
+            {cols.map((c, cIdx) => (
               <div
                 key={c.title}
                 className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm space-y-3"
               >
                 <span
                   className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{ background: BADGE_GRADIENT }}
+                  style={{ background: getHeaderView(cIdx) }}
                 >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white text-[#5A00D6]">
-                    <Layers className="h-3 w-3 text-[#5A00D6]" />
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                    <Layers className="h-3 w-3 text-white" />
                   </span>
                   <span>{c.title}</span>
                 </span>
                 <ul className="space-y-2">
-                  {c.links.map((l) => (
-                    <li key={l}>
-                      <Link
-                        to={linkHref(c, l)}
-                        className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF]"
-                      >
-                        <span
-                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                          style={{ background: ICON_GRADIENT }}
+                  {c.links.map((l, lIdx) => {
+                    const tile = getTilePalette(cIdx * 3 + lIdx);
+                    const sym = getSymbolView(cIdx * 3 + lIdx);
+                    return (
+                      <li key={l}>
+                        <Link
+                          to={linkHref(c, l)}
+                          className="flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                          style={{ backgroundColor: tile.bg, color: tile.text }}
                         >
-                          <Sparkles className="h-2.5 w-2.5 text-white" />
-                        </span>
-                        <span>{l}</span>
-                      </Link>
-                    </li>
-                  ))}
+                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                            <Sparkles className="h-2.5 w-2.5" style={{ color: sym.iconColor }} />
+                          </span>
+                          <span style={{ color: tile.text }}>{l}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3 items-stretch">
-            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-2xs">
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                style={{ background: ICON_GRADIENT }}
-              >
-                <Award className="h-3.5 w-3.5 text-white" />
-              </span>
-              <div className="text-xs font-extrabold text-[#0A2B6D]">
-                Software: ComplianceHR Infinity
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-2xs">
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                style={{ background: ICON_GRADIENT }}
-              >
-                <Sparkles className="h-3.5 w-3.5 text-white" />
-              </span>
-              <div className="text-xs font-extrabold text-[#0A2B6D]">
-                <span className="text-[#0072FF]">Complete Control.</span>{' '}
-                <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-                <span className="text-[#FF2E9A]">Brighter Success.</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] bg-white px-4 py-2 text-center shadow-2xs">
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white"
-                style={{ background: ICON_GRADIENT }}
-              >
-                <Mail className="h-3.5 w-3.5 text-white" />
-              </span>
-              <div className="text-xs font-extrabold text-[#0A2B6D]">
-                Developer: Kristy Lee Whelan ·{' '}
-                <a
-                  href="mailto:kristyleebatkin@live.com.au"
-                  className="text-[#5A00D6] underline hover:text-[#FF2E9A]"
+            {[
+              { icon: Award, text: 'Software: ComplianceHR Infinity' },
+              { icon: Sparkles, text: 'Complete Control. Greater Confidence. Brighter Success.' },
+              { icon: Mail, text: 'Developer: Kristy Lee Whelan · kristyleebatkin@live.com.au', href: 'mailto:kristyleebatkin@live.com.au' },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              const tile = getTilePalette(idx + 4);
+              const sym = getSymbolView(idx + 4);
+              return (
+                <div
+                  key={item.text}
+                  className="flex items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-4 py-2 text-center shadow-2xs"
+                  style={{ backgroundColor: tile.bg, color: tile.text }}
                 >
-                  kristyleebatkin@live.com.au
-                </a>
-              </div>
-            </div>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
+                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                  </span>
+                  {item.href ? (
+                    <a href={item.href} className="text-xs font-extrabold underline" style={{ color: tile.text }}>
+                      {item.text}
+                    </a>
+                  ) : (
+                    <div className="text-xs font-extrabold" style={{ color: tile.text }}>
+                      {item.text}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

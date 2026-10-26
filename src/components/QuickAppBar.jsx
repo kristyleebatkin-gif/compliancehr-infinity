@@ -7,6 +7,7 @@ import {
   MapPin, BadgeCheck, ClipboardList, AlertTriangle, UsersRound, Vault,
   CalendarClock, Target, GraduationCap, Briefcase,
 } from 'lucide-react';
+import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
 
 const QUICK_LINKS = [
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -48,17 +49,14 @@ export default function QuickAppBar() {
         }}
       >
         <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-4 sm:px-4 sm:py-4 text-center space-y-3">
-          {/* Centred Header Badge + Toggle Button Matching Top Section Design */}
+          {/* Centred Header Badge + Toggle Button with White Symbols in Header */}
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <span
               className="inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-              style={{
-                background:
-                  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-              }}
+              style={{ background: getHeaderView(1) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-                <Compass className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Compass className="h-3.5 w-3.5 text-white" />
               </span>
               <span className="text-center">Quick App Bar — Instant Workspace Navigation</span>
             </span>
@@ -67,43 +65,40 @@ export default function QuickAppBar() {
               type="button"
               onClick={() => setShowAllModules((prev) => !prev)}
               className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs sm:text-[13px] font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-              style={{
-                background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
-              }}
+              style={{ background: getHeaderView(2) }}
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#0072FF]">
-                <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+                <Sparkles className="h-3.5 w-3.5 text-white" />
               </span>
               <span>All {MODULE_DIRECTORY.length} Modules</span>
               {showAllModules ? <ChevronUp className="h-3.5 w-3.5 text-white" /> : <ChevronDown className="h-3.5 w-3.5 text-white" />}
             </button>
           </div>
 
-          {/* 6-Per-Line Grid of Quick App Module Items */}
+          {/* 6-Per-Line Grid of Quick App Module Items in Mixed Full Colours */}
           <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
-            {QUICK_LINKS.map((item) => {
+            {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
               const Icon = item.icon;
+              const tile = getTilePalette(idx + 2);
+              const sym = getSymbolView(idx + 2);
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setShowAllModules(false)}
-                  className={`flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[10px] lg:text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md ${
-                    active ? 'ring-2 ring-[#FF2E9A]' : ''
+                  className={`flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-[10px] lg:text-[11px] font-extrabold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                    active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
+                  style={{ backgroundColor: tile.bg, color: tile.text }}
                 >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Icon className="h-3 w-3 text-white" />
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                   </span>
-                  <span className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight text-[#0A2B6D]">
+                  <span
+                    className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight"
+                    style={{ color: tile.text }}
+                  >
                     {item.label}
                   </span>
                 </Link>
@@ -115,38 +110,38 @@ export default function QuickAppBar() {
           {showAllModules && (
             <div className="w-full pt-2 space-y-2.5 border-t-2 border-[#0A2B6D]/20">
               <div className="flex items-center justify-between px-2">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
                   All {MODULE_DIRECTORY.length} Live App Modules
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowAllModules(false)}
-                  className="rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  className="rounded-full border-2 border-[#0A2B6D] bg-[#FF2E9A] px-3 py-0.5 text-xs font-extrabold text-white"
                 >
                   Close
                 </button>
               </div>
 
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
-                {MODULE_DIRECTORY.map((mod) => {
+                {MODULE_DIRECTORY.map((mod, idx) => {
                   const Icon = mod.icon;
+                  const tile = getTilePalette(idx);
+                  const sym = getSymbolView(idx);
                   return (
                     <Link
                       key={mod.key}
                       to={mod.path}
                       onClick={() => setShowAllModules(false)}
-                      className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[10px] lg:text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] hover:shadow-md"
+                      className="flex h-full min-h-[42px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-[10px] lg:text-[11px] font-extrabold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                      style={{ backgroundColor: tile.bg, color: tile.text }}
                     >
-                      <span
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] text-white shadow-2xs"
-                        style={{
-                          background:
-                            'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)',
-                        }}
-                      >
-                        <Icon className="h-3 w-3 text-white" />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
+                        <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight text-[#0A2B6D]">
+                      <span
+                        className="min-w-0 flex-1 whitespace-normal break-words text-left leading-tight"
+                        style={{ color: tile.text }}
+                      >
                         {mod.label}
                       </span>
                     </Link>

@@ -14,13 +14,16 @@ import {
   Users,
 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-const ICON_GRADIENT =
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
-const BADGE_GRADIENT =
-  'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 
 const FEATURES = [
   { icon: Users, title: 'Workforce Records', desc: 'Staff profiles, documents, certificates, teams and consent-aware audit access.' },
@@ -47,57 +50,59 @@ export default function FeaturesSection() {
       <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-4 py-5 sm:px-6 sm:py-6 text-center space-y-5">
         <span
           className="mx-auto inline-flex min-h-[42px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm md:text-base font-extrabold tracking-wide text-white shadow-sm"
-          style={{ background: BADGE_GRADIENT }}
+          style={{ background: getHeaderView(5) }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white bg-white text-[#FF2E9A]">
-            <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
+            <Sparkles className="h-3.5 w-3.5 text-white" />
           </span>
           <span className="text-center">Latest Platform Capabilities · 12 Connected Engines</span>
         </span>
 
         <div className="mx-auto max-w-3xl space-y-1.5">
-          <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
-            An impossible standard,{' '}
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              achieved effortlessly
-            </span>
+          <h2
+            className="font-editorial text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent"
+            style={{ backgroundImage: getTitleGradientView(2) }}
+          >
+            An impossible standard, achieved effortlessly
           </h2>
-          <p className="text-xs sm:text-sm md:text-base font-extrabold text-[#5A00D6]">
+          <p
+            className="text-xs sm:text-sm md:text-base font-extrabold"
+            style={{ color: getSubheaderColourView(2) }}
+          >
             One super-platform covering the full provider lifecycle, from intake, people and rostering to safety, HR, invoicing, registration, NDIS audit preparation and the live compliance tracker.
           </p>
         </div>
 
         <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 auto-rows-fr text-left">
-          {FEATURES.map((f, index) => (
-            <Reveal
-              key={f.title}
-              delay={(index % 6) * 0.04}
-              className="group flex h-full flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] text-white shadow-sm transition-transform group-hover:scale-105"
-                    style={{ background: ICON_GRADIENT }}
-                  >
-                    <f.icon className="h-4 w-4 text-white" />
-                  </span>
-                  <span
-                    className="rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-                    style={{ background: BADGE_GRADIENT }}
-                  >
-                    #{index + 1}
-                  </span>
+          {FEATURES.map((f, index) => {
+            const tile = getTilePalette(index);
+            const sym = getSymbolView(index);
+            return (
+              <Reveal
+                key={f.title}
+                delay={(index % 6) * 0.04}
+                className="group flex h-full flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ backgroundColor: tile.bg, color: tile.text }}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-sm transition-transform group-hover:scale-105">
+                      <f.icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                    </span>
+                    <span className="rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                      #{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 font-editorial text-sm font-extrabold leading-snug" style={{ color: tile.text }}>
+                    {f.title}
+                  </h3>
+                  <p className="mt-1 text-xs font-bold leading-snug" style={{ color: tile.subtext }}>
+                    {f.desc}
+                  </p>
                 </div>
-                <h3 className="mt-3 font-editorial text-sm font-extrabold leading-snug text-[#0A2B6D]">
-                  {f.title}
-                </h3>
-                <p className="mt-1 text-xs font-bold leading-snug text-[#0A2B6D]">
-                  {f.desc}
-                </p>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
