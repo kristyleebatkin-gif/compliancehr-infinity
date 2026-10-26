@@ -4,6 +4,7 @@ import { Image } from '@/components/ui/image';
 import { Vault, Mail, MailWarning, BellRing, CheckCircle2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AlertLamp from '@/components/communications/AlertLamp';
+import AboveMailboxCommandDeck from '@/components/safe/AboveMailboxCommandDeck';
 import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/communicationNavigation.css';
 
@@ -72,6 +73,12 @@ export default function CommunicationNavigation({ tabs }) {
       }}
     >
       <div className="space-y-2.5 rounded-[16px] bg-white p-3">
+      {/* Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
+      <AboveMailboxCommandDeck
+        mailAlertCount={totalAlerts || 3}
+        onDropExpressMail={() => setAlertCount((prev) => prev + 1)}
+      />
+
       {/* Top Alert Lamps + Colour-Changing Alert Mailbox */}
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-12 items-stretch">
         {/* Interactive Mailbox That Changes Colour When There Are Alerts */}

@@ -10,6 +10,7 @@ import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColour
 import SilverScreenSplit from '@/components/safe/SilverScreenSplit';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import MiniCommunicationCentrePanel from '@/components/safe/MiniCommunicationCentrePanel';
+import AboveMailboxCommandDeck from '@/components/safe/AboveMailboxCommandDeck';
 import {
   LogoBrandedOfficeSecondScreen,
   DEFAULT_LOGO,
@@ -342,35 +343,16 @@ function CommunicationAndMailboxTabs() {
             </div>
           </div>
 
-          {/* Above Mailbox: Compact Live Roster Strip — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
-          <div
-            className="rounded-xl p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div className="flex items-center justify-between gap-1.5 rounded-[8px] bg-white px-2 py-1">
-              <span
-                className="gradient-brand inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[7.5px] font-extrabold uppercase text-white"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <CalendarClock className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Live Roster Above Mailbox</span>
-              </span>
-              <span
-                className="rounded border border-[#0A2B6D]/20 px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
-                style={{ background: UNIFORM_SPRAY_BG }}
-              >
-                3 Shifts Active · 100% Screened
-              </span>
-              <Link
-                to="/roster"
-                className="rounded-full bg-[#0A2B6D] px-2 py-0.5 text-[7px] font-extrabold text-white"
-              >
-                Roster →
-              </Link>
-            </div>
-          </div>
+          {/* Cool Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
+          <AboveMailboxCommandDeck
+            mailAlertCount={mailAlertCount}
+            onDropExpressMail={() => {
+              setHasAlertMail(true);
+              setMailAlertCount((prev) => prev + 1);
+            }}
+          />
 
-          {/* Underneath Mini Comms & Roster: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
+          {/* Underneath Mini Comms & Sky-Drop Command Deck: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
           <div
             className="rounded-xl p-[3px] transition-all duration-300"
             style={{

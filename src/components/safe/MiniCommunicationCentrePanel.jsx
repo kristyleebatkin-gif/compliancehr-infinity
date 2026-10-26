@@ -112,10 +112,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
       className="h-full rounded-xl p-[3px] shadow-sm"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div
-        className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] p-1.5 text-center"
-        style={{ background: UNIFORM_SPRAY_BG }}
-      >
+      <div className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] bg-white p-1.5 text-center">
         {/* 1. Mini Communication Centre App-Coloured Header */}
         <div
           className="gradient-brand flex items-center justify-between gap-1 rounded-lg px-2 py-1 text-white"
@@ -138,7 +135,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
           </Link>
         </div>
 
-        {/* 2. Mini Alert Mailbox & Alert Lamps Row (Just Like Communication Centre) */}
+        {/* 2. Mini Alert Mailbox & Alert Lamps Row — Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
         <div className="grid grid-cols-3 gap-1">
           <Link
             to="/communications"
@@ -156,7 +153,8 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
 
           <Link
             to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+            style={{ background: UNIFORM_SPRAY_BG }}
           >
             <span className="inline-flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
@@ -167,7 +165,8 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
 
           <Link
             to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+            style={{ background: UNIFORM_SPRAY_BG }}
           >
             <span className="inline-flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
@@ -177,17 +176,20 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
           </Link>
         </div>
 
-        {/* 3. Mini Quick-Press Communication Function Squares (Like in CommunicationNavigation) */}
+        {/* 3. Mini Quick-Press Communication Function Squares — Pink/Blue/Purple Spray & Dark Blue Writing */}
         <div
           className="w-full rounded-lg p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="rounded-[6px] bg-white p-1">
+          <div
+            className="rounded-[6px] p-1"
+            style={{ background: UNIFORM_SPRAY_BG }}
+          >
             <div className="mb-0.5 flex items-center justify-between px-1">
               <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Communication Function Squares
               </span>
-              <span className="text-[6.5px] font-extrabold text-[#5A00D6]">10 Channels</span>
+              <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">10 Channels</span>
             </div>
             <div className="grid grid-cols-5 gap-1">
               {MINI_COMM_SQUARES.map((sq) => {
@@ -196,7 +198,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
                   <Link
                     key={sq.key}
                     to="/communications"
-                    className="flex flex-col items-center justify-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white p-0.5 text-center transition-transform hover:-translate-y-0.5"
+                    className="flex flex-col items-center justify-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white/85 p-0.5 text-center transition-transform hover:-translate-y-0.5"
                     style={{ borderTopWidth: '2.5px', borderTopColor: sq.color }}
                   >
                     <span
@@ -215,12 +217,15 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
           </div>
         </div>
 
-        {/* 4. Small Shared To-Do List Inside Mini Communication Centre */}
+        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Pink/Blue/Purple Spray & Dark Blue Writing */}
         <div
           className="w-full flex-1 rounded-lg p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="flex h-full flex-col justify-between gap-1 rounded-[6px] bg-white p-1.5 text-left">
+          <div
+            className="flex h-full flex-col justify-between gap-1 rounded-[6px] p-1.5 text-left"
+            style={{ background: UNIFORM_SPRAY_BG }}
+          >
             <div
               className="gradient-brand flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
               style={{ background: getHeaderView(4), color: '#FFFFFF' }}
