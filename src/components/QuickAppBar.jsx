@@ -60,8 +60,8 @@ export default function QuickAppBar() {
             </span>
           </div>
 
-          {/* White Background + Modular Tiles in App Colour (Different Views), White Writing & One-Line Fit */}
-          <div className="grid w-full grid-cols-2 gap-2.5 rounded-2xl bg-white p-1 sm:grid-cols-3 md:grid-cols-6 auto-rows-fr">
+          {/* White Background + Double-Size Modular Tiles in App Colour (Different Views), White Writing & One-Line Fit */}
+          <div className="grid w-full grid-cols-1 gap-3.5 rounded-2xl bg-white p-1.5 sm:grid-cols-2 md:grid-cols-3 auto-rows-fr">
             {QUICK_LINKS.map((item, idx) => {
               const active = isActive(item.path);
               const Icon = item.icon;
@@ -71,7 +71,7 @@ export default function QuickAppBar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex h-full min-h-[48px] items-center gap-2 rounded-xl border-2 px-3 py-2 text-xs sm:text-[13px] md:text-sm font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                  className={`flex h-full min-h-[88px] sm:min-h-[96px] items-center gap-3.5 rounded-2xl border-[3px] px-5 py-4 text-base sm:text-lg md:text-xl font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg ${
                     active ? 'ring-2 ring-[#0A2B6D]' : ''
                   }`}
                   style={{
@@ -81,10 +81,10 @@ export default function QuickAppBar() {
                   }}
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white shadow-2xs"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 bg-white shadow-sm"
                     style={{ borderColor: borderCol }}
                   >
-                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                    <Icon className="h-6 w-6" style={{ color: sym.iconColor }} />
                   </span>
                   <span className="min-w-0 flex-1 whitespace-nowrap overflow-hidden text-ellipsis text-left leading-tight text-white">
                     {item.label}
